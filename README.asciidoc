@@ -1,4 +1,4 @@
-= RAML API Core
+= RAML WebApi Explorer
 
 :source-highlighter: prettify
 

@@ -1,0 +1,12 @@
+= RAML API Core
+
+:source-highlighter: prettify
+
+:!numbered:
+
+This package is used by the RAML Tools for .NET Visual Studio extension to generate RAML metadata from an existing WebAPI implementation. 
+
+In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.
+
+For more info please refer to the https://github.com/raml-org/raml-dotnet-tools[RAML Tools for .NET]
+

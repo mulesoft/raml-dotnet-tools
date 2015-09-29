@@ -8,5 +8,5 @@ This package is used by the RAML Tools for .NET Visual Studio extension to gener
 
 In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.
 
-For more info please refer to the https://github.com/raml-org/raml-dotnet-tools[RAML Tools for .NET]
+For more info please refer to the https://github.com/mulesoft-labs/raml-dotnet-tools[RAML Tools for .NET]
 

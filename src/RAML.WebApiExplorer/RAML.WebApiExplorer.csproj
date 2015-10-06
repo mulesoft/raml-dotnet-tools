@@ -58,6 +58,7 @@
       <HintPath>..\packages\Raml.Parser.0.8.101\lib\net45\Raml.Parser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />

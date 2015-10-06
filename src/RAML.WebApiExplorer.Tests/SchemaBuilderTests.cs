@@ -65,5 +65,17 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsNotNull(obj);
         }
 
+        [Test]
+        public void ShouldGenerateAnnotations()
+        {
+            var schema = schemaBuilder.Get(typeof(AnnotatedObject));
+            var obj = JsonSchema.Parse(schema);
+            Assert.IsNotNull(obj);
+            Assert.IsTrue(schema.Contains("\"Age\": { \"type\": \"integer\", \"minimum\": 18, \"maximum\": 120"));
+            Assert.IsTrue(schema.Contains("\"Weight\": { \"type\": \"number\", \"minimum\": 20.50, \"maximum\": 300.50"));
+            Assert.IsTrue(schema.Contains("\"LastName\": { \"type\": \"string\", \"required\": true"));
+            Assert.IsTrue(schema.Contains("\"City\": { \"type\": \"string\", \"maxLength\": 255}"));
+            Assert.IsTrue(schema.Contains("\"State\": { \"type\": \"string\", \"minLength\": 2}"));
+        }
     }
 }

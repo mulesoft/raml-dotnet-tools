@@ -177,7 +177,7 @@ namespace RAML.WebApiExplorer
 
 	        var objectSchema = "{ \r\n".Indent(pad) +
 	                           "  \"type\": \"object\",\r\n".Indent(pad) +
-                               ("  " + attributes + ",\r\n").Indent(pad) +
+                               (string.IsNullOrWhiteSpace(attributes) ? "" : ("  " + attributes + ",\r\n").Indent(pad)) +
                                ("  \"id\": \"" + type.Name + "\",\r\n").Indent(pad) + 
                                "  \"properties\": {\r\n".Indent(pad);
 

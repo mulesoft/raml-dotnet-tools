@@ -139,7 +139,7 @@ namespace RAML.WebApiExplorer
 					|| type.GetGenericTypeDefinition() == typeof(System.Web.Http.Results.JsonResult<>));
 		}
 
-		private string GetRecursively(Type type, int pad)
+		private string GetRecursively(Type type, int pad, IEnumerable<CustomAttributeData> customAttributes)
 		{
 			if (type.IsGenericType && IsGenericWebResult(type))
 				type = type.GetGenericArguments()[0];
@@ -160,10 +160,10 @@ namespace RAML.WebApiExplorer
             if (type.GetProperties().Count(p => p.CanWrite && p.SetMethod.IsPublic) == 0)
 		        return string.Empty;
 
-		    return GetNestedObjectSchema(type, pad);
+		    return GetNestedObjectSchema(type, pad, customAttributes);
 		}
 
-	    private string GetNestedObjectSchema(Type type, int pad)
+	    private string GetNestedObjectSchema(Type type, int pad, IEnumerable<CustomAttributeData> customAttributes)
 	    {
 	        if (types.Contains(type))
 	        {
@@ -171,8 +171,13 @@ namespace RAML.WebApiExplorer
 	        }
 
             types.Add(type);
+	        
+            var attributes = HandleRequiredAttribute(customAttributes);
+            attributes += HandleValidationAttributes(customAttributes);
+
 	        var objectSchema = "{ \r\n".Indent(pad) +
 	                           "  \"type\": \"object\",\r\n".Indent(pad) +
+                               ("  " + attributes + ",\r\n").Indent(pad) +
                                ("  \"id\": \"" + type.Name + "\",\r\n").Indent(pad) + 
                                "  \"properties\": {\r\n".Indent(pad);
 
@@ -273,7 +278,7 @@ namespace RAML.WebApiExplorer
 
 	    private string HandleNestedTypeProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
 	    {
-	        var nestedType = GetRecursively(prop.PropertyType, pad + 2);
+	        var nestedType = GetRecursively(prop.PropertyType, pad + 2, customAttributes);
             if(nestedType == null)
                 return string.Empty;
 
@@ -350,6 +355,17 @@ namespace RAML.WebApiExplorer
 	        return res;
 	    }
 
+        private static string HandleRequiredAttribute(IEnumerable<CustomAttributeData> customAttributes)
+        {
+            var res = string.Empty;
+
+            if (customAttributes.Any(a => a.AttributeType == typeof(RequiredAttribute)))
+            {
+                res += "\"required\": true";
+            }
+            return res;
+        }
+
 	    private static string HandleRequiredAttribute(PropertyInfo prop, IEnumerable<CustomAttributeData> customAttributes)
 	    {
 	        var res = string.Empty;
@@ -382,13 +398,19 @@ namespace RAML.WebApiExplorer
 	            case "MinLengthAttribute":
                     res += ", \"minLength\": " + attribute.ConstructorArguments.First().Value;
 	                break;
-	            case "RegularExpressionAttribute":
-                    res += ", \"pattern\": " + "\"" + attribute.ConstructorArguments.First().Value + "\"";
-	                break;
 	            case "RangeAttribute":
                     res += ", \"minimum\": " + Format(attribute.ConstructorArguments.First());
                     res += ", \"maximum\": " + Format(attribute.ConstructorArguments.Last());
 	                break;
+                case "EmailAddressAttribute":
+	                res += @", ""pattern"": ""[^\\s@]+@[^\\s@]+\\.[^\\s@]""";
+                    break;
+                case "UrlAttribute":
+                    res += @", ""pattern"": ""^(ftp|http|https):\/\/[^ \""]+$""";
+                    break;
+                //case "RegularExpressionAttribute":
+                //    res += ", \"pattern\": " + "\"" + attribute.ConstructorArguments.First().Value + "\"";
+                //    break;
 	        }
 	        return res;
 	    }

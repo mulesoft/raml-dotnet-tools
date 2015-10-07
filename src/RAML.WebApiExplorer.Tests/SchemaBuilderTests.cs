@@ -76,6 +76,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsTrue(schema.Contains("\"LastName\": { \"type\": \"string\", \"required\": true"));
             Assert.IsTrue(schema.Contains("\"City\": { \"type\": \"string\", \"maxLength\": 255}"));
             Assert.IsTrue(schema.Contains("\"State\": { \"type\": \"string\", \"minLength\": 2}"));
+            Assert.IsTrue(schema.Contains("\"Person\":\r\n      { \r\n        \"type\": \"object\",\r\n        \"required\": true,"));
         }
     }
 }

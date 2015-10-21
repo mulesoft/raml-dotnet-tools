@@ -1,5 +1,4 @@
-﻿using Raml.Api.Core;
-using Raml.Parser.Expressions;
+﻿using Raml.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
+using RAML.Api.Core;
 
 namespace RAML.WebApiExplorer
 {

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Raml.Parser.Expressions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using Raml.Parser.Expressions;
+using RAML.Api.Core;
 
 namespace RAML.WebApiExplorer
 {
@@ -258,7 +259,7 @@ namespace RAML.WebApiExplorer
 					             Verb = verb,
 					             QueryParameters = GetQueryParameters(api.RelativePath, api.ParameterDescriptions),
 					             Body = GetRequestMimeTypes(api),
-					             Responses = GetResponses(api.ResponseDescription),
+					             Responses = GetResponses(api.ResponseDescription, api),
 				             };
 				methods.Add(method);
                 verbs.Add(verb);
@@ -270,36 +271,75 @@ namespace RAML.WebApiExplorer
 			return methods;
 		}
 
-		private IEnumerable<Response> GetResponses(ResponseDescription responseDescription)
+		private IEnumerable<Response> GetResponses(ResponseDescription responseDescription, ApiDescription api)
 		{
+            var responses = new List<Response>();
+
 			if (responseDescription.ResponseType == null && responseDescription.DeclaredType == null)
-				return new Collection<Response>();
+				return responses;
 
 			var responseType = responseDescription.ResponseType ?? responseDescription.DeclaredType;
 
+            var attributes = api.ActionDescriptor.GetCustomAttributes<Attribute>();
+            responses = HandleResponseTypeStatusAttributes(attributes);
+
             if(responseType == typeof(IHttpActionResult))
-                return new Collection<Response>();
+                return responses;
 
-		    var schemaName = AddSchema(responseType);
+            responses.Add(HandleResponseTypeAttributes(responseType));
 
-		    var mimeTypes = new Dictionary<string, MimeType>
-			                {
-				                {
-					                "application/json",
-					                new MimeType
-					                {
-						                Schema = schemaName
-					                }
-				                }
-			                };
-
-			var response = new Response
-			               {
-				               Body = mimeTypes,
-							   Code = "200" // TODO: is it OK to asume this ?
-			               };
-			return new[] {response};
+			return responses;
 		}
+
+	    private Response HandleResponseTypeAttributes(Type responseType)
+	    {
+            var schemaName = AddSchema(responseType);
+
+            return new Response
+            {
+                Body = CreateMimeType(schemaName),
+                Code = "200"
+            };
+	    }
+
+	    private List<Response> HandleResponseTypeStatusAttributes(IEnumerable<Attribute> attributes)
+	    {
+            var responses = new Dictionary<string,Response>();
+            foreach (var attribute in attributes.Where(a => a is ResponseTypeStatusAttribute))
+            {
+                var response = GetResponse(attribute);
+                if(!responses.ContainsKey(response.Code))
+                    responses.Add(response.Code, response);
+            }
+	        return responses.Values.ToList();
+	    }
+
+	    private Response GetResponse(Attribute attribute)
+	    {
+            var status = ((ResponseTypeStatusAttribute)attribute).StatusCode;
+            var type = ((ResponseTypeStatusAttribute)attribute).ResponseType;
+            var schemaName = AddSchema(type);
+            return new Response
+            {
+                Code = ((int)status).ToString(CultureInfo.InvariantCulture),
+                Body = CreateMimeType(schemaName)
+            };
+	    }
+
+	    private static Dictionary<string, MimeType> CreateMimeType(string schemaName)
+	    {
+	        var mimeTypes = new Dictionary<string, MimeType>
+	        {
+	            {
+	                "application/json",
+	                new MimeType
+	                {
+	                    Schema = schemaName
+	                }
+	            }
+	        };
+	        return mimeTypes;
+	    }
 
 	    private string AddSchema(Type type)
 	    {

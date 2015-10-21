@@ -13,7 +13,7 @@
       <copyright>MuleSoft Inc, Copyright (c) 2015</copyright>
       <tags>RAML WebApi Reverse Engineering</tags>
 	  <licenseUrl>https://www.mulesoft.com/cpal</licenseUrl>
-      <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</projectUrl>
+      <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-apiexplorer</projectUrl>
       <iconUrl>http://raml.org/images/logo.png</iconUrl>
       <dependencies>
 		  <dependency id="Microsoft.AspNet.Mvc" version="5.1.2" />

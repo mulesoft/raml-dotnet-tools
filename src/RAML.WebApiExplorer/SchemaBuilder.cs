@@ -399,8 +399,10 @@ namespace RAML.WebApiExplorer
                     res += ", \"minLength\": " + attribute.ConstructorArguments.First().Value;
 	                break;
 	            case "RangeAttribute":
-                    res += ", \"minimum\": " + Format(attribute.ConstructorArguments.First());
-                    res += ", \"maximum\": " + Format(attribute.ConstructorArguments.Last());
+                    if(!IsMinValue(attribute.ConstructorArguments.First()))
+                        res += ", \"minimum\": " + Format(attribute.ConstructorArguments.First());
+                    if (!IsMaxValue(attribute.ConstructorArguments.Last()))
+                        res += ", \"maximum\": " + Format(attribute.ConstructorArguments.Last());
 	                break;
                 case "EmailAddressAttribute":
 	                res += @", ""pattern"": ""[^\\s@]+@[^\\s@]+\\.[^\\s@]""";
@@ -415,12 +417,28 @@ namespace RAML.WebApiExplorer
 	        return res;
 	    }
 
+	    private static bool IsMaxValue(CustomAttributeTypedArgument argument)
+	    {
+	        if (argument.ArgumentType == typeof (int))
+	            return int.MaxValue == (int) argument.Value;
+
+	        return Math.Abs(double.MaxValue - (double) argument.Value) < 1;
+	    }
+
+        private static bool IsMinValue(CustomAttributeTypedArgument argument)
+	    {
+            if (argument.ArgumentType == typeof(int))
+                return int.MinValue == (int)argument.Value;
+
+            return Math.Abs(double.MinValue - (double)argument.Value) < 1;
+	    }
+
 	    private static object Format(CustomAttributeTypedArgument argument)
 	    {
             var us = new CultureInfo("en-US");
 	        return argument.ArgumentType == typeof (int)
 	            ? argument.Value
-	            : Convert.ToDecimal(argument.Value).ToString("F", us);
+	            : Convert.ToDouble(argument.Value).ToString("F", us);
 	    }
 
 	    private static string GetPropertyName(MemberInfo property)

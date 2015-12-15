@@ -144,12 +144,18 @@ namespace RAML.WebApiExplorer
 			if (type.IsGenericType && IsGenericWebResult(type))
 				type = type.GetGenericArguments()[0];
 
-			if (IsArrayOrEnumerable(type))
+		    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Dictionary<,>))
+                return null;
+
+            if (IsArrayOrEnumerable(type))
 			{
 				var elementType = type.GetElementType() ?? type.GetGenericArguments()[0];
 
 			    if (SchemaTypeMapper.Map(elementType) != null)
 			        return GetNestedArraySchemaPrimitiveType(pad, elementType);
+
+    	         if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof (KeyValuePair<,>))
+                        return GetNestedArraySchema(pad, elementType);
 
 				if (elementType.GetProperties().Count(p => p.CanWrite && p.SetMethod.IsPublic) == 0)
 					return string.Empty;
@@ -200,15 +206,24 @@ namespace RAML.WebApiExplorer
 	        }
 	        else
 	        {
-                types.Add(elementType);
                 arraySchema += "  {\r\n".Indent(pad) +
                                "    \"type\": \"object\",\r\n".Indent(pad) +
                                "    \"properties\": \r\n".Indent(pad) +
                                "    {\r\n".Indent(pad);
 
-                arraySchema += GetProperties(elementType, pad + 4);
-
-                arraySchema += "    }\r\n".Indent(pad);
+	            if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof (KeyValuePair<,>))
+	            {
+                    var keyType = SchemaTypeMapper.Map(elementType.GetGenericArguments()[0]) ?? "object";
+                    var valueType = SchemaTypeMapper.Map(elementType.GetGenericArguments()[1]) ?? "object";
+	                arraySchema += ("\"Key\": { \"type\": \"" + keyType + "\"},\r\n").Indent(pad + 4) +
+	                               ("\"Value\" : { \"type\": \"" + valueType + "\"}\r\n").Indent(pad + 4);
+	            }
+	            else
+	            {
+                    types.Add(elementType);
+	                arraySchema += GetProperties(elementType, pad + 4);
+	            }
+	            arraySchema += "    }\r\n".Indent(pad);
                 arraySchema += "  }\r\n".Indent(pad);            
 	        }
 
@@ -294,11 +309,14 @@ namespace RAML.WebApiExplorer
 	            var subclasses =prop.PropertyType.Assembly.GetTypes()
                     .Where(type => type.IsSubclassOf(prop.PropertyType))
                     .ToArray();
-	            if (subclasses.Any())
-	                schema += GetOneOfProperty(prop, subclasses, pad);
+
+	            if (!subclasses.Any())
+	                return string.Empty;
+
+                schema += GetOneOfProperty(prop, subclasses, pad);
 	        }
 
-            if (prop != props.Last() && !String.IsNullOrWhiteSpace(schema) && schema.Length > "\r\n".Length)
+	        if (prop != props.Last() && !String.IsNullOrWhiteSpace(schema) && schema.Length > "\r\n".Length)
 	            schema = schema.Substring(0, schema.Length - "\r\n".Length) + ",\r\n";
 
 	        return schema;

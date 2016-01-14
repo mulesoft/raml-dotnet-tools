@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -257,7 +258,7 @@ namespace RAML.WebApiExplorer
 				             {
 					             Description = GetDescription(api),
 					             Verb = verb,
-					             QueryParameters = GetQueryParameters(api.RelativePath, api.ParameterDescriptions),
+					             QueryParameters = GetQueryParameters(api.ParameterDescriptions), // GetQueryParameters(api.RelativePath, api.ParameterDescriptions),
 					             Body = GetRequestMimeTypes(api),
 					             Responses = GetResponses(api.ResponseDescription, api),
 				             };
@@ -406,6 +407,81 @@ namespace RAML.WebApiExplorer
 
 
 
+        private IDictionary<string, Parameter> GetQueryParameters(IEnumerable<ApiParameterDescription> parameterDescriptions)
+        {
+            var queryParams = new Dictionary<string, Parameter>();
+
+            foreach (var apiParam in parameterDescriptions.Where(p => p.Source == ApiParameterSource.FromUri))
+            {
+                if (!IsPrimitiveType(apiParam.ParameterDescriptor.ParameterType))
+                {
+                    GetParametersFromComplexType(apiParam, queryParams);
+                }
+                else
+                {
+                    var parameter = GetPrimitiveParameter(apiParam);
+
+                    if (!queryParams.ContainsKey(apiParam.Name))
+                        queryParams.Add(apiParam.Name, parameter);
+                }
+            }
+            return queryParams;
+        }
+
+	    private void GetParametersFromComplexType(ApiParameterDescription apiParam, IDictionary<string, Parameter> queryParams)
+	    {
+	        var properties = apiParam.ParameterDescriptor.ParameterType
+	            .GetProperties().Where(p => p.CanWrite);
+	        foreach (var property in properties)
+	        {
+                if(!IsPrimitiveType(property.PropertyType))
+                    continue;
+
+	            var parameter = GetParameterFromProperty(apiParam, property);
+
+	            if (!queryParams.ContainsKey(property.Name))
+	                queryParams.Add(property.Name, parameter);
+	        }
+	    }
+
+	    private static Parameter GetParameterFromProperty(ApiParameterDescription apiParam, PropertyInfo property)
+	    {
+	        var parameter = new Parameter
+	        {
+	            Default = IsNullable(property.PropertyType) ? "null" : null,
+	            Required = !IsNullable(property.PropertyType),
+	            Type = SchemaTypeMapper.Map(property.PropertyType)
+	        };
+	        return parameter;
+	    }
+
+	    private static Parameter GetPrimitiveParameter(ApiParameterDescription apiParam)
+	    {
+	        var parameter = new Parameter
+	        {
+	            Default =
+	                apiParam.ParameterDescriptor.DefaultValue == null
+	                    ? (apiParam.ParameterDescriptor.IsOptional ? "null" : null)
+	                    : apiParam.ParameterDescriptor.DefaultValue.ToString(),
+	            Required = !apiParam.ParameterDescriptor.IsOptional,
+	            Type = SchemaTypeMapper.Map(apiParam.ParameterDescriptor.ParameterType),
+	            Description = apiParam.Documentation
+	        };
+	        return parameter;
+	    }
+
+	    private static bool IsNullable(Type type)
+	    {
+            return type == typeof(string) || Nullable.GetUnderlyingType(type) != null || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
+	    }
+
+	    private bool IsPrimitiveType(Type parameterType)
+	    {
+	        return SchemaTypeMapper.Map(parameterType) != null;
+	    }
+
+
+        [Obsolete]
 		private IDictionary<string, Parameter> GetQueryParameters(string urlWithParams, IEnumerable<ApiParameterDescription> parameterDescriptions)
 		{
 			var queryParams = new Dictionary<string, Parameter>();

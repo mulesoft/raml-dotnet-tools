@@ -195,7 +195,8 @@ namespace RAML.WebApiExplorer
 				sb.AppendLine("headers:".Indent(indentation + 2));
 				foreach (var header in method.Headers)
 				{
-					SerializeParameterProperties(sb, header, indentation + 4);
+                    sb.AppendLine(header.Key + ":".Indent(indentation + 4));
+					SerializeParameterProperties(sb, header.Value, indentation + 6);
 				}
 			}
 

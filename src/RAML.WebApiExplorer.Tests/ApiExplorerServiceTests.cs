@@ -34,7 +34,7 @@ namespace RAML.WebApiExplorer.Tests
 			routes.Add("test", new HttpRoute("test/{id}"));
 			var conf = new HttpConfiguration(routes);
 			var apiExplorer = conf.Services.GetApiExplorer();
-			var apiExplorerService = new ApiExplorerService(apiExplorer, "http://test.com");
+			var apiExplorerService = new ApiExplorerServiceVersion08(apiExplorer, "http://test.com");
 			var ramlDoc = apiExplorerService.GetRaml();
 			Assert.IsNotNull(ramlDoc);
 		}

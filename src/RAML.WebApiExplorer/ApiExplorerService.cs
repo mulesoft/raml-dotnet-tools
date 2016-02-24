@@ -1,7 +1,9 @@
 ﻿using Raml.Parser.Expressions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +15,7 @@ using RAML.Api.Core;
 
 namespace RAML.WebApiExplorer
 {
-	public class ApiExplorerService
+	public abstract class ApiExplorerService
 	{
 		private readonly IApiExplorer apiExplorer;
 		private readonly string baseUri;
@@ -28,17 +30,16 @@ namespace RAML.WebApiExplorer
 
         public string DefaultMediaType { get; set; }
 
-        private readonly SchemaBuilder schemaBuilder = new SchemaBuilder();
-	    private readonly IDictionary<string, string> schemas = new Dictionary<string, string>();
-        private readonly ICollection<Type> schemaTypes = new Collection<Type>();
+        protected readonly MyOrderedDictionary SchemasOrTypes = new MyOrderedDictionary();
+	    protected readonly ICollection<Type> Types = new Collection<Type>();
 
-	    public ApiExplorerService(IApiExplorer apiExplorer, string baseUri)
+	    public ApiExplorerService(IApiExplorer apiExplorer, string baseUri = null)
 		{
 			this.apiExplorer = apiExplorer;
 			this.baseUri = baseUri;
 		}
 
-		public RamlDocument GetRaml(string title = null)
+		public RamlDocument GetRaml(Version version = Version.V1, string title = null)
 		{
 			if (string.IsNullOrWhiteSpace(title))
 				title = "Api";
@@ -93,7 +94,7 @@ namespace RAML.WebApiExplorer
 					SetResourcePropertiesByController(resource, api.ActionDescriptor.ControllerDescriptor);
 			}
 
-		    raml.Schemas = new List<IDictionary<string, string>> { schemas };
+		    raml.Schemas = new List<IDictionary<string, string>> { SchemasOrTypes.ToDictionary() };
 
 			OrganizeResourcesHierarchically(raml, resourcesDic);
 
@@ -294,11 +295,11 @@ namespace RAML.WebApiExplorer
 
 	    private Response HandleResponseTypeAttributes(Type responseType)
 	    {
-            var schemaName = AddSchema(responseType);
+            var schemaName = AddType(responseType);
 
             return new Response
             {
-                Body = CreateMimeType(schemaName),
+                Body = CreateJsonMimeTypeWithSchema(schemaName),
                 Code = "200"
             };
 	    }
@@ -319,56 +320,54 @@ namespace RAML.WebApiExplorer
 	    {
             var status = ((ResponseTypeStatusAttribute)attribute).StatusCode;
             var type = ((ResponseTypeStatusAttribute)attribute).ResponseType;
-            var schemaName = AddSchema(type);
+            var schemaName = AddType(type);
             return new Response
             {
                 Code = ((int)status).ToString(CultureInfo.InvariantCulture),
-                Body = CreateMimeType(schemaName)
+                Body = CreateJsonMimeTypeWithSchema(schemaName)
             };
 	    }
 
-	    private static Dictionary<string, MimeType> CreateMimeType(string schemaName)
+        private static Dictionary<string, MimeType> CreateJsonMimeTypeWithType(string type)
+        {
+            var mimeType = new MimeType { Type = type };
+            return CreateMimeTypes(mimeType);
+        }
+
+	    private static Dictionary<string, MimeType> CreateJsonMimeTypeWithSchema(string schemaName)
+	    {
+	        var mimeType = CreateMimeTypeWithSchema(schemaName);
+	        return CreateMimeTypes(mimeType);
+	    }
+
+	    private static Dictionary<string, MimeType> CreateMimeTypes(MimeType mimeType)
 	    {
 	        var mimeTypes = new Dictionary<string, MimeType>
 	        {
 	            {
 	                "application/json",
-	                new MimeType
-	                {
-	                    Schema = schemaName
-	                }
+	                mimeType
 	            }
 	        };
 	        return mimeTypes;
 	    }
 
-	    private string AddSchema(Type type)
+	    private static MimeType CreateMimeTypeWithSchema(string schemaName)
 	    {
-	        var schemaName = type.Name.Replace("`", string.Empty);
-	        if (schemaTypes.Contains(type)) 
-                return schemaName;
-
-	        var schema = schemaBuilder.Get(type);
-
-	        if (string.IsNullOrWhiteSpace(schema))
-	            return string.Empty;
-	        
-            // handle case of different types with same class name
-	        if (schemas.ContainsKey(schemaName))
-	            schemaName = GetUniqueSchemaName(schemaName);
-
-	        schemas.Add(schemaName, schema);
-            schemaTypes.Add(type);
-
-	        return schemaName;
+	        return new MimeType
+	        {
+	            Schema = schemaName
+	        };
 	    }
 
-	    private string GetUniqueSchemaName(string schemaName)
+	    protected abstract string AddType(Type type);
+
+	    protected string GetUniqueSchemaName(string schemaName)
 	    {
 	        for (var i = 0; i < 1000; i++)
 	        {
 	            schemaName += i;
-	            if (!schemas.ContainsKey(schemaName))
+	            if (!SchemasOrTypes.ContainsKey(schemaName))
 	                return schemaName;
 	        }
             throw new InvalidOperationException("Could not find a unique name. You have more than 1000 types with the same class name");
@@ -386,12 +385,9 @@ namespace RAML.WebApiExplorer
 			{
 				var type = apiParam.ParameterDescriptor.ParameterType;
 
-                var schemaName = AddSchema(type);
+                var schemaName = AddType(type);
 
-				mimeType = new MimeType
-				           {
-					           Schema = schemaName
-				           };
+				mimeType = CreateMimeTypeWithSchema(schemaName);
 			}
 
 			if(mimeType != null && !mediaTypes.Any())
@@ -547,4 +543,22 @@ namespace RAML.WebApiExplorer
 			return dic;
 		}
 	}
+
+    public class MyOrderedDictionary : OrderedDictionary
+    {
+        public void Add(string key, string value)
+        {
+            base.Add(key, value);
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return base.Contains(key);
+        }
+
+        public IDictionary<string, string> ToDictionary()
+        {
+            return base.Keys.Cast<object>().ToDictionary(key => key.ToString(), key => base[key].ToString());
+        }
+    }
 }

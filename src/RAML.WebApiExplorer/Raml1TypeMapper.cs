@@ -33,8 +33,8 @@ namespace RAML.WebApiExplorer
 					"date"
 				},
 				{
-					typeof (object),
-					"any"
+					typeof (Uri),
+					"string"
 				},
 				{
 					typeof (int?),
@@ -59,7 +59,12 @@ namespace RAML.WebApiExplorer
 				{
 					typeof (byte[]),
 					"file"
+				},
+				{
+					typeof (object),
+					"object"
 				}
+
 			};
 
 		public static string Map(Type type)

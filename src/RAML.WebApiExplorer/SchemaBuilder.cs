@@ -253,6 +253,17 @@ namespace RAML.WebApiExplorer
 
             return schema;
         }
+        protected override string GetProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
+        {
+            if (prop.PropertyType.IsEnum)
+                schema = HandleEnumProperty(pad, prop, props, schema);
+            else if (SchemaTypeMapper.Map(prop.PropertyType) != null)
+                schema = HandlePrimitiveTypeProperty(pad, prop, props, schema, customAttributes);
+            else
+                schema = HandleNestedTypeProperty(pad, prop, schema, props, customAttributes);
+
+            return schema;
+        }
 
         protected string GetRecursively(Type type, int pad, IEnumerable<CustomAttributeData> customAttributes)
         {

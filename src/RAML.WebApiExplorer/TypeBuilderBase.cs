@@ -26,7 +26,7 @@ namespace RAML.WebApiExplorer
         protected string GetProperties(Type elementType, int pad)
         {
             var schema = string.Empty;
-            var props = elementType.GetProperties().Where(p => p.CanRead || p.CanWrite).ToArray();
+            var props = elementType.GetProperties().Where(p => p.CanWrite).ToArray();
             foreach (var prop in props)
             {
                 schema = GetProperty(pad, prop, schema, props, prop.CustomAttributes);
@@ -34,17 +34,8 @@ namespace RAML.WebApiExplorer
             return schema;
         }
 
-        protected string GetProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
-        {
-            if (prop.PropertyType.IsEnum)
-                schema = HandleEnumProperty(pad, prop, props, schema);
-            else if (SchemaTypeMapper.Map(prop.PropertyType) != null)
-                schema = HandlePrimitiveTypeProperty(pad, prop, props, schema, customAttributes);
-            else 
-                schema = HandleNestedTypeProperty(pad, prop, schema, props, customAttributes);
-	        
-            return schema;
-        }
+        protected abstract string GetProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props,
+            IEnumerable<CustomAttributeData> customAttributes);
 
         protected abstract string HandleEnumProperty(int pad, PropertyInfo prop, IEnumerable<PropertyInfo> props, string schema);
 

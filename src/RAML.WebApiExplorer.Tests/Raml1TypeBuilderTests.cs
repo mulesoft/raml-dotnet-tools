@@ -29,12 +29,24 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsTrue(raml1Types.ContainsKey("Owner"));
 		}
 
-		[Test]
-		public void ShouldParseTypeWithNestedTypeWhereFirstTypeHasNoSettableProperties()
+        [Test]
+        public void ShouldParseUriAsString()
         {
-			var raml1Type = raml1TypeBuilder.Add(typeof(WebLocation));
-            Assert.IsTrue(raml1Types.ContainsKey("Uri"));
-			Assert.IsNotNullOrEmpty(raml1Type);
+            raml1TypeBuilder.Add(typeof(WebLocation));
+            Assert.AreEqual(1, raml1Types.Count);
+            Assert.IsTrue(!raml1Types.ContainsKey("Uri"));
+            Assert.IsTrue(raml1Types["WebLocation"].ToString().Contains("properties:"));
+            Assert.IsTrue(raml1Types["WebLocation"].ToString().Contains("BaseUri:"));
+            Assert.IsTrue(raml1Types["WebLocation"].ToString().Contains("Location:"));
+        }
+
+		[Test]
+		public void ShouldSkipTypeThatHasNoSettableProperties()
+        {
+            raml1TypeBuilder.Add(typeof(TypeWithReadOnlyProperties));
+            Assert.AreEqual(1, raml1Types.Count);
+            Assert.IsFalse(raml1Types["TypeWithReadOnlyProperties"].ToString().Contains("ReadOnlyProp"));
+            Assert.IsFalse(raml1Types["TypeWithReadOnlyProperties"].ToString().Contains("ReadOnlyObject"));
 		}
 
 		[Test]
@@ -43,50 +55,54 @@ namespace RAML.WebApiExplorer.Tests
 			var raml1Type = raml1TypeBuilder.Add(typeof(Owner[]));
             Assert.AreEqual(1, raml1Types.Count);
 			Assert.IsTrue(raml1Types.ContainsKey("Owner"));
-            Assert.AreEqual("type: Owner[]", raml1Type);
+            Assert.AreEqual("Owner[]", raml1Type);
 		}
 
         [Test]
         public void ShouldParseDictionary()
         {
-            var raml1Type = raml1TypeBuilder.Add(typeof(IDictionary<string, Owner>));
+            raml1TypeBuilder.Add(typeof(IDictionary<string, Owner>));
             Assert.AreEqual(2, raml1Types.Count);
             Assert.IsTrue(raml1Types.ContainsKey("Owner"));
             Assert.IsTrue(raml1Types.ContainsKey("OwnerMap"));
-            Assert.IsTrue(raml1Type.Contains("[]:"));
-            Assert.IsTrue(raml1Type.Contains("type: Owner"));
+            Assert.IsTrue(raml1Types["OwnerMap"].ToString().Contains("[]:"));
+            Assert.IsTrue(raml1Types["OwnerMap"].ToString().Contains("type: Owner"));
         }
 
 		[Test]
 		public void ShouldParseComplexType()
 		{
-			var raml1Type = raml1TypeBuilder.Add(typeof(SearchGetResponse));
+			raml1TypeBuilder.Add(typeof(SearchGetResponse));
+            Assert.AreEqual(5, raml1Types.Count);
 		}
 
-        [Test]
-        public void ShouldParseTypeWithSubclasses()
+        [Test, Ignore] // it should not be necesary
+        public void ShouldGetSubclassesOfType()
         {
-            var raml1Type = raml1TypeBuilder.Add(typeof(Entry));
+            raml1TypeBuilder.Add(typeof(Entry));
+            Assert.AreEqual(6, raml1Types.Count);
+            Assert.IsTrue(raml1Types["StoragediskUUID"].ToString().Contains("type: Storage"));
         }
 
         [Test]
         public void ShouldParseTypeWithRecursiveTypes()
         {
-            var raml1Type = raml1TypeBuilder.Add(typeof(Employee));
+            raml1TypeBuilder.Add(typeof(Employee));
+            Assert.AreEqual(2, raml1Types.Count);
+            Assert.IsTrue(raml1Types["Employee"].ToString().Contains("type: Person"));
         }
 
         [Test]
         public void ShouldGenerateAnnotations()
         {
-            var raml1Type = raml1TypeBuilder.Add(typeof(AnnotatedObject));
-            //var obj = JsonSchema.Parse(schema);
-            //Assert.IsNotNull(obj);
-            //Assert.IsTrue(schema.Contains("\"Age\": { \"type\": \"integer\", \"minimum\": 18, \"maximum\": 120"));
-            //Assert.IsTrue(schema.Contains("\"Weight\": { \"type\": \"number\", \"minimum\": 20.50, \"maximum\": 300.50"));
-            //Assert.IsTrue(schema.Contains("\"LastName\": { \"type\": \"string\", \"required\": true"));
-            //Assert.IsTrue(schema.Contains("\"City\": { \"type\": \"string\", \"maxLength\": 255}"));
-            //Assert.IsTrue(schema.Contains("\"State\": { \"type\": \"string\", \"minLength\": 2}"));
-            //Assert.IsTrue(schema.Contains("\"Person\":\r\n      { \r\n        \"type\": \"object\",\r\n        \"required\": true,"));
+            raml1TypeBuilder.Add(typeof(AnnotatedObject));
+            var raml1Type = raml1Types["AnnotatedObject"].ToString();
+            Assert.IsTrue(raml1Type.Contains("minimum: 18"));
+            Assert.IsTrue(raml1Type.Contains("maximum: 120"));
+            Assert.IsTrue(raml1Type.Contains("minimum: 20.50"));
+            Assert.IsTrue(raml1Type.Contains("maximum: 300.50"));
+            Assert.IsTrue(raml1Type.Contains("maxLength: 255"));
+            Assert.IsTrue(raml1Type.Contains("minLength: 2"));
         }
     }
 }

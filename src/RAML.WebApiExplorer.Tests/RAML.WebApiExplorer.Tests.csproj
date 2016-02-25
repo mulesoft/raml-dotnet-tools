@@ -98,6 +98,7 @@
     <Compile Include="Types\StoragediskUUID.cs" />
     <Compile Include="Types\Storagenfs.cs" />
     <Compile Include="Types\Storagetmpfs.cs" />
+    <Compile Include="Types\TypeWithReadOnlyProperties.cs" />
     <Compile Include="Types\WebLocation.cs" />
   </ItemGroup>
   <ItemGroup>

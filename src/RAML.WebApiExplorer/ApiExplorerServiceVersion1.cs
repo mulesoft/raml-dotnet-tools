@@ -10,7 +10,7 @@ namespace RAML.WebApiExplorer
         public ApiExplorerServiceVersion1(IApiExplorer apiExplorer, string baseUri = null)
             : base(apiExplorer, baseUri)
         {
-            typeBuilder = new Raml1TypeBuilder(SchemasOrTypes);
+            typeBuilder = new Raml1TypeBuilder(RamlTypes);
         }
 
         protected override string AddType(Type type)

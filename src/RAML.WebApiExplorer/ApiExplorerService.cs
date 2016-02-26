@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -30,7 +29,8 @@ namespace RAML.WebApiExplorer
 
         public string DefaultMediaType { get; set; }
 
-        protected readonly MyOrderedDictionary SchemasOrTypes = new MyOrderedDictionary();
+        protected readonly RamlTypesOrderedDictionary RamlTypes = new RamlTypesOrderedDictionary();
+        protected readonly IDictionary<string, string> Schemas = new Dictionary<string, string>();
 	    protected readonly ICollection<Type> Types = new Collection<Type>();
 
 	    public ApiExplorerService(IApiExplorer apiExplorer, string baseUri = null)
@@ -94,7 +94,10 @@ namespace RAML.WebApiExplorer
 					SetResourcePropertiesByController(resource, api.ActionDescriptor.ControllerDescriptor);
 			}
 
-		    raml.Schemas = new List<IDictionary<string, string>> { SchemasOrTypes.ToDictionary() };
+		    raml.Schemas = new List<IDictionary<string, string>> { Schemas };
+
+            // TODO: change !!!!
+		    raml.Types = RamlTypes.ToDictionary();
 
 			OrganizeResourcesHierarchically(raml, resourcesDic);
 
@@ -367,7 +370,7 @@ namespace RAML.WebApiExplorer
 	        for (var i = 0; i < 1000; i++)
 	        {
 	            schemaName += i;
-	            if (!SchemasOrTypes.ContainsKey(schemaName))
+	            if (!Schemas.ContainsKey(schemaName))
 	                return schemaName;
 	        }
             throw new InvalidOperationException("Could not find a unique name. You have more than 1000 types with the same class name");
@@ -543,22 +546,4 @@ namespace RAML.WebApiExplorer
 			return dic;
 		}
 	}
-
-    public class MyOrderedDictionary : OrderedDictionary
-    {
-        public void Add(string key, string value)
-        {
-            base.Add(key, value);
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return base.Contains(key);
-        }
-
-        public IDictionary<string, string> ToDictionary()
-        {
-            return base.Keys.Cast<object>().ToDictionary(key => key.ToString(), key => base[key].ToString());
-        }
-    }
 }

@@ -1,37 +1,41 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Linq;
+using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer
 {
-    public class Raml1TypeBuilder : TypeBuilderBase
+    public class Raml1TypeBuilder
     {
-        private readonly MyOrderedDictionary raml1Types;
+        private readonly RamlTypesOrderedDictionary raml1Types;
+        private readonly ICollection<Type> Types = new Collection<Type>();
 
-        public Raml1TypeBuilder(MyOrderedDictionary raml1Types)
+        public Raml1TypeBuilder(RamlTypesOrderedDictionary raml1Types)
         {
             this.raml1Types = raml1Types;
         }
 
         public string Add(Type type)
         {
-            var typeName = type.Name.Replace("`", string.Empty);
+            var typeName = GetTypeName(type);
+
             if(Types.Contains(type))
                 return typeName;
 
             Types.Add(type);
 
-            string raml1Type;
+            RamlType raml1Type;
 
-            if (type.IsGenericType && IsGenericWebResult(type))
+            if (type.IsGenericType && TypeBuilderHelper.IsGenericWebResult(type))
                 type = type.GetGenericArguments()[0];
 
-            if (IsArrayOrEnumerable(type))
+            if (TypeBuilderHelper.IsArrayOrEnumerable(type))
             {
                 var elementType = GetElementType(type);
-                if (IsArrayOrEnumerable(elementType))
+                if (TypeBuilderHelper.IsArrayOrEnumerable(elementType))
                 {
                     var subElementType = GetElementType(elementType);
                     if (!HasPropertiesOrParentType(subElementType))
@@ -67,164 +71,245 @@ namespace RAML.WebApiExplorer
                 raml1Type = GetObject(type);
             }
 
-            if(!string.IsNullOrWhiteSpace(raml1Type))
+            if(raml1Type != null)
                 AddType(type, raml1Type);
 
             return typeName;
         }
 
-        private string GetMap(Type type)
+        private RamlType GetMap(Type type)
         {
             var subtype = type.GetGenericArguments()[1];
-            var subtypeName = subtype.Name;
+            var subtypeName = GetTypeName(subtype);
 
             if(Raml1TypeMapper.Map(subtype) == null)
                 subtypeName = Add(subtype);
 
             if(string.IsNullOrWhiteSpace(subtypeName))
-                return string.Empty;
+                return null;
 
-            var raml1Type = "type: object" + Environment.NewLine;
-            raml1Type += "properties:" + Environment.NewLine;
-            raml1Type += "[]:".Indent(4) + Environment.NewLine;
-            
-            raml1Type += "type: ".Indent(8) + subtypeName;
+            var raml1Type = new RamlType
+            {
+                Object = new ObjectType
+                {
+                    Properties = new Dictionary<string, RamlType>()
+                    {
+                        {
+                            "[]", new RamlType
+                            {
+                                Type = subtypeName
+                            }
+                        }
+                    }
+                }
+            };
+
             return raml1Type;
         }
 
-        private string GetArrayOfArray(Type subElementType)
+        private RamlType GetArrayOfArray(Type subElementType)
         {
-            var elementTypeName = subElementType.Name;
+            string elementTypeName;
             if (Raml1TypeMapper.Map(subElementType) == null)
                 elementTypeName = Add(subElementType);
-
-            if(string.IsNullOrWhiteSpace(elementTypeName))
-                return string.Empty;
-
-            return "type: " + elementTypeName + "[][]";
-        }
-
-        private string GetArray(Type elementType)
-        {
-            var elementTypeName = elementType.Name;
-            if (Raml1TypeMapper.Map(elementType) == null)
-                elementTypeName = Add(elementType);
+            else
+                elementTypeName = Raml1TypeMapper.Map(subElementType);
 
             if (string.IsNullOrWhiteSpace(elementTypeName))
-                return string.Empty;
+                return null;
 
-            return "type: " + elementTypeName + "[]";
+            var raml1Type = new RamlType
+            {
+                Array = new ArrayType
+                {
+                    Items = new RamlType
+                    {
+                        Array = new ArrayType
+                        {
+                            Items = new RamlType
+                            {
+                                Name = GetTypeName(subElementType),
+                                Type = elementTypeName
+                            }
+                        }
+                    }
+                }
+            };
+
+            return raml1Type;
         }
 
-        private string GetScalar(Type type)
+        private RamlType GetArray(Type elementType)
         {
-            return "type:" + Raml1TypeMapper.Map(type);
+            string elementTypeName;
+            if (Raml1TypeMapper.Map(elementType) == null)
+                elementTypeName = Add(elementType);
+            else
+                elementTypeName = Raml1TypeMapper.Map(elementType);
+                
+            
+            if (string.IsNullOrWhiteSpace(elementTypeName))
+                return null;
+
+            return new RamlType
+            {
+                Array = new ArrayType
+                {
+                    Items = new RamlType
+                    {
+                        Name = GetTypeName(elementType),
+                        Type = elementTypeName
+                    }
+                }
+            };
         }
 
-        private string GetEnum(Type type)
+        private RamlType GetScalar(Type type)
         {
-            return "type: string" + Environment.NewLine +
-                   "enum: [ " + string.Join(",",type.GetEnumNames()) + " ]";
+            var ramlType = new RamlType
+            {
+                Scalar = new Property
+                {
+                    Type = Raml1TypeMapper.Map(type),
+                }
+            };
+            return ramlType;
         }
 
-        private string GetObject(Type type)
+        private RamlType GetEnum(Type type)
         {
-            var raml1Type = string.Empty;
+            var ramlType = new RamlType
+            {
+                Type = "string",
+                Scalar = new Property { Enum = type.GetEnumNames() } // TODO: check!!
+            };
+
+            return ramlType;
+        }
+
+        private RamlType GetObject(Type type)
+        {
+            var raml1Type = new RamlType();
+            raml1Type.Object = new ObjectType();
+            raml1Type.Type = "object";
 
             if (type.BaseType != null && type.BaseType != typeof(object))
             {
                 var parent = GetObject(type.BaseType);
                 AddType(type.BaseType, parent);
-
-                raml1Type = "type: " + type.BaseType.Name + Environment.NewLine;
+                raml1Type.Type = GetTypeName(type.BaseType);
             }
 
             if (type.GetProperties().Count(p => p.CanWrite) > 0)
             {
-                raml1Type += "properties:" + Environment.NewLine;
-                raml1Type += GetProperties(type, 4);
+                raml1Type.Object.Properties = GetProperties(type);
             }
             return raml1Type;
         }
 
-        protected override string GetProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, 
-            IEnumerable<CustomAttributeData> customAttributes)
+        private IDictionary<string, RamlType> GetProperties(Type type)
+        {
+            var props = type.GetProperties().Where(p => p.CanWrite).ToArray();
+            var dic = new Dictionary<string, RamlType>();
+            foreach (var prop in props)
+            {
+                var key = GetPropertyName(prop);
+                var ramlType = GetProperty(prop);
+                if(ramlType != null)
+                    dic.Add(key, ramlType);
+            }
+            return dic;
+        }
+
+        private string GetPropertyName(PropertyInfo prop)
+        {
+            return prop.Name + (IsOptionalProperty(prop, prop.CustomAttributes) ? "?" : "");
+        }
+
+        private RamlType GetProperty(PropertyInfo prop)
         {
             if (prop.PropertyType.IsEnum)
-                schema = HandleEnumProperty(pad, prop, props, schema);
-            else if (Raml1TypeMapper.Map(prop.PropertyType) != null)
-                schema = HandlePrimitiveTypeProperty(pad, prop, props, schema, customAttributes);
-            else if (IsArrayOrEnumerable(prop.PropertyType))
-                schema = HandleArrayProperty(pad, prop, schema, props, customAttributes);
-            else if (IsDictionary(prop.PropertyType))
-                schema = HandleDictionaryProperty(pad, prop, schema, props, customAttributes);
-            else
-                schema = HandleNestedTypeProperty(pad, prop, schema, props, customAttributes);
+                return GetEnum(prop.PropertyType);
+            
+            if (Raml1TypeMapper.Map(prop.PropertyType) != null)
+                return HandlePrimitiveTypeProperty(prop);
 
-            return schema;
+            if (TypeBuilderHelper.IsArrayOrEnumerable(prop.PropertyType))
+                return GetArray(prop.PropertyType);
+            
+            if (IsDictionary(prop.PropertyType))
+                return GetMap(prop.PropertyType);
+            
+            return HandleNestedTypeProperty(prop);
         }
 
-        private string HandleArrayProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
+        private RamlType HandlePrimitiveTypeProperty(PropertyInfo prop)
         {
-            schema += GetPropertyName(prop).Indent(pad) + ":";
-            schema += GetArray(prop.PropertyType).Indent(pad + 4) + Environment.NewLine;
-            return schema;
+            var ramlTypeProp = GetScalar(prop.PropertyType);
+            HandleValidationAttributes(ramlTypeProp, prop.CustomAttributes);
+            return ramlTypeProp;
         }
 
-        private string HandleDictionaryProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
+        private void HandleValidationAttributes(RamlType ramlTypeProp, IEnumerable<CustomAttributeData> customAttributes)
         {
-            schema += GetPropertyName(prop).Indent(pad) + ":";
-            schema += GetMap(prop.PropertyType).Indent(pad + 4) + Environment.NewLine;
-            return schema;
+            foreach (var attribute in customAttributes)
+            {
+                HandleValidationAttribute(ramlTypeProp, attribute);
+            }
         }
 
-        protected override string HandleEnumProperty(int pad, PropertyInfo prop, IEnumerable<PropertyInfo> props, string schema)
+        private static void HandleValidationAttribute(RamlType ramlTypeProp, CustomAttributeData attribute)
         {
-            schema += GetPropertyName(prop).Indent(pad);
-            schema += GetEnum(prop.PropertyType).Indent(pad + 4);
-            return schema;
+            switch (attribute.AttributeType.Name)
+            {
+                case "MaxLengthAttribute":
+                    ramlTypeProp.Scalar.MaxLength = (int?) attribute.ConstructorArguments.First().Value;
+                    break;
+                case "MinLengthAttribute":
+                    ramlTypeProp.Scalar.MinLength = (int?) attribute.ConstructorArguments.First().Value;
+                    break;
+                case "RangeAttribute":
+                    if (!TypeBuilderHelper.IsMinValue(attribute.ConstructorArguments.First()))
+                        ramlTypeProp.Scalar.Minimum = ConvertToNullableDecimal(attribute.ConstructorArguments.First().Value);
+                    if (!TypeBuilderHelper.IsMaxValue(attribute.ConstructorArguments.Last()))
+                        ramlTypeProp.Scalar.Maximum = ConvertToNullableDecimal(attribute.ConstructorArguments.Last().Value);
+                    break;
+                case "EmailAddressAttribute":
+                    ramlTypeProp.Scalar.Pattern = @"pattern: [^\\s@]+@[^\\s@]+\\.[^\\s@]";
+                    break;
+                case "UrlAttribute":
+                    ramlTypeProp.Scalar.Pattern = @"pattern: ^(ftp|http|https):\/\/[^ \""]+$";
+                    break;
+                //case "RegularExpressionAttribute":
+                //    ramlTypeProp.Scalar.Pattern = "pattern: " + attribute.ConstructorArguments.First().Value;
+                //    break;
+            }
         }
 
-        protected override string HandlePrimitiveTypeProperty(int pad, PropertyInfo prop, IEnumerable<PropertyInfo> props, string schema,
-            IEnumerable<CustomAttributeData> customAttributes)
+        private static decimal? ConvertToNullableDecimal(object value)
         {
-            schema += GetPropertyName(prop).Indent(pad);
+            if (value == null)
+                return null;
 
-            if (IsOptionalProperty(prop, customAttributes))
-                schema += "?";
-
-            schema += ":" + Environment.NewLine;
-
-            schema += GetScalar(prop.PropertyType).Indent(pad + 4) + Environment.NewLine;
-            schema += HandleValidationAttributes(customAttributes).Indent(pad + 8);
-
-            return schema;
+            return Convert.ToDecimal(value);
         }
 
-        protected override string HandleNestedTypeProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props,
-            IEnumerable<CustomAttributeData> customAttributes)
+        private RamlType HandleNestedTypeProperty(PropertyInfo prop)
         {
             var typeName = Add(prop.PropertyType);
 
             if (string.IsNullOrWhiteSpace(typeName))
-                return string.Empty;
+                return null;
 
-            schema += GetPropertyName(prop).Indent(pad);
-            if (IsOptionalProperty(prop, customAttributes))
-                schema += "?";
-            schema += ":" + Environment.NewLine;
-
-            schema += "type: ".Indent(pad + 4) + typeName + Environment.NewLine;
-
-            return schema;
+            return new RamlType { Type = typeName };
         }
 
         private static bool IsOptionalProperty(PropertyInfo prop, IEnumerable<CustomAttributeData> customAttributes)
         {
-            return customAttributes.All(a => a.AttributeType != typeof(RequiredAttribute)) && IsNullable(prop.PropertyType);
+            return customAttributes.All(a => a.AttributeType != typeof(RequiredAttribute)) && TypeBuilderHelper.IsNullable(prop.PropertyType);
         }
 
-        protected override string HandleValidationAttribute(CustomAttributeData attribute)
+        private string HandleValidationAttribute(CustomAttributeData attribute)
         {
             var res = string.Empty;
 
@@ -237,10 +322,10 @@ namespace RAML.WebApiExplorer
                     res += Environment.NewLine + "minLength: " + attribute.ConstructorArguments.First().Value;
                     break;
                 case "RangeAttribute":
-                    if (!IsMinValue(attribute.ConstructorArguments.First()))
-                        res += Environment.NewLine + "minimum: " + Format(attribute.ConstructorArguments.First());
-                    if (!IsMaxValue(attribute.ConstructorArguments.Last()))
-                        res += Environment.NewLine + "maximum: " + Format(attribute.ConstructorArguments.Last());
+                    if (!TypeBuilderHelper.IsMinValue(attribute.ConstructorArguments.First()))
+                        res += Environment.NewLine + "minimum: " + TypeBuilderHelper.Format(attribute.ConstructorArguments.First());
+                    if (!TypeBuilderHelper.IsMaxValue(attribute.ConstructorArguments.Last()))
+                        res += Environment.NewLine + "maximum: " + TypeBuilderHelper.Format(attribute.ConstructorArguments.Last());
                     break;
                 case "EmailAddressAttribute":
                     res += Environment.NewLine + @"pattern: [^\\s@]+@[^\\s@]+\\.[^\\s@]";
@@ -270,21 +355,31 @@ namespace RAML.WebApiExplorer
             return (type.BaseType != null && type.BaseType != typeof(object)) || type.GetProperties().Any(p => p.CanWrite);
         }
 
-        private void AddType(Type type, string raml1Type)
+        private void AddType(Type type, RamlType raml1Type)
         {
-            if(IsArrayOrEnumerable(type)) // TODO: do not save array types, check !!
-                return;
-
-            var typeName = IsDictionary(type) ? type.GetGenericArguments()[1].Name + "Map" : type.Name;
+            var typeName = GetTypeName(type);
 
             // handle case of different types with same class name
             if (raml1Types.ContainsKey(typeName))
-                typeName = GetUniqueSchemaName(typeName);
+                typeName = GetUniqueName(typeName);
 
             raml1Types.Add(typeName, raml1Type);
         }
 
-        protected string GetUniqueSchemaName(string schemaName)
+        private static string GetTypeName(Type type)
+        {
+            var typeName = type.Name;
+            
+            if (IsDictionary(type)) 
+                typeName = type.GetGenericArguments()[1].Name + "Map";
+
+            if (TypeBuilderHelper.IsArrayOrEnumerable(type))
+                typeName = "ListOf" + GetTypeName(GetElementType(type));
+
+            return typeName;
+        }
+
+        private string GetUniqueName(string schemaName)
         {
             for (var i = 0; i < 1000; i++)
             {

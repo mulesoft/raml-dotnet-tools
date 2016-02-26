@@ -44,10 +44,24 @@ namespace RAML.WebApiExplorer
 
 		    SerializeSchemas(sb, ramlDocument.Schemas);
 
+            SerializeRaml1Types(sb, ramlDocument.Types);
+
 			SerializeResources(sb, ramlDocument.Resources);
 
 			return sb.ToString();
 		}
+
+	    private void SerializeRaml1Types(StringBuilder sb, IDictionary<string, RamlType> types)
+	    {
+            if (types == null || !types.Any())
+                return;
+
+            sb.AppendLine("types:");
+            foreach (var kv in types)
+            {
+                SerializeRaml1Type(sb, kv.Key, kv.Value, 2);
+            }
+	    }
 
 	    private void SerializeSchemas(StringBuilder sb, IEnumerable<IDictionary<string, string>> schemas)
 	    {
@@ -279,6 +293,17 @@ namespace RAML.WebApiExplorer
             foreach (var line in lines)
             {
                 sb.AppendLine(line.Indent(indentation + 4));
+            }
+        }
+
+        private void SerializeRaml1Type(StringBuilder sb, string propertyTitle, RamlType ramlType, int indentation)
+        {
+            sb.AppendFormat("- {0}{1}:".Indent(indentation), propertyTitle, !ramlType.Required ? "?" : "");
+            sb.AppendLine();
+            if (ramlType.Scalar != null)
+            {
+                sb.AppendFormat("type: ", ramlType.Scalar.Type);
+                sb.AppendLine();
             }
         }
 

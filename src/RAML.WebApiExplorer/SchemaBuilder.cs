@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
 namespace RAML.WebApiExplorer
 {
-    public class SchemaBuilder : TypeBuilderBase
+    public class SchemaBuilder
     {
         private readonly IDictionary<string, Type> definitions = new Dictionary<string, Type>();
+        protected readonly ICollection<Type> Types = new Collection<Type>();
 
         public string Get(Type type)
         {
@@ -17,10 +19,10 @@ namespace RAML.WebApiExplorer
 
             string schema;
 
-            if (type.IsGenericType && IsGenericWebResult(type))
+            if (type.IsGenericType && TypeBuilderHelper.IsGenericWebResult(type))
                 type = type.GetGenericArguments()[0];
 
-            if (IsArrayOrEnumerable(type))
+            if (TypeBuilderHelper.IsArrayOrEnumerable(type))
             {
                 var elementType = type.GetElementType() ?? type.GetGenericArguments()[0];
                 if (elementType.GetProperties().Count(p => p.CanRead || p.CanWrite) == 0)
@@ -41,6 +43,23 @@ namespace RAML.WebApiExplorer
             schema += "}" + Environment.NewLine;
 
             return schema;
+        }
+
+        private string GetProperties(Type elementType, int pad)
+        {
+            var schema = string.Empty;
+            var props = elementType.GetProperties().Where(p => p.CanWrite).ToArray();
+            foreach (var prop in props)
+            {
+                schema = GetProperty(pad, prop, schema, props, prop.CustomAttributes);
+            }
+            return schema;
+        }
+
+
+        private string HandleValidationAttributes(IEnumerable<CustomAttributeData> customAttributes)
+        {
+            return customAttributes.Where(p => p.AttributeType != typeof(RequiredAttribute)).Aggregate(string.Empty, (current, p) => current + HandleValidationAttribute(p));
         }
 
         private string AddDefinitionsIfAny(string schema)
@@ -198,7 +217,7 @@ namespace RAML.WebApiExplorer
             return arraySchema;
         }
 
-        protected override string HandleEnumProperty(int pad, PropertyInfo prop, IEnumerable<PropertyInfo> props, string schema)
+        protected string HandleEnumProperty(int pad, PropertyInfo prop, IEnumerable<PropertyInfo> props, string schema)
         {
             if (prop == props.Last())
                 schema += GetEnumProperty(prop, pad) + Environment.NewLine;
@@ -209,12 +228,12 @@ namespace RAML.WebApiExplorer
 
         private static string GetEnumProperty(PropertyInfo prop, int pad)
         {
-            return ("\"" + GetPropertyName(prop) + "\": { ").Indent(pad) + Environment.NewLine
+            return ("\"" + TypeBuilderHelper.GetPropertyName(prop) + "\": { ").Indent(pad) + Environment.NewLine
                 + ("  \"enum\": [" + string.Join(", ", Enum.GetNames(prop.PropertyType).Select(v => "\"" + v + "\"")) + "]").Indent(pad) + Environment.NewLine
                 + "}".Indent(pad);
         }
 
-        protected override string HandlePrimitiveTypeProperty(int pad, PropertyInfo prop, IEnumerable<PropertyInfo> props, string schema, IEnumerable<CustomAttributeData> customAttributes)
+        protected string HandlePrimitiveTypeProperty(int pad, PropertyInfo prop, IEnumerable<PropertyInfo> props, string schema, IEnumerable<CustomAttributeData> customAttributes)
         {
             if (prop == props.Last())
                 schema += BuildLastProperty(prop, customAttributes, pad);
@@ -223,7 +242,7 @@ namespace RAML.WebApiExplorer
             return schema;
         }
 
-        protected override string HandleNestedTypeProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
+        protected string HandleNestedTypeProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
         {
             var nestedType = GetRecursively(prop.PropertyType, pad + 2, customAttributes);
             if (nestedType == null)
@@ -231,7 +250,7 @@ namespace RAML.WebApiExplorer
 
             if (!string.IsNullOrWhiteSpace(nestedType))
             {
-                var name = GetPropertyName(prop);
+                var name = TypeBuilderHelper.GetPropertyName(prop);
                 schema += ("\"" + name + "\":").Indent(pad) + Environment.NewLine;
                 schema += nestedType;
             }
@@ -253,7 +272,7 @@ namespace RAML.WebApiExplorer
 
             return schema;
         }
-        protected override string GetProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
+        protected string GetProperty(int pad, PropertyInfo prop, string schema, IEnumerable<PropertyInfo> props, IEnumerable<CustomAttributeData> customAttributes)
         {
             if (prop.PropertyType.IsEnum)
                 schema = HandleEnumProperty(pad, prop, props, schema);
@@ -267,13 +286,13 @@ namespace RAML.WebApiExplorer
 
         protected string GetRecursively(Type type, int pad, IEnumerable<CustomAttributeData> customAttributes)
         {
-            if (type.IsGenericType && IsGenericWebResult(type))
+            if (type.IsGenericType && TypeBuilderHelper.IsGenericWebResult(type))
                 type = type.GetGenericArguments()[0];
 
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                 return null;
 
-            if (IsArrayOrEnumerable(type))
+            if (TypeBuilderHelper.IsArrayOrEnumerable(type))
             {
                 var elementType = type.GetElementType() ?? type.GetGenericArguments()[0];
 
@@ -297,13 +316,13 @@ namespace RAML.WebApiExplorer
 
         private string GetOneOfProperty(PropertyInfo prop, IEnumerable<Type> subclasses, int pad)
         {
-            var name = GetPropertyName(prop);
+            var name = TypeBuilderHelper.GetPropertyName(prop);
             var oneOf = ("\"" + name + "\": {").Indent(pad) + Environment.NewLine;
             oneOf += "\"type\": \"object\",".Indent(pad + 2) + Environment.NewLine;
             oneOf += "\"oneOf\": [".Indent(pad + 2) + Environment.NewLine;
             foreach (var subclass in subclasses.Distinct())
             {
-                var className = GetClassName(subclass);
+                var className = TypeBuilderHelper.GetClassName(subclass);
                 oneOf += ("{ \"$ref\": \"#/definitions/" + className + "\" },").Indent(pad + 4) + Environment.NewLine;
                 if (!definitions.ContainsKey(className))
                 {
@@ -337,7 +356,7 @@ namespace RAML.WebApiExplorer
 
         private string BuildPropertyCommon(PropertyInfo prop, IEnumerable<CustomAttributeData> customAttributes)
         {
-            var name = GetPropertyName(prop);
+            var name = TypeBuilderHelper.GetPropertyName(prop);
 
             var res = "\"" + name + "\": { \"type\": " + SchemaTypeMapper.GetAttribute(prop.PropertyType);
 
@@ -366,14 +385,14 @@ namespace RAML.WebApiExplorer
             {
                 res += ", \"required\": true";
             }
-            else if (IsNullable(prop.PropertyType))
+            else if (TypeBuilderHelper.IsNullable(prop.PropertyType))
             {
                 res += ", \"required\": false";
             }
             return res;
         }
 
-        protected override string HandleValidationAttribute(CustomAttributeData attribute)
+        protected string HandleValidationAttribute(CustomAttributeData attribute)
         {
             string res = string.Empty;
 
@@ -386,10 +405,10 @@ namespace RAML.WebApiExplorer
                     res += ", \"minLength\": " + attribute.ConstructorArguments.First().Value;
                     break;
                 case "RangeAttribute":
-                    if (!IsMinValue(attribute.ConstructorArguments.First()))
-                        res += ", \"minimum\": " + Format(attribute.ConstructorArguments.First());
-                    if (!IsMaxValue(attribute.ConstructorArguments.Last()))
-                        res += ", \"maximum\": " + Format(attribute.ConstructorArguments.Last());
+                    if (!TypeBuilderHelper.IsMinValue(attribute.ConstructorArguments.First()))
+                        res += ", \"minimum\": " + TypeBuilderHelper.Format(attribute.ConstructorArguments.First());
+                    if (!TypeBuilderHelper.IsMaxValue(attribute.ConstructorArguments.Last()))
+                        res += ", \"maximum\": " + TypeBuilderHelper.Format(attribute.ConstructorArguments.Last());
                     break;
                 case "EmailAddressAttribute":
                     res += @", ""pattern"": ""[^\\s@]+@[^\\s@]+\\.[^\\s@]""";

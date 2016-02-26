@@ -23,10 +23,10 @@ namespace RAML.WebApiExplorer
                 return string.Empty;
 
             // handle case of different types with same class name
-            if (SchemasOrTypes.ContainsKey(schemaName))
+            if (Schemas.ContainsKey(schemaName))
                 schemaName = GetUniqueSchemaName(schemaName);
 
-            SchemasOrTypes.Add(schemaName, schema);
+            Schemas.Add(schemaName, schema);
             Types.Add(type);
 
             return schemaName;

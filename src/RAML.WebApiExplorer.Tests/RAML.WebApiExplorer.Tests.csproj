@@ -82,6 +82,7 @@
     <Compile Include="ApiExplorerServiceTests.cs" />
     <Compile Include="Raml1TypeBuilderTests.cs" />
     <Compile Include="Raml1TypeMapperTests.cs" />
+    <Compile Include="RamlSerializerTests.cs" />
     <Compile Include="SchemaTypeMapperTests.cs" />
     <Compile Include="TestController.cs" />
     <Compile Include="Types\Attributes.cs" />

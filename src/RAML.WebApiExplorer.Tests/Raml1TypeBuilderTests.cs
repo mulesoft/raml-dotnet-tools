@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FstabExplorerTest.Fstab.Models;
 using NUnit.Framework;
+using Raml.Parser.Expressions;
 using RAML.WebApiExplorer.Tests.Types;
 
 namespace RAML.WebApiExplorer.Tests

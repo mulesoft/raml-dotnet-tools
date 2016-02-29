@@ -96,8 +96,7 @@ namespace RAML.WebApiExplorer
 
 		    raml.Schemas = new List<IDictionary<string, string>> { Schemas };
 
-            // TODO: change !!!!
-		    raml.Types = RamlTypes.ToDictionary();
+		    raml.Types = RamlTypes;
 
 			OrganizeResourcesHierarchically(raml, resourcesDic);
 

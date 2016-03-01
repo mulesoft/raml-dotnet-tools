@@ -39,12 +39,12 @@ namespace RAML.WebApiExplorer
 			this.baseUri = baseUri;
 		}
 
-		public RamlDocument GetRaml(Version version = Version.V1, string title = null)
+		public RamlDocument GetRaml(RamlVersion ramlVersion = RamlVersion.Version1, string title = null)
 		{
 			if (string.IsNullOrWhiteSpace(title))
 				title = "Api";
 
-			var raml = new RamlDocument {Title = title, BaseUri = baseUri};
+			var raml = new RamlDocument {Title = title, BaseUri = baseUri, RamlVersion = ramlVersion };
 			var resourcesDic = new Dictionary<string, Resource>();
 			var parameterDescriptionsDic = new Dictionary<string, Collection<ApiParameterDescription>>();
 			foreach (var api in apiExplorer.ApiDescriptions)

@@ -122,5 +122,12 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsTrue(res.Contains("#%RAML 1.0"));
         }
 
+        [Test]
+        public void DefaultRamlVersionIs08()
+        {
+            var doc = new RamlDocument();
+            var res = serializer.Serialize(doc);
+            Assert.IsTrue(res.Contains("#%RAML 0.8"));
+        }
     }
 }

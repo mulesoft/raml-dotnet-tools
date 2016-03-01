@@ -6,6 +6,7 @@ using System.Web.Http.Description;
 using System.Web.Http.Routing;
 using Moq;
 using NUnit.Framework;
+using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer.Tests
 {
@@ -13,7 +14,7 @@ namespace RAML.WebApiExplorer.Tests
 	public class ApiExplorerServiceTests
 	{
 		[Test]
-		public void Test()
+		public void TestV08()
 		{
 			//var apiExplorer = new Mock<IApiExplorer>();
 			//var apiDescriptions = new Collection<ApiDescription>();
@@ -35,9 +36,23 @@ namespace RAML.WebApiExplorer.Tests
 			var conf = new HttpConfiguration(routes);
 			var apiExplorer = conf.Services.GetApiExplorer();
 			var apiExplorerService = new ApiExplorerServiceVersion08(apiExplorer, "http://test.com");
-			var ramlDoc = apiExplorerService.GetRaml();
+			var ramlDoc = apiExplorerService.GetRaml(RamlVersion.Version08);
 			Assert.IsNotNull(ramlDoc);
+            Assert.AreEqual(RamlVersion.Version08, ramlDoc.RamlVersion);
 		}
+
+        [Test]
+        public void Testv1()
+        {
+            var routes = new HttpRouteCollection();
+            routes.Add("test", new HttpRoute("test/{id}"));
+            var conf = new HttpConfiguration(routes);
+            var apiExplorer = conf.Services.GetApiExplorer();
+            var apiExplorerService = new ApiExplorerServiceVersion1(apiExplorer, "http://test.com");
+            var ramlDoc = apiExplorerService.GetRaml();
+            Assert.IsNotNull(ramlDoc);
+            Assert.AreEqual(RamlVersion.Version1, ramlDoc.RamlVersion);
+        }
 
 	}
 }

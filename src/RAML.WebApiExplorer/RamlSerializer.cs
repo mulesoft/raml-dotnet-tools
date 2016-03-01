@@ -167,6 +167,9 @@ namespace RAML.WebApiExplorer
 
 		private void SerializeListProperty(StringBuilder sb, string title, IEnumerable<string> enumerable, int indent)
 		{
+            if(enumerable == null)
+                return;
+
 			sb.AppendLine((title + ":").Indent(indent));
 			foreach (var value in enumerable)
 			{
@@ -339,13 +342,13 @@ namespace RAML.WebApiExplorer
             sb.AppendFormat("{0}{1}:".Indent(indentation), propertyTitle, !ramlType.Required ? "?" : "");
             sb.AppendLine();
 
-            SerializeType(sb, indentation + 4, ramlType.Type);
+            SerializeType(sb, indentation, ramlType.Type);
             SerializeRamlTypeCommonProperties(sb, ramlType, indentation);
 
-            SerializeExamples(sb, ramlType, indentation + 4);
+            SerializeExamples(sb, ramlType, indentation);
 
             if (ramlType.Scalar != null)
-                SerializeRamlTypeScalar(sb, ramlType, indentation + 4);
+                SerializeRamlTypeScalar(sb, ramlType, indentation);
 
             if (ramlType.Object != null)
                 SerializeRamlTypeObject(sb, ramlType, indentation);

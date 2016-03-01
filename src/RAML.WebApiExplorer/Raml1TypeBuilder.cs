@@ -11,7 +11,7 @@ namespace RAML.WebApiExplorer
     public class Raml1TypeBuilder
     {
         private readonly RamlTypesOrderedDictionary raml1Types;
-        private readonly ICollection<Type> Types = new Collection<Type>();
+        private readonly ICollection<Type> types = new Collection<Type>();
 
         public Raml1TypeBuilder(RamlTypesOrderedDictionary raml1Types)
         {
@@ -22,10 +22,10 @@ namespace RAML.WebApiExplorer
         {
             var typeName = GetTypeName(type);
 
-            if(Types.Contains(type))
+            if(types.Contains(type))
                 return typeName;
 
-            Types.Add(type);
+            types.Add(type);
 
             RamlType raml1Type;
 
@@ -61,7 +61,8 @@ namespace RAML.WebApiExplorer
             }
             else if (Raml1TypeMapper.Map(type) != null)
             {
-                raml1Type = GetScalar(type);
+                //raml1Type = GetScalar(type);
+                raml1Type = null;
             }
             else
             {
@@ -200,7 +201,7 @@ namespace RAML.WebApiExplorer
                 raml1Type.Type = GetTypeName(type.BaseType);
             }
 
-            if (type.GetProperties().Count(p => p.CanWrite) > 0)
+            if (GetClassProperties(type).Count(p => p.CanWrite) > 0)
             {
                 raml1Type.Object.Properties = GetProperties(type);
             }
@@ -209,21 +210,31 @@ namespace RAML.WebApiExplorer
 
         private IDictionary<string, RamlType> GetProperties(Type type)
         {
-            var props = type.GetProperties().Where(p => p.CanWrite).ToArray();
+            var props = GetClassProperties(type).ToArray();
             var dic = new Dictionary<string, RamlType>();
             foreach (var prop in props)
             {
-                var key = GetPropertyName(prop);
+                var key = TypeBuilderHelper.GetPropertyName(prop);
                 var ramlType = GetProperty(prop);
-                if(ramlType != null)
+                
+                if (ramlType != null)
+                {
+                    ramlType.Required = !IsOptionalProperty(prop, prop.CustomAttributes);
                     dic.Add(key, ramlType);
+                }
             }
             return dic;
         }
 
-        private string GetPropertyName(PropertyInfo prop)
+        private static IEnumerable<PropertyInfo> GetClassProperties(Type type)
         {
-            return prop.Name + (IsOptionalProperty(prop, prop.CustomAttributes) ? "?" : "");
+            var properties = type.GetProperties().Where(p => p.CanWrite);
+            if (type.BaseType != null && type.BaseType != typeof (Object))
+            {
+                var parentProperties = type.BaseType.GetProperties().Where(p => p.CanWrite);
+                properties = properties.Where(p => parentProperties.All(x => x.Name != p.Name));
+            }
+            return properties;
         }
 
         private RamlType GetProperty(PropertyInfo prop)
@@ -309,37 +320,6 @@ namespace RAML.WebApiExplorer
             return customAttributes.All(a => a.AttributeType != typeof(RequiredAttribute)) && TypeBuilderHelper.IsNullable(prop.PropertyType);
         }
 
-        private string HandleValidationAttribute(CustomAttributeData attribute)
-        {
-            var res = string.Empty;
-
-            switch (attribute.AttributeType.Name)
-            {
-                case "MaxLengthAttribute":
-                    res += Environment.NewLine + "maxLength: " + attribute.ConstructorArguments.First().Value;
-                    break;
-                case "MinLengthAttribute":
-                    res += Environment.NewLine + "minLength: " + attribute.ConstructorArguments.First().Value;
-                    break;
-                case "RangeAttribute":
-                    if (!TypeBuilderHelper.IsMinValue(attribute.ConstructorArguments.First()))
-                        res += Environment.NewLine + "minimum: " + TypeBuilderHelper.Format(attribute.ConstructorArguments.First());
-                    if (!TypeBuilderHelper.IsMaxValue(attribute.ConstructorArguments.Last()))
-                        res += Environment.NewLine + "maximum: " + TypeBuilderHelper.Format(attribute.ConstructorArguments.Last());
-                    break;
-                case "EmailAddressAttribute":
-                    res += Environment.NewLine + @"pattern: [^\\s@]+@[^\\s@]+\\.[^\\s@]";
-                    break;
-                case "UrlAttribute":
-                    res += Environment.NewLine + @"pattern: ^(ftp|http|https):\/\/[^ \""]+$";
-                    break;
-                //case "RegularExpressionAttribute":
-                //    res += "pattern: " + " + attribute.ConstructorArguments.First().Value;
-                //    break;
-            }
-            return res;
-        }
-
         private static Type GetElementType(Type type)
         {
             return type.GetElementType() ?? type.GetGenericArguments()[0];
@@ -369,14 +349,14 @@ namespace RAML.WebApiExplorer
         private static string GetTypeName(Type type)
         {
             var typeName = type.Name;
-            
-            if (IsDictionary(type)) 
+
+            if (IsDictionary(type))
                 typeName = type.GetGenericArguments()[1].Name + "Map";
 
             if (TypeBuilderHelper.IsArrayOrEnumerable(type))
                 typeName = "ListOf" + GetTypeName(GetElementType(type));
 
-            return typeName;
+            return typeName.Replace("`", string.Empty);
         }
 
         private string GetUniqueName(string schemaName)

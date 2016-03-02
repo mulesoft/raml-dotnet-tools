@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Web.Http.Description;
+using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer
 {
@@ -31,5 +33,14 @@ namespace RAML.WebApiExplorer
 
             return schemaName;
         }
+
+        protected override MimeType CreateMimeType(string type)
+        {
+            return new MimeType
+            {
+                Schema = type
+            };
+        }
+
     }
 }

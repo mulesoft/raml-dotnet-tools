@@ -297,11 +297,11 @@ namespace RAML.WebApiExplorer
 
 	    private Response HandleResponseTypeAttributes(Type responseType)
 	    {
-            var schemaName = AddType(responseType);
+            var type = AddType(responseType);
 
             return new Response
             {
-                Body = CreateJsonMimeTypeWithSchema(schemaName),
+                Body = CreateJsonMimeType(type),
                 Code = "200"
             };
 	    }
@@ -322,27 +322,22 @@ namespace RAML.WebApiExplorer
 	    {
             var status = ((ResponseTypeStatusAttribute)attribute).StatusCode;
             var type = ((ResponseTypeStatusAttribute)attribute).ResponseType;
-            var schemaName = AddType(type);
+            var typeName = AddType(type);
             return new Response
             {
                 Code = ((int)status).ToString(CultureInfo.InvariantCulture),
-                Body = CreateJsonMimeTypeWithSchema(schemaName)
+                Body = CreateJsonMimeType(typeName)
             };
 	    }
 
-        private static Dictionary<string, MimeType> CreateJsonMimeTypeWithType(string type)
+        protected Dictionary<string, MimeType> CreateJsonMimeType(string type)
         {
-            var mimeType = new MimeType { Type = type };
+            var mimeType = CreateMimeType(type);
             return CreateMimeTypes(mimeType);
         }
 
-	    private static Dictionary<string, MimeType> CreateJsonMimeTypeWithSchema(string schemaName)
-	    {
-	        var mimeType = CreateMimeTypeWithSchema(schemaName);
-	        return CreateMimeTypes(mimeType);
-	    }
 
-	    private static Dictionary<string, MimeType> CreateMimeTypes(MimeType mimeType)
+	    protected Dictionary<string, MimeType> CreateMimeTypes(MimeType mimeType)
 	    {
 	        var mimeTypes = new Dictionary<string, MimeType>
 	        {
@@ -354,13 +349,6 @@ namespace RAML.WebApiExplorer
 	        return mimeTypes;
 	    }
 
-	    private static MimeType CreateMimeTypeWithSchema(string schemaName)
-	    {
-	        return new MimeType
-	        {
-	            Schema = schemaName
-	        };
-	    }
 
 	    protected abstract string AddType(Type type);
 
@@ -387,9 +375,9 @@ namespace RAML.WebApiExplorer
 			{
 				var type = apiParam.ParameterDescriptor.ParameterType;
 
-                var schemaName = AddType(type);
+                var typeName = AddType(type);
 
-				mimeType = CreateMimeTypeWithSchema(schemaName);
+				mimeType = CreateMimeType(typeName);
 			}
 
 			if(mimeType != null && !mediaTypes.Any())
@@ -403,9 +391,10 @@ namespace RAML.WebApiExplorer
 			return mimeTypes;
 		}
 
+	    protected abstract MimeType CreateMimeType(string type);
 
 
-        private IDictionary<string, Parameter> GetQueryParameters(IEnumerable<ApiParameterDescription> parameterDescriptions)
+	    private IDictionary<string, Parameter> GetQueryParameters(IEnumerable<ApiParameterDescription> parameterDescriptions)
         {
             var queryParams = new Dictionary<string, Parameter>();
 

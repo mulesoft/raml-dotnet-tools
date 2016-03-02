@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Raml.Parser.Expressions;
@@ -8,19 +7,21 @@ namespace RAML.WebApiExplorer
 {
 	public class RamlSerializer
 	{
+        private readonly Raml1TypesSerializer raml1TypesSerializer = new Raml1TypesSerializer();
+
 		public string Serialize(RamlDocument ramlDocument)
 		{
 			var sb = new StringBuilder(ramlDocument.Resources.Count + ramlDocument.Resources.Sum(r => r.Resources.Count) * 20);
 
             sb.AppendLine("#%RAML " + (ramlDocument.RamlVersion == RamlVersion.Version08 ? "0.8" : "1.0"));
 
-			SerializeProperty(sb, "title", ramlDocument.Title);
+            RamlSerializerHelper.SerializeProperty(sb, "title", ramlDocument.Title);
 
-			SerializeProperty(sb, "baseUri", ramlDocument.BaseUri);
+            RamlSerializerHelper.SerializeProperty(sb, "baseUri", ramlDocument.BaseUri);
 
-			SerializeProperty(sb, "version", ramlDocument.Version);
+            RamlSerializerHelper.SerializeProperty(sb, "version", ramlDocument.Version);
 
-			SerializeProperty(sb, "mediaType", ramlDocument.MediaType);
+            RamlSerializerHelper.SerializeProperty(sb, "mediaType", ramlDocument.MediaType);
 
 			SerializeArrayProperty(sb, "securedBy", ramlDocument.SecuredBy);
 
@@ -33,16 +34,16 @@ namespace RAML.WebApiExplorer
 				sb.AppendLine("documentation:");
 				foreach (var docItem in ramlDocument.Documentation)
 				{
-					SerializeProperty(sb, "- title", docItem.Title, 2);
-					SerializeMultilineProperty(sb, "content", docItem.Content, 4);
-                    SerializeAnnotations(sb, docItem.Annotations, 4);
+                    RamlSerializerHelper.SerializeProperty(sb, "- title", docItem.Title, 2);
+                    RamlSerializerHelper.SerializeMultilineProperty(sb, "content", docItem.Content, 4);
+                    raml1TypesSerializer.SerializeAnnotations(sb, docItem.Annotations, 4);
 				}
 				sb.AppendLine();
 			}
 
 			SerializeSecuritySchemes(sb, ramlDocument.SecuritySchemes);
 
-            SerializeRaml1Types(sb, ramlDocument.Types);
+            raml1TypesSerializer.Serialize(sb, ramlDocument.Types);
 
 		    SerializeSchemas(sb, ramlDocument.Schemas);
 
@@ -50,7 +51,7 @@ namespace RAML.WebApiExplorer
 
             SerializeAnnotationTypes(sb, ramlDocument.AnnotationTypes);
 
-            SerializeAnnotations(sb, ramlDocument.Annotations);
+            raml1TypesSerializer.SerializeAnnotations(sb, ramlDocument.Annotations);
 
 			return sb.ToString();
 		}
@@ -73,31 +74,18 @@ namespace RAML.WebApiExplorer
 
 	    private void SerializeAnnotationType(StringBuilder sb, AnnotationType annotationType)
 	    {
-	        SerializeProperty(sb, "description", annotationType.Description, 8);
-            SerializeProperty(sb, "displayName", annotationType.DisplayName, 8);
-            SerializeProperty(sb, "allowMultiple", annotationType.AllowMultiple, 8);
-            SerializeProperty(sb, "usage", annotationType.Usage, 8);
+            RamlSerializerHelper.SerializeProperty(sb, "description", annotationType.Description, 8);
+            RamlSerializerHelper.SerializeProperty(sb, "displayName", annotationType.DisplayName, 8);
+            RamlSerializerHelper.SerializeProperty(sb, "allowMultiple", annotationType.AllowMultiple, 8);
+            RamlSerializerHelper.SerializeProperty(sb, "usage", annotationType.Usage, 8);
             SerializeArrayProperty(sb, "allowedTargets", annotationType.AllowedTargets, 8);
             foreach (var parameter in annotationType.Parameters)
             {
                 SerializeParameter(sb, parameter, 8);
             }
-            SerializeAnnotations(sb, annotationType.Annotations, 8);
+            raml1TypesSerializer.SerializeAnnotations(sb, annotationType.Annotations, 8);
 	    }
 
-	    private void SerializeRaml1Types(StringBuilder sb, RamlTypesOrderedDictionary types)
-	    {
-            if (types == null || types.Count == 0)
-                return;
-
-            sb.AppendLine("types:");
-            foreach (var key in types.Keys)
-            {
-                var ramlType = types[key];
-                ramlType.Required = true;
-                SerializeRaml1Type(sb, "- " + key, ramlType, 2);
-            }
-	    }
 
 	    private void SerializeSchemas(StringBuilder sb, IEnumerable<IDictionary<string, string>> schemas)
 	    {
@@ -107,7 +95,7 @@ namespace RAML.WebApiExplorer
 	        sb.AppendLine("schemas:");
 	        foreach (var kv in schemas.SelectMany(schemaDic => schemaDic))
 	        {
-	           SerializeSchema(sb, kv.Key, kv.Value, 2);
+                RamlSerializerHelper.SerializeSchema(sb, kv.Key, kv.Value, 2);
 	        }
 	    }
 
@@ -127,29 +115,15 @@ namespace RAML.WebApiExplorer
 			foreach (var securityScheme in scheme)
 			{
 				sb.AppendLine(("- " + securityScheme.Key + ":").Indent(indent));
-				SerializeDescriptionProperty(sb, securityScheme.Value.Description, indent + 4);
+                RamlSerializerHelper.SerializeDescriptionProperty(sb, securityScheme.Value.Description, indent + 4);
 				if (securityScheme.Value.Type != null && securityScheme.Value.Type.Any())
-					SerializeProperty(sb, "type", securityScheme.Value.Type.First().Key, indent + 4);
+                    RamlSerializerHelper.SerializeProperty(sb, "type", securityScheme.Value.Type.First().Key, indent + 4);
 
 				SerializeSecurityDescriptor(sb, securityScheme.Value.DescribedBy, indent + 4);
 				SerializeSecuritySettings(sb, securityScheme.Value.Settings, indent + 4);
 			}
 		}
 
-        private void SerializeDescriptionProperty(StringBuilder sb, string description, int indentation)
-	    {
-            if (string.IsNullOrWhiteSpace(description))
-                return;
-
-            if (description.Contains(Environment.NewLine) || description.Contains("\r\n") || description.Contains("\n") || description.Contains("\r"))
-            {
-                SerializeMultilineProperty(sb, "description", description, indentation);
-                return;
-            }
-
-            sb.AppendFormat("{0}: {1}".Indent(indentation), "description", "\"" + description.Replace("\"", string.Empty) + "\"");
-            sb.AppendLine();
-	    }
 
 	    private void SerializeSecuritySettings(StringBuilder sb, SecuritySettings settings, int indent)
 		{
@@ -157,25 +131,15 @@ namespace RAML.WebApiExplorer
 				return;
 
 			sb.AppendLine("settings:".Indent(indent));
-			SerializeProperty(sb, "accessTokenUri", settings.AccessTokenUri, indent + 2);
-			SerializeProperty(sb, "authorizationUri", settings.AuthorizationUri, indent + 2);
-			SerializeProperty(sb, "requestTokenUri", settings.RequestTokenUri, indent + 2);
-			SerializeProperty(sb, "tokenCredentialsUri", settings.TokenCredentialsUri, indent + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "accessTokenUri", settings.AccessTokenUri, indent + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "authorizationUri", settings.AuthorizationUri, indent + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "requestTokenUri", settings.RequestTokenUri, indent + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "tokenCredentialsUri", settings.TokenCredentialsUri, indent + 2);
 			SerializeArrayProperty(sb, "authorizationGrants", settings.AuthorizationGrants, indent + 2);
-			SerializeListProperty(sb, "scopes", settings.Scopes, indent + 2);
+            RamlSerializerHelper.SerializeListProperty(sb, "scopes", settings.Scopes, indent + 2);
 		}
 
-		private void SerializeListProperty(StringBuilder sb, string title, IEnumerable<string> enumerable, int indent)
-		{
-            if(enumerable == null)
-                return;
 
-			sb.AppendLine((title + ":").Indent(indent));
-			foreach (var value in enumerable)
-			{
-				sb.AppendLine(("- " + value).Indent(indent + 2));
-			}
-		}
 
 		private void SerializeSecurityDescriptor(StringBuilder sb, SecuritySchemeDescriptor describedBy, int indent)
 		{
@@ -218,14 +182,14 @@ namespace RAML.WebApiExplorer
 		{
 			sb.AppendLine((resource.RelativeUri + ":").Indent(indentation));
 			SerializeParameters(sb, "baseUriParameters", resource.BaseUriParameters, indentation + 2);
-            SerializeDescriptionProperty(sb, resource.Description, indentation + 2);
-			SerializeProperty(sb, "displayName", resource.DisplayName, indentation + 2);
+            RamlSerializerHelper.SerializeDescriptionProperty(sb, resource.Description, indentation + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "displayName", resource.DisplayName, indentation + 2);
 			SerializeProtocols(sb, resource.Protocols, indentation + 2);
 			SerializeParameters(sb, "uriParameters", resource.UriParameters, indentation + 2);
 			SerializeMethods(sb, resource.Methods, indentation + 2);
 			//SerializeType(sb, resource.Type, indentation + 2);
 			SerializeResources(sb, resource.Resources, indentation + 2);
-            SerializeAnnotations(sb, resource.Annotations, indentation + 2);
+            raml1TypesSerializer.SerializeAnnotations(sb, resource.Annotations, indentation + 2);
 		}
 
 
@@ -241,7 +205,7 @@ namespace RAML.WebApiExplorer
 		private void SerializeMethod(StringBuilder sb, Method method, int indentation)
 		{
 			sb.AppendLine((method.Verb + ":").Indent(indentation));
-            SerializeDescriptionProperty(sb, method.Description, indentation + 2);
+            RamlSerializerHelper.SerializeDescriptionProperty(sb, method.Description, indentation + 2);
 			//SerializeType(sb, method.Type, indentation + 2);
 			
 			if (method.Headers != null)
@@ -250,7 +214,7 @@ namespace RAML.WebApiExplorer
 				foreach (var header in method.Headers)
 				{
                     sb.AppendLine(header.Key + ":".Indent(indentation + 4));
-					SerializeParameterProperties(sb, header.Value, indentation + 6);
+					RamlSerializerHelper.SerializeParameterProperties(sb, header.Value, indentation + 6);
 				}
 			}
 
@@ -261,7 +225,7 @@ namespace RAML.WebApiExplorer
 			SerializeParameters(sb, "queryParameters", method.QueryParameters, indentation + 2);
 			SerializeBody(sb, method.Body, indentation + 2);
 			SerializeResponses(sb, method.Responses, indentation + 2);
-            SerializeAnnotations(sb, method.Annotations, indentation + 2);
+            raml1TypesSerializer.SerializeAnnotations(sb, method.Annotations, indentation + 2);
 		}
 
 		private void SerializeBody(StringBuilder sb, IDictionary<string, MimeType> body, int indentation)
@@ -279,12 +243,12 @@ namespace RAML.WebApiExplorer
 		private void SerializeMimeType(StringBuilder sb, KeyValuePair<string, MimeType> mimeType, int indentation)
 		{
 			sb.AppendLine((mimeType.Key + ":").Indent(indentation));
-            SerializeDescriptionProperty(sb, mimeType.Value.Description, indentation + 2);
-			SerializeProperty(sb, "type", mimeType.Value.Type, indentation + 2);
+            RamlSerializerHelper.SerializeDescriptionProperty(sb, mimeType.Value.Description, indentation + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "type", mimeType.Value.Type, indentation + 2);
 			SerializeParameters(sb, "formParameters", mimeType.Value.FormParameters, indentation + 2);
-			SerializeProperty(sb, "schema", mimeType.Value.Schema, indentation + 2);
-			SerializeProperty(sb, "example", mimeType.Value.Example, indentation + 2);
-            SerializeAnnotations(sb, mimeType.Value.Annotations, indentation + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "schema", mimeType.Value.Schema, indentation + 2);
+            RamlSerializerHelper.SerializeProperty(sb, "example", mimeType.Value.Example, indentation + 2);
+            raml1TypesSerializer.SerializeAnnotations(sb, mimeType.Value.Annotations, indentation + 2);
 		}
 
 		private void SerializeResponses(StringBuilder sb, IEnumerable<Response> responses, int indentation)
@@ -302,7 +266,7 @@ namespace RAML.WebApiExplorer
 		private void SerializeResponse(StringBuilder sb, Response response, int indentation)
 		{
 			sb.AppendLine(response.Code.Indent(indentation) + ":");
-            SerializeDescriptionProperty(sb, response.Description, indentation + 2);
+            RamlSerializerHelper.SerializeDescriptionProperty(sb, response.Description, indentation + 2);
 			SerializeBody(sb, response.Body, indentation + 2);
 		}
 
@@ -315,222 +279,11 @@ namespace RAML.WebApiExplorer
 			sb.AppendLine();
 		}
 
-		private static void SerializeMultilineProperty(StringBuilder sb, string propertyTitle, string propertyValue, int indentation)
-		{
-			sb.AppendFormat("{0}: |".Indent(indentation), propertyTitle);
-			sb.AppendLine();
-			var lines = propertyValue.Split(new []{ Environment.NewLine, "\r\n", "\n", "\r" }, StringSplitOptions.None);
-			foreach (var line in lines)
-			{
-				sb.AppendLine(line.Indent(indentation + 2));
-			}
-		}
-
-        private static void SerializeSchema(StringBuilder sb, string propertyTitle, string propertyValue, int indentation)
-        {
-            sb.AppendFormat("- {0}: |".Indent(indentation), propertyTitle);
-            sb.AppendLine();
-            var lines = propertyValue.Split(new[] { Environment.NewLine, "\r\n", "\n", "\r" }, StringSplitOptions.None);
-            foreach (var line in lines)
-            {
-                sb.AppendLine(line.Indent(indentation + 4));
-            }
-        }
-
-        private void SerializeRaml1Type(StringBuilder sb, string propertyTitle, RamlType ramlType, int indentation)
-        {
-            sb.AppendFormat("{0}{1}:".Indent(indentation), propertyTitle, !ramlType.Required ? "?" : "");
-            sb.AppendLine();
-
-            SerializeType(sb, indentation, ramlType.Type);
-            SerializeRamlTypeCommonProperties(sb, ramlType, indentation);
-
-            SerializeExamples(sb, ramlType, indentation);
-
-            if (ramlType.Scalar != null)
-                SerializeRamlTypeScalar(sb, ramlType, indentation);
-
-            if (ramlType.Object != null)
-                SerializeRamlTypeObject(sb, ramlType, indentation);
-
-            if (ramlType.Array != null)
-                SerializeRamlTypeArray(sb, indentation, ramlType.Array);
-
-            if (ramlType.External != null)
-                SerializeRamlTypeExternal(sb, ramlType, indentation);
-        }
-
-	    private static void SerializeRamlTypeCommonProperties(StringBuilder sb, RamlType ramlType, int indentation)
-	    {
-	        SerializeProperty(sb, "description", ramlType.Description, indentation + 4);
-
-	        SerializeProperty(sb, "displayName", ramlType.DisplayName, indentation + 4);
-
-	        SerializeProperty(sb, "example", ramlType.Example, indentation + 4);
-
-	        SerializeFacets(sb, ramlType.Facets, indentation + 4);
-	    }
-
-	    private static void SerializeRamlTypeExternal(StringBuilder sb, RamlType ramlType, int indentation)
-	    {
-	        if (!string.IsNullOrWhiteSpace(ramlType.External.Schema))
-	            SerializeSchema(sb, "schema", ramlType.External.Schema, indentation + 4);
-
-	        if (!string.IsNullOrWhiteSpace(ramlType.External.Xml))
-	            SerializeSchema(sb, "schema", ramlType.External.Xml, indentation + 4);
-	    }
-
-	    private void SerializeRamlTypeArray(StringBuilder sb, int indentation, ArrayType arrayType)
-	    {
-	        if (arrayType.Items.Array != null)
-	        {
-	            SerializeType(sb, indentation, arrayType.Items.Array.Items.Type + "[][]");
-                SerializeRamlTypeArrayProperties(sb, indentation, arrayType.Items.Array.Items.Array);
-	        }
-	        else
-	        {
-	            SerializeType(sb, indentation, arrayType.Items.Type + "[]");
-	            SerializeRamlTypeArrayProperties(sb, indentation, arrayType);
-	        }
-	    }
-
-	    private void SerializeRamlTypeArrayProperties(StringBuilder sb, int indentation, ArrayType arrayType)
-	    {
-	        SerializeProperty(sb, "minItems", arrayType.MinItems, indentation);
-	        SerializeProperty(sb, "maxItems", arrayType.MaxItems, indentation);
-	        SerializeProperty(sb, "uniqueItems", arrayType.UniqueItems, indentation);
-	        SerializeRamlTypeCommonProperties(sb, arrayType.Items, indentation);
-	    }
-
-	    private void SerializeRamlTypeObject(StringBuilder sb, RamlType ramlType, int indentation)
-	    {
-	        SerializeProperty(sb, "maxProperties", ramlType.Object.MaxProperties, indentation + 4);
-	        SerializeProperty(sb, "minProperties", ramlType.Object.MinProperties, indentation + 4);
-	        SerializeProperty(sb, "discriminator", ramlType.Object.Discriminator as string, indentation + 4);
-	        SerializeProperty(sb, "discriminatorValue", ramlType.Object.DiscriminatorValue, indentation + 4);
-	        SerializeObjectProperties(sb, ramlType.Object.Properties, indentation + 4);
-	    }
-
-	    private void SerializeObjectProperties(StringBuilder sb, IDictionary<string, RamlType> properties, int indentation)
-	    {
-	        if(properties == null || !properties.Any())
-                return;
-	        sb.AppendLine("properties:".Indent(indentation));
-	        foreach (var property in properties)
-	        {
-                SerializeRaml1Type(sb, property.Key, property.Value, indentation + 4);
-	        }
-	    }
-
-	    private void SerializeRamlTypeScalar(StringBuilder sb, RamlType ramlType, int indentation)
-	    {
-	        SerializeParameterProperties(sb, ramlType.Scalar, indentation);
-	        SerializeProperty(sb, "multipleOf", ramlType.Scalar.MultipleOf, indentation);
-	        SerializeListProperty(sb, "fileTypes", ramlType.Scalar.FileTypes, indentation);
-            SerializeFormat(sb, indentation, ramlType.Scalar.Format);
-	        SerializeAnnotations(sb, ramlType.Scalar.Annotations, indentation);
-	    }
-
-        private void SerializeAnnotations(StringBuilder sb, IDictionary<string, object> annotations, int indentation = 0, string format = "({0}): {1}{2}")
-	    {
-	        if (annotations == null || !annotations.Any())
-	            return;
-
-	        foreach (var annotation in annotations)
-	        {
-	            var value = annotation.Value as string;
-                if(!string.IsNullOrWhiteSpace(value))
-	                sb.AppendFormat(format.Indent(indentation), annotation.Key, value, Environment.NewLine);
-
-	            var subannotation = annotation.Value as IDictionary<string, object>;
-                if(subannotation != null)
-                    SerializeAnnotations(sb, subannotation, indentation + 4, "{0}: {1}{2}");
-	        }
-	    }
-
-	    private static void SerializeFormat(StringBuilder sb, int indentation, NumberFormat? numberFormat)
-	    {
-            if(numberFormat == null)
-                return;
-
-	        sb.AppendFormat("format: {0}{1}".Indent(indentation + 4), GetFormat(numberFormat));
-	        sb.AppendLine();
-	        
-	    }
-
-	    private static string GetFormat(NumberFormat? numberFormat)
-	    {
-	        return Enum.GetName(typeof(NumberFormat), numberFormat.Value).ToLowerInvariant();
-	    }
-
-	    private static void SerializeType(StringBuilder sb, int indentation, string type)
-	    {
-	        SerializeProperty(sb, "type", type, indentation + 4);
-	    }
-
-	    private static void SerializeFacets(StringBuilder sb, IDictionary<string, object> facets, int indentation)
-	    {
-            if(facets == null || !facets.Any())
-                return;
-
-	        sb.AppendFormat("facets:".Indent(indentation));
-	        sb.AppendLine();
-
-	        foreach (var facet in facets)
-	        {
-	            sb.AppendFormat("{0}: {1}".Indent(indentation + 4), facet.Key, facet.Value);
-	        }
-	    }
-
-	    private static void SerializeExamples(StringBuilder sb, RamlType ramlType, int indentation)
-	    {
-	        if (ramlType.Examples == null || !ramlType.Examples.Any()) 
-                return;
-
-	        sb.Append("examples:".Indent(indentation + 4));
-	        sb.AppendLine();
-	        foreach (var example in ramlType.Examples)
-	        {
-	            sb.Append("- content: ".Indent(indentation + 8));
-	            sb.AppendLine();
-	            sb.Append(example);
-	            sb.AppendLine();
-	        }
-	    }
 
 
-	    private static void SerializeProperty(StringBuilder sb, string propertyTitle, string propertyValue, int indentation = 0)
-		{
-			if (string.IsNullOrWhiteSpace(propertyValue)) 
-				return;
 
-			if (propertyValue.Contains(Environment.NewLine) || propertyValue.Contains("\r\n") || propertyValue.Contains("\n") || propertyValue.Contains("\r"))
-			{
-				SerializeMultilineProperty(sb, propertyTitle, propertyValue, indentation);
-				return;
-			}
 
-			sb.AppendFormat("{0}: {1}".Indent(indentation), propertyTitle, propertyValue);
-			sb.AppendLine();
-		}
 
-        private static void SerializeProperty(StringBuilder sb, string propertyTitle, int? propertyValue, int indentation = 0)
-        {
-            if (propertyValue == null)
-                return;
-
-            sb.AppendFormat("{0}: {1}".Indent(indentation), propertyTitle, propertyValue);
-            sb.AppendLine();
-        }
-
-        private void SerializeProperty(StringBuilder sb, string propertyTitle, bool? propertyValue, int indentation)
-        {
-            if (propertyValue == null)
-                return;
-
-            sb.AppendFormat("{0}: {1}".Indent(indentation), propertyTitle, propertyValue);
-            sb.AppendLine();
-        }
 
 		private void SerializeParameters(StringBuilder sb, string parametersTitle, IDictionary<string, Parameter> parameters, int indentation = 0)
 		{
@@ -549,70 +302,10 @@ namespace RAML.WebApiExplorer
 			sb.AppendFormat("{0}:".Indent(indentation), parameter.Key);
 			sb.AppendLine();
 
-			SerializeParameterProperties(sb, parameter.Value, indentation);
+			RamlSerializerHelper.SerializeParameterProperties(sb, parameter.Value, indentation);
 		}
 
-		private void SerializeParameterProperties(StringBuilder sb, Parameter parameter, int indentation)
-		{
-			SerializeParameterProperty(sb, "default", parameter.Default, indentation + 2);
-            SerializeDescriptionProperty(sb, parameter.Description, indentation + 2);
-			SerializeParameterProperty(sb, "displayName", parameter.DisplayName, indentation + 2);
-			SerializeParameterProperty(sb, "example", parameter.Example, indentation + 2);
-			SerializeParameterProperty(sb, "pattern", parameter.Pattern, indentation + 2);
-			SerializeParameterProperty(sb, "type", parameter.Type, indentation + 2);
-			SerializeEnumProperty(sb, parameter.Enum, indentation + 2);
-			SerializeParameterProperty(sb, "maxLength", parameter.MaxLength, indentation + 2);
-			SerializeParameterProperty(sb, "maximum", parameter.Maximum, indentation + 2);
-			SerializeParameterProperty(sb, "minimum", parameter.Minimum, indentation + 2);
-			if(parameter.Repeat)
-				SerializeParameterProperty(sb, "repeat", parameter.Repeat, indentation + 2);
 
-			SerializeParameterProperty(sb, "required", parameter.Required, indentation + 2);
-		}
 
-		private void SerializeEnumProperty(StringBuilder sb, IEnumerable<string> enumerableProperty, int indentation)
-		{
-			if (enumerableProperty == null || !enumerableProperty.Any()) 
-				return;
-
-			sb.AppendFormat("enum: {0}".Indent(indentation), "[" + string.Join(",", enumerableProperty) + "]");
-			sb.AppendLine();
-		}
-
-		private void SerializeParameterProperty(StringBuilder sb, string propertyTitle, int? propertyValue, int indentation)
-		{
-			if (propertyValue == null)
-				return;
-
-			sb.AppendFormat("{0}: {1}".Indent(indentation), propertyTitle, propertyValue);
-			sb.AppendLine();
-		}
-
-		private void SerializeParameterProperty(StringBuilder sb, string propertyTitle, decimal? propertyValue, int indentation)
-		{
-			if (propertyValue == null)
-				return;
-
-			sb.AppendFormat("{0}: {1}".Indent(indentation), propertyTitle, propertyValue);
-			sb.AppendLine();
-		}
-
-		private void SerializeParameterProperty(StringBuilder sb, string propertyTitle, bool? propertyValue, int indentation)
-		{
-			if (propertyValue == null)
-				return;
-
-			sb.AppendFormat("{0}: {1}".Indent(indentation), propertyTitle, propertyValue.Value ? "true" : "false");
-			sb.AppendLine();
-		}
-
-		private static void SerializeParameterProperty(StringBuilder sb, string propertyTitle, string propertyValue, int indentation)
-		{
-			if (string.IsNullOrWhiteSpace(propertyValue)) 
-				return;
-
-			sb.AppendFormat("{0}: {1}".Indent(indentation), propertyTitle, propertyValue);
-			sb.AppendLine();
-		}
 	}
 }

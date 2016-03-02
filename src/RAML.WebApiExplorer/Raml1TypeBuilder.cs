@@ -25,8 +25,6 @@ namespace RAML.WebApiExplorer
             if(types.Contains(type))
                 return typeName;
 
-            types.Add(type);
-
             RamlType raml1Type;
 
             if (type.IsGenericType && TypeBuilderHelper.IsGenericWebResult(type))
@@ -38,37 +36,52 @@ namespace RAML.WebApiExplorer
                 if (TypeBuilderHelper.IsArrayOrEnumerable(elementType))
                 {
                     var subElementType = GetElementType(elementType);
+
+                    if (Raml1TypeMapper.Map(subElementType) != null)
+                        return Raml1TypeMapper.Map(subElementType) + "[][]";
+
                     if (!HasPropertiesOrParentType(subElementType))
                         return string.Empty;
+
+                    types.Add(type);
 
                     raml1Type = GetArrayOfArray(subElementType);
                 }
                 else
                 {
+                    if (Raml1TypeMapper.Map(elementType) != null)
+                        return Raml1TypeMapper.Map(elementType) + "[]";
+
                     if (!HasPropertiesOrParentType(elementType))
                         return string.Empty;
+
+                    types.Add(type);
 
                     raml1Type = GetArray(elementType);                    
                 }
             }
-            else if (IsDictionary(type))
+            else if (IsDictionary(type) || IsParentADictionary(type) )
             {
+                types.Add(type);
                 raml1Type = GetMap(type);
             }
             else if (type.IsEnum)
             {
+                types.Add(type);
                 raml1Type = GetEnum(type);
             }
             else if (Raml1TypeMapper.Map(type) != null)
             {
                 //raml1Type = GetScalar(type);
                 raml1Type = null;
+                typeName = Raml1TypeMapper.Map(type);
             }
             else
             {
                 if (!HasPropertiesOrParentType(type))
                     return string.Empty;
 
+                types.Add(type);
                 raml1Type = GetObject(type);
             }
 
@@ -78,9 +91,21 @@ namespace RAML.WebApiExplorer
             return typeName;
         }
 
+        private static bool IsParentADictionary(Type type)
+        {
+            return (type.BaseType != null && type.BaseType != typeof(Object) && IsDictionary(type.BaseType));
+        }
+
         private RamlType GetMap(Type type)
         {
-            var subtype = type.GetGenericArguments()[1];
+            Type subtype;
+
+            if(IsDictionary(type))
+                subtype = type.GetGenericArguments()[1];
+            else
+                subtype = type.BaseType.GetGenericArguments()[1];
+
+
             var subtypeName = GetTypeName(subtype);
 
             if(Raml1TypeMapper.Map(subtype) == null)
@@ -98,7 +123,8 @@ namespace RAML.WebApiExplorer
                         {
                             "[]", new RamlType
                             {
-                                Type = subtypeName
+                                Type = subtypeName,
+                                Required = true
                             }
                         }
                     }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Web.Http.Description;
+using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer
 {
@@ -15,13 +17,16 @@ namespace RAML.WebApiExplorer
 
         protected override string AddType(Type type)
         {
-            var typeName = type.Name.Replace("`", string.Empty);
-            if (Types.Contains(type))
-                return typeName;
-
-            typeBuilder.Add(type);
-
+            var typeName = typeBuilder.Add(type);
             return typeName;
+        }
+
+        protected override MimeType CreateMimeType(string type)
+        {
+            return new MimeType
+            {
+                Type = type
+            };
         }
     }
 }

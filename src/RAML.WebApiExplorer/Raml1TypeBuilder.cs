@@ -108,7 +108,9 @@ namespace RAML.WebApiExplorer
 
             var subtypeName = GetTypeName(subtype);
 
-            if(Raml1TypeMapper.Map(subtype) == null)
+            if (Raml1TypeMapper.Map(subtype) != null)
+                subtypeName = Raml1TypeMapper.Map(subtype);
+            else
                 subtypeName = Add(subtype);
 
             if(string.IsNullOrWhiteSpace(subtypeName))

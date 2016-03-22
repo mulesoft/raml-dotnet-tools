@@ -35,7 +35,7 @@ namespace RAML.WebApiExplorer
             else
                 apiExplorerService = new ApiExplorerServiceVersion08(apiExplorer, config.VirtualPathRoot);
 
-            var ramlDocument = apiExplorerService.GetRaml();
+            var ramlDocument = apiExplorerService.GetRaml(ramlVersion);
             var ramlContents = new RamlSerializer().Serialize(ramlDocument);
             return ramlContents;
         }

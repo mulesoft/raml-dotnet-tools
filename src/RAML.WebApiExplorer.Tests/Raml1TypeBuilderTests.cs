@@ -60,25 +60,25 @@ namespace RAML.WebApiExplorer.Tests
         [Test]
         public void ShouldParseArrayOfPrimitives()
         {
-            raml1TypeBuilder.Add(typeof(int[]));
-            Assert.AreEqual(1, raml1Types.Count);
-            Assert.AreEqual("integer", raml1Types.GetByKey("ListOfInt32").Array.Items.Type);
+            var type = raml1TypeBuilder.Add(typeof(int[]));
+            Assert.AreEqual(0, raml1Types.Count);
+            Assert.AreEqual("integer[]", type);
         }
 
         [Test]
         public void ShouldParseListOfPrimitives()
         {
-            raml1TypeBuilder.Add(typeof(List<int>));
-            Assert.AreEqual(1, raml1Types.Count);
-            Assert.AreEqual("integer", raml1Types.GetByKey("ListOfInt32").Array.Items.Type);
+            var type = raml1TypeBuilder.Add(typeof(List<int>));
+            Assert.AreEqual(0, raml1Types.Count);
+            Assert.AreEqual("integer[]", type);
         }
 
         [Test]
         public void ShouldParseArrayOfArray()
         {
-            raml1TypeBuilder.Add(typeof(List<int[]>));
-            Assert.AreEqual(1, raml1Types.Count);
-            Assert.AreEqual("integer", raml1Types.GetByKey("ListOfListOfInt32").Array.Items.Array.Items.Type);
+            var type = raml1TypeBuilder.Add(typeof(List<int[]>));
+            Assert.AreEqual(0, raml1Types.Count);
+            Assert.AreEqual("integer[][]", type);
         }
 
         [Test]

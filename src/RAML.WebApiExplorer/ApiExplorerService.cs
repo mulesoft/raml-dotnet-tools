@@ -399,7 +399,8 @@ namespace RAML.WebApiExplorer
 
 			foreach (var mediaType in mediaTypes)
 			{
-				mimeTypes.Add(mediaType.MediaType, mediaType.MediaType == "application/json" ? mimeType : new MimeType());
+                if(!mimeTypes.ContainsKey(mediaType.MediaType))
+				    mimeTypes.Add(mediaType.MediaType, mediaType.MediaType == "application/json" ? mimeType : new MimeType());
 			}
 			
 			return mimeTypes;

@@ -13,7 +13,7 @@
 </head>
 <body ng-app="ramlConsoleApp" ng-cloak id="raml-console-unembedded">
     <div style="position:relative; height: 100vh; overflow: auto;">
-        <raml-console src="@Url.Action("Raw","Raml")" with-root-documentation></raml-console>
+        <raml-console src="@Url.Action("Raw", "Raml", new { version = "0.8" })" with-root-documentation></raml-console>
     </div>
     <script src="@Url.Content("~/scripts/apiconsole/vendor.js")"></script>
     <script src="@Url.Content("~/scripts/apiconsole/app.js")"></script>

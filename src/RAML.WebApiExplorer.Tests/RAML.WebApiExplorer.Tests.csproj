@@ -51,8 +51,8 @@
       <HintPath>..\packages\RAML.Api.Core.0.9.8\lib\net45\Raml.Api.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Raml.Parser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Raml.Parser.1.0.0.0\lib\net45\Raml.Parser.dll</HintPath>
+    <Reference Include="Raml.Parser, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Raml.Parser.1.0.1.0\lib\net45\Raml.Parser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -2910,7 +2910,9 @@
     <None Include="node_modules\raml-1-0-parser\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RAML.WebApiExplorer\RAML.WebApiExplorer.csproj">

@@ -401,6 +401,9 @@ namespace RAML.WebApiExplorer
 
             foreach (var apiParam in parameterDescriptions.Where(p => p.Source == ApiParameterSource.FromUri))
             {
+                if (apiParam.ParameterDescriptor == null)
+                    continue;
+
                 if (!IsPrimitiveType(apiParam.ParameterDescriptor.ParameterType))
                 {
                     GetParametersFromComplexType(apiParam, queryParams);
@@ -467,38 +470,6 @@ namespace RAML.WebApiExplorer
 	    {
 	        return SchemaTypeMapper.Map(parameterType) != null;
 	    }
-
-
-        [Obsolete]
-		private IDictionary<string, Parameter> GetQueryParameters(string urlWithParams, IEnumerable<ApiParameterDescription> parameterDescriptions)
-		{
-			var queryParams = new Dictionary<string, Parameter>();
-			if (string.IsNullOrWhiteSpace(urlWithParams) || !urlWithParams.Contains("?"))
-				return queryParams;
-
-			var url = urlWithParams.Substring(urlWithParams.IndexOf("?", StringComparison.Ordinal));
-			var urlParameters = GetParametersFromUrl(url);
-
-			foreach (var apiParam in parameterDescriptions.Where(p => p.Source == ApiParameterSource.FromUri))
-			{
-				if (!urlParameters.ContainsKey(apiParam.Name)) 
-					continue;
-
-				var parameter = new Parameter
-				                {
-					                Default =
-						                apiParam.ParameterDescriptor.DefaultValue == null
-							                ? (apiParam.ParameterDescriptor.IsOptional ? "null" : null)
-							                : apiParam.ParameterDescriptor.DefaultValue.ToString(),
-					                Required = !apiParam.ParameterDescriptor.IsOptional,
-					                Type = SchemaTypeMapper.Map(apiParam.ParameterDescriptor.ParameterType),
-									Description = apiParam.Documentation
-				                };
-				if(!queryParams.ContainsKey(apiParam.Name))
-					queryParams.Add(apiParam.Name, parameter);
-			}
-			return queryParams;
-		}
 
 		private IDictionary<string, Parameter> GetUriParameters(string url, IEnumerable<ApiParameterDescription> apiParameterDescriptions)
 		{

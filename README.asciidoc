@@ -6,7 +6,156 @@
 
 This package is used by the RAML Tools for .NET Visual Studio extension to generate RAML metadata from an existing WebAPI implementation. 
 
-In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.
-
 For more info please refer to the https://github.com/mulesoft-labs/raml-dotnet-tools[RAML Tools for .NET]
 
+Using the extension, by right-click your project and choose the *Enable RAML metadata output* command will add a `RamlController`, start up configurations, a razor view and other required files (css, js, etc.).
+You will find all these files in the https://github.com/mulesoft-labs/raml-dotnet-apiexplorer/tree/master/src/RAML.WebApiExplorer/package/Content[package] folder.
+You can check there for an example of how the functionality in this package is used.
+
+
+== Obtaining a RAML model
+
+This package lays on the https://msdn.microsoft.com/en-us/library/system.web.http.description.apiexplorer(v=vs.118).aspx[ApiExplorer]
+For more info on ApiExplorer check https://blogs.msdn.microsoft.com/yaohuang1/2012/05/13/asp-net-web-api-introducing-iapiexplorerapiexplorer/[here] and https://blogs.msdn.microsoft.com/yaohuang1/2012/05/21/asp-net-web-api-generating-a-web-api-help-page-using-apiexplorer/[here]
+
+**Important:** Your WebApi app must be running to be able to use the ApiExplorer functionality.
+
+The main class is *ApiExplorerServiceVersion1* for RAML 1 or *ApiExplorerServiceVersion08* for RAML 0.8.
+The entry method is *GetRaml*. The following sample shows how to obtain a RAML 1 model.
+
+[source, c#]
+----
+    var config = GlobalConfiguration.Configuration;
+    var apiExplorer = config.Services.GetApiExplorer();
+    ApiExplorerService apiExplorerService = new ApiExplorerServiceVersion1(apiExplorer, config.VirtualPathRoot);
+    RamlDocument ramlDocument = apiExplorerService.GetRaml();
+----
+
+The *Serialize* method on the *RamlSerializer* class takes the raml model (RamlDocument) and converts it into a RAML specification.
+
+[source, c#]
+----
+        string ramlContents = new RamlSerializer().Serialize(ramlDocument);
+----
+
+
+== Customizing the Generated RAML
+
+Some aspects of your API-like security are not automatically detected. You can customize the RAML generation process and further adjust it to your API.
+
+You can set the security schemes of your API, this is an example for OAuth v2.
+First it creates a *SecuritySchemeDescriptor* where you can set the query parameters, headers, and responses.
+In this case it defines a single query parameter called "access_token".
+
+Then it calls the *UseOAuth2* method, which sets the endpoints, grants, scopes, and the previously created security scheme descriptor.
+
+In this example the authorization URL is `/oauth/authorize`, the access token URL is `/oauth/access_token`.
+There are two authorization grants *code* and *token*, and a single scope *all*.
+
+[source, c#]
+----
+    // Set OAuth security scheme descriptor:  headers, query parameters, and responses
+    var descriptor = new SecuritySchemeDescriptor
+    {
+        QueryParameters = new Dictionary<string, Parameter>
+          {
+              {
+                  "access_token",
+                  new Parameter
+                  {
+                      Type = "string",
+                      Required = true
+                  }
+              }
+          }
+    };
+
+    // Set OAuth v2 endpoints, grants, scopes and descriptor
+    apiExplorerService.UseOAuth2("/oauth/authorize", "/oauth/access_token",
+                new[] {"code", "token"}, new[] {"all"}, descriptor);
+
+----
+
+You can set the protocols for the web API by setting the *Protocols* property of the ApiExplorerService instance.
+For example for using HTTPS only in all of your API you would do this:
+
+[source, c#]
+----
+    apiExplorerService.Protocols = new[] { Protocol.HTTPS };
+----
+
+In a similar fashion if you want to set all of your resources to be accessed with OAuth v2, you can set the *SecuredBy* property of the ApiExplorerService instance.
+
+[source, c#]
+----
+    apiExplorerService.SecuredBy = new[] { "oauth_2_0" };
+----
+
+Combining all this together:
+
+[source, c#]
+----
+    var config = GlobalConfiguration.Configuration;
+    var apiExplorer = config.Services.GetApiExplorer();
+    var apiExplorerService = new ApiExplorerService(apiExplorer, config.VirtualPathRoot);
+
+    // Use HTTPS only
+    apiExplorerService.Protocols = new[] { Protocol.HTTPS };
+
+    // Use OAuth 2 for all resources
+    apiExplorerService.SecuredBy = new[] { "oauth_2_0" };
+
+    // Set OAuth security scheme descriptor: headers, query parameters, and responses
+    var descriptor = new SecuritySchemeDescriptor
+    {
+        QueryParameters = new Dictionary<string, Parameter>
+            {
+                {
+                    "access_token",
+                    new Parameter
+                    {
+                        Type = "string",
+                        Required = true
+                    }
+                }
+            }
+    };
+
+    // Set OAuth v2 endpoints, grants, scopes, and descriptor
+    apiExplorerService.UseOAuth2("https://api.movies.com/oauth/authorize",
+        "https://api.movies.com/oauth/access_token", new[] {"code", "token"}, new[] {"all"}, descriptor);
+
+    var ramlDocument = apiExplorerService.GetRaml();
+
+----
+
+If using OAuth v1, you can use the *UseOAuth1* method. For other security schemes or further customization, you can use the *SetSecurityScheme* method or the *SecuritySchemes* property.
+
+Other global properties can be set using the *SetRamlProperties* action.
+For example, to set the root level documentation:
+
+[source, c#]
+----
+    apiExplorerService.SetRamlProperties = raml =>
+        {
+            raml.Documentation = "Documentation is availabe at http://documentation.org"
+        }
+----
+
+For customizing your RAML only for specific resources, you have three action available: *SetMethodProperties*, *SetResourceProperties*, *SetResourcePropertiesByAction*, and *SetResourcePropertiesByController*.
+
+For example for setting OAuth v2 for the movies POST action, you can do this:
+
+[source, c#]
+----
+apiExplorerService.SetMethodProperties = (apiDescription, method) =>
+    {
+      if (apiDescription.RelativePath == "movies" && method.Verb == "post")
+        {
+            method.SecuredBy = new [] {"oauth_2_0"};
+        }
+
+    };
+----
+
+You can also modify the Body or the Responses using the same strategy.

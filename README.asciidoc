@@ -8,7 +8,7 @@ This package is used by the RAML Tools for .NET Visual Studio extension to gener
 
 For more info please refer to the https://github.com/mulesoft-labs/raml-dotnet-tools[RAML Tools for .NET]
 
-Using the extension, by right-click your project and choose the *Enable RAML metadata output* command will add a `RamlController`, start up configurations, a razor view and other required files (css, js, etc.).
+Using the extension, right-clicking your project and choosing the *Enable RAML metadata output* command will add a `RamlController`, start up configurations, a razor view and other required files (css, js, etc.).
 You will find all these files in the https://github.com/mulesoft-labs/raml-dotnet-apiexplorer/tree/master/src/RAML.WebApiExplorer/package/Content[package] folder.
 You can check there for an example of how the functionality in this package is used.
 
@@ -36,6 +36,35 @@ The *Serialize* method on the *RamlSerializer* class takes the raml model (RamlD
 [source, c#]
 ----
         string ramlContents = new RamlSerializer().Serialize(ramlDocument);
+----
+
+
+== Adding XML Comments to the documentation
+
+If you use XML comments in the headers of your controller actions, these can be included into your RAML model.
+
+You need to generate the XML documentation, for this right click your WebApi project properties and click on the *Build* tab and select the *XML documentation file* check.
+
++
+image::./docimages/XmlCommentsDocumentation.png[align="center"]
++
+
+You will also need to add in the Register method of your WebApi configuration a call to the *IncludeXmlComments* method of *DocumentationProviderConfig* class.
+
+**Note:** The default name of the XML file matches the name of the project, if you change this or the location you will need to provide the path in the *IncludeXmlComments* method. If you left the default location then there's no need to specify any parameters.
+
+[source, c#]
+----
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            RAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();
+        }
+    }
 ----
 
 

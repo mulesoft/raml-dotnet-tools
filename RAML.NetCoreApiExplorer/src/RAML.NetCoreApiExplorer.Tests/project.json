@@ -4,7 +4,10 @@
   "dependencies": {
     "Microsoft.AspNetCore.Mvc.ApiExplorer": "1.0.0",
     "NETStandard.Library": "1.6.0",
-    "RAML.NetCore.APICore": "0.1.0"
+    "RAML.NetCore.APICore": "0.1.0",
+    "RAML.NetCoreApiExplorer": "1.0.0-*",
+    "RAML.Parser.Expressions": "1.0.0-*",
+    "xunit": "2.2.0-beta4-build3444"
   },
 
   "frameworks": {

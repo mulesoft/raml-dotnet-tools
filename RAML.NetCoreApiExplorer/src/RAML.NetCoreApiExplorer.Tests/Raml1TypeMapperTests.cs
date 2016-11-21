@@ -38,9 +38,9 @@ namespace RAML.NetCoreApiExplorer.Tests
         }
 
         [Fact]
-        public void ShouldConvertToString_WhenDateTime()
+        public void ShouldConvertToDatetime_WhenDateTime()
         {
-            Assert.Equal("date", Raml1TypeMapper.Map(typeof(DateTime)));
+            Assert.Equal("datetime", Raml1TypeMapper.Map(typeof(DateTime)));
         }
 
         [Fact]
@@ -74,9 +74,9 @@ namespace RAML.NetCoreApiExplorer.Tests
         }
 
         [Fact]
-        public void ShouldConvertToString_WhenNullableDateTime()
+        public void ShouldConvertToDatetime_WhenNullableDateTime()
         {
-            Assert.Equal("date", Raml1TypeMapper.Map(typeof(DateTime?)));
+            Assert.Equal("datetime", Raml1TypeMapper.Map(typeof(DateTime?)));
         }
 
     }

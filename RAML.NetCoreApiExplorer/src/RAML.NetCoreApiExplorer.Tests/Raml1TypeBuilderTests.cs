@@ -99,13 +99,13 @@ namespace RAML.NetCoreApiExplorer.Tests
             Assert.Equal(6, raml1Types.Count);
 		}
 
-        [Fact] // it should not be necesary
-        public void ShouldGetSubclassesOfType()
-        {
-            raml1TypeBuilder.Add(typeof(Entry));
-            Assert.Equal(6, raml1Types.Count);
-            Assert.Equal("Storage", raml1Types.GetByKey("StoragediskUUID").Type);
-        }
+        //[Fact]
+        //public void ShouldGetSubclassesOfType()
+        //{
+        //    raml1TypeBuilder.Add(typeof(Entry));
+        //    Assert.Equal(6, raml1Types.Count);
+        //    Assert.Equal("Storage", raml1Types.GetByKey("StoragediskUUID").Type);
+        //}
 
         [Fact]
         public void ShouldParseTypeWithRecursiveTypes()

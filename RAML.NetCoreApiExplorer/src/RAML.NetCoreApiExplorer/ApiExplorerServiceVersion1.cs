@@ -20,6 +20,11 @@ namespace RAML.WebApiExplorer
             typeBuilder = new Raml1TypeBuilder(RamlTypes);
         }
 
+        public override RamlDocument GetRaml(string title = null)
+        {
+            return GetRaml(RamlVersion.Version1, title);
+        }
+
         protected override string AddType(Type type)
         {
             var typeName = typeBuilder.Add(type);

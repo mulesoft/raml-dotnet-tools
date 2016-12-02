@@ -20,7 +20,7 @@ namespace RAML.WebApiExplorer
             _descriptionProvider = descriptionProvider;
         }
 
-        public void OnResourceExecuting(ResourceExecutingContext context)
+        public virtual void OnResourceExecuting(ResourceExecutingContext context)
         {
             if (!IsRamlController(context))
                 return;
@@ -30,11 +30,14 @@ namespace RAML.WebApiExplorer
 
             var ramlVersion = GetRamlVersion(context);
 
-            RamlDocument ramlDocument;
+            ApiExplorerService apiExplorerService;
             if (ramlVersion == RamlVersion.Version1)
-                ramlDocument = new ApiExplorerServiceVersion1(_descriptionProvider).GetRaml();
+                apiExplorerService = new ApiExplorerServiceVersion1(_descriptionProvider);
             else
-                ramlDocument = new ApiExplorerServiceVersion08(_descriptionProvider).GetRaml(ramlVersion);
+                apiExplorerService = new ApiExplorerServiceVersion08(_descriptionProvider);
+
+            var ramlDocument = GetRamlContents(apiExplorerService);
+
             var raml = new RamlSerializer().Serialize(ramlDocument);
             var result = new ContentResult
             {
@@ -43,6 +46,12 @@ namespace RAML.WebApiExplorer
                 StatusCode = 200
             };
             context.Result = result;
+        }
+
+        public virtual RamlDocument GetRamlContents(ApiExplorerService apiExplorerService)
+        {
+            var ramlDocument = apiExplorerService.GetRaml();
+            return ramlDocument;
         }
 
         private static RamlVersion GetRamlVersion(ResourceExecutingContext context)

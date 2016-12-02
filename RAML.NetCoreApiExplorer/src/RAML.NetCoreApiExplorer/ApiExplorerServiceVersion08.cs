@@ -18,6 +18,11 @@ namespace RAML.WebApiExplorer
         {
         }
 
+        public override RamlDocument GetRaml(string title = null)
+        {
+            return GetRaml(RamlVersion.Version08, title);
+        }
+
         protected override string AddType(Type type)
         {
             var schemaName = type.Name.Replace("`", string.Empty);

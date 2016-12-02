@@ -38,7 +38,9 @@ namespace RAML.WebApiExplorer
 			this.baseUri = baseUri;
 		}
 
-		public RamlDocument GetRaml(RamlVersion ramlVersion = RamlVersion.Version1, string title = null)
+	    public abstract RamlDocument GetRaml(string title = null);
+
+	    protected RamlDocument GetRaml(RamlVersion ramlVersion = RamlVersion.Version1, string title = null)
 		{
 			if (string.IsNullOrWhiteSpace(title))
 				title = "Api";

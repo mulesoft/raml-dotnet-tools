@@ -11,77 +11,37 @@ For more info please on the Visual Studio extension refer to the https://github.
 Using the extension, right-clicking your project and choosing the *Enable RAML metadata output* command will add a `RamlController`, start up configurations, a razor view and other required files (css, js, etc.).
 You will find all these files in the https://github.com/mulesoft-labs/raml-dotnetcore-apiexplorer/tree/develop/RAML.NetCoreApiExplorer/src/package/Content[package] folder.
 
-== Obtaining a RAML model
-
 This package builds on top of https://github.com/aspnet/Mvc/tree/dev/src/Microsoft.AspNetCore.Mvc.ApiExplorer[Microsoft.AspNetCore.Mvc.ApiExplorer]
 
 **Important:** Your Asp.Net Core app must be running to be able to use the ApiExplorer functionality.
 
+== Attribute vs Conventional routing
+
 The entry point is the *ApiExplorerDataFilter* class. This is a resource filter that will take all of your controllers and build a RAML specification out of them.
-**Note that a controller must use *attribute routing* to be able to use the functionality**
-If some of your controllers use the conventional routing you will need to avoid the filter to catch this controllers by modifying the configuration in the start up.
-The *RAML.WebApiExplorer.RamlController* also needs to be hidden from the filter, if you are using the extension this configuration was already added four you.
-For example to remove the controller *DefaultRoutingController* from the filter you will add the following line in the *ConfigureServices* methos of your *StartUp.cs* class:
+**Note** that a controller must use *attribute routing* to be able to use the functionality.
+If some of your controllers use the conventional routing you will need to avoid the filter to catch this controllers. You can do so by modifying the configuration in the start up.
+For example to remove the controller *DefaultRoutingController* from the filter you need to add an *ApiExplorerVisibilityDisabledConvention* specifying the type to the sets of conventions.
+This is done with the following line of code:
+
+[source, c#]
+----
+options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
+----
+
+You will need to add it to the *ConfigureServices* method of your *StartUp.cs* class:
 
 [source, c#]
 ----
     public void ConfigureServices(IServiceCollection services)
     {
         // Add framework services.
+        services.AddScoped<MyApiExplorerDataFilter>();
         services.AddMvc(options =>
             {
                 options.Filters.AddService(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));
                 options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());
-                options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(RAML.WebApiExplorer.RamlController)));
 				options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
             });
-    }
-----		
-
-The main class is *ApiExplorerServiceVersion1* for RAML 1 or *ApiExplorerServiceVersion08* for RAML 0.8.
-The entry method is *GetRaml*. The following sample shows how to obtain a RAML 1 model.
-
-[source, c#]
-----
-    var config = GlobalConfiguration.Configuration;
-    var apiExplorer = config.Services.GetApiExplorer();
-    ApiExplorerService apiExplorerService = new ApiExplorerServiceVersion1(apiExplorer, config.VirtualPathRoot);
-    RamlDocument ramlDocument = apiExplorerService.GetRaml();
-----
-
-The *Serialize* method on the *RamlSerializer* class takes the raml model (RamlDocument) and converts it into a RAML specification.
-
-[source, c#]
-----
-        string ramlContents = new RamlSerializer().Serialize(ramlDocument);
-----
-
-
-== Adding XML Comments to the documentation
-
-If you use XML comments in the headers of your controller actions, these can be included into your RAML model.
-
-You need to generate the XML documentation, for this right click your WebApi project properties and click on the *Build* tab and select the *XML documentation file* check.
-
-+
-image::./docimages/XmlCommentsDocumentation.png[align="center"]
-+
-
-You will also need to add in the Register method of your WebApi configuration a call to the *IncludeXmlComments* method of *DocumentationProviderConfig* class.
-
-**Note:** The default name of the XML file matches the name of the project, if you change this or the location you will need to provide the path in the *IncludeXmlComments* method. If you left the default location then there's no need to specify any parameters.
-
-[source, c#]
-----
-    public static class WebApiConfig
-    {
-        public static void Register(HttpConfiguration config)
-        {
-            // Web API routes
-            config.MapHttpAttributeRoutes();
-
-            RAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();
-        }
     }
 ----
 
@@ -111,6 +71,44 @@ For example:
 == Customizing the Generated RAML
 
 Some aspects of your API-like security are not automatically detected. You can customize the RAML generation process and further adjust it to your API.
+
+To do this, create a class that inhertis from ApiExplorerDataFilter and override the GetRamlContents method.
+
+[source, c#]
+----
+
+   public class MyApiExplorerDataFilter : ApiExplorerDataFilter
+    {
+        public MyApiExplorerDataFilter(IApiDescriptionGroupCollectionProvider descriptionProvider) : base(descriptionProvider)
+        {
+        }
+
+        public override RamlDocument GetRamlContents(RAML.WebApiExplorer.ApiExplorerService apiExplorerService)
+        {
+            // TODO: write your customization code
+            return apiExplorerService.GetRaml();
+        }
+    }
+----
+
+Then replace *ApiExplorerDataFilter* on *StartUp.cs* for your class:
+
+[source, c#]
+----
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // Add framework services.
+        services.AddApplicationInsightsTelemetry(Configuration);
+        services.AddScoped<MyApiExplorerDataFilter>();
+        services.AddMvc(options =>
+        {
+            options.Filters.AddService(typeof(MyApiExplorerDataFilter));
+            options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());
+            options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(RAML.WebApiExplorer.RamlController)));
+        });
+    }
+----
 
 You can set the security schemes of your API, this is an example for OAuth v2.
 First it creates a *SecuritySchemeDescriptor* where you can set the query parameters, headers, and responses.
@@ -160,42 +158,48 @@ In a similar fashion if you want to set all of your resources to be accessed wit
     apiExplorerService.SecuredBy = new[] { "oauth_2_0" };
 ----
 
-Combining all this together:
+Combining all this together, your code should look like this:
 
 [source, c#]
 ----
-    var config = GlobalConfiguration.Configuration;
-    var apiExplorer = config.Services.GetApiExplorer();
-    var apiExplorerService = new ApiExplorerService(apiExplorer, config.VirtualPathRoot);
 
-    // Use HTTPS only
-    apiExplorerService.Protocols = new[] { Protocol.HTTPS };
-
-    // Use OAuth 2 for all resources
-    apiExplorerService.SecuredBy = new[] { "oauth_2_0" };
-
-    // Set OAuth security scheme descriptor: headers, query parameters, and responses
-    var descriptor = new SecuritySchemeDescriptor
+   public class MyApiExplorerDataFilter : ApiExplorerDataFilter
     {
-        QueryParameters = new Dictionary<string, Parameter>
+        public MyApiExplorerDataFilter(IApiDescriptionGroupCollectionProvider descriptionProvider) : base(descriptionProvider)
+        {
+        }
+
+        public override RamlDocument GetRamlContents(RAML.WebApiExplorer.ApiExplorerService apiExplorerService)
+        {
+            // Use HTTPS only
+            apiExplorerService.Protocols = new[] { Protocol.HTTPS };
+
+            // Use OAuth 2 for all resources
+            apiExplorerService.SecuredBy = new[] { "oauth_2_0" };
+
+            // Set OAuth security scheme descriptor: headers, query parameters, and responses
+            var descriptor = new SecuritySchemeDescriptor
             {
+                QueryParameters = new Dictionary<string, Parameter>
                 {
-                    "access_token",
-                    new Parameter
                     {
-                        Type = "string",
-                        Required = true
+                        "access_token",
+                        new Parameter
+                        {
+                            Type = "string",
+                            Required = true
+                        }
                     }
                 }
-            }
-    };
+            };
 
-    // Set OAuth v2 endpoints, grants, scopes, and descriptor
-    apiExplorerService.UseOAuth2("https://api.movies.com/oauth/authorize",
-        "https://api.movies.com/oauth/access_token", new[] {"code", "token"}, new[] {"all"}, descriptor);
-
-    var ramlDocument = apiExplorerService.GetRaml();
-
+            // Set OAuth v2 endpoints, grants, scopes, and descriptor
+            apiExplorerService.UseOAuth2("https://api.movies.com/oauth/authorize",
+                "https://api.movies.com/oauth/access_token", new[] { "code", "token" }, new[] { "all" }, descriptor);
+            var ramlDocument = apiExplorerService.GetRaml();
+            return ramlDocument;
+        }
+    }
 ----
 
 If using OAuth v1, you can use the *UseOAuth1* method. For other security schemes or further customization, you can use the *SetSecurityScheme* method or the *SecuritySchemes* property.

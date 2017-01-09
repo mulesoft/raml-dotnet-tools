@@ -3193,15 +3193,15 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "RAML.NetCoreApiExplorer/1.0.0": {
+      "RAML.NetCoreApiExplorer/0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ApiExplorer": "1.0.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
           "NETStandard.Library": "1.6.0",
-          "RAML.NetCore.APICore": "0.1.0",
-          "RAML.Parser.Expressions": "1.0.0",
+          "RAML.NetCore.APICore": "0.0.1",
+          "RAML.Parser.Expressions": "0.0.1",
           "System.ComponentModel.Annotations": "4.1.0"
         },
         "compile": {
@@ -3211,7 +3211,7 @@
           "netstandard1.6/RAML.NetCoreApiExplorer.dll": {}
         }
       },
-      "RAML.Parser.Expressions/1.0.0": {
+      "RAML.Parser.Expressions/0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -8870,12 +8870,12 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "RAML.NetCoreApiExplorer/1.0.0": {
+    "RAML.NetCoreApiExplorer/0.0.1": {
       "type": "project",
       "path": "../RAML.NetCoreApiExplorer/project.json",
       "msbuildProject": "../RAML.NetCoreApiExplorer/RAML.NetCoreApiExplorer.xproj"
     },
-    "RAML.Parser.Expressions/1.0.0": {
+    "RAML.Parser.Expressions/0.0.1": {
       "type": "project",
       "path": "../RAML.Parser.Expressions/project.json",
       "msbuildProject": "../RAML.Parser.Expressions/RAML.Parser.Expressions.xproj"

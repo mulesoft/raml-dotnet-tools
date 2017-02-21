@@ -209,8 +209,7 @@ namespace RAML.WebApiExplorer
         {
             var ramlType = new RamlType
             {
-                Type = "string",
-                Scalar = new Property { Enum = type.GetEnumNames() } // TODO: check!!
+                Scalar = new Property { Enum = type.GetEnumNames() }
             };
 
             return ramlType;
@@ -285,6 +284,7 @@ namespace RAML.WebApiExplorer
         private RamlType HandlePrimitiveTypeProperty(PropertyInfo prop)
         {
             var ramlTypeProp = GetScalar(prop.PropertyType);
+            ramlTypeProp.Name = prop.Name;
             HandleValidationAttributes(ramlTypeProp, prop.CustomAttributes);
             return ramlTypeProp;
         }

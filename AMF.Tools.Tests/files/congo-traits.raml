@@ -1,0 +1,17 @@
+- paged:
+    queryParameters:
+      start:
+        description: The first page of results to return
+        type: number
+        example: 1
+      pages:
+        description: The number of pages of results to return
+        type: number
+        example: 3
+- accountable:
+    headers:
+      X-Accounting-Code:
+        description: |
+          Your accounting code, for tracking usage of the API
+        required: true
+        example: CLDSTORE-203

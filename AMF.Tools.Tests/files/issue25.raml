@@ -1,0 +1,47 @@
+#%RAML 0.8
+title: Issue 25 check
+version: 1.0
+baseUri: http://issuecheck.com/api
+mediaType: application/json
+schemas:
+    - WorkerProfile: |
+        {  "$schema": "http://json-schema.org/draft-03/schema",
+          "type": "object",
+          "properties": {
+            "id":  { "type": "integer", "required": true },
+            "name": { "type": "string", "required": true }
+           }
+        }
+    - Address: |
+        {  "$schema": "http://json-schema.org/draft-03/schema",
+          "type": "object",
+          "properties": {
+            "street": { "type": "string", "required": true },
+            "number": { "type": "string", "required": false }
+           }
+        }
+/workers:
+  /{id}:
+    put:
+        body:
+          application/json:
+            schema: WorkerProfile        
+    get:
+        responses:
+          200:
+            body:
+              application/json:
+                schema: WorkerProfile
+/addresses:
+  /{id}:
+    get:
+        description: Retrieve the address with the specified ID
+        responses:
+          200:
+            body:
+              application/json:
+                schema: Address
+    put:
+        body:
+          application/json:
+            schema: Address

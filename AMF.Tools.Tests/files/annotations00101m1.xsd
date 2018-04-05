@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Ident: @(#)annotations00101m1.xsd
+   generated from: @(#)annotations00101m.jmpp	1.3 02/11/19
+
+-->
+
+<xsd:schema
+  xmlns="Schema/annotations"
+  xmlns:jt="JavaTest"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="Schema/annotations">
+  <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+          This is the schema itself.
+      </xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="root"/>
+</xsd:schema>

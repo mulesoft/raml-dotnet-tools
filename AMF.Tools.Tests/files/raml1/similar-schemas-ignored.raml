@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: similar schemas ignored
+version: 1
+baseUri: http://localhost/v1
+mediaType: application/json
+types:
+  thing:
+    properties:
+        id:
+        name:
+        color?:
+  thingy:
+    properties:
+        id:
+        name:
+        color?:
+        other: integer
+/things:
+  get:
+    description: Retrieve a list of things
+    responses:
+     200:
+       body:
+         schema: thing
+/thingys:
+  get:
+    description: Retrieve a list of thingys
+    responses:
+     200:
+       body:
+         schema: thingy

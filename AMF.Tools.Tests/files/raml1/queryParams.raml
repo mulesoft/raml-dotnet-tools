@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: test case for complex query parameters
+
+types:
+    localeAndTimezone:
+        type: string
+        pattern: |
+            (locale=([a-zA-Z]){3},tz=([a-zA-Z]){3,4})
+
+/resource01:
+    get:
+        queryParameters:
+            q:
+                description: |
+                    remember that when you specify an array type for a
+                    query parameter, that means it may be repeated in the URL
+                    eg - ?q=locale%3DUSA,tz%3DPST&q=locale%3DIndia,tz%3DKK
+                type: localeAndTimezone[]

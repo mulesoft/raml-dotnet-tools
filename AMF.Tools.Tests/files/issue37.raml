@@ -1,0 +1,35 @@
+#%RAML 0.8
+title: issue 37
+version: 1.0
+baseUri: http://localhost:8081/api
+mediaType: application/json
+traits:
+  - with2Responses:
+        responses:
+          400:
+            body:
+              schema: |
+                    { "$schema": "http://json-schema.org/schema",
+                      "type": "object",
+                      "description": "a contact",
+                      "properties": {
+                        "name": { "type": "string", "required" : "true" },
+                        "email": { "type": "string", "required" : "true" },
+                        "phone": { "type": "string", "required" : "true" }
+                      }
+                    }
+          404:
+            body:
+              schema: |
+                    { "$schema": "http://json-schema.org/schema",
+                      "type": "object",
+                      "description": "a contact",
+                      "properties": {
+                        "name": { "type": "string", "required" : "true" },
+                        "email": { "type": "string", "required" : "true" },
+                        "phone": { "type": "string", "required" : "true" }
+                      }
+                    }
+/contacts:
+  get:
+    is: [with2Responses]

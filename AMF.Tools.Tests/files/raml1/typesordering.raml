@@ -1,0 +1,238 @@
+#%RAML 1.0
+title: Chinook RAML 1 Api
+types:
+  album:
+    properties:
+        artist:
+          type: artist
+        Id: 
+            type: integer
+        Title:
+  employee:
+    type: person
+    properties:
+        HireDate?:
+  SupportRepresentant:
+    type: employee
+    properties:
+        ReportsTo:
+            type: employee
+  customer:
+        type: person
+        properties:
+          Company:
+  artist:
+    properties:
+          Id: 
+            type: integer
+          Name:
+    examples:
+         one: {
+            "Id": 1,
+            "Name": "Dave Mathews Band"
+          }
+         two: {
+            "Id": 2,
+            "Name": "Pearl Jam"
+          }
+  person:
+    properties:
+        Id: 
+            type: integer
+        Title?:
+        BirthDate?:
+        FirstName:
+        LastName:
+        Address?:
+        City?:
+        State?:
+        Country?:
+        PostalCode?:
+            type: string
+            minLength: 4
+            maxLength: 14
+        Phone?:
+            type: string
+            minLength: 8
+        Fax?:
+        Email?:
+        Picture?:
+            type: file
+  track:
+        properties:
+          Id: 
+            type: integer
+          Name:
+          album:
+            type: album
+          MediaType:
+              properties:
+                Id: 
+                    type: integer
+                Name:
+          Genre:
+              properties:
+                Id:
+                    type: integer
+                Name:
+          Composer:
+          Milliseconds: 
+            type: integer
+          Bytes:
+            type: integer
+          UnitPrice: 
+            type: number     
+  invoiceLine:
+    properties: 
+        Id: 
+            type: integer
+        track:
+            type: track
+        UnitPrice: 
+            type: number
+            minimum: 0
+        Quantity: 
+            type: integer
+            minimum: 1
+  invoice:
+        properties:
+          customer:
+              type: customer
+          InvoiceDate:
+          BillingAddress:
+          BillingCity:
+          BillingState:
+          BillingCountry:
+          BillingPostalCode:
+          Lines:
+              type: invoiceLine[]
+/customers:
+  get:
+    responses:
+      200:   
+        body:
+          application/json:
+            type: customer[]
+  post:
+    body:
+      application/json:
+        type: customer
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:   
+              body:
+                application/json:
+                  type: customer
+    put:
+      body:
+        application/json:
+          type: customer
+    delete:
+/tracks:
+  get:
+    responses:
+      200:   
+          body:
+            application/json:
+              type: track[]
+  post:
+    body:
+      application/json:
+        type: track
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:   
+              body:
+                application/json:
+                  type: track
+    put:
+      body:
+        application/json:
+          type: track
+    delete:
+/artists:
+  get:
+    responses:
+        200:   
+          body:
+            application/json:
+              type: artist[]
+  post:
+    body:
+      application/json:
+        type: artist
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+            200:   
+              body:
+                application/json:
+                  type: artist
+    put:
+      body:
+        application/json:
+          type: artist
+    delete:
+/albums:
+  get:
+    responses:
+      200:   
+        body:
+          application/json:
+            type: album[]
+  post:
+    body:
+      application/json:
+        type: album
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:   
+            body:
+              application/json:
+                type: album
+    put:
+      body:
+        application/json:
+          type: album
+    delete:
+/invoices:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: invoice[]
+  post:
+    body:
+      application/json:
+        type: invoice
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: invoice
+    put:
+      body:
+        application/json:
+          type: invoice
+    delete:

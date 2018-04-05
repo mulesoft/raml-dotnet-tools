@@ -1,0 +1,24 @@
+using System.Linq;
+using AMF.Parser.Model;
+
+namespace AMF.Tools.Core
+{
+    public class GeneratorServiceHelper
+    {
+        public static Payload GetMimeType(Response response)
+        {
+            if (!response.Payloads.Any(b => b.Schema != null))
+                return null;
+
+            var payload = response.Payloads.FirstOrDefault(p => p.MediaType == "application/json");
+
+            return payload ?? response.Payloads.First(); //TODO: check
+        }
+
+        public static string GetKeyForResource(Operation operation, EndPoint resource)
+        {
+            return resource.Path + "-" + (string.IsNullOrWhiteSpace(operation.Method) ? "Get" : operation.Method);
+        }
+
+    }
+}

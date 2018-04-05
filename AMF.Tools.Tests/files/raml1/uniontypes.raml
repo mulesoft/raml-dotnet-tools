@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: Unions
+version: 1.0
+baseUri: http://maps.com/api
+mediaType: application/json
+types:
+    Person:
+        properties:
+            lastname: 
+            firstname:
+    Company:
+        properties:
+            name:
+            address:
+    Customer:
+        type: Person|Company
+    Customers:
+        type: (Person | Company)[]
+    Group:
+        type: Person[] | Company
+/customers:
+  get:
+    responses:
+      200:
+        body:
+          type: Customers
+  post:
+    body:
+      application/json:
+        type: Customer

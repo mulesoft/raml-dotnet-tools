@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "prop1": {
+      "type": "string",
+      "required":true,
+      "minLength": 36,
+      "maxLength": 36
+    },
+    "prop2": {
+      "type": "string",
+      "required": true
+    },
+    "foo": {
+      "type": "string",
+      "required": false
+    }
+  }
+} 

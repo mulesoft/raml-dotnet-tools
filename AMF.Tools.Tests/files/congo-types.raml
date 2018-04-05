@@ -1,0 +1,47 @@
+- baseResource:
+    is: [ accountable ]
+- collection:
+    type: baseResource
+    get:
+      description: Get a list of <<resourcePathName>>
+      is: [ paged ]
+      responses:
+        200:
+          body:
+            schema: <<resourcePathName>>
+            example: <<example-collection>>
+    post:
+      description: Create/add a new <<resourcePathName | !singularize>>
+      body:
+        schema: new<<resourcePathName | !singularize>>
+        example: <<example-newmember>>
+      responses:
+        201:
+          headers:
+            Location:
+          body:
+            schema: <<resourcePathName | !singularize>>
+            example: <<example-member>>
+- member:
+    type: baseResource
+    get:
+      description: Get a specific <<resourcePathName | !singularize>>
+      responses:
+        200:
+          body:
+            schema: <<resourcePathName | !singularize>>
+            example: <<example-member>>
+    patch:
+      description: Update the specific <<resourcePathName | !singularize>>
+      body:
+        schema: partial<<resourcePathName | !singularize>>
+        example: <<example-partialmember>>
+      responses:
+        200:
+          body:
+            schema: <<resourcePathName | !singularize>>
+            example: <<example-member>>
+    delete:
+      description: Remove/cancel the specific <<resourcePathName | !singularize>>
+      responses:
+        204:

@@ -1,0 +1,13 @@
+#%RAML 1.0 Trait
+queryParameters:
+    offset:
+        type: integer
+        required: false
+        minimum: 0
+        default: 0
+    limit:
+        type: integer
+        required: false
+        minimum: 5
+        default: 10
+        maximum: 20

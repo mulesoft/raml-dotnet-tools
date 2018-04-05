@@ -1,0 +1,36 @@
+#%RAML 0.8
+title: Movies
+version: 1.0
+baseUri: http://movies.com/api
+mediaType: application/json
+/movies:
+  get:
+    description: gets all movies in the catalogue
+    responses:
+      200:
+        body:
+          schema: !include "movies.schema"
+  /{id}:
+    get:
+      description: get the info of a movie
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-03/schema",
+                  "type": "object",
+                  "description": "a movie",
+                  "properties": {
+                    "id": { "type": "integer"},
+                    "name": { "type": "string"},
+                    "director": { "type": "string"},
+                    "genre": { "type": "string" },
+                    "cast":{ "type": "string" },
+                    "duration":{ "type": "number" },
+                    "storyline":{ "type": "string" },
+                    "language":{ "type": "string" },
+                    "rented":{ "type": "boolean" }
+                  }
+                }

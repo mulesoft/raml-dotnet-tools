@@ -1,0 +1,19 @@
+#%RAML 0.8
+title: Headers
+version: 1.0
+baseUri: http://headers.com/api
+mediaType: application/json
+/root:
+  get:
+    description: gets all movies in the catalogue
+    headers:
+      user:
+      code:
+    responses:
+      200:
+  post:
+    responses:
+      201:
+        headers:
+          Location:
+            description: "The relative url of the created resource" 

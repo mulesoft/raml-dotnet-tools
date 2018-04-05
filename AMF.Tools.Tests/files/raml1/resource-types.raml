@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: Resource Type Params
+version: 1.0
+baseUri: http://resourcetypes.com/api
+mediaType: application/json
+resourceTypes:
+  item:
+    uriParameters:
+      id:
+        type: integer
+    get:
+        queryParameters:
+            pageSize:
+                description: Use this parameter to specify the page size for the results. Maximum available page size for this API is 20000.
+                type: integer
+                example: 100
+                required: false
+                default: 100
+            start:
+                description: Use this parameter to specify the start of the interval you want to get data for. When both start and end is used, start must preceed end. End cannot be used without start. When only start is used, end is set to current date and time. When both start and end is omitted end is set to current date and time and start is set to current date and time minus 7 days. 
+                required: false
+            end:
+                description: Use this parameter to specify the end of the interval you want to get data for. When both start and end is used, start must preceed end. End cannot be used without start. When only start is used, end is set to current date and time. When both start and end is omitted end is set to current date and time and start is set to current date and time minus 7 days. 
+                required: false
+/users:
+  /{id}:
+    type: item
+    get:
+    put:
+    post:

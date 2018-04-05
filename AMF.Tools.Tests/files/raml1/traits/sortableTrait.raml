@@ -1,0 +1,10 @@
+#%RAML 1.0 Trait
+queryParameters:
+    sortBy:
+        type: string
+        required: false
+    sortOrder:
+        type: string
+        required: false
+        enum: [ ASC, DESC ]
+        default: ASC

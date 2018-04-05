@@ -1,0 +1,86 @@
+#%RAML 0.8
+---
+title: DARS
+version: 0.0.1
+protocols: [HTTPS]
+baseUri: https://test
+mediaType: application/json
+securedBy: [basic]
+
+securitySchemes:
+  - basic:
+      type: Basic Authentication
+schemas:
+ - lognote: |
+          { 
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "type": "object",
+            "description": "a movie",
+            "properties": {
+            "id": { "type": "integer"},
+            "name": { "type": "string"},
+            "director": { "type": "string"},
+            "genre": { "type": "string" },
+            "cast":{ "type": "string" },
+            "duration":{ "type": "number" },
+            "storyline":{ "type": "string" },
+            "language":{ "type": "string" }
+            }
+          }
+ - lognotes: |
+            { "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "array",
+              "description": "movies",
+              "items": 
+                {
+                  "type": "object",  
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string"},
+                    "director": { "type": "string"},
+                    "genre": { "type": "string" },
+                    "cast":{ "type": "string" },
+                    "duration":{ "type": "number" },
+                    "storyline":{ "type": "string" },
+                    "language":{ "type": "string" },
+                    "rented":{ "type": "boolean" }
+                }
+              }
+            }
+
+resourceTypes:
+  - readOnlyCollection:
+      get:
+        description: Get a list of available >.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: <<resourcePathName>>
+          404:
+            body:
+              application/json:
+                example: |
+                  {"message": "No items matching the given criteria were found."}
+
+  - readOnlyCollectionItem:
+      get:
+        description: |
+          Get the specific >.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: <<resourcePathName|!singularize>>
+          404:
+            body:
+              application/json:
+                example: |
+                  {"message": "File could not be found."}
+
+/lognotes:
+  type:
+    readOnlyCollection:
+  /{logNoteKey}:
+    type:
+      readOnlyCollectionItem:

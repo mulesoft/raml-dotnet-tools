@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Traits
+version: 1.0
+baseUri: http://maps.com/api
+mediaType: application/json
+traits:
+    pageable:
+      description: Filters out a single page of the collection
+      queryParameters:
+        pageSize:
+          description: Number of elements in the page
+          type: integer
+          required: false
+          example: 20
+          default: 0
+        offset:
+          description: Page offset
+          type: integer
+          required: false
+          example: 80
+          default: 10
+/item:
+  /{itemId}:
+    /comments:
+      get:
+        description: Gets the comments
+        is: [pageable]
+      post:
+        description: Saves a comment

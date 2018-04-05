@@ -1,0 +1,42 @@
+#%RAML 1.0
+title: Number formats
+version: 1.0
+mediaType: application/json
+types:
+    sample:
+        type: object
+        properties:
+            longprop: 
+                type: number
+                format: long
+            int64prop:
+                type: number
+                format: int64
+            int32prop:
+                type: number
+                format: int32
+            int16prop:
+                type: number
+                format: int16
+            int8prop:
+                type: number
+                format: int8
+            intprop: 
+                type: number
+                format: int
+            floatprop: 
+                type: number
+                format: float
+            doubleprop:
+                type: number
+                format: double
+            integerprop:
+                type: integer
+            numberprop:
+                type: number
+/persons:
+  get:
+    responses:
+      200:
+        body:
+          schema: sample

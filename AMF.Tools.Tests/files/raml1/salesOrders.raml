@@ -1,0 +1,91 @@
+#%RAML 1.0
+title: salesOrder api
+version: v1
+description: |
+    an example api for testing the raml 1.0 spec
+baseUri: https://{apiHost}:{apiPort}/{apiContext}/api/{version}
+baseUriParameters:
+    apiHost:
+        type: string
+    apiPort:
+        type: integer
+        minimum: 80
+    apiContext:
+        type: string
+mediaType: application/json
+uses:
+    common: types/commonTypes.raml # A set of common base type definitions 
+resourceTypes:
+    collectionResource: !include resourceTypes/collectionResourceType.raml # A set of common base type definitions 
+    collectionMemberResource: !include resourceTypes/collectionMemberResourceType.raml # A set of common base type definitions 
+traits:
+    pageable: !include traits/pageableTrait.raml # A set of common base type definitions 
+    sortable: !include traits/sortableTrait.raml # A set of common base type definitions 
+types:
+    lineItem:
+        type: object
+        properties:
+            quantity:
+                type: integer
+                minimum: 1
+                maximum: 99
+    salesOrderPrototype:
+        type: object
+        properties:
+            user: common.url
+            items:
+                type: salesOrderItemPrototype[]
+    salesOrderItemPrototype:
+        type: lineItem
+        properties:
+            product: common.url
+    salesOrder:
+        type: object
+        properties:
+            id: common.guid
+            created: datetime
+            itemSubTotal: common.monetaryValue
+            items:
+                type: salesOrderItem[]
+    salesOrderItem:
+        type: lineItem
+        properties:
+            description: string
+            unitPrice: common.monetaryValue
+            extendedPrice: common.monetaryValue
+    salesOrderLinks:
+        type: object
+        properties:
+            self: common.link
+            user: common.link
+    salesOrderResponse:
+        type: salesOrder
+        properties:
+            _links: salesOrderLinks
+            _meta: common.responseMetadata
+    salesOrderCollectionResponse:
+        type: common.collectionResponse
+        properties:
+            salesOrders:
+                type: common.link[]
+/salesOrders:
+    type:
+        collectionResource:
+            collectionResponse: salesOrderCollectionResponse
+            errorResponse: common.defaultResponse
+            collectionMemberPrototype: salesOrderPrototype
+            collectionMemberResponse:  salesOrderResponse
+    get:
+        is:
+            -  pageable
+            -  sortable
+        queryParameters:
+            user?: common.guid
+    /{salesOrderId}:
+        uriParameters:
+            salesOrderId: common.guid
+        type:
+            collectionMemberResource:
+                collectionMemberResponse: salesOrderResponse
+                errorResponse: common.defaultResponse
+                collectionMemberPrototype: salesOrderPrototype

@@ -1,0 +1,51 @@
+#%RAML 0.8
+title: Movies
+version: 1.0
+baseUri: http://movies.com/api
+mediaType: application/json
+schemas:
+    - Group: |
+            { "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "object",
+              "description": "group",
+              "properties": 
+               {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string"},
+                    "user": 
+                    {
+                        "type": "object",
+                        "properties":
+                        {
+                            "one": { "type": "integer" },
+                            "two": { "type": "string"}                           
+                        }
+                    }
+               }
+            }
+    - User: |
+            { "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "object",
+              "description": "user",
+              "properties": 
+               {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string"}
+               }
+            }
+/movies:
+  get:
+    responses:
+      200:
+        body: 
+          schema: Group
+  post:
+    description: adds a movie to the catalogue
+    body:
+        schema: User
+  /{id}:
+    get:
+      responses:
+        200:
+          body: 
+            schema: User

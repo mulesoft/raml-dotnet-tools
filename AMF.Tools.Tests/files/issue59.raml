@@ -1,0 +1,714 @@
+#%RAML 0.8
+---
+title: JC-Interface - File Services
+version: 0.0.1
+protocols: [HTTPS]
+baseUri: https://jag.gov.bc.ca
+mediaType: application/json
+securedBy: [basic]
+
+securitySchemes:
+  - basic:
+      type: Basic Authentication
+
+schemas:
+  - charge: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "sectionTxt" : {
+            "type" : "string"
+          },
+          "sectionDscTxt" : {
+            "type" : "string"
+          }
+        }
+      }  
+
+  - participant: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "fullNm" : {
+            "type" : "string"
+          },
+          "charge" : {
+            "type" : "array",
+            "items" : { "$ref": "charge" }
+          }
+        }
+      }
+
+  - fileDetail: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "mdocJustinNo" : {
+            "type" : "string"
+          },
+          "physicalFileId" : {
+            "type" : "string"
+          },
+          "fileHomeAgencyId" : {
+            "type" : "string"
+          },
+          "fileNumberTxt" : {
+            "type" : "string"
+          },
+          "mdocSeqNo" : {
+            "type" : "string"
+          },
+          "ticketSeriesTxt" : {
+            "type" : "string"
+          },
+          "mdocRefTypeCd" : {
+            "type" : "string"
+          },
+          "courtLevelCd" : {
+            "type" : "string",
+            "enum" : [ "P", "S", "A" ]
+          },
+          "courtClassCd" : {
+            "type" : "string",
+            "enum" : [ "A", "Y", "T", "F", "C", "M", "L", "R", "B", "D", "E", "G", "H", "N", "O", "P", "S", "V" ]
+          },
+          "warrantYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "inCustodyYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "nextApprDt" : {
+            "type" : "string"
+          },
+          "pcssCourtDivisionCd" : {
+            "type" : "string",
+            "enum" : [ "I", "R", "F" ]
+          },
+          "participant" : {
+            "type" : "array",
+            "items" : { "$ref": "participant" }
+          }
+        }
+      }
+
+  - fileSearchResponse: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "responseCd" : {
+            "type" : "string"
+          },
+          "responseMessageTxt" : {
+            "type" : "string"
+          },
+          "recCount" : {
+            "type" : "string"
+          },
+          "fileDetail" : {
+            "type" : "array",
+            "items" : { "$ref": "fileDetail" }
+          }
+        }
+      }
+
+  - rcc: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "rccId" : {
+            "type" : "string"
+          },
+          "rccAgencyId" : {
+            "type" : "string"
+          },
+          "rccAgencyFileNo" : {
+            "type" : "string"
+          },
+          "synopsisTxt" : {
+            "type" : "string"
+          }
+        }
+      }
+
+  - crownFileNote: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "fileNoteId" : {
+            "type" : "string"
+          },
+          "noteTxt" : {
+            "type" : "string"
+          }
+        }
+      }
+
+  - hearingRestriction2: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "hearingRestrictionId" : {
+            "type" : "string"
+          },
+          "adjPartId" : {
+            "type" : "string"
+          },
+          "adjFullNm" : {
+            "type" : "string"
+          },
+          "hearingRestrictionTypeCd" : {
+            "type" : "string",
+            "enum" : [ "S", "D", "A", "G" ]
+          },
+          "partId" : {
+            "type" : "string"
+          },
+          "profSeqNo" : {
+            "type" : "string"
+          },
+          "partNm" : {
+            "type" : "string"
+          },
+          "adjInitialsTxt" : {
+            "type" : "string"
+          },
+          "justinNo" : {
+            "type" : "string"
+          },
+          "hearingRestrictionCcn" : {
+            "type" : "string"
+          }
+        }
+      }
+
+  - criminalWitness: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "partId" : {
+            "type" : "string"
+          },
+          "lastNm" : {
+            "type" : "string"
+          },
+          "givenNm" : {
+            "type" : "string"
+          },
+          "witnessTypeCd" : {
+            "type" : "string"
+          },
+          "roleTypeCd" : {
+            "type" : "string",
+            "enum" : [ "WIT", "CRN" ]
+          },
+          "requiredYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "confidentialYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "pinCodeTxt" : {
+            "type" : "string"
+          },
+          "agencyId" : {
+            "type" : "string"
+          }
+        }
+      }
+
+  - criminalParticipant: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "partId" : {
+            "type" : "string"
+          },
+          "profSeqNo" : {
+            "type" : "string"
+          },
+          "lastNm" : {
+            "type" : "string"
+          },
+          "givenNm" : {
+            "type" : "string"
+          },
+          "orgNm" : {
+            "type" : "string"
+          },
+          "warrantYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "inCustodyYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "interpreterYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "detainedYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "birthDt" : {
+            "type" : "string"
+          },
+          "counselRrepId" : {
+            "type" : "string"
+          },
+          "counselPartId" : {
+            "type" : "string"
+          },
+          "counselLastNm" : {
+            "type" : "string"
+          },
+          "counselGivenNm" : {
+            "type" : "string"
+          },
+          "counselRelatedRepTypeCd" : {
+            "type" : "string"
+          },
+          "counselEnteredDt" : {
+            "type" : "string"
+          },
+          "designatedCounselYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "charge" : {
+            "type" : "array",
+            "items" : { "$ref": "charge" }
+          }
+        }
+      }
+
+  - trialRemark: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "commentTxt" : {
+            "type" : "string"
+          }
+        }
+      }  
+
+  - criminalFileDetailResponse: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "responseCd" : {
+            "type" : "string"
+          },
+          "responseMessageTxt" : {
+            "type" : "string"
+          },
+          "justinNo" : {
+            "type" : "string"
+          },
+          "fileNumberTxt" : {
+            "type" : "string"
+          },
+          "homeLocationAgenId" : {
+            "type" : "string"
+          },
+          "courtLevelCd" : {
+            "type" : "string",
+            "enum" : [ "P", "S", "A" ]
+          },
+          "courtClassCd" : {
+            "type" : "string",
+            "enum" : [ "A", "Y", "T", "F", "C", "M", "L", "R", "B", "D", "E", "G", "H", "N", "O", "P", "S", "V" ]
+          },
+          "currentEstimateLenQty" : {
+            "type" : "string"
+          },
+          "currentEstimateLenUnit" : {
+            "type" : "string",
+            "enum" : [ "HRS", "DYS", "MTH", "MTHS", "YRS", "MIN", "WKS", "HR" ]
+          },
+          "initialEstimateLenQty" : {
+            "type" : "string"
+          },
+          "initialEstimateLenUnit" : {
+            "type" : "string",
+            "enum" : [ "HRS", "DYS", "MTH", "MTHS", "YRS", "MIN", "WKS", "HR" ]
+          },
+          "trialStartDt" : {
+            "type" : "string"
+          },
+          "witnessCount" : {
+            "type" : "string"
+          },
+          "mdocSubCategoryDsc" : {
+            "type" : "string"
+          },
+          "approvedByAgencyCd" : {
+            "type" : "string"
+          },
+          "approvedByPartNm" : {
+            "type" : "string"
+          },
+          "assignedPartNm" : {
+            "type" : "string"
+          },
+          "crownEstimateLenQty" : {
+            "type" : "string"
+          },
+          "crownEstimateLenUnit" : {
+            "type" : "string",
+            "enum" : [ "HRS", "DYS", "MTH", "MTHS", "YRS", "MIN", "WKS", "HR" ]
+          },
+          "caseAgeDays" : {
+            "type" : "string"
+          },
+          "indictableYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "complexityTypeCd" : {
+            "type" : "string",
+            "enum" : [ "SPC", "GA", "SA", "ALL", "SG" ]
+          },
+          "personnelWitnessRecCount" : {
+            "type" : "string"
+          },
+          "expertWitnessRecCount" : {
+            "type" : "string"
+          },
+          "civilianWitnessRecCount" : {
+            "type" : "string"
+          },
+          "enforcementAgencyFileNoTxt" : {
+            "type" : "string"
+          },
+          "trialRemarkTxt" : {
+            "type" : "string"
+          },
+          "commentToJudgeTxt" : {
+            "type" : "string"
+          },
+          "mdocCcn" : {
+            "type" : "string"
+          },
+          "trialRemark" : {
+            "type" : "array",
+            "items" : { "$ref": "trialRemark" }
+          },
+          "participant" : {
+            "type" : "array",
+            "items" : { "$ref": "criminalParticipant" }
+          },
+          "witness" : {
+            "type" : "array",
+            "items" : { "$ref": "criminalWitness" }
+          },
+          "hearingRestriction" : {
+            "type" : "array",
+            "items" : { "$ref": "hearingRestriction2" }
+          },
+          "crownFileNote" : {
+            "type" : "array",
+            "items" : { "$ref": "crownFileNote" }
+          },
+          "rcc" : {
+            "type" : "array",
+            "items" : { "$ref": "rcc" }
+          }
+        }
+      }      
+
+  - criminalAppearanceDetail: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "historyYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "appearanceId" : {
+            "type" : "string"
+          },
+          "appearanceDt" : {
+            "type" : "string"
+          },
+          "appearanceTm" : {
+            "type" : "string"
+          },
+          "appearanceReasonCd" : {
+            "type" : "string"
+          },
+          "courtAgencyId" : {
+            "type" : "string"
+          },
+          "courtRoomCd" : {
+            "type" : "string"
+          },
+          "judgeFullNm" : {
+            "type" : "string"
+          },
+          "judgeInitials" : {
+            "type" : "string"
+          },
+          "counselFullNm" : {
+            "type" : "string"
+          },
+          "estimatedTimeHour" : {
+            "type" : "string"
+          },
+          "estimatedTimeMin" : {
+            "type" : "string"
+          },
+          "partOfTrialYN" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ]
+          },
+          "appearanceStatusCd" : {
+            "type" : "string",
+            "enum" : [ "SCHD", "CNCL", "UNCF" ]
+          },
+          "partId" : {
+            "type" : "string"
+          },
+          "profSeqNo" : {
+            "type" : "string"
+          },
+          "lastNm" : {
+            "type" : "string"
+          },
+          "givenNm" : {
+            "type" : "string"
+          },
+          "orgNm" : {
+            "type" : "string"
+          },
+          "appearanceResultCd" : {
+            "type" : "string"
+          },
+          "appearanceCcn" : {
+            "type" : "string"
+          },
+          "supplementalEquipmentTxt" : {
+            "type" : "string"
+          },
+          "securityRestrictionTxt" : {
+            "type" : "string"
+          },
+          "outOfTownJudgeTxt" : {
+            "type" : "string"
+          }
+        }
+      }
+
+  - criminalFileAppearancesResponse: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "responseCd" : {
+            "type" : "string"
+          },
+          "responseMessageTxt" : {
+            "type" : "string"
+          },
+          "futureRecCount" : {
+            "type" : "string"
+          },
+          "historyRecCount" : {
+            "type" : "string"
+          },
+          "apprDetail" : {
+            "type" : "array",
+            "items" : { "$ref": "criminalAppearanceDetail" }
+          }
+        }
+      }
+
+/files:
+  displayName: Court File Resources
+  /criminal:
+    get:
+      description: |
+        Provides facilities for performing a criminal file search. 
+      queryParameters:
+        searchMode:
+          displayName: Search Mode
+          type: string
+          enum: [ "FILENO", "PARTNAME", "CROWN", "JUSTINNO", "PHYSID" ]
+          required: true
+        fileHomeAgencyId:
+          displayName: File Home Agency Id
+          description: File home Agency Identifier; the Justin Agency ID.  Equates to a location code.
+          type: string
+          required: true        
+        fileNumberTxt:
+          displayName: File number
+          type: string
+          required: false
+        filePrefixTxt:
+          displayName: File prefix
+          type: string
+          required: false
+        filePermissions:
+          displayName: File Permissions
+          description: A list of one or more of the courtClassCd codes indicating the files to which the requesting user has permissions.
+          type: string
+          required: true          
+        fileSuffixNo:
+          displayName: File suffix
+          type: string
+          required: false
+        mdocRefTypeCd:
+          displayName: Document reference type code
+          type: string
+          required: false
+        courtClassCd:
+          displayName: Court class code
+          type: string
+          enum: [ "A", "Y", "T", "F", "C", "M", "L", "R", "B", "D", "E", "G", "H", "N", "O", "P", "S", "V" ]
+          required: false
+        courtLevelCd:
+          displayName: Court level code
+          type: string
+          enum: [ "P", "S", "A" ]
+          default: "P"
+          required: false
+        nameSearchTypeCd:
+          displayName: Name search Type Code
+          type: string
+          enum: [ "E", "P", "S" ]
+          default: "P"
+          required: false
+        lastNm:
+          displayName: Lastname to search by
+          type: string
+          required: false
+        orgNm:
+          displayName: Organization name to search by
+          type: string
+          required: false
+        givenNm:
+          displayName: Given name to search by
+          type: string
+          required: false
+        birthDt:
+          displayName: Birthdate to search by
+          type: string
+          required: false
+        searchByCrownPartId:
+          displayName: The participant Id of the crown
+          type: string
+          required: false        
+        searchByCrownActiveOnlyYN:
+          displayName: Flag
+          type: string
+          enum: [ "Y", "N" ]
+          required: false
+        searchByCrownFileDesignationCd:
+          displayName: File designation code
+          type: string
+          enum: [ "SPC", "GA", "SA", "ALL", "SG" ]
+          required: false
+        mdocJustinNoSet:
+          displayName: The Justin file number to search by
+          type: string
+          required: false
+        physicalFileIdSet:
+          displayName: Physical file ID set
+          type: string
+          required: false
+      headers:
+        requestAgencyIdentifierId:
+          description: Requesting Agency Identifier
+          type: string
+          required: true
+        requestPartId:
+          description: Requesting Participant Id
+          type: string
+          required: true
+      responses:
+        200:
+          body:
+            application/json:
+              schema: fileSearchResponse
+        404:
+          body:
+            application/json:
+              example: |
+                {"message": "No items matching the given criteria were found."}  
+    /{fileId}:
+      get:
+        description: |
+          Get the details for a given criminal file.       
+        headers:
+          requestAgencyIdentifierId:
+            description: Requesting Agency Identifier
+            type: string
+            required: true
+          requestPartId:
+            description: Requesting Participant Id
+            type: string
+            required: true
+        responses:
+          200:
+            body:
+              application/json:
+                schema: criminalFileDetailResponse
+          404:
+            body:
+              application/json:
+                example: |
+                  {"message": "No items matching the given criteria were found."}
+      /appearances:
+        get:
+          description: |
+            Get the appearance information for a given criminal file.       
+          queryParameters:
+            futureYN:
+              displayName: Flag
+              type: string
+              enum: [ "Y", "N" ]
+              default: "Y"
+              required: false
+            historyYN:
+              displayName: Flag
+              type: string
+              enum: [ "Y", "N" ]
+              default: "Y"
+              required: false
+          headers:
+            requestAgencyIdentifierId:
+              description: Requesting Agency Identifier
+              type: string
+              required: true
+            requestPartId:
+              description: Requesting Participant Id
+              type: string
+              required: true
+          responses:
+            200:
+              body:
+                application/json:
+                  schema: criminalFileAppearancesResponse
+            404:
+              body:
+                application/json:
+                  example: |
+                    {"message": "No items matching the given criteria were found."}

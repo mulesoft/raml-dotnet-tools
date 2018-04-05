@@ -1,0 +1,90 @@
+#%RAML 1.0 Library
+types:
+    guid:
+        type: string
+        minLength: 36
+        maxLength: 36
+        pattern: |
+            [0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}
+    url:
+        type: string
+        pattern: |
+            (https?):\/\/((?:[a-z0-9.-]|%[0-9A-F]{2}){3,})(?::(\d+))?((?:\/(?:[a-z0-9-._~!$&'()*+,;=:@]|%[0-9A-F]{2})*)*)
+    link:
+        type: object
+        properties:
+            href:
+                type: url
+            title?:
+                type: string
+    message:
+        type: object
+        properties:
+            severity:
+                type: string
+                enum: [
+                    INFO, WARN, ERROR, FATAL
+                ]
+            code:
+                type: string
+            description:
+                type: string
+    responseMetadata:
+        type: object
+        properties:
+            success:
+                type: boolean
+            messages:
+                type: message[]
+    defaultResponse:
+        type: object
+        properties:
+            _meta:
+                type: responseMetadata
+    collectionProps:
+        type: object
+        properties:
+            offset:
+                type: integer
+                minimum: 0
+                default: 0
+            limit:
+                type: integer
+                minimum: 5
+                default: 10
+                maximum: 20
+    collectionPagingLinks:
+        type: object
+        properties:
+            first?:
+                type: link
+            prev?:
+                type: link
+            self:
+                type: link
+            next?:
+                type: link
+            last?:
+                type: link
+    collectionResponse:
+        type: collectionProps
+        properties:
+            totalItems:
+                type: integer
+                minimum: 0
+            _links:
+                type: collectionPagingLinks
+    monetaryValue:
+        type: object
+        properties:
+            whole:
+                type: integer
+                minimum: 0
+            fractional:
+                type: integer
+                minimum: 0
+                maximum: 99
+            currency:
+                type: string
+                enum: [ USD ]
+                default: USD

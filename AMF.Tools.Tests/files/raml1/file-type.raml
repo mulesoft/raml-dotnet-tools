@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Example
+/uploadFile:
+  description: uploads a file
+  post:
+    body:
+      multipart/formdata:
+        properties: 
+          file:
+            description: the file to upload
+            required: true
+            type: file

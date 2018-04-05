@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  link:
+    type: object
+    properties:
+        href: string
+        title?: string
+  example:
+    type: object
+    properties:
+      name: string
+      links:
+        type: object
+        properties:
+          self: 
+            type: link
+/:
+    get:
+        body:
+            application/json:
+                type: example

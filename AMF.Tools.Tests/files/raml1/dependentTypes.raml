@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: type definition ordering tests
+
+/stuff:
+    post:
+        body:
+            application/json:
+                type: typeA
+
+types:
+    typeA:
+        type: object
+        properties:
+            b: typeB
+            foo: string
+    typeB:
+        type: object
+        properties:
+            bar: string

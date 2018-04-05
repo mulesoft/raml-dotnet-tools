@@ -1,0 +1,43 @@
+#%RAML 1.0 
+title: Testing annotations
+mediaType: application/json
+annotationTypes:
+  experimental:
+  feedbackRequested:
+    allowedTargets: [Resource, Method, Response]
+  assertion:
+    allowedTargets: Response
+    properties:
+      value: string
+  testHarness:
+    properties:
+      value: string
+  badge:
+    properties:
+      value: string
+  clearanceLevel:
+    properties:
+      level:
+        enum: [ low, medium, high ]
+        required: true
+      signature:
+        pattern: "\\d{3}-\\w{12}"
+        required: true
+
+(experimental): test
+(testHarness): test
+/groups:
+  (experimental):
+  (feedbackRequested):
+/users:
+  (testHarness): usersTest
+  (badge): tested.gif
+  (clearanceLevel):
+    level: high
+    signature: 230-ghtwvfrs1itr
+  get:
+    (experimental):
+    (feedbackRequested):
+    responses:
+      200:
+        (assertion): Condition 1

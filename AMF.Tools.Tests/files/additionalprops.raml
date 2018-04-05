@@ -1,0 +1,20 @@
+#%RAML 0.8
+title: AdditionalProps
+version: 1.0
+baseUri: http://additional.com/api
+mediaType: application/json
+/movies:
+  get:
+    description: gets all movies in the catalogue
+    responses:
+      200:
+        body:
+          schema: |
+            {
+                "type": "object",
+                "properties": {
+                    "number":      { "type": "number" },
+                    "street_name": { "type": "string" }
+                },
+                "additionalProperties": { "type": "string" }
+            }

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <Extern href="stdidcmd.h"/>
+
+  <!--This header contains the command ids for the menus provided by the shell. -->
+  <Extern href="vsshlids.h"/>
+
+
+
+
+  <!--The Commands section is where we the commands, menus and menu groups are defined.
+      This section uses a Guid to identify the package that provides the command defined inside it. -->
+  <Commands package="guidMuleSoft_RAML_ToolsPackagePkg">
+    <Groups>
+
+      <Group guid="guidMuleSoft_RAML_ReferencesNode" id="ReferencesNodeGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_REFERENCEROOT"/>
+      </Group>
+      <Group guid="guidMuleSoft_RAML_FileNode" id="FileNodeGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+      </Group>
+      <Group guid="guidMuleSoft_RAML_ProjectNode" id="ProjectNodeGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+      </Group>
+      <Group guid="guidMuleSoft_RAML_FolderNode" id="FolderNodeGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_FOLDERNODE"/>
+      </Group>
+    </Groups>
+
+    <!--Buttons section. -->
+    <Buttons>
+
+      <Button guid="guidMuleSoft_RAML_ReferencesNode" id="cmdRAMLGenerator" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_ReferencesNode" id="ReferencesNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Add RAML Reference...</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_FolderNode" id="cmdRAMLGenerator2" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_FolderNode" id="FolderNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Add RAML Reference...</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_FileNode" id="cmdUpdateRAMLReference" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_FileNode" id="FileNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdUpdateRAMLReference</CommandName>
+          <ButtonText>Update RAML Reference</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_ProjectNode" id="cmdAddContract" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_ProjectNode" id="ProjectNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdAddContract</CommandName>
+          <ButtonText>Add RAML Contract...</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_ContractFolderNode" id="cmdAddContract2" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_FolderNode" id="FolderNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Add RAML Contract...</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_CmdUpdateRAMLContract" id="cmdUpdateRAMLContract" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_FileNode" id="FileNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdUpdateRAMLContract</CommandName>
+          <ButtonText>Update RAML Contract from source</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_EnableMetadataOutput" id="cmdEnableMetadataOutput" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_ProjectNode" id="ProjectNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdEnableMetadataOutput</CommandName>
+          <ButtonText>Enable RAML metadata output</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_DisableMetadataOutput" id="cmdDisableMetadataOutput" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_ProjectNode" id="ProjectNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdDisableMetadataOutput</CommandName>
+          <ButtonText>Disable RAML metadata output</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidMuleSoft_RAML_EditProperties" id="cmdEditRamlProperties" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_FileNode" id="FileNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdEditRamlProperties</CommandName>
+          <ButtonText>Edit RAML Properties</ButtonText>
+        </Strings>
+      </Button>
+
+
+      <!--<Button guid="guidMuleSoft_RAML_CmdExtractRAML" id="cmdExtractRAML" priority="0x0100" type="Button">
+        <Parent guid="guidMuleSoft_RAML_ProjectNode" id="ProjectNodeGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdExtractRAML</CommandName>
+          <ButtonText>Extract RAML...</ButtonText>
+        </Strings>
+      </Button>-->
+
+    </Buttons>
+
+    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
+
+    </Bitmaps>
+
+  </Commands>
+
+
+
+
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidMuleSoft_RAML_ToolsPackagePkg" value="{49d3aa6e-2e80-4568-92e9-4bcb3eb2b40d}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidMuleSoft_RAML_ReferencesNode" value="{9556bec5-0574-49ed-a2f7-9c427687cc44}">
+      <IDSymbol name="ReferencesNodeGroup" value="0x1020" />
+      <IDSymbol name="cmdRAMLGenerator" value="0x0100" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_FolderNode" value="{b16d5c80-c404-423c-aa1b-ecf5b58f89bd}">
+      <IDSymbol name="FolderNodeGroup" value="0x1020" />
+      <IDSymbol name="cmdRAMLGenerator2" value="0x0200" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_FileNode" value="{61eff566-9e0e-4197-b9c4-8b0dab685768}">
+      <IDSymbol name="FileNodeGroup" value="0x1020" />
+      <IDSymbol name="cmdUpdateRAMLReference" value="0x0200" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_ProjectNode" value="{50f8cbf6-aacf-457d-aa89-0bc300a9b7ae}">
+      <IDSymbol name="ProjectNodeGroup" value="0x1020"/>
+      <IDSymbol name="cmdAddContract" value="0x0400" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_ContractFolderNode" value="{a83de21a-fdf5-4bf4-9ec2-88bab3e327ba}">
+      <IDSymbol name="FolderNodeGroup" value="0x1020"/>
+      <IDSymbol name="cmdAddContract2" value="0x0400" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_CmdUpdateRAMLContract" value="{14c03645-17a8-49ae-b301-6a619f3942d9}">
+      <IDSymbol name="FileNodeGroup" value="0x1020"/>
+      <IDSymbol name="cmdUpdateRAMLContract" value="0x0500" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_EnableMetadataOutput" value="{30206c8b-b59e-477f-929e-d47376b779b7}">
+      <IDSymbol name="ProjectNodeGroup" value="0x1020"/>
+      <IDSymbol name="cmdEnableMetadataOutput" value="0x0600" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_DisableMetadataOutput" value="{9345ba25-7345-4be0-81eb-d365fe004dea}">
+      <IDSymbol name="ProjectNodeGroup" value="0x1020"/>
+      <IDSymbol name="cmdDisableMetadataOutput" value="0x0800" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMuleSoft_RAML_EditProperties" value="{4dd305ea-f3af-496a-89a1-b9a763758477}">
+      <IDSymbol name="FileNodeGroup" value="0x1020" />
+      <IDSymbol name="cmdEditRamlProperties" value="0x0900" />
+    </GuidSymbol>
+
+    <!--<GuidSymbol name="guidMuleSoft_RAML_CmdExtractRAML" value="{a1f4149f-0985-4a2c-88ad-0e747290b3a2}">
+      <IDSymbol name="ProjectNodeGroup" value="0x1020"/>
+      <IDSymbol name="cmdExtractRAML" value="0x0700" />
+    </GuidSymbol>-->
+
+
+    <GuidSymbol name="guidImages" value="{59571131-f5d7-4e0a-b2da-973f343a7e28}" >
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>

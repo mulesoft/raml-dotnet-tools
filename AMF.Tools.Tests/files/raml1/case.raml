@@ -1,0 +1,46 @@
+#%RAML 1.0
+title: Maps
+version: 1.0
+baseUri: http://maps.com/api
+mediaType: application/json
+types:
+    arrayOfInt: 
+        type: array
+        items:
+            type: integer
+        example: [1,2,3,4,5]
+    person:
+        type: object
+        properties:
+            lastname: 
+                type: string
+                required: true
+                maxLength: 255
+            firstname: string
+    customer:
+        type: person
+        properties:
+            company:
+    arrayOfPerson:
+        type: person[]
+    arrayOfObject:
+        type: array
+        items:
+            type: object
+            properties:
+                lastname: 
+                    type: string
+                    required: true
+                    maxLength: 255
+                firstname: string
+/persons:
+  get:
+    responses:
+      200:
+        body:
+          type: arrayOfPerson
+  post:
+    description: adds a movie to the catalogue
+    body:
+      application/json:
+        type: person[]

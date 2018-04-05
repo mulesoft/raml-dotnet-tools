@@ -1,0 +1,22 @@
+#%RAML 0.8
+title: api
+baseUri: /
+version: v1
+/transactions:
+  displayName: "Transactions"
+  get:
+  /{id}:
+    displayName: "Transaction"
+    description: Information about a particular transaction
+    uriParameters: 
+      id: 
+        displayName: "id"
+        description: Transaction id
+        type: integer
+        required: true
+        repeat: false
+    get:
+    /history:
+      displayName: "Transaction history"
+      description: Stages the transaction went through
+      get:

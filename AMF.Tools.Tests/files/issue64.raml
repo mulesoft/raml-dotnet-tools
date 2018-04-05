@@ -1,0 +1,48 @@
+#%RAML 0.8
+title: Service XPTO
+baseUri: https://to.be.defined:8080/{version}
+mediaType: application/json
+protocols: [ HTTP, HTTPS ]
+version: v1.0.0
+schemas:
+    - address: |
+        {
+            "$schema": "http://json-schema.org/schema#",
+            "title": "Address",
+            "type": "object",
+            "properties": {
+                "addressLine1": {
+                    "required": "true",
+                    "type": "string"
+                },
+                "zipCode": {
+                    "required": "true",
+                    "type": "string"
+                }
+            }
+        }
+    - order: |
+        {
+            "$schema": "http://json-schema.org/schema#",
+            "type" : "object",
+            "properties" : {
+                "id" : {
+                    "required": "true",
+                    "type" : "string"
+                },
+                "billAdress" : {
+                    "required": "true",
+                    "type" : "object",
+                    "$ref" : "address"
+                }
+            }
+        }
+/auth:
+    post:
+        body:
+            application/json:
+                schema: order
+        responses:
+            200:
+                body:
+                    application/json:

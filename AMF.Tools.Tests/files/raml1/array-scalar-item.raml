@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: array with scalar item
+/foo:
+  put:
+    body:
+      application/json:
+        properties:
+          bar:
+            type: array
+            items: string

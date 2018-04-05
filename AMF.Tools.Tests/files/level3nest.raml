@@ -1,0 +1,53 @@
+#%RAML 0.8
+title: test
+version: 1.0
+baseUri: http://localhost:8081/api
+schemas:
+  - nested: |
+        {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Create",
+            "type": "object",
+            "required": ["PropertyOne"],
+            "properties": {
+                "PropertyOne": {
+                    "type": "string"
+                },
+                "Details": {
+                    "title": "Details",
+                    "type": "object",
+                    "required": ["PropertyTwo"],
+                    "properties": {
+                        "PropertyTwo": {
+                            "type": "string"
+                        },
+                        "Address": {
+                            "title": "Address",
+                            "type": "object",
+                            "required": ["Line1"],
+                            "properties": {
+                                "Line1": {
+                                    "type": "string"
+                                },
+                                "Line2": {
+                                    "type": "string"
+                                },
+                                "Line3": {
+                                    "type": "string"
+                                },
+                                "Line4": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: nested

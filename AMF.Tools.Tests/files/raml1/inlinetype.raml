@@ -1,0 +1,27 @@
+#%RAML 1.0 
+title: My API With Types
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              firstname:
+                type: string
+              lastname:
+                type: string
+              age:
+                type: number
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+            firstname:
+              type: string
+            lastname:
+              type: string
+            age:
+              type: number

@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D5482ED5-6B2D-4342-A9FF-21878BBC98F8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AMF.Tools.Core</RootNamespace>
+    <AssemblyName>AMF.Tools.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AMF.Parser, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Parser.0.4.0.0\lib\net462\AMF.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="EdgeJs, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Edge.js.8.2.1\lib\net40\EdgeJs.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Raml.Api.Core, Version=0.9.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RAML.Api.Core.0.9.10\lib\net45\Raml.Api.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\ApiEnum.cs" />
+    <Compile Include="Model\ApiObject.cs" />
+    <Compile Include="ApiObjectsCleaner.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="ClientGenerator\ApiRequestObjectsGenerator.cs" />
+    <Compile Include="ClientGenerator\ApiResponseObjectsGenerator.cs" />
+    <Compile Include="Model\Client\ClassObject.cs" />
+    <Compile Include="Model\Client\ClientGeneratorMethod.cs" />
+    <Compile Include="Model\Client\ClientGeneratorModel.cs" />
+    <Compile Include="ClientGenerator\ClientGeneratorService.cs" />
+    <Compile Include="ClientGenerator\ClientMethodsGenerator.cs" />
+    <Compile Include="Model\Client\FluentProperty.cs" />
+    <Compile Include="CollectionTypeHelper.cs" />
+    <Compile Include="Model\GeneratorParameter.cs" />
+    <Compile Include="GeneratorServiceBase.cs" />
+    <Compile Include="GeneratorServiceHelper.cs" />
+    <Compile Include="HeadersParser.cs" />
+    <Compile Include="MethodsGeneratorBase.cs" />
+    <Compile Include="NetTypeMapper.cs" />
+    <Compile Include="NewNetTypeMapper.cs" />
+    <Compile Include="ObjectParser.cs" />
+    <Compile Include="ParametersMapper.cs" />
+    <Compile Include="ParserHelpers.cs" />
+    <Compile Include="Pluralization\BidirectionalDictionary.cs" />
+    <Compile Include="Pluralization\CustomPluralizationEntry.cs" />
+    <Compile Include="Pluralization\EnglishPluralizationService.cs" />
+    <Compile Include="Pluralization\EnumerableExtensions.cs" />
+    <Compile Include="Pluralization\IPluralizationService.cs" />
+    <Compile Include="Pluralization\PluralizationServiceUtil.cs" />
+    <Compile Include="Pluralization\StringBidirectionalDictionary.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\Property.cs" />
+    <Compile Include="Model\PropertyBase.cs" />
+    <Compile Include="QueryParametersParser.cs" />
+    <Compile Include="RamlParserExtensions.cs" />
+    <Compile Include="RamlTypeParser.cs" />
+    <Compile Include="RamlTypesHelper.cs" />
+    <Compile Include="RequestTypesService.cs" />
+    <Compile Include="ResponseTypesService.cs" />
+    <Compile Include="SchemaParameterParser.cs" />
+    <Compile Include="Model\Security.cs" />
+    <Compile Include="SecurityParser.cs" />
+    <Compile Include="UniquenessHelper.cs" />
+    <Compile Include="UriParametersGenerator.cs" />
+    <Compile Include="Model\Server\ControllerMethod.cs" />
+    <Compile Include="Model\Server\ControllerObject.cs" />
+    <Compile Include="Model\Server\IHasName.cs" />
+    <Compile Include="Model\Server\MethodParameter.cs" />
+    <Compile Include="Model\Server\ModelsGeneratorModel.cs" />
+    <Compile Include="WebApiGenerator\ModelsGeneratorService.cs" />
+    <Compile Include="WebApiGenerator\UrlGeneratorHelper.cs" />
+    <Compile Include="Model\Server\WebApiGeneratorModel.cs" />
+    <Compile Include="WebApiGenerator\WebApiGeneratorService.cs" />
+    <Compile Include="WebApiGenerator\WebApiMethodsGenerator.cs" />
+    <Compile Include="XmlCommentHelper.cs" />
+    <Compile Include="XML\ArraysToCollectionsExtension.cs" />
+    <Compile Include="XML\FieldsToPropertiesExtension.cs" />
+    <Compile Include="XML\ICodeExtension.cs" />
+    <Compile Include="XML\XmlSchemaParser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="edge\double_edge.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="edge\edge.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="edge\x64\node.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="edge\x86\node.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="node_modules\amf-client-js\amf.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="node_modules\amf-client-js\node_modules\%40mulesoft\amf-shacl-node\shacl.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="node_modules\amf-shacl-node\shacl.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="node_modules\parser.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="edge\x64\edge_nativeclr.node">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="edge\x86\edge_nativeclr.node">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="node_modules\amf-client-js\node_modules\%40mulesoft\amf-shacl-node\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="node_modules\amf-client-js\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="node_modules\amf-shacl-node\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="node_modules\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Parsers\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+</Project>

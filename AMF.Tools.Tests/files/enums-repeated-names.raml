@@ -1,0 +1,64 @@
+#%RAML 0.8
+title: repeated enum names
+version: 1
+baseUri: http://localhost/v1
+mediaType: application/json
+schemas:
+  - things: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "array",
+        "items": 
+        {
+          "type": "object",
+          "properties": 
+          {
+            "id": { "type": "string", "required": true },
+            "name": { "type": "string", "required": true },
+            "color": { "type": "string", "required": true, "enum": [ "1", "2", "3" ] },
+          }
+        }
+      }
+  - thing: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "object",
+        "properties": 
+        {
+          "id": { "type": "string", "required": false },
+          "name": { "type": "string", "required": true },
+          "color": { "type": "string", "required": true, "enum": [ "red", "green", "blue" ] },
+        }
+      }
+  - thingResult: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "object",
+        "properties": 
+        {
+          "name": { "type": "string", "required": true },
+          "count": { "type": "integer", "required": true },
+          "color": { "type": "string", "required": true, "enum": [ "foo", "bar", "baz" ] },
+        }
+      }
+/things:
+  get:
+    description: Retrieve a list of things
+    responses:
+     200:
+       body:
+         schema: things
+  /{thingid}:
+    get:
+      description: Get a single thing by ID
+      responses:
+       200:
+        body:
+          schema: thing
+    /result:
+      get:
+        description: Gets the result of processing a thing
+        responses:
+         200:
+           body:
+            schema: thingResult

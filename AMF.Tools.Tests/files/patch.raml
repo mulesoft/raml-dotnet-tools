@@ -1,0 +1,122 @@
+#%RAML 0.8
+title: patch test case
+version: 1.0
+baseUri: http://localhost:8081/api
+mediaType: application/json
+/contacts:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                { "$schema": "http://json-schema.org/schema",
+                  "type": "object",
+                  "description": "a contact",
+                  "properties": {
+                    "name": { "type": "string", "required" : "true" },
+                    "email": { "type": "string", "required" : "true" },
+                    "phone": { "type": "string", "required" : "true" }
+                  }
+                }
+    patch:
+        description: Edit a comment.
+        body:
+          application/json:
+            schema: |
+                {
+                    "$schema": "http://json-schema.org/draft-03/schema",
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "url": {
+                            "type": "string"
+                        },
+                        "body": {
+                            "type": "string"
+                        },
+                        "user": {
+                            "properties": {
+                                "login": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "avatar_url": {
+                                    "type": "string"
+                                },
+                                "gravatar_id": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "created_at": {
+                            "description": "ISO 8601.",
+                            "type": "string"
+                        }
+                    }
+                }
+        responses:
+          200:
+            body:
+              schema: |
+                {
+                    "$schema": "http://json-schema.org/draft-03/schema",
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "url": {
+                            "type": "string"
+                        },
+                        "body": {
+                            "type": "string"
+                        },
+                        "user": {
+                            "properties": {
+                                "login": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "avatar_url": {
+                                    "type": "string"
+                                },
+                                "gravatar_id": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "created_at": {
+                            "description": "ISO 8601.",
+                            "type": "string"
+                        }
+                    }
+                }
+              example: |
+                {
+                    "id": 1,
+                    "url": "https://api.github.com/gists/83ba86d111d39709da8c/comments/1",
+                    "body": "Just commenting for the sake of commenting",
+                    "user": {
+                        "login": "octocat",
+                        "id": 1,
+                        "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+                        "gravatar_id": "somehexcode",
+                        "url": "https://api.github.com/users/octocat"
+                    },
+                    "created_at": "2011-04-18T23:23:56Z"
+                }

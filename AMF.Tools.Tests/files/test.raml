@@ -1,0 +1,259 @@
+#%RAML 0.8
+---
+title: Remote Vending API
+version: v1.0
+baseUri: http://remote-vending/api
+mediaType: application/json
+schemas:
+  - post-sale: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "machineId" : {
+            "type" : "string"
+          },
+          "trayId" : {
+            "type" : "string"
+          },
+          "dateAndTime" : {
+            "type" : "string"
+          },
+          "exchange" : {
+            "type" : "object",
+            "properties" : {
+              "value" : {
+                "type" : "integer"
+              },
+              "in" : {
+                "type" : "integer"
+              },
+              "out" : {
+                "type" : "integer"
+              }
+            }
+          }
+        }    
+      }
+  - get-sales: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "sales" : {
+            "type" : "array",
+            "items" : {
+                "type" : "object",
+                "properties" : {
+                  "dateAndTime" : {
+                    "type" : "string"
+                  },
+                  "value" : {
+                    "type" : "integer"
+                  },
+                  "machineId" : {
+                    "type" : "string"
+                  },
+                  "productId" : {
+                    "type" : "string"
+                  }
+                }
+              }
+          },
+          "totalValue" : {
+              "type" : "integer"
+            }
+        }    
+      }
+  - get-machines: |
+     {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "machines" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+                "properties" : {
+                  "id" : {
+                    "type" : "string"
+                  },
+                  "location" : {
+                    "type" : "string"
+                  }
+                }
+              }
+          }
+        }    
+      }
+  - get-machine: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "location" : {
+            "type" : "string"
+          },
+          "sales" : {
+            "type" : "array",
+            "items" : {
+                "type" : "object",
+                "properties" : {
+                  "dateTime" : {
+                    "type" : "string"
+                  },
+                  "productId" : {
+                    "type" : "string"
+                  }
+                }
+              }
+          },
+          "floatsToBeReplenished" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            }
+          },
+          "stockToBeReplenished" : {
+            "type" : "integer"
+          }
+        }    
+      }
+documentation:
+  - title: Introduction
+    content: |
+      API to manage the sales and replenishments of stock items and floats in our vending machines.
+resourceTypes: 
+  - base:
+      get:
+        responses:
+          200:
+            body:
+              schema: get-<<resourcePathName>> # e.g. get-machines
+  - collection:
+      type: base
+      post:
+        body:
+          schema: post-<<resourcePathName | !singularize>>  # e.g. post-sale
+        responses:
+          201:
+            description: Created!
+            headers:
+              Location:
+                description: uri of new resource
+                type: string
+                required: true  
+traits:
+  - filterable:
+      queryParameters:
+        stockLevel:
+          displayName: Stock Level
+          description: Percentage of trays with stock items in them.
+          type: string
+          required: false
+          example: stockLevel=20
+        floatLevel:
+          displayName: Float Level
+          description: Percentage of monetary units present in the float.
+          type: string
+          required: false
+          example: floatLevel=80
+/sales:
+  type: collection
+  post:
+    body:
+      example: |
+        {
+            "machineId" : "ZX4102",
+            "trayId" : "A1",
+            "dateAndTime" : "2013-10-22 16:17:00",
+            "exchange" : {
+                "value" : 450,
+                "in" : 500,
+                "out" : 50
+            } 
+        }
+  get:
+    responses:
+      200:
+        body:
+          example: |
+            {
+                "count" : 2,
+                "sales" : [
+                  {
+                    "dateAndTime" : "2013-10-22 16:17:00",
+                    "value" : 450,
+                    "machineId" : "ZX4102",
+                    "productId" : "Cad-CB1012"
+                  },
+                  {
+                    "dateAndTime" : "2013-10-22 16:17:00",
+                    "value" : 150,
+                    "machineId" : "ZX5322",
+                    "productId" : "CC-LB1"
+                  }
+                ],
+                "totalValue" : 600
+            }
+/machines:
+  type: base
+  get:
+    is: [filterable]
+    responses:
+      200:
+        body:
+          example: |
+            {
+                "count" : 3,
+                "machines" : [
+                  {
+                    "id" : "ZX4102",
+                    "location" : "Starbuck's, 442 Geary Street, San Francisco, CA 94102"
+                  },
+                  {
+                    "id" : "ZX5322",
+                    "location" : "Starbuck's, 462 Powell Street, San Francisco, CA 94102"
+                  },
+                  {
+                    "id" : "ZX6792",
+                    "location" : "Cafe La Taza, 470 Post Street, San Francisco, CA 94102"
+                  }
+                ]
+            }
+  /{machine}:
+    type: base
+    get:
+      responses:
+        200:
+          body:
+            example: |
+              {
+                  "id" : "ZX4102",
+                  "location" : "Starbuck's, 442 Geary Street, San Francisco, CA 94102",
+                  "sales" : [
+                    {
+                      "dateAndTime" : "2013-10-22 16:17:00",
+                      "value" : 450,
+                      "machineId" : "ZX4102",
+                      "productId" : "Cad-CB1012"
+                    },
+                    {
+                      "dateAndTime" : "2013-10-22 16:17:00",
+                      "value" : 150,
+                      "machineId" : "ZX5322",
+                      "productId" : "CC-LB1"
+                    }
+                  ],
+                  "floatsToBeReplenished" : [20, 40, 20, 80, 20, 40, 40],
+                  "stockToBeReplenished" : 54
+              }

@@ -1,0 +1,33 @@
+#%RAML 0.8
+title: Number formats
+mediaType: application/json
+schemas:
+    - sample: |
+        {
+          "type": "object",
+          "$schema": "http://json-schema.org/draft-03/schema",
+          "properties": {
+            "longprop": {
+              "type": "number",
+              "format": "long"
+            },
+            "intprop": { 
+              "type": "integer",
+              "required": true 
+            },
+            "numberprop": {
+              "type":"number",
+              "required": true
+            },
+            "shortprop": {
+              "type": "number",
+              "format": "short"
+            }
+          }
+        }
+/persons:
+  get:
+    responses:
+      200:
+        body:
+          schema: sample

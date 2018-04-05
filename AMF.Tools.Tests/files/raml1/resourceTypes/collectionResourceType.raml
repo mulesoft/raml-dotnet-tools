@@ -1,0 +1,52 @@
+#%RAML 1.0 ResourceType
+get:
+    responses:
+        200:
+            body:
+                application/json:
+                    type: <<collectionResponse>>
+        400:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        401:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        403:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        500:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+post:
+    body:
+        application/json:
+            type: <<collectionMemberPrototype>>
+    responses:
+        201:
+            body:
+                application/json:
+                    type: <<collectionMemberResponse>>
+        400:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        401:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        403:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        409:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        500:
+            body:
+                application/json:
+                    type: <<errorResponse>>

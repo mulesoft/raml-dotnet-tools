@@ -1,0 +1,76 @@
+ #%RAML 0.8
+title: Mule Worker Role Provisioning API
+version: 1.0
+baseUri: https://localhost/api
+mediaType: application/json
+protocols: [HTTPS]
+
+/workers:
+  post:
+    description: creates a new deployment
+    body:
+      application/json:
+        schema: |
+          {
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "type": "object",
+            "description": "deployment settings",
+            "properties": {
+            "oauth_id": { "type": "string"},
+            "oauth_secret": { "type": "string"},
+            "subscription_id": {"type": "string"},
+            "management_certificate": {"type": "string"},
+            "service_name": { "type": "string"},
+            "service_type": { "enum": [ "api_gateway", "integration_worker" ]},
+            "service_location": { "enum": [ "South Central US", "West US", "East US", "East US 2", "Central US", "North Europe", "West Europe", "Southeast Asia", "East Asia", "Japan West"]},
+            "instance_size": { "enum": ["ExtraSmall", "Small", "Medium", "Large", "ExtraLarge", "A5", "A6", "A7", "A8", "A9"]},
+            "instance_count": { "type": "integer", "minimum": 1, "maximum": 16},
+            "mule_version": { "type": "string"},
+            "configuration": { "type": "string"},
+            "license": { "type": "string"}
+            }
+          }
+        example: |
+          {
+            "oauth_id" : "my id",
+            "oauth_secret": "the secret",
+            "subscription_id": "123",
+            "management_certificate": "MIIJ/AIBAzCCCbwGCSqGSIb3DQEHAaCCCa0EggmpMIIJpTCCBe4GC",
+            "service_name" : "my worker role",
+            "service_type" : "integration_worker",
+            "service_location": "EAST US",
+            "instance_size": "ExtraSmall",
+            "instance_count": "2",
+            "mule_version": "3.6.1",
+            "configuration": "MIIJ/AIBAzCCCbwGCSqGSIb3DQEHAaCCCa0EggmpMIIJpTCCBe4GC",
+            "license": "MIIJ/AIBAzCCCbwGCSqGSIb3DQEHAaCCCa0EggmpMIIJpTCCBe4GC"
+          }
+    responses:
+      200:
+        body:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "object",
+              "description": "deployment settings response",
+              "properties": {
+                "id": { "type": "int"}
+              }
+            }
+  /{id}:
+    get:
+      description: gets the deployment status
+      responses:
+        200:
+          body:
+            schema: |
+              {
+                "$schema": "http://json-schema.org/draft-03/schema",
+                "type": "object",
+                "description": "deployment settings response",
+                "properties": {
+                  "id": { "type": "int"},
+                  "status": { "type": "string"}
+                }
+              }
+          

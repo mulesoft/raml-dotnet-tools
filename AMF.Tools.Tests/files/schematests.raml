@@ -1,0 +1,188 @@
+#%RAML 0.8
+title: things
+version: 1
+baseUri: http://localhost/v1
+mediaType: application/json
+
+resourceTypes:
+  - collection:
+      get:
+        description: Get a list of <<schema-type>>
+        responses:
+          200:
+            body:
+              schema: <<resourcePathName>>
+              example: <<example-collection>>
+      post:
+        description: Create/add a new <<schema-type>>
+        body:
+          schema: <<resourcePathName | !singularize>>
+          example: <<example-member>>
+        responses:
+          201:
+            headers:
+              Location:
+            body:
+              schema: <<resourcePathName | !singularize>>
+              example: <<example-member>>
+  - member:
+      get:
+        description: Get a specific <<schema-type>>
+        responses:
+          200:
+            body:
+              schema: <<resourcePathName | !singularize>>
+              example: <<example-member>>
+      delete:
+        description: Remove/cancel the specific <<schema-type>>
+        responses:
+          204:
+  - readonlymember:
+      get:
+        description: Get a specific <<schema-type>>
+        responses:
+          200:
+            body:
+              schema: <<schema-type>>
+              example: <<example-member>>
+  - sender:
+      post:
+        description: Create/add a new <<schema-type>>
+        body:
+          schema: <<schema-type>>
+          example: <<example-member>>
+schemas:
+  - things: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "array",
+        "items": 
+        {
+          "type": "object",
+          "properties": 
+          {
+            "id": { "type": "string", "required": true },
+            "name": { "type": "string", "required": true }
+          }
+        }
+      }
+  - thing: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "object",
+        "properties": 
+        {
+          "id": { "type": "string", "required": false },
+          "name": { "type": "string", "required": true },
+          "color": { "type": "string", "required": true, "enum": [ "red", "green", "blue" ] },
+          "children": { 
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties":
+              {
+                "name": { "type": "string", "required": true },
+                "size": { "type": "number", "required": true }
+              }
+            }
+          }
+        }
+      }
+  - thingResult: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "object",
+        "properties": 
+        {
+          "name": { "type": "string", "required": true },
+          "count": { "type": "integer", "required": true },
+          "children": { 
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties":
+              {
+                "name": { "type": "string", "required": true },
+                "size": { "type": "number", "required": true }
+              }
+            }
+          }
+        }
+      }
+  - thingRequest: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "object",
+        "properties": 
+        {
+          "name": { "type": "string", "required": true },
+          "count": { "type": "integer", "required": true },
+          "children": { 
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties":
+              {
+                "name": { "type": "string", "required": true },
+                "size": { "type": "number", "required": true }
+              }
+            }
+          }
+        }
+      }
+/things:
+  displayName: things
+  type:
+    collection:
+      schema-type: things
+      example-collection: |
+        [
+          { "id":"1", "name": "Thing one" },
+          { "id":"2", "name": "Thing two" }
+        ]
+      example-member: |
+        { 
+        }
+  get:
+    description: Retrieve a list of things
+    responses:
+     200:
+       body:
+  post:
+    description: Create or update (upsert) a thing with the posted data
+
+  /{thingid}:
+    type:
+      member:
+        schema-type: thing
+        example-member: |
+          { 
+          }
+    get:
+      description: Get a single thing by ID
+      responses:
+       200:
+    delete:
+      description: Delete a single thing by ID    
+
+    /result:
+      type:
+        readonlymember:
+          schema-type: thingResult
+          example-member: |
+            { 
+            }
+      get:
+        description: Gets the result of processing a thing
+        responses:
+         200:
+           body:
+    /send:
+      type:
+        sender:
+          schema-type: thingRequest
+          example-member: |
+            { 
+            }
+      post:
+        description: sends the result of processing a thing

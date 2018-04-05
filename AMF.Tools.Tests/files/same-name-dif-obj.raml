@@ -1,0 +1,71 @@
+#%RAML 0.8
+title: Same name different object
+version: 1.0
+baseUri: http://samename.com/api
+mediaType: application/json
+schemas:
+    - movie: |
+          {
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "type": "object",
+            "id": "movie",
+            "description": "a movie",
+            "properties": {
+                "id": { "type": "integer"},
+                "name": { "type": "string"},
+                "director": { 
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "integer"},
+                        "firstname": { "type": "string"},
+                        "lastname": { "type": "string" }
+                    }
+                },
+                "genre": { "type": "string" },
+                "cast":{ "type": "string" },
+                "duration":{ "type": "number" },
+                "storyline":{ "type": "string" },
+                "language":{ "type": "string" }
+            }
+          }
+    - school: |
+            {
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "object",
+              "description": "a school",
+              "properties": 
+                {
+                  "name": { "type" : "string"},
+                  "address": { "type" : "string"},
+                  "director": { 
+                    "type" : "object",
+                    "properties": {
+                        "title": { "type": "string"},
+                        "firstname": { "type": "string"},
+                        "lastname": { "type": "string" },
+                        "resume": { "type": "string" }
+                    }
+
+                  }
+                }
+            }
+/movies:
+  post:
+    description: adds a movie to the catalogue
+    body:
+        schema: movie
+  /{id}:
+      get:
+        description: gets a movie
+        responses:
+          200:
+            body:
+              schema: movie
+/school:
+  /{id}:
+    get:
+      description: get a school
+      responses:
+        200:
+          body:
+              schema: school

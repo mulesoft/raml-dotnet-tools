@@ -1,0 +1,90 @@
+#%RAML 1.0 ResourceType
+get:
+    responses:
+        200:
+            body:
+                application/json:
+                    type: <<collectionMemberResponse>>
+        400:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        401:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        403:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        404:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        500:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+put:
+    body:
+        application/json:
+            type: <<collectionMemberPrototype>>
+    responses:
+        200:
+            body:
+                application/json:
+                    type: <<collectionMemberResponse>>
+        400:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        401:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        403:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        404:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        409:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        500:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+delete:
+    responses:
+        200:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        400:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        401:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        403:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        404:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        409:
+            body:
+                application/json:
+                    type: <<errorResponse>>
+        500:
+            body:
+                application/json:
+                    type: <<errorResponse>>

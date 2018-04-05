@@ -1,0 +1,101 @@
+- deliveries: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "array",
+      "items": 
+      {
+        "type": "object",
+        "properties": 
+        {
+          "id": { "type": "string", "required": true },
+          "at": { "type": "string", "required": true },
+          "toAddressId": { "type": "string", "required": true },
+          "orderItemId": { "type": "string", "required": true },
+          "status": { "type": "string", "required": true, "enum": [ "scheduled", "completed", "failed" ] },
+          "droneId": { "type": "string" }
+        }
+      }
+    }
+- delivery: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": 
+      {
+        "id": { "type": "string", "required": true },
+        "at": { "type": "string", "required": true },
+        "toAddressId": { "type": "string", "required": true },
+        "orderItemId": { "type": "string", "required": true },
+        "status": { "type": "string", "required": true, "enum": [ "scheduled", "completed", "failed" ] },
+        "droneId": { "type": "string" }
+      }
+    }
+- newdelivery: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": 
+      {
+        "at": { "type": "string", "required": true },
+        "toAddressId": { "type": "string", "required": true },
+        "orderItemId": { "type": "string", "required": true }
+      }
+    }
+- partialdelivery: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": 
+      {
+        "at": { "type": "string" },
+        "toAddressId": { "type": "string" }
+      }
+    }
+- drones: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "array",
+      "items": 
+      {
+        "type": "object",
+        "properties": 
+        {
+          "id": { "type": "string", "required": true },
+          "latitude": { "type": "number" },
+          "longitude": { "type": "number" },
+          "altitude": { "type": "number" },
+          "name": { "type": "string", "required": true }
+        }
+      }
+    }
+- drone: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": 
+      {
+        "id": { "type": "string", "required": true },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "altitude": { "type": "number" },
+        "name": { "type": "string", "required": true }
+      }
+    }
+- newdrone: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": 
+      {
+        "name": { "type": "string", "required": true }
+      }
+    }
+- partialdrone: |
+    {
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": 
+      {
+        "name": { "type": "string", "required": true }
+      }
+    }

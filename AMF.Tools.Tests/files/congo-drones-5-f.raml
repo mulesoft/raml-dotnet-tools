@@ -1,0 +1,154 @@
+#%RAML 0.8
+baseUri: http://mocksvc.mulesoft.com/mocks/567096aa-b8e9-4464-96bf-dc0a3e7668f5
+title: Congo API For Drone Deliveries
+mediaType: application/json
+schemas: !include congo-drones-schemas.raml
+resourceTypes: !include congo-types.raml
+traits: !include congo-traits.raml
+/deliveries:
+  type: 
+    collection: 
+      example-collection: |
+        [
+          { 
+            "id": "4",
+            "at": "Tue, 08 Jul 2014 13:00:00 GMT",
+            "toAddressId": "gi6w4fgi",
+            "orderItemId": "6782798",
+            "status": "completed",
+            "droneId": "f"
+          },
+          { 
+            "id": "137",
+            "at": "Sun, 20 Jul 2014 19:36:00 GMT",
+            "toAddressId": "6tg23d6i",
+            "orderItemId": "7626827",
+            "status": "scheduled",
+            "droneId": "a"
+          },
+          { 
+            "id": "8",
+            "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+            "toAddressId": "gi6w4fgi",
+            "orderItemId": "9877292",
+            "status": "scheduled",
+            "droneId": "f"
+          }
+        ]
+      example-member: &delivery |
+        { 
+          "id": "987",
+          "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+          "toAddressId": "273hh79",
+          "orderItemId": "9877292",
+          "status": "scheduled",
+          "droneId": "f"
+        }
+      example-newmember: |
+        { 
+          "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+          "toAddressId": "273hh79",
+          "orderItemId": "736786"
+        }
+  get: 
+    queryParameters:
+      sinceDate:
+        type: date
+        example: "Mon, 14 Jul 2014 07:00:00 GMT"
+      throughDate:
+        type: date
+        example: "Mon, 18 Jul 2014 07:00:00 GMT"
+  /{deliveryId}:
+    type: 
+      member: 
+        example-member: &delivery |
+            { 
+              "id": "987",
+              "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+              "toAddressId": "273hh79",
+              "orderItemId": "9877292",
+              "status": "scheduled",
+              "droneId": "f"
+            }
+        example-partialmember: |
+          { 
+            "at": "Mon, 21 Jul 2014 00:00:00 GMT"
+          }
+/drones:
+  type: 
+    collection: 
+      example-collection: |
+        [
+          {
+            "id": "a",
+            "latitude": 37.787862,
+            "longitude": -122.404694,
+            "altitude": 28.3,
+            "name": "High Flyer"
+          },
+          {
+            "id": "f",
+            "latitude": 37.852519,
+            "longitude": -122.237390,
+            "altitude": 56.9,
+            "name": "Camelot"
+          }
+        ]
+      example-member: &drone |
+        {
+          "id": "f",
+          "latitude": 37.852519,
+          "longitude": -122.237390,
+          "altitude": 56.9,
+          "name": "Camelot"
+        }
+      example-newmember: |
+        {
+          "name": "Lancelot"
+        }
+  get:
+    queryParameters:
+      atLatitude:
+        description: Latitude in decimal degrees
+        type: number
+      atLongitude:
+        description: Longitude in decimal degrees
+        type: number
+      atAltitude:
+        description: Altitude in meters above the [ellipsoid](http://www.w3.org/TR/geolocation-API/#ref-wgs)
+        type: number
+      atRange:
+        description: Maximum distance from location, in meters
+        type: number
+        default: 100
+  /{droneId}:
+    type: 
+      member: 
+        example-member:  &drone |
+            {
+              "id": "f",
+              "latitude": 37.852519,
+              "longitude": -122.237390,
+              "altitude": 56.9,
+              "name": "Camelot"
+            }
+        example-partialmember: |
+          {
+            "name": "Arthur"
+          }
+    /deliveries:
+      get:
+        responses:
+          200:
+            body:
+              example: |
+                [
+                  { 
+                    "id": "8",
+                    "at": "Sun, 20 Jul 2014 21:20:00 GMT",
+                    "toAddressId": "gi6w4fgi",
+                    "orderItemId": "9877292",
+                    "status": "scheduled",
+                    "droneId": "f"
+                  }
+                ]

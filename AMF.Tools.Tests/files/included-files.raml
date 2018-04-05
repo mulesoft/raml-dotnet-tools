@@ -1,0 +1,13 @@
+#%RAML 0.8
+title: Movies
+version: 1.0
+baseUri: http://movies.com/api
+mediaType: application/json
+schemas: !include schemas.raml
+/movies:
+  get:
+    description: gets all movies in the catalogue
+    responses:
+      200:
+        body:
+          schema: movies

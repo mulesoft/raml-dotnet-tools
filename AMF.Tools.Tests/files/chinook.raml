@@ -1,0 +1,482 @@
+#%RAML 0.8
+title: Api
+baseUri: /
+schemas:
+  - Customer: |
+      { 
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "type": "object",
+        "id": "Customer",
+        "properties": {
+          "Id": { "type": "integer"},
+          "Company": { "type": "string"},
+          "SupportRepresentant":
+            { 
+              "type": "object",
+              "id": "Employee",
+              "properties": {
+                "Id": { "type": "integer"},
+                "Title": { "type": "string"},
+                "BirthDate": { "type": "string"},
+                "HireDate": { "type": "string"},
+                "ReportsTo":
+                  { "$ref": "Employee" },
+                "FirstName": { "type": "string"},
+                "LastName": { "type": "string"},
+                "Address": { "type": "string"},
+                "City": { "type": "string"},
+                "State": { "type": "string"},
+                "Country": { "type": "string"},
+                "PostalCode": { "type": "string"},
+                "Phone": { "type": "string"},
+                "Fax": { "type": "string"},
+                "Email": { "type": "string"}
+              }
+            },
+          "FirstName": { "type": "string"},
+          "LastName": { "type": "string"},
+          "Address": { "type": "string"},
+          "City": { "type": "string"},
+          "State": { "type": "string"},
+          "Country": { "type": "string"},
+          "PostalCode": { "type": "string"},
+          "Phone": { "type": "string"},
+          "Fax": { "type": "string"},
+          "Email": { "type": "string"}
+        }
+      }
+      
+  - Track: |
+      { 
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "type": "object",
+        "id": "Track",
+        "properties": {
+          "Id": { "type": "integer"},
+          "Name": { "type": "string"},
+          "Album":
+            { 
+              "type": "object",
+              "id": "Album",
+              "properties": {
+                "Artist":
+                  { 
+                    "type": "object",
+                    "id": "Artist",
+                    "properties": {
+                      "Id": { "type": "integer"},
+                      "Name": { "type": "string"}
+                    }
+                  },
+                "Id": { "type": "integer"},
+                "Title": { "type": "string"},
+                "Tracks":
+                  {
+                    "type": "array",
+                    "items": 
+                      { "$ref": "Track" }
+                  }
+              }
+            },
+          "MediaType":
+            { 
+              "type": "object",
+              "id": "MediaType",
+              "properties": {
+                "Id": { "type": "integer"},
+                "Name": { "type": "string"}
+              }
+            },
+          "Genre":
+            { 
+              "type": "object",
+              "id": "Genre",
+              "properties": {
+                "Id": { "type": "integer"},
+                "Name": { "type": "string"}
+              }
+            },
+          "Composer": { "type": "string"},
+          "Milliseconds": { "type": "integer"},
+          "Bytes": { "type": "integer"},
+          "UnitPrice": { "type": "number"}
+        }
+      }
+      
+  - Artist: |
+      { 
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "type": "object",
+        "id": "Artist",
+        "properties": {
+          "Id": { "type": "integer"},
+          "Name": { "type": "string"}
+        }
+      }
+      
+  - Album: |
+      { 
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "type": "object",
+        "id": "Album",
+        "properties": {
+          "Artist":
+            { 
+              "type": "object",
+              "id": "Artist",
+              "properties": {
+                "Id": { "type": "integer"},
+                "Name": { "type": "string"}
+              }
+            },
+          "Id": { "type": "integer"},
+          "Title": { "type": "string"},
+          "Tracks":
+            {
+              "type": "array",
+              "items": 
+              {
+                "type": "object",
+                "properties": 
+                {
+                "Id": { "type": "integer"},
+                "Name": { "type": "string"},
+                "Album":
+                  { "$ref": "Album" },
+                "MediaType":
+                  { 
+                    "type": "object",
+                    "id": "MediaType",
+                    "properties": {
+                      "Id": { "type": "integer"},
+                      "Name": { "type": "string"}
+                    }
+                  },
+                "Genre":
+                  { 
+                    "type": "object",
+                    "id": "Genre",
+                    "properties": {
+                      "Id": { "type": "integer"},
+                      "Name": { "type": "string"}
+                    }
+                  },
+                "Composer": { "type": "string"},
+                "Milliseconds": { "type": "integer"},
+                "Bytes": { "type": "integer"},
+                "UnitPrice": { "type": "number"}
+                }
+              }
+            }
+        }
+      }
+      
+  - Invoice: |
+      { 
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "type": "object",
+        "id": "Invoice",
+        "properties": {
+          "Id": { "type": "integer"},
+          "Customer":
+            { 
+              "type": "object",
+              "id": "Customer",
+              "properties": {
+                "Id": { "type": "integer"},
+                "Company": { "type": "string"},
+                "SupportRepresentant":
+                  { 
+                    "type": "object",
+                    "id": "Employee",
+                    "properties": {
+                      "Id": { "type": "integer"},
+                      "Title": { "type": "string"},
+                      "BirthDate": { "type": "string"},
+                      "HireDate": { "type": "string"},
+                      "ReportsTo":
+                        { "$ref": "Employee" },
+                      "FirstName": { "type": "string"},
+                      "LastName": { "type": "string"},
+                      "Address": { "type": "string"},
+                      "City": { "type": "string"},
+                      "State": { "type": "string"},
+                      "Country": { "type": "string"},
+                      "PostalCode": { "type": "string"},
+                      "Phone": { "type": "string"},
+                      "Fax": { "type": "string"},
+                      "Email": { "type": "string"}
+                    }
+                  },
+                "FirstName": { "type": "string"},
+                "LastName": { "type": "string"},
+                "Address": { "type": "string"},
+                "City": { "type": "string"},
+                "State": { "type": "string"},
+                "Country": { "type": "string"},
+                "PostalCode": { "type": "string"},
+                "Phone": { "type": "string"},
+                "Fax": { "type": "string"},
+                "Email": { "type": "string"}
+              }
+            },
+          "InvoiceDate": { "type": "string"},
+          "BillingAddress": { "type": "string"},
+          "BillingCity": { "type": "string"},
+          "BillingState": { "type": "string"},
+          "BillingCountry": { "type": "string"},
+          "BillingPostalCode": { "type": "string"},
+          "Lines":
+            {
+              "type": "array",
+              "items": 
+              {
+                "type": "object",
+                "properties": 
+                {
+                "Id": { "type": "integer"},
+                "Invoice":
+                  { "$ref": "Invoice" },
+                "Track":
+                  { 
+                    "type": "object",
+                    "id": "Track",
+                    "properties": {
+                      "Id": { "type": "integer"},
+                      "Name": { "type": "string"},
+                      "Album":
+                        { 
+                          "type": "object",
+                          "id": "Album",
+                          "properties": {
+                            "Artist":
+                              { 
+                                "type": "object",
+                                "id": "Artist",
+                                "properties": {
+                                  "Id": { "type": "integer"},
+                                  "Name": { "type": "string"}
+                                }
+                              },
+                            "Id": { "type": "integer"},
+                            "Title": { "type": "string"},
+                            "Tracks":
+                              {
+                                "type": "array",
+                                "items": 
+                                  { "$ref": "Track" }
+                              }
+                          }
+                        },
+                      "MediaType":
+                        { 
+                          "type": "object",
+                          "id": "MediaType",
+                          "properties": {
+                            "Id": { "type": "integer"},
+                            "Name": { "type": "string"}
+                          }
+                        },
+                      "Genre":
+                        { 
+                          "type": "object",
+                          "id": "Genre",
+                          "properties": {
+                            "Id": { "type": "integer"},
+                            "Name": { "type": "string"}
+                          }
+                        },
+                      "Composer": { "type": "string"},
+                      "Milliseconds": { "type": "integer"},
+                      "Bytes": { "type": "integer"},
+                      "UnitPrice": { "type": "number"}
+                    }
+                  },
+                "UnitPrice": { "type": "number"},
+                "Quantity": { "type": "integer"}
+                }
+              }
+            }
+        }
+      }
+      
+/customers:
+  get:
+    description: No Documentation Found. (Customer.Get)
+    headers:
+  post:
+    description: No Documentation Found. (Customer.Post)
+    headers:
+    body:
+      application/json:
+        schema: Customer
+      text/json:
+      application/xml:
+      text/xml:
+      application/x-www-form-urlencoded:
+  /{id}:
+    uriParameters:
+      id:
+        description: No Documentation Found.
+        type: string
+        required: true
+    get:
+      description: No Documentation Found. (Customer.Get)
+      headers:
+    put:
+      description: No Documentation Found. (Customer.Put)
+      headers:
+      body:
+        application/json:
+          schema: Customer
+        text/json:
+        application/xml:
+        text/xml:
+        application/x-www-form-urlencoded:
+    delete:
+      description: No Documentation Found. (Customer.Delete)
+      headers:
+/tracks:
+  get:
+    description: No Documentation Found. (Track.Get)
+    headers:
+  post:
+    description: No Documentation Found. (Track.Post)
+    headers:
+    body:
+      application/json:
+        schema: Track
+      text/json:
+      application/xml:
+      text/xml:
+      application/x-www-form-urlencoded:
+  /{id}:
+    uriParameters:
+      id:
+        description: No Documentation Found.
+        type: string
+        required: true
+    get:
+      description: No Documentation Found. (Track.Get)
+      headers:
+    put:
+      description: No Documentation Found. (Track.Put)
+      headers:
+      body:
+        application/json:
+          schema: Track
+        text/json:
+        application/xml:
+        text/xml:
+        application/x-www-form-urlencoded:
+    delete:
+      description: No Documentation Found. (Track.Delete)
+      headers:
+/artists:
+  get:
+    description: No Documentation Found. (Artist.Get)
+    headers:
+  post:
+    description: No Documentation Found. (Artist.Post)
+    headers:
+    body:
+      application/json:
+        schema: Artist
+      text/json:
+      application/xml:
+      text/xml:
+      application/x-www-form-urlencoded:
+  /{id}:
+    uriParameters:
+      id:
+        description: No Documentation Found.
+        type: string
+        required: true
+    get:
+      description: No Documentation Found. (Artist.Get)
+      headers:
+    put:
+      description: No Documentation Found. (Artist.Put)
+      headers:
+      body:
+        application/json:
+          schema: Artist
+        text/json:
+        application/xml:
+        text/xml:
+        application/x-www-form-urlencoded:
+    delete:
+      description: No Documentation Found. (Artist.Delete)
+      headers:
+/albums:
+  get:
+    description: No Documentation Found. (Album.Get)
+    headers:
+  post:
+    description: No Documentation Found. (Album.Post)
+    headers:
+    body:
+      application/json:
+        schema: Album
+      text/json:
+      application/xml:
+      text/xml:
+      application/x-www-form-urlencoded:
+  /{id}:
+    uriParameters:
+      id:
+        description: No Documentation Found.
+        type: string
+        required: true
+    get:
+      description: No Documentation Found. (Album.Get)
+      headers:
+    put:
+      description: No Documentation Found. (Album.Put)
+      headers:
+      body:
+        application/json:
+          schema: Album
+        text/json:
+        application/xml:
+        text/xml:
+        application/x-www-form-urlencoded:
+    delete:
+      description: No Documentation Found. (Album.Delete)
+      headers:
+/invoices:
+  get:
+    description: No Documentation Found. (Invoice.Get)
+    headers:
+  post:
+    description: No Documentation Found. (Invoice.Post)
+    headers:
+    body:
+      application/json:
+        schema: Invoice
+      text/json:
+      application/xml:
+      text/xml:
+      application/x-www-form-urlencoded:
+  /{id}:
+    uriParameters:
+      id:
+        description: No Documentation Found.
+        type: string
+        required: true
+    get:
+      description: No Documentation Found. (Invoice.Get)
+      headers:
+    put:
+      description: No Documentation Found. (Invoice.Put)
+      headers:
+      body:
+        application/json:
+          schema: Invoice
+        text/json:
+        application/xml:
+        text/xml:
+        application/x-www-form-urlencoded:
+    delete:
+      description: No Documentation Found. (Invoice.Delete)
+      headers:

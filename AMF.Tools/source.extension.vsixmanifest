@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="VSIXProject1.a1f8ba2f-ef20-491a-b985-cc2e48676376" Version="1.0" Language="en-US" Publisher="Company" />
-    <DisplayName>VSIXProject1</DisplayName>
+    <Identity Id="AMF.Tools.a1f8ba2f-ef20-491a-b985-cc2e48676376" Version="1.0" Language="en-US" Publisher="Company" />
+    <DisplayName>AMF.Tools</DisplayName>
     <Description>Empty VSIX Project.</Description>
   </Metadata>
   <Installation>

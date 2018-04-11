@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using AMF.Tools.Properties;
 using NuGet.VisualStudio;
 using AMF.Common;
+using AMF.Parser.Model;
 
 namespace MuleSoft.RAML.Tools
 {
@@ -15,17 +16,17 @@ namespace MuleSoft.RAML.Tools
     {
         protected readonly IServiceProvider ServiceProvider;
         protected readonly ILogger Logger;
-        protected readonly string NewtonsoftJsonPackageId = Settings.Default.NewtonsoftJsonPackageId;
+        protected readonly string NewtonsoftJsonPackageId = AMF.Tools.Properties.Settings.Default.NewtonsoftJsonPackageId;
 
-        private readonly string nugetPackagesSource = Settings.Default.NugetPackagesSource;
+        private readonly string nugetPackagesSource = AMF.Tools.Properties.Settings.Default.NugetPackagesSource;
 
-        private readonly string ramlApiCorePackageId = Settings.Default.RAMLApiCorePackageId;
-        private readonly string ramlApiCorePackageVersion = Settings.Default.RAMLApiCorePackageVersion;
-        public readonly static string ApiReferencesFolderName = Settings.Default.ApiReferencesFolderName;
-        private readonly string microsoftNetHttpPackageId = Settings.Default.MicrosoftNetHttpPackageId;
-        private readonly string microsoftNetHttpPackageVersion = Settings.Default.MicrosoftNetHttpPackageVersion;
+        private readonly string ramlApiCorePackageId = AMF.Tools.Properties.Settings.Default.RAMLApiCorePackageId;
+        private readonly string ramlApiCorePackageVersion = AMF.Tools.Properties.Settings.Default.RAMLApiCorePackageVersion;
+        public readonly static string ApiReferencesFolderName = AMF.Tools.Properties.Settings.Default.ApiReferencesFolderName;
+        private readonly string microsoftNetHttpPackageId = AMF.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageId;
+        private readonly string microsoftNetHttpPackageVersion = AMF.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageVersion;
 
-        protected readonly string ClientT4TemplateName = Settings.Default.ClientT4TemplateName;
+        protected readonly string ClientT4TemplateName = AMF.Tools.Properties.Settings.Default.ClientT4TemplateName;
         protected readonly TemplatesManager TemplatesManager = new TemplatesManager();
 
         protected RamlReferenceServiceBase(IServiceProvider serviceProvider, ILogger logger)
@@ -55,7 +56,7 @@ namespace MuleSoft.RAML.Tools
             var installer = componentModel.GetService<IVsPackageInstaller>();
 
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, AMF.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             InstallNugetDependencies(proj, installer, packs);
 
@@ -68,7 +69,7 @@ namespace MuleSoft.RAML.Tools
 
         protected abstract void InstallNugetDependencies(Project proj, IVsPackageInstaller installer, IVsPackageMetadata[] packs);
 
-        protected void AddFilesToProject(string ramlSourceFile, Project proj, string targetNamespace, string ramlOriginalSource, string targetFileName, string clientRootClassName)
+        protected void AddFilesToProject(RamlInfo data, string ramlSourceFile, Project proj, string targetNamespace, string ramlOriginalSource, string targetFileName, string clientRootClassName)
         {
             if(!File.Exists(ramlSourceFile))
                 throw new FileNotFoundException("RAML file not found " + ramlSourceFile);
@@ -101,10 +102,10 @@ namespace MuleSoft.RAML.Tools
             var refFilePath = InstallerServices.AddRefFile(ramlSourceFile, destFolderPath, targetFileName, props);
             ramlProjItem.ProjectItems.AddFromFile(refFilePath);
 
-            GenerateCode(proj, targetNamespace, clientRootClassName, apiRefsFolderPath, ramlDestFile, destFolderPath, destFolderName, ramlProjItem);
+            GenerateCode(data, proj, targetNamespace, clientRootClassName, apiRefsFolderPath, ramlDestFile, destFolderPath, destFolderName, ramlProjItem);
         }
 
-        protected abstract System.Threading.Tasks.Task GenerateCode(Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
+        protected abstract System.Threading.Tasks.Task GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem);
 
     }

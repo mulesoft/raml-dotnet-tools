@@ -2,20 +2,18 @@
 using System.ComponentModel.Design;
 using System.Dynamic;
 using System.Globalization;
-using AMF.Common;
 using AMF.Common.ViewModels;
+using AMF.Tools.Properties;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using MuleSoft.RAML.Tools;
-using AMF.Tools.Properties;
-using Caliburn.Micro;
 
 namespace AMF.Tools
 {
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class AddContractCommand
+    internal sealed class AddReferenceCommand
     {
         /// <summary>
         /// Command ID.
@@ -25,7 +23,7 @@ namespace AMF.Tools
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("5cf85f6a-50ee-4fe6-b316-838cbeafff00");
+        public static readonly Guid CommandSet = new Guid("0b89f7f1-319a-48f4-8ba7-90c8fbc0c062");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -33,11 +31,11 @@ namespace AMF.Tools
         private readonly Package package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AddContractCommand"/> class.
+        /// Initializes a new instance of the <see cref="AddReferenceCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private AddContractCommand(Package package)
+        private AddReferenceCommand(Package package)
         {
             if (package == null)
             {
@@ -58,7 +56,7 @@ namespace AMF.Tools
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static AddContractCommand Instance
+        public static AddReferenceCommand Instance
         {
             get;
             private set;
@@ -81,7 +79,7 @@ namespace AMF.Tools
         /// <param name="package">Owner package, not null.</param>
         public static void Initialize(Package package)
         {
-            Instance = new AddContractCommand(package);
+            Instance = new AddReferenceCommand(package);
         }
 
         /// <summary>
@@ -93,12 +91,11 @@ namespace AMF.Tools
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
-            var ramlScaffoldUpdater = RamlScaffoldServiceBase.GetRamlScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
+            var generationServices = RamlReferenceServiceBase.GetRamlReferenceService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, new ActivityLogger());
             var ramlChooserViewModel = new RamlChooserViewModel();
-            ramlChooserViewModel.Load(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, ramlScaffoldUpdater.AddContract, "Add RAML Contract", true, Settings.Default.RAMLExchangeUrl);
+            ramlChooserViewModel.Load(this.ServiceProvider, generationServices.AddRamlReference, "Add RAML Reference", false, Settings.Default.RAMLExchangeUrl);
             dynamic settings = new ExpandoObject();
-            settings.Height = 570;
-
+            settings.Height = 475;
             AmfToolsPackage.WindowManager.ShowDialog(ramlChooserViewModel, null, settings);
         }
     }

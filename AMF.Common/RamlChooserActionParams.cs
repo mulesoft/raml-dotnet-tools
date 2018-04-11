@@ -30,6 +30,6 @@
 
         public string ImplementationControllersFolder { get; set; }
         public bool AddGeneratedSuffixToFiles { get; set; }
-        public RamlData Data { get; set; }
+        public RamlInfo Data { get; set; }
     }
 }

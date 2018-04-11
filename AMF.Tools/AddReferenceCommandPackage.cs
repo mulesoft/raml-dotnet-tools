@@ -1,9 +1,14 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.InteropServices;
-using AMF.Common;
-using Caliburn.Micro;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.Win32;
 
 namespace AMF.Tools
 {
@@ -25,20 +30,21 @@ namespace AMF.Tools
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true)]
-    [InstalledProductRegistration("#1110", "#1112", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
-    [Guid(AmfToolsPackage.PackageGuidString)]
+    [InstalledProductRegistration("#2110", "#2112", "1.0", IconResourceID = 2400)] // Info on this package for Help/About
+    [ProvideMenuResource("Menus1.ctmenu", 1)]
+    [Guid(AddReferenceCommandPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class AmfToolsPackage : Package
+    public sealed class AddReferenceCommandPackage : Package
     {
         /// <summary>
-        /// VSPackage1 GUID string.
+        /// AddReferenceCommandPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "d24cb627-9b37-4ac3-aec3-aba333e88419";
+        public const string PackageGuidString = "b09cf59c-865e-4d13-afa7-9390b64013ea";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AmfToolsPackage"/> class.
+        /// Initializes a new instance of the <see cref="AddReferenceCommand"/> class.
         /// </summary>
-        public AmfToolsPackage()
+        public AddReferenceCommandPackage()
         {
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
@@ -46,29 +52,6 @@ namespace AMF.Tools
             // initialization is the Initialize method.
         }
 
-        private static IWindowManager windowManager;
-        public static IWindowManager WindowManager {
-            get
-            {
-                if(windowManager == null)
-                {
-                    bootstrapper.Initialize();
-
-                    try
-                    {
-                        windowManager = IoC.Get<IWindowManager>();
-                    }
-                    catch
-                    {
-                        windowManager = new WindowManager();
-                    }
-
-                    LoadSystemWindowsInteractivity();
-                }
-                return windowManager;
-            }
-        }
-        private static Bootstrapper bootstrapper = new Bootstrapper();
         #region Package Members
 
         /// <summary>
@@ -77,19 +60,10 @@ namespace AMF.Tools
         /// </summary>
         protected override void Initialize()
         {
+            AddReferenceCommand.Initialize(this);
             base.Initialize();
-            AddContractCommand.Initialize(this);
         }
 
         #endregion
-
-        // workaround http://stackoverflow.com/questions/29362125/visual-studio-extension-could-not-find-a-required-assembly
-        private static void LoadSystemWindowsInteractivity()
-        {
-            // HACK: Force load System.Windows.Interactivity.dll from plugin's 
-            // directory
-            typeof(System.Windows.Interactivity.Behavior).ToString();
-        }
-
     }
 }

@@ -95,7 +95,7 @@ namespace AMF.Tools.Core
 
             var regex = new Regex("{([^}]+)}");
             var matches = regex.Matches(url);
-            parameters.AddRange(matches.Cast<Match>().Select(match => new GeneratorParameter { Name = match.Groups[1].Value, Type = "string" }));
+            parameters.AddRange(matches.Cast<Match>().Select(match => new GeneratorParameter { Name = match.Groups[1].Value, Type = "string" }).ToArray());
             return parameters;
         }
 

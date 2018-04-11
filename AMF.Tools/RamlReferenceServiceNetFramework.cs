@@ -32,7 +32,7 @@ namespace MuleSoft.RAML.Tools
                 InstallNugetDependencies(proj);
                 Logger.LogInformation("Nuget Dependencies installed");
 
-                AddFilesToProject(parameters.RamlFilePath, proj, parameters.TargetNamespace, parameters.RamlSource, parameters.TargetFileName, parameters.ClientRootClassName);
+                AddFilesToProject(parameters.Data, parameters.RamlFilePath, proj, parameters.TargetNamespace, parameters.RamlSource, parameters.TargetFileName, parameters.ClientRootClassName);
                 Logger.LogInformation("Files added to project");
             }
             catch (Exception ex)
@@ -53,11 +53,11 @@ namespace MuleSoft.RAML.Tools
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, webApiCorePackageId, webApiCorePackageVersion, Settings.Default.NugetExternalPackagesSource);
         }
 
-        protected override async Task GenerateCode(Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
+        protected override async Task GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
-            ramlProjItem.Properties.Item("CustomTool").Value = string.Empty; // to cause a refresh when file already exists
-            ramlProjItem.Properties.Item("CustomTool").Value = "RamlClientTool";
+            //ramlProjItem.Properties.Item("CustomTool").Value = string.Empty; // to cause a refresh when file already exists
+            //ramlProjItem.Properties.Item("CustomTool").Value = "RamlClientTool";
         }
     }
 }

@@ -56,6 +56,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ActivityLogger.cs" />
+    <Compile Include="AddReferenceCommand.cs" />
+    <Compile Include="AddReferenceCommandPackage.cs" />
     <Compile Include="BaseDialogWindow.cs" />
     <Compile Include="AddContractCommand.cs" />
     <Compile Include="AddContractCommandPackage.cs" />
@@ -95,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <VSCTCompile Include="AddReferenceCommandPackage.vsct">
+      <ResourceName>Menus1.ctmenu</ResourceName>
+    </VSCTCompile>
     <Content Include="edge\x64\edge_nativeclr.node">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -190,10 +195,15 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="RAMLClient.t4" />
+    <Content Include="RAMLClient.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Resources\AddReferenceCommand.png" />
+    <Content Include="Resources\AddReferenceCommandPackage.ico" />
     <Content Include="Templates\AspNet5\ApiControllerBase.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

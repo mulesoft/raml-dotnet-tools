@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 
-namespace VSIXProject1
+namespace AMF.Tools
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -41,7 +41,6 @@ namespace VSIXProject1
         /// Command1Package GUID string.
         /// </summary>
         public const string PackageGuidString = "e6389fe8-eaf0-4f57-9dba-b22d88050571";
-        private static Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddContractCommand"/> class.
@@ -62,8 +61,6 @@ namespace VSIXProject1
         /// </summary>
         protected override void Initialize()
         {
-            bootstrapper.Initialize();
-
             AddContractCommand.Initialize(this);
             base.Initialize();
         }

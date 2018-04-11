@@ -52,10 +52,10 @@ namespace MuleSoft.RAML.Tools
         public void Scaffold(string ramlSource, RamlChooserActionParams parameters)
         {
             var data = parameters.Data;
-            if (data == null || data.Model == null)
+            if (data == null || data.RamlDocument == null)
                 return;
 
-            var model = data.Model;
+            var model = new WebApiGeneratorService(data.RamlDocument, parameters.TargetNamespace).BuildModel();
 
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);

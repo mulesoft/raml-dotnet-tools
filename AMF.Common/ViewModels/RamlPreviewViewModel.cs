@@ -460,8 +460,8 @@ namespace AMF.Common.ViewModels
                 if(!isContractUseCase)
                     parameters.ClientRootClassName = ProxyClientName;
 
-                var data = await RamlScaffolderHelper.GetRamlData(parameters.RamlFilePath, parameters.TargetNamespace);
-                parameters.Data = data;
+                var ramlInfo = await RamlInfoService.GetRamlInfo(parameters.RamlFilePath);
+                parameters.Data = ramlInfo;
 
                 action(parameters);
 

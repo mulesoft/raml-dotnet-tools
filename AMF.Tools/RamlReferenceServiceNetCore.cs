@@ -32,7 +32,7 @@ namespace MuleSoft.RAML.Tools
                 InstallNugetDependencies(proj);
                 Logger.LogInformation("Nuget Dependencies installed");
 
-                AddFilesToProject(parameters.RamlFilePath, proj, parameters.TargetNamespace, parameters.RamlSource, parameters.TargetFileName, parameters.ClientRootClassName);
+                AddFilesToProject(parameters.Data, parameters.RamlFilePath, proj, parameters.TargetNamespace, parameters.RamlSource, parameters.TargetFileName, parameters.ClientRootClassName);
                 Logger.LogInformation("Files added to project");
             }
             catch (Exception ex)
@@ -55,25 +55,25 @@ namespace MuleSoft.RAML.Tools
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Xml", "4.3.0", Settings.Default.NugetExternalPackagesSource);
         }
 
-        protected override async System.Threading.Tasks.Task GenerateCode(Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
+        protected override async System.Threading.Tasks.Task GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
             TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath);
-            await GenerateCode(targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName);
+            await GenerateCode(data, targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName);
         }
 
-        private async System.Threading.Tasks.Task GenerateCode(string targetNamespace, string clientRootClassName, string ramlDestFile, string destFolderPath,
+        private async System.Threading.Tasks.Task GenerateCode(RamlInfo data, string targetNamespace, string clientRootClassName, string ramlDestFile, string destFolderPath,
             string destFolderName)
         {
-            var ramlInfo = await RamlInfoService.GetRamlInfo(ramlDestFile);
-            if (ramlInfo.HasErrors)
-            {
-                ActivityLog.LogError(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, ramlInfo.ErrorMessage);
-                MessageBox.Show(ramlInfo.ErrorMessage);
-                return;
-            }
+            //var ramlInfo = await RamlInfoService.GetRamlInfo(ramlDestFile);
+            //if (ramlInfo.HasErrors)
+            //{
+            //    ActivityLog.LogError(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, ramlInfo.ErrorMessage);
+            //    MessageBox.Show(ramlInfo.ErrorMessage);
+            //    return;
+            //}
 
-            var model = new ClientGeneratorService(ramlInfo.RamlDocument, clientRootClassName, targetNamespace).BuildModel();
+            var model = new ClientGeneratorService(data.RamlDocument, clientRootClassName, targetNamespace).BuildModel();
             var directoryName = Path.GetDirectoryName(ramlDestFile).TrimEnd(Path.DirectorySeparatorChar);
             var templateFolder = directoryName.Substring(0, directoryName.LastIndexOf(Path.DirectorySeparatorChar)) +
                                  Path.DirectorySeparatorChar + "Templates";

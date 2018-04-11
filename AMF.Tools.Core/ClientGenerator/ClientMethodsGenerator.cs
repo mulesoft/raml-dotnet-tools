@@ -97,7 +97,7 @@ namespace AMF.Tools.Core.ClientGenerator
 
             //TODO: check
             var responseContentTypes = operation.Responses != null ?
-                    operation.Responses.Where(r => r.Payloads != null).SelectMany(r => r.Payloads).Select(p => p.MediaType)
+                    operation.Responses.Where(r => r.Payloads != null).SelectMany(r => r.Payloads).Select(p => p.MediaType).ToArray()
                     : new string[0];
 
             var generatedMethod = new ClientGeneratorMethod
@@ -134,7 +134,7 @@ namespace AMF.Tools.Core.ClientGenerator
 
         private void GetQueryParameters(string objectName, Operation method, ClientGeneratorMethod generatedMethod)
         {
-            if (method.Request.QueryParameters != null && method.Request.QueryParameters.Any())
+            if (method.Request != null && method.Request.QueryParameters != null && method.Request.QueryParameters.Any())
             {
                 var queryObject = queryParametersParser.GetQueryObject(generatedMethod, method, objectName);
                 generatedMethod.Query = queryObject;
@@ -145,7 +145,7 @@ namespace AMF.Tools.Core.ClientGenerator
 
         private void GetHeaders(string objectName, Operation method, ClientGeneratorMethod generatedMethod)
         {
-            if (method.Request.Headers != null && method.Request.Headers.Any())
+            if (method.Request != null && method.Request.Headers != null && method.Request.Headers.Any())
             {
                 var headerObject = HeadersParser.GetHeadersObject(generatedMethod, method, objectName);
                 generatedMethod.Header = headerObject;

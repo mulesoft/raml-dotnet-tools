@@ -277,7 +277,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("11.0.2")]
         public string NewtonsoftJsonForCorePackageVersion {
             get {
                 return ((string)(this["NewtonsoftJsonForCorePackageVersion"]));

@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MuleSoft.RAML.Tools.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AMF.Tools.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="NugetPackagesSource" Type="System.String" Scope="Application">
@@ -87,7 +87,7 @@
       <Value Profile="(Default)">6.5.1</Value>
     </Setting>
     <Setting Name="NewtonsoftJsonForCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">9.0.1</Value>
+      <Value Profile="(Default)">11.0.2</Value>
     </Setting>
     <Setting Name="RamlNetCoreApiExplorerPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">RAML.NetCoreApiExplorer</Value>

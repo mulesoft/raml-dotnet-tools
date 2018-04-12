@@ -49,20 +49,20 @@ namespace MuleSoft.RAML.Tools
 
         protected override void InstallNugetDependencies(Project proj, IVsPackageInstaller installer, IVsPackageMetadata[] packs)
         {
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, NewtonsoftJsonPackageId, "9.0.1", Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, NewtonsoftJsonPackageId, "11.0.2", Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "Microsoft.AspNet.WebApi.Client", "5.2.3", Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Xml.XmlSerializer", "4.3.0", Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Xml", "4.3.0", Settings.Default.NugetExternalPackagesSource);
         }
 
-        protected override async System.Threading.Tasks.Task GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
+        protected override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
             TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath);
-            await GenerateCode(data, targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName);
+            GenerateCode(data, targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName);
         }
 
-        private async System.Threading.Tasks.Task GenerateCode(RamlInfo data, string targetNamespace, string clientRootClassName, string ramlDestFile, string destFolderPath,
+        private void GenerateCode(RamlInfo data, string targetNamespace, string clientRootClassName, string ramlDestFile, string destFolderPath,
             string destFolderName)
         {
             //var ramlInfo = await RamlInfoService.GetRamlInfo(ramlDestFile);

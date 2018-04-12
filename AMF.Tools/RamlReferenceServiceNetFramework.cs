@@ -6,6 +6,9 @@ using AMF.Tools.Properties;
 using NuGet.VisualStudio;
 using AMF.Common;
 using System.Threading.Tasks;
+using AMF.Tools.Core.ClientGenerator;
+using System.IO;
+using Microsoft.VisualStudio.Shell;
 
 namespace MuleSoft.RAML.Tools
 {
@@ -53,11 +56,38 @@ namespace MuleSoft.RAML.Tools
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, webApiCorePackageId, webApiCorePackageVersion, Settings.Default.NugetExternalPackagesSource);
         }
 
-        protected override async Task GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
-            string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
+        protected override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, 
+            string apiRefsFolderPath, string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
             //ramlProjItem.Properties.Item("CustomTool").Value = string.Empty; // to cause a refresh when file already exists
             //ramlProjItem.Properties.Item("CustomTool").Value = "RamlClientTool";
+
+            var model = new ClientGeneratorService(data.RamlDocument, clientRootClassName, targetNamespace).BuildModel();
+            var directoryName = Path.GetDirectoryName(ramlDestFile).TrimEnd(Path.DirectorySeparatorChar);
+            var templateFolder = directoryName.Substring(0, directoryName.LastIndexOf(Path.DirectorySeparatorChar)) +
+                                 Path.DirectorySeparatorChar + "Templates";
+
+            var templateFilePath = Path.Combine(templateFolder, ClientT4TemplateName);
+            var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
+
+            TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath);
+
+            var t4Service = new T4Service(ServiceProvider);
+            var res = t4Service.TransformText(templateFilePath, model, extensionPath, ramlDestFile, targetNamespace);
+
+            if (res.HasErrors)
+            {
+                ActivityLog.LogError(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, res.Errors);
+                MessageBox.Show(res.Errors);
+            }
+            else
+            {
+                var content = TemplatesManager.AddClientMetadataHeader(res.Content);
+                var csTargetFile = Path.Combine(destFolderPath, destFolderName + ".cs");
+                File.WriteAllText(csTargetFile, content);
+                ramlProjItem.ProjectItems.AddFromFile(csTargetFile);
+            }
+
         }
     }
 }

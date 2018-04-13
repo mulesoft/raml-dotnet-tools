@@ -167,9 +167,6 @@
     <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular2.woff2" />
     <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro-2.woff2" />
     <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2" />
-    <None Include="node_modules\amf-client-js\node_modules\%40mulesoft\amf-shacl-node\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html" />
     <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth2.html" />
     <Content Include="MetadataPackage\Content\wwwroot\favicon.ico" />
@@ -178,23 +175,35 @@
     <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console.js" />
     <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-dark-theme.css" />
     <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-light-theme.css" />
-    <Content Include="node_modules\amf-client-js\package.json">
+    <None Include="node_modules\amf-client-js\node_modules\%40mulesoft\amf-shacl-node\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-shacl-node\package.json">
+    </None>
+    <None Include="node_modules\amf-client-js\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\package.json">
+    </None>
+    <None Include="node_modules\amf-shacl-node\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
+    </None>
+    <None Include="node_modules\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="node_modules\amf-client-js\amf.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="node_modules\amf-client-js\node_modules\%40mulesoft\amf-shacl-node\shacl.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="node_modules\amf-shacl-node\shacl.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="node_modules\parser.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="RAMLClient.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -267,29 +276,14 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="index.html" />
-    <Content Include="node_modules\amf-client-js\amf.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\%40mulesoft\amf-shacl-node\shacl.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="node_modules\amf-shacl-node\shacl.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\parser.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="Resources\Command1.png" />
     <Content Include="Resources\Command1Package.ico" />
     <Content Include="Resources\VSPackage1.ico" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AMF.Parser, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Parser.0.4.0.0\lib\net462\AMF.Parser.dll</HintPath>
+    <Reference Include="AMF.Parser, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Parser.0.5.0.0\lib\net462\AMF.Parser.dll</HintPath>
     </Reference>
     <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>

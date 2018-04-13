@@ -594,9 +594,6 @@ namespace AMF.Common.ViewModels
                 var tempPath = Path.GetTempFileName();
                 File.WriteAllText(tempPath, result.ModifiedContents);
 
-                //TODO: move to parser
-                tempPath = tempPath.Substring(2).Replace("\\", "/");
-
                 var amfModel = await parser.Load(tempPath);
 
                 SetPreview(amfModel.WebApi);

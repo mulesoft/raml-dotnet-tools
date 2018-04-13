@@ -99,8 +99,6 @@ namespace AMF.Common
                 }
             }
 
-            //TODO: move to parser
-            tempPath = tempPath.Substring(2).Replace("\\", "/");
             var task = new AmfParser().Load(tempPath);
             task.WaitWithPumping();
             info.RamlDocument = task.Result;

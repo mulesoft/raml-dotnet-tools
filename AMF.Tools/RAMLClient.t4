@@ -431,7 +431,7 @@ namespace $(namespace)
 		public SchemaValidationSettings SchemaValidation { get; private set; } 
 
         protected readonly HttpClient client;
-        public const string BaseUri = "<#= model.BaseUri #>";
+        public const string BaseUri = "<#= model.BaseUri == null ? string.Empty : model.BaseUri #>";
 
         internal HttpClient Client { get { return client; } }
 

@@ -24,6 +24,9 @@ namespace AMF.Tools.Core
                 securitySchemes.Add(sec);
             }
 
+            if (securitySchemes.Count == 0)
+                return null;
+
             var securityScheme = securitySchemes.First(); //TODO: check
 
             var settings = securityScheme?.Settings;

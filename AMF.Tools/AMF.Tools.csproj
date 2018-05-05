@@ -56,14 +56,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ActivityLogger.cs" />
-    <Compile Include="AddReferenceCommand.cs" />
-    <Compile Include="AddReferenceCommandPackage.cs" />
+    <Compile Include="Commands\AddReferenceCommand.cs" />
+    <Compile Include="Commands\AddReferenceCommandPackage.cs" />
     <Compile Include="BaseDialogWindow.cs" />
-    <Compile Include="AddContractCommand.cs" />
-    <Compile Include="AddContractCommandPackage.cs" />
+    <Compile Include="Commands\AddContractCommand.cs" />
+    <Compile Include="Commands\AddContractCommandPackage.cs" />
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="CodeGeneratorRegistrationAttribute.cs" />
     <Compile Include="CodeRegenerationResult.cs" />
+    <Compile Include="Commands\ExtractOASCommand.cs" />
+    <Compile Include="Commands\ExtractOASCommandPackage.cs" />
+    <Compile Include="Commands\ExtractRAMLCommand.cs" />
+    <Compile Include="Commands\ExtractRAMLCommandPackage.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="JsonSchemaMessagesManager.cs" />
@@ -97,7 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <VSCTCompile Include="AddReferenceCommandPackage.vsct">
+    <VSCTCompile Include="Commands\AddReferenceCommandPackage.vsct">
       <ResourceName>Menus1.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="edge\x64\edge_nativeclr.node">
@@ -167,6 +171,12 @@
     <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular2.woff2" />
     <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro-2.woff2" />
     <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2" />
+    <VSCTCompile Include="Commands\ExtractRAMLCommandPackage.vsct">
+      <ResourceName>Menus2.ctmenu</ResourceName>
+    </VSCTCompile>
+    <VSCTCompile Include="Commands\ExtractOASCommandPackage.vsct">
+      <ResourceName>Menus3.ctmenu</ResourceName>
+    </VSCTCompile>
     <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html" />
     <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth2.html" />
     <Content Include="MetadataPackage\Content\wwwroot\favicon.ico" />
@@ -213,6 +223,10 @@
     </None>
     <Content Include="Resources\AddReferenceCommand.png" />
     <Content Include="Resources\AddReferenceCommandPackage.ico" />
+    <Content Include="Resources\ExtractOASCommand.png" />
+    <Content Include="Resources\ExtractOASCommandPackage.ico" />
+    <Content Include="Resources\ExtractRAMLCommand.png" />
+    <Content Include="Resources\ExtractRAMLCommandPackage.ico" />
     <Content Include="Templates\AspNet5\ApiControllerBase.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -255,7 +269,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <VSCTCompile Include="AddContractCommandPackage.vsct">
+    <VSCTCompile Include="Commands\AddContractCommandPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
       <SubType>Designer</SubType>
     </VSCTCompile>
@@ -276,8 +290,8 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="index.html" />
-    <Content Include="Resources\Command1.png" />
-    <Content Include="Resources\Command1Package.ico" />
+    <Content Include="Resources\AddContractCommand.png" />
+    <Content Include="Resources\AddContractCommandPackage.ico" />
     <Content Include="Resources\VSPackage1.ico" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
@@ -464,6 +478,7 @@
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

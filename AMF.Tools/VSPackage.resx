@@ -135,7 +135,7 @@
     <value>Command1 Visual Studio Extension Detailed Info</value>
   </data>
   <data name="400" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Command1Package.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Resources\AddContractCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="1110" xml:space="preserve">
     <value>VSPackage1 Extension</value>
@@ -154,5 +154,23 @@
   </data>
   <data name="2400" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\AddReferenceCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="3110" xml:space="preserve">
+    <value>ExtractRAMLCommand Extension</value>
+  </data>
+  <data name="3112" xml:space="preserve">
+    <value>ExtractRAMLCommand Visual Stuido Extension Detailed Info</value>
+  </data>
+  <data name="3400" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ExtractRAMLCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="4110" xml:space="preserve">
+    <value>ExtractOASCommand Extension</value>
+  </data>
+  <data name="4112" xml:space="preserve">
+    <value>ExtractOASCommand Visual Stuido Extension Detailed Info</value>
+  </data>
+  <data name="4400" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ExtractOASCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -1,0 +1,718 @@
+= RAML Tools for .NET
+
+:source-highlighter: prettify
+
+:!numbered:
+
+The RAML Tools for .NET allows developers to easily integrate and consume APIs that expose a RAML definition, or create a new ASP.NET implementation using a contract-first approach from a previously created RAML definition. See http://raml.org for information on RAML (RESTful API Markup Language). 
+
+The tools are provided as a Visual Studio extension, allowing simple and natural integration of RAML into a normal development workflow.
+
+A single installation package provides support for both client and service code-generation scenarios.
+
+*New*: Command Line Tool available https://github.com/mulesoft-labs/raml-dotnet-tools/tree/master/command-line[here]
+
+Contents:
+
+* <<Supported Scenarios>>
+** <<API Client Code from a RAML Definition>>
+** <<ASP.NET Implementation from a RAML Definition>>
+** <<Extract a RAML definition from an ASP.NET Core or WebApi 2 app>>
+* <<Prerequisites>>
+* <<Installation>>
+* <<Generating an API Client>>
+* <<Updating the API Reference>>
+* <<Using the API Client with the Movies Sample>>
+** <<Consuming an API>>
+** <<Calling an Authenticated API with OAuth>>
+** <<Consuming the HTTP Response>>
+* <<Implementing an ASP.NET 5 (MVC 6)>>
+* <<Implementing an ASP.NET Web API>>
+* <<Updating your RAML specification>>
+* <<Implementing a Controller in ASP.NET Web API>>
+* <<Customizing the Generated Code>>
+** <<Compatibility With New Versions of the Templates>>
+** <<Customizing the Generated Code for the Client>>
+** <<Customizing the Generated cCode for the Asp.Net Web API>>
+* <<Metadata - Extract a RAML definition from your Web app>>
+** <<Api Console>>
+** <<Viewing the Raw RAML>>
+** <<Downloading the RAML>>
+** <<Customizing the Generated RAML>>
+* <<XML Schemas>>
+* <<Fine tuning generated .NET primitive types>>
+** <<Numeric types>>
+** <<Date types>>
+* <<Internal dependencies>>
+* <<FAQ>>
+
+== Supported Scenarios
+
+=== API Client Code from a RAML Definition
+
+You can generate API client code from a RAML definition, which lets client applications consume existing APIs from a RAML definition.
+
+In Visual Studio .NET, you can add a reference to a RAML definition, and a strongly-typed client proxy is generated in the project. A local copy of the RAML definition stores as a file within the Visual Studio project, which is kept in sync with the original RAML definition.
+ 
+If the remote API does not provide a RAML definition, you can use a self-managed local definition to allow rapid generation of the client code in a declarative manner.
+
+=== ASP.NET Implementation from a RAML Definition
+
+You can generate an ASP .NET MVC 6 or Web API 2 implementation from a new or existing RAML definition.
+
+From within Visual Studio .NET, you can add a RAML definition from which the tool generates an initial ASP .NET MVC 6, or Web API 2 implementation, depending if you are invoking the command from a Visual Studio 2015 project type (.xproj) or the traditional project type (.csproj). This implementation includes controller classes and route registrations that map to the resources exposed in the RAML definition and also includes model classes for their representation. The model classes are generated from the available RAML types or JSON schemas.
+
+In code, the controllers definition and implementation are logically separated. The generated code representing the definition is driven by the RAML definition allowing you to focus exclusively on the implementation classes. This separation of concerns allows iterative evolution of the API with non-destructive forward engineering of the code-based definition.
+
+=== Extract a RAML definition from an ASP.NET Core or WebApi 2 app
+
+You can generate a RAML 1 or 0.8 definition from your ASP .NET Core or WebAPI 2 implementation.
+
+When enabling metadata, a local endpoint is registered to provide a browser-accessible API Console for the RAML-enabled implementation. This gives an easily navigable view of the API, including full documentation of routes, resource schema, and includes examples.
+
+
+== Prerequisites
+
+* Visual Studio 2013 Update 3 or Visual Studio 2015
+* .NET Framework 4.5 or higher
+* RAML 1.0 or 0.8 compatible endpoint
+* Supported languages: C# (other languages indirectly)
+
+== Installation
+
+. Run the RAML tools for Visual Studio Tools extension (VSIX) included in this package (ensure that Visual Studio 2013 is closed).
+. On the initial screen select Visual Studio 2013 and click *Install*.
++
+image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
++
+. Wait for the installer to complete and click the *Close* button.
+
+== Generating an API Client
+
+. Start Visual Studio 2013 and create a new project that consumes the API, or open an existing project.
+. In the Solution Explorer right-click the References node for the selected project and select the *Add RAML Reference* command.
++
+image::./docimages/RAML_NET_SolutionExplorer.png[align="center"]
++
+. Specify the URL of the RAML definition and click the *Go* button, use the *Upload* button to select the file from the local filesystem or choose an existing RAML definition from the *Exchange* library.
++
+image::./docimages/RAML_NET_AddRAMLReference.png[align="center"]
++
+. The RAML definition is presented together a preview of the available resources. When ready, click the *OK* button to begin generating the API client. Optionally change the filename or namespace for the generated code.
++
+A folder called API References containing the generated assets is added to the project. These assets include the original RAML file as well as any include dependencies, generated code, and a hidden .ref file with metadata for the code-generation tools.
++
+image::./docimages/RAML_NET_APIRef.png[align="center"]
++
+The RAML.Api.Core, Newtonsoft.Json and Microsoft.AspNet.WebApi.Client NuGet packages are installed and referenced by the project.
++
+. The C# classes nested beneath the parent RAML file contain the generated code to consume the Web API. At this point, the generated code is ready to be used.
+
+== Updating the API Reference
+
+If the referenced RAML definition changes, the client code can be easily regenerated by right-clicking the parent RAML file and selecting *Update RAML Reference*.
+
+image::./docimages/RAML_NET_RunTests.png[align="center"]
+
+
+== Using the API Client with the Movies Sample
+
+The RAML .NET installation package includes a sample project for a Movies API,
+which is a fictitious video library service where users browse a movie catalog,  rent or return movies, and add movies to a wishlist for future watching.
+
+The main constructor of the project's MoviesClient client uses an endpoint URI. The overload for the constructor allows a custom HttpClient implementation to be injected, such as an HttpClient instance configured with a MessageHandler. You can use this instance for unit testing.
+
+=== Consuming an API
+
+The MoviesClient model object replicates the same structure as the RAML definition through available resources and actions. The methods in this object model are asynchronous and based on the Task Parallel Library (TPL), so they can execute with the new async  and await syntax in C# version 5.
+
+
+[source, c#]
+----
+var api = new MoviesClient("http://movies.com/api/");
+
+// GET /movies
+var moviesResponse = await api.Movies.Get();
+
+// GET /movies/available
+var availableMoviesResponse = await api.Movies.Available.Get();
+----
+
+
+If your API requires authentication, you can specify the access token as per this example of an authenticated Post.
+
+=== Calling an Authenticated API with OAuth
+
+If your API is secured with OAuth, you can specify the access token before making a call as shown in this example:
+
+[source, c#]
+----
+var api = new MoviesApi("http://movies.con/api/");
+var postMovie = new PostMovies
+{
+  Name = "Big Fish",
+  Director = "Tim Burton",
+  Cast = "Ewan McGregor, Albert Finney, Billy Crudup",
+  Language = "English",
+  Genre = "Drama, Fantasy"
+};
+
+// Set OAuth access token
+moviesApi.OAuthAccessToken = "<OAuth_Token>";
+
+// POST /movies
+var response = await moviesApi.Movies.Post(postMovie);
+----
+
+Replace the <OAuth_Token> with your  OAuth token received from your OAuth authorization service.
+
+=== Consuming the HTTP Response
+
+All methods in the generated class return an instance of ApiResponse or of a subclass of it. This class provides access to the HTTP status codes, raw headers, and content. The following code fragment illustrates how to use those:
+
+[source, c#]
+----
+var statusCode = response.StatusCode;
+var rawHeaders = response.RawHeaders;
+var rawContent = response.RawContent;
+var stream = await response.RawContent.ReadAsStreamAsync();
+----
+
+When the RAML specifies a JSON contract for a response, the tool generates a strongly typed object with an equivalent structure. This object is accessible through the Content property in the response.
+
+[source, c#]
+----
+var moviesResponse = await api.Movies.Get();
+MoviesGetOKResponseContent[] movies = moviesResponse.Content;
+var director = movies.First().Director;
+----
+
+For more advanced scenarios in which several JSON schemas are associated with a response, the Content property provides a different typed object for each schema.
+
+[source, c#]
+----
+var okContent = movieResponse.Content.IdGetOKResponseContent;
+var badReqContent = movieResponse.Content.IdGetBadRequestResponseContent;
+var notFoundContent = movieResponse.Content.IdGetNotFoundResponseContent;
+----
+
+Depending on the HTTP status code, each property has a value or is null. For example, if the status code is OK (200), only the IdGetOKResponseContent  has a value, and the other properties are null.
+
+The response also provides access to typed headers in case they were included in the RAML definition:
+
+[source, c#]
+----
+GetByIdMoviesOKResponseHeader headers = movieResponse.Headers;
+var created = headers.Created;
+var code = headers.Code;
+----
+
+== Implementing an ASP.NET 5 (MVC 6)
+
+To implement an ASP.NET MVC 6:
+
+. Start Visual Studio 2015 and create a new ASP.NET Web Application.
+. In the New ASP.NET Project menu, select a template:
++
+image::./docimages/webapi-vs2015.png[align="center", width="550"]
++
+. In the Solution Explorer, right-click the project node and click the *Add RAML Contract* command.
++
+image::./docimages/RAML_NETAddRAMLContract.png[align="center", width="550"]
++
+. The dialog lets you create a RAML definition or import an existing one. If you import an existing one, click  the *Go* button to download the RAML definition from an URL, or browse to use a local copy from your file system. 
+
+The preview screen has several options to customize the generated code. You can change the filename, namespace, or choose asynchronous methods.
+
+Also you can customize the location of the generated classes. Check the "Customize output folders" and enter the path for the controllers and/or the models. 
+Select the check box if you want to add "generated.cs" to the model filenames.
+
+A Contracts folder is added to the project containing the generated assets. These assets include a local copy of the RAML definition, the generated model classes (inferred from the RAML types or JSON schemas in the RAML definition), and .NET interfaces representing the contracts for the ASP.NET Controllers.
+
+If you want to customize the location of the generated classes, select the "Customize output folders", specify the paths, and choose if you want to add ".generated.cs" suffix to the Models. **Specified paths will be relative to the project's root folder**.
+If you leave these fields empty, it will place the generated controllers in the "Controllers" folder and the rest of the assets under the Contracts folder.
+
+If you plan to host several versions of the API in the same solution, you can check the "Use api version" option. 
+This will add the version as a prefix to routes, controllers, and models, thus preventing collision between different versions of the API.
+
+image::docimages/RAML_NETAddRAMLContractScreen.png[align="center", width=550]
+
+
+
+== Implementing an ASP.NET Web API
+
+To implement an ASP.NET Web API:
+
+. Start Visual Studio and create a new ASP.NET Web project.
+. In the New ASP.NET Project menu, click *Web API*:
++
+image::./docimages/RAML_NET_NewASPProject.png[align="center", width="550"]
++
+. In the Solution Explorer, right-click the project node and click the *Add RAML Contract* command.
++
+image::./docimages/RAML_NETAddRAMLContract.png[align="center", width="550"]
++
+. The dialog lets you create a RAML definition or import an existing one. If you import an existing one, click  the *Go* button to download the RAML definition from an URL, or browse to use a local copy from your file system. 
+
+. On the preview screen you have several options to customize the generated code. You can change the filename, namespace, or choose asynchronous methods.
+
+Also you can customize the location of the generated classes. Check the "Customize output folders" and enter the path for the controllers and/or the models. 
+Select the check box if you want to add "generated.cs" to the model filenames.
+
+A Contracts folder is added to the project containing the generated assets. These assets include a local copy of the RAML definition, the generated model classes (inferred from the RAML types or JSON schemas in the RAML definition), and .NET interfaces representing the contracts for the ASP.NET Controllers.
+
+If you want to customize the location of the generated classes, select the "Customize output folders", specify the paths, and choose if you want to add ".generated.cs" suffix to the Models. **Specified paths will be relative to the project's root folder**.
+If you leave these fields empty, it will place the generated controllers in the "Controllers" folder and the rest of the assets under the Contracts folder.
+
+If you plan to host several versions of the API in the same solution, you can check the "Use api version" option. 
+This will add the version as a prefix to routes, controllers, and models, thus preventing collision between different versions of the API.
+
+image::docimages/RAML_NETAddRAMLContractScreen.png[align="center", width=550]
+
+
+
+== Updating your RAML specification
+
+The tool also supports updating the generated ASP.NET MVC 6 or Web API when a change is made to the RAML definition. This lets you keep the contract definition in a RAML file with the implementation, so that both stay in sync. The classes get re-generated when you save changes made to any the RAML files in your project. This only affects the existing .NET contract interfaces and adds ASP.NET MVC 6 or Web API controller implementations for any new resource in the RAML definition. The existing controller implementations remain untouched.
+
+If new resources or methods have been added, the implementation controller won't match the interface. You will have to implement those methods manually.
+
+In a similar fashion if changes are made to a resource or method and this produces changes in the signature of a method, the interface will be updated but the implementation not. You will have to manually update the signature (and the implementation code).
+
+In the case of deletions the base controllers will no longer route to the implementation method, so it in this case is not absolutely necessary because it will still compile (obsolete implementation code should be removed manually).
+
+In short, interfaces and base controllers will be updated automatically, but existing controller implementations are not changed so they must be updated or deleted manually.
+
+
+== Implementing a Controller in ASP.NET Web API
+
+The generated controllers provide the starting point for the implementation. The tool generates a class that implements the .NET interface or contract for the resource defined in RAML. The following example illustrates the controller Movies for the Movies RAML file:
+
+[source, c#]
+----
+public partial class MoviesController : IMoviesController
+{
+
+    /// <summary>
+    /// Gets all movies in the catalogue
+    /// </summary>
+    /// <returns>IList<MoviesGetOKResponseContent></returns>
+    public IHttpActionResult Get()
+    {
+        // TODO: implement Get - route: movies/
+        // var result = new IList<MoviesGetOKResponseContent>();
+        // return Ok(result);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Adds a movie to the catalog
+    /// </summary>
+    /// <param name="moviespostrequestcontent"></param>
+    /// <param name="access_token">Sends a valid OAuth v2 access token. Do not use together with the &quot;Authorization&quot; header </param>
+    public IHttpActionResult Post(Models.MoviesPostRequestContent moviespostrequestcontent,[FromUri] string access_token = null)
+    {
+        // TODO: implement Post - route: movies/
+        return Ok();
+    }
+
+    /// <summary>
+    /// Get the info of a movie
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>IdGetOKResponseContent</returns>
+    public IHttpActionResult GetById([FromUri] string id)
+    {
+        // TODO: implement GetById - route: movies/{id}
+        // var result = new IdGetOKResponseContent();
+        // return Ok(result);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Update the info of a movie
+    /// </summary>
+    /// <param name="idputrequestcontent"></param>
+    /// <param name="id"></param>
+    public IHttpActionResult Put(Models.IdPutRequestContent idputrequestcontent,[FromUri] string id)
+    {
+        // TODO: implement Put - route: movies/{id}
+        return Ok();
+    }
+
+    /// <summary>
+    /// Remove a movie from the catalog
+    /// </summary>
+    /// <param name="id"></param>
+    public IHttpActionResult Delete([FromUri] string id)
+    {
+        // TODO: implement Delete - route: movies/{id}
+        return Ok();
+    }
+
+    /// <summary>
+    /// Rent a movie
+    /// </summary>
+    /// <param name="json"></param>
+    /// <param name="id"></param>
+    /// <param name="access_token">Sends a valid OAuth 2 access token. Do not use together with the &quot;Authorization&quot; header </param>
+    public IHttpActionResult PutRent(string json,[FromUri] string id,[FromUri] string access_token = null)
+    {
+        // TODO: implement PutRent - route: movies/{id}/rent
+        return Ok();
+    }
+
+    /// <summary>
+    /// return a movie
+    /// </summary>
+    /// <param name="json"></param>
+    /// <param name="id"></param>
+    /// <param name="access_token">Sends a valid OAuth v2 access token. Do not use together with the &quot;Authorization&quot; header </param>
+    public IHttpActionResult PutReturn(string json,[FromUri] string id,[FromUri] string access_token = null)
+    {
+        // TODO: implement PutReturn - route: movies/{id}/return
+        return Ok();
+    }
+
+    /// <summary>
+    /// gets the current user movies wishlist
+    /// </summary>
+    /// <param name="access_token">Sends a valid OAuth v2 access token. Do not use together with the &quot;Authorization&quot; header </param>
+    /// <returns>IList<WishlistGetOKResponseContent></returns>
+    public IHttpActionResult GetWishlist([FromUri] string access_token = null)
+    {
+        // TODO: implement GetWishlist - route: movies/wishlist
+        // var result = new IList<WishlistGetOKResponseContent>();
+        // return Ok(result);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Add a movie to the current user movies wishlist
+    /// </summary>
+    /// <param name="json"></param>
+    /// <param name="id"></param>
+    /// <param name="access_token">Sends a valid OAuth 2 access token. Do not use together with the &quot;Authorization&quot; header </param>
+    public IHttpActionResult PostById(string json,[FromUri] string id,[FromUri] string access_token = null)
+    {
+        // TODO: implement PostById - route: movies/wishlist/{id}
+        return Ok();
+    }
+
+    /// <summary>
+    /// Removes a movie from the current user movies wishlist
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="access_token">Sends a valid OAuth v2 access token. Do not use together with the &quot;Authorization&quot; header </param>
+    public IHttpActionResult DeleteById([FromUri] string id,[FromUri] string access_token = null)
+    {
+        // TODO: implement DeleteById - route: movies/wishlist/{id}
+        return Ok();
+    }
+
+    /// <summary>
+    /// Gets the user rented movies
+    /// </summary>
+    /// <returns>IList<RentedGetOKResponseContent></returns>
+    public IHttpActionResult GetRented()
+    {
+        // TODO: implement GetRented - route: movies/rented
+        // var result = new IList<RentedGetOKResponseContent>();
+        // return Ok(result);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Get all movies that are not currently rented
+    /// </summary>
+    /// <returns>IList<AvailableGetOKResponseContent></returns>
+    public IHttpActionResult GetAvailable()
+    {
+        // TODO: implement GetAvailable - route: movies/available
+        // var result = new IList<AvailableGetOKResponseContent>();
+        // return Ok(result);
+        return Ok();
+    }
+
+}
+----
+
+The `IMoviesController` interface implemented by the controller represents the contract. You can provide, for example, the implementation code for the Get method and return a list of available movies in the catalog.
+
+== Customizing the Generated Code
+
+RAML Tools for .NET uses T4 templates for code generation of client and service implementation.
+The T4 templates are now placed in your project folder to let you easily customize them.
+
+If you customize a template, be sure to add this file to your VCS repository.
+
+Each template has a header with the title, version, and hash. Do not modify this information as it's used to check for customization and compatibility with new versions.
+
+=== Compatibility With New Versions of the Templates
+
+When upgrading the tool if the template has changed, a compatibility check is performed. If you have customized the template and the new version of the template is compatible with your current one, you are given the option to override or continue using your customized template.
+
+In case your customized template is no longer compatible,  you are given the choice to override the template or stop the process. In the latter, you must uninstall the new version of the tool and reinstall the previous one.
+
+
+=== Customizing the Generated Code for the Client
+
+For the client there is a single template containing all the generated code, the *RAMLClient.t4* file is placed under "API References/Templates".
+
+
+=== Customizing the Generated cCode for the Asp.Net Web API
+
+For the Web API there are a several templates under "Contracts/Templates":
+
+- *ApiControllerImplementation.t4*: Generates the skeleton of the controller, this is the place where you implement your code.
+
+- *ApiControllerBase.t4*: This class delegates the to the methods on the controller implementation class (ApiControllerImplementation).
+
+- *ApiControllerInterface.t4*: The interface that the controller implements.
+
+- *ApiModel.t4*: Template for the request and response content models.
+
+
+== Metadata - Extract a RAML definition from your Web app
+
+RAML metadata output lets you extract a RAML definition for your ASP.NET Core or WebAPI 2 app. To enable metadata output, right-click your project and choose the *Enable RAML metadata output* command.
+This adds a `RamlController`, start up configurations, a razor view and other required files (css, js, etc.).
+The next sections list the three ways you can access the information about your API.
+
+
+=== Api Console
+
+Run the web application and navigate to `/raml` to see the API Console. 
+
+image::./docimages/RAML_NET_ApiConsole.png[align="center"]
+
+You can navigate by clicking the buttons, you can see the request and responses, and try the available methods for each resource.
+
+=== Viewing the Raw RAML
+
+If you wish to view the RAML that is generated from your API, run your web app and navigate to `/raml/raw`. This will generate RAML 1 output, if you need the 0.8 version type '/raml/raw?version=0.8' instead.
+
+image::./docimages/RAML_NET_RAML-v1.png[align="center"]
+
+
+=== Downloading the RAML
+
+If you wish to download the RAML as a file, run your web app and navigate to `/raml/download`. This prompts you to choose the location and file name.
+
+=== Asp.Net Core configuration
+
+On Asp.Net core controllers **must use attribute routing** to be able to use the functionality.
+If some of your controllers use conventional routing you will need to avoid the filter to include this controllers. You can do so by modifying the configuration in the start up.
+For example to remove the controller *DefaultRoutingController* from the filter you need to add an *ApiExplorerVisibilityDisabledConvention* specifying the type to the set of conventions.
+This is done with the following line of code:
+
+[source, c#]
+----
+options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
+----
+
+You will need to add it to the *ConfigureServices* method of your *StartUp.cs* class:
+
+[source, c#]
+----
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // Add framework services.
+        services.AddScoped<MyApiExplorerDataFilter>();
+        services.AddMvc(options =>
+            {
+                options.Filters.AddService(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));
+                options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());
+				options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
+            });
+    }
+----
+
+=== Specifying Response Type in Asp.Net Core
+
+*ResponseTypeStatusAttribute* class is used to specify the response type of a controller's action, associated to a status code.
+For example:
+
+
+[source, c#]
+----
+        [HttpGet("{id}")]
+        [ResponseTypeStatus(typeof(Movie), HttpStatusCode.OK)]
+        [ResponseTypeStatus(typeof(NotFoundError), HttpStatusCode.NotFound)]
+        public IActionResult Get(int id)
+        {
+            var movie = Repositories.Movies.FindById(id);
+            if (movie == null)
+                return NotFound(new NotFoundError("Movie not found", id));
+
+            return Ok(movie);
+        }
+----
+
+
+=== Customizing the Generated RAML on your ASP.NET Core app
+
+Some aspects of your API-like security are not automatically detected. You can customize the RAML generation process and further adjust it to your API.
+To see how check the *Customizing the Generated RAML* section https://github.com/mulesoft-labs/raml-dotnetcore-apiexplorer[here]
+
+
+=== Adding XML Comments to the documentation in Asp.Net WebApi 2
+
+If you use XML comments in the headers of your controller actions, these can be included into your RAML model.
+
+You need to generate the XML documentation, for this right click your WebApi project properties and click on the *Build* tab and select the *XML documentation file* check.
+
++
+image::./docimages/XmlCommentsDocumentation.png[align="center"]
++
+
+You will also need to add in the Register method of your WebApi configuration a call to the *IncludeXmlComments* method of *DocumentationProviderConfig* class.
+
+**Note:** The default name of the XML file matches the name of the project, if you change this or the location you will need to provide the path in the *IncludeXmlComments* method. If you left the default location then there's no need to specify any parameters.
+
+[source, c#]
+----
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            RAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();
+        }
+    }
+----
+
+
+== Specifying Response Type  in Asp.Net WebApi 2
+
+*ResponseTypeAttribute* class is used to specify the main response type of a controller's action.
+For example:
+
+[source, c#]
+----
+        [HttpGet("{id}")]
+        [ResponseType(typeof(Movie)]
+        public IActionResult Get(int id)
+        {
+            var movie = Repositories.Movies.FindById(id);
+            return Ok(movie);
+        }
+----
+
+
+=== Customizing the Generated RAML on your ASP.NET WebApi 2 app
+
+Some aspects of your API-like security are not automatically detected. You can customize the RAML generation process and further adjust it to your API.
+To see how check the *Customizing the Generated RAML* section https://github.com/mulesoft-labs/raml-dotnet-apiexplorer[here]
+
+
+
+== XML Schemas
+
+When using XML schemas, please note that there is no root type. You need to create all the types that you will reference in your RAML 1 spec as they are external types, with the same name that appears on the XSD.
+For example for the following RAML we will need *PurchaseOrderType* and *ElementType*. Note that you can specify the same XML Schema in both cases.
+
+----
+#%RAML 1.0
+title: XML Schemas API
+version: v1
+baseUri: /
+mediaType: application/xml
+schemas:
+  PurchaseOrderType: !include ipo.xsd
+  ElementType: !include ipo.xsd
+/orders:
+  displayName: Orders
+  get:
+    responses:
+      200:
+        body:
+          type: PurchaseOrderType
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            type: ElementType
+----
+
+
+
+== Fine tuning generated .NET primitive types
+
+You can use the format property in your RAML specification to customize the generated .NET type.
+Using type datetime and format rfc2616 we will obtain a DateTimeOffset type.
+Using type number and format long, double, float will generate the corresponding .NET types.
+
+Example to obtain a .NET long type in the generated code:
+
+RAML 1:
+
+----
+types:
+    longprop: 
+        type: number
+        format: long
+----
+
+RAML 0.8:
+
+----
+{
+    "longprop": { "type": "number", "format": "long" }
+}
+----
+
+
+=== Numeric types
+
+[width="40%",frame="topbot",options="header"]
+|======================
+|Format   |.Net type
+|long     |long
+|int64    |long
+|int32    |int
+|int16    |short
+|int8     |byte
+|int      |int
+|double   |double
+|float    |float
+|======================
+
+
+=== Date types
+
+[width="40%",frame="topbot",options="header"]
+|======================
+|Format   |.Net type
+|rfc2616  |DateTimeOffset
+|rfc3339  |DateTime
+|======================
+
+
+== Internal dependencies
+
+. https://github.com/raml-org/raml-dotnet-parser-2[RAML .Net Parser]
+. https://github.com/mulesoft-labs/raml-dotnet-apicore[RAML API Core]
+. https://github.com/mulesoft-labs/raml-dotnet-apiexplorer[RAML ApiExplorer]
+
+
+== FAQ
+
+*What are the differences between the RAML Parser for .NET and RAML Tools for .NET?*
+
+The RAML Parser takes a text based RAML definition and returns an Abstract Syntax Tree (An object model representing the resources/methods in the RAML definition). The RAML Tools leverage this model in code generation templates to provide strongly typed classes for the consumption or implementation of the API itself.
+
+*Which languages can the tools generate code for?*
+
+Currently, C# is the only output language supported. This generated code can however simply be contained within a separate assembly, and the types exposed then consumed from any CLR language.
+
+*Can I customize the code-generation templates?*
+
+Yes, RAML Tools for .NET uses T4 templates for code generation of client and service implementation. See the appropriate sections for guidance on where and how to customize templates.
+
+*I already have an API built using ASP.NET WebApi - how do I adopt RAML for my project?*
+
+To extract a RAML definition for an existing WebApi project, simply enable RAML <<Metadata>> output from the project context menu.

@@ -64,10 +64,11 @@
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="CodeGeneratorRegistrationAttribute.cs" />
     <Compile Include="CodeRegenerationResult.cs" />
-    <Compile Include="Commands\ExtractOASCommand.cs" />
-    <Compile Include="Commands\ExtractOASCommandPackage.cs" />
+    <Compile Include="Commands\CommandsUtil.cs" />
     <Compile Include="Commands\ExtractRAMLCommand.cs" />
     <Compile Include="Commands\ExtractRAMLCommandPackage.cs" />
+    <Compile Include="Commands\EditPropertiesCommand.cs" />
+    <Compile Include="Commands\EditPropertiesCommandPackage.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="JsonSchemaMessagesManager.cs" />
@@ -103,6 +104,7 @@
     <None Include="App.config" />
     <VSCTCompile Include="Commands\AddReferenceCommandPackage.vsct">
       <ResourceName>Menus1.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
     </VSCTCompile>
     <Content Include="edge\x64\edge_nativeclr.node">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -173,8 +175,9 @@
     <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2" />
     <VSCTCompile Include="Commands\ExtractRAMLCommandPackage.vsct">
       <ResourceName>Menus2.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
     </VSCTCompile>
-    <VSCTCompile Include="Commands\ExtractOASCommandPackage.vsct">
+    <VSCTCompile Include="Commands\EditPropertiesCommandPackage.vsct">
       <ResourceName>Menus3.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html" />
@@ -223,8 +226,8 @@
     </None>
     <Content Include="Resources\AddReferenceCommand.png" />
     <Content Include="Resources\AddReferenceCommandPackage.ico" />
-    <Content Include="Resources\ExtractOASCommand.png" />
-    <Content Include="Resources\ExtractOASCommandPackage.ico" />
+    <Content Include="Resources\EditPropertiesCommand.png" />
+    <Content Include="Resources\EditPropertiesCommandPackage.ico" />
     <Content Include="Resources\ExtractRAMLCommand.png" />
     <Content Include="Resources\ExtractRAMLCommandPackage.ico" />
     <Content Include="Templates\AspNet5\ApiControllerBase.t4">
@@ -296,8 +299,11 @@
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AMF.Parser, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Parser.0.5.0.0\lib\net462\AMF.Parser.dll</HintPath>
+    <Reference Include="AMF.Api.Core, Version=0.9.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Api.Core.0.9.10\lib\net45\AMF.Api.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AMF.Parser, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Parser.0.6.0.0\lib\net462\AMF.Parser.dll</HintPath>
     </Reference>
     <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>
@@ -440,9 +446,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Raml.Api.Core, Version=0.9.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RAML.Api.Core.0.9.10\lib\net45\Raml.Api.Core.dll</HintPath>
-    </Reference>
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\packages\stdole.7.0.3302\lib\net10\stdole.dll</HintPath>

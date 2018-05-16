@@ -9,7 +9,7 @@
 				 x:Name="RamlChooserWindow"
                  Background="Gainsboro"
 				 Width="600"
-                 d:DesignHeight="570"
+                 d:DesignHeight="420"
                  Height="{Binding Height}"
 				 ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
@@ -74,7 +74,7 @@
             <Setter Property="Height"
 					Value="25" />
             <Setter Property="Width"
-					Value="40" />
+					Value="60" />
             <Setter Property="Background"
 					Value="#00A2DF" />
             <Setter Property="BorderThickness" 
@@ -92,7 +92,7 @@
             <Setter Property="Height"
 					Value="25" />
             <Setter Property="Width"
-					Value="40" />
+					Value="60" />
             <Setter Property="Background"
 					Value="WhiteSmoke" />
             <Setter Property="Foreground"
@@ -191,7 +191,7 @@
 
                     <Button Content="OK"
 									x:Name="AddNewContract"
-									Style="{StaticResource CommonButton}"
+									Style="{StaticResource DefaultButton}"
 									Grid.Column="2" />
 
                 </Grid>
@@ -203,7 +203,7 @@
 							 Style="{StaticResource DefaultRadioButton}"
 							 Visibility="{Binding ContractUseCaseVisibility}"
 							 GroupName="MainOption"
-                             Margin="0,14,0,10"
+                             Margin="0,24,0,10"
 							 Grid.Row="3">
                 </RadioButton>
 
@@ -214,54 +214,20 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-
-                    <Button Grid.Column="0"
-                            Style="{StaticResource BigButton}"
-							x:Name="AddExistingRamlFromExchange">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Image Source="images\exchange.png" Grid.Row="0" Stretch="None"></Image>
-                            <Label Content="Exchange" Grid.Row="1" Style="{StaticResource MainButttonLabel}"></Label>
-                            <TextBlock Text="Browse APIs on the Anypoint Exchange" Grid.Row="2" Style="{StaticResource SecondaryButtonLabel}" Margin="5,8,5,2"></TextBlock>
-                        </Grid>
-                    </Button>
-
-                    <Button 
-                                Style="{StaticResource BigButton}"
-								Grid.Column="2"
-								x:Name="AddExistingRamlFromDisk" >
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Image Source="images\upload.png" Grid.Row="0" Stretch="None"></Image>
-                            <Label Content="Upload" Grid.Row="1" Style="{StaticResource MainButttonLabel}"></Label>
-                            <TextBlock Text="Upload a RAML file from your local machine"
-						   Style="{StaticResource SecondaryButtonLabel}"
-						   Grid.Row="2"
+                    <Label Content="Upload a RAML/OAS file from your local machine"
+						   Style="{StaticResource DefaultLabel}"
+						   Grid.Column="0"
                            />
-
-                        </Grid>
-
-                    </Button>
-
-
-
-
-
-
+                    <Button     Style="{StaticResource DefaultButton}"
+								Grid.Column="2"
+                                Content="Upload"
+								x:Name="AddExistingRamlFromDisk" />
                 </Grid>
 
 
-                <Label Content="or enter the URL of a RAML/OAS definition:"
+                <Label Content="Or enter the URL of a RAML/OAS definition:"
 							   Style="{StaticResource DefaultLabel}"
-                               Margin="0,16,0,4"
+                               Margin="0,4,0,4"
                                Grid.Row="5" />
 
                 <Grid Grid.Row="6">

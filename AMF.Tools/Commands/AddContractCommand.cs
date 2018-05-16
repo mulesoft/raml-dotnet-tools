@@ -9,6 +9,9 @@ using Microsoft.VisualStudio.Shell.Interop;
 using MuleSoft.RAML.Tools;
 using AMF.Tools.Properties;
 using Caliburn.Micro;
+using EnvDTE;
+using Microsoft.VisualStudio.ComponentModelHost;
+using NuGet.VisualStudio;
 
 namespace AMF.Tools
 {
@@ -50,10 +53,37 @@ namespace AMF.Tools
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(CommandSet, CommandId);
-                var menuItem = new MenuCommand(this.MenuItemCallback, menuCommandID);
+                var menuItem = new OleMenuCommand(this.MenuItemCallback, menuCommandID);
+                menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);
             }
         }
+
+        private void BeforeQueryStatus(object sender, EventArgs e)
+        {
+            var menuCommand = sender as OleMenuCommand;
+            if (menuCommand == null) return;
+
+            CommandsUtil.ShowAndEnableCommand(menuCommand, false);
+
+            if (!IsAspNet5OrWebApiCoreInstalled())
+                return;
+
+            CommandsUtil.ShowAndEnableCommand(menuCommand, true);
+        }
+
+
+        private static bool IsAspNet5OrWebApiCoreInstalled()
+        {
+            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
+            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
+
+            if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
+                return CommandsUtil.IsAspNet5MvcInstalled(proj);
+
+            return CommandsUtil.IsWebApiCoreInstalled(proj);
+        }
+
 
         /// <summary>
         /// Gets the instance of the command.

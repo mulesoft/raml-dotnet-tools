@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Raml.Common;
+using AMF.Api.Core;
 using AMF.Parser.Model;
 using AMF.Tools.Core.ClientGenerator;
 

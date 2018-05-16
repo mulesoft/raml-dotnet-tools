@@ -79,7 +79,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RAML.Api.Core")]
+        [global::System.Configuration.DefaultSettingValueAttribute("AMF.Api.Core")]
         public string RAMLApiCorePackageId {
             get {
                 return ((string)(this["RAMLApiCorePackageId"]));
@@ -214,7 +214,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RAML.Parser")]
+        [global::System.Configuration.DefaultSettingValueAttribute("AMF.Parser")]
         public string RAMLParserPackageId {
             get {
                 return ((string)(this["RAMLParserPackageId"]));

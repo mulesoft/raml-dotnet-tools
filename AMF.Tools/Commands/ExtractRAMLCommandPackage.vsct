@@ -55,6 +55,7 @@
       <Button guid="guidExtractRAMLCommandPackageCmdSet" id="ExtractRAMLCommandId" priority="0x0100" type="Button">
         <Parent guid="guidExtractRAMLCommandPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <ButtonText>Extract RAML</ButtonText>
         </Strings>

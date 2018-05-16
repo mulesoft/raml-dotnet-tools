@@ -9,7 +9,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Xml.XPath;
 using Microsoft.CSharp;
-using Raml.Common;
+using AMF.Api.Core;
 
 namespace AMF.Tools.Core.XML
 {

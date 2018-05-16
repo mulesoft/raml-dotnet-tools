@@ -105,7 +105,7 @@ namespace MuleSoft.RAML.Tools
             GenerateCode(data, proj, targetNamespace, clientRootClassName, apiRefsFolderPath, ramlDestFile, destFolderPath, destFolderName, ramlProjItem);
         }
 
-        protected abstract void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
+        public abstract void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem);
 
     }

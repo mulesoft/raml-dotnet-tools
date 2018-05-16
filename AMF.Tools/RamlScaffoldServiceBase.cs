@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using Raml.Common;
+using AMF.Api.Core;
 using System.Threading.Tasks;
 
 namespace MuleSoft.RAML.Tools

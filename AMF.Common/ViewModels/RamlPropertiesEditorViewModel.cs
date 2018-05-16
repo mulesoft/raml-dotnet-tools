@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
-using Raml.Common;
+using AMF.Api.Core;
 
 namespace AMF.Common.ViewModels
 {

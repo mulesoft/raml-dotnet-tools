@@ -56,7 +56,7 @@ namespace MuleSoft.RAML.Tools
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, webApiCorePackageId, webApiCorePackageVersion, Settings.Default.NugetExternalPackagesSource);
         }
 
-        protected override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, 
+        public override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, 
             string apiRefsFolderPath, string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
             //ramlProjItem.Properties.Item("CustomTool").Value = string.Empty; // to cause a refresh when file already exists

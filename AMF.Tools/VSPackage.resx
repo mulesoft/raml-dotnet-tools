@@ -164,13 +164,13 @@
   <data name="3400" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ExtractRAMLCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="4110" xml:space="preserve">
-    <value>ExtractOASCommand Extension</value>
+  <data name="5110" xml:space="preserve">
+    <value>EditPropertiesCommand Extension</value>
   </data>
-  <data name="4112" xml:space="preserve">
-    <value>ExtractOASCommand Visual Stuido Extension Detailed Info</value>
+  <data name="5112" xml:space="preserve">
+    <value>EditPropertiesCommand Visual Stuido Extension Detailed Info</value>
   </data>
-  <data name="4400" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\ExtractOASCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="5400" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\EditPropertiesCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

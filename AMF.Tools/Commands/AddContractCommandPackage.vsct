@@ -36,7 +36,7 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidCommand1PackageCmdSet" id="MyMenuGroup" priority="0x0600">
+      <Group guid="guidRamlCommandsSet" id="MyMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
       </Group>
     </Groups>
@@ -52,9 +52,10 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidCommand1PackageCmdSet" id="Command1Id" priority="0x0100" type="Button">
-        <Parent guid="guidCommand1PackageCmdSet" id="MyMenuGroup" />
+      <Button guid="guidRamlCommandsSet" id="Command1Id" priority="0x0100" type="Button">
+        <Parent guid="guidRamlCommandsSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <ButtonText>Add RAML/OAS Contract...</ButtonText>
         </Strings>
@@ -77,7 +78,7 @@
     <GuidSymbol name="guidCommand1Package" value="{e6389fe8-eaf0-4f57-9dba-b22d88050571}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidCommand1PackageCmdSet" value="{5cf85f6a-50ee-4fe6-b316-838cbeafff00}">
+    <GuidSymbol name="guidRamlCommandsSet" value="{5cf85f6a-50ee-4fe6-b316-838cbeafff00}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="Command1Id" value="0x0100" />
     </GuidSymbol>

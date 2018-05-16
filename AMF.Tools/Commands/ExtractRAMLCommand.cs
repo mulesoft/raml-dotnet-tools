@@ -1,9 +1,13 @@
 ﻿using System;
 using System.ComponentModel.Design;
 using System.Globalization;
+using AMF.Common;
+using EnvDTE;
+using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using MuleSoft.RAML.Tools;
+using NuGet.VisualStudio;
 
 namespace AMF.Tools
 {
@@ -45,10 +49,51 @@ namespace AMF.Tools
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(CommandSet, CommandId);
-                var menuItem = new MenuCommand(this.MenuItemCallback, menuCommandID);
+                var menuItem = new OleMenuCommand(this.MenuItemCallback, menuCommandID);
+                menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);
             }
         }
+
+        private void BeforeQueryStatus(object sender, EventArgs e)
+        {
+            var menuCommand = sender as OleMenuCommand;
+            if (menuCommand == null) return;
+
+            CommandsUtil.ShowAndEnableCommand(menuCommand, false);
+
+            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
+            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
+
+            if (!VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsWebApiCoreInstalled(proj) || IsWebApiExplorerInstalled()))
+                return;
+
+            if (VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsAspNet5MvcInstalled(proj) || IsNetCoreApiExplorerInstalled()))
+                return;
+
+            CommandsUtil.ShowAndEnableCommand(menuCommand, true);
+        }
+
+        private bool IsNetCoreApiExplorerInstalled()
+        {
+            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
+            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
+            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
+            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "RAML.NetCoreApiExplorer");
+            return isWebApiCoreInstalled;
+        }
+
+        private bool IsWebApiExplorerInstalled()
+        {
+            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
+            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
+            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
+            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "RAML.WebApiExplorer");
+            return isWebApiCoreInstalled;
+        }
+
 
         /// <summary>
         /// Gets the instance of the command.

@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Microsoft.Win32;
-using Raml.Common;
+using AMF.Api.Core;
 
 namespace AMF.Common.ViewModels
 {

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using AMF.Parser.Model;
 using AMF.Tools.Core.Pluralization;
-using Raml.Common;
+using AMF.Api.Core;
 
 namespace AMF.Tools.Core
 {

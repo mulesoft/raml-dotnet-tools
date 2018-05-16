@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Raml.Common;
+using AMF.Api.Core;
 using AMF.Tools.Core.XML;
 using AMF.Parser.Model;
 

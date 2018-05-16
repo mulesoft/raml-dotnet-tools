@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public abstract class ReverseEngineeringServiceBase
     {

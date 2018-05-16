@@ -1,12 +1,9 @@
 ﻿using System;
 using System.ComponentModel.Design;
 using System.Dynamic;
-using System.Globalization;
 using AMF.Common.ViewModels;
 using AMF.Tools.Properties;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using MuleSoft.RAML.Tools;
 
 namespace AMF.Tools
 {

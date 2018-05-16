@@ -12,9 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using AMF.Api.Core;
-using System.Threading.Tasks;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public abstract class RamlScaffoldServiceBase
     {

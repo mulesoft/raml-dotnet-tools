@@ -5,7 +5,7 @@ using EnvDTE;
 using AMF.Tools.Properties;
 using NuGet.VisualStudio;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public static class NugetInstallerHelper
     {

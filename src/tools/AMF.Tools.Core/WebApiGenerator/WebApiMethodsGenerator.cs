@@ -4,7 +4,6 @@ using System.Linq;
 using AMF.Api.Core;
 using AMF.Parser.Model;
 using AMF.Tools.Core.WebApiGenerator;
-using System;
 
 namespace AMF.Tools.Core
 {

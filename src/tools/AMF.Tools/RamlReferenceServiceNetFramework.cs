@@ -5,12 +5,11 @@ using Microsoft.VisualStudio.Shell.Interop;
 using AMF.Tools.Properties;
 using NuGet.VisualStudio;
 using AMF.Common;
-using System.Threading.Tasks;
 using AMF.Tools.Core.ClientGenerator;
 using System.IO;
 using Microsoft.VisualStudio.Shell;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     // Net 4.5 implementation
     public class RamlReferenceServiceNetFramework : RamlReferenceServiceBase 

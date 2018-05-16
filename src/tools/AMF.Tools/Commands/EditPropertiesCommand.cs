@@ -1,17 +1,13 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows;
 using AMF.Common;
 using AMF.Common.ViewModels;
-using AMF.Parser;
 using AMF.Tools.Properties;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using MuleSoft.RAML.Tools;
 
 namespace AMF.Tools
 {

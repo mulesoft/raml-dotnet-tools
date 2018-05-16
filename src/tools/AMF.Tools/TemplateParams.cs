@@ -2,7 +2,7 @@
 using EnvDTE;
 using AMF.Tools.Core.WebApiGenerator;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class TemplateParams<TT> where TT : IHasName
     {

@@ -2,7 +2,7 @@
 using AMF.Common;
 using Microsoft.VisualStudio.Shell;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class ActivityLogger : ILogger
     {

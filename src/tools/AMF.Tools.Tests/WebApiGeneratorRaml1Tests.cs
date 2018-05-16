@@ -1,5 +1,4 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using AMF.Parser;
 using System.Linq;
 using System.Threading.Tasks;

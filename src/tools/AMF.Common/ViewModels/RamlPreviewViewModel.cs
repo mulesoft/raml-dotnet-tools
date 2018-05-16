@@ -8,10 +8,8 @@ using Caliburn.Micro;
 using AMF.Parser;
 using AMF.Parser.Model;
 using System.Linq;
-using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 using AMF.Api.Core;
-using System.Threading.Tasks;
 
 namespace AMF.Common.ViewModels
 {

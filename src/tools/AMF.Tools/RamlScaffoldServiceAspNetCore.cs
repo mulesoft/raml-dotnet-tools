@@ -7,9 +7,8 @@ using AMF.Tools.Properties;
 using AMF.Common;
 using Microsoft.VisualStudio.ComponentModelHost;
 using NuGet.VisualStudio;
-using System.Threading.Tasks;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class RamlScaffoldServiceAspNetCore : RamlScaffoldServiceBase
     {

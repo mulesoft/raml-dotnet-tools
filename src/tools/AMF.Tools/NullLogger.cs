@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class NullLogger : ILogger
     {

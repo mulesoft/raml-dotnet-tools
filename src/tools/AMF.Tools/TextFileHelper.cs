@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class TextFileHelper
     {

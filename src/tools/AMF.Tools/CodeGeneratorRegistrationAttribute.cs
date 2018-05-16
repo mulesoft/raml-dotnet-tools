@@ -13,7 +13,7 @@
 //using System.Globalization;
 //using Microsoft.VisualStudio.Shell;
 
-//namespace MuleSoft.RAML.Tools
+//namespace AMF.Tools
 //{
 //    // Note, that class shipped as source code with the earlier Visual Studio SDKs.
 //    // However, this same functionality is now included in the later VS Shell assemblies.

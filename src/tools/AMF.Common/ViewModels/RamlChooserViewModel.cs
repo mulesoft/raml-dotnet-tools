@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Dynamic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;

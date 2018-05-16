@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AMF.Common
+﻿namespace AMF.Common
 {
     internal class Logger
     {

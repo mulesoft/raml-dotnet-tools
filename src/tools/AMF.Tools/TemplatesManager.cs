@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows;
 using AMF.Tools.Properties;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class TemplatesManager
     {

@@ -8,10 +8,9 @@ using AMF.Tools.Properties;
 using NuGet.VisualStudio;
 using AMF.Common;
 using AMF.Tools.Core.ClientGenerator;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class RamlReferenceServiceNetCore : RamlReferenceServiceBase
     {

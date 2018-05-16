@@ -1,12 +1,10 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
 using AMF.Common;
 using EnvDTE;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using MuleSoft.RAML.Tools;
 using NuGet.VisualStudio;
 
 namespace AMF.Tools

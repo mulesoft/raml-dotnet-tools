@@ -1,17 +1,12 @@
 ﻿using System;
 using System.ComponentModel.Design;
 using System.Dynamic;
-using System.Globalization;
 using AMF.Common;
 using AMF.Common.ViewModels;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using MuleSoft.RAML.Tools;
 using AMF.Tools.Properties;
-using Caliburn.Micro;
 using EnvDTE;
-using Microsoft.VisualStudio.ComponentModelHost;
-using NuGet.VisualStudio;
 
 namespace AMF.Tools
 {

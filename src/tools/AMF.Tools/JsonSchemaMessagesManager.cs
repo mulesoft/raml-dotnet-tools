@@ -5,7 +5,7 @@ using System.Linq;
 using EnvDTE;
 using AMF.Common;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class JsonSchemaMessagesManager
     {

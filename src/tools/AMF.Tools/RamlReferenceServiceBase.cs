@@ -5,12 +5,10 @@ using EnvDTE;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using AMF.Tools.Properties;
 using NuGet.VisualStudio;
 using AMF.Common;
-using AMF.Parser.Model;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public abstract class RamlReferenceServiceBase
     {

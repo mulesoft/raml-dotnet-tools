@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TextTemplating;
 using Microsoft.VisualStudio.TextTemplating.VSHost;
-using AMF.Tools.Core;
 using AMF.Tools.Core.ClientGenerator;
 
 namespace AMF.Common

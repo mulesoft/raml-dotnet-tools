@@ -1,4 +1,4 @@
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class CodeRegenerationResult
     {

@@ -1,7 +1,7 @@
 ﻿// PkgCmdID.cs
 // MUST match PkgCmdID.h
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     static class PkgCmdIDList
     {

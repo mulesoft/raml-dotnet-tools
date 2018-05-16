@@ -19,7 +19,7 @@
 //using AMF.Common;
 //using System.Threading.Tasks;
 
-//namespace MuleSoft.RAML.Tools
+//namespace AMF.Tools
 //{
     
 //    [ComVisible(true)]

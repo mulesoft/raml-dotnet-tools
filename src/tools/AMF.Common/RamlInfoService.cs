@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
-using Microsoft.VisualStudio.Shell;
 using AMF.Parser;
 using System.Threading.Tasks;
 

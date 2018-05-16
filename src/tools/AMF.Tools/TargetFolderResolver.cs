@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using EnvDTE;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class TargetFolderResolver
     {

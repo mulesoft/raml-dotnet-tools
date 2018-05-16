@@ -5,7 +5,7 @@ using EnvDTE;
 using AMF.Common;
 using AMF.Tools.Core.WebApiGenerator;
 
-namespace MuleSoft.RAML.Tools
+namespace AMF.Tools
 {
     public class CodeGenerator
     {

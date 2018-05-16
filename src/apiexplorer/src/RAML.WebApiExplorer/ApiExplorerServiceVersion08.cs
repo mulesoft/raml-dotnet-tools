@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Http.Description;
-using AMF.Parser.Model;
+using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer
 {
@@ -13,31 +13,33 @@ namespace RAML.WebApiExplorer
         {
         }
 
-        protected override Shape AddType(Type type)
+        protected override string AddType(Type type)
         {
             var schemaName = type.Name.Replace("`", string.Empty);
-            if (Types.ContainsKey(type))
-                return Types[type];
+            if (Types.Contains(type))
+                return schemaName;
 
             var schema = schemaBuilder.Get(type);
 
             if (string.IsNullOrWhiteSpace(schema))
-                return null;
+                return string.Empty;
 
             // handle case of different types with same class name
             if (Schemas.ContainsKey(schemaName))
                 schemaName = GetUniqueSchemaName(schemaName);
 
             Schemas.Add(schemaName, schema);
-            var shape = new SchemaShape("application/json", schema, null, null, null, type.FullName, null, null, null, null, null, null);
-            Types.Add(type, shape);
+            Types.Add(type);
 
-            return shape;
+            return schemaName;
         }
 
-        protected override Shape CreateMimeType(string type)
+        protected override MimeType CreateMimeType(string type)
         {
-            return new TypeToShapeConverter().Convert(type);
+            return new MimeType
+            {
+                Schema = type
+            };
         }
 
     }

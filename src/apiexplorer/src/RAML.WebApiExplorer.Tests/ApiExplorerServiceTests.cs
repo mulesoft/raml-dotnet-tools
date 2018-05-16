@@ -1,7 +1,12 @@
-﻿using System.Web.Http;
+﻿using System.Collections.ObjectModel;
+using System.Reflection.Emit;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Description;
 using System.Web.Http.Routing;
+using Moq;
 using NUnit.Framework;
-using static RAML.WebApiExplorer.ApiExplorerService;
+using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer.Tests
 {
@@ -33,6 +38,7 @@ namespace RAML.WebApiExplorer.Tests
 			var apiExplorerService = new ApiExplorerServiceVersion08(apiExplorer, "http://test.com");
 			var ramlDoc = apiExplorerService.GetRaml(RamlVersion.Version08);
 			Assert.IsNotNull(ramlDoc);
+            Assert.AreEqual(RamlVersion.Version08, ramlDoc.RamlVersion);
 		}
 
         [Test]
@@ -45,6 +51,7 @@ namespace RAML.WebApiExplorer.Tests
             var apiExplorerService = new ApiExplorerServiceVersion1(apiExplorer, "http://test.com");
             var ramlDoc = apiExplorerService.GetRaml();
             Assert.IsNotNull(ramlDoc);
+            Assert.AreEqual(RamlVersion.Version1, ramlDoc.RamlVersion);
         }
 
 	}

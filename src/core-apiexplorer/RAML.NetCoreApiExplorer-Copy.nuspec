@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+      <id>$id$</id>
+      <version>$version$</version>
+      <title>RAML Net Core Api Explorer</title>
+      <authors>MuleSoft Inc</authors>
+      <owners>MuleSoft Inc</owners>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <description>This package is used by the RAML Tools for .NET Visual Studio extension to generate RAML metadata from an existing ASP.NET Core implementation.
+      In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.</description>
+      <releaseNotes>RAML Asp.Net Core Explorer</releaseNotes>
+      <copyright>MuleSoft Inc, Copyright (c) 2015</copyright>
+      <tags>RAML Asp.Net Core Reverse Engineering</tags>
+	  <licenseUrl>https://www.mulesoft.com/cpal</licenseUrl>
+      <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-apiexplorer</projectUrl>
+      <iconUrl>http://raml.org/images/logo.png</iconUrl>
+      <dependencies>
+		  <dependency id="Microsoft.AspNetCore.Mvc" version="1.0.0" />
+		  <dependency id="Microsoft.AspNetCore.StaticFiles" version="1.0.0" />
+      </dependencies>
+  </metadata>
+  <files>
+    <file src="package\content\**\*.*" target="content\netstandard1.6\"/>
+	  <file src="\bin\Debug\RAML.Parser.Expressions.dll" target="lib\netstandard1.6\"/>
+  </files>
+</package>

@@ -1,4 +1,4 @@
-﻿using AMF.Parser.Model;
+﻿using Raml.Parser.Expressions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,81 +11,41 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using RAML.Api.Core;
-using System.Collections.Specialized;
 
 namespace RAML.WebApiExplorer
 {
 	public abstract class ApiExplorerService
 	{
-        public enum RamlVersion
-        {
-            Version08,
-            Version1
-        }
-
-        private readonly IApiExplorer apiExplorer;
-		private readonly string host;
-        private readonly string basePath;
-        private SecurityScheme securityScheme;
+		private readonly IApiExplorer apiExplorer;
+		private readonly string baseUri;
+		private SecurityScheme securityScheme;
 		private string securityType;
 
 		public IEnumerable<string> SecuredBy { get; set; }
 
-		public IEnumerable<ParametrizedSecurityScheme> SecuritySchemes { get; set; }
+		public IEnumerable<IDictionary<string, SecurityScheme>> SecuritySchemes { get; set; }
 
-		public IEnumerable<string> Protocols { get; set; }
+		public IEnumerable<Protocol> Protocols { get; set; }
 
         public string DefaultMediaType { get; set; }
 
+        protected readonly RamlTypesOrderedDictionary RamlTypes = new RamlTypesOrderedDictionary();
         protected readonly IDictionary<string, string> Schemas = new Dictionary<string, string>();
-	    protected readonly IDictionary<Type, Shape> Types = new Dictionary<Type, Shape>();
+	    protected readonly ICollection<Type> Types = new Collection<Type>();
 
 	    public ApiExplorerService(IApiExplorer apiExplorer, string baseUri = null)
 		{
 			this.apiExplorer = apiExplorer;
-			host = GetHost(baseUri);
-            basePath = GetPath(baseUri);
+			this.baseUri = baseUri;
 		}
 
-        private string GetPath(string baseUri)
-        {
-            if (string.IsNullOrWhiteSpace(baseUri))
-                return null;
-
-            try
-            {
-                var uri = new Uri(baseUri);
-                return uri.AbsolutePath;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        private string GetHost(string baseUri)
-        {
-            if (string.IsNullOrWhiteSpace(baseUri))
-                return null;
-
-            try
-            {
-                var uri = new Uri(baseUri);
-                return uri.Host;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public WebApi GetRaml(RamlVersion ramlVersion = RamlVersion.Version1, string title = null)
+		public RamlDocument GetRaml(RamlVersion ramlVersion = RamlVersion.Version1, string title = null)
 		{
 			if (string.IsNullOrWhiteSpace(title))
 				title = "Api";
 
-			
-			var resourcesDic = new Dictionary<string, EndPoint>();
+			var raml = new RamlDocument {Title = title, BaseUri = baseUri, RamlVersion = ramlVersion };
+			var resourcesDic = new Dictionary<string, Resource>();
 			var parameterDescriptionsDic = new Dictionary<string, Collection<ApiParameterDescription>>();
 			foreach (var api in apiExplorer.ApiDescriptions)
 			{
@@ -100,22 +60,18 @@ namespace RAML.WebApiExplorer
 
 				foreach (var apiParam in GetParametersFromUrl(relativeUri))
 				{
-					relativeUri = RemoveNonExistingParametersFromRoute(relativeUri, api, apiParam.Name);
+					relativeUri = RemoveNonExistingParametersFromRoute(relativeUri, api, apiParam.Key);
 				}
 
-				EndPoint resource;
+				Resource resource;
 				if (!resourcesDic.ContainsKey(relativeUri))
 				{
-                    IEnumerable<ParametrizedSecurityScheme> endpointSecurity = null;
-
-                    var operations = GetMethods(api);
-
-                    parameterDescriptionsDic.Add(relativeUri, api.ParameterDescriptions);
-                    var parameters = GetParameters(api.RelativePath, parameterDescriptionsDic[api.RelativePath]);
-                    
-                    resource = new EndPoint(name: null, description: api.Documentation, path: api.RelativePath, operations: operations, 
-                        parameters: parameters, security: endpointSecurity);
-
+					resource = new Resource
+					               {
+						               Methods = GetMethods(api, new Collection<string>()),
+									   RelativeUri = relativeUri,
+					               };
+					parameterDescriptionsDic.Add(relativeUri, api.ParameterDescriptions);
 					resourcesDic.Add(relativeUri, resource);
 				}
 				else
@@ -125,33 +81,41 @@ namespace RAML.WebApiExplorer
 					{
 						parameterDescriptionsDic[relativeUri].Add(apiParameterDescription);
 					}
+					AddMethods(resource, api, resource.Methods.Select(m => m.Verb).ToList());
 				}
 
-                SetResourceProperties?.Invoke(resource, api);
+				if(SetResourceProperties != null)
+					SetResourceProperties(resource, api);
 
-                SetResourcePropertiesByAction?.Invoke(resource, api.ActionDescriptor);
+				if(SetResourcePropertiesByAction != null)
+					SetResourcePropertiesByAction(resource, api.ActionDescriptor);
 
-                SetResourcePropertiesByController?.Invoke(resource, api.ActionDescriptor.ControllerDescriptor);
-            }
+				if(SetResourcePropertiesByController != null)
+					SetResourcePropertiesByController(resource, api.ActionDescriptor.ControllerDescriptor);
+			}
 
-            var endPoints = resourcesDic.Select(d => d.Value).OrderBy(e => e.Path).ToArray();
-            var raml = new WebApi(name: title, description: null, host: host, schemes: Protocols, endPoints: endPoints, basePath: basePath, 
-                accepts: null, contentType: null, version: null, termsOfService: null, provider: null, license: null, documentations: null, 
-                baseUriParameters: null, security: SecuritySchemes);
+		    raml.Schemas = new List<IDictionary<string, string>> { Schemas };
 
-            // raml = SetUriParameters(raml.EndPoints, parameterDescriptionsDic, string.Empty);
+		    raml.Types = RamlTypes;
+
+			OrganizeResourcesHierarchically(raml, resourcesDic);
+
+			SetUriParameters(raml.Resources, parameterDescriptionsDic, string.Empty);
 
 			if(SetRamlProperties != null)
-                raml = SetRamlProperties(raml);
+				SetRamlProperties(raml);
 
-			//if (SecuritySchemes != null)
-			//	securitySchemes = SecuritySchemes;
+			if (SecuritySchemes != null)
+				raml.SecuritySchemes = SecuritySchemes;
 			
-			//if (!string.IsNullOrWhiteSpace(securityType) && securityScheme != null)
-   //             raml = SetSecurityScheme(raml);
+			if (!string.IsNullOrWhiteSpace(securityType) && securityScheme != null)
+				SetSecurityScheme(raml);
 
-			//if (SecuredBy != null)
-			//	securedBy = SecuredBy;
+			if (SecuredBy != null)
+				raml.SecuredBy = SecuredBy;
+
+			if(Protocols != null)
+				raml.Protocols = Protocols;
 
 			return raml;
 		}
@@ -162,37 +126,63 @@ namespace RAML.WebApiExplorer
 			securityType = type;
 		}
 
-		public WebApi UseOAuth2(WebApi webApi, string authorizationUri, string accessTokenUri, IEnumerable<string> authorizationGrants, IEnumerable<Scope> scopes, SecurityScheme securitySchemeDescriptor)
+		public void UseOAuth2(string authorizationUri, string accessTokenUri, IEnumerable<string> authorizationGrants, IEnumerable<string> scopes, SecuritySchemeDescriptor securitySchemeDescriptor)
 		{
 			securityType = "oauth_2_0";
-            var settings = new Settings(null, authorizationUri, null, null, accessTokenUri, authorizationGrants, null, scopes, null, null);
-            var security = new List<ParametrizedSecurityScheme> { new ParametrizedSecurityScheme("OAuth 2.0", securityScheme, settings) };
-
-            return new WebApi(webApi.Name, webApi.Description, webApi.Host, webApi.Schemes, webApi.EndPoints, webApi.BasePath, webApi.Accepts,
-                webApi.ContentType, webApi.Version, webApi.TermsOfService, webApi.Provider, webApi.License, webApi.Documentations,
-                webApi.BaseUriParameters, security);
+			var securitySettings = new SecuritySettings
+			                       {
+				                       AuthorizationUri = authorizationUri,
+				                       AccessTokenUri = accessTokenUri,
+				                       AuthorizationGrants = authorizationGrants,
+				                       Scopes = scopes
+			                       };
+			securityScheme = new SecurityScheme
+			                 {
+				                 DescribedBy = securitySchemeDescriptor,
+				                 Settings = securitySettings,
+				                 Type = new Dictionary<string, IDictionary<string, string>> {{"OAuth 2.0", null}}
+			                 };
 		}
 
-		public WebApi UseOAuth1(WebApi webApi, string authorizationUri, string requestTokenUri, string tokenCredentialsUri, SecurityScheme securitySchemeDescriptor)
+		public void UseOAuth1(string authorizationUri, string requestTokenUri, string tokenCredentialsUri, SecuritySchemeDescriptor securitySchemeDescriptor)
 		{
 			securityType = "oauth_1_0";
-            var settings = new Settings(requestTokenUri, authorizationUri, tokenCredentialsUri, null, null, null, null, null, null, null);
-            var security = new List<ParametrizedSecurityScheme> { new ParametrizedSecurityScheme("OAuth 1.0", securityScheme, settings) };
+			var securitySettings = new SecuritySettings
+			                       {
+				                       AuthorizationUri = authorizationUri,
+				                       RequestTokenUri = requestTokenUri,
+				                       TokenCredentialsUri = tokenCredentialsUri
+			                       };
+			securityScheme = new SecurityScheme
+			                 {
+				                 DescribedBy = securitySchemeDescriptor,
+				                 Settings = securitySettings,
+				                 Type = new Dictionary<string, IDictionary<string, string>> {{"OAuth 1.0", null}}
+			                 };
+		}
 
-            return new WebApi(webApi.Name, webApi.Description, webApi.Host, webApi.Schemes, webApi.EndPoints, webApi.BasePath, webApi.Accepts,
-                webApi.ContentType, webApi.Version, webApi.TermsOfService, webApi.Provider, webApi.License, webApi.Documentations,
-                webApi.BaseUriParameters, security);
-        }
+		public Action<RamlDocument> SetRamlProperties { get; set; }
 
-        public Func<WebApi, WebApi> SetRamlProperties { get; set; }
+		public Action<Resource, ApiDescription> SetResourceProperties  { get; set; }
 
-		public Func<EndPoint, ApiDescription, WebApi> SetResourceProperties  { get; set; }
+		public Action<Resource, HttpControllerDescriptor> SetResourcePropertiesByController { get; set; }
 
-		public Func<EndPoint, HttpControllerDescriptor, WebApi> SetResourcePropertiesByController { get; set; }
+		public Action<Resource, HttpActionDescriptor> SetResourcePropertiesByAction { get; set; }
 
-		public Func<EndPoint, HttpActionDescriptor, WebApi> SetResourcePropertiesByAction { get; set; }
+        public Action<ApiDescription, Method> SetMethodProperties { get; set; }
 
-        public Func<ApiDescription, Operation, WebApi> SetMethodProperties { get; set; }
+		private void SetSecurityScheme(RamlDocument raml)
+		{
+			var securitySchemes = new List<IDictionary<string, SecurityScheme>>();
+
+			if (raml.SecuritySchemes != null && raml.SecuritySchemes.Any())
+				securitySchemes = raml.SecuritySchemes.ToList();
+
+			var schemes = new Dictionary<string, SecurityScheme> { { securityType, securityScheme } };
+			securitySchemes.Add(schemes);
+
+			raml.SecuritySchemes = securitySchemes;
+		}
 
 		private static string RemoveNonExistingParametersFromRoute(string relativeUri, ApiDescription api, string parameterName)
 		{
@@ -207,17 +197,44 @@ namespace RAML.WebApiExplorer
 			return relativeUri;
 		}
 
-		//private void SetUriParameters(IEnumerable<EndPoint> resources, Dictionary<string, Collection<ApiParameterDescription>> parameterDescriptionsDic, 
-  //          string parentUrl)
-		//{
-		//	if(resources == null)
-		//		return;
+		private void SetUriParameters(IEnumerable<Resource> resources, Dictionary<string, Collection<ApiParameterDescription>> parameterDescriptionsDic, string parentUrl)
+		{
+			if(resources == null)
+				return;
 
-		//	foreach (var resource in resources)
-		//	{
-  //              resource.Parameters = ;
-		//	}
-		//}
+			foreach (var resource in resources)
+			{
+				var fullUrl = parentUrl + resource.RelativeUri;
+				resource.UriParameters = GetUriParameters(resource.RelativeUri, parameterDescriptionsDic[fullUrl]);
+				SetUriParameters(resource.Resources, parameterDescriptionsDic, fullUrl);
+			}
+		}
+
+		private void OrganizeResourcesHierarchically(RamlDocument raml, Dictionary<string, Resource> resourcesDic)
+		{
+			foreach (var kv in resourcesDic)
+			{
+				var matchingResources = resourcesDic.Where(r => r.Key != kv.Key && kv.Key.StartsWith(r.Key + "/"));
+				if (matchingResources.Any())
+				{
+					var parent = matchingResources.OrderByDescending(r => r.Key.Length).First();
+					kv.Value.RelativeUri = kv.Value.RelativeUri.Substring(parent.Key.Length); // remove parent route from relative uri
+					parent.Value.Resources.Add(kv.Value);
+				}
+				else
+				{
+					raml.Resources.Add(kv.Value);
+				}
+			}
+		}
+
+		private void AddMethods(Resource resource, ApiDescription api, ICollection<string> verbs)
+		{
+			var methods = resource.Methods.ToList();
+			var newMethods = GetMethods(api, verbs);
+			methods.AddRange(newMethods);
+			resource.Methods = methods;
+		}
 
 		private string GetDescription(ApiDescription api)
 		{
@@ -231,21 +248,30 @@ namespace RAML.WebApiExplorer
 			return description;
 		}
 
-		private IEnumerable<Operation> GetMethods(ApiDescription api)
+		private IEnumerable<Method> GetMethods(ApiDescription api, ICollection<string> verbs)
 		{
-			var methods = new Collection<Operation>();
+			var methods = new Collection<Method>();
 			foreach (var httpMethod in api.ActionDescriptor.SupportedHttpMethods)
 			{
-                var queryParameters = GetQueryParameters(api.ParameterDescriptions);
-                
-                var method = new Operation(method: api.HttpMethod.Method, name: api.ActionDescriptor.ActionName, description: GetDescription(api), deprecated: false, 
-                    summary: null, documentation: null, schemes: null, accepts: null, contentType: null, request: GetRequest(api), 
-                    responses: GetResponses(api.ResponseDescription, api), security: null);
+				var verb = httpMethod.Method.ToLowerInvariant();
+				if (verbs.Contains(verb)) 
+					continue;
 
+				var method = new Method
+				             {
+					             Description = GetDescription(api),
+					             Verb = verb,
+					             QueryParameters = GetQueryParameters(api.ParameterDescriptions), // GetQueryParameters(api.RelativePath, api.ParameterDescriptions),
+					             Body = GetRequestMimeTypes(api),
+					             Responses = GetResponses(api.ResponseDescription, api),
+				             };
 				methods.Add(method);
+                verbs.Add(verb);
 
-                SetMethodProperties?.Invoke(api, method);
-            }
+                if (SetMethodProperties != null)
+                    SetMethodProperties(api, method);
+
+			}
 			return methods;
 		}
 
@@ -273,8 +299,11 @@ namespace RAML.WebApiExplorer
 	    {
             var type = AddType(responseType);
 
-            var body = CreateJsonMimeType(type.Name);
-            return new Response(name: "200", description: null, statusCode: "200", headers: null, payloads: body, examples: null);
+            return new Response
+            {
+                Body = CreateJsonMimeType(type),
+                Code = "200"
+            };
 	    }
 
 	    private List<Response> HandleResponseTypeStatusAttributes(IEnumerable<Attribute> attributes)
@@ -283,8 +312,8 @@ namespace RAML.WebApiExplorer
             foreach (var attribute in attributes.Where(a => a is ResponseTypeStatusAttribute))
             {
                 var response = GetResponse(attribute);
-                if(!responses.ContainsKey(response.StatusCode))
-                    responses.Add(response.StatusCode, response);
+                if(!responses.ContainsKey(response.Code))
+                    responses.Add(response.Code, response);
             }
 	        return responses.Values.ToList();
 	    }
@@ -294,27 +323,34 @@ namespace RAML.WebApiExplorer
             var status = ((ResponseTypeStatusAttribute)attribute).StatusCode;
             var type = ((ResponseTypeStatusAttribute)attribute).ResponseType;
             var typeName = AddType(type);
-            return new Response(name: status.ToString(), description: null, statusCode: status.ToString(), headers: null, 
-                payloads: CreateJsonMimeType(typeName.Name), examples: null);
+            return new Response
+            {
+                Code = ((int)status).ToString(CultureInfo.InvariantCulture),
+                Body = CreateJsonMimeType(typeName)
+            };
 	    }
 
-        protected IEnumerable<Payload> CreateJsonMimeType(string type)
+        protected Dictionary<string, MimeType> CreateJsonMimeType(string type)
         {
             var mimeType = CreateMimeType(type);
             return CreateMimeTypes(mimeType);
         }
 
-	    protected IEnumerable<Payload> CreateMimeTypes(Shape mimeType)
+
+	    protected Dictionary<string, MimeType> CreateMimeTypes(MimeType mimeType)
 	    {
-            var mimeTypes = new List<Payload>
-            {
-                new Payload("application/json", mimeType)
+	        var mimeTypes = new Dictionary<string, MimeType>
+	        {
+	            {
+	                "application/json",
+	                mimeType
+	            }
 	        };
 	        return mimeTypes;
 	    }
 
 
-	    protected abstract Shape AddType(Type type);
+	    protected abstract string AddType(Type type);
 
 	    protected string GetUniqueSchemaName(string schemaName)
 	    {
@@ -327,30 +363,36 @@ namespace RAML.WebApiExplorer
             throw new InvalidOperationException("Could not find a unique name. You have more than 1000 types with the same class name");
 	    }
 
-	    private Request GetRequest(ApiDescription api)
+	    private Dictionary<string, MimeType> GetRequestMimeTypes(ApiDescription api)
 		{
 			var mediaTypes = api.SupportedRequestBodyFormatters.SelectMany(f => f.SupportedMediaTypes).ToArray();
+			var mimeTypes = new Dictionary<string, MimeType>();
 
 			var apiParam = api.ParameterDescriptions.FirstOrDefault(p => p.Source == ApiParameterSource.FromBody);
-			Shape shape = null;
+			MimeType mimeType = null;
 
 			if (apiParam != null)
 			{
 				var type = apiParam.ParameterDescriptor.ParameterType;
-                shape = AddType(type);
+
+                var typeName = AddType(type);
+
+				mimeType = CreateMimeType(typeName);
 			}
 
-            var queryParams = GetQueryParameters(api.ParameterDescriptions).Select(p => p.Value).ToArray();
-            var payloads = new List<Payload>();
-            if (shape != null && mediaTypes.Any(m => m.MediaType == "application/json"))
-                payloads.Add(new Payload("application/json", shape));
+			if(mimeType != null && !mediaTypes.Any())
+				mimeTypes.Add("application/json", mimeType);
 
-            Shape queryString = null; //TODO: check
-            IEnumerable<Parameter> headers = null;  //TODO: check
-            return new Request(queryParams, headers, payloads, queryString);
+			foreach (var mediaType in mediaTypes)
+			{
+                if(!mimeTypes.ContainsKey(mediaType.MediaType))
+				    mimeTypes.Add(mediaType.MediaType, mediaType.MediaType == "application/json" ? mimeType : new MimeType());
+			}
+			
+			return mimeTypes;
 		}
 
-	    protected abstract Shape CreateMimeType(string type);
+	    protected abstract MimeType CreateMimeType(string type);
 
 
 	    private IDictionary<string, Parameter> GetQueryParameters(IEnumerable<ApiParameterDescription> parameterDescriptions)
@@ -368,7 +410,7 @@ namespace RAML.WebApiExplorer
                 }
                 else
                 {
-                    var parameter = GetPrimitiveParameter(apiParam, "query");
+                    var parameter = GetPrimitiveParameter(apiParam);
 
                     if (!queryParams.ContainsKey(apiParam.Name))
                         queryParams.Add(apiParam.Name, parameter);
@@ -386,24 +428,36 @@ namespace RAML.WebApiExplorer
                 if(!IsPrimitiveType(property.PropertyType))
                     continue;
 
-	            var parameter = GetParameterFromProperty(apiParam, property, "query");
+	            var parameter = GetParameterFromProperty(apiParam, property);
 
 	            if (!queryParams.ContainsKey(property.Name))
 	                queryParams.Add(property.Name, parameter);
 	        }
 	    }
 
-	    private Parameter GetParameterFromProperty(ApiParameterDescription apiParam, PropertyInfo property, string binding)
+	    private static Parameter GetParameterFromProperty(ApiParameterDescription apiParam, PropertyInfo property)
 	    {
-            var parameter = new Parameter(name: apiParam.Name, description: apiParam.Documentation, 
-                required: !IsNullable(property.PropertyType), binding: binding, schema: AddType(property.PropertyType));
+	        var parameter = new Parameter
+	        {
+	            Default = IsNullable(property.PropertyType) ? "null" : null,
+	            Required = !IsNullable(property.PropertyType),
+	            Type = SchemaTypeMapper.Map(property.PropertyType)
+	        };
 	        return parameter;
 	    }
 
-	    private Parameter GetPrimitiveParameter(ApiParameterDescription apiParam, string binding)
+	    private static Parameter GetPrimitiveParameter(ApiParameterDescription apiParam)
 	    {
-            var parameter = new Parameter(name: apiParam.Name, description: apiParam.Documentation, required: !apiParam.ParameterDescriptor.IsOptional,
-                binding: binding, schema: AddType(apiParam.ParameterDescriptor.ParameterType));
+	        var parameter = new Parameter
+	        {
+	            Default =
+	                apiParam.ParameterDescriptor.DefaultValue == null
+	                    ? (apiParam.ParameterDescriptor.IsOptional ? "null" : null)
+	                    : apiParam.ParameterDescriptor.DefaultValue.ToString(),
+	            Required = !apiParam.ParameterDescriptor.IsOptional,
+	            Type = SchemaTypeMapper.Map(apiParam.ParameterDescriptor.ParameterType),
+	            Description = apiParam.Documentation
+	        };
 	        return parameter;
 	    }
 
@@ -417,31 +471,23 @@ namespace RAML.WebApiExplorer
 	        return SchemaTypeMapper.Map(parameterType) != null;
 	    }
 
-		private IEnumerable<Parameter> GetParameters(string url, IEnumerable<ApiParameterDescription> apiParameterDescriptions)
+		private IDictionary<string, Parameter> GetUriParameters(string url, IEnumerable<ApiParameterDescription> apiParameterDescriptions)
 		{
-            var parameters = new List<Parameter>();
-			foreach (var apiParam in apiParameterDescriptions)
+			var urlParameters = GetParametersFromUrl(url);
+			var parameterDescriptions = apiParameterDescriptions
+				.Where(apiParam => urlParameters.ContainsKey(apiParam.Name) 
+					&& !string.IsNullOrWhiteSpace(apiParam.Documentation));
+
+			foreach (var apiParam in parameterDescriptions)
 			{
-                parameters.Add(new Parameter(name: apiParam.Name, description: apiParam.Documentation,
-                    required: !apiParam.ParameterDescriptor.IsOptional, binding: MapSourceToBinding(apiParam.Source),
-                    schema: MapTypeToSchema(apiParam.ParameterDescriptor.ParameterType)));
+				urlParameters[apiParam.Name].Description = apiParam.Documentation;
 			}
-			return parameters;
+			return urlParameters;
 		}
 
-        private Shape MapTypeToSchema(Type parameterType)
-        {
-            return AddType(parameterType); 
-        }
-
-        private string MapSourceToBinding(ApiParameterSource source)
-        {
-            return source.ToString(); //TODO: check
-        }
-
-        private static IEnumerable<Parameter> GetParametersFromUrl(string url)
+		private static IDictionary<string, Parameter> GetParametersFromUrl(string url)
 		{
-			var dic = new List<Parameter>();
+			var dic = new Dictionary<string, Parameter>();
 
 			if (string.IsNullOrWhiteSpace(url) || !url.Contains("{"))
 				return dic;
@@ -453,62 +499,11 @@ namespace RAML.WebApiExplorer
 			var matches = regex.Matches(url);
 			foreach (Match match in matches)
 			{
-                var key = match.Groups[1].Value;
-
-                var parameter = new Parameter (name: null, description: null, required: true, binding: "URL", schema: MapPrimitiveToShape("string"));
-				dic.Add(parameter);
+				var parameter = new Parameter {Required = true, Type = "string"};
+				dic.Add(match.Groups[1].Value, parameter);
 			}
 
 			return dic;
 		}
-
-        private static Shape MapPrimitiveToShape(string primitiveType)
-        {
-            return new ScalarShape(primitiveType, null, 0, 0, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null);
-        }
-
-
-        ////TODO: check
-        //public class RamlTypesOrderedDictionary
-        //{
-        //    private readonly OrderedDictionary dic = new OrderedDictionary();
-        //    public int Count { get { return dic.Count; } }
-
-        //    public void Clear()
-        //    {
-        //        dic.Clear();
-        //    }
-
-        //    public List<string> Keys { get { return dic.Keys.Cast<string>().ToList(); } }
-
-        //    public IDictionaryEnumerator GetEnumerator()
-        //    {
-        //        return dic.GetEnumerator();
-        //    }
-
-        //    public void Add(string key, Shape value)
-        //    {
-        //        dic.Add(key, value);
-        //    }
-
-        //    public Shape GetByKey(string key)
-        //    {
-        //        if (!ContainsKey(key))
-        //            return null;
-
-        //        var type = dic[key] as Shape;
-        //        return type;
-        //    }
-
-        //    public bool ContainsKey(string key)
-        //    {
-        //        return dic.Contains(key);
-        //    }
-
-        //    public Shape this[string key]
-        //    {
-        //        get { return (Shape)dic[key]; }
-        //    }
-        //}
-    }
+	}
 }

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>RAML Parser domain model classes</Description>
+    <Copyright>MuleSoft Inc</Copyright>
+    <AssemblyTitle>RAML.Parser.Expressions</AssemblyTitle>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <Authors>MuleSoft Inc</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>RAML.Parser.Expressions</AssemblyName>
+    <PackageId>RAML.Parser.Expressions</PackageId>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Specialized" Version="4.0.1" />
+  </ItemGroup>
+
+</Project>

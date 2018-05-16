@@ -1,29 +1,32 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Http.Description;
-using AMF.Parser.Model;
+using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer
 {
     public class ApiExplorerServiceVersion1 : ApiExplorerService
     {
-        private readonly TypeToShapeConverter typeBuilder;
+        private readonly Raml1TypeBuilder typeBuilder;
 
         public ApiExplorerServiceVersion1(IApiExplorer apiExplorer, string baseUri = null)
             : base(apiExplorer, baseUri)
         {
-            typeBuilder = new TypeToShapeConverter();
+            typeBuilder = new Raml1TypeBuilder(RamlTypes);
         }
 
-        protected override Shape AddType(Type type)
+        protected override string AddType(Type type)
         {
-            var typeName = typeBuilder.Convert(type);
+            var typeName = typeBuilder.Add(type);
             return typeName;
         }
 
-        protected override Shape CreateMimeType(string type)
+        protected override MimeType CreateMimeType(string type)
         {
-            return new TypeToShapeConverter().Convert(type);
+            return new MimeType
+            {
+                Type = type
+            };
         }
     }
 }

@@ -1,13 +1,13 @@
 var fs = require('fs')
     , path = require('path')
-    , builtEdge = path.resolve(__dirname, '../build/Release/' + (process.env.EDGE_USE_CORECLR || !fs.existsSync(path.resolve(__dirname, '../build/Release/edge_nativeclr.node')) ? 'edge_coreclr.node' : 'edge_nativeclr.node'))
+    , builtEdge = path.resolve(__dirname, '../build/Release/edge.node')
     , edge;
 
 var versionMap = [
+    [ /^0\.8\./, '0.8.22' ],
+    [ /^0\.10\./, '0.10.0' ],
+    [ /^0\.12\./, '0.12.0' ],
     [ /^4\./, '4.1.1' ],
-    [ /^5\./, '5.1.0' ],
-    [ /^6\./, '6.4.0' ],
-    [ /^7\./, '7.10.0' ],
 ];
 
 function determineVersion() {
@@ -25,11 +25,11 @@ var edgeNative;
 if (process.env.EDGE_NATIVE) {
     edgeNative = process.env.EDGE_NATIVE;
 }
+else if (process.platform === 'win32') {
+    edgeNative = './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/edge';
+}
 else if (fs.existsSync(builtEdge)) {
     edgeNative = builtEdge;
-}
-else if (process.platform === 'win32') {
-    edgeNative = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + (process.env.EDGE_USE_CORECLR ? 'edge_coreclr' : 'edge_nativeclr'));
 }
 else {
     throw new Error('The edge native module is not available at ' + builtEdge 
@@ -39,16 +39,6 @@ else {
 if (process.env.EDGE_DEBUG) {
     console.log('Load edge native library from: ' + edgeNative);
 }
-if (edgeNative.match(/edge_coreclr\.node$/i)) {
-    // Propagate the choice between desktop and coreclr to edge-cs; this is used in deciding
-    // how to compile literal C# at https://github.com/tjanczuk/edge-cs/blob/master/lib/edge-cs.js
-    process.env.EDGE_USE_CORECLR = 1;
-}
-if (process.env.EDGE_USE_CORECLR && !process.env.EDGE_BOOTSTRAP_DIR && fs.existsSync(path.join(__dirname, 'bootstrap', 'bin', 'Release', 'netcoreapp1.0', 'bootstrap.dll'))) {
-    process.env.EDGE_BOOTSTRAP_DIR = path.join(__dirname, 'bootstrap', 'bin', 'Release', 'netcoreapp1.0');
-}
-
-process.env.EDGE_NATIVE = edgeNative;
 edge = require(edgeNative);
 
 exports.func = function(language, options) {
@@ -109,11 +99,7 @@ exports.func = function(language, options) {
 
         if (typeof options.compiler !== 'string') {
             throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
-                "did not specify correct compiler package name or assembly.");
-        }
-
-        if (process.env.EDGE_USE_CORECLR) {
-            options.bootstrapDependencyManifest = compiler.getBootstrapDependencyManifest();
+                "did not specify correct compiler assembly.");
         }
     }
 

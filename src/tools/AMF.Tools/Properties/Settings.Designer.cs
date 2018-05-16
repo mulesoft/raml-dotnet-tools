@@ -196,7 +196,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RAML.WebApiExplorer")]
+        [global::System.Configuration.DefaultSettingValueAttribute("AMF.WebApiExplorer")]
         public string RAMLWebApiExplorerPackageId {
             get {
                 return ((string)(this["RAMLWebApiExplorerPackageId"]));

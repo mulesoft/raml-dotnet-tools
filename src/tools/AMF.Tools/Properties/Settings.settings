@@ -60,7 +60,7 @@
       <Value Profile="(Default)">https://www.mulesoft.com/exchange#!/?types=RAML</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">RAML.WebApiExplorer</Value>
+      <Value Profile="(Default)">AMF.WebApiExplorer</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageVersion" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1.2.2</Value>

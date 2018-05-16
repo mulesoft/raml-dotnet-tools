@@ -1,136 +1,131 @@
 ﻿using System.Collections.Generic;
 using FstabExplorerTest.Fstab.Models;
 using NUnit.Framework;
-using AMF.Parser.Model;
+using Raml.Parser.Expressions;
 using RAML.WebApiExplorer.Tests.Types;
-using static RAML.WebApiExplorer.ApiExplorerService;
-using System.Linq;
 
 namespace RAML.WebApiExplorer.Tests
 {
 	[TestFixture]
-    public class TypeToShapeConverterTests
+    public class Raml1TypeBuilderTests
 	{
-        private TypeToShapeConverter typesToShapeConverter;
+        private Raml1TypeBuilder raml1TypeBuilder;
+	    private RamlTypesOrderedDictionary raml1Types;
 
 	    [SetUp]
 	    public void TestSetup()
 	    {
-            typesToShapeConverter = new TypeToShapeConverter();
+            raml1Types = new RamlTypesOrderedDictionary();
+            raml1TypeBuilder = new Raml1TypeBuilder(raml1Types);
 	    }
 
 	    [Test]
 		public void ShouldParseTypeWithNestedTypes()
 		{
-			var raml1Type = typesToShapeConverter.Convert(typeof (ForksPostResponse));
-            Assert.IsNotNull(raml1Type);
-            Assert.IsTrue(typesToShapeConverter.Types.ContainsKey("RAML.WebApiExplorer.Tests.Types.ForksPostResponse"));
-            Assert.IsTrue(typesToShapeConverter.Types.ContainsKey("RAML.WebApiExplorer.Tests.Types.Owner"));
+			var raml1Type = raml1TypeBuilder.Add(typeof (ForksPostResponse));
+            Assert.IsNotNullOrEmpty(raml1Type);
+            Assert.IsTrue(raml1Types.ContainsKey("ForksPostResponse"));
+            Assert.IsTrue(raml1Types.ContainsKey("Owner"));
 		}
 
         [Test]
         public void ShouldParseUriAsString()
         {
-            typesToShapeConverter.Convert(typeof(WebLocation));
-            Assert.AreEqual(1, typesToShapeConverter.Types.Count);
-            Assert.IsTrue(!typesToShapeConverter.Types.ContainsKey("Uri"));
-            var webLocation = typesToShapeConverter.Types["RAML.WebApiExplorer.Tests.Types.WebLocation"] as NodeShape;
-            Assert.AreEqual(2, webLocation.Properties.Count());
-            Assert.IsTrue(webLocation.Properties.Any(p => p.Path == "BaseUri"));
-            Assert.IsTrue(webLocation.Properties.Any(p => p.Path == "Location"));
+            raml1TypeBuilder.Add(typeof(WebLocation));
+            Assert.AreEqual(1, raml1Types.Count);
+            Assert.IsTrue(!raml1Types.ContainsKey("Uri"));
+            Assert.AreEqual(2, raml1Types.GetByKey("WebLocation").Object.Properties.Count);
+            Assert.IsTrue(raml1Types.GetByKey("WebLocation").Object.Properties.ContainsKey("BaseUri"));
+            Assert.IsTrue(raml1Types.GetByKey("WebLocation").Object.Properties.ContainsKey("Location"));
         }
 
-        [Test]
-        public void ShouldSkipTypeThatHasNoSettableProperties()
+		[Test]
+		public void ShouldSkipTypeThatHasNoSettableProperties()
         {
-            typesToShapeConverter.Convert(typeof(TypeWithReadOnlyProperties));
-            Assert.AreEqual(1, typesToShapeConverter.Types.Count);
-            var readOnlyType = typesToShapeConverter.Types["RAML.WebApiExplorer.Tests.Types.TypeWithReadOnlyProperties"] as NodeShape;
-            Assert.IsFalse(readOnlyType.Properties.Any(p => p.Path == "ReadOnlyProp"));
-            Assert.IsFalse(readOnlyType.Properties.Any(p => p.Path == "ReadOnlyObject"));
+            raml1TypeBuilder.Add(typeof(TypeWithReadOnlyProperties));
+            Assert.AreEqual(1, raml1Types.Count);
+            Assert.IsFalse(raml1Types.GetByKey("TypeWithReadOnlyProperties").Object.Properties.ContainsKey("ReadOnlyProp"));
+            Assert.IsFalse(raml1Types.GetByKey("TypeWithReadOnlyProperties").Object.Properties.ContainsKey("ReadOnlyObject"));
 		}
 
 		[Test]
 		public void ShouldParseArray()
 		{
-			var raml1Type = typesToShapeConverter.Convert(typeof(Owner[]));
-            Assert.AreEqual(2, typesToShapeConverter.Types.Count);
-			Assert.IsTrue(typesToShapeConverter.Types.ContainsKey("RAML.WebApiExplorer.Tests.Types.Owner"));
-            Assert.AreEqual("RAML.WebApiExplorer.Tests.Types.Owner", ((ArrayShape)typesToShapeConverter.Types["RAML.WebApiExplorer.Tests.Types.Owner[]"]).Items.Name);
+			var raml1Type = raml1TypeBuilder.Add(typeof(Owner[]));
+            Assert.AreEqual(2, raml1Types.Count);
+			Assert.IsTrue(raml1Types.ContainsKey("Owner"));
+            Assert.AreEqual("Owner", raml1Types.GetByKey("ListOfOwner").Array.Items.Type);
 		}
 
         [Test]
         public void ShouldParseArrayOfPrimitives()
         {
-            var type = typesToShapeConverter.Convert(typeof(int[]));
-            Assert.AreEqual(0, typesToShapeConverter.Types.Count);
+            var type = raml1TypeBuilder.Add(typeof(int[]));
+            Assert.AreEqual(0, raml1Types.Count);
             Assert.AreEqual("integer[]", type);
         }
 
         [Test]
         public void ShouldParseListOfPrimitives()
         {
-            var type = typesToShapeConverter.Convert(typeof(List<int>));
-            Assert.AreEqual(0, typesToShapeConverter.Types.Count);
+            var type = raml1TypeBuilder.Add(typeof(List<int>));
+            Assert.AreEqual(0, raml1Types.Count);
             Assert.AreEqual("integer[]", type);
         }
 
         [Test]
         public void ShouldParseArrayOfArray()
         {
-            var type = typesToShapeConverter.Convert(typeof(List<int[]>));
-            Assert.AreEqual(0, typesToShapeConverter.Types.Count);
+            var type = raml1TypeBuilder.Add(typeof(List<int[]>));
+            Assert.AreEqual(0, raml1Types.Count);
             Assert.AreEqual("integer[][]", type);
         }
 
-        //[Test]
-        //public void ShouldParseDictionary()
-        //{
-        //    typesToShapeConverter.Convert(typeof(IDictionary<string, Owner>));
-        //    Assert.AreEqual(2, typesToShapeConverter.Types.Count);
-        //    Assert.IsTrue(typesToShapeConverter.Types.ContainsKey("Owner"));
-        //    Assert.IsTrue(typesToShapeConverter.Types.ContainsKey("OwnerMap"));
-        //    var node = typesToShapeConverter.Types["OwnerMap"] as NodeShape;
-        //    Assert.IsTrue(node.Properties.Any(p => p.Path == "[]"));
-        //    Assert.AreEqual("Owner", node.Properties.First(p => p.Path == "[]"].Type);
-        //}
+        [Test]
+        public void ShouldParseDictionary()
+        {
+            raml1TypeBuilder.Add(typeof(IDictionary<string, Owner>));
+            Assert.AreEqual(2, raml1Types.Count);
+            Assert.IsTrue(raml1Types.ContainsKey("Owner"));
+            Assert.IsTrue(raml1Types.ContainsKey("OwnerMap"));
+            Assert.IsTrue(raml1Types.GetByKey("OwnerMap").Object.Properties.ContainsKey("[]"));
+            Assert.AreEqual("Owner", raml1Types.GetByKey("OwnerMap").Object.Properties["[]"].Type);
+        }
 
 		[Test]
 		public void ShouldParseComplexType()
 		{
-			typesToShapeConverter.Convert(typeof(SearchGetResponse));
-            Assert.AreEqual(6, typesToShapeConverter.Types.Count);
+			raml1TypeBuilder.Add(typeof(SearchGetResponse));
+            Assert.AreEqual(6, raml1Types.Count);
 		}
 
-        [Test] // it should not be necesary
+        [Test, Ignore] // it should not be necesary
         public void ShouldGetSubclassesOfType()
         {
-            typesToShapeConverter.Convert(typeof(Entry));
-            Assert.AreEqual(6, typesToShapeConverter.Types.Count);
-            Assert.AreEqual("Storage", typesToShapeConverter.Types["StoragediskUUID"].LinkTargetName);
+            raml1TypeBuilder.Add(typeof(Entry));
+            Assert.AreEqual(6, raml1Types.Count);
+            Assert.AreEqual("Storage", raml1Types.GetByKey("StoragediskUUID").Type);
         }
 
         [Test]
         public void ShouldParseTypeWithRecursiveTypes()
         {
-            typesToShapeConverter.Convert(typeof(Employee));
-            Assert.AreEqual(2, typesToShapeConverter.Types.Count);
-            Assert.AreEqual("RAML.WebApiExplorer.Tests.Types.Person", typesToShapeConverter.Types["RAML.WebApiExplorer.Tests.Types.Employee"].LinkTargetName);
+            raml1TypeBuilder.Add(typeof(Employee));
+            Assert.AreEqual(2, raml1Types.Count);
+            Assert.AreEqual("Person", raml1Types.GetByKey("Employee").Type);
         }
 
         [Test]
         public void ShouldGenerateAnnotations()
         {
-            typesToShapeConverter.Convert(typeof(AnnotatedObject));
-            var raml1Type = typesToShapeConverter.Types["RAML.WebApiExplorer.Tests.Types.AnnotatedObject"] as NodeShape;
-            var age = raml1Type.Properties.First(p => p.Path == "Age").Range as ScalarShape;
-            Assert.AreEqual("18", age.Minimum);
-            Assert.AreEqual("120", age.Maximum);
-            var weigth = raml1Type.Properties.First(p => p.Path == "Weight").Range as ScalarShape;
-            Assert.AreEqual(20.5.ToString(), weigth.Minimum);
-            Assert.AreEqual(300.5.ToString(), weigth.Maximum);
-            Assert.AreEqual(255, ((ScalarShape)raml1Type.Properties.First(p => p.Path == "City").Range).MaxLength);
-            Assert.AreEqual(2, ((ScalarShape)raml1Type.Properties.First(p => p.Path == "State").Range).MinLength);
+            raml1TypeBuilder.Add(typeof(AnnotatedObject));
+            var raml1Type = raml1Types.GetByKey("AnnotatedObject");
+            Assert.AreEqual(18.00, raml1Type.Object.Properties["Age"].Scalar.Minimum);
+            Assert.AreEqual(120.00, raml1Type.Object.Properties["Age"].Scalar.Maximum);
+            Assert.AreEqual(20.50, raml1Type.Object.Properties["Weight"].Scalar.Minimum);
+            Assert.AreEqual(300.50, raml1Type.Object.Properties["Weight"].Scalar.Maximum);
+            Assert.AreEqual(255, raml1Type.Object.Properties["City"].Scalar.MaxLength);
+            Assert.AreEqual(2, raml1Type.Object.Properties["State"].Scalar.MinLength);
         }
     }
 }

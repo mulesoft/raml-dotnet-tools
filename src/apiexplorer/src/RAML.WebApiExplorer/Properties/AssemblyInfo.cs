@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MuleSoft Inc")]
 [assembly: AssemblyProduct("RAML.WebApiExplorer")]
-[assembly: AssemblyCopyright("MuleSoft Inc, Copyright © 2016")]
+[assembly: AssemblyCopyright("MuleSoft Inc, Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

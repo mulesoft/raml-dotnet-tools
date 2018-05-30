@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{18F4242B-DCB2-4310-AEFB-32970A2BBF2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3FCFF3A8-781E-40F3-9633-CF0833D9A423}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMF.NetCoreApiExplorer", "src\AMF.NetCoreApiExplorer\AMF.NetCoreApiExplorer.csproj", "{BCA5919C-957F-4A75-B75A-BCF72FC9734E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMF.NetCoreApiExplorer.Tests", "src\AMF.NetCoreApiExplorer.Tests\AMF.NetCoreApiExplorer.Tests.csproj", "{50848B82-F4C5-4B1A-A0A4-611083A85955}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RAML.Parser.Expressions", "src\RAML.Parser.Expressions\RAML.Parser.Expressions.csproj", "{60BC41C7-E57E-4E39-AF57-A5F882F812C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCA5919C-957F-4A75-B75A-BCF72FC9734E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCA5919C-957F-4A75-B75A-BCF72FC9734E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCA5919C-957F-4A75-B75A-BCF72FC9734E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCA5919C-957F-4A75-B75A-BCF72FC9734E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50848B82-F4C5-4B1A-A0A4-611083A85955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50848B82-F4C5-4B1A-A0A4-611083A85955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50848B82-F4C5-4B1A-A0A4-611083A85955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50848B82-F4C5-4B1A-A0A4-611083A85955}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60BC41C7-E57E-4E39-AF57-A5F882F812C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60BC41C7-E57E-4E39-AF57-A5F882F812C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60BC41C7-E57E-4E39-AF57-A5F882F812C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60BC41C7-E57E-4E39-AF57-A5F882F812C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BCA5919C-957F-4A75-B75A-BCF72FC9734E} = {18F4242B-DCB2-4310-AEFB-32970A2BBF2E}
+		{50848B82-F4C5-4B1A-A0A4-611083A85955} = {3FCFF3A8-781E-40F3-9633-CF0833D9A423}
+		{60BC41C7-E57E-4E39-AF57-A5F882F812C6} = {18F4242B-DCB2-4310-AEFB-32970A2BBF2E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9E438A2-FDDC-4DA2-A47E-8C65DF3A636C}
+	EndGlobalSection
+EndGlobal

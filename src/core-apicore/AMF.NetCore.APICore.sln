@@ -5,11 +5,6 @@ VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F08A56BF-A1B0-4944-A3C7-A2CA2EF45943}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71E9BCAC-3B4A-4EA2-B1D8-B7D5CFBBA20B}"
-	ProjectSection(SolutionItems) = preProject
-		AMF.NetCore.APICore.nuspec = AMF.NetCore.APICore.nuspec
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{52E428A0-2D9A-4AAC-B535-F3DCC1CB942B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMF.NetCore.APICore", "src\AMF.NetCore.APICore\AMF.NetCore.APICore.csproj", "{206A416F-DD49-4391-BB1F-4466FDB041BA}"

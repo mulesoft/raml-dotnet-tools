@@ -7,8 +7,8 @@
     <VersionPrefix>0.0.1</VersionPrefix>
     <Authors>MuleSoft Inc</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>RAML.NetCore.APICore</AssemblyName>
-    <PackageId>RAML.NetCore.APICore</PackageId>
+    <AssemblyName>AMF.NetCore.APICore</AssemblyName>
+    <PackageId>AMF.NetCore.APICore</PackageId>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -17,6 +17,7 @@
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

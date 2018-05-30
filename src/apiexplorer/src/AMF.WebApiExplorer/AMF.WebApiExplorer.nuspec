@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-      <id>$id$</id>
-      <version>$version$</version>
+      <id>AMF.WebApiExplorer</id>
+      <version>1.2.2</version>
       <title>AMF WebApi Explorer</title>
       <authors>MuleSoft Inc</authors>
       <owners>MuleSoft Inc</owners>

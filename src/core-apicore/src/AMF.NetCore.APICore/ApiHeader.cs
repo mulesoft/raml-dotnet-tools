@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace RAML.Api.Core
+namespace AMF.Api.Core
 {
 	public class ApiHeader
 	{

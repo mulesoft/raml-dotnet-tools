@@ -1,7 +1,7 @@
 ﻿using Xunit;
-using Raml.Common;
+using AMF.Common;
 
-namespace Raml.Api.Core.Tests
+namespace AMF.Api.Core.Tests
 {
     
     public class NetNamingMapperTests

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Core API support classes for the RAML tools package</Description>
+    <Copyright>MuleSoft Inc</Copyright>
+    <AssemblyTitle>RAML.NetCore.APICore</AssemblyTitle>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <Authors>MuleSoft Inc</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>RAML.NetCore.APICore</AssemblyName>
+    <PackageId>RAML.NetCore.APICore</PackageId>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="1.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+</Project>

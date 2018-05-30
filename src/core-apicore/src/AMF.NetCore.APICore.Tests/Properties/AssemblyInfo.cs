@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Raml.NetCore.APICore.Tests")]
+[assembly: AssemblyProduct("AMF.NetCore.APICore.Tests")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

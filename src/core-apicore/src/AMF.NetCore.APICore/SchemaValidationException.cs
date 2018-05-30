@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RAML.Api.Core
+namespace AMF.Api.Core
 {
     public class SchemaValidationException : Exception
     {

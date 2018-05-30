@@ -7,8 +7,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MuleSoft Inc")]
-[assembly: AssemblyProduct("RAML.NetCore.APICore")]
-[assembly: AssemblyDescription(".Net Core common classes for the RAML tools extension")]
+[assembly: AssemblyProduct("AMF.NetCore.APICore")]
+[assembly: AssemblyDescription(".Net Core common classes for the AMF tools extension")]
 [assembly: AssemblyCopyright("Copyright © 2016 MuleSoft")]
 
 

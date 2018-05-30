@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace RAML.Api.Core
+namespace AMF.Api.Core
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class ResponseTypeStatusAttribute : Attribute

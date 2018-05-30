@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace RAML.Api.Core
+namespace AMF.Api.Core
 {
     public static class SchemaValidator
     {

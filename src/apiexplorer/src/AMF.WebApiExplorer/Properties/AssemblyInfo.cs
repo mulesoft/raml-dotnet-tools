@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RAML WebApi Explorer")]
-[assembly: AssemblyDescription("This package is used by the RAML Tools for .NET Visual Studio extension to generate RAML metadata from an existing WebAPI implementation. In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.")]
+[assembly: AssemblyTitle("AMF WebApi Explorer")]
+[assembly: AssemblyDescription("This package is used by the AMF Tools for .NET Visual Studio extension to generate RAML metadata from an existing WebAPI implementation. In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MuleSoft Inc")]
-[assembly: AssemblyProduct("RAML.WebApiExplorer")]
+[assembly: AssemblyProduct("AMF.WebApiExplorer")]
 [assembly: AssemblyCopyright("MuleSoft Inc, Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

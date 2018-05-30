@@ -52,7 +52,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="RAML.WebApiExplorer.nuspec">
+    <None Include="AMF.WebApiExplorer.nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

@@ -1,0 +1,36 @@
+= RAML API Core for .Net Core
+
+:source-highlighter: prettify
+
+:!numbered:
+
+These are support classes for the Visual Studio extension https://github.com/mulesoft-labs/raml-dotnet-tools[RAML Tools for .NET].
+
+The nuget package is installed into the user project when enabling RAML metadata from the Visual Studio extension in a ASP.Net Core project.
+These classes are used in the RAML extraction process from an ASP.Net Core app.
+
+More info on the Visual Studio extension: https://github.com/mulesoft-labs/raml-dotnet-tools[RAML Tools for .NET]
+
+
+== Specifying Response Type in Asp.Net Core
+
+*ResponseTypeStatusAttribute* class is used to specify the response type of a controller's action, associated to a status code.
+For example:
+
+
+[source, c#]
+----
+        [HttpGet("{id}")]
+        [ResponseTypeStatus(typeof(Movie), HttpStatusCode.OK)]
+        [ResponseTypeStatus(typeof(NotFoundError), HttpStatusCode.NotFound)]
+        public IActionResult Get(int id)
+        {
+            var movie = Repositories.Movies.FindById(id);
+            if (movie == null)
+                return NotFound(new NotFoundError("Movie not found", id));
+
+            return Ok(movie);
+        }
+----
+
+Other classes in this package are a port of RAML.API.Core to .Net Core but are not used yet.

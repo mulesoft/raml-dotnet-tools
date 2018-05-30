@@ -1,0 +1,19 @@
+{
+  "title": "RAML.NetCore.APICore",
+  "copyright": "MuleSoft Inc",
+  "authors": [ "MuleSoft Inc" ],
+  "description": "Core API support classes for the RAML tools package",
+  "version": "0.0.1",
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc.Abstractions": "1.0.0",
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

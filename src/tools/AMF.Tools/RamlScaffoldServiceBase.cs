@@ -119,7 +119,7 @@ namespace AMF.Tools
 
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
-            // RAML.Api.Core dependencies
+            // AMF.Api.Core dependencies
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, newtonsoftJsonPackageId, packageVersion, Settings.Default.NugetExternalPackagesSource);
 
             // System.Xml.XmlSerializer 4.0.11-beta-23516

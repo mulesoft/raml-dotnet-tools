@@ -47,7 +47,7 @@ namespace AMF.Tools
 
         protected override void RemoveDependencies(Project proj, IVsPackageInstallerServices installerServices, IVsPackageUninstaller installer)
         {
-            // Uninstall RAML.WebApiExplorer
+            // Uninstall AMF.WebApiExplorer
             if (installerServices.IsPackageInstalled(proj, RamlWebApiExplorerPackageId))
             {
                 installer.UninstallPackage(proj, RamlWebApiExplorerPackageId, false);
@@ -96,7 +96,7 @@ namespace AMF.Tools
             {
                 if (lines[line + 1].Contains("{"))
                 {
-                    lines.Insert(line + 2, "\t\t\tRAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
+                    lines.Insert(line + 2, "\t\t\tAMF.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
                     inserted = true;
                 }
             }
@@ -105,7 +105,7 @@ namespace AMF.Tools
             {
                 line = TextFileHelper.FindLineWith(lines, ".MapHttpAttributeRoutes();");
                 if (line != -1)
-                    lines.Insert(line + 1, "\t\t\tRAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
+                    lines.Insert(line + 1, "\t\t\tAMF.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
             }
         }
 
@@ -120,13 +120,13 @@ namespace AMF.Tools
                 "4.0.0", Settings.Default.NugetExternalPackagesSource);
 
             // RAML.Parser
-            if (!installerServices.IsPackageInstalled(proj, RamlParserPackageId))
+            if (!installerServices.IsPackageInstalled(proj, "RAML.Parser"))
             {
-                installer.InstallPackage(NugetPackagesSource, proj, RamlParserPackageId, RamlParserPackageVersion,
+                installer.InstallPackage(NugetPackagesSource, proj, "RAML.Parser", "1.0.7",
                     false);
             }
 
-            // RAML.Api.Core
+            // AMF.Api.Core
             if (!installerServices.IsPackageInstalled(proj, RamlApiCorePackageId))
             {
                 //installer.InstallPackage(nugetPackagesSource, proj, ramlApiCorePackageId, ramlApiCorePackageVersion, false);
@@ -134,7 +134,7 @@ namespace AMF.Tools
                     false);
             }
 
-            // RAML.WebApiExplorer
+            // AMF.WebApiExplorer
             if (!installerServices.IsPackageInstalled(proj, RamlWebApiExplorerPackageId))
             {
                 installer.InstallPackage(NugetPackagesSource, proj, RamlWebApiExplorerPackageId,
@@ -162,7 +162,7 @@ namespace AMF.Tools
             if (!content.Contains("DocumentationProviderConfig.IncludeXmlComments"))
                 return;
 
-            content = content.Replace("RAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();", string.Empty);
+            content = content.Replace("AMF.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();", string.Empty);
 
             File.WriteAllText(path, content);
         }

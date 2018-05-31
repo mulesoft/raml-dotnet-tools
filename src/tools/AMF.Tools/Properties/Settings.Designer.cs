@@ -196,7 +196,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RAML.WebApiExplorer")]
+        [global::System.Configuration.DefaultSettingValueAttribute("AMF.WebApiExplorer")]
         public string RAMLWebApiExplorerPackageId {
             get {
                 return ((string)(this["RAMLWebApiExplorerPackageId"]));
@@ -223,7 +223,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.0.7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.6.0-beta")]
         public string RAMLParserPackageVersion {
             get {
                 return ((string)(this["RAMLParserPackageVersion"]));
@@ -286,7 +286,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RAML.NetCoreApiExplorer")]
+        [global::System.Configuration.DefaultSettingValueAttribute("AMF.NetCoreApiExplorer")]
         public string RamlNetCoreApiExplorerPackageId {
             get {
                 return ((string)(this["RamlNetCoreApiExplorerPackageId"]));

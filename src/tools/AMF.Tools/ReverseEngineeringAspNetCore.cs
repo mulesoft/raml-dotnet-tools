@@ -43,7 +43,7 @@ namespace AMF.Tools
 
         protected override void RemoveDependencies(Project proj, IVsPackageInstallerServices installerServices, IVsPackageUninstaller installer)
         {
-            // RAML.NetCoreApiExplorer
+            // AMF.NetCoreApiExplorer
             if (installerServices.IsPackageInstalled(proj, RamlNetCoreApiExplorerPackageId))
             {
                 installer.UninstallPackage(proj, RamlNetCoreApiExplorerPackageId, false);
@@ -149,7 +149,7 @@ namespace AMF.Tools
 
         private void ConfigureNetCoreMvcServices(List<string> lines)
         {
-            var addService = "            services.AddScoped<RAML.WebApiExplorer.ApiExplorerDataFilter>();";
+            var addService = "            services.AddScoped<AMF.WebApiExplorer.ApiExplorerDataFilter>();";
 
             int line;
             if (!lines.Any(l => l.Contains("services.AddMvc")))
@@ -187,9 +187,9 @@ namespace AMF.Tools
 
         private static string AddOptions()
         {
-            return "                    options.Filters.AddService(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));" + Environment.NewLine
-                   + "                    options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());" + Environment.NewLine
-                   + "                    options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(RAML.WebApiExplorer.RamlController)));" + Environment.NewLine;
+            return "                    options.Filters.AddService(typeof(AMF.WebApiExplorer.ApiExplorerDataFilter));" + Environment.NewLine
+                   + "                    options.Conventions.Add(new AMF.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());" + Environment.NewLine
+                   + "                    options.Conventions.Add(new AMF.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(AMF.WebApiExplorer.RamlController)));" + Environment.NewLine;
         }
 
         private void InstallNetCoreDependencies(Project proj, IVsPackageMetadata[] packs, IVsPackageInstaller installer, IVsPackageInstallerServices installerServices)
@@ -197,13 +197,13 @@ namespace AMF.Tools
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "Microsoft.AspNetCore.StaticFiles",
                 "1.0.0", Settings.Default.NugetExternalPackagesSource);
 
-            // RAML.Parser
+            // RAML.Parser.Expressions
             if (!installerServices.IsPackageInstalled(proj, RamlParserExpressionsPackageId))
             {
                 installer.InstallPackage(NugetPackagesSource, proj, RamlParserExpressionsPackageId, RamlParserExpressionsPackageVersion, false);
             }
 
-            // RAML.NetCoreApiExplorer
+            // AMF.NetCoreApiExplorer
             if (!installerServices.IsPackageInstalled(proj, RamlNetCoreApiExplorerPackageId))
             {
                 installer.InstallPackage(NugetPackagesSource, proj, RamlNetCoreApiExplorerPackageId, RamlNetCoreApiExplorerPackageVersion, false);
@@ -217,19 +217,19 @@ namespace AMF.Tools
 
             var lines = File.ReadAllLines(startUpPath).ToList();
 
-            var addService = "            services.AddScoped<RAML.WebApiExplorer.ApiExplorerDataFilter>();";
+            var addService = "            services.AddScoped<AMF.WebApiExplorer.ApiExplorerDataFilter>();";
             RemoveLine(lines, addService);
 
             var appUsestaticfiles = "            app.UseStaticFiles();";
             RemoveLine(lines, appUsestaticfiles);
 
-            var option1 = "                    options.Filters.AddService(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));";
+            var option1 = "                    options.Filters.AddService(typeof(AMF.WebApiExplorer.ApiExplorerDataFilter));";
             RemoveLine(lines, option1);
 
-            var option2 = "                    options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());";
+            var option2 = "                    options.Conventions.Add(new AMF.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());";
             RemoveLine(lines, option2);
 
-            var option3 = "                    options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(RAML.WebApiExplorer.RamlController)));";
+            var option3 = "                    options.Conventions.Add(new AMF.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(AMF.WebApiExplorer.RamlController)));";
             RemoveLine(lines, option3);
 
             File.WriteAllText(startUpPath, string.Join(Environment.NewLine, lines));

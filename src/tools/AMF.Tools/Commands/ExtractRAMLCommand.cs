@@ -78,7 +78,7 @@ namespace AMF.Tools
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "RAML.NetCoreApiExplorer");
+            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "AMF.NetCoreApiExplorer");
             return isWebApiCoreInstalled;
         }
 
@@ -88,7 +88,7 @@ namespace AMF.Tools
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "RAML.WebApiExplorer");
+            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "AMF.WebApiExplorer");
             return isWebApiCoreInstalled;
         }
 

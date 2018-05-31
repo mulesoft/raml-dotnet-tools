@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("MuleSoft Inc")]
 [assembly: AssemblyProduct("AMF.NetCore.APICore")]
 [assembly: AssemblyDescription(".Net Core common classes for the AMF tools extension")]
-[assembly: AssemblyCopyright("Copyright © 2016 MuleSoft")]
+[assembly: AssemblyCopyright("Copyright © 2018 MuleSoft")]
 
 
 // Setting ComVisible to false makes the types in this assembly not visible

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("MuleSoft Inc")]
 [assembly: AssemblyProduct("AMF.NetCoreApiExplorer")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCopyright("MuleSoft Inc, Copyright © 2016")]
+[assembly: AssemblyCopyright("MuleSoft Inc, Copyright © 2018")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

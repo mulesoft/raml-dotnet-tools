@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MuleSoft Inc")]
 [assembly: AssemblyProduct("AMF.Api.Core")]
-[assembly: AssemblyCopyright("Copyright © 2016 MuleSoft")]
+[assembly: AssemblyCopyright("Copyright © 2018 MuleSoft")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

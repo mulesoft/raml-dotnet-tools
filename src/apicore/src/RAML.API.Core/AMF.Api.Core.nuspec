@@ -8,10 +8,10 @@
     <owners>MuleSoft Inc</owners>
     <projectUrl>https://github.com/mulesoft-labs/amf-dotnet-tools</projectUrl>
 	<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-	<iconUrl>http://AMF.org/images/logo.png</iconUrl>
+	<iconUrl>http://raml.org/images/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Core API support classes for the AMF tools package</description>
-    <copyright>Copyright © 2015 MuleSoft</copyright>
+    <copyright>Copyright © 2018 MuleSoft</copyright>
     <tags>RAML OAS SWAGGER REST API SCHEMA MARKUP CLIENT SERVICE</tags>
       <dependencies>
           <dependency id="Microsoft.Net.Http" version="2.2.29" />

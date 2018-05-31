@@ -190,9 +190,6 @@
     <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console.js" />
     <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-dark-theme.css" />
     <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-light-theme.css" />
-    <None Include="node_modules\amf-client-js\.npmignore">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="node_modules\amf-client-js\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -208,9 +205,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="node_modules\amf-client-js\amf.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="node_modules\amf-client-js\test.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="node_modules\amf-shacl-node\shacl.js">

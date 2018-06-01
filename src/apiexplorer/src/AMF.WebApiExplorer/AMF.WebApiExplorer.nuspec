@@ -21,7 +21,7 @@
       </dependencies>
 	<references>
 	  <group targetFramework="net45">
-		  <reference file="Raml.Parser.dll" />
+		  <reference file="Raml.Parser.Model.dll" />
       <reference file="AMF.Api.Core.dll" />
 		  <reference file="AMF.WebApiExplorer.dll" />
 	  </group>
@@ -29,7 +29,7 @@
   </metadata>
   <files>
     <file src="package\content\**\*.*" target="content\net45\"/>
-	  <file src="bin\Debug\Raml.Parser.dll" target="lib\net45\"/>
+	  <file src="bin\Debug\Raml.Parser.Model.dll" target="lib\net45\"/>
     <file src="bin\Debug\AMF.Api.Core.dll" target="lib\net45\"/>
     <file src="bin\Debug\AMF.WebApiExplorer.dll" target="lib\net45\"/>
   </files>

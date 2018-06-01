@@ -3,7 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Raml.Parser.Expressions;
 
-namespace RAML.WebApiExplorer
+namespace AMF.WebApiExplorer
 {
     public class RamlController : Controller
     {

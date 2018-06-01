@@ -63,7 +63,7 @@
       <Value Profile="(Default)">AMF.WebApiExplorer</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1.2.2</Value>
+      <Value Profile="(Default)">1.2.3</Value>
     </Setting>
     <Setting Name="RAMLParserPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">AMF.Parser</Value>

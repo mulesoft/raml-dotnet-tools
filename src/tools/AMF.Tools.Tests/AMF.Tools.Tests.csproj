@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AMF.Parser, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Parser.0.6.0-beta\lib\net462\AMF.Parser.dll</HintPath>
+    <Reference Include="AMF.Parser, Version=0.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Parser.0.6.1-beta\lib\net462\AMF.Parser.dll</HintPath>
     </Reference>
     <Reference Include="EdgeJs, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Edge.js.8.2.1\lib\net40\EdgeJs.dll</HintPath>
@@ -394,6 +394,9 @@
     <None Include="files\xml-sample.raml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="node_modules\amf-client-js\.npmignore">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="node_modules\amf-client-js\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -436,6 +439,9 @@
     <Content Include="node_modules\amf-client-js\amf.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="node_modules\amf-client-js\test.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="node_modules\amf-shacl-node\shacl.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -445,6 +451,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="node_modules\amf-client-js\typings\amf-client-js.d.ts">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </TypeScriptCompile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

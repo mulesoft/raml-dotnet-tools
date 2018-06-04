@@ -3,12 +3,13 @@ using System.IO;
 using System.Net.Http;
 using AMF.Parser;
 using System.Threading.Tasks;
+using AMF.Parser.Model;
 
 namespace AMF.Common
 {
     public static class RamlInfoService
     {
-        public static async Task<RamlInfo> GetRamlInfo(string ramlSource)
+        public static async Task<RamlInfo> GetRamlInfo(string ramlSource, AmfModel model = null)
         {
             var info = new RamlInfo();
 
@@ -98,9 +99,16 @@ namespace AMF.Common
                 }
             }
 
-            var task = new AmfParser().Load(tempPath);
-            task.WaitWithPumping();
-            info.RamlDocument = task.Result;
+            if (model == null)
+            {
+                var task = new AmfParser().Load(tempPath);
+                task.WaitWithPumping();
+                info.RamlDocument = task.Result;
+            }
+            else
+            {
+                info.RamlDocument = model;
+            }
 
             return info;
         }

@@ -177,8 +177,13 @@ namespace AMF.Common.ViewModels
             }
         }
 
-        private void SetPreview(WebApi document)
+        private AmfModel _model;
+
+        private void SetPreview(AmfModel model)
         {
+            _model = model;
+            var document = model.WebApi;
+
             Execute.OnUIThreadAsync(() =>
             {
                 try
@@ -341,7 +346,7 @@ namespace AMF.Common.ViewModels
                 RamlTempFilePath = path;
                 RamlOriginalSource = url;
 
-                SetPreview(amfModel.WebApi);
+                SetPreview(amfModel);
 
                 //CanImport = true;
                 //StopProgress();
@@ -458,7 +463,7 @@ namespace AMF.Common.ViewModels
                 if(!isContractUseCase)
                     parameters.ClientRootClassName = ProxyClientName;
 
-                var ramlInfo = await RamlInfoService.GetRamlInfo(parameters.RamlFilePath);
+                var ramlInfo = await RamlInfoService.GetRamlInfo(parameters.RamlFilePath, _model);
                 parameters.Data = ramlInfo;
 
                 action(parameters);
@@ -594,7 +599,7 @@ namespace AMF.Common.ViewModels
 
                 var amfModel = await parser.Load(tempPath);
 
-                SetPreview(amfModel.WebApi);
+                SetPreview(amfModel);
             }
             catch (Exception ex)
             {

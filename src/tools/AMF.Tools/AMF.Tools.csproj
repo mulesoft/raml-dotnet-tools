@@ -182,6 +182,10 @@
     <VSCTCompile Include="Commands\EditPropertiesCommandPackage.vsct">
       <ResourceName>Menus3.ctmenu</ResourceName>
     </VSCTCompile>
+    <Content Include="license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html" />
     <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth2.html" />
     <Content Include="MetadataPackage\Content\wwwroot\favicon.ico" />

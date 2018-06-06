@@ -11,6 +11,7 @@ namespace AMF.Tools.TestRunner
             try
             {
                 RunServerRaml1TestsAsync().Wait();
+                RunWebApiTestsAsync().Wait();
                 Console.WriteLine("All tests passed");
             }
             catch (Exception ex)
@@ -18,6 +19,13 @@ namespace AMF.Tools.TestRunner
                 InformException(ex);
                 Console.ReadKey();
             }
+        }
+
+        private static async Task RunWebApiTestsAsync()
+        {
+            var tests = new WebApiGeneratorTests();
+            await tests.ShouldWorkIncludeWithRelativeIncludes();
+            // await tests.ShouldWorkIncludeWithIncludes();
         }
 
         private static async Task RunServerRaml1TestsAsync()

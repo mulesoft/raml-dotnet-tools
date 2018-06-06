@@ -236,6 +236,14 @@ namespace Raml.Tools.Tests
         }
 
         [Test]
+        public async Task ShouldWorkIncludeWithRelativeIncludes()
+        {
+            var raml = await new AmfParser().Load("files/relative-include.raml");
+            var model = new WebApiGeneratorService(raml, "TestNs").BuildModel();
+            Assert.IsNotNull(model);
+        }
+
+        [Test]
         public async Task ShouldWorkIncludeWithIncludes()
         {
             var raml = await new AmfParser().Load("files/included-files.raml");

@@ -6,17 +6,19 @@ namespace AMF.Tools.TestRunner
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             try
             {
                 RunServerRaml1TestsAsync().Wait();
                 RunWebApiTestsAsync().Wait();
                 Console.WriteLine("All tests passed");
+                return 0;
             }
             catch (Exception ex)
             {
                 InformException(ex);
+                return 1;
             }
         }
 

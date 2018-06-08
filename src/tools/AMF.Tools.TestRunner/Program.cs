@@ -17,7 +17,6 @@ namespace AMF.Tools.TestRunner
             catch (Exception ex)
             {
                 InformException(ex);
-                Console.ReadKey();
             }
         }
 

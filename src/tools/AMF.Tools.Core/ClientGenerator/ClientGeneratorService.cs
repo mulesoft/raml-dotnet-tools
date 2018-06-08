@@ -85,7 +85,7 @@ namespace AMF.Tools.Core.ClientGenerator
                        ResponseHeaderObjects = responseHeadersObjects,
 
                        BaseUriParameters = ParametersMapper.Map(raml.WebApi.BaseUriParameters).ToArray(),
-                       BaseUri = raml.WebApi.BasePath,
+                       BaseUri = raml.WebApi.Servers.Any() ? raml.WebApi.Servers.First() : null,
                        Security = SecurityParser.GetSecurity(raml.WebApi),
                        Version = raml.WebApi.Version,
                        Warnings = warnings,

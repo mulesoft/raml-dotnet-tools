@@ -86,13 +86,6 @@ namespace AMF.Tools.Core
             if (!string.IsNullOrWhiteSpace(shape.LinkTargetName))
                 return NetNamingMapper.GetObjectName(shape.LinkTargetName.Substring(shape.LinkTargetName.LastIndexOf('/') + 1));
 
-            if(shape.Id.Contains("#/declarations"))
-            {
-                var key = shape.Id.Substring(shape.Id.LastIndexOf('/') + 1);
-                if (existingObjects.ContainsKey(key))
-                    return existingObjects[key].Type;
-            }
-
             if (shape is ScalarShape scalar)
                 return GetNetType(scalar.DataType.Substring(scalar.DataType.LastIndexOf('#') + 1), scalar.Format);
 
@@ -101,6 +94,13 @@ namespace AMF.Tools.Core
 
             if (shape is FileShape file)
                 return TypeStringConversion["file"];
+
+            if (shape.Id.Contains("#/declarations"))
+            {
+                var key = shape.Id.Substring(shape.Id.LastIndexOf('/') + 1);
+                if (existingObjects.ContainsKey(key))
+                    return existingObjects[key].Type;
+            }
 
             if (shape.Inherits.Count() == 1)
             {

@@ -122,7 +122,8 @@ namespace AMF.Tools.Core
             foreach(var parent in p.Range.Inherits)
             {
                 if(!(parent is ScalarShape) && !NewNetTypeMapper.IsPrimitiveType(prop.Type) 
-                    && !(CollectionTypeHelper.IsCollection(prop.Type) && NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(prop.Type))))
+                    && !(CollectionTypeHelper.IsCollection(prop.Type) && NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(prop.Type)))
+                    && string.IsNullOrWhiteSpace(parent.LinkTargetName))
                     ParseObject(prop.Name, parent, existingObjects, warnings, existingEnums, targetNamespace);
             }
             return prop;

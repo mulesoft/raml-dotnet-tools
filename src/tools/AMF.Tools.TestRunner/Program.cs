@@ -32,9 +32,9 @@ namespace AMF.Tools.TestRunner
         private static async Task RunServerRaml1TestsAsync()
         {
             var tests = new WebApiGeneratorRaml1Tests();
-            //await tests.ShouldBuildTypes_WhenMovies();
-            //await tests.ShouldDetectArrayTypes_WhenMovies();
-            //await tests.ShouldBuild_WhenMovieType();
+            await tests.ShouldBuildTypes_WhenMovies();
+            await tests.ShouldDetectArrayTypes_WhenMovies();
+            await tests.ShouldBuild_WhenMovieType();
             await tests.ShouldBuild_WhenChinook();
             await tests.ShouldBuildArrays();
             await tests.ShouldBuildDependentTypes();
@@ -42,8 +42,10 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldBuild_WhenCustomScalar();
             await tests.ShouldBuild_WhenParameters();
             await tests.ShouldBuild_WhenTypeExpressions();
-            // await tests.ShouldDiffientiateBetweenTypesAndBaseTypes();
+            await tests.ShouldDiffientiateBetweenTypesAndBaseTypes();
             await tests.ShouldHandleAnyType();
+
+            //TODO: resource types not working!!
             await tests.ShouldApplyParametersOfResourceType();
         }
 

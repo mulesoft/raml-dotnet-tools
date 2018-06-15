@@ -11,12 +11,13 @@ namespace AMF.Tools.Core
     {
         //private readonly JsonSchemaParser jsonSchemaParser = new JsonSchemaParser();
         private IDictionary<string, ApiObject> newObjects = new Dictionary<string, ApiObject>();
+        private IDictionary<string, ApiEnum> newEnums = new Dictionary<string, ApiEnum>();
         private IDictionary<string, ApiObject> existingObjects;
-        private IDictionary<string, string> warnings;
         private IDictionary<string, ApiEnum> existingEnums;
+        private IDictionary<string, string> warnings;
         private string targetNamespace;
 
-        public IDictionary<string, ApiObject> ParseObject(string key, Shape shape, IDictionary<string, ApiObject> existingObjects, 
+        public Tuple<IDictionary<string, ApiObject>,IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, IDictionary<string, ApiObject> existingObjects, 
             IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, string targetNamespace)
         {
             this.existingObjects = existingObjects;
@@ -24,6 +25,23 @@ namespace AMF.Tools.Core
             this.warnings = warnings;
             this.targetNamespace = targetNamespace;
 
+            if (shape is ScalarShape scalar && scalar.Values != null && scalar.Values.Any())
+                return ParseEnum(warnings, existingEnums, scalar);
+
+            return ParseObject(key, shape, existingObjects);
+        }
+
+        private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseEnum(IDictionary<string, string> warnings, 
+            IDictionary<string, ApiEnum> existingEnums, ScalarShape scalar)
+        {
+            var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
+            newEnums.Add(apiEnum.Name, apiEnum);
+            return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
+        }
+
+        private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, 
+            IDictionary<string, ApiObject> existingObjects)
+        {
             var apiObj = new ApiObject
             {
                 BaseClass = GetBaseClass(shape),
@@ -41,21 +59,21 @@ namespace AMF.Tools.Core
             if (existingObjects.Values.Any(o => o.Name == apiObj.Name))
             {
                 if (UniquenessHelper.HasSameProperties(apiObj, existingObjects, key, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))
-                    return newObjects;
+                    return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
 
                 apiObj.Name = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Name, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
             }
             if (existingObjects.Values.Any(o => o.Type == apiObj.Type))
             {
                 if (UniquenessHelper.HasSameProperties(apiObj, existingObjects, key, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))
-                    return newObjects;
+                    return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
 
                 apiObj.Type = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Type, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
             }
 
             newObjects.Add(apiObj.Type, apiObj);
 
-            return newObjects;
+            return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
         }
 
         //TODO: check
@@ -114,6 +132,13 @@ namespace AMF.Tools.Core
                 prop.MinLength = scalar.MinLength;
                 prop.Maximum = string.IsNullOrWhiteSpace(scalar.Maximum) ? (double?)null : Convert.ToDouble(scalar.Maximum);
                 prop.Minimum = string.IsNullOrWhiteSpace(scalar.Minimum) ? (double?)null : Convert.ToDouble(scalar.Minimum);
+                if(scalar.Values != null && scalar.Values.Any())
+                {
+                    // enum ??
+                    prop.IsEnum = true;
+                    var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
+                    newEnums.Add(apiEnum.Name, apiEnum);
+                }
             }
             if(p.Range is NodeShape)
             {
@@ -127,6 +152,16 @@ namespace AMF.Tools.Core
                     ParseObject(prop.Name, parent, existingObjects, warnings, existingEnums, targetNamespace);
             }
             return prop;
+        }
+
+        private ApiEnum ParseEnum(ScalarShape scalar, IDictionary<string, ApiEnum> existingEnums, IDictionary<string, string> warnings, IDictionary<string, ApiEnum> newEnums)
+        {
+            return new ApiEnum
+            {
+                Name = NetNamingMapper.GetObjectName(scalar.Name),
+                Description = scalar.Description,
+                Values = scalar.Values.Select(p => new PropertyBase { Name = NetNamingMapper.GetEnumValueName(p), OriginalName = p }).ToArray()
+            };
         }
 
         private string GetNameFromPath(string path)

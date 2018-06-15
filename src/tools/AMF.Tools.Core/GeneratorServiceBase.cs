@@ -132,9 +132,24 @@ namespace AMF.Tools.Core
 
                 var key = shape.Name;
 
-                var newObjects = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace);
+                var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace);
 
-                AddNewObjects(newObjects);
+                AddNewElements(newElements);
+            }
+        }
+
+        protected void AddNewElements(Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> newElements)
+        {
+            AddNewObjects(newElements.Item1);
+            AddNewEnums(newElements.Item2);
+        }
+
+        protected void AddNewEnums(IDictionary<string, ApiEnum> newEnums)
+        {
+            foreach (var newEnum in newEnums)
+            {
+                if(!enums.ContainsKey(newEnum.Key))
+                    enums.Add(newEnum.Key, newEnum.Value);
             }
         }
 

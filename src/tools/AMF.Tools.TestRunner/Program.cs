@@ -12,6 +12,7 @@ namespace AMF.Tools.TestRunner
             {
                 RunServerRaml1TestsAsync().Wait();
                 RunWebApiTestsAsync().Wait();
+                RunClientRaml1TestsAsync().Wait();
                 Console.WriteLine("All tests passed");
                 return 0;
             }
@@ -20,6 +21,12 @@ namespace AMF.Tools.TestRunner
                 InformException(ex);
                 return 1;
             }
+        }
+
+        private static async Task RunClientRaml1TestsAsync()
+        {
+            var tests = new ClientGeneratorRaml1Tests();
+            await tests.ShouldHandleEnums();
         }
 
         private static async Task RunWebApiTestsAsync()
@@ -44,8 +51,6 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldBuild_WhenTypeExpressions();
             await tests.ShouldDiffientiateBetweenTypesAndBaseTypes();
             await tests.ShouldHandleAnyType();
-
-            //TODO: resource types not working!!
             await tests.ShouldApplyParametersOfResourceType();
         }
 

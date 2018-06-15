@@ -71,9 +71,9 @@ namespace AMF.Tools.Core.WebApiGenerator
                     var payloads = operation.Request.Payloads.Where(p => p.MediaType.Contains("json"));
                     foreach (var payload in payloads)
                     {
-                        var newObjects = new ObjectParser().ParseObject(GeneratorServiceHelper.GetKeyForResource(operation, endpoint) , payload.Schema, 
+                        var newElements = new ObjectParser().ParseObject(GeneratorServiceHelper.GetKeyForResource(operation, endpoint) , payload.Schema, 
                             schemaObjects, warnings, enums, targetNamespace);
-                        AddNewObjects(newObjects);
+                        AddNewElements(newElements);
                     }
                 }
             }

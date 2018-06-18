@@ -69,7 +69,7 @@
       <Value Profile="(Default)">AMF.Parser</Value>
     </Setting>
     <Setting Name="RAMLParserPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.6.2-beta</Value>
+      <Value Profile="(Default)">0.6.6-beta</Value>
     </Setting>
     <Setting Name="MicrosoftNetHttpPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Microsoft.Net.Http</Value>
@@ -84,7 +84,7 @@
       <Value Profile="(Default)">Edge.js</Value>
     </Setting>
     <Setting Name="EdgePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">6.5.1</Value>
+      <Value Profile="(Default)">8.2.1</Value>
     </Setting>
     <Setting Name="NewtonsoftJsonForCorePackageVersion" Type="System.String" Scope="Application">
       <Value Profile="(Default)">11.0.2</Value>

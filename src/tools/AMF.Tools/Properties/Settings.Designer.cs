@@ -223,7 +223,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.6.2-beta")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.6.6-beta")]
         public string RAMLParserPackageVersion {
             get {
                 return ((string)(this["RAMLParserPackageVersion"]));
@@ -268,7 +268,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6.5.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8.2.1")]
         public string EdgePackageVersion {
             get {
                 return ((string)(this["EdgePackageVersion"]));

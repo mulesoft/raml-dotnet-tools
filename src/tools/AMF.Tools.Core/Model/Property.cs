@@ -9,6 +9,8 @@ namespace AMF.Tools.Core
     [Serializable]
     public class Property : PropertyBase
     {
+        public Property(string parentClassName = null) : base(parentClassName) { }
+
         public string Description { get; set; }
         public string Type { get; set; }
         public string Example { get; set; }

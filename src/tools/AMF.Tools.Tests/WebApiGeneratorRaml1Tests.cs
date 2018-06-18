@@ -363,6 +363,25 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("object", model.Objects.First(o => o.Name != "Foo").Properties.First(p => p.Name == "Baz").Type);
         }
 
+        [Test]
+        public async Task ShouldHandleEnumsAtRootLevel()
+        {
+            var model = await BuildModel("files/raml1/enums-root.raml");
+            Assert.AreEqual(2, model.Enums.Count());
+            Assert.AreEqual("MyValue1", model.Enums.First(e => e.Name == "MyEnum").Values.First().Name);
+            Assert.AreEqual("MyValue3", model.Enums.First(e => e.Name == "MyEnum").Values.Last().Name);
+            Assert.AreEqual("MyEnum", model.Objects.First(e => e.Name == "MyUserClass").Properties.First(p => p.Name == "Myenum").Type);
+            Assert.AreEqual("Myotherenum", model.Objects.First(e => e.Name == "MyUserClass").Properties.First(p => p.Name == "Myotherenum").Type);
+        }
+
+        [Test]
+        public async Task ShouldHandleSameNameEnclosingType()
+        {
+            var model = await BuildModel("files/raml1/enclosing-type-name.raml");
+            Assert.IsTrue(model.Objects.Any(e => e.Name == "One"));
+            Assert.AreNotEqual("One", model.Objects.First(e => e.Name == "One").Properties.First().Name);
+        }
+
         private static async Task<WebApiGeneratorModel> GetAnnotationTargetsModel()
         {
             return await BuildModel("files/raml1/annotations-targets.raml");

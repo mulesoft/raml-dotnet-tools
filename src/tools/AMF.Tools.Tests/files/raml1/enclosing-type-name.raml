@@ -1,0 +1,13 @@
+#%RAML 1.0 
+title: enclosing type
+mediaType: application/json
+types:
+  one:
+    type: object
+    properties:
+        one: string
+        two: string
+/groups:
+  post:
+    body:
+        type: one

@@ -54,7 +54,7 @@ namespace AMF.Tools.Core
                 Example = MapExample(shape)
             };
 
-            apiObj.Properties = MapProperties(shape).ToList();
+            apiObj.Properties = MapProperties(shape, apiObj.Name).ToList();
 
             if (existingObjects.Values.Any(o => o.Name == apiObj.Name))
             {
@@ -62,6 +62,10 @@ namespace AMF.Tools.Core
                     return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
 
                 apiObj.Name = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Name, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
+                foreach(var prop in apiObj.Properties)
+                {
+                    prop.ParentClassName = apiObj.Name;
+                }
             }
             if (existingObjects.Values.Any(o => o.Type == apiObj.Type))
             {
@@ -99,19 +103,19 @@ namespace AMF.Tools.Core
             return null;
         }
 
-        private IEnumerable<Property> MapProperties(Shape shape)
+        private IEnumerable<Property> MapProperties(Shape shape, string parentClassName)
         {
             if(shape is NodeShape)
             {
-                return ((NodeShape)shape).Properties.Select(p => MapProperty(p)).ToArray();
+                return ((NodeShape)shape).Properties.Select(p => MapProperty(p, parentClassName)).ToArray();
             }
 
             return new Property[0];
         }
 
-        private Property MapProperty(PropertyShape p)
+        private Property MapProperty(PropertyShape p, string parentClassName)
         {
-            var prop = new Property
+            var prop = new Property(parentClassName)
             {
                 Name = NetNamingMapper.GetObjectName(GetNameFromPath(p.Path)),
                 Required = p.Required,

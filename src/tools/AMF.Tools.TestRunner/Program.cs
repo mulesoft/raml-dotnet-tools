@@ -52,6 +52,8 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldDiffientiateBetweenTypesAndBaseTypes();
             await tests.ShouldHandleAnyType();
             await tests.ShouldApplyParametersOfResourceType();
+            await tests.ShouldHandleEnumsAtRootLevel();
+            await tests.ShouldHandleSameNameEnclosingType();
         }
 
         private static void InformException(Exception ex)

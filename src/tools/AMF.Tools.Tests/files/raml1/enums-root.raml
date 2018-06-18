@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: Enum test
+version: v1.0
+baseUri: http://localhost:8080/
+protocols: [ HTTP ]
+mediaType: application/json
+
+types:
+  MyEnum:
+    type: string
+    enum: [ MyValue1, MyValue2, MyValue3 ]
+
+  MyUserClass:
+    type: object
+    properties:
+      myenum: MyEnum
+      myotherenum:
+        enum: [ MyValue1, MyValue2, MyValue3 ]
+      myint: integer
+      mystring: string
+
+/enumtest:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: MyUserClass

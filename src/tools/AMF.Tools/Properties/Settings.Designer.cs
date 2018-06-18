@@ -223,7 +223,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.6.6-beta")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.7.0-beta")]
         public string RAMLParserPackageVersion {
             get {
                 return ((string)(this["RAMLParserPackageVersion"]));

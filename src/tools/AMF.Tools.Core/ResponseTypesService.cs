@@ -11,14 +11,16 @@ namespace AMF.Tools.Core
         private readonly IDictionary<string, ApiObject> schemaObjects;
         private readonly IDictionary<string, ApiObject> schemaResponseObjects;
         private readonly IDictionary<string, string> linkKeysWithObjectNames;
+        private readonly IDictionary<string, ApiEnum> enums;
         private readonly SchemaParameterParser schemaParameterParser = new SchemaParameterParser(new EnglishPluralizationService());
 
         public ResponseTypesService(IDictionary<string, ApiObject> schemaObjects, IDictionary<string, ApiObject> schemaResponseObjects, 
-            IDictionary<string, string> linkKeysWithObjectNames)
+            IDictionary<string, string> linkKeysWithObjectNames, IDictionary<string, ApiEnum> enums)
         {
             this.schemaObjects = schemaObjects;
             this.schemaResponseObjects = schemaResponseObjects;
             this.linkKeysWithObjectNames = linkKeysWithObjectNames;
+            this.enums = enums;
         }
 
         public string GetResponseType(Operation method, EndPoint resource, Payload mimeType, string key, string responseCode, string fullUrl)
@@ -146,7 +148,7 @@ namespace AMF.Tools.Core
 
         private string GetNamedReturnType(Operation method, EndPoint resource, Payload mimeType, string fullUrl)
         {
-            return NewNetTypeMapper.GetNetType(mimeType.Schema, schemaObjects);
+            return NewNetTypeMapper.GetNetType(mimeType.Schema, schemaObjects, null, enums);
 
             //if (mimeType.Schema != null && mimeType.Schema.Contains("<<") && mimeType.Schema.Contains(">>"))
             //    return GetReturnTypeFromParameter(method, resource, fullUrl, mimeType.Schema);

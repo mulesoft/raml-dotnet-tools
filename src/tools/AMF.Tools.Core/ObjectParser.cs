@@ -124,7 +124,7 @@ namespace AMF.Tools.Core
             prop.Name = NetNamingMapper.GetObjectName(string.IsNullOrWhiteSpace(p.Path) ? p.Range.Name : GetNameFromPath(p.Path));
             prop.Description = p.Range.Description;
             prop.Example = MapExample(p.Range);
-            prop.Type = NewNetTypeMapper.GetNetType(p.Range, existingObjects, newObjects);
+            prop.Type = NewNetTypeMapper.GetNetType(p.Range, existingObjects, newObjects, existingEnums, newEnums);
 
             if (p.Range is ScalarShape scalar)
             {
@@ -138,6 +138,7 @@ namespace AMF.Tools.Core
                     prop.IsEnum = true;
                     var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
                     newEnums.Add(apiEnum.Name, apiEnum);
+                    prop.Type = apiEnum.Name;
                 }
             }
             if(p.Range is NodeShape)

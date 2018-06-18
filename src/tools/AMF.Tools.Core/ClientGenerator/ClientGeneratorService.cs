@@ -54,7 +54,7 @@ namespace AMF.Tools.Core.ClientGenerator
 
             clientMethodsGenerator = new ClientMethodsGenerator(raml, schemaResponseObjects, uriParameterObjects,
                 queryObjects, headerObjects, responseHeadersObjects, schemaRequestObjects, linkKeysWithObjectNames,
-                schemaObjects);
+                schemaObjects, enums);
 
             var parentClass = new ClassObject { Name = rootClassName, Description = "Main class for grouping root resources. Nested resources are defined as properties. The constructor can optionally receive an URL and HttpClient instance to override the default ones." };
             classesNames.Add(parentClass.Name);

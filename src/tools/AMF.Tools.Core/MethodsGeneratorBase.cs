@@ -21,13 +21,14 @@ namespace AMF.Tools.Core
         private RequestTypesService requestTypesService;
 
         protected MethodsGeneratorBase(AmfModel raml, IDictionary<string, ApiObject> schemaResponseObjects,
-            IDictionary<string, ApiObject> schemaRequestObjects, IDictionary<string, string> linkKeysWithObjectNames, IDictionary<string, ApiObject> schemaObjects)
+            IDictionary<string, ApiObject> schemaRequestObjects, IDictionary<string, string> linkKeysWithObjectNames, IDictionary<string, ApiObject> schemaObjects,
+            IDictionary<string, ApiEnum> enums)
         {
             this.raml = raml;
             this.schemaResponseObjects = schemaResponseObjects;
             this.schemaObjects = schemaObjects;
-            responseTypesService = new ResponseTypesService(schemaObjects, schemaResponseObjects, linkKeysWithObjectNames);
-            requestTypesService = new RequestTypesService(schemaObjects, schemaRequestObjects, linkKeysWithObjectNames);
+            responseTypesService = new ResponseTypesService(schemaObjects, schemaResponseObjects, linkKeysWithObjectNames, enums);
+            requestTypesService = new RequestTypesService(schemaObjects, schemaRequestObjects, linkKeysWithObjectNames, enums);
             uriParametersGenerator = new UriParametersGenerator(schemaObjects);
         }
 

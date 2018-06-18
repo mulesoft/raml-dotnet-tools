@@ -42,7 +42,8 @@ namespace AMF.Tools.Core.WebApiGenerator
                 };
             }
 
-            webApiMethodsGenerator = new WebApiMethodsGenerator(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects);
+            webApiMethodsGenerator = new WebApiMethodsGenerator(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects, 
+                enums);
             var controllers = GetControllers().ToArray();
             CleanNotUsedObjects(controllers); //TODO: check
             

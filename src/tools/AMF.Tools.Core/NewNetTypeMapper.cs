@@ -81,16 +81,25 @@ namespace AMF.Tools.Core
 
         //TODO: check
         public static string GetNetType(Shape shape, IDictionary<string, ApiObject> existingObjects = null,
-            IDictionary<string, ApiObject> newObjects = null)
+            IDictionary<string, ApiObject> newObjects = null, IDictionary<string, ApiEnum> existingEnums = null, IDictionary<string, ApiEnum> newEnums = null)
         {
             if (!string.IsNullOrWhiteSpace(shape.LinkTargetName))
                 return NetNamingMapper.GetObjectName(shape.LinkTargetName.Substring(shape.LinkTargetName.LastIndexOf('/') + 1));
 
             if (shape is ScalarShape scalar)
+            {
+                if(shape.Values != null && shape.Values.Any())
+                {
+                    var key = shape.Id.Substring(shape.Id.LastIndexOf('/') + 1);
+                    if (existingEnums != null && existingEnums.ContainsKey(key))
+                        return existingEnums[key].Name;
+                    if (newEnums != null && newEnums.ContainsKey(key))
+                        return newEnums[key].Name;
+                }
                 return GetNetType(scalar.DataType.Substring(scalar.DataType.LastIndexOf('#') + 1), scalar.Format);
-
+            }
             if (shape is ArrayShape array)
-                return CollectionTypeHelper.GetCollectionType(GetNetType(array.Items, existingObjects, newObjects));
+                return CollectionTypeHelper.GetCollectionType(GetNetType(array.Items, existingObjects, newObjects, existingEnums, newEnums));
 
             if (shape is FileShape file)
                 return TypeStringConversion["file"];
@@ -98,8 +107,10 @@ namespace AMF.Tools.Core
             if (shape.Id.Contains("#/declarations"))
             {
                 var key = shape.Id.Substring(shape.Id.LastIndexOf('/') + 1);
-                if (existingObjects.ContainsKey(key))
+                if (existingObjects != null && existingObjects.ContainsKey(key))
                     return existingObjects[key].Type;
+                if (newObjects != null && newObjects.ContainsKey(key))
+                    return newObjects[key].Type;
             }
 
             if (shape.Inherits.Count() == 1)
@@ -107,10 +118,10 @@ namespace AMF.Tools.Core
                 if (shape is NodeShape nodeShape)
                 {
                     if (nodeShape.Properties.Count() == 0)
-                        return GetNetType(nodeShape.Inherits.First(), existingObjects, newObjects);
+                        return GetNetType(nodeShape.Inherits.First(), existingObjects, newObjects, existingEnums, newEnums);
                 }
                 if (shape.Inherits.First() is ArrayShape arrayShape)
-                    return CollectionTypeHelper.GetCollectionType(GetNetType(arrayShape.Items, existingObjects, newObjects));
+                    return CollectionTypeHelper.GetCollectionType(GetNetType(arrayShape.Items, existingObjects, newObjects, existingEnums, newEnums));
 
                 if (shape is AnyShape any)
                 {

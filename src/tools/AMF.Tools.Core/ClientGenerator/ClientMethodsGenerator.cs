@@ -22,8 +22,8 @@ namespace AMF.Tools.Core.ClientGenerator
             IDictionary<string, ApiObject> uriParameterObjects, IDictionary<string, ApiObject> queryObjects, 
             IDictionary<string, ApiObject> headerObjects, IDictionary<string, ApiObject> responseHeadersObjects,
             IDictionary<string, ApiObject> schemaRequestObjects, IDictionary<string, string> linkKeysWithObjectNames,
-            IDictionary<string, ApiObject> schemaObjects )
-            : base(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects)
+            IDictionary<string, ApiObject> schemaObjects, IDictionary<string, ApiEnum> enums)
+            : base(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects, enums)
         {
             this.uriParameterObjects = uriParameterObjects;
             this.queryObjects = queryObjects;

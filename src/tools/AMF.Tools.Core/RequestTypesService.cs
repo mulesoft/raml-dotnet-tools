@@ -11,15 +11,16 @@ namespace AMF.Tools.Core
         private readonly IDictionary<string, ApiObject> schemaObjects;
         private readonly IDictionary<string, ApiObject> schemaRequestObjects;
         private readonly IDictionary<string, string> linkKeysWithObjectNames;
-
+        private readonly IDictionary<string, ApiEnum> enums;
         private readonly SchemaParameterParser schemaParameterParser = new SchemaParameterParser(new EnglishPluralizationService());
 
         public RequestTypesService(IDictionary<string, ApiObject> schemaObjects, IDictionary<string, ApiObject> schemaRequestObjects, 
-            IDictionary<string, string> linkKeysWithObjectNames)
+            IDictionary<string, string> linkKeysWithObjectNames, IDictionary<string, ApiEnum> enums)
         {
             this.schemaObjects = schemaObjects;
             this.schemaRequestObjects = schemaRequestObjects;
             this.linkKeysWithObjectNames = linkKeysWithObjectNames;
+            this.enums = enums;
         }
 
         public GeneratorParameter GetRequestParameter(string key, Operation method, EndPoint resource, string fullUrl, IEnumerable<string> defaultMediaTypes)
@@ -32,7 +33,7 @@ namespace AMF.Tools.Core
             {
                 Name = mimeType.Name,
                 Description = mimeType.Description,
-                Type = NewNetTypeMapper.GetNetType(mimeType, schemaObjects)
+                Type = NewNetTypeMapper.GetNetType(mimeType, schemaObjects, null, enums)
             };
 
             //if (mimeType != null)

@@ -13,8 +13,8 @@ namespace AMF.Tools.Core
 
         public WebApiMethodsGenerator(AmfModel raml, IDictionary<string, ApiObject> schemaResponseObjects, 
             IDictionary<string, ApiObject> schemaRequestObjects, IDictionary<string, string> linkKeysWithObjectNames, 
-            IDictionary<string, ApiObject> schemaObjects)
-            : base(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects)
+            IDictionary<string, ApiObject> schemaObjects, IDictionary<string, ApiEnum> enums)
+            : base(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects, enums)
         {
             queryParametersParser = new QueryParametersParser(schemaObjects);
         }

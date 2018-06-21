@@ -163,7 +163,9 @@ namespace AMF.Common.ViewModels
         protected override void OnViewReady(object view)
         {
             if (!isNewContract)
-                StartProgress();
+            {
+                //StartProgress();
+            }
         }
 
         public int Height
@@ -188,7 +190,7 @@ namespace AMF.Common.ViewModels
             {
                 try
                 {
-                    
+                    StartProgress();
                     ResourcesPreview = GetResourcesPreview(document);
                     StopProgress();
                     SetNamespace(RamlTempFilePath);
@@ -206,6 +208,10 @@ namespace AMF.Common.ViewModels
                 {
                     ShowErrorAndStopProgress("Error while parsing raml file. " + ex.Message);
                     logger.LogError(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, VisualStudioAutomationHelper.GetExceptionInfo(ex));
+                }
+                finally
+                {
+                    StopProgress();
                 }
             });
         }
@@ -400,45 +406,53 @@ namespace AMF.Common.ViewModels
 
         public async Task Import()
         {
-            StartProgress();
-            // DoEvents();
-
-            if (string.IsNullOrWhiteSpace(Namespace))
+            try
             {
-                ShowErrorAndStopProgress("Error: you must specify a namespace.");
-                return;                
+                StartProgress();
+                // DoEvents();
+
+                if (string.IsNullOrWhiteSpace(Namespace))
+                {
+                    ShowErrorAndStopProgress("Error: you must specify a namespace.");
+                    return;
+                }
+
+                //if (!Filename.ToLowerInvariant().EndsWith(RamlFileExtension))
+                //{
+                //    ShowErrorAndStopProgress("Error: the file must have the .raml extension.");
+                //    return;
+                //}
+
+                if (!IsContractUseCase && !File.Exists(RamlTempFilePath))
+                {
+                    ShowErrorAndStopProgress("Error: the specified file does not exist.");
+                    return;
+                }
+
+                if (IsContractUseCase && UseApiVersion && string.IsNullOrWhiteSpace(ApiVersion))
+                {
+                    ShowErrorAndStopProgress("Error: you need to specify a version.");
+                    return;
+                }
+
+                if (IsContractUseCase && ConfigFolders && HasInvalidPath(ModelsFolder))
+                {
+                    ShowErrorAndStopProgress("Error: invalid path specified for models. Path must be relative.");
+                    //txtModels.Focus();
+                    return;
+                }
+
+                if (IsContractUseCase && ConfigFolders && HasInvalidPath(ImplementationControllersFolder))
+                {
+                    ShowErrorAndStopProgress("Error: invalid path specified for controllers. Path must be relative.");
+                    //txtImplementationControllers.Focus();
+                    return;
+                }
+
             }
-
-            //if (!Filename.ToLowerInvariant().EndsWith(RamlFileExtension))
-            //{
-            //    ShowErrorAndStopProgress("Error: the file must have the .raml extension.");
-            //    return;
-            //}
-
-            if (!IsContractUseCase && !File.Exists(RamlTempFilePath))
+            finally
             {
-                ShowErrorAndStopProgress("Error: the specified file does not exist.");
-                return;
-            }
-
-            if (IsContractUseCase && UseApiVersion && string.IsNullOrWhiteSpace(ApiVersion))
-            {
-                ShowErrorAndStopProgress("Error: you need to specify a version.");
-                return;
-            }
-
-            if (IsContractUseCase && ConfigFolders && HasInvalidPath(ModelsFolder))
-            {
-                ShowErrorAndStopProgress("Error: invalid path specified for models. Path must be relative.");
-                //txtModels.Focus();
-                return;
-            }
-
-            if (IsContractUseCase && ConfigFolders && HasInvalidPath(ImplementationControllersFolder))
-            {
-                ShowErrorAndStopProgress("Error: invalid path specified for controllers. Path must be relative.");
-                //txtImplementationControllers.Focus();
-                return;
+                StopProgress();
             }
 
             var path = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
@@ -540,6 +554,7 @@ namespace AMF.Common.ViewModels
         public void Cancel()
         {
             WasImported = false;
+            StopProgress();
             TryClose();
         }
 

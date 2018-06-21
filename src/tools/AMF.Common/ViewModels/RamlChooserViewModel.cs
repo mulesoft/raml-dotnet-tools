@@ -95,9 +95,15 @@ namespace AMF.Common.ViewModels
             var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, RamlOriginalSource,
                 Path.GetFileName(fd.FileName), isContractUseCase);
 
-            StartProgress();
-            await previewViewModel.FromFile();
-            StopProgress();
+            try
+            {
+                StartProgress();
+                await previewViewModel.FromFile();
+            }
+            finally
+            {
+                StopProgress();
+            }
 
             ShowPreviewViewAndClose(previewViewModel);
         }
@@ -193,10 +199,16 @@ namespace AMF.Common.ViewModels
         {
             SelectExistingRamlOption();
             var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, Url, "title", isContractUseCase);
-            
-            StartProgress();
-            await previewViewModel.FromUrl();
-            StopProgress();
+
+            try
+            {
+                StartProgress();
+                await previewViewModel.FromUrl();
+            }
+            finally
+            {
+                StopProgress();
+            }
             
             ShowPreviewViewAndClose(previewViewModel);
         }
@@ -282,6 +294,7 @@ namespace AMF.Common.ViewModels
 
         public void Cancel()
         {
+            StopProgress();
             TryClose();
         }
 

@@ -25,7 +25,7 @@
             <Setter Property="IsTabStop"
 					Value="False" />
             <Setter Property="Focusable"
-					Value="False" />
+					Value="True" />
             <Setter Property="VerticalAlignment"
 					Value="Top" />
             <Setter Property="SnapsToDevicePixels"

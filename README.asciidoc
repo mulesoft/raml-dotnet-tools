@@ -1,22 +1,20 @@
-= RAML Tools for .NET
+= AMF Tools for .NET
 
 :source-highlighter: prettify
 
 :!numbered:
 
-The RAML Tools for .NET allows developers to easily integrate and consume APIs that expose a RAML definition, or create a new ASP.NET implementation using a contract-first approach from a previously created RAML definition. See http://raml.org for information on RAML (RESTful API Markup Language). 
+The AMF Tools for .NET allows developers to easily integrate and consume APIs that expose a RAML/OAS definition, or create a new ASP.NET implementation using a contract-first approach from a previously created RAML/OAS definition. See http://raml.org for information on RAML (RESTful API Markup Language). 
 
-The tools are provided as a Visual Studio extension, allowing simple and natural integration of RAML into a normal development workflow.
+The tools are provided as a Visual Studio extension, allowing simple and natural integration of RAML/OAS into a normal development workflow.
 
 A single installation package provides support for both client and service code-generation scenarios.
-
-*New*: Command Line Tool available https://github.com/mulesoft-labs/raml-dotnet-tools/tree/master/command-line[here]
 
 Contents:
 
 * <<Supported Scenarios>>
-** <<API Client Code from a RAML Definition>>
-** <<ASP.NET Implementation from a RAML Definition>>
+** <<API Client Code from a RAML/OAS Definition>>
+** <<ASP.NET Implementation from a RAML/OAS Definition>>
 ** <<Extract a RAML definition from an ASP.NET Core or WebApi 2 app>>
 * <<Prerequisites>>
 * <<Installation>>
@@ -28,7 +26,7 @@ Contents:
 ** <<Consuming the HTTP Response>>
 * <<Implementing an ASP.NET 5 (MVC 6)>>
 * <<Implementing an ASP.NET Web API>>
-* <<Updating your RAML specification>>
+* <<Updating your RAML/OAS specification>>
 * <<Implementing a Controller in ASP.NET Web API>>
 * <<Customizing the Generated Code>>
 ** <<Compatibility With New Versions of the Templates>>
@@ -48,21 +46,21 @@ Contents:
 
 == Supported Scenarios
 
-=== API Client Code from a RAML Definition
+=== API Client Code from a RAML/OAS Definition
 
-You can generate API client code from a RAML definition, which lets client applications consume existing APIs from a RAML definition.
+You can generate API client code from a RAML/OAS definition, which lets client applications consume existing APIs from a RAML/OAS definition.
 
-In Visual Studio .NET, you can add a reference to a RAML definition, and a strongly-typed client proxy is generated in the project. A local copy of the RAML definition stores as a file within the Visual Studio project, which is kept in sync with the original RAML definition.
+In Visual Studio .NET, you can add a reference to a RAML/OAS definition, and a strongly-typed client proxy is generated in the project. A local copy of the RAML/OAS definition stores as a file within the Visual Studio project, which is kept in sync with the original RAML/OAS definition.
  
-If the remote API does not provide a RAML definition, you can use a self-managed local definition to allow rapid generation of the client code in a declarative manner.
+If the remote API does not provide a RAML/OAS definition, you can use a self-managed local definition to allow rapid generation of the client code in a declarative manner.
 
-=== ASP.NET Implementation from a RAML Definition
+=== ASP.NET Implementation from a RAML/OAS Definition
 
-You can generate an ASP .NET MVC 6 or Web API 2 implementation from a new or existing RAML definition.
+You can generate an ASP .NET MVC 6 or Web API 2 implementation from a new or existing RAML/OAS definition.
 
-From within Visual Studio .NET, you can add a RAML definition from which the tool generates an initial ASP .NET MVC 6, or Web API 2 implementation, depending if you are invoking the command from a Visual Studio 2015 project type (.xproj) or the traditional project type (.csproj). This implementation includes controller classes and route registrations that map to the resources exposed in the RAML definition and also includes model classes for their representation. The model classes are generated from the available RAML types or JSON schemas.
+From within Visual Studio .NET, you can add a RAML/OAS definition from which the tool generates an initial ASP .NET MVC 6, or Web API 2 implementation, depending if you are invoking the command from a Visual Studio 2017 project type (.xproj) or the traditional project type (.csproj). This implementation includes controller classes and route registrations that map to the resources exposed in the RAML/OAS definition and also includes model classes for their representation. The model classes are generated from the available RAML/OAS types or JSON schemas.
 
-In code, the controllers definition and implementation are logically separated. The generated code representing the definition is driven by the RAML definition allowing you to focus exclusively on the implementation classes. This separation of concerns allows iterative evolution of the API with non-destructive forward engineering of the code-based definition.
+In code, the controllers definition and implementation are logically separated. The generated code representing the definition is driven by the RAML/OAS definition allowing you to focus exclusively on the implementation classes. This separation of concerns allows iterative evolution of the API with non-destructive forward engineering of the code-based definition.
 
 === Extract a RAML definition from an ASP.NET Core or WebApi 2 app
 
@@ -73,15 +71,15 @@ When enabling metadata, a local endpoint is registered to provide a browser-acce
 
 == Prerequisites
 
-* Visual Studio 2013 Update 3 or Visual Studio 2015
-* .NET Framework 4.5 or higher
-* RAML 1.0 or 0.8 compatible endpoint
+* Visual Studio 2017
+* .NET Framework 4.6.2 or higher
+* RAML 1.0/0.8 or OAS 2.0 compatible endpoint
 * Supported languages: C# (other languages indirectly)
 
 == Installation
 
-. Run the RAML tools for Visual Studio Tools extension (VSIX) included in this package (ensure that Visual Studio 2013 is closed).
-. On the initial screen select Visual Studio 2013 and click *Install*.
+. Run the AMF tools for Visual Studio Tools extension (VSIX) included in this package (ensure that Visual Studio 2017 is closed).
+. On the initial screen select Visual Studio 2017 and click *Install*.
 +
 image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
 +
@@ -89,7 +87,7 @@ image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
 
 == Generating an API Client
 
-. Start Visual Studio 2013 and create a new project that consumes the API, or open an existing project.
+. Start Visual Studio 2017 and create a new project that consumes the API, or open an existing project.
 . In the Solution Explorer right-click the References node for the selected project and select the *Add RAML Reference* command.
 +
 image::./docimages/RAML_NET_SolutionExplorer.png[align="center"]
@@ -211,7 +209,7 @@ var code = headers.Code;
 
 To implement an ASP.NET MVC 6:
 
-. Start Visual Studio 2015 and create a new ASP.NET Web Application.
+. Start Visual Studio 2017 and create a new ASP.NET Web Application.
 . In the New ASP.NET Project menu, select a template:
 +
 image::./docimages/webapi-vs2015.png[align="center", width="550"]
@@ -441,7 +439,7 @@ The `IMoviesController` interface implemented by the controller represents the c
 
 == Customizing the Generated Code
 
-RAML Tools for .NET uses T4 templates for code generation of client and service implementation.
+AMF Tools for .NET uses T4 templates for code generation of client and service implementation.
 The T4 templates are now placed in your project folder to let you easily customize them.
 
 If you customize a template, be sure to add this file to your VCS repository.
@@ -701,9 +699,9 @@ RAML 0.8:
 
 == FAQ
 
-*What are the differences between the RAML Parser for .NET and RAML Tools for .NET?*
+*What are the differences between the RAML Parser for .NET and AMF Tools for .NET?*
 
-The RAML Parser takes a text based RAML definition and returns an Abstract Syntax Tree (An object model representing the resources/methods in the RAML definition). The RAML Tools leverage this model in code generation templates to provide strongly typed classes for the consumption or implementation of the API itself.
+The RAML Parser takes a text based RAML definition and returns an Abstract Syntax Tree (An object model representing the resources/methods in the RAML definition). The AMF Tools leverage this model in code generation templates to provide strongly typed classes for the consumption or implementation of the API itself.
 
 *Which languages can the tools generate code for?*
 
@@ -711,7 +709,7 @@ Currently, C# is the only output language supported. This generated code can how
 
 *Can I customize the code-generation templates?*
 
-Yes, RAML Tools for .NET uses T4 templates for code generation of client and service implementation. See the appropriate sections for guidance on where and how to customize templates.
+Yes, AMF Tools for .NET uses T4 templates for code generation of client and service implementation. See the appropriate sections for guidance on where and how to customize templates.
 
 *I already have an API built using ASP.NET WebApi - how do I adopt RAML for my project?*
 

@@ -88,7 +88,7 @@ image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
 == Generating an API Client
 
 . Start Visual Studio 2017 and create a new project that consumes the API, or open an existing project.
-. In the Solution Explorer right-click the References node for the selected project and select the *Add RAML Reference* command.
+. In the Solution Explorer right-click the References node for the selected project and select the *Add RAML/OAS Reference* command.
 +
 image::./docimages/RAML_NET_SolutionExplorer.png[align="center"]
 +

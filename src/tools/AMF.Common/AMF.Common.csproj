@@ -36,8 +36,8 @@
     <Reference Include="AMF.Api.Core, Version=0.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AMF.Api.Core.0.9.10\lib\net45\AMF.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="AMF.Parser, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Parser.0.7.0-beta\lib\net462\AMF.Parser.dll</HintPath>
+    <Reference Include="AMF.Parser, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Parser.0.7.1-beta\lib\net462\AMF.Parser.dll</HintPath>
     </Reference>
     <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>

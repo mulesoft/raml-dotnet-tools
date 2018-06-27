@@ -102,6 +102,8 @@ namespace AMF.Tools.Core.ClientGenerator
             apiObjectsCleaner.CleanObjects(classes, schemaRequestObjects, apiObjectsCleaner.IsUsedAsParameterInAnyMethod);
 
             apiObjectsCleaner.CleanObjects(classes, schemaResponseObjects, apiObjectsCleaner.IsUsedAsResponseInAnyMethod);
+
+            apiObjectsCleaner.CleanObjects(classes, schemaObjects, apiObjectsCleaner.IsUsedAnywhere);
         }
 
 

@@ -85,6 +85,8 @@ namespace AMF.Tools.Core.WebApiGenerator
             apiObjectsCleaner.CleanObjects(controllers, schemaRequestObjects, apiObjectsCleaner.IsUsedAsParameterInAnyMethod);
 
             apiObjectsCleaner.CleanObjects(controllers, schemaResponseObjects, apiObjectsCleaner.IsUsedAsResponseInAnyMethod);
+
+            apiObjectsCleaner.CleanObjects(controllers, schemaObjects, apiObjectsCleaner.IsUsedAnywhere);
         }
 
         private IEnumerable<ControllerObject> GetControllers()

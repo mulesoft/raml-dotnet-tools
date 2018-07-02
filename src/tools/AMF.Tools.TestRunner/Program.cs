@@ -42,7 +42,7 @@ namespace AMF.Tools.TestRunner
             //await tests.ShouldBuildTypes_WhenMovies();
             //await tests.ShouldDetectArrayTypes_WhenMovies();
             //await tests.ShouldBuild_WhenMovieType();
-            await tests.ShouldBuild_WhenChinook();
+            //await tests.ShouldBuild_WhenChinook();
             //await tests.ShouldBuildArrays();
             //await tests.ShouldBuildDependentTypes();
             //await tests.ShouldBuild_EvenWithDisorderedTypes();
@@ -54,6 +54,22 @@ namespace AMF.Tools.TestRunner
             //await tests.ShouldApplyParametersOfResourceType();
             //await tests.ShouldHandleEnumsAtRootLevel();
             //await tests.ShouldHandleSameNameEnclosingType();
+            //await tests.ShouldHandleCasing();
+
+            //await tests.ShouldHandleComplexQueryParams();
+
+            await tests.ShouldHandleDates();
+            await tests.ShouldHandleNullDescription();
+            await tests.ShouldHandleNumberFormats();
+            await tests.ShouldHandleNumberFormatsOnRaml08_v3Schema();
+            await tests.ShouldHandleNumberFormatsOnRaml08_v4Schema();
+            await tests.ShouldHandleRouteNameContainedInUriParam();
+            await tests.ShouldHandleSimilarSchemas();
+            await tests.ShouldHandleTraitsInLibraries();
+            await tests.ShouldHandleUnionTypes();
+            await tests.ShouldHandleXml();
+            await tests.ShouldHandle_FileTypes();
+            await tests.ShouldHandle_SalesOrdersCase();
         }
 
         private static void InformException(Exception ex)

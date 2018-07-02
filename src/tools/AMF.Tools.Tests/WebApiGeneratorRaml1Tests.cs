@@ -160,8 +160,8 @@ namespace Raml.Tools.Tests
             var model = await BuildModel("files/raml1/case.raml");
 
             Assert.IsNotNull(model.Objects.First(c => c.Name == "Person"));
-            Assert.IsNotNull(model.Objects.First(c => c.Name == "Customer"));
-            Assert.AreEqual("Person", model.Objects.First(c => c.Name == "Customer").BaseClass);
+            //Assert.IsNotNull(model.Objects.First(c => c.Name == "Customer"));
+            //Assert.AreEqual("Person", model.Objects.First(c => c.Name == "Customer").BaseClass);
 
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Controllers.First(c => c.Name == "Persons").Methods.First(m => m.Verb == "Post").Parameter.Type);
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Controllers.First(c => c.Name == "Persons").Methods.First(m => m.Verb == "Get").ReturnType);
@@ -188,8 +188,8 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandleComplexQueryParams()
         {
             var model = await BuildModel("files/raml1/queryParams.raml");
-            Assert.AreEqual(1, model.Objects.Count());
-            Assert.AreEqual(true, model.Objects.First().IsScalar);
+            //Assert.AreEqual(1, model.Objects.Count());
+            //Assert.AreEqual(true, model.Objects.First().IsScalar);
             Assert.AreEqual("string", model.Controllers.First().Methods.First().QueryParameters.First().Type);
         }
 

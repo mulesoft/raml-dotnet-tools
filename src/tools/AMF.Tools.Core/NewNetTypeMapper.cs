@@ -43,6 +43,10 @@ namespace AMF.Tools.Core
                     "DateTime"
                 },
                 {
+                    "dateTime",
+                    "DateTime"
+                },
+                {
                     "date-only",
                     "DateTime"
                 },

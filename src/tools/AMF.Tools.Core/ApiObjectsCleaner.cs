@@ -63,13 +63,25 @@ namespace AMF.Tools.Core
         public bool IsUsedAnywhere(IEnumerable<Core.WebApiGenerator.ControllerObject> controllers, ApiObject obj)
         {
             return IsUsedAsParameterInAnyMethod(controllers, obj) || IsUsedAsResponseInAnyMethod(controllers, obj)
-                || IsUsedAsReferenceInAnyObject(obj);
+                || IsUsedAsReferenceInAnyObject(obj) || IsUsedAsQueryOrUriParameter(controllers, obj);
         }
+
+        private bool IsUsedAsQueryOrUriParameter(IEnumerable<Core.WebApiGenerator.ControllerObject> controllers, ApiObject obj)
+        {
+            return controllers.Any(c => c.Methods.Any(m => (m.QueryParameters != null && m.QueryParameters.Any(qp => qp.Type == obj.Name)) 
+            || (m.UriParameters != null && m.UriParameters.Any(up => up.Type == obj.Name))));
+        }
+
 
         public bool IsUsedAnywhere(IEnumerable<Core.ClientGenerator.ClassObject> classes, ApiObject obj)
         {
             return IsUsedAsParameterInAnyMethod(classes, obj) || IsUsedAsResponseInAnyMethod(classes, obj)
-                || IsUsedAsReferenceInAnyObject(obj);
+                || IsUsedAsReferenceInAnyObject(obj) || IsUsedAsUriParameter(classes, obj);
+        }
+
+        private bool IsUsedAsUriParameter(IEnumerable<Core.ClientGenerator.ClassObject> classes, ApiObject obj)
+        {
+            return classes.Any(c => c.Methods.Any(m => (m.UriParameters != null && m.UriParameters.Any(up => up.Type == obj.Name))));
         }
 
         public bool IsUsedAsResponseInAnyMethod(IEnumerable<Core.WebApiGenerator.ControllerObject> controllers, ApiObject requestObj)

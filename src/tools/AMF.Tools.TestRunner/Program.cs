@@ -39,38 +39,45 @@ namespace AMF.Tools.TestRunner
         private static async Task RunServerRaml1TestsAsync()
         {
             var tests = new WebApiGeneratorRaml1Tests();
-            //await tests.ShouldBuildTypes_WhenMovies();
-            //await tests.ShouldDetectArrayTypes_WhenMovies();
-            //await tests.ShouldBuild_WhenMovieType();
-            //await tests.ShouldBuild_WhenChinook();
-            //await tests.ShouldBuildArrays();
-            //await tests.ShouldBuildDependentTypes();
-            //await tests.ShouldBuild_EvenWithDisorderedTypes();
-            //await tests.ShouldBuild_WhenCustomScalar();
-            //await tests.ShouldBuild_WhenParameters();
-            //await tests.ShouldBuild_WhenTypeExpressions();
-            //await tests.ShouldDiffientiateBetweenTypesAndBaseTypes();
-            //await tests.ShouldHandleAnyType();
-            //await tests.ShouldApplyParametersOfResourceType();
-            //await tests.ShouldHandleEnumsAtRootLevel();
-            //await tests.ShouldHandleSameNameEnclosingType();
-            //await tests.ShouldHandleCasing();
+            await tests.ShouldBuildTypes_WhenMovies();
+            await tests.ShouldDetectArrayTypes_WhenMovies();
+            await tests.ShouldBuild_WhenMovieType();
+            await tests.ShouldBuild_WhenChinook();
+            await tests.ShouldBuildArrays();
+            await tests.ShouldBuildDependentTypes();
+            await tests.ShouldBuild_EvenWithDisorderedTypes();
+            await tests.ShouldBuild_WhenCustomScalar();
+            await tests.ShouldBuild_WhenParameters();
+            await tests.ShouldBuild_WhenTypeExpressions();
+            await tests.ShouldDiffientiateBetweenTypesAndBaseTypes();
+            await tests.ShouldHandleAnyType();
+            await tests.ShouldApplyParametersOfResourceType();
+            await tests.ShouldHandleEnumsAtRootLevel();
+            await tests.ShouldHandleSameNameEnclosingType();
+            await tests.ShouldHandleCasing();
+            await tests.ShouldHandleDates();
+            await tests.ShouldHandleNullDescription();
+            await tests.ShouldHandleNumberFormats();
+            await tests.ShouldHandleNumberFormatsOnRaml08_v3Schema();
+            await tests.ShouldHandleNumberFormatsOnRaml08_v4Schema();
+            await tests.ShouldHandleRouteNameContainedInUriParam();
+            await tests.ShouldHandleSimilarSchemas();
+            await tests.ShouldHandle_FileTypes();
 
+            // TODO: https://www.mulesoft.org/jira/browse/APIMF-927
+            // await tests.ShouldHandleTraitsInLibraries();
+            // TODO: https://www.mulesoft.org/jira/browse/APIMF-927
+            //await tests.ShouldHandle_SalesOrdersCase();
+
+            // TODO: https://www.mulesoft.org/jira/browse/APIMF-891
+            //await tests.ShouldHandleXml();
+            
+            //TODO: 
+            //await tests.ShouldHandleUnionTypes();
+
+            //TODO: check
             //await tests.ShouldHandleComplexQueryParams();
 
-            //await tests.ShouldHandleDates();
-            //await tests.ShouldHandleNullDescription();
-            //await tests.ShouldHandleNumberFormats();
-            //await tests.ShouldHandleNumberFormatsOnRaml08_v3Schema();
-            //await tests.ShouldHandleNumberFormatsOnRaml08_v4Schema();
-            //await tests.ShouldHandleRouteNameContainedInUriParam();
-            //await tests.ShouldHandleSimilarSchemas();
-
-            await tests.ShouldHandleTraitsInLibraries();
-            await tests.ShouldHandleUnionTypes();
-            await tests.ShouldHandleXml();
-            await tests.ShouldHandle_FileTypes();
-            await tests.ShouldHandle_SalesOrdersCase();
         }
 
         private static void InformException(Exception ex)

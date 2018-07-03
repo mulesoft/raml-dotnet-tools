@@ -45,7 +45,7 @@ namespace AMF.Tools.Core.WebApiGenerator
             webApiMethodsGenerator = new WebApiMethodsGenerator(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects, 
                 enums);
             var controllers = GetControllers().ToArray();
-            CleanNotUsedObjects(controllers); //TODO: check
+            CleanNotUsedObjects(controllers);
             
             return new WebApiGeneratorModel
                    {
@@ -69,7 +69,7 @@ namespace AMF.Tools.Core.WebApiGenerator
             {
                 foreach (var operation in endpoint.Operations.Where(o => o.Request != null && o.Request.Payloads.Any()))
                 {
-                    var payloads = operation.Request.Payloads.Where(p => p.MediaType.Contains("json"));
+                    var payloads = operation.Request.Payloads; //.Where(p => p.MediaType.Contains("json"));
                     foreach (var payload in payloads)
                     {
                         var newElements = new ObjectParser().ParseObject(GeneratorServiceHelper.GetKeyForResource(operation, endpoint) , payload.Schema, 

@@ -47,7 +47,15 @@ namespace AMF.Tools.Core
                     "DateTime"
                 },
                 {
+                    "dateTimeOnly",
+                    "DateTime"
+                },
+                {
                     "date-only",
+                    "DateTime"
+                },
+                {
+                    "time",
                     "DateTime"
                 },
                 {
@@ -111,8 +119,14 @@ namespace AMF.Tools.Core
             if (shape.Id.Contains("#/declarations"))
             {
                 var key = shape.Id.Substring(shape.Id.LastIndexOf('/') + 1);
-                if (existingObjects != null && existingObjects.ContainsKey(key))
-                    return existingObjects[key].Type;
+                if (existingObjects != null && (existingObjects.ContainsKey(key)
+                    || existingObjects.Keys.Any(k => k.ToLowerInvariant() == key.ToLowerInvariant())))
+                {
+                    if(existingObjects.ContainsKey(key))
+                        return existingObjects[key].Type;
+
+                    return existingObjects.First(kv => kv.Key.ToLowerInvariant() == key.ToLowerInvariant()).Value.Type;
+                }
                 if (newObjects != null && newObjects.ContainsKey(key))
                     return newObjects[key].Type;
             }

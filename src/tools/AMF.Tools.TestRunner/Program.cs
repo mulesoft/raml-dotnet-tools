@@ -58,13 +58,14 @@ namespace AMF.Tools.TestRunner
 
             //await tests.ShouldHandleComplexQueryParams();
 
-            await tests.ShouldHandleDates();
-            await tests.ShouldHandleNullDescription();
-            await tests.ShouldHandleNumberFormats();
-            await tests.ShouldHandleNumberFormatsOnRaml08_v3Schema();
-            await tests.ShouldHandleNumberFormatsOnRaml08_v4Schema();
-            await tests.ShouldHandleRouteNameContainedInUriParam();
-            await tests.ShouldHandleSimilarSchemas();
+            //await tests.ShouldHandleDates();
+            //await tests.ShouldHandleNullDescription();
+            //await tests.ShouldHandleNumberFormats();
+            //await tests.ShouldHandleNumberFormatsOnRaml08_v3Schema();
+            //await tests.ShouldHandleNumberFormatsOnRaml08_v4Schema();
+            //await tests.ShouldHandleRouteNameContainedInUriParam();
+            //await tests.ShouldHandleSimilarSchemas();
+
             await tests.ShouldHandleTraitsInLibraries();
             await tests.ShouldHandleUnionTypes();
             await tests.ShouldHandleXml();

@@ -10,9 +10,9 @@ namespace AMF.Tools.TestRunner
         {
             try
             {
-                RunServerRaml1TestsAsync().Wait();
+                //RunServerRaml1TestsAsync().Wait();
                 //RunWebApiTestsAsync().Wait();
-                //RunClientRaml1TestsAsync().Wait();
+                RunClientRaml1TestsAsync().Wait();
                 Console.WriteLine("All tests passed");
                 return 0;
             }
@@ -26,7 +26,21 @@ namespace AMF.Tools.TestRunner
         private static async Task RunClientRaml1TestsAsync()
         {
             var tests = new ClientGeneratorRaml1Tests();
-            await tests.ShouldHandleEnums();
+            //await tests.ShouldHandleEnums();
+            //await tests.ShouldBuildTypes_WhenMovies();
+            //await tests.ShouldBuildUriParameter_WhenCustomScalar();
+            //await tests.ShouldBuild_WhenCustomScalar();
+            //await tests.ShouldBuild_WhenMovieType();
+            //await tests.ShouldBuild_WhenParameters();
+            //await tests.ShouldHandleArrayAsExpression();
+            //await tests.ShouldHandleArrayItemAsScalar();
+
+            await tests.ShouldHandleInlinedTypes();
+            await tests.ShouldHandleShortcutsSyntacticSugar();
+            await tests.ShouldHandleTypeExpressions();
+
+            // TODO: collections defined in types
+            //await tests.ShouldBuildArrayTypes();
         }
 
         private static async Task RunWebApiTestsAsync()

@@ -40,7 +40,15 @@ types:
         body:
           schema: arrayOfPerson
   post:
-    description: adds a movie to the catalogue
     body:
       application/json:
         schema: arrayOfInt
+  put:
+    body:
+      application/json:
+        schema: arrayOfObject
+    /{id}:
+      post:
+        body:
+          application/json:
+            type: typeThatHasArrayProperty

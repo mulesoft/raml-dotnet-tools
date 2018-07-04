@@ -20,5 +20,9 @@ namespace AMF.Tools.Core
             return resource.Path + "-" + (string.IsNullOrWhiteSpace(operation.Method) ? "Get" : operation.Method);
         }
 
+        public static string GetKeyForResource(Operation operation, EndPoint resource, Response response)
+        {
+            return resource.Path + "-" + (string.IsNullOrWhiteSpace(operation.Method) ? "Get" : operation.Method) + response.StatusCode;
+        }
     }
 }

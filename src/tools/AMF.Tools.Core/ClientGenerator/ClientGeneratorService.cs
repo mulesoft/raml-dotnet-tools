@@ -45,8 +45,8 @@ namespace AMF.Tools.Core.ClientGenerator
             //new RamlTypeParser(raml.Shapes, schemaObjects, ns, enums, warnings).Parse();
 
             ParseSchemas();
-            //schemaRequestObjects = GetRequestObjects();
-            //schemaResponseObjects = GetResponseObjects();
+            schemaRequestObjects = GetRequestObjects();
+            schemaResponseObjects = GetResponseObjects();
 
             CleanProperties(schemaObjects);
             CleanProperties(schemaRequestObjects);
@@ -96,6 +96,77 @@ namespace AMF.Tools.Core.ClientGenerator
                    };
         }
 
+        private IDictionary<string, ApiObject> GetResponseObjects()
+        {
+            var objects = new Dictionary<string, ApiObject>();
+            foreach (var endpoint in raml.WebApi.EndPoints)
+            {
+                if (endpoint.Operations == null)
+                    continue;
+
+                foreach (var operation in endpoint.Operations)
+                {
+                    if (operation.Responses == null)
+                        continue;
+
+                    foreach (var response in operation.Responses)
+                    {
+                        if (response == null && response.Payloads == null)
+                            continue;
+
+                        var key = GeneratorServiceHelper.GetKeyForResource(operation, endpoint, response);
+                        GetShapes(key, objects, response.Payloads);
+                    }
+                }
+            }
+            return objects;
+        }
+
+        private void GetShapes(string key, IDictionary<string, ApiObject> objects, IEnumerable<Payload> payloads)
+        {
+            if (payloads == null)
+                return;
+
+            foreach (var payload in payloads.Where(p => p != null))
+            {
+                var shape = payload.Schema;
+                if (shape == null)
+                    continue;
+
+                ParseObjects(key, objects, shape);
+            }
+        }
+
+        private void ParseObjects(string key, IDictionary<string, ApiObject> objects, Shape shape)
+        {
+            var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace);
+            AddNewEnums(newElements.Item2);
+            AddObjects(objects, newElements.Item1);
+        }
+
+        private static void AddObjects(IDictionary<string, ApiObject> objects, IDictionary<string, ApiObject> newObjects)
+        {
+            foreach (var obj in newObjects)
+            {
+                if (!objects.ContainsKey(obj.Key))
+                    objects.Add(obj.Key, obj.Value);
+            }
+        }
+
+        private IDictionary<string, ApiObject> GetRequestObjects()
+        {
+            var objects = new Dictionary<string, ApiObject>();
+            foreach (var endpoint in raml.WebApi.EndPoints)
+            {
+                foreach (var operation in endpoint.Operations)
+                {
+                    var key = GeneratorServiceHelper.GetKeyForResource(operation, endpoint);
+                    if (operation.Request != null && operation.Request.Payloads != null)
+                        GetShapes(key, objects, operation.Request.Payloads);
+                }
+            }
+            return objects;
+        }
 
         private void CleanNotUsedObjects(IEnumerable<ClassObject> classes)
         {

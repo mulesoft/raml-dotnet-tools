@@ -10,7 +10,7 @@ namespace AMF.Tools.Core
 {
     public abstract class GeneratorServiceBase
     {
-        private readonly ObjectParser objectParser = new ObjectParser();
+        protected readonly ObjectParser objectParser = new ObjectParser();
         //private RamlTypeParser raml1TypesParser;
 
         protected readonly string[] suffixes = { "A", "B", "C", "D", "E", "F", "G" };

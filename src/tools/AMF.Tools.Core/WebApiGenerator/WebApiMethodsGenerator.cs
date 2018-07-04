@@ -72,7 +72,7 @@ namespace AMF.Tools.Core
                 Name = NetNamingMapper.GetMethodName(method.Method ?? "Get" + resource.Path),
                 Parameter = GetParameter(GeneratorServiceHelper.GetKeyForResource(method, resource), method, resource, url),
                 UriParameters = uriParametersGenerator.GetUriParameters(resource, url, parentUriParameters),
-                ReturnType = GetReturnType(GeneratorServiceHelper.GetKeyForResource(method, resource), method, resource, url),
+                ReturnType = GetReturnType(method, resource, url),
                 Comment = GetComment(resource, method, url),
                 Url = relativeUri,
                 Verb = NetNamingMapper.Capitalize(method.Method),

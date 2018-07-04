@@ -32,7 +32,7 @@ namespace AMF.Tools.Core
             uriParametersGenerator = new UriParametersGenerator(schemaObjects);
         }
 
-        protected string GetReturnType(string key, Operation method, Parser.Model.EndPoint resource, string fullUrl)
+        protected string GetReturnType(Operation method, Parser.Model.EndPoint resource, string fullUrl)
         {
             if (method.Responses.All(r => !r.Payloads.Any(p => p.Schema != null)))
                 return "string";
@@ -41,7 +41,7 @@ namespace AMF.Tools.Core
                 .Where(r => r.Payloads.Any(b => b.Schema != null))
                 .ToArray();
 
-            var returnType = HandleMultipleSchemaType(responses, resource, method, key, fullUrl);
+            var returnType = HandleMultipleSchemaType(responses, resource, method, fullUrl);
 
             if (!string.IsNullOrWhiteSpace(returnType))
                 return returnType;
@@ -49,9 +49,9 @@ namespace AMF.Tools.Core
             return "string";
         }
 
-        private string HandleMultipleSchemaType(IEnumerable<Response> responses, Parser.Model.EndPoint resource, Operation method, string key, string fullUrl)
+        private string HandleMultipleSchemaType(IEnumerable<Response> responses, Parser.Model.EndPoint resource, Operation method, string fullUrl)
         {
-            var properties = GetProperties(responses, resource, method, key, fullUrl);
+            var properties = GetProperties(responses, resource, method, fullUrl);
 
             if (properties.Count == 0)
                 return "string";
@@ -60,6 +60,7 @@ namespace AMF.Tools.Core
                 return properties.First().Type;
 
             // Build a new response object containing all types
+            var key = GeneratorServiceHelper.GetKeyForResource(method, resource);
             var name = NetNamingMapper.GetObjectName("Multiple" + key);
             var apiObject = new ApiObject
             {
@@ -72,11 +73,12 @@ namespace AMF.Tools.Core
             return name;
         }
 
-        private List<Property> GetProperties(IEnumerable<Response> responses, Parser.Model.EndPoint resource, Operation method, string key, string fullUrl)
+        private List<Property> GetProperties(IEnumerable<Response> responses, Parser.Model.EndPoint resource, Operation method, string fullUrl)
         {
             var properties = new List<Property>();
             foreach (var response in responses)
             {
+                var key = GeneratorServiceHelper.GetKeyForResource(method, resource, response);
                 AddProperty(resource, method, key, response, properties, fullUrl);
             }
             return properties;

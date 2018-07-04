@@ -48,7 +48,7 @@ namespace AMF.Tools.Core
                 IsArray = shape is ArrayShape,
                 IsScalar = shape is ScalarShape,
                 IsUnionType = shape is UnionShape,
-                Name = NetNamingMapper.GetObjectName(shape.Name),
+                Name = NetNamingMapper.GetObjectName(key),
                 Type = NetNamingMapper.GetObjectName(key),
                 Description = shape.Description,
                 Example = MapExample(shape)
@@ -141,7 +141,9 @@ namespace AMF.Tools.Core
                     // enum ??
                     prop.IsEnum = true;
                     var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
-                    newEnums.Add(apiEnum.Name, apiEnum);
+                    if(!newEnums.ContainsKey(apiEnum.Name))
+                        newEnums.Add(apiEnum.Name, apiEnum);
+
                     prop.Type = apiEnum.Name;
                 }
             }

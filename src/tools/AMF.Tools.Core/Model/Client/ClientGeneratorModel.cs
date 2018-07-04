@@ -23,9 +23,9 @@ namespace AMF.Tools.Core.ClientGenerator
             get
             {
                 var objects = SchemaObjects.Values.ToList();
-                objects.AddRange(RequestObjects.Values);
-                objects.AddRange(ResponseObjects.Values);
-                objects.AddRange(QueryObjects.Values);
+                objects.AddRange(RequestObjects.Where(o => !SchemaObjects.ContainsKey(o.Key)).Select(o => o.Value).ToArray());
+                objects.AddRange(ResponseObjects.Where(o => !SchemaObjects.ContainsKey(o.Key)).Select(o => o.Value).ToArray());
+                objects.AddRange(QueryObjects.Where(o => !SchemaObjects.ContainsKey(o.Key)).Select(o => o.Value).ToArray());
                 objects.AddRange(UriParameterObjects.Values);
                 return objects;
             }

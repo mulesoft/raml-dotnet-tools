@@ -28,6 +28,36 @@ namespace AMF.Tools.Core
             if(method.Request == null || !method.Request.Payloads.Any())
                 return new GeneratorParameter { Name = "content", Type = "string" }; //TODO: check
 
+            var apiObjectByKey = GetRequestApiObjectByKey(key);
+            if (apiObjectByKey != null)
+                return CreateGeneratorParameter(apiObjectByKey);
+
+            apiObjectByKey = GetRequestApiObjectByKey(NetNamingMapper.GetObjectName(key));
+            if (apiObjectByKey != null)
+                return CreateGeneratorParameter(apiObjectByKey);
+
+            var requestKey = key + GeneratorServiceBase.RequestContentSuffix;
+            apiObjectByKey = GetRequestApiObjectByKey(requestKey);
+            if (apiObjectByKey != null)
+                return CreateGeneratorParameter(apiObjectByKey);
+
+            if (linkKeysWithObjectNames.ContainsKey(key))
+            {
+                var linkedKey = linkKeysWithObjectNames[key];
+                apiObjectByKey = GetRequestApiObjectByKey(linkedKey);
+                if (apiObjectByKey != null)
+                    return CreateGeneratorParameter(apiObjectByKey);
+            }
+
+            if (linkKeysWithObjectNames.ContainsKey(requestKey))
+            {
+                var linkedKey = linkKeysWithObjectNames[requestKey];
+                apiObjectByKey = GetRequestApiObjectByKey(linkedKey);
+                if (apiObjectByKey != null)
+                    return CreateGeneratorParameter(apiObjectByKey);
+            }
+
+
             var mimeType = GetMimeType(method.Request.Payloads, defaultMediaTypes);
             return new GeneratorParameter //TODO: check
             {
@@ -88,32 +118,6 @@ namespace AMF.Tools.Core
 
             //        return new GeneratorParameter { Name = "content", Type = DecodeRequestRaml1Type(verb.Body.Type) };
             //    }
-            //}
-
-            //var apiObjectByKey = GetRequestApiObjectByKey(key);
-            //if (apiObjectByKey != null)
-            //    return CreateGeneratorParameter(apiObjectByKey);
-
-
-            //var requestKey = key + GeneratorServiceBase.RequestContentSuffix;
-            //apiObjectByKey = GetRequestApiObjectByKey(requestKey);
-            //if (apiObjectByKey != null)
-            //    return CreateGeneratorParameter(apiObjectByKey);
-
-            //if (linkKeysWithObjectNames.ContainsKey(key))
-            //{
-            //    var linkedKey = linkKeysWithObjectNames[key];
-            //    apiObjectByKey = GetRequestApiObjectByKey(linkedKey);
-            //    if (apiObjectByKey != null)
-            //        return CreateGeneratorParameter(apiObjectByKey);
-            //}
-
-            //if (linkKeysWithObjectNames.ContainsKey(requestKey))
-            //{
-            //    var linkedKey = linkKeysWithObjectNames[requestKey];
-            //    apiObjectByKey = GetRequestApiObjectByKey(linkedKey);
-            //    if (apiObjectByKey != null)
-            //        return CreateGeneratorParameter(apiObjectByKey);
             //}
 
             //if (mimeType != null)

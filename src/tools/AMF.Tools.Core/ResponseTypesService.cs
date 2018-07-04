@@ -26,15 +26,6 @@ namespace AMF.Tools.Core
         public string GetResponseType(Operation method, EndPoint resource, Payload mimeType, string key, string responseCode, string fullUrl)
         {
             string returnType = null;
-            returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
-
-            if (!string.IsNullOrWhiteSpace(returnType))
-                return returnType;
-
-            // returnType = GetReturnTypeFromResourceType(method, resource, key, responseCode, fullUrl);
-
-            if (!string.IsNullOrWhiteSpace(returnType))
-                return returnType;
 
             if (ResponseHasKey(key))
                 return GetReturnTypeFromResponseByKey(key);
@@ -57,8 +48,12 @@ namespace AMF.Tools.Core
                     return GetReturnTypeFromResponseByKey(linkedKey);
             }
 
-            returnType = DecodeResponseRaml1Type(returnType);
+            returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
 
+            if (!string.IsNullOrWhiteSpace(returnType))
+                return returnType;
+
+            returnType = DecodeResponseRaml1Type(returnType);
             return returnType;
         }
 
@@ -216,12 +211,26 @@ namespace AMF.Tools.Core
 
         private bool ResponseHasKey(string key)
         {
-            return schemaObjects.ContainsKey(key) || schemaResponseObjects.ContainsKey(key);
+            return schemaObjects.ContainsKey(key) || schemaResponseObjects.ContainsKey(key)
+                || schemaObjects.ContainsKey(NetNamingMapper.GetObjectName(key)) 
+                || schemaResponseObjects.ContainsKey(NetNamingMapper.GetObjectName(key));
         }
 
         private string GetReturnTypeFromResponseByKey(string key)
         {
-            var apiObject = schemaObjects.ContainsKey(key) ? schemaObjects[key] : schemaResponseObjects[key];
+            ApiObject apiObject = null;
+            if (schemaObjects.ContainsKey(key))
+                apiObject = schemaObjects[key];
+
+            if (schemaResponseObjects.ContainsKey(key))
+                apiObject = schemaResponseObjects[key];
+
+            var nameKey = NetNamingMapper.GetObjectName(key);
+            if (schemaObjects.ContainsKey(nameKey))
+                apiObject = schemaObjects[nameKey];
+
+            if (schemaResponseObjects.ContainsKey(nameKey))
+                apiObject = schemaResponseObjects[nameKey];
 
             return RamlTypesHelper.GetTypeFromApiObject(apiObject);
         }

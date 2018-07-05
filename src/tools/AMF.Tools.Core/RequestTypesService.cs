@@ -26,7 +26,19 @@ namespace AMF.Tools.Core
         public GeneratorParameter GetRequestParameter(string key, Operation method, EndPoint resource, string fullUrl, IEnumerable<string> defaultMediaTypes)
         {
             if(method.Request == null || !method.Request.Payloads.Any())
-                return new GeneratorParameter { Name = "content", Type = "string" }; //TODO: check
+                return new GeneratorParameter { Name = "content", Type = "string" };
+
+            var mimeType = GetMimeType(method.Request.Payloads, defaultMediaTypes);
+            var type = NewNetTypeMapper.GetNetType(mimeType, schemaObjects, null, enums);
+            if (RamlTypesHelper.IsPrimitiveOrSchemaObject(type, schemaObjects))
+            {
+                return new GeneratorParameter //TODO: check
+                {
+                    Name = mimeType.Name,
+                    Description = mimeType.Description,
+                    Type = type
+                };
+            }
 
             var apiObjectByKey = GetRequestApiObjectByKey(key);
             if (apiObjectByKey != null)
@@ -57,14 +69,7 @@ namespace AMF.Tools.Core
                     return CreateGeneratorParameter(apiObjectByKey);
             }
 
-
-            var mimeType = GetMimeType(method.Request.Payloads, defaultMediaTypes);
-            return new GeneratorParameter //TODO: check
-            {
-                Name = mimeType.Name,
-                Description = mimeType.Description,
-                Type = NewNetTypeMapper.GetNetType(mimeType, schemaObjects, null, enums)
-            };
+            return new GeneratorParameter { Name = "content", Type = "string" };
 
             //if (mimeType != null)
             //{

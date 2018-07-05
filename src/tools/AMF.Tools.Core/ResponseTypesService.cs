@@ -27,6 +27,11 @@ namespace AMF.Tools.Core
         {
             string returnType = null;
 
+            returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
+
+            if (!string.IsNullOrWhiteSpace(returnType) && RamlTypesHelper.IsPrimitiveOrSchemaObject(returnType, schemaObjects))
+                return returnType;
+
             if (ResponseHasKey(key))
                 return GetReturnTypeFromResponseByKey(key);
 
@@ -47,11 +52,6 @@ namespace AMF.Tools.Core
                 if (ResponseHasKey(linkedKey))
                     return GetReturnTypeFromResponseByKey(linkedKey);
             }
-
-            returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
-
-            if (!string.IsNullOrWhiteSpace(returnType))
-                return returnType;
 
             returnType = DecodeResponseRaml1Type(returnType);
             return returnType;

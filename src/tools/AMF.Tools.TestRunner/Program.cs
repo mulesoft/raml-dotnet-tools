@@ -10,8 +10,8 @@ namespace AMF.Tools.TestRunner
         {
             try
             {
-                //RunServerRaml1TestsAsync().Wait();
-                //RunWebApiTestsAsync().Wait();
+                RunServerRaml1TestsAsync().Wait();
+                RunWebApiTestsAsync().Wait();
                 RunClientRaml1TestsAsync().Wait();
                 Console.WriteLine("All tests passed");
                 return 0;

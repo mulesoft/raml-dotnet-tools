@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using AMF.Api.Core;
 
@@ -46,6 +48,12 @@ namespace AMF.Tools.Core
                 return type;
 
             return NetNamingMapper.GetObjectName(type);
+        }
+
+        internal static bool IsPrimitiveOrSchemaObject(string type, IDictionary<string, ApiObject> schemaObjects)
+        {
+            return NewNetTypeMapper.IsPrimitiveType(type) || NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(type)) ||
+            schemaObjects.ContainsKey(type) || schemaObjects.Any(o => o.Value.Type == type || o.Value.Type == CollectionTypeHelper.GetBaseType(type));
         }
 
         public static string GetTypeFromApiObject(ApiObject apiObject)

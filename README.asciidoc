@@ -30,12 +30,13 @@ Contents:
 * <<Customizing the Generated Code>>
 ** <<Compatibility With New Versions of the Templates>>
 ** <<Customizing the Generated Code for the Client>>
-** <<Customizing the Generated cCode for the Asp.Net Web API>>
+** <<Customizing the Generated Code for the Asp.Net Web API>>
 * <<Metadata - Extract a RAML definition from your Web app>>
 ** <<Api Console>>
 ** <<Viewing the Raw RAML>>
 ** <<Downloading the RAML>>
-** <<Customizing the Generated RAML>>
+** <<Customizing the Generated RAML on your ASP.NET Core app>>
+** <<Customizing the Generated RAML on your ASP.NET WebApi 2 app>>
 * <<XML Schemas>>
 * <<Fine tuning generated .NET primitive types>>
 ** <<Numeric types>>
@@ -262,7 +263,7 @@ image::docimages/RAML_NETAddRAMLContractScreen.png[align="center", width=550]
 
 
 
-== Updating your RAML specification
+== Updating your RAML/OAS specification
 
 The tool also supports updating the generated ASP.NET MVC 6 or Web API when a change is made to the RAML definition. This lets you keep the contract definition in a RAML file with the implementation, so that both stay in sync. The classes get re-generated when you save changes made to any the RAML files in your project. This only affects the existing .NET contract interfaces and adds ASP.NET MVC 6 or Web API controller implementations for any new resource in the RAML definition. The existing controller implementations remain untouched.
 
@@ -451,7 +452,7 @@ In case your customized template is no longer compatible,  you are given the cho
 For the client there is a single template containing all the generated code, the *RAMLClient.t4* file is placed under "API References/Templates".
 
 
-=== Customizing the Generated cCode for the Asp.Net Web API
+=== Customizing the Generated Code for the Asp.Net Web API
 
 For the Web API there are a several templates under "Contracts/Templates":
 
@@ -706,4 +707,4 @@ Yes, AMF Tools for .NET uses T4 templates for code generation of client and serv
 
 *I already have an API built using ASP.NET WebApi - how do I adopt RAML for my project?*
 
-To extract a RAML definition for an existing WebApi project, simply enable RAML <<Metadata>> output from the project context menu.
+To extract a RAML definition for an existing WebApi project, simply *enable RAML Metadata output* from the project context menu. More info in the section: <<Metadata - Extract a RAML definition from your Web app>>

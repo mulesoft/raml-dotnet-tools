@@ -3,6 +3,7 @@ using System.Linq;
 using AMF.Parser.Model;
 using AMF.Tools.Core.Pluralization;
 using AMF.Api.Core;
+using System;
 
 namespace AMF.Tools.Core
 {
@@ -34,7 +35,7 @@ namespace AMF.Tools.Core
             {
                 return new GeneratorParameter //TODO: check
                 {
-                    Name = mimeType.Name,
+                    Name = string.IsNullOrWhiteSpace(mimeType.Name) ? GetParameterName(type) : GetParameterName(mimeType.Name),
                     Description = mimeType.Description,
                     Type = type
                 };
@@ -143,6 +144,13 @@ namespace AMF.Tools.Core
             //}
 
             //return new GeneratorParameter { Name = "content", Type = "string" };
+        }
+
+        private string GetParameterName(string name)
+        {
+            var res = NetNamingMapper.GetObjectName(name);
+            res = res.Substring(0, 1).ToLowerInvariant() + res.Substring(1);
+            return res;
         }
 
         //private string GetParamType(MimeType mimeType, ApiObject apiObject)

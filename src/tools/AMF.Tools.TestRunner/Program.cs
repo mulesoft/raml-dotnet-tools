@@ -10,6 +10,7 @@ namespace AMF.Tools.TestRunner
         {
             try
             {
+                RunOasTestsAsync().Wait();
                 RunServerRaml1TestsAsync().Wait();
                 RunWebApiTestsAsync().Wait();
                 RunClientRaml1TestsAsync().Wait();
@@ -21,6 +22,13 @@ namespace AMF.Tools.TestRunner
                 InformException(ex);
                 return 1;
             }
+        }
+
+        private static async Task RunOasTestsAsync()
+        {
+            var tests = new OasTests();
+            await tests.PetStoreClient();
+            await tests.PetStoreServer();
         }
 
         private static async Task RunClientRaml1TestsAsync()

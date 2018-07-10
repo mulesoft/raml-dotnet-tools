@@ -86,26 +86,35 @@ namespace AMF.Tools.Core
 
         public bool IsUsedAsResponseInAnyMethod(IEnumerable<Core.WebApiGenerator.ControllerObject> controllers, ApiObject requestObj)
         {
-            return controllers.Any(c => c.Methods.Any(m => m.ReturnType == requestObj.Type ||   m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Type)));
+            return controllers.Any(c => c.Methods.Any(m => m.ReturnType == requestObj.Type || 
+            m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Type) ||
+            CollectionTypeHelper.GetCollectionType(m.ReturnType) == requestObj.Type));
         }
 
         public bool IsUsedAsParameterInAnyMethod(IEnumerable<Core.WebApiGenerator.ControllerObject> controllers, ApiObject requestObj)
         {
             return controllers.Any(c => c.Methods
                 .Any(m => m.Parameter != null
-                          && (m.Parameter.Type == requestObj.Type || m.Parameter.Type == CollectionTypeHelper.GetCollectionType(requestObj.Type))));
+                          && (m.Parameter.Type == requestObj.Type || m.Parameter.Type == CollectionTypeHelper.GetCollectionType(requestObj.Type)
+                          || CollectionTypeHelper.GetCollectionType(m.Parameter.Type) == requestObj.Type) ));
         }
 
         public bool IsUsedAsResponseInAnyMethod(IEnumerable<ClassObject> classes, ApiObject requestObj)
         {
-            return classes.Any(c => c.Methods.Any(m => m.ReturnType == requestObj.Type || m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Type)));
+            return classes.Any(c => c.Methods.Any(m => m.ReturnType == requestObj.Type 
+            || m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Type) 
+            || CollectionTypeHelper.GetCollectionType(m.ReturnType) == requestObj.Type
+            || (m.ReturnTypeObject != null && m.ReturnTypeObject.Properties != null 
+            && m.ReturnTypeObject.Properties.Any(x => x.Type == requestObj.Type || x.Type == CollectionTypeHelper.GetCollectionType(requestObj.Type)
+            || CollectionTypeHelper.GetCollectionType(x.Type) == requestObj.Type) )));
         }
 
         public bool IsUsedAsParameterInAnyMethod(IEnumerable<ClassObject> classes, ApiObject requestObj)
         {
             return classes.Any(c => c.Methods
                 .Any(m => m.Parameter != null
-                          && (m.Parameter.Type == requestObj.Type || m.Parameter.Type == CollectionTypeHelper.GetCollectionType(requestObj.Type))));
+                          && (m.Parameter.Type == requestObj.Type || m.Parameter.Type == CollectionTypeHelper.GetCollectionType(requestObj.Type)
+                          || CollectionTypeHelper.GetCollectionType(m.Parameter.Type) == requestObj.Type) ));
         }
         
         private bool IsUsedAsReferenceInAnyObject(ApiObject obj)
@@ -113,19 +122,26 @@ namespace AMF.Tools.Core
             return schemaObjects.SelectMany(o => o.Value.Properties).Any(x => x.Type == obj.Type ||
                      x.Type == CollectionTypeHelper.GetCollectionType(obj.Type) ||
                      x.Type == obj.BaseClass ||
-                     x.Type == CollectionTypeHelper.GetCollectionType(obj.BaseClass))
+                     CollectionTypeHelper.GetCollectionType(x.Type) == obj.Type ||
+                     x.Type == CollectionTypeHelper.GetCollectionType(obj.BaseClass) ||
+                     CollectionTypeHelper.GetCollectionType(x.Type) == obj.BaseClass
+                     )
 
                    || schemaObjects.Values.Any(o => o.BaseClass == obj.Type)
 
                    || schemaRequestObjects.SelectMany(o => o.Value.Properties).Any(x => x.Type == obj.Type || 
                         x.Type == CollectionTypeHelper.GetCollectionType(obj.Type) || 
-                        x.Type == obj.BaseClass || 
-                        x.Type == CollectionTypeHelper.GetCollectionType(obj.BaseClass))
+                        x.Type == obj.BaseClass ||
+                        CollectionTypeHelper.GetCollectionType(x.Type) == obj.Type ||
+                        x.Type == CollectionTypeHelper.GetCollectionType(obj.BaseClass) ||
+                        CollectionTypeHelper.GetCollectionType(x.Type) == obj.BaseClass)
 
                    || schemaResponseObjects.SelectMany(o => o.Value.Properties).Any(x => x.Type == obj.Type || 
                         x.Type == CollectionTypeHelper.GetCollectionType(obj.Type) ||
                         x.Type == obj.BaseClass ||
-                        x.Type == CollectionTypeHelper.GetCollectionType(obj.BaseClass));
+                        CollectionTypeHelper.GetCollectionType(x.Type) == obj.Type ||
+                        x.Type == CollectionTypeHelper.GetCollectionType(obj.BaseClass) ||
+                        CollectionTypeHelper.GetCollectionType(x.Type) == obj.BaseClass);
         }
 
     }

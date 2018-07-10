@@ -21,8 +21,9 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task PetStoreClient()
         {
-            var model = await BuildClientodel("files/oas/petstore.json");
+            var model = await BuildClientModel("files/oas/petstore.json");
             Assert.AreEqual(2, model.Classes.Count());
+            Assert.IsTrue(model.Objects.Any(o => o.Name == "Pet"));
         }
 
         private static async Task<WebApiGeneratorModel> BuildWebApiModel(string ramlFile)
@@ -32,7 +33,7 @@ namespace Raml.Tools.Tests
             return new WebApiGeneratorService(raml, "TestNs").BuildModel();
         }
 
-        private static async Task<ClientGeneratorModel> BuildClientodel(string ramlFile)
+        private static async Task<ClientGeneratorModel> BuildClientModel(string ramlFile)
         {
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);

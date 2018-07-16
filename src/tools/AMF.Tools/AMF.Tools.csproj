@@ -97,9 +97,6 @@
     <Compile Include="TemplateParams.cs" />
     <Compile Include="TemplatesManager.cs" />
     <Compile Include="TextFileHelper.cs" />
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AmfToolsPackage.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -489,12 +486,6 @@
       <ManifestResourceName>VSPackage</ManifestResourceName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AMF.Common\AMF.Common.csproj">

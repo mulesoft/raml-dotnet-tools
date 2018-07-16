@@ -3,7 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using AMF.Common;
 using Caliburn.Micro;
+using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace AMF.Tools
 {
@@ -71,6 +73,8 @@ namespace AMF.Tools
         private static Bootstrapper bootstrapper = new Bootstrapper();
         #region Package Members
 
+        private static Events events;
+        private static DocumentEvents documentEvents;
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
@@ -79,9 +83,26 @@ namespace AMF.Tools
         {
             base.Initialize();
             AddContractCommand.Initialize(this);
+            AddReferenceCommand.Initialize(this);
+            EditPropertiesCommand.Initialize(this);
+            ExtractRAMLCommand.Initialize(this);
+
+            // trigger scaffold when RAML document gets saved
+            var dte = ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
+            events = dte.Events;
+            documentEvents = events.DocumentEvents;
+            documentEvents.DocumentSaved += DocumentEventsOnDocumentSaved;
+
         }
 
         #endregion
+
+        private void DocumentEventsOnDocumentSaved(Document document)
+        {
+            RamlScaffoldServiceBase.TriggerScaffoldOnRamlChanged(document);
+
+            //RamlClientTool.TriggerClientRegeneration(document, GetExtensionPath());
+        }
 
         // workaround http://stackoverflow.com/questions/29362125/visual-studio-extension-could-not-find-a-required-assembly
         private static void LoadSystemWindowsInteractivity()

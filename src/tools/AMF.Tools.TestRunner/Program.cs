@@ -87,12 +87,12 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldHandle_FileTypes();
 
             // TODO: https://www.mulesoft.org/jira/browse/APIMF-927
-            // await tests.ShouldHandleTraitsInLibraries();
+            await tests.ShouldHandleTraitsInLibraries();
             // TODO: https://www.mulesoft.org/jira/browse/APIMF-927
-            //await tests.ShouldHandle_SalesOrdersCase();
+            await tests.ShouldHandle_SalesOrdersCase();
 
             // TODO: https://www.mulesoft.org/jira/browse/APIMF-891
-            //await tests.ShouldHandleXml();
+            await tests.ShouldHandleXml();
             
             //TODO: 
             //await tests.ShouldHandleUnionTypes();

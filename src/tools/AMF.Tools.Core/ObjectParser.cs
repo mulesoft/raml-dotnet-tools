@@ -75,7 +75,8 @@ namespace AMF.Tools.Core
                 apiObj.Type = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Type, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
             }
 
-            newObjects.Add(apiObj.Type, apiObj);
+            if(!newObjects.ContainsKey(apiObj.Type))
+                newObjects.Add(apiObj.Type, apiObj);
 
             return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
         }

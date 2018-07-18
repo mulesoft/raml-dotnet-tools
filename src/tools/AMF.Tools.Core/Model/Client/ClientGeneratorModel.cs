@@ -18,16 +18,34 @@ namespace AMF.Tools.Core.ClientGenerator
 
         public ClassObject Root { get; set; }
 
+        private Dictionary<string, ApiObject> objects = null;
         public override IEnumerable<ApiObject> Objects
         {
             get
             {
-                var objects = SchemaObjects.Values.ToList();
-                objects.AddRange(RequestObjects.Where(o => !SchemaObjects.ContainsKey(o.Key)).Select(o => o.Value).ToArray());
-                objects.AddRange(ResponseObjects.Where(o => !SchemaObjects.ContainsKey(o.Key)).Select(o => o.Value).ToArray());
-                objects.AddRange(QueryObjects.Where(o => !SchemaObjects.ContainsKey(o.Key)).Select(o => o.Value).ToArray());
-                objects.AddRange(UriParameterObjects.Values);
-                return objects;
+                if (objects == null)
+                    GetObjects();
+
+                return objects.Values.ToArray();
+            }
+        }
+
+        private void GetObjects()
+        {
+            objects = new Dictionary<string, ApiObject>();
+            AddRange(objects, SchemaObjects);
+            AddRange(objects, RequestObjects);
+            AddRange(objects, ResponseObjects);
+            AddRange(objects, QueryObjects);
+            AddRange(objects, UriParameterObjects);
+        }
+
+        private void AddRange(IDictionary<string, ApiObject> objects, IDictionary<string, ApiObject> objectsToAdd)
+        {
+            foreach (var obj in objectsToAdd)
+            {
+                if (!objects.ContainsKey(obj.Key))
+                    objects.Add(obj.Key, obj.Value);
             }
         }
 

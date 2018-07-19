@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="AMF.Tools.a1f8ba2f-ef20-491a-b985-cc2e48676376" Version="1.3" Language="en-US" Publisher="MuleSoft Inc" />
+        <Identity Id="AMF.Tools.a1f8ba2f-ef20-491a-b985-cc2e48676376" Version="1.4" Language="en-US" Publisher="MuleSoft Inc" />
         <DisplayName>AMF.Tools</DisplayName>
         <Description xml:space="preserve">AMF Tools for .NET allows developers to easily integrate and consume APIs that exposes a RAML or OAS (swagger) definitions, or generate a new ASP.NET Web API implementation from scratch using a contract-first approach from a previously created RAML or OAS (swagger) definition.
 Project home: https://github.com/mulesoft-labs/amf-dotnet-tools</Description>

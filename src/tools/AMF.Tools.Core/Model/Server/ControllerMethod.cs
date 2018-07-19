@@ -44,14 +44,14 @@ namespace AMF.Tools.Core.WebApiGenerator
                 if (UseSecurity && SecurityParameters != null && SecurityParameters.Any())
                     foreach (var prop in SecurityParameters.Where(parameter => !parameters.ContainsKey(parameter.Name.ToLowerInvariant())))
                         parameters.Add(prop.Name.ToLowerInvariant(),
-                            new MethodParameter(!prop.Required,
+                            new MethodParameter(!prop.Required && NewNetTypeMapper.IsNullableType(prop.Type),
                                 "[FromUri] " + prop.Type + " " + prop.Name.ToLowerInvariant() 
                                 + (!prop.Required && NewNetTypeMapper.IsNullableType(prop.Type) ? " = null" : string.Empty)));
 
                 if (QueryParameters != null && QueryParameters.Any())
                     foreach (var prop in QueryParameters.Where(parameter => !parameters.ContainsKey(parameter.Name.ToLowerInvariant())))
                         parameters.Add(prop.Name.ToLowerInvariant(),
-                            new MethodParameter(!prop.Required,
+                            new MethodParameter(!prop.Required && NewNetTypeMapper.IsNullableType(prop.Type),
                                 "[FromUri] " + prop.Type + " " + prop.Name.ToLowerInvariant() 
                                 + (!prop.Required && NewNetTypeMapper.IsNullableType(prop.Type) ? " = null" : string.Empty)));
 
@@ -112,11 +112,12 @@ namespace AMF.Tools.Core.WebApiGenerator
                 if (UseSecurity && SecurityParameters != null && SecurityParameters.Any())
                     foreach (var prop in SecurityParameters.Where(parameter => !parameters.ContainsKey(parameter.Name.ToLowerInvariant())))
                         parameters.Add(prop.Name.ToLowerInvariant(),
-                            new MethodParameter(!prop.Required, prop.Name.ToLowerInvariant()));
+                            new MethodParameter(!prop.Required && NewNetTypeMapper.IsNullableType(prop.Type), prop.Name.ToLowerInvariant()));
 
                 if (QueryParameters != null && QueryParameters.Any())
                     foreach (var prop in QueryParameters.Where(parameter => !parameters.ContainsKey(parameter.Name.ToLowerInvariant())))
-                        parameters.Add(prop.Name.ToLowerInvariant(), new MethodParameter(!prop.Required, prop.Name.ToLowerInvariant()));
+                        parameters.Add(prop.Name.ToLowerInvariant(), 
+                            new MethodParameter(!prop.Required && NewNetTypeMapper.IsNullableType(prop.Type), prop.Name.ToLowerInvariant()));
 
                 var methodParameters = parameters.Values.OrderBy(p => p.IsOptional).ToList();
                 var parametersString = string.Join(",", methodParameters.Select(p => p.ParameterDeclaration));

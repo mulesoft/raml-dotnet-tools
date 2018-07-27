@@ -26,16 +26,16 @@ namespace AMF.Tools
         public static readonly Guid CommandSet = new Guid("5cf85f6a-50ee-4fe6-b316-838cbeafff00");
 
         /// <summary>
-        /// VS Package that provides this command, not null.
+        /// VS AsyncPackage that provides this command, not null.
         /// </summary>
-        private readonly Package package;
+        private readonly AsyncPackage package;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddContractCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private AddContractCommand(Package package)
+        private AddContractCommand(AsyncPackage package)
         {
             if (package == null)
             {
@@ -104,7 +104,7 @@ namespace AMF.Tools
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(Package package)
+        public static void Initialize(AsyncPackage package)
         {
             Instance = new AddContractCommand(package);
         }

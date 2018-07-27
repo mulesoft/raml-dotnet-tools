@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 
 namespace AMF.Tools
@@ -22,12 +25,12 @@ namespace AMF.Tools
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionOpening_string, PackageAutoLoadFlags.BackgroundLoad)]
     [InstalledProductRegistration("#3110", "#3112", "1.0", IconResourceID = 3400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus2.ctmenu", 1)]
     [Guid(ExtractRAMLCommandPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class ExtractRAMLCommandPackage : Package
+    public sealed class ExtractRAMLCommandPackage : AsyncPackage
     {
         /// <summary>
         /// ExtractRAMLCommandPackage GUID string.
@@ -45,17 +48,18 @@ namespace AMF.Tools
             // initialization is the Initialize method.
         }
 
-        #region Package Members
+        #region AsyncPackage Members
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
         /// </summary>
-        protected override void Initialize()
+        protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             ExtractRAMLCommand.Initialize(this);
-            base.Initialize();
+            await base.InitializeAsync(cancellationToken, progress);
         }
+        
 
         #endregion
     }

@@ -27,9 +27,9 @@ namespace AMF.Tools
         public static readonly Guid CommandSet = new Guid("0fd6b089-7a11-4828-ba12-f5bea9e4a489");
 
         /// <summary>
-        /// VS Package that provides this command, not null.
+        /// VS AsyncPackage that provides this command, not null.
         /// </summary>
-        private readonly Package package;
+        private readonly AsyncPackage package;
         private CommandID menuCommandID;
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace AMF.Tools
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private EditPropertiesCommand(Package package)
+        private EditPropertiesCommand(AsyncPackage package)
         {
             if (package == null)
             {
@@ -85,7 +85,7 @@ namespace AMF.Tools
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(Package package)
+        public static void Initialize(AsyncPackage package)
         {
             Instance = new EditPropertiesCommand(package);
         }

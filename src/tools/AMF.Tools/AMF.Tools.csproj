@@ -93,6 +93,7 @@
     <Compile Include="ReverseEngineeringAspNetCore.cs" />
     <Compile Include="ReverseEngineeringServiceBase.cs" />
     <Compile Include="ReverseEngineeringServiceWebApi.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="TargetFolderResolver.cs" />
     <Compile Include="TemplateParams.cs" />
     <Compile Include="TemplatesManager.cs" />
@@ -657,9 +658,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="RAMLClient.t4">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Templates\Client\RAMLClient.t4">
       <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\ClientCore\RAMLClient.t4">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>

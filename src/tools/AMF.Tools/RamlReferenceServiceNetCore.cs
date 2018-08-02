@@ -49,7 +49,7 @@ namespace AMF.Tools
         protected override void InstallNugetDependencies(Project proj, IVsPackageInstaller installer, IVsPackageMetadata[] packs)
         {
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, NewtonsoftJsonPackageId, "11.0.2", Settings.Default.NugetExternalPackagesSource);
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "Microsoft.AspNet.WebApi.Client", "5.2.3", Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "Microsoft.AspNet.WebApi.Client", "5.2.6", Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Xml.XmlSerializer", "4.3.0", Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Xml", "4.3.0", Settings.Default.NugetExternalPackagesSource);
         }
@@ -57,7 +57,7 @@ namespace AMF.Tools
         public override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
-            TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath);
+            TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath, "ClientCore");
             GenerateCode(data, targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName);
         }
 
@@ -75,7 +75,7 @@ namespace AMF.Tools
             var model = new ClientGeneratorService(data.RamlDocument, clientRootClassName, targetNamespace).BuildModel();
             var directoryName = Path.GetDirectoryName(ramlDestFile).TrimEnd(Path.DirectorySeparatorChar);
             var templateFolder = directoryName.Substring(0, directoryName.LastIndexOf(Path.DirectorySeparatorChar)) +
-                                 Path.DirectorySeparatorChar + "Templates";
+                                 Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "ClientCore" + Path.DirectorySeparatorChar;
 
             var templateFilePath = Path.Combine(templateFolder, ClientT4TemplateName);
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;

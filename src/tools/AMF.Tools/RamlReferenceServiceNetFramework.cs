@@ -64,12 +64,12 @@ namespace AMF.Tools
             var model = new ClientGeneratorService(data.RamlDocument, clientRootClassName, targetNamespace).BuildModel();
             var directoryName = Path.GetDirectoryName(ramlDestFile).TrimEnd(Path.DirectorySeparatorChar);
             var templateFolder = directoryName.Substring(0, directoryName.LastIndexOf(Path.DirectorySeparatorChar)) +
-                                 Path.DirectorySeparatorChar + "Templates";
+                                 Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Client" + Path.DirectorySeparatorChar;
 
             var templateFilePath = Path.Combine(templateFolder, ClientT4TemplateName);
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
 
-            TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath);
+            TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath, "Client");
 
             var t4Service = new T4Service(ServiceProvider);
             var res = t4Service.TransformText(templateFilePath, model, extensionPath, ramlDestFile, targetNamespace);

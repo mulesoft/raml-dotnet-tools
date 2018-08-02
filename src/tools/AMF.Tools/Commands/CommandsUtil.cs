@@ -25,8 +25,15 @@ namespace AMF.Tools
         {
             var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            //net core app 2: "Microsoft.AspNetCore"
-            return installerServices.IsPackageInstalled(proj, "Microsoft.AspNetCore.Mvc");
+            
+            if (installerServices.IsPackageInstalled(proj, "Microsoft.AspNetCore.Mvc"))
+                return true;
+
+            //net core app 2
+            if (installerServices.IsPackageInstalled(proj, "Microsoft.AspNetCore.All"))
+                return true;
+
+            return false;
         }
 
     }

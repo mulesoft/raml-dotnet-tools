@@ -29,11 +29,13 @@ namespace AMF.Tools
             CopyTemplateToProjectFolder(generatedFolderPath, templateName, sourceTemplateFolder, ServerTemplatesVersion, title);
         }
 
-        public void CopyClientTemplateToProjectFolder(string generatedFolderPath)
+        public void CopyClientTemplateToProjectFolder(string generatedFolderPath, string templateSubFolder)
         {
             var templateName = Settings.Default.ClientT4TemplateName;
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
-            CopyTemplateToProjectFolder(generatedFolderPath, templateName, extensionPath, ClientTemplatesVersion, Settings.Default.ClientTemplateTitle);
+            var sourceTemplateFolder = Path.Combine(extensionPath,
+                "Templates" + Path.DirectorySeparatorChar + templateSubFolder + Path.DirectorySeparatorChar);
+            CopyTemplateToProjectFolder(generatedFolderPath, templateName, sourceTemplateFolder, ClientTemplatesVersion, Settings.Default.ClientTemplateTitle);
         }
 
         public bool ConfirmWhenIncompatibleClientTemplate(string generatodFolderPath)

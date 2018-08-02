@@ -192,6 +192,18 @@ namespace AMF.Tools.Core.ClientGenerator
             }
         }
 
+        public string ParameterStringCore
+        {
+            get
+            {
+                var paramsString = RequestType + " request";
+                if (ReturnType != "string" && ReturnType != "HttpContent")
+                    paramsString += ", IEnumerable<IOutputFormatter> responseFormatters = null";
+
+                return paramsString;
+            }
+        }
+
         public string QualifiedParameterType
         {
             get

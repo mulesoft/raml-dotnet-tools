@@ -8,16 +8,22 @@ using AMF.Common;
 using AMF.Tools.Core.ClientGenerator;
 using System.IO;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.ComponentModelHost;
+using System.Linq;
 
 namespace AMF.Tools
 {
     // Net 4.5 implementation
     public class RamlReferenceServiceNetFramework : RamlReferenceServiceBase 
     {
-
+        private readonly string ramlApiCorePackageId = Settings.Default.RAMLApiCorePackageId;
+        private readonly string ramlApiCorePackageVersion = Settings.Default.RAMLApiCorePackageVersion;
         private readonly string newtonsoftJsonPackageVersion = Settings.Default.NewtonsoftJsonPackageVersion;
         private readonly string webApiCorePackageId = Settings.Default.WebApiCorePackageId;
         private readonly string webApiCorePackageVersion = Settings.Default.WebApiCorePackageVersion;
+        private readonly string microsoftNetHttpPackageId = Settings.Default.MicrosoftNetHttpPackageId;
+        private readonly string microsoftNetHttpPackageVersion = Settings.Default.MicrosoftNetHttpPackageVersion;
+        private readonly string nugetPackagesSource = Settings.Default.NugetPackagesSource;
 
         public RamlReferenceServiceNetFramework(IServiceProvider serviceProvider, ILogger logger) : base(serviceProvider, logger)
         {
@@ -49,10 +55,22 @@ namespace AMF.Tools
             }
         }
 
-        protected override void InstallNugetDependencies(Project proj, IVsPackageInstaller installer, IVsPackageMetadata[] packs)
+        protected override void InstallNugetDependencies(Project proj)
         {
+            var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
+            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
+            var installer = componentModel.GetService<IVsPackageInstaller>();
+            var packs = installerServices.GetInstalledPackages(proj).ToArray();
+
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, AMF.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, NewtonsoftJsonPackageId, newtonsoftJsonPackageVersion, Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, webApiCorePackageId, webApiCorePackageVersion, Settings.Default.NugetExternalPackagesSource);
+
+            // RAML.Api.Core
+            if (!installerServices.IsPackageInstalled(proj, ramlApiCorePackageId))
+            {
+                installer.InstallPackage(nugetPackagesSource, proj, ramlApiCorePackageId, ramlApiCorePackageVersion, false);
+            }
         }
 
         public override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, 
@@ -64,7 +82,7 @@ namespace AMF.Tools
             var model = new ClientGeneratorService(data.RamlDocument, clientRootClassName, targetNamespace).BuildModel();
             var directoryName = Path.GetDirectoryName(ramlDestFile).TrimEnd(Path.DirectorySeparatorChar);
             var templateFolder = directoryName.Substring(0, directoryName.LastIndexOf(Path.DirectorySeparatorChar)) +
-                                 Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Client" + Path.DirectorySeparatorChar;
+                                 Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar;
 
             var templateFilePath = Path.Combine(templateFolder, ClientT4TemplateName);
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;

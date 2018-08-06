@@ -14,17 +14,13 @@ namespace AMF.Tools
     {
         protected readonly IServiceProvider ServiceProvider;
         protected readonly ILogger Logger;
-        protected readonly string NewtonsoftJsonPackageId = AMF.Tools.Properties.Settings.Default.NewtonsoftJsonPackageId;
+        protected readonly string NewtonsoftJsonPackageId = Properties.Settings.Default.NewtonsoftJsonPackageId;
 
-        private readonly string nugetPackagesSource = AMF.Tools.Properties.Settings.Default.NugetPackagesSource;
+        
 
-        private readonly string ramlApiCorePackageId = AMF.Tools.Properties.Settings.Default.RAMLApiCorePackageId;
-        private readonly string ramlApiCorePackageVersion = AMF.Tools.Properties.Settings.Default.RAMLApiCorePackageVersion;
-        public readonly static string ApiReferencesFolderName = AMF.Tools.Properties.Settings.Default.ApiReferencesFolderName;
-        private readonly string microsoftNetHttpPackageId = AMF.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageId;
-        private readonly string microsoftNetHttpPackageVersion = AMF.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageVersion;
+        public readonly static string ApiReferencesFolderName = Properties.Settings.Default.ApiReferencesFolderName;
 
-        protected readonly string ClientT4TemplateName = AMF.Tools.Properties.Settings.Default.ClientT4TemplateName;
+        protected readonly string ClientT4TemplateName = Properties.Settings.Default.ClientT4TemplateName;
         protected readonly TemplatesManager TemplatesManager = new TemplatesManager();
 
         protected RamlReferenceServiceBase(IServiceProvider serviceProvider, ILogger logger)
@@ -47,25 +43,7 @@ namespace AMF.Tools
 
         public abstract void AddRamlReference(RamlChooserActionParams parameters);
 
-        protected void InstallNugetDependencies(Project proj)
-        {
-            var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
-            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            var installer = componentModel.GetService<IVsPackageInstaller>();
-
-            var packs = installerServices.GetInstalledPackages(proj).ToArray();
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, AMF.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
-
-            InstallNugetDependencies(proj, installer, packs);
-
-            // RAML.Api.Core
-            if (!installerServices.IsPackageInstalled(proj, ramlApiCorePackageId))
-            {
-                installer.InstallPackage(nugetPackagesSource, proj, ramlApiCorePackageId, ramlApiCorePackageVersion, false);
-            }
-        }
-
-        protected abstract void InstallNugetDependencies(Project proj, IVsPackageInstaller installer, IVsPackageMetadata[] packs);
+        protected abstract void InstallNugetDependencies(Project proj);
 
         protected void AddFilesToProject(RamlInfo data, string ramlSourceFile, Project proj, string targetNamespace, string ramlOriginalSource, string targetFileName, string clientRootClassName)
         {

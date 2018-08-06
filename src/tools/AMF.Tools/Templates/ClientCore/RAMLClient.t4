@@ -939,9 +939,7 @@ foreach (var apiObject in model.ApiResponseObjects)
                 }
                 else
                 {
-		            var task = Formatters != null && Formatters.Any() 
-                                ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode), Formatters).ConfigureAwait(false)
-                                : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode)).ConfigureAwait(false);
+		            var task = RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode)).ConfigureAwait(false);
 		        
 		            var content = task.GetAwaiter().GetResult();
                     typedContent.SetPropertyByStatusCode(StatusCode, content);
@@ -994,9 +992,7 @@ foreach (var apiObject in model.ApiResponseObjects)
 
                     try
                     {
-                        var task = Formatters != null && Formatters.Any()
-                                    ? RawContent.ReadAsAsync<<#= body.Type.StartsWith("IList") ? body.Type.Substring(1) : body.Type #>>(Formatters).ConfigureAwait(false)
-                                    : RawContent.ReadAsAsync<<#= body.Type.StartsWith("IList") ? body.Type.Substring(1) : body.Type #>>().ConfigureAwait(false);
+                        var task = RawContent.ReadAsAsync<<#= body.Type.StartsWith("IList") ? body.Type.Substring(1) : body.Type #>>().ConfigureAwait(false);
 
                         typedContent = task.GetAwaiter().GetResult();
                         return typedContent;
@@ -1017,9 +1013,7 @@ foreach (var apiObject in model.ApiResponseObjects)
                                 var typeName = "System.Collections.Generic.List`1[[" + propertyType.GetGenericArguments()[0] + "," + this.GetType().Assembly.FullName + "]]";
                                 propertyType = Type.GetType(typeName);
                             }
-                            var task = Formatters != null && Formatters.Any()
-                                        ? RawContent.ReadAsAsync(propertyType, Formatters).ConfigureAwait(false)
-                                        : RawContent.ReadAsAsync(propertyType).ConfigureAwait(false);
+                            var task = RawContent.ReadAsAsync(propertyType).ConfigureAwait(false);
 
                             var content = task.GetAwaiter().GetResult();
                             if(content == null)
@@ -1033,9 +1027,7 @@ foreach (var apiObject in model.ApiResponseObjects)
 <#
         } else {
 #>
-                    var task =  Formatters != null && Formatters.Any() 
-                                ? RawContent.ReadAsAsync<<#= body.Type #>>(Formatters).ConfigureAwait(false)
-                                : RawContent.ReadAsAsync<<#= body.Type #>>().ConfigureAwait(false);
+                    var task =  RawContent.ReadAsAsync<<#= body.Type #>>().ConfigureAwait(false);
 		        
 		            typedContent = task.GetAwaiter().GetResult();
 <#      

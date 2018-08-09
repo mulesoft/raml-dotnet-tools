@@ -25,6 +25,8 @@ namespace AMF.Tools.Core.WebApiGenerator
 
             ParseSchemas();
             GetRequestObjects();
+            schemaResponseObjects = GetResponseObjects();
+
             //CleanProperties(schemaObjects);
             //CleanProperties(schemaRequestObjects);
             //CleanProperties(schemaResponseObjects);
@@ -45,6 +47,10 @@ namespace AMF.Tools.Core.WebApiGenerator
             webApiMethodsGenerator = new WebApiMethodsGenerator(raml, schemaResponseObjects, schemaRequestObjects, linkKeysWithObjectNames, schemaObjects, 
                 enums);
             var controllers = GetControllers().ToArray();
+
+            apiObjectsCleaner = new ApiObjectsCleaner(schemaRequestObjects, schemaResponseObjects, schemaObjects);
+            uriParametersGenerator = new UriParametersGenerator(schemaObjects);
+
             CleanNotUsedObjects(controllers);
             
             return new WebApiGeneratorModel
@@ -111,15 +117,15 @@ namespace AMF.Tools.Core.WebApiGenerator
 
                 var fullUrl = resource.Path;
 
-                // when the resource is a parameter dont generate a class but add it's methods and children to the parent
-                if (resource.Path.StartsWith("/{") && resource.Path.EndsWith("}"))
-                {
-                    AddMethodsToRootController(classes, classesNames, classesObjectsRegistry, resource, fullUrl, rootController, parentUriParameters);
+                //// when the resource is a parameter dont generate a class but add it's methods and children to the parent
+                //if (resource.Path.StartsWith("/{") && resource.Path.EndsWith("}"))
+                //{
+                //    AddMethodsToRootController(classes, classesNames, classesObjectsRegistry, resource, fullUrl, rootController, parentUriParameters);
                     
-                    //GetMethodsFromChildResources(resource.Resources, fullUrl, rootController, resource.UriParameters);
-                }
-                else
-                {
+                //    //GetMethodsFromChildResources(resource.Resources, fullUrl, rootController, resource.UriParameters);
+                //}
+                //else
+                //{
                     var isParentController = fullUrl.Count(u => u == '/') == 1;
                     if (isParentController)
                     {
@@ -127,10 +133,12 @@ namespace AMF.Tools.Core.WebApiGenerator
                     }
                     else
                     {
-                        var parentController = classes.First(c => resource.Path.StartsWith("/" + c.PrefixUri));
+                        var parentController = classes.First(c => c.PrefixUri.StartsWith("/")
+                                                                ? resource.Path.StartsWith(c.PrefixUri)
+                                                                : resource.Path.StartsWith("/" + c.PrefixUri));
                         GetMethodsFromChildResources(resource, fullUrl, parentController, parentUriParameters); //TODO: check parentUriParameters
                     }
-                }
+                //}
             }
         }
 

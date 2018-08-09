@@ -10,6 +10,7 @@ namespace AMF.Tools.Core.WebApiGenerator
     {
         public string Name { get; set; }
         public string ReturnType { get; set; }
+        public ApiObject ReturnTypeObject { get; set; }
 
         public GeneratorParameter Parameter { get; set; }
         public string Comment { get; set; }

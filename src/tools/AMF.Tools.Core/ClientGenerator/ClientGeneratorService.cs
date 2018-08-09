@@ -67,6 +67,10 @@ namespace AMF.Tools.Core.ClientGenerator
             var apiRequestObjects = apiRequestGenerator.Generate(classObjects);
             var apiResponseObjects = apiResponseGenerator.Generate(classObjects);
 
+
+            apiObjectsCleaner = new ApiObjectsCleaner(schemaRequestObjects, schemaResponseObjects, schemaObjects);
+            uriParametersGenerator = new UriParametersGenerator(schemaObjects);
+
             CleanNotUsedObjects(classObjects);
 
 
@@ -94,63 +98,6 @@ namespace AMF.Tools.Core.ClientGenerator
                        UriParameterObjects = uriParameterObjects,
                        Enums = Enums.ToArray()
                    };
-        }
-
-        private IDictionary<string, ApiObject> GetResponseObjects()
-        {
-            var objects = new Dictionary<string, ApiObject>();
-            foreach (var endpoint in raml.WebApi.EndPoints)
-            {
-                if (endpoint.Operations == null)
-                    continue;
-
-                foreach (var operation in endpoint.Operations)
-                {
-                    if (operation.Responses == null)
-                        continue;
-
-                    foreach (var response in operation.Responses)
-                    {
-                        if (response == null && response.Payloads == null)
-                            continue;
-
-                        var key = GeneratorServiceHelper.GetKeyForResource(operation, endpoint, response);
-                        GetShapes(key, objects, response.Payloads);
-                    }
-                }
-            }
-            return objects;
-        }
-
-        private void GetShapes(string key, IDictionary<string, ApiObject> objects, IEnumerable<Payload> payloads)
-        {
-            if (payloads == null)
-                return;
-
-            foreach (var payload in payloads.Where(p => p != null))
-            {
-                var shape = payload.Schema;
-                if (shape == null)
-                    continue;
-
-                ParseObjects(key, objects, shape);
-            }
-        }
-
-        private void ParseObjects(string key, IDictionary<string, ApiObject> objects, Shape shape)
-        {
-            var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace);
-            AddNewEnums(newElements.Item2);
-            AddObjects(objects, newElements.Item1);
-        }
-
-        private static void AddObjects(IDictionary<string, ApiObject> objects, IDictionary<string, ApiObject> newObjects)
-        {
-            foreach (var obj in newObjects)
-            {
-                if (!objects.ContainsKey(obj.Key))
-                    objects.Add(obj.Key, obj.Value);
-            }
         }
 
         private IDictionary<string, ApiObject> GetRequestObjects()

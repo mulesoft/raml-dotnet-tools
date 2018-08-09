@@ -15,14 +15,14 @@ namespace AMF.Tools.Core
 
         protected readonly string[] suffixes = { "A", "B", "C", "D", "E", "F", "G" };
 
-        protected readonly UriParametersGenerator uriParametersGenerator;
+        protected UriParametersGenerator uriParametersGenerator;
         protected readonly SchemaParameterParser schemaParameterParser = new SchemaParameterParser(new EnglishPluralizationService());
         protected IDictionary<string, ApiObject> schemaObjects = new Dictionary<string, ApiObject>();
         protected IDictionary<string, ApiObject> schemaRequestObjects = new Dictionary<string, ApiObject>();
         protected IDictionary<string, ApiObject> schemaResponseObjects = new Dictionary<string, ApiObject>();
         protected IDictionary<string, string> linkKeysWithObjectNames = new Dictionary<string, string>();
 
-        protected readonly ApiObjectsCleaner apiObjectsCleaner;        
+        protected ApiObjectsCleaner apiObjectsCleaner;        
 
 		protected IDictionary<string, string> warnings;
 	    protected IDictionary<string, ApiEnum> enums;
@@ -42,8 +42,6 @@ namespace AMF.Tools.Core
 		{
 			this.raml = raml;
 		    this.targetNamespace = targetNamespace;
-		    apiObjectsCleaner = new ApiObjectsCleaner(schemaRequestObjects, schemaResponseObjects, schemaObjects);
-		    uriParametersGenerator = new UriParametersGenerator(schemaObjects);
 		    //ApplyResourceTypesAndTraits(raml.WebApi.EndPoints);
             //raml1TypesParser = new RamlTypeParser(raml.Shapes, schemaObjects, targetNamespace, enums, warnings);
 		}
@@ -255,5 +253,69 @@ namespace AMF.Tools.Core
             return objectNameForParameter;
         }
 
+
+
+
+
+
+        protected IDictionary<string, ApiObject> GetResponseObjects()
+        {
+            var objects = new Dictionary<string, ApiObject>();
+            if (raml.WebApi == null)
+                return objects;
+
+            foreach (var endpoint in raml.WebApi.EndPoints)
+            {
+                if (endpoint.Operations == null)
+                    continue;
+
+                foreach (var operation in endpoint.Operations)
+                {
+                    if (operation.Responses == null)
+                        continue;
+
+                    foreach (var response in operation.Responses)
+                    {
+                        if (response == null && response.Payloads == null)
+                            continue;
+
+                        var key = GeneratorServiceHelper.GetKeyForResource(operation, endpoint, response);
+                        GetShapes(key, objects, response.Payloads);
+                    }
+                }
+            }
+            return objects;
+        }
+
+        protected void GetShapes(string key, IDictionary<string, ApiObject> objects, IEnumerable<Payload> payloads)
+        {
+            if (payloads == null)
+                return;
+
+            foreach (var payload in payloads.Where(p => p != null))
+            {
+                var shape = payload.Schema;
+                if (shape == null)
+                    continue;
+
+                ParseObjects(key, objects, shape);
+            }
+        }
+
+        private void ParseObjects(string key, IDictionary<string, ApiObject> objects, Shape shape)
+        {
+            var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace);
+            AddNewEnums(newElements.Item2);
+            AddObjects(objects, newElements.Item1);
+        }
+
+        private static void AddObjects(IDictionary<string, ApiObject> objects, IDictionary<string, ApiObject> newObjects)
+        {
+            foreach (var obj in newObjects)
+            {
+                if (!objects.ContainsKey(obj.Key))
+                    objects.Add(obj.Key, obj.Value);
+            }
+        }
     }
 }

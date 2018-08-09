@@ -86,9 +86,12 @@ namespace AMF.Tools.Core
 
         public bool IsUsedAsResponseInAnyMethod(IEnumerable<Core.WebApiGenerator.ControllerObject> controllers, ApiObject requestObj)
         {
-            return controllers.Any(c => c.Methods.Any(m => m.ReturnType == requestObj.Type || 
-            m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Type) ||
-            CollectionTypeHelper.GetCollectionType(m.ReturnType) == requestObj.Type));
+            return controllers.Any(c => c.Methods.Any(m => m.ReturnType == requestObj.Type ||
+                m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Type) ||
+                CollectionTypeHelper.GetCollectionType(m.ReturnType) == requestObj.Type ||
+                m.ReturnType == requestObj.Name ||
+                m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Name) ||
+                CollectionTypeHelper.GetCollectionType(m.ReturnType) == requestObj.Name));
         }
 
         public bool IsUsedAsParameterInAnyMethod(IEnumerable<Core.WebApiGenerator.ControllerObject> controllers, ApiObject requestObj)

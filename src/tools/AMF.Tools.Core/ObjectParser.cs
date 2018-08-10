@@ -150,7 +150,8 @@ namespace AMF.Tools.Core
             }
             if(p.Range is NodeShape)
             {
-                ParseObject(prop.Name, p.Range, existingObjects, warnings, existingEnums, targetNamespace);
+                var tuple = ParseObject(prop.Name, p.Range, existingObjects, warnings, existingEnums, targetNamespace);
+                prop.Type = NetNamingMapper.GetObjectName(prop.Name);
             }
             foreach(var parent in p.Range.Inherits)
             {

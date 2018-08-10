@@ -159,6 +159,11 @@ namespace AMF.Tools.Core
                     && string.IsNullOrWhiteSpace(parent.LinkTargetName))
                     ParseObject(prop.Name, parent, existingObjects, warnings, existingEnums, targetNamespace);
             }
+            if(p.Range is ArrayShape array)
+            {
+                ParseObject(array.Name, array.Items, existingObjects, warnings, existingEnums, targetNamespace);
+                prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(array.Name));
+            }
             return prop;
         }
 

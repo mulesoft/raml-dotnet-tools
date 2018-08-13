@@ -17,10 +17,22 @@ namespace AMF.Tools.Core.WebApiGenerator
         {
             get
             {
-                var objects = SchemaObjects.Values.ToList();
-                objects.AddRange(RequestObjects.Values);
-                objects.AddRange(ResponseObjects.Values);
-                return objects;
+                var objects = new Dictionary<string, ApiObject>();
+                foreach(var obj in SchemaObjects)
+                {
+                    objects.Add(obj.Key, obj.Value);
+                }
+                foreach (var obj in RequestObjects)
+                {
+                    if(!objects.ContainsKey(obj.Key))
+                        objects.Add(obj.Key, obj.Value);
+                }
+                foreach (var obj in ResponseObjects)
+                {
+                    if (!objects.ContainsKey(obj.Key))
+                        objects.Add(obj.Key, obj.Value);
+                }
+                return objects.Values.ToArray();
             }
         }
 

@@ -250,7 +250,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandle_SalesOrdersCase()
         {
             var model = await BuildModel("files/raml1/salesOrders.raml");
-            Assert.AreEqual(12, model.Objects.Count());
+            Assert.AreEqual(47, model.Objects.Count());
         }
 
         [Test]

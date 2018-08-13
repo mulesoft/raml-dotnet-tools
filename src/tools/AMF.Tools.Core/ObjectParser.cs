@@ -147,23 +147,37 @@ namespace AMF.Tools.Core
 
                     prop.Type = apiEnum.Name;
                 }
+                return prop;
             }
-            if(p.Range is NodeShape)
+
+            if (existingObjects.ContainsKey(prop.Type) || newObjects.ContainsKey(prop.Type))
+                return prop;
+
+            if (p.Range is NodeShape)
             {
                 var tuple = ParseObject(prop.Name, p.Range, existingObjects, warnings, existingEnums, targetNamespace);
                 prop.Type = NetNamingMapper.GetObjectName(prop.Name);
             }
-            foreach(var parent in p.Range.Inherits)
+            if (p.Range is ArrayShape array)
+            {
+                if (array.Items is ScalarShape)
+                    return prop;
+
+                prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(array.Name));
+
+                var itemType = NewNetTypeMapper.GetNetType(array.Items, existingObjects, newObjects, existingEnums, newEnums);
+                if (existingObjects.ContainsKey(itemType) || newObjects.ContainsKey(itemType))
+                    return prop;
+
+                ParseObject(array.Name, array.Items, existingObjects, warnings, existingEnums, targetNamespace);
+            }
+
+            foreach (var parent in p.Range.Inherits)
             {
                 if(!(parent is ScalarShape) && !NewNetTypeMapper.IsPrimitiveType(prop.Type) 
                     && !(CollectionTypeHelper.IsCollection(prop.Type) && NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(prop.Type)))
                     && string.IsNullOrWhiteSpace(parent.LinkTargetName))
                     ParseObject(prop.Name, parent, existingObjects, warnings, existingEnums, targetNamespace);
-            }
-            if(p.Range is ArrayShape array)
-            {
-                ParseObject(array.Name, array.Items, existingObjects, warnings, existingEnums, targetNamespace);
-                prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(array.Name));
             }
             return prop;
         }

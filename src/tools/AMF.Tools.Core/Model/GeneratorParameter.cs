@@ -6,7 +6,7 @@ namespace AMF.Tools.Core
     [Serializable]
     public class GeneratorParameter
     {
-        private readonly string[] reservedWords = { "ref", "out", "in", "base", "long", "int", "short", "bool", "string", "decimal", "float", "double" };
+        private readonly string[] reservedWords = { "ref", "out", "in", "base", "long", "int", "short", "bool", "string", "decimal", "float", "double", "default" };
         private string name;
 
         public string Type { get; set; }

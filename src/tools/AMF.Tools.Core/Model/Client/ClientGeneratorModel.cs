@@ -53,7 +53,12 @@ namespace AMF.Tools.Core.ClientGenerator
 
         public string BaseUri
         {
-            get { return !string.IsNullOrWhiteSpace(baseUri) && !baseUri.EndsWith("/") ? baseUri + "/" : baseUri; }
+            get {
+                if (string.IsNullOrWhiteSpace(baseUri))
+                    return string.Empty;
+
+                return !baseUri.EndsWith("/") ? baseUri + "/" : baseUri;
+            }
             set { baseUri = value; }
         }
 

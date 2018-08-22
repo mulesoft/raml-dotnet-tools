@@ -34,6 +34,9 @@ namespace AMF.Tools
             try
             {
                 Logger.LogInformation("Add RAML Reference process started");
+
+                Tracking.Track("API reference .Net fx");
+
                 var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
                 var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
 

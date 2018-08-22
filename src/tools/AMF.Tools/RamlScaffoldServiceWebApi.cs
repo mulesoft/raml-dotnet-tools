@@ -48,6 +48,8 @@ namespace AMF.Tools
 
         public override void AddContract(RamlChooserActionParams parameters)
         {
+            Tracking.Track("Asp.Net WebApi Scaffold");
+
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
 

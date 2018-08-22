@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Shell;
 using AMF.Tools.Properties;
 using NuGet.VisualStudio;
 using AMF.Common;
+using Segment;
 
 namespace AMF.Tools
 {
@@ -25,6 +26,7 @@ namespace AMF.Tools
         
         public ReverseEngineeringServiceWebApi(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            Tracking.Track("Asp.Net WebApi Extract RAML");
         }
 
         protected override void ConfigureProject(Project proj)

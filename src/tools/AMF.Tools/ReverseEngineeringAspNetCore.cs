@@ -19,6 +19,7 @@ namespace AMF.Tools
 
         public ReverseEngineeringAspNetCore(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            Tracking.Track("Asp.Net Core Extract RAML");
         }
 
         protected override void ConfigureProject(Project proj)

@@ -9,7 +9,6 @@ using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Shell.Events;
 using Task = System.Threading.Tasks.Task;
 
 namespace AMF.Tools
@@ -60,6 +59,7 @@ namespace AMF.Tools
                 if(windowManager == null)
                 {
                     bootstrapper.Initialize();
+                    Tracking.Init();
 
                     try
                     {
@@ -75,6 +75,8 @@ namespace AMF.Tools
                 return windowManager;
             }
         }
+
+
         private static Bootstrapper bootstrapper = new Bootstrapper();
         #region AsyncPackage Members
 

@@ -8,6 +8,7 @@ namespace AMF.Tools
 {
     public class Tracking
     {
+        private const string ApiKey = "7856322d613393b800727439f0954eb9";
         public static void Init()
         {
             // production settings this is your project's write key
@@ -26,9 +27,8 @@ namespace AMF.Tools
             //"event_type":, "user_properties":{"$set": {"Cohort":"Test B"},
             //"$add": {"friendCount":3}}, "country":"United States", "ip":"127.0.0.1",
             //"time":1396381378123}]
-
             var parameters = new Dictionary<string, string> {
-                        { "api_key", "5aee4965dc93cb3816250ce65e6a9868" },
+                        { "api_key", ApiKey },
                         { "event", eventData }
                     };
 
@@ -55,7 +55,7 @@ namespace AMF.Tools
             var url = "https://api.amplitude.com/httpapi";
             var eventData = "{ " +
                 "user_id: \"" + UserInfo.Get() + "\", " +
-                "event_type: \"" + eventDescription + "\", " +
+                "event_type: \".Net API Tools - " + eventDescription + "\", " +
                 "country: \"" + System.Globalization.RegionInfo.CurrentRegion.EnglishName + "\", " +
                 "platform: \"" + UserInfo.GetPlatform() + "\" " +
             " }";
@@ -66,7 +66,7 @@ namespace AMF.Tools
             //"time":1396381378123}]
 
             var parameters = new Dictionary<string, string> {
-                        { "api_key", "5aee4965dc93cb3816250ce65e6a9868" },
+                        { "api_key", ApiKey },
                         { "event", eventData }
                     };
 

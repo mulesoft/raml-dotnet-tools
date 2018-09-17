@@ -92,7 +92,7 @@ image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
 +
 image::./docimages/RAML_NET_SolutionExplorer.png[align="center"]
 +
-. Specify the URL of the RAML definition and click the *Go* button, use the *Upload* button to select the file from the local filesystem or choose an existing RAML definition from the *Exchange* library.
+. Specify the URL of the RAML definition and click the *Go* button, use the *Upload* button to select the file from the local filesystem.
 +
 image::./docimages/RAML_NET_AddRAMLReference.png[align="center"]
 +

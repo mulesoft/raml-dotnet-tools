@@ -1,0 +1,1102 @@
+<#
+// title: Client Proxy T4 Template
+// hash: 550362fe928c9e475980ba9c3c6f07f9
+// version: 6.0
+#>
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="$(binDir)AMF.Parser.dll" #>
+<#@ assembly name="$(binDir)EdgeJs.dll" #>
+<#@ assembly name="$(binDir)AMF.Tools.Core.dll" #>
+<#@ assembly name="$(binDir)AMF.Api.Core.dll" #>
+<#@ assembly name="System.Runtime" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="AMF.Api.Core" #>
+<#@ import namespace="AMF.Tools.Core" #>
+<#@ import namespace="AMF.Tools.Core.ClientGenerator" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System" #>
+<#@ parameter name="model" type="AMF.Tools.Core.ClientGenerator.ClientGeneratorModel" #>
+<#@ output extension=".cs" #>
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using AMF.Api.Core;
+using $(namespace).Models;
+using Microsoft.AspNetCore.Mvc.Formatters;
+
+namespace $(namespace)
+{
+<#
+	foreach (var classObject in model.Classes)
+	{
+		if (!string.IsNullOrWhiteSpace(classObject.Description))
+		{
+#>
+    /// <summary>
+    /// <#= XmlCommentHelper.Escape(classObject.Description) #>
+    /// </summary>
+<#
+		}
+#>
+    public partial class <#= classObject.Name #>
+    {
+        private readonly <#= model.Root.Name #> proxy;
+
+        internal <#= classObject.Name #>(<#= model.Root.Name #> proxy)
+        {
+            this.proxy = proxy;
+        }
+<#
+		foreach (var property in classObject.Properties)
+		{
+#>
+
+        public virtual <#= property.Name #> <#= property.Name #>
+        {
+            get { return new <#= property.Name #>(proxy); }
+        }
+<#
+		}
+#>
+
+<#
+		foreach (var method in classObject.Methods)
+		{
+        // Simple method ----------------------------------------------------------------------------------------
+#>
+
+        <#= method.XmlSimpleComment #>
+        public virtual async Task<<#= method.ResponseType #>> <#= method.Name #>(<#= method.SimpleParameterString #>)
+        {
+
+            var url = "<#= method.Url ?? string.Empty #>";
+<#
+	            foreach (var p in method.UriParameters)
+	            {
+#>
+            url = url.Replace("{<#= p.Name #>}", <#= p.Name #>.ToString());
+<#
+        	    }
+
+	            if (method.Query != null)
+	            {
+#>
+            if(<#= method.Query.Name.ToLower() #> != null)
+            {
+                url += "?";
+<#
+		            foreach (var property in method.Query.Properties)
+		            {
+                        if(property.Type == "bool" || property.Type == "bool?")
+                        {
+#>
+                if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
+					url += "&<#= property.OriginalName #>=" + <#= method.Query.Name.ToLower() #>.<#= property.Name #>.ToString().ToLower();
+<#
+                        }
+                        else
+                        {
+#>
+                if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
+					url += "&<#= property.OriginalName #>=" + <#= method.Query.Name.ToLower() #>.<#= property.Name #>;
+<#
+                        }
+        		    }
+#>
+            }
+<#
+	            }
+#>
+
+            url = url.Replace("?&", "?");
+
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+<#
+
+		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
+		        {
+#>
+	        if (string.IsNullOrEmpty(proxy.OAuthAccessToken))
+				throw new InvalidOperationException("This API call is secured with OAuth, you must provide an access token (set OAuthAccessToken before calling this method)");
+<#
+			        if (((model.Security.Headers == null || !model.Security.Headers.Any())
+			            && (model.Security.QueryParameters == null || !model.Security.QueryParameters.Any()))
+                        || (model.Security.Headers != null && model.Security.Headers.Any()))
+			        {
+#>
+            req.Headers.Add("Authorization", "Bearer " + proxy.OAuthAccessToken);
+<#
+			        }
+			        else
+			        {
+#>
+            req.RequestUri = new Uri(url + (url.EndsWith("?") || url.EndsWith("&") ? "" : (url.Contains("?") ? "&" : "?")) + "access_token=" + proxy.OAuthAccessToken, UriKind.Relative);
+<#
+			        }
+		        }
+
+                if (method.Verb != null && method.Verb != "Delete" && method.Verb != "Get")
+                {
+	                if (method.Parameter == null || method.Parameter.Type == "string")
+	                {
+#>
+            req.Content = new StringContent(content);
+<#
+	                }
+	                else
+	                {
+                        if(method.RequestContentTypes.Any(c => c.Contains("xml")) && !method.RequestContentTypes.Any(c => c.Contains("json"))){
+#>
+
+            var stringWriter = new StringWriter();
+        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, <#= method.Parameter.Name #>);
+            req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
+<#
+                        } else {
+#>
+            req.Content = new ObjectContent(typeof(<#= method.QualifiedParameterType #>), <#= method.Parameter.Name #>, new JsonMediaTypeFormatter());                           
+<#                        
+                        }
+        	        }
+                }
+#>
+	        var response = await proxy.Client.SendAsync(req);
+<#
+            string validationCall = "new Lazy<SchemaValidationResults>(() => new SchemaValidationResults(true), true)";
+            string validationWithException = "";
+
+            if (method.ResponseType != "ApiResponse" && method.ReturnTypeObject != null && !string.IsNullOrWhiteSpace(method.ReturnTypeObject.JSONSchema))
+			{
+                var jsonSchema = !method.ReturnTypeObject.IsMultiple ? 
+					String.Format("\"{0}\"", method.ReturnTypeObject.JSONSchema) : 
+					method.ResponseType + ".GetSchema(response.StatusCode)";
+                
+				validationWithException = String.Format("await SchemaValidator.ValidateWithExceptionAsync({0}, response.Content)", jsonSchema);
+                validationCall = String.Format("new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid({0}, response.Content), true)", jsonSchema);
+#>
+			
+			if (proxy.SchemaValidation.Enabled)
+		    {
+				if(proxy.SchemaValidation.RaiseExceptions) 
+				{
+					<#= validationWithException #>;
+				}
+					
+			}
+
+<#
+			}
+#>
+
+<#
+
+	            if (method.ResponseHeaders.Count == 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers);
+<#
+	            }
+	            else if (method.ResponseHeaders.Count > 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers, response.StatusCode);
+<#
+                }
+
+#>
+            return new <#= method.ResponseType #>  
+                                            {
+                                                RawContent = response.Content,
+<#                  if (method.ResponseHeaders != null && method.ResponseHeaders.Any()) { #>
+                                                Headers = headers, 
+<#                  } #>
+                                                RawHeaders = response.Headers, 
+                                                StatusCode = response.StatusCode,
+                                                ReasonPhrase = response.ReasonPhrase,
+												SchemaValidation = <#= validationCall #>
+                                            };
+
+        }
+<#
+// End simple method ----------------------------------------------------------------------------------------
+#>
+
+        <#= method.XmlComment #>
+        public virtual async Task<<#= method.ResponseType #>> <#= method.Name #>(<#= method.ParameterStringCore #>)
+        {
+
+            var url = "<#= method.Url ?? string.Empty #>";
+<#
+			    if (method.UriParameters != null && method.UriParameters.Any())
+			    {
+#>
+			if(request.UriParameters == null)
+				throw new InvalidOperationException("Uri Parameters cannot be null");               
+<#
+    			}
+
+	            foreach (var p in method.UriParameters)
+	            {
+#>
+
+			if(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #> == null)
+				throw new InvalidOperationException("Uri Parameter <#= NetNamingMapper.Capitalize(p.Name) #> cannot be null");
+
+            url = url.Replace("{<#= p.Name #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
+<#
+	            }
+
+	            if (method.Query != null)
+	            {
+#>
+            if(request.Query != null)
+            {
+                url += "?";
+<#
+		            foreach (var property in method.Query.Properties)
+		            {
+                        if(property.Type == "bool" || property.Type == "bool?")
+                        {
+#>
+                if(request.Query.<#= property.Name #> != null)
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + request.Query.<#= property.Name #>.ToString().ToLower();
+<#
+                        }
+                        else
+                        {
+#>
+                if(request.Query.<#= property.Name #> != null)
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + request.Query.<#= property.Name #>;
+<#
+                        }
+		            }
+#>
+            }
+<#
+	            }
+#>
+
+            url = url.Replace("?&", "?");
+
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+
+<#
+		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
+		        {
+#>
+	        if (string.IsNullOrEmpty(proxy.OAuthAccessToken))
+				throw new InvalidOperationException("This API call is secured with OAuth, you must provide an access token (set OAuthAccessToken before calling this method)");
+<#
+			        if (((model.Security.Headers == null || !model.Security.Headers.Any())
+			            && (model.Security.QueryParameters == null || !model.Security.QueryParameters.Any()))
+                        || (model.Security.Headers != null && model.Security.Headers.Any()))
+			        {
+#>
+            req.Headers.Add("Authorization", "Bearer " + proxy.OAuthAccessToken);
+<#
+			        }
+			        else
+			        {
+#>
+            req.RequestUri = new Uri(url + (url.EndsWith("?") || url.EndsWith("&") ? "" : (url.Contains("?") ? "&" : "?")) + "access_token=" + proxy.OAuthAccessToken, UriKind.Relative);
+<#
+			        }
+		        }
+
+			    if (method.Header != null)
+			    {
+#>
+            if(request.Headers != null)
+            {
+                foreach(var header in request.Headers.Headers)
+                {
+                    req.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+<#
+    			}
+			    else
+			    {
+#>
+            if(request.RawHeaders != null)
+            {
+                foreach(var header in request.RawHeaders)
+                {
+                    req.Headers.TryAddWithoutValidation(header.Key, string.Join(",", header.Value));
+                }
+            }
+<#
+			    }
+
+                if (method.Verb != null && method.Verb != "Delete" && method.Verb != "Get")
+                {
+	                if (method.Parameter == null || method.Parameter.Type == "string")
+	                {
+#>
+            req.Content = request.Content;
+<#
+	                }
+	                else
+	                {
+                        if(method.RequestContentTypes.Any(c => c.Contains("xml")) && !method.RequestContentTypes.Any(c => c.Contains("json"))){
+#>
+            var stringWriter = new StringWriter();
+        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, request.Content);
+            req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
+<#
+                        } else {
+#>
+            if(request.Formatter == null)
+                request.Formatter = new JsonMediaTypeFormatter();
+<#
+                        }
+	                }
+                }
+#>
+	        var response = await proxy.Client.SendAsync(req);
+<#
+            if (method.ResponseType != "ApiResponse" && method.ReturnTypeObject != null && !string.IsNullOrWhiteSpace(method.ReturnTypeObject.JSONSchema))
+			{
+#>
+			if (proxy.SchemaValidation.Enabled && proxy.SchemaValidation.RaiseExceptions)
+            {
+				if(proxy.SchemaValidation.RaiseExceptions)
+				{
+					<#= validationWithException #>;
+				}
+				
+            }
+<#
+			}
+
+	            if (method.ResponseHeaders.Count == 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers);
+<#
+	            }
+	            else if (method.ResponseHeaders.Count > 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers, response.StatusCode);
+<#
+                }
+
+#>
+            return new <#= method.ResponseType #>  
+                                            {
+                                                RawContent = response.Content,
+<#                  if (method.ResponseHeaders != null && method.ResponseHeaders.Any()) { #>
+                                                Headers = headers, 
+<#                  }  #>
+                                                RawHeaders = response.Headers,
+<#                  if (method.ReturnType != "string" && method.ReturnType != "HttpContent") { #>
+	                                            Formatters = responseFormatters,
+<#                  }  #>
+                                                StatusCode = response.StatusCode,
+                                                ReasonPhrase = response.ReasonPhrase,
+												SchemaValidation = <#= validationCall #>
+                                            };
+<#
+                
+#>
+        }
+
+<#
+
+    	}
+#>
+    }
+
+<#
+	}
+#>
+    /// <summary>
+    /// <#= model.Root.Description == null ? string.Empty : XmlCommentHelper.Escape(model.Root.Description) #>
+    /// </summary>
+    public partial class <#= model.Root.Name #>
+    {
+
+		public SchemaValidationSettings SchemaValidation { get; private set; } 
+
+        protected readonly HttpClient client;
+        public const string BaseUri = "<#= model.BaseUri == null ? string.Empty : model.BaseUri #>";
+
+        internal HttpClient Client { get { return client; } }
+
+
+
+<#
+    if (model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
+    {
+#>
+
+        public string OAuthAccessToken { get; set; }
+
+		private string oauthAuthorizeUrl = "<#= model.Security.AuthorizationUri ?? "" #>";
+		public string OAuthAuthorizeUrl { get { return oauthAuthorizeUrl; } set { oauthAuthorizeUrl = value; } }
+
+   		private string oauthAccessTokenUrl = "<#= model.Security.AccessTokenUri #>";
+		public string OAuthAccessTokenUrl { get { return oauthAccessTokenUrl; } set { oauthAccessTokenUrl = value; } }
+<#
+    }
+
+#>
+
+        public <#= model.Root.Name #>(string endpointUrl)
+        {
+            SchemaValidation = new SchemaValidationSettings
+			{
+				Enabled = true,
+				RaiseExceptions = true
+			};
+
+			if(string.IsNullOrWhiteSpace(endpointUrl))
+                throw new ArgumentException("You must specify the endpoint URL", "endpointUrl");
+
+			if (endpointUrl.Contains("{"))
+			{
+				var regex = new Regex(@"\{([^\}]+)\}");
+				var matches = regex.Matches(endpointUrl);
+				var parameters = new List<string>();
+				foreach (Match match in matches)
+				{
+					parameters.Add(match.Groups[1].Value);
+				}
+				throw new InvalidOperationException("Please replace parameter/s " + string.Join(", ", parameters) + " in the URL before passing it to the constructor ");
+			}
+
+            client = new HttpClient {BaseAddress = new Uri(endpointUrl)};
+        }
+
+        public <#= model.Root.Name #>(HttpClient httpClient)
+        {
+            if(httpClient.BaseAddress == null)
+                throw new InvalidOperationException("You must set the BaseAddress property of the HttpClient instance");
+
+            client = httpClient;
+
+			SchemaValidation = new SchemaValidationSettings
+			{
+				Enabled = true,
+				RaiseExceptions = true
+			};
+        }
+
+        
+<#
+	foreach (var property in model.Root.Properties)
+	{
+#>
+
+        public virtual <#= property.Name #> <#= property.Name #>
+        {
+            get { return new <#= property.Name #>(this); }
+        }
+                
+<#
+	}
+#>
+
+
+		public void AddDefaultRequestHeader(string name, string value)
+		{
+			client.DefaultRequestHeaders.Add(name, value);
+		}
+
+		public void AddDefaultRequestHeader(string name, IEnumerable<string> values)
+		{
+			client.DefaultRequestHeaders.Add(name, values);
+		}
+
+
+    }
+
+} // end namespace
+
+
+
+<#
+var hasXmlSchemas = false;
+foreach (var apiObject in model.Objects.Where(o => !string.IsNullOrWhiteSpace(o.GeneratedCode)))
+{
+    hasXmlSchemas = true;
+#>
+
+<#= apiObject.GeneratedCode #>
+
+<#
+}
+#>
+
+
+
+
+
+
+namespace $(namespace).Models
+{
+<#
+foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.GeneratedCode)))
+{
+    if(hasXmlSchemas && !apiObject.Properties.Any())
+        continue;
+
+    if(apiObject.IsArray && apiObject.Type != null)
+        continue;
+
+    if(apiObject.IsScalar)
+        continue;
+
+	if (!string.IsNullOrWhiteSpace(apiObject.Description))
+	{
+#>
+    /// <summary>
+    /// <#= XmlCommentHelper.Escape(apiObject.Description) #>
+    /// </summary>
+<#
+	}	
+	
+	if(!apiObject.IsMultiple && !string.IsNullOrWhiteSpace(apiObject.BaseClass)) 
+	{
+#>
+    public partial class <#= apiObject.Name #> <#= " : " +  apiObject.BaseClass #>
+    {
+<#
+	} 
+	else 
+	{
+#>
+    public <#= (apiObject.Properties.Any()) ? "partial class " : "abstract class " #> <#= apiObject.Name #> <#= apiObject.IsMultiple ? ": ApiMultipleResponse" : string.Empty #>
+    {
+<#
+	} 
+
+	if (apiObject.IsMultiple)
+	{
+#>
+        static readonly Dictionary<HttpStatusCode, string> schemas = new Dictionary<HttpStatusCode, string>
+        {
+<#
+		foreach (var property in apiObject.Properties.Where(p => p.Type != null && p.Name != null && p.JSONSchema != null).ToArray())
+		{
+#>
+			{ (HttpStatusCode)<#= (int)property.StatusCode #>, "<#= property.JSONSchema #>"},
+<#
+        }
+#>
+		};
+        
+		public static string GetSchema(HttpStatusCode statusCode)
+        {
+            return schemas.ContainsKey(statusCode) ? schemas[statusCode] : string.Empty;
+        }
+        
+        public <#= apiObject.Name #>()
+        {
+<#
+		foreach (var property in apiObject.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+		{
+#>
+            names.Add((HttpStatusCode)<#= (int)property.StatusCode #>, "<#= property.Name #>");
+            types.Add((HttpStatusCode)<#= (int)property.StatusCode #>, typeof(<#= property.Type #>));
+<#
+		}
+#>
+        }
+<#
+	}
+
+
+
+	foreach (var property in apiObject.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+	{
+    // this if a whitespace line to separate properties, do not delete !
+#>
+
+<#
+	    if (!string.IsNullOrWhiteSpace(property.Description))
+	    {
+#>
+        /// <summary>
+        /// <#= XmlCommentHelper.Escape(property.Description) #>
+        /// </summary>
+<#
+    	}
+        if(property.IsAdditionalProperties)
+        {
+#>
+        [JsonExtensionData]
+<#
+        }
+		if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
+		{
+#>
+		[JsonProperty("<#= property.OriginalName #>")]
+<#		} 
+
+		if(property.IsEnum)
+		{
+#>
+		[JsonConverter(typeof(StringEnumConverter))]
+<#		} #>
+        public <#= property.Type #> <#= property.Name #> { get; set; }
+
+<#
+	}
+
+#>
+
+    } // end class
+
+<#
+}
+
+foreach (var header in model.HeaderObjects.Values.Where(o => o.Properties.Any()))
+{
+	if (!string.IsNullOrWhiteSpace(header.Description))
+	{
+#>
+    /// <summary>
+    /// <#= XmlCommentHelper.Escape(header.Description) #>
+    /// </summary>
+<#
+	}
+#>
+    public partial class <#= header.Name #> : ApiHeader
+    {
+
+<#
+	foreach (var property in header.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+	{
+    // this if a whitespace line to separate properties, do not delete !
+#>
+
+<#
+
+	    if (!string.IsNullOrWhiteSpace(property.Description))
+	    {
+#>
+        /// <summary>
+        /// <#= XmlCommentHelper.Escape(property.Description) #>
+        /// </summary>
+<#
+		}
+        if(property.IsAdditionalProperties)
+        {
+#>
+        [JsonExtensionData]
+<#
+        }
+		if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
+		{
+#>
+		[JsonProperty("<#= property.OriginalName #>")]
+<#		}
+
+		if(property.IsEnum)
+		{
+#>
+		[JsonConverter(typeof(StringEnumConverter))]
+<#		} #>
+        public <#= property.Type #> <#= property.Name #> { get; set; }
+<#
+	}
+#>
+
+    } // end class
+
+<#
+}
+
+foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Properties.Any()))
+{
+	if (!string.IsNullOrWhiteSpace(respHeader.Description))
+	{
+#>
+    /// <summary>
+    /// <#= XmlCommentHelper.Escape(respHeader.Description) #>
+    /// </summary>
+<#
+	}
+#>
+    public partial class <#= respHeader.Name #> : <#= respHeader.IsMultiple ? "ApiMultipleObject" : "ApiResponseHeader" #>
+    {
+<#
+	if (respHeader.IsMultiple)
+	{
+#>        
+        public <#= respHeader.Name #>()
+        {
+<#
+		foreach (var property in respHeader.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+		{
+#>
+            names.Add((HttpStatusCode)<#= (int)property.StatusCode #>, "<#= property.Name #>");
+            types.Add((HttpStatusCode)<#= (int)property.StatusCode #>, typeof(<#= property.Type #>));
+<#
+		}
+#>
+        }
+
+		public void SetProperties(HttpResponseHeaders headers, HttpStatusCode statusCode)
+	    {
+<#
+		foreach (var property in respHeader.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+		{
+#>
+		    if (statusCode == (HttpStatusCode)<#= (int)property.StatusCode #>)
+		    {
+				var header = new <#= property.Type #>();
+			    foreach (var responseHeader in headers)
+			    {
+				    var prop = header.GetType().GetProperties().FirstOrDefault(p => p.Name == NetNamingMapper.GetPropertyName(responseHeader.Key));
+					if(prop != null)
+						prop.SetValue(header, responseHeader.Value);
+			    }
+			    this.<#= property.Name #> = header;
+				return;
+		    }
+<#
+		}
+#>
+	    }
+<#
+	}
+
+	foreach (var property in respHeader.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+	{
+    // this if a whitespace line to separate properties, do not delete !
+#>
+
+<#
+	    if (!string.IsNullOrWhiteSpace(property.Description))
+	    {
+#>
+        /// <summary>
+        /// <#= XmlCommentHelper.Escape(property.Description) #>
+        /// </summary>
+<#
+	    }
+        if(property.IsAdditionalProperties)
+        {
+#>
+        [JsonExtensionData]
+<#
+        }
+		if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
+		{
+#>
+		[JsonProperty("<#= property.OriginalName #>")]
+<#		}
+
+		if(property.IsEnum)
+		{
+#>
+		[JsonConverter(typeof(StringEnumConverter))]
+<#		} #>
+        public <#= property.Type #> <#= property.Name #> { get; set; }
+<#
+	}
+#>
+
+    } // end class
+
+<#
+}
+
+
+foreach (var apiObject in model.ApiRequestObjects)
+{
+	if (!string.IsNullOrWhiteSpace(apiObject.Description))
+	{
+#>
+    /// <summary>
+    /// <#= XmlCommentHelper.Escape(apiObject.Description) #>
+    /// </summary>
+<#
+	}
+#>
+    public partial class <#= apiObject.Name #> : ApiRequest
+    {
+        public <#= apiObject.Name #>(<#= apiObject.ConstructorParams #>)
+        {
+<#
+        foreach (var property in apiObject.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+        {
+#>
+            this.<#= property.Name #> = <#= property.Name #>;
+<#
+        }
+#>
+        }
+
+<#
+	foreach (var property in apiObject.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
+	{
+    // this if a whitespace line to separate properties, do not delete !
+#>
+
+<#
+	    if (!string.IsNullOrWhiteSpace(property.Description))
+	    {
+#>
+        /// <summary>
+        /// <#= XmlCommentHelper.Escape(property.Description) #>
+        /// </summary>
+<#
+    	}
+#>
+        public <#= property.Type #> <#= property.Name #> { get; set; }
+<#
+	}
+
+#>
+
+    } // end class
+
+<#
+}
+
+
+foreach (var apiObject in model.ApiResponseObjects)
+{
+	if (!string.IsNullOrWhiteSpace(apiObject.Description))
+	{
+#>
+    /// <summary>
+    /// <#= XmlCommentHelper.Escape(apiObject.Description) #>
+    /// </summary>
+<#
+	}
+#>
+
+    public partial class <#= apiObject.Name #> : ApiResponse
+    {
+
+<#
+	foreach (var property in apiObject.Properties.Where(p => p != null && p.Type != null && p.Name != null && p.Name != "Content").ToArray())
+	{
+    // this if a whitespace line to separate properties, do not delete !
+#>
+
+<#
+	    if (!string.IsNullOrWhiteSpace(property.Description))
+	    {
+#>
+        /// <summary>
+        /// <#= XmlCommentHelper.Escape(property.Description) #>
+        /// </summary>
+<#
+    	}
+#>
+        public <#= property.Type #> <#= property.Name #> { get; set; }
+<#
+	}
+
+	var body = apiObject.Properties.FirstOrDefault(p => p.Name == "Content");
+	if (body != null)
+	{
+		if (body.Type.StartsWith("Multiple"))
+		{
+#>
+	    private <#= body.Type #> typedContent;
+        /// <summary>
+        /// Typed response content
+        /// </summary>
+        public <#= body.Type #> Content 
+	    {
+	        get
+	        {
+		        if (typedContent != null) 
+					return typedContent;
+
+		        typedContent = new <#= body.Type #>();
+
+                IEnumerable<string> values = new List<string>();
+                if (RawContent != null && RawContent.Headers != null)
+                    RawContent.Headers.TryGetValues("Content-Type", out values);
+
+                if (values.Any(hv => hv.ToLowerInvariant().Contains("xml")) &&
+                    !values.Any(hv => hv.ToLowerInvariant().Contains("json")))
+                {
+                    var task = RawContent.ReadAsStreamAsync();
+
+                    var xmlStream = task.GetAwaiter().GetResult();
+                    var content = new XmlSerializer(typedContent.GetTypeByStatusCode(StatusCode)).Deserialize(xmlStream);
+                    typedContent.SetPropertyByStatusCode(StatusCode, content);
+                }
+                else
+                {
+		            var task = RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode)).ConfigureAwait(false);
+		        
+		            var content = task.GetAwaiter().GetResult();
+                    typedContent.SetPropertyByStatusCode(StatusCode, content);
+                }
+
+		        return typedContent;
+	        }
+    	}  
+		
+		public static string GetSchema(HttpStatusCode statusCode)
+        {
+            return <#= body.Type #>.GetSchema(statusCode);
+        }      
+<#		
+		}
+		else
+		{
+#>
+
+	    private <#= body.Type #> typedContent;
+        /// <summary>
+        /// Typed Response content
+        /// </summary>
+        public <#= body.Type #> Content 
+    	{
+	        get
+	        {
+		        if (typedContent != null)
+			        return typedContent;
+
+                IEnumerable<string> values = new List<string>();
+                if (RawContent != null && RawContent.Headers != null)
+                    RawContent.Headers.TryGetValues("Content-Type", out values);
+
+                if (values.Any(hv => hv.ToLowerInvariant().Contains("xml")) &&
+                    !values.Any(hv => hv.ToLowerInvariant().Contains("json")))
+                {
+                    var task = RawContent.ReadAsStreamAsync();
+
+                    var xmlStream = task.GetAwaiter().GetResult();
+                    typedContent = (<#= body.Type #>)new XmlSerializer(typeof(<#= body.Type #>)).Deserialize(xmlStream);
+                }
+                else
+                {
+<#
+        if(apiObject.IsUnionType)
+        {
+#>
+                    typedContent = new <#= body.Type.StartsWith("IList") ? body.Type.Substring(1) : body.Type #>();
+
+                    try
+                    {
+                        var task = RawContent.ReadAsAsync<<#= body.Type.StartsWith("IList") ? body.Type.Substring(1) : body.Type #>>().ConfigureAwait(false);
+
+                        typedContent = task.GetAwaiter().GetResult();
+                        return typedContent;
+                    }
+                    catch (JsonSerializationException) { }
+
+                    var type = typedContent.GetType().IsGenericType
+                        ? typedContent.GetType().GetGenericArguments()[0]
+                        : typedContent.GetType();
+
+                    foreach (var prop in type.GetProperties())
+                    {
+                        try
+                        {
+                            var propertyType = prop.PropertyType;
+                            if (propertyType.IsInterface) // get List concrete type instead of interface
+                            {
+                                var typeName = "System.Collections.Generic.List`1[[" + propertyType.GetGenericArguments()[0] + "," + this.GetType().Assembly.FullName + "]]";
+                                propertyType = Type.GetType(typeName);
+                            }
+                            var task = RawContent.ReadAsAsync(propertyType).ConfigureAwait(false);
+
+                            var content = task.GetAwaiter().GetResult();
+                            if(content == null)
+                                continue;
+
+                            prop.SetValue(typedContent, content);
+                            return typedContent;
+                        }
+                        catch (JsonSerializationException) { }
+                    }
+<#
+        } else {
+#>
+                    var task =  RawContent.ReadAsAsync<<#= body.Type #>>().ConfigureAwait(false);
+		        
+		            typedContent = task.GetAwaiter().GetResult();
+<#      
+        } 
+#>
+                }
+		        return typedContent;
+	        }
+	    }
+
+		
+
+<#
+		}
+	}
+#>
+
+    } // end class
+
+<#
+}
+
+foreach (var apiEnum in model.Enums)
+{
+	if (!string.IsNullOrWhiteSpace(apiEnum.Description))
+	{
+#>
+    /// <summary>
+    /// <#= XmlCommentHelper.Escape(apiEnum.Description) #>
+    /// </summary>
+<#
+	}	
+#>
+	
+	public enum <#= apiEnum.Name #>
+	{
+<#
+	var i = 1;
+	foreach (var property in apiEnum.Values)
+	{
+#>
+		[JsonProperty("<#= property.OriginalName #>")]
+		<#= property.Name #><#= i < apiEnum.Values.Count() ? "," : string.Empty #>
+<#	
+		i++;
+	}
+#>
+    }
+
+<#
+}
+
+
+	if (model.Warnings.Any()){
+#>
+    // Unable to parse the following Schemas. Please note that JSON Schema version 4 is partially supported
+<#
+		foreach (var warning in model.Warnings)
+		{
+#>
+    // <#= warning.Key #> - <#= warning.Value #>
+<#
+		}
+    }
+#>
+
+} // end Models namespace

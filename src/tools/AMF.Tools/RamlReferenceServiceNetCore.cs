@@ -32,7 +32,8 @@ namespace AMF.Tools
                 var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
                 var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
 
-                AddPortableImports(proj);
+                if(VisualStudioAutomationHelper.IsJsonOrXProj(proj))
+                    AddPortableImports(proj);
 
                 InstallNugetDependencies(proj);
                 Logger.LogInformation("Nuget Dependencies installed");
@@ -77,11 +78,11 @@ namespace AMF.Tools
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
             TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath, "ClientCore");
-            GenerateCode(data, targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName);
+            GenerateCode(data, targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName, ramlProjItem);
         }
 
         public void GenerateCode(RamlInfo data, string targetNamespace, string clientRootClassName, string ramlDestFile, string destFolderPath,
-            string destFolderName)
+            string destFolderName, ProjectItem ramlProjItem)
         {
             //var ramlInfo = await RamlInfoService.GetRamlInfo(ramlDestFile);
             //if (ramlInfo.HasErrors)
@@ -111,6 +112,7 @@ namespace AMF.Tools
             var content = TemplatesManager.AddClientMetadataHeader(res.Content);
             var csTargetFile = Path.Combine(destFolderPath, destFolderName + ".cs");
             File.WriteAllText(csTargetFile, content);
+            ramlProjItem.ProjectItems.AddFromFile(csTargetFile);
         }
 
         private void AddPortableImports(Project proj)

@@ -160,6 +160,9 @@ namespace AMF.Tools.Core
                 return GetNetType("any", null);
             }
 
+            if (shape is UnionShape)
+                return "object";
+
             return NetNamingMapper.GetObjectName(shape.Name);
         }
 

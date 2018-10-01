@@ -54,9 +54,9 @@ namespace AMF.Tools.Core
 	        if (param.Schema == null)
                 return "string";
 	        
-            if(param.Schema is ScalarShape)
-	            return NewNetTypeMapper.GetNetType((ScalarShape)param.Schema) +
-	                   (NewNetTypeMapper.GetNetType((ScalarShape)param.Schema) == "string" || param.Required ? "" : "?");
+            if(param.Schema is ScalarShape scalar)
+	            return NewNetTypeMapper.GetNetType(scalar) +
+	                   (NewNetTypeMapper.GetNetType(scalar) == "string" || NewNetTypeMapper.GetNetType(scalar) == "object" || param.Required ? "" : "?");
 
             var pureType = param.Schema.Name;
 

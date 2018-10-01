@@ -47,9 +47,9 @@ namespace AMF.Tools.Core
             {
                 var description = ParserHelpers.RemoveNewLines(header.Description);
 
-                var shape = (ScalarShape)header.Schema;
+                var shape = (AnyShape)header.Schema;
                 var type = NewNetTypeMapper.GetNetType(shape);
-                var typeSuffix = (type == "string" || header.Required ? "" : "?");
+                var typeSuffix = (type == "string" || type == "object" || header.Required ? "" : "?");
 
                 properties.Add(new Property
                                {

@@ -102,14 +102,15 @@ namespace AMF.Tools.Core
                           || CollectionTypeHelper.GetCollectionType(m.Parameter.Type) == requestObj.Type) ));
         }
 
-        public bool IsUsedAsResponseInAnyMethod(IEnumerable<ClassObject> classes, ApiObject requestObj)
+        public bool IsUsedAsResponseInAnyMethod(IEnumerable<ClassObject> classes, ApiObject apiObj)
         {
-            return classes.Any(c => c.Methods.Any(m => m.ReturnType == requestObj.Type 
-            || m.ReturnType == CollectionTypeHelper.GetCollectionType(requestObj.Type) 
-            || CollectionTypeHelper.GetCollectionType(m.ReturnType) == requestObj.Type
+            return classes.Any(c => c.Methods.Any(m => m.ReturnType == apiObj.Type 
+            || m.ReturnType == CollectionTypeHelper.GetCollectionType(apiObj.Type) 
+            || CollectionTypeHelper.GetCollectionType(m.ReturnType) == apiObj.Type
+            || m.ReturnType == apiObj.Name
             || (m.ReturnTypeObject != null && m.ReturnTypeObject.Properties != null 
-            && m.ReturnTypeObject.Properties.Any(x => x.Type == requestObj.Type || x.Type == CollectionTypeHelper.GetCollectionType(requestObj.Type)
-            || CollectionTypeHelper.GetCollectionType(x.Type) == requestObj.Type) )));
+            && m.ReturnTypeObject.Properties.Any(x => x.Type == apiObj.Type || x.Type == CollectionTypeHelper.GetCollectionType(apiObj.Type)
+            || CollectionTypeHelper.GetCollectionType(x.Type) == apiObj.Type) )));
         }
 
         public bool IsUsedAsParameterInAnyMethod(IEnumerable<ClassObject> classes, ApiObject requestObj)

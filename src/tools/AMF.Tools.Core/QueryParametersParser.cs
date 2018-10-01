@@ -49,7 +49,7 @@ namespace AMF.Tools.Core
 			return properties;
 		}
 
-	    private string GetType(Parameter param) //TODO: check
+	    private string GetType(Parameter param)
 	    {
 	        if (param.Schema == null)
                 return "string";

@@ -19,6 +19,7 @@ namespace AMF.Common
         private const string UsesDirective = "uses:";
         private readonly IDictionary<string, Task<string>> downloadFileTasks = new Dictionary<string, Task<string>>();
         private readonly IDictionary<string, string> relativePaths = new Dictionary<string, string>();
+        private IDictionary<string, string> scopeFileToInclude = new Dictionary<string, string>();
 
         private HttpClient client;
         private readonly ICollection<string> includeSources = new Collection<string>();
@@ -38,6 +39,7 @@ namespace AMF.Common
         {
             string path;
             string[] lines;
+            scopeFileToInclude.Clear();
             var destinationFilePath = GetDestinationFilePath(Path.GetTempPath(), ramlSource);
 
             if (ramlSource.StartsWith("http"))
@@ -128,6 +130,10 @@ namespace AMF.Common
 
                 File.WriteAllText(writeToFilePath, string.Join(Environment.NewLine, lines).Trim());
             }
+            catch (UnauthorizedAccessException)
+            {
+                throw;
+            }
             catch (Exception)
             {
                 // This is intentional
@@ -166,6 +172,7 @@ namespace AMF.Common
 
                 includedFiles.Add(destinationFilePath);
                 scopeIncludedFiles.Add(destinationFilePath);
+                scopeFileToInclude.Add(destinationFilePath, includeSource);
             }
 
             // replace old include for new include
@@ -214,25 +221,25 @@ namespace AMF.Common
             if(destinationFilePath == fullPathIncludeSource)
                 return;
 
-            // copy file to dest folder
-            if (File.Exists(destinationFilePath) && confirmOvewrite)
-            {
-                var dialogResult = InstallerServices.ShowConfirmationDialog(Path.GetFileName(destinationFilePath));
-                if (dialogResult == MessageBoxResult.Yes)
-                {
-                    if (File.Exists(destinationFilePath))
-                        new FileInfo(destinationFilePath).IsReadOnly = false;
+            //// copy file to dest folder
+            //if (File.Exists(destinationFilePath) && confirmOvewrite)
+            //{
+            //    var dialogResult = InstallerServices.ShowConfirmationDialog(Path.GetFileName(destinationFilePath));
+            //    if (dialogResult == MessageBoxResult.Yes)
+            //    {
+            //        if (File.Exists(destinationFilePath))
+            //            new FileInfo(destinationFilePath).IsReadOnly = false;
 
-                    File.Copy(fullPathIncludeSource, destinationFilePath, true);
-                }
-            }
-            else
-            {
-                if (File.Exists(destinationFilePath))
-                    new FileInfo(destinationFilePath).IsReadOnly = false;
+            //        File.Copy(fullPathIncludeSource, destinationFilePath, true);
+            //    }
+            //}
+            //else
+            //{
+            //    if (File.Exists(destinationFilePath))
+            //        new FileInfo(destinationFilePath).IsReadOnly = false;
 
-                File.Copy(fullPathIncludeSource, destinationFilePath, true);
-            }
+            //    File.Copy(fullPathIncludeSource, destinationFilePath, true);
+            //}
         }
 
         private void ManageIncludedFiles(string destinationFolder, ICollection<string> includedFiles, string path, string relativePath,
@@ -249,7 +256,8 @@ namespace AMF.Common
                 if (relativePaths.ContainsKey(includedFile))
                     relativePath = relativePaths[includedFile];
 
-                var nestedFileLines = File.ReadAllLines(includedFile);
+                var fullPathIncludeSource = ResolveFullPath(path, relativePath, scopeFileToInclude[includedFile]);
+                var nestedFileLines = File.ReadAllLines(fullPathIncludeSource);
 
                 ManageNestedFiles(nestedFileLines, destinationFolder, includedFiles, path, relativePath, includedFile, confirmOvewrite, rootRamlPath, false);
             }

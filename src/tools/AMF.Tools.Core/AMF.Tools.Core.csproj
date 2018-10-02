@@ -65,7 +65,6 @@
     <Compile Include="Model\ApiEnum.cs" />
     <Compile Include="Model\ApiObject.cs" />
     <Compile Include="ApiObjectsCleaner.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="ClientGenerator\ApiRequestObjectsGenerator.cs" />
     <Compile Include="ClientGenerator\ApiResponseObjectsGenerator.cs" />
     <Compile Include="Model\Client\ClassObject.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="GeneratorServiceHelper.cs" />
     <Compile Include="HeadersParser.cs" />
     <Compile Include="MethodsGeneratorBase.cs" />
-    <Compile Include="NetTypeMapper.cs" />
     <Compile Include="NewNetTypeMapper.cs" />
     <Compile Include="ObjectParser.cs" />
     <Compile Include="ParametersMapper.cs" />
@@ -97,7 +95,6 @@
     <Compile Include="Model\PropertyBase.cs" />
     <Compile Include="QueryParametersParser.cs" />
     <Compile Include="RamlParserExtensions.cs" />
-    <Compile Include="RamlTypeParser.cs" />
     <Compile Include="RamlTypesHelper.cs" />
     <Compile Include="RequestTypesService.cs" />
     <Compile Include="ResponseTypesService.cs" />

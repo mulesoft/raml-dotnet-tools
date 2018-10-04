@@ -2,6 +2,7 @@
 using System.Linq;
 using AMF.Parser.Model;
 using AMF.Api.Core;
+using System.Text.RegularExpressions;
 
 namespace AMF.Tools.Core
 {
@@ -96,13 +97,13 @@ namespace AMF.Tools.Core
             IDictionary<string, ApiObject> newObjects = null, IDictionary<string, ApiEnum> existingEnums = null, IDictionary<string, ApiEnum> newEnums = null)
         {
             if (!string.IsNullOrWhiteSpace(shape.LinkTargetName))
-                return NetNamingMapper.GetObjectName(shape.LinkTargetName.Substring(shape.LinkTargetName.LastIndexOf('/') + 1));
+                return NetNamingMapper.GetObjectName(GetTypeFromLinkOrId(shape.LinkTargetName));
 
             if (shape is ScalarShape scalar)
             {
                 if(shape.Values != null && shape.Values.Any())
                 {
-                    var key = shape.Id.Substring(shape.Id.LastIndexOf('/') + 1);
+                    var key = GetTypeFromLinkOrId(shape.Id);
                     if (existingEnums != null && existingEnums.ContainsKey(key))
                         return existingEnums[key].Name;
                     if (newEnums != null && newEnums.ContainsKey(key))
@@ -118,7 +119,7 @@ namespace AMF.Tools.Core
 
             if (shape.Id.Contains("#/declarations"))
             {
-                var key = shape.Id.Substring(shape.Id.LastIndexOf('/') + 1);
+                var key = GetTypeFromLinkOrId(shape.Id);
                 if (existingObjects != null && (existingObjects.ContainsKey(key)
                     || existingObjects.Keys.Any(k => k.ToLowerInvariant() == key.ToLowerInvariant())))
                 {
@@ -164,6 +165,18 @@ namespace AMF.Tools.Core
                 return "object";
 
             return NetNamingMapper.GetObjectName(shape.Name);
+        }
+
+        private static string GetTypeFromLinkOrId(string linkOrId)
+        {
+            // workaround for rule exception??? in link target names in AMF js parser
+            var regex = new Regex("/linked_[0-9]{1}");
+            if (regex.IsMatch(linkOrId))
+            {
+                var name = regex.Replace(linkOrId, string.Empty);
+                return name.Substring(name.LastIndexOf('/') + 1);
+            }
+            return linkOrId.Substring(linkOrId.LastIndexOf('/') + 1);
         }
 
         public static string GetNetType(string type, string format)

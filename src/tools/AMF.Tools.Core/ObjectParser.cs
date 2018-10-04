@@ -163,9 +163,10 @@ namespace AMF.Tools.Core
                 if (array.Items is ScalarShape)
                     return prop;
 
-                prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(array.Name));
-
                 var itemType = NewNetTypeMapper.GetNetType(array.Items, existingObjects, newObjects, existingEnums, newEnums);
+
+                prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(itemType));
+
                 if (existingObjects.ContainsKey(itemType) || newObjects.ContainsKey(itemType))
                     return prop;
 

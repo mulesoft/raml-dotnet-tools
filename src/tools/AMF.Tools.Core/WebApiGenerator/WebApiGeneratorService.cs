@@ -81,14 +81,10 @@ namespace AMF.Tools.Core.WebApiGenerator
                         var newElements = new ObjectParser().ParseObject(GeneratorServiceHelper.GetKeyForResource(operation, endpoint) , payload.Schema, 
                             schemaObjects, warnings, enums, targetNamespace);
 
-                        foreach(var el in newElements.Item1)
-                            schemaRequestObjects.Add(el);
+                        foreach (var el in newElements.Item1)
+                            AddElement(el, schemaRequestObjects);
 
-                        foreach (var el in newElements.Item2)
-                        {
-                            if(!enums.ContainsKey(el.Key))
-                                enums.Add(el);
-                        }
+                        AddNewEnums(newElements.Item2);
                     }
                 }
             }

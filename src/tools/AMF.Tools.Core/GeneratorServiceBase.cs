@@ -89,6 +89,32 @@ namespace AMF.Tools.Core
             }
         }
 
+        protected void AddElement(KeyValuePair<string, ApiObject> newElement, IDictionary<string, ApiObject> objects)
+        {
+            if (objects.ContainsKey(newElement.Key))
+            {
+                if (UniquenessHelper.HasSameProperties(objects[newElement.Key], objects, newElement.Key,
+                    new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))
+                    return;
+
+                var apiObject = objects[newElement.Key];
+                var oldName = apiObject.Name;
+                apiObject.Name = UniquenessHelper.GetUniqueName(objects, apiObject.Name, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
+                var newKey = UniquenessHelper.GetUniqueKey(objects, newElement.Key, new Dictionary<string, ApiObject>());
+                objects.Add(newKey, apiObject);
+                objects.Remove(objects.First(o => o.Key == newElement.Key));
+                foreach (var apiObj in objects)
+                {
+                    foreach (var prop in apiObj.Value.Properties)
+                    {
+                        if (prop.Type == oldName)
+                            prop.Type = apiObject.Name;
+                    }
+                }
+            }
+            objects.Add(newElement.Key, newElement.Value);
+        }
+
         protected void CleanProperties(IDictionary<string, ApiObject> apiObjects)
         {
             var keys = apiObjects.Keys.ToList();
@@ -154,30 +180,7 @@ namespace AMF.Tools.Core
         protected void AddNewObjects(IDictionary<string, ApiObject> newObjects)
         {
             foreach (var newObj in newObjects)
-            {
-                if (schemaObjects.ContainsKey(newObj.Key))
-                {
-                    if (UniquenessHelper.HasSameProperties(schemaObjects[newObj.Key], schemaObjects, newObj.Key,
-                        new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))
-                        continue;
-
-                    var apiObject = schemaObjects[newObj.Key];
-                    var oldName = apiObject.Name;
-                    apiObject.Name = UniquenessHelper.GetUniqueName(schemaObjects, apiObject.Name, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
-                    var newKey = UniquenessHelper.GetUniqueKey(schemaObjects, newObj.Key, new Dictionary<string, ApiObject>());
-                    schemaObjects.Add(newKey, apiObject);
-                    schemaObjects.Remove(schemaObjects.First(o => o.Key == newObj.Key));
-                    foreach (var apiObj in schemaObjects)
-                    {
-                        foreach (var prop in apiObj.Value.Properties)
-                        {
-                            if (prop.Type == oldName)
-                                prop.Type = apiObject.Name;
-                        }
-                    }
-                }
-                schemaObjects.Add(newObj.Key, newObj.Value);
-            }
+                AddElement(newObj, schemaObjects);
         }
 
         protected string GetUniqueObjectName(Parser.Model.EndPoint resource, Parser.Model.EndPoint parent)

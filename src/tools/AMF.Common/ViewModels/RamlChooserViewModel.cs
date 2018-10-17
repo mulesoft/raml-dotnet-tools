@@ -6,6 +6,9 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using Microsoft.Win32;
 using AMF.Api.Core;
+using System.Net.Http;
+using System.Linq;
+using System.IO.Compression;
 
 namespace AMF.Common.ViewModels
 {
@@ -73,6 +76,80 @@ namespace AMF.Common.ViewModels
         public bool CanAddNewContract
         {
             get { return !string.IsNullOrWhiteSpace(Title); }
+        }
+
+        public async void AddExistingRamlFromExchange()
+        {
+            var exchangeBrowseViewModel = new ExchangeBrowserViewModel();
+            WindowManager.ShowDialog(exchangeBrowseViewModel);
+            var selectedAsset = exchangeBrowseViewModel.SelectedAsset;
+            if(selectedAsset != null)
+            {
+                var file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "raml");
+                if(file == null)
+                    file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "fat-raml");
+                if (file == null)
+                {
+                    MessageBox.Show("The selected REST API does not seem to have any RAML file associated");
+                    return;
+                }
+
+                var uri = file.ExternalLink;
+
+                var client = new HttpClient();
+                var byteArray = await client.GetByteArrayAsync(uri);
+                var assetName = NetNamingMapper.GetObjectName(selectedAsset.Name);
+                var zipPath = Path.Combine(Path.GetTempPath(), assetName  + ".zip");
+                File.WriteAllBytes(zipPath, byteArray);
+                var destinationFolder = Path.Combine(Path.GetTempPath(), assetName + DateTime.Now.Ticks);
+                ZipFile.ExtractToDirectory(zipPath, destinationFolder);
+
+                RamlTempFilePath = GetRamlPath(destinationFolder, file.MainFile, uri);
+                if (RamlTempFilePath == null)
+                {
+                    MessageBox.Show("Unable to determine main RAML file, please use the 'Upload' option to choose the right file from folder " + destinationFolder);
+                    return;
+                }
+
+                var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, RamlOriginalSource,
+                    Path.GetFileName(RamlTempFilePath), isContractUseCase);
+
+                try
+                {
+                    StartProgress();
+                    await previewViewModel.FromFile();
+                }
+                finally
+                {
+                    StopProgress();
+                }
+
+                ShowPreviewViewAndClose(previewViewModel);
+            }
+        }
+
+        public string GetRamlPath(string destinationFolder, string mainFile, string uri)
+        {
+            if (!string.IsNullOrWhiteSpace(mainFile))
+            {
+                var path = Path.Combine(destinationFolder, mainFile);
+                if(File.Exists(path))
+                    return path;
+            }
+
+            var fileName = Path.GetFileName(uri);
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                var path = Path.Combine(destinationFolder, fileName.Replace(".zip", string.Empty));
+                if(File.Exists(path))
+                    return path;
+            }
+
+            var files = Directory.GetFiles(destinationFolder, "*.raml");
+            if(files.Count() == 1 && File.Exists(files[0]))
+                return files[0];
+
+            return null;
         }
 
         public async void AddExistingRamlFromDisk()

@@ -9,7 +9,7 @@
 				 x:Name="RamlChooserWindow"
                  Background="Gainsboro"
 				 Width="600"
-                 d:DesignHeight="420"
+                 d:DesignHeight="620"
                  Height="{Binding Height}"
 				 ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
@@ -214,14 +214,46 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Upload a RAML/OAS file from your local machine"
-						   Style="{StaticResource DefaultLabel}"
-						   Grid.Column="0"
-                           />
-                    <Button     Style="{StaticResource DefaultButton}"
+                    <Button Grid.Column="0"
+                            Style="{StaticResource BigButton}"
+							x:Name="AddExistingRamlFromExchange">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image Source="images\exchange.png" Grid.Row="0" Stretch="None"></Image>
+                            <Label Content="Exchange" Grid.Row="1" Style="{StaticResource MainButttonLabel}"></Label>
+                            <TextBlock Text="Browse APIs on the Anypoint Exchange" Grid.Row="2" Style="{StaticResource SecondaryButtonLabel}" Margin="5,8,5,2"></TextBlock>
+                        </Grid>
+                    </Button>
+
+
+                    <Button 
+                                Style="{StaticResource BigButton}"
 								Grid.Column="2"
-                                Content="Upload"
-								x:Name="AddExistingRamlFromDisk" />
+								x:Name="AddExistingRamlFromDisk" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image Source="images\upload.png" Grid.Row="0" Stretch="None"></Image>
+                            <Label Content="Upload" Grid.Row="1" Style="{StaticResource MainButttonLabel}"></Label>
+                            <TextBlock Text="Upload a RAML file from your local machine"
+						   Style="{StaticResource SecondaryButtonLabel}"
+						   Grid.Row="2"
+                           />
+
+                        </Grid>
+
+                    </Button>
+
+
+
+
                 </Grid>
 
 

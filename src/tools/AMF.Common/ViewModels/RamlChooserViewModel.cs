@@ -85,9 +85,9 @@ namespace AMF.Common.ViewModels
             var selectedAsset = exchangeBrowseViewModel.SelectedAsset;
             if(selectedAsset != null)
             {
-                var file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "raml");
+                var file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "fat-raml");
                 if(file == null)
-                    file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "fat-raml");
+                    file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "raml");
                 if (file == null)
                 {
                     MessageBox.Show("The selected REST API does not seem to have any RAML file associated");

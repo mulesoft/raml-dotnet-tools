@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 
@@ -21,6 +25,7 @@ namespace AMF.Common.ViewModels
         public ExchangeBrowserViewModel()
         {
             Title = "Select a REST API";
+            Mouse.OverrideCursor = Cursors.Wait;
         }
 
         protected override void OnViewReady(object view)
@@ -40,7 +45,7 @@ namespace AMF.Common.ViewModels
         }
 
         public ExchangeAsset SelectedAsset { get; set; }
-        public void OnSelectionChangedAction(object sender, SelectionChangedEventArgs e, object dataContext)
+        public void OnSelectionChangedAction(SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count != 1)
                 return;
@@ -70,6 +75,7 @@ namespace AMF.Common.ViewModels
             var response = await client.GetAsync(url + "?type=rest-api");
             var content = await response.Content.ReadAsStringAsync();
             Assets = new ObservableCollection<ExchangeAsset>(new JavaScriptSerializer().Deserialize<List<ExchangeAsset>>(content));
+            Mouse.OverrideCursor = null;
         }
 
         public class ExchangeAsset
@@ -79,6 +85,14 @@ namespace AMF.Common.ViewModels
             public string Name { get; set; }
             public string Description { get; set; }
             public IEnumerable<File> Files { get; set; }
+            public ExchangeOrganization Organization { get; set; }
+            public string Link { get { return "https://anypoint.mulesoft.com/exchange/" + GroupId + "/" + AssetId; } }
+            public string OrganizationName { get { return Organization?.Name; } }
+        }
+
+        public class ExchangeOrganization
+        {
+            public string Name { get; set; }
         }
 
         public class File

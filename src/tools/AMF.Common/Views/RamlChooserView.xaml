@@ -223,7 +223,7 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Image Source="images\exchange.png" Grid.Row="0" Stretch="None"></Image>
+                            <Image Source="../images/exchange.png" Grid.Row="0" Stretch="None"></Image>
                             <Label Content="Exchange" Grid.Row="1" Style="{StaticResource MainButttonLabel}"></Label>
                             <TextBlock Text="Browse APIs on the Anypoint Exchange" Grid.Row="2" Style="{StaticResource SecondaryButtonLabel}" Margin="5,8,5,2"></TextBlock>
                         </Grid>
@@ -240,7 +240,7 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Image Source="images\upload.png" Grid.Row="0" Stretch="None"></Image>
+                            <Image Source="../images/upload.png" Grid.Row="0" Stretch="None"></Image>
                             <Label Content="Upload" Grid.Row="1" Style="{StaticResource MainButttonLabel}"></Label>
                             <TextBlock Text="Upload a RAML file from your local machine"
 						   Style="{StaticResource SecondaryButtonLabel}"

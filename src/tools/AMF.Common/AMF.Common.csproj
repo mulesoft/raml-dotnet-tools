@@ -214,9 +214,9 @@
     <Compile Include="VisualStudioAutomationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\exchange.png" />
-    <Content Include="images\RAML.png" />
-    <Content Include="images\upload.png" />
+    <Resource Include="images\exchange.png" />
+    <Resource Include="images\RAML.png" />
+    <Resource Include="images\upload.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

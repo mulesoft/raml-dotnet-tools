@@ -111,7 +111,7 @@ namespace AMF.Common.ViewModels
                     return;
                 }
 
-                var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, RamlOriginalSource,
+                var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, RamlTempFilePath,
                     Path.GetFileName(RamlTempFilePath), isContractUseCase);
 
                 try

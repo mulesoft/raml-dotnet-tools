@@ -408,15 +408,12 @@
     </Content>
     <Content Include="node_modules\fast-json-stable-stringify\benchmark\index.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="node_modules\fast-json-stable-stringify\example\key_cmp.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="node_modules\fast-json-stable-stringify\example\nested.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="node_modules\fast-json-stable-stringify\index.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -428,11 +425,9 @@
     </Content>
     <Content Include="node_modules\json-schema-traverse\spec\fixtures\schema.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="node_modules\json-schema-traverse\spec\index.spec.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="node_modules\parser.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -626,10 +621,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\fast-json-stable-stringify\benchmark\test.json">
+    <None Include="node_modules\fast-json-stable-stringify\benchmark\test.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
+    </None>
     <Content Include="node_modules\fast-json-stable-stringify\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -771,8 +765,8 @@
     <Reference Include="AMF.Api.Core, Version=0.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AMF.Api.Core.0.9.10\lib\net45\AMF.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="AMF.Parser, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Parser.0.9.1-beta\lib\net462\AMF.Parser.dll</HintPath>
+    <Reference Include="AMF.Parser, Version=0.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Parser.0.9.2\lib\net462\AMF.Parser.dll</HintPath>
     </Reference>
     <Reference Include="Analytics.NET, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Analytics.3.0.0\lib\Analytics.NET.dll</HintPath>

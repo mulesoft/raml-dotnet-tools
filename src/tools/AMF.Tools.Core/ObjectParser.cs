@@ -18,7 +18,7 @@ namespace AMF.Tools.Core
         private string targetNamespace;
 
         public Tuple<IDictionary<string, ApiObject>,IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, IDictionary<string, ApiObject> existingObjects, 
-            IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, string targetNamespace)
+            IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, string targetNamespace, bool isType = false)
         {
             this.existingObjects = existingObjects;
             this.existingEnums = existingEnums;
@@ -28,7 +28,7 @@ namespace AMF.Tools.Core
             if (shape is ScalarShape scalar && scalar.Values != null && scalar.Values.Any())
                 return ParseEnum(warnings, existingEnums, scalar);
 
-            return ParseObject(key, shape, existingObjects);
+            return ParseObject(key, shape, existingObjects, isType);
         }
 
         private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseEnum(IDictionary<string, string> warnings, 
@@ -40,7 +40,7 @@ namespace AMF.Tools.Core
         }
 
         private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, 
-            IDictionary<string, ApiObject> existingObjects)
+            IDictionary<string, ApiObject> existingObjects, bool isType)
         {
             var apiObj = new ApiObject
             {
@@ -54,11 +54,10 @@ namespace AMF.Tools.Core
                 Example = MapExample(shape)
             };
 
-            apiObj.Properties = MapProperties(shape, apiObj.Name).ToList();
-
-            if (apiObj.IsArray)
+            if (isType && apiObj.IsArray)
                 apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
 
+            apiObj.Properties = MapProperties(shape, apiObj.Name).ToList();
 
             if (existingObjects.Values.Any(o => o.Name == apiObj.Name))
             {

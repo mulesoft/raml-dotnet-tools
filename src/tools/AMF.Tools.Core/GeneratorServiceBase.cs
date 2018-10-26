@@ -156,7 +156,7 @@ namespace AMF.Tools.Core
 
                 var key = shape.Name;
 
-                var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace);
+                var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace, true);
 
                 AddNewElements(newElements);
             }

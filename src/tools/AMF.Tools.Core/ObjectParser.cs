@@ -56,6 +56,10 @@ namespace AMF.Tools.Core
 
             apiObj.Properties = MapProperties(shape, apiObj.Name).ToList();
 
+            if (apiObj.IsArray)
+                apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
+
+
             if (existingObjects.Values.Any(o => o.Name == apiObj.Name))
             {
                 if (UniquenessHelper.HasSameProperties(apiObj, existingObjects, key, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))

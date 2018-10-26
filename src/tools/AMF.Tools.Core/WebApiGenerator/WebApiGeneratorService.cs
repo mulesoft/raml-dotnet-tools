@@ -121,28 +121,21 @@ namespace AMF.Tools.Core.WebApiGenerator
 
                 var fullUrl = resource.Path;
 
-                //// when the resource is a parameter dont generate a class but add it's methods and children to the parent
-                //if (resource.Path.StartsWith("/{") && resource.Path.EndsWith("}"))
-                //{
-                //    AddMethodsToRootController(classes, classesNames, classesObjectsRegistry, resource, fullUrl, rootController, parentUriParameters);
-                    
-                //    //GetMethodsFromChildResources(resource.Resources, fullUrl, rootController, resource.UriParameters);
-                //}
-                //else
-                //{
-                    var isParentController = fullUrl.Count(u => u == '/') == 1;
-                    if (isParentController)
-                    {
-                        var controller = CreateControllerAndAddMethods(classes, classesNames, classesObjectsRegistry, resource, fullUrl, parentUriParameters);
-                    }
+                var isParentController = fullUrl.Count(u => u == '/') == 1;
+                if (isParentController)
+                {
+                    CreateControllerAndAddMethods(classes, classesNames, classesObjectsRegistry, resource, fullUrl, parentUriParameters);
+                }
+                else
+                {
+                    var parentController = classes.FirstOrDefault(c => c.PrefixUri.StartsWith("/")
+                                                            ? resource.Path.StartsWith(c.PrefixUri)
+                                                            : resource.Path.StartsWith("/" + c.PrefixUri));
+                    if(parentController != null)
+                        GetMethodsFromChildResources(resource, fullUrl, parentController, parentUriParameters);
                     else
-                    {
-                        var parentController = classes.First(c => c.PrefixUri.StartsWith("/")
-                                                                ? resource.Path.StartsWith(c.PrefixUri)
-                                                                : resource.Path.StartsWith("/" + c.PrefixUri));
-                        GetMethodsFromChildResources(resource, fullUrl, parentController, parentUriParameters); //TODO: check parentUriParameters
-                    }
-                //}
+                        CreateControllerAndAddMethods(classes, classesNames, classesObjectsRegistry, resource, fullUrl, parentUriParameters);
+                }
             }
         }
 

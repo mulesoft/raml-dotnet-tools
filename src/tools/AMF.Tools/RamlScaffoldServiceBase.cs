@@ -305,7 +305,15 @@ namespace AMF.Tools
             if (model.Objects.Any(o => !string.IsNullOrWhiteSpace(o.GeneratedCode)))
                 models = model.Objects.Where(o => o.Properties.Any() || !string.IsNullOrWhiteSpace(o.GeneratedCode));
 
-            models = models.Where(o => !o.IsArray || o.Type == null); // skip array of primitives
+            // when array has no properties, set it collection on base type
+            foreach(var arrayModel in models.Where(o => o.IsArray && o.Properties.Count == 0 && o.Type != null 
+                            && CollectionTypeHelper.IsCollection(o.Type) && !NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(o.Type))))
+            {
+                arrayModel.BaseClass = arrayModel.Type.Substring(1); // remove the initil "I" to make it a concrete class
+            }
+            // skip array of primitives
+            models = models.Where(o => o.Type == null || !(CollectionTypeHelper.IsCollection(o.Type) 
+                                            && NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(o.Type))));
             models = models.Where(o => !o.IsScalar); // skip scalar types
 
             var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);

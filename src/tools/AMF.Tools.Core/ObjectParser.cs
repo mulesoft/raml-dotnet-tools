@@ -18,7 +18,7 @@ namespace AMF.Tools.Core
         private string targetNamespace;
 
         public Tuple<IDictionary<string, ApiObject>,IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, IDictionary<string, ApiObject> existingObjects, 
-            IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, string targetNamespace, bool isType = false)
+            IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, string targetNamespace, bool isRootType = false)
         {
             this.existingObjects = existingObjects;
             this.existingEnums = existingEnums;
@@ -28,7 +28,7 @@ namespace AMF.Tools.Core
             if (shape is ScalarShape scalar && scalar.Values != null && scalar.Values.Any())
                 return ParseEnum(warnings, existingEnums, scalar);
 
-            return ParseObject(key, shape, existingObjects, isType);
+            return ParseObject(key, shape, existingObjects, isRootType);
         }
 
         private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseEnum(IDictionary<string, string> warnings, 
@@ -40,7 +40,7 @@ namespace AMF.Tools.Core
         }
 
         private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, 
-            IDictionary<string, ApiObject> existingObjects, bool isType)
+            IDictionary<string, ApiObject> existingObjects, bool isRootType)
         {
             var apiObj = new ApiObject
             {
@@ -54,7 +54,7 @@ namespace AMF.Tools.Core
                 Example = MapExample(shape)
             };
 
-            if (isType && apiObj.IsArray)
+            if (isRootType && apiObj.IsArray)
                 apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
 
             apiObj.Properties = MapProperties(shape, apiObj.Name).ToList();
@@ -169,6 +169,12 @@ namespace AMF.Tools.Core
                 var itemType = NewNetTypeMapper.GetNetType(array.Items, existingObjects, newObjects, existingEnums, newEnums);
 
                 prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(itemType));
+
+                if(array.Items is NodeShape && itemType == "Items")
+                {
+                    itemType = NetNamingMapper.GetObjectName(array.Name);
+                    prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(array.Name));
+                }
 
                 if (existingObjects.ContainsKey(itemType) || newObjects.ContainsKey(itemType))
                     return prop;

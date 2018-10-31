@@ -10,8 +10,8 @@
 				 x:Name="RamlChooserWindow"
                  Background="Gainsboro"
 				 Width="600"
-                 d:DesignHeight="420"
-                 Height="{Binding Height}"
+                 d:DesignHeight="470"
+                 Height="470"
 				 ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -141,23 +141,37 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-
-            <Label Content="Select an API"
-							Style="{StaticResource DefaultLabel}"
-                            Margin="0,4,0,4"
-                            Grid.Column="1" 
-                            Grid.Row="0" />
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="190" />
+                    <ColumnDefinition Width="90" />
+                </Grid.ColumnDefinitions>
+                
+                <Label Content="Select an API"
+							FontWeight="Bold"
+                            Margin="0,10,0,2"
+                            Grid.Column="0" />
+                <TextBox x:Name="SearchText" Grid.Column="1" Width="180" Style="{StaticResource DefaultTextBox}" />
+                <Button Content="Search"
+                        x:Name="Search"
+                        Grid.Column="2"
+                        Style="{StaticResource Button}"
+                        Width="68"
+                        Height="30" />
+            </Grid>
 
             <DataGrid ItemsSource="{Binding Assets}" AutoGenerateColumns="False"  IsReadOnly="True"
-                      Grid.Column="1" Height="302" Margin="0,35,0,0" Grid.RowSpan="3" VerticalAlignment="Top"
+                      Grid.Row="1"
+                      Grid.Column="1" Height="302" Margin="0,10" Grid.RowSpan="3" VerticalAlignment="Top"
                       cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChangedAction($eventArgs)]">
                 <DataGrid.Resources>
                     <sys:String x:Key="moreInfo">Open in Browser</sys:String>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Version" Binding="{Binding Version}" />
                     <DataGridTextColumn Header="Organization" Binding="{Binding OrganizationName}" />
-                    <DataGridTextColumn Width="*" Header="Description" Binding="{Binding Description}" />
                     <DataGridHyperlinkColumn Header="More Info" Binding="{Binding Link}" ContentBinding="{Binding Source={StaticResource moreInfo}}">
                         <DataGridHyperlinkColumn.ElementStyle>
                             <Style>
@@ -177,14 +191,14 @@
                         x:Name="Select" 
                         Grid.Column="0"
                         IsEnabled="{Binding Path=SelectEnabled}" 
-                        Style="{StaticResource Button}"
+                        Style="{StaticResource DefaultButton}"
                         Width="68"
                         Height="35" />
 
                 <Button Content="Cancel"
 									x:Name="Cancel"
-									Style="{StaticResource Button}"
 									Grid.Column="1"
+                                    Style="{StaticResource Button}"
                                     Width="68"
                                     Height="35" />
             </Grid>

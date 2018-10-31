@@ -19,8 +19,11 @@ namespace AMF.Common.ViewModels
     {
         static HttpClient client = new HttpClient();
         private readonly string url = "https://anypoint.mulesoft.com/exchange/api/v1/assets";
+        private readonly string DefaultQueryString = "type=rest-api&limit=" + AssetsLimit;
+        private static readonly short AssetsLimit = 100;
 
         public string Title { get; set; }
+        public string SearchText { get; set; }
 
         public ExchangeBrowserViewModel()
         {
@@ -70,9 +73,14 @@ namespace AMF.Common.ViewModels
             }
         }
 
-        private async Task GetProductsAsync()
+        private async Task GetProductsAsync(string search = null)
         {
-            var response = await client.GetAsync(url + "?type=rest-api");
+            Mouse.OverrideCursor = Cursors.Wait;
+            var requestUri = url + "?" + DefaultQueryString;
+            if (!string.IsNullOrWhiteSpace(search))
+                requestUri += "&search=" + System.Uri.EscapeUriString(search);
+
+            var response = await client.GetAsync(requestUri);
             var content = await response.Content.ReadAsStringAsync();
             Assets = new ObservableCollection<ExchangeAsset>(new JavaScriptSerializer().Deserialize<List<ExchangeAsset>>(content));
             Mouse.OverrideCursor = null;
@@ -84,6 +92,7 @@ namespace AMF.Common.ViewModels
             public string AssetId { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
+            public string Version { get; set; }
             public IEnumerable<File> Files { get; set; }
             public ExchangeOrganization Organization { get; set; }
             public string Link { get { return "https://anypoint.mulesoft.com/exchange/" + GroupId + "/" + AssetId; } }
@@ -101,6 +110,14 @@ namespace AMF.Common.ViewModels
             public string Packaging { get; set; } // ": "zip",
             public string ExternalLink { get; set; } // ": "https://exchange2-asset-manager.s3.amazonaws.com/d83b3280-4ea8-4c3b-a8a2-ec6e589574f4/97a76ab9-3639-4002-9b84-bb6b751860d3/carlos-1.0.0-fat-raml.zip?AWSAccessKeyId=AKIAI5ZXWOH2ORZHJPTQ&Expires=1510926241&Signature=xOE%2BHrUE7ssYwYq259LQRdXQveY%3D&response-content-disposition=attachment%3B%20filename%3Dcarlos-1.0.0-raml.zip",
             public string MainFile { get; set; }
+        }
+
+        public async void Search()
+        {
+            if (string.IsNullOrWhiteSpace(SearchText))
+                return;
+
+            await GetProductsAsync(SearchText);
         }
 
         public void Select()

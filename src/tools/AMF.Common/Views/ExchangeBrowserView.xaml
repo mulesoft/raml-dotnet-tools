@@ -7,15 +7,17 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
 				 x:Class="AMF.Common.Views.ExchangeBrowserView"
-				 x:Name="RamlChooserWindow"
+				 Title="Exchange"
                  Background="Gainsboro"
 				 Width="600"
-                 d:DesignHeight="470"
-                 Height="470"
+                 d:DesignHeight="520"
+                 Height="520"
 				 ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
 
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        
         <Style x:Key="DefaultLabel"
 			   TargetType="{x:Type Label}">
             <Setter Property="FontSize" Value="13"></Setter>
@@ -137,6 +139,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
@@ -144,26 +147,49 @@
             <Grid Grid.Column="1" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="190" />
                     <ColumnDefinition Width="90" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Label Content="Select an API"
 							FontWeight="Bold"
                             Margin="0,10,0,2"
                             Grid.Column="0" />
-                <TextBox x:Name="SearchText" Grid.Column="1" Width="180" Style="{StaticResource DefaultTextBox}" />
+                
+                <Button Content="Login"
+                        x:Name="Login"
+                        Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BoolToVis}}"
+                        Grid.Column="1"
+                        Style="{StaticResource Button}"
+                        Width="68"
+                        Height="30" />
+
+                <StackPanel Grid.Column="1" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}">
+                    <Label Content="Username"
+                        Style="{StaticResource DefaultLabel}" />
+                    <Label Content="{Binding Path=Username}"
+                        Style="{StaticResource DefaultLabel}" />
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="190" />
+                    <ColumnDefinition Width="90" />
+                </Grid.ColumnDefinitions>
+                
+                <TextBox x:Name="SearchText" Grid.Column="0" Width="180" Style="{StaticResource DefaultTextBox}" />
                 <Button Content="Search"
                         x:Name="Search"
-                        Grid.Column="2"
+                        Grid.Column="1"
                         Style="{StaticResource Button}"
                         Width="68"
                         Height="30" />
             </Grid>
 
             <DataGrid ItemsSource="{Binding Assets}" AutoGenerateColumns="False"  IsReadOnly="True"
-                      Grid.Row="1"
-                      Grid.Column="1" Height="302" Margin="0,10" Grid.RowSpan="3" VerticalAlignment="Top"
+                      Grid.Row="2"
+                      Grid.Column="1" Height="302" Margin="0,10" VerticalAlignment="Top"
                       cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChangedAction($eventArgs)]">
                 <DataGrid.Resources>
                     <sys:String x:Key="moreInfo">Open in Browser</sys:String>
@@ -182,7 +208,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Grid Grid.Column="1" Grid.Row="2">
+            <Grid Grid.Column="1" Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -197,7 +223,7 @@
 
                 <Button Content="Cancel"
 									x:Name="Cancel"
-									Grid.Column="1"
+									Grid.Column="2"
                                     Style="{StaticResource Button}"
                                     Width="68"
                                     Height="35" />

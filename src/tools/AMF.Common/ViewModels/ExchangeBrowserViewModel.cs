@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using Caliburn.Micro;
-using Newtonsoft.Json;
 
 namespace AMF.Common.ViewModels
 {
     public class ExchangeBrowserViewModel : Screen
     {
         static HttpClient client = new HttpClient();
-        private readonly string url = "https://anypoint.mulesoft.com/exchange/api/v1/assets";
+        private static readonly string BaseUrl = "https://anypoint.mulesoft.com";
+        private readonly string AssetsUrl = BaseUrl + "/exchange/api/v1/assets";
         private readonly string DefaultQueryString = "type=rest-api&limit=" + AssetsLimit;
         private static readonly short AssetsLimit = 100;
 
@@ -53,7 +49,7 @@ namespace AMF.Common.ViewModels
             if (e.AddedItems.Count != 1)
                 return;
 
-            var selected =  e.AddedItems[0] as ExchangeAsset;
+            var selected = e.AddedItems[0] as ExchangeAsset;
             if (selected == null)
                 return;
 
@@ -63,6 +59,8 @@ namespace AMF.Common.ViewModels
         }
 
         private bool selectEnabled;
+        private string accesToken;
+
         public bool SelectEnabled
         {
             get => selectEnabled;
@@ -76,14 +74,56 @@ namespace AMF.Common.ViewModels
         private async Task GetProductsAsync(string search = null)
         {
             Mouse.OverrideCursor = Cursors.Wait;
-            var requestUri = url + "?" + DefaultQueryString;
+            var requestUri = AssetsUrl + "?" + DefaultQueryString;
             if (!string.IsNullOrWhiteSpace(search))
-                requestUri += "&search=" + System.Uri.EscapeUriString(search);
+                requestUri += "&search=" + Uri.EscapeUriString(search);
 
-            var response = await client.GetAsync(requestUri);
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            if (!string.IsNullOrWhiteSpace(AccessToken))
+            {
+                //requestUri += "&access_token=" + AccessToken;
+                request.Headers.Add("Authorization", "Bearer " + AccessToken);
+                // request.Headers.Add("Username/Password", "Authentication");
+            }
+            var response = await client.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
             Assets = new ObservableCollection<ExchangeAsset>(new JavaScriptSerializer().Deserialize<List<ExchangeAsset>>(content));
             Mouse.OverrideCursor = null;
+        }
+
+        public string Username { get; set; }
+        public string AccessToken
+        {
+            get => accesToken; set
+            {
+                accesToken = value;
+                NotifyOfPropertyChange(() => AccessToken);
+                NotifyOfPropertyChange(() => IsLoggedIn);
+                NotifyOfPropertyChange(() => IsNotLoggedIn);
+            }
+        }
+
+        public bool IsLoggedIn
+        {
+            get => !string.IsNullOrWhiteSpace(AccessToken);
+        }
+
+        public bool IsNotLoggedIn
+        {
+            get => !IsLoggedIn;
+        }
+
+        public async void Login()
+        {
+            var loginViewModel = new LoginViewModel();
+            WindowManager.ShowDialog(loginViewModel);
+
+            if (loginViewModel.Token != null)
+            {
+                AccessToken = loginViewModel.Token;
+                Username = loginViewModel.Username;
+                await GetProductsAsync(SearchText); //reload with token
+            }
         }
 
         public class ExchangeAsset
@@ -122,7 +162,7 @@ namespace AMF.Common.ViewModels
 
         public void Select()
         {
-            if(SelectedAsset != null)
+            if (SelectedAsset != null)
                 TryClose();
         }
 
@@ -131,5 +171,27 @@ namespace AMF.Common.ViewModels
             SelectedAsset = null;
             TryClose();
         }
+
+        private IWindowManager windowManager;
+
+        private IWindowManager WindowManager
+        {
+            get
+            {
+                if (windowManager != null)
+                    return windowManager;
+
+                try
+                {
+                    windowManager = IoC.Get<IWindowManager>();
+                }
+                catch
+                {
+                    windowManager = new WindowManager();
+                }
+                return windowManager;
+            }
+        }
+
     }
 }

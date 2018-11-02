@@ -198,6 +198,7 @@
     <Compile Include="ViewModels\ExchangeBrowserViewModel.cs" />
     <Compile Include="ViewModels\RamlChooserViewModel.cs" />
     <Compile Include="ViewModels\RamlPreviewViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RamlPropertiesEditorViewModel.cs" />
     <Compile Include="Views\ExchangeBrowserView.xaml.cs">
       <DependentUpon>ExchangeBrowserView.xaml</DependentUpon>
@@ -207,6 +208,9 @@
     </Compile>
     <Compile Include="Views\RamlPreviewView.xaml.cs">
       <DependentUpon>RamlPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RamlPropertiesEditorView.xaml.cs">
       <DependentUpon>RamlPropertiesEditorView.xaml</DependentUpon>
@@ -240,6 +244,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\RamlPreviewView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

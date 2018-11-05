@@ -149,6 +149,10 @@ namespace AMF.Common.ViewModels
             if(files.Count() == 1 && File.Exists(files[0]))
                 return files[0];
 
+            var defaultPath = Path.Combine(destinationFolder, "api.raml");
+            if (File.Exists(defaultPath))
+                return defaultPath;
+
             return null;
         }
 

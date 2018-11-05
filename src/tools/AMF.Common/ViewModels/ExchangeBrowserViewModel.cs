@@ -59,7 +59,7 @@ namespace AMF.Common.ViewModels
         }
 
         private bool selectEnabled;
-        private string accesToken;
+        private static string accesToken;
 
         public bool SelectEnabled
         {
@@ -81,9 +81,7 @@ namespace AMF.Common.ViewModels
             var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
             if (!string.IsNullOrWhiteSpace(AccessToken))
             {
-                //requestUri += "&access_token=" + AccessToken;
                 request.Headers.Add("Authorization", "Bearer " + AccessToken);
-                // request.Headers.Add("Username/Password", "Authentication");
             }
             var response = await client.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
@@ -91,7 +89,18 @@ namespace AMF.Common.ViewModels
             Mouse.OverrideCursor = null;
         }
 
-        public string Username { get; set; }
+        private static string username;
+        public string Username
+        {
+            get => username;
+
+            set
+            {
+                username = value;
+                NotifyOfPropertyChange(() => Username);
+            }
+        }
+
         public string AccessToken
         {
             get => accesToken; set

@@ -331,7 +331,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.2.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.2")]
         public string AMFNetCoreApiCorePackageVersion {
             get {
                 return ((string)(this["AMFNetCoreApiCorePackageVersion"]));

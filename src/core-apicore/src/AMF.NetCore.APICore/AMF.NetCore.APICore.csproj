@@ -4,7 +4,6 @@
     <Description>Core API support classes for the RAML tools package</Description>
     <Copyright>MuleSoft Inc</Copyright>
     <AssemblyTitle>RAML.NetCore.APICore</AssemblyTitle>
-    <VersionPrefix>0.0.1</VersionPrefix>
     <Authors>MuleSoft Inc</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>AMF.NetCore.APICore</AssemblyName>
@@ -18,6 +17,7 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

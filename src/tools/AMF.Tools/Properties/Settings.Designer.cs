@@ -88,7 +88,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.9.10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9.11")]
         public string RAMLApiCorePackageVersion {
             get {
                 return ((string)(this["RAMLApiCorePackageVersion"]));
@@ -317,6 +317,24 @@ namespace AMF.Tools.Properties {
         public string RamlParserExpressionsPackageVersion {
             get {
                 return ((string)(this["RamlParserExpressionsPackageVersion"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AMF.NetCore.APICore")]
+        public string AMFNetCoreApiCorePackageId {
+            get {
+                return ((string)(this["AMFNetCoreApiCorePackageId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.2.0")]
+        public string AMFNetCoreApiCorePackageVersion {
+            get {
+                return ((string)(this["AMFNetCoreApiCorePackageVersion"]));
             }
         }
     }

@@ -219,10 +219,10 @@ namespace AMF.Tools.Core
             return TypeStringConversion.Any(t => t.Value == type) || TypeStringConversion.ContainsKey(type);
         }
 
-        private static readonly string[] NullableTypes = new string[] { "int", "long", "double", "short", "byte", "float", "bool" };
+        private static readonly string[] NotNullableTypes = new string[] { "int", "long", "double", "short", "byte", "float", "bool", "DateTime" };
         public static bool IsNullableType(string type)
         {
-            return !NullableTypes.Contains(type);
+            return !NotNullableTypes.Contains(type);
         }
 
     }

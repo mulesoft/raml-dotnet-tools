@@ -89,7 +89,9 @@ namespace AMF.Api.Core
             validnamespace = validnamespace.Replace("(", string.Empty);
             validnamespace = validnamespace.Replace(")", string.Empty);
             validnamespace = validnamespace.Replace("|", string.Empty);
-			return validnamespace;
+            validnamespace = validnamespace.Replace("%", string.Empty);
+            validnamespace = validnamespace.Replace("=", string.Empty);
+            return validnamespace;
 		}
 
 		public static bool HasIndalidChars(string input)
@@ -150,7 +152,9 @@ namespace AMF.Api.Core
 		        .Replace("]", string.Empty)
 		        .Replace("(", string.Empty)
 		        .Replace(")", string.Empty)
-		        .Replace("|", string.Empty);
+		        .Replace("|", string.Empty)
+                .Replace("%", string.Empty)
+                .Replace("=", string.Empty);
 
             propName = propName.Replace("+", "Plus");
             propName = propName.Replace(".", "Dot");

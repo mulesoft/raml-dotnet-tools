@@ -89,6 +89,8 @@ namespace AMF.Common
             validnamespace = validnamespace.Replace("(", string.Empty);
             validnamespace = validnamespace.Replace(")", string.Empty);
             validnamespace = validnamespace.Replace("|", string.Empty);
+            validnamespace = validnamespace.Replace("%", string.Empty);
+            validnamespace = validnamespace.Replace("=", string.Empty);
             validnamespace = ReplaceSpecialChars(validnamespace, "-");
             return validnamespace;
 		}
@@ -151,7 +153,9 @@ namespace AMF.Common
 		        .Replace("]", string.Empty)
 		        .Replace("(", string.Empty)
 		        .Replace(")", string.Empty)
-		        .Replace("|", string.Empty);
+                .Replace("|", string.Empty)
+                .Replace("%", string.Empty)
+                .Replace("=", string.Empty);
 
             propName = propName.Replace("+", "Plus");
             propName = propName.Replace(".", "Dot");

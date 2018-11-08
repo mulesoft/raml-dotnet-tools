@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>AMF.Api.Core</id>
-    <version>0.9.10</version>
+    <version>0.9.11</version>
     <title>AMF.Api.Core</title>
     <authors>MuleSoft Inc</authors>
     <owners>MuleSoft Inc</owners>

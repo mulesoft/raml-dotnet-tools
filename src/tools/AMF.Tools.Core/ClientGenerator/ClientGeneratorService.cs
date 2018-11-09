@@ -52,6 +52,8 @@ namespace AMF.Tools.Core.ClientGenerator
             CleanProperties(schemaRequestObjects);
             CleanProperties(schemaResponseObjects);
 
+            HandleScalarTypes();
+
             clientMethodsGenerator = new ClientMethodsGenerator(raml, schemaResponseObjects, uriParameterObjects,
                 queryObjects, headerObjects, responseHeadersObjects, schemaRequestObjects, linkKeysWithObjectNames,
                 schemaObjects, enums);
@@ -74,30 +76,30 @@ namespace AMF.Tools.Core.ClientGenerator
             CleanNotUsedObjects(classObjects);
 
 
-            
+
             return new ClientGeneratorModel
-                   {
-                       Namespace = ns,
-                       SchemaObjects = schemaObjects,
-                       RequestObjects = schemaRequestObjects,
-                       ResponseObjects = schemaResponseObjects,
-                       QueryObjects = queryObjects,
-                       HeaderObjects = headerObjects,
+            {
+                Namespace = ns,
+                SchemaObjects = schemaObjects,
+                RequestObjects = schemaRequestObjects,
+                ResponseObjects = schemaResponseObjects,
+                QueryObjects = queryObjects,
+                HeaderObjects = headerObjects,
 
-                       ApiRequestObjects = apiRequestObjects.ToArray(),
-                       ApiResponseObjects = apiResponseObjects.ToArray(),
-                       ResponseHeaderObjects = responseHeadersObjects,
+                ApiRequestObjects = apiRequestObjects.ToArray(),
+                ApiResponseObjects = apiResponseObjects.ToArray(),
+                ResponseHeaderObjects = responseHeadersObjects,
 
-                       BaseUriParameters = ParametersMapper.Map(raml.WebApi.BaseUriParameters).ToArray(),
-                       BaseUri = raml.WebApi.Servers.Any() ? raml.WebApi.Servers.First() : null,
-                       Security = SecurityParser.GetSecurity(raml.WebApi),
-                       Version = raml.WebApi.Version,
-                       Warnings = warnings,
-                       Classes = classObjects.Where(c => c.Name != rootClassName).ToArray(),
-                       Root = classObjects.First(c => c.Name == rootClassName),
-                       UriParameterObjects = uriParameterObjects,
-                       Enums = Enums.ToArray()
-                   };
+                BaseUriParameters = ParametersMapper.Map(raml.WebApi.BaseUriParameters).ToArray(),
+                BaseUri = raml.WebApi.Servers.Any() ? raml.WebApi.Servers.First() : null,
+                Security = SecurityParser.GetSecurity(raml.WebApi),
+                Version = raml.WebApi.Version,
+                Warnings = warnings,
+                Classes = classObjects.Where(c => c.Name != rootClassName).ToArray(),
+                Root = classObjects.First(c => c.Name == rootClassName),
+                UriParameterObjects = uriParameterObjects,
+                Enums = Enums.ToArray()
+            };
         }
 
         private IDictionary<string, ApiObject> GetRequestObjects()

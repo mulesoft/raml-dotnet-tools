@@ -31,6 +31,8 @@ namespace AMF.Tools.Core.WebApiGenerator
             //CleanProperties(schemaRequestObjects);
             //CleanProperties(schemaResponseObjects);
 
+            HandleScalarTypes();
+
             if (raml.WebApi == null)
             {
                 return new WebApiGeneratorModel

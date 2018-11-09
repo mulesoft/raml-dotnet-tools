@@ -54,8 +54,20 @@ namespace AMF.Tools.Core
                 Example = MapExample(shape)
             };
 
-            if (isRootType && apiObj.IsArray)
+            if (isRootType && (apiObj.IsArray || apiObj.IsScalar))
                 apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
+
+            if (shape is NodeShape node && node.Properties.Count() == 1 && node.Properties.First().Path.StartsWith("/")
+                && node.Properties.First().Path.EndsWith("/"))
+            {
+                apiObj.IsMap = true;
+                var valueType = "object";
+                if(node.Properties.First().Range != null)
+                    valueType = NewNetTypeMapper.GetNetType(node.Properties.First().Range, existingObjects);
+
+                apiObj.Type = $"Dictionary<string, {valueType}>";
+                new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
+            }
 
             apiObj.Properties = MapProperties(shape, apiObj.Name).ToList();
 

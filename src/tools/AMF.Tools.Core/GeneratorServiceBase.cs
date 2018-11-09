@@ -46,6 +46,47 @@ namespace AMF.Tools.Core
             //raml1TypesParser = new RamlTypeParser(raml.Shapes, schemaObjects, targetNamespace, enums, warnings);
 		}
 
+        protected void HandleScalarTypes()
+        {
+            foreach (var obj in schemaObjects)
+            {
+                foreach (var prop in obj.Value.Properties)
+                {
+                    var baseType = prop.Type;
+                    if (CollectionTypeHelper.IsCollection(prop.Type))
+                        baseType = CollectionTypeHelper.GetBaseType(prop.Type);
+
+                    if (!prop.IsEnum && !NewNetTypeMapper.IsPrimitiveType(baseType))
+                    {
+                        var apiObj = FindObject(baseType, schemaObjects);
+                        if (apiObj != null && apiObj.IsScalar)
+                            prop.Type = apiObj.Type;
+                        
+                        if(apiObj == null)
+                        {
+                            var a = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static ApiObject FindObject(string type, IDictionary<string, ApiObject> objects)
+        {
+            var foundKey = objects.Keys.FirstOrDefault(k => string.Equals(k, type));
+            if (foundKey != null)
+                return objects[foundKey];
+
+            var byType = new Func<KeyValuePair<string, ApiObject>, bool>(o => o.Value.Type == type);
+            if (objects.Any(byType))
+                return objects.First(byType).Value;
+
+            var byName = new Func<KeyValuePair<string, ApiObject>, bool>(o => o.Value.Name == type);
+            if (objects.Any(byName))
+                return objects.First(byName).Value;
+
+            return null;
+        }
         protected static string CalculateClassKey(string url)
         {
             return url.GetHashCode().ToString(CultureInfo.InvariantCulture);

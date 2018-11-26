@@ -92,7 +92,6 @@ namespace AMF.Tools.Core
             {"rfc2616", "DateTimeOffset"}
         };
 
-        //TODO: check
         public static string GetNetType(Shape shape, IDictionary<string, ApiObject> existingObjects = null,
             IDictionary<string, ApiObject> newObjects = null, IDictionary<string, ApiEnum> existingEnums = null, IDictionary<string, ApiEnum> newEnums = null)
         {

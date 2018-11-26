@@ -91,6 +91,7 @@ namespace AMF.Api.Core
             validnamespace = validnamespace.Replace("|", string.Empty);
             validnamespace = validnamespace.Replace("%", string.Empty);
             validnamespace = validnamespace.Replace("=", string.Empty);
+            validnamespace = validnamespace.Replace("~", string.Empty);
             return validnamespace;
 		}
 
@@ -154,6 +155,7 @@ namespace AMF.Api.Core
 		        .Replace(")", string.Empty)
 		        .Replace("|", string.Empty)
                 .Replace("%", string.Empty)
+                .Replace("~", string.Empty)
                 .Replace("=", string.Empty);
 
             propName = propName.Replace("+", "Plus");
@@ -173,7 +175,8 @@ namespace AMF.Api.Core
 	            .Replace("/", string.Empty)
 	            .Replace(" ", "_")
 	            .Replace("-", "_")
-	            .Replace("+", string.Empty)
+                .Replace("~", string.Empty)
+                .Replace("+", string.Empty)
 	            .Replace(".", string.Empty);
 
             if (StartsWithNumber(value))

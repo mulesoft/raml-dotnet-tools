@@ -221,25 +221,25 @@ namespace AMF.Common
             if(destinationFilePath == fullPathIncludeSource)
                 return;
 
-            //// copy file to dest folder
-            //if (File.Exists(destinationFilePath) && confirmOvewrite)
-            //{
-            //    var dialogResult = InstallerServices.ShowConfirmationDialog(Path.GetFileName(destinationFilePath));
-            //    if (dialogResult == MessageBoxResult.Yes)
-            //    {
-            //        if (File.Exists(destinationFilePath))
-            //            new FileInfo(destinationFilePath).IsReadOnly = false;
+            // copy file to dest folder
+            if (File.Exists(destinationFilePath) && confirmOvewrite)
+            {
+                var dialogResult = InstallerServices.ShowConfirmationDialog(Path.GetFileName(destinationFilePath));
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    if (File.Exists(destinationFilePath))
+                        new FileInfo(destinationFilePath).IsReadOnly = false;
 
-            //        File.Copy(fullPathIncludeSource, destinationFilePath, true);
-            //    }
-            //}
-            //else
-            //{
-            //    if (File.Exists(destinationFilePath))
-            //        new FileInfo(destinationFilePath).IsReadOnly = false;
+                    File.Copy(fullPathIncludeSource, destinationFilePath, true);
+                }
+            }
+            else
+            {
+                if (File.Exists(destinationFilePath))
+                    new FileInfo(destinationFilePath).IsReadOnly = false;
 
-            //    File.Copy(fullPathIncludeSource, destinationFilePath, true);
-            //}
+                File.Copy(fullPathIncludeSource, destinationFilePath, true);
+            }
         }
 
         private void ManageIncludedFiles(string destinationFolder, ICollection<string> includedFiles, string path, string relativePath,
@@ -256,8 +256,14 @@ namespace AMF.Common
                 if (relativePaths.ContainsKey(includedFile))
                     relativePath = relativePaths[includedFile];
 
+                var nestedFileLines = new string[0];
                 var fullPathIncludeSource = ResolveFullPath(path, relativePath, scopeFileToInclude[includedFile]);
-                var nestedFileLines = File.ReadAllLines(fullPathIncludeSource);
+                if (File.Exists(fullPathIncludeSource))
+                    nestedFileLines = File.ReadAllLines(fullPathIncludeSource);
+                else if (File.Exists(includedFile))
+                    nestedFileLines = File.ReadAllLines(includedFile);
+                else
+                    throw new FileNotFoundException("Could not find file " + includedFile);
 
                 ManageNestedFiles(nestedFileLines, destinationFolder, includedFiles, path, relativePath, includedFile, confirmOvewrite, rootRamlPath, false);
             }
@@ -325,9 +331,34 @@ namespace AMF.Common
             if (File.Exists(fullPath))
                 return fullPath;
 
+            string fixedPath = FixOverlappingPath(includeSource, pathToUse, "/", "\\");
+            if (fixedPath != string.Empty && File.Exists(fixedPath))
+                return fixedPath;
+
+            fixedPath = FixOverlappingPath(includeSource, pathToUse, "\\", "/");
+            if (fixedPath != string.Empty && File.Exists(fixedPath))
+                return fixedPath;
+
             includeToUse = includeSource.Replace("../", string.Empty);
             includeToUse = includeToUse.Replace('/', Path.DirectorySeparatorChar);
             return Path.Combine(path, includeToUse);
+        }
+
+        private static string FixOverlappingPath(string includeSource, string pathToUse, string folderSeparator, string replaceFolder)
+        {
+            var fixedPath = string.Empty;
+            if (includeSource.Contains(folderSeparator))
+            {
+                var end = includeSource.Substring(0, includeSource.LastIndexOf(folderSeparator));
+                var comparablePathToUse = pathToUse.Replace(replaceFolder, folderSeparator);
+                if (comparablePathToUse.EndsWith(end))
+                {
+                    var fixedInclude = includeSource.Substring(includeSource.LastIndexOf(folderSeparator) + 1);
+                    fixedPath = Path.Combine(pathToUse, fixedInclude);
+                }
+            }
+
+            return fixedPath;
         }
 
         private static string GoUpIfTwoDots(string includeToUse, string pathToUse)

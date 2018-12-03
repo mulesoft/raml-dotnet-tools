@@ -144,9 +144,9 @@ namespace AMF.Tools.Core.ClientGenerator
                 if (ReturnType == "string") 
                     return "HttpContent";
 
-                if (CollectionTypeHelper.IsCollection(ReturnType))
+                if (CollectionTypeHelper.IsCollection(ReturnType) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
                     return ReturnType;
-
+                
                 return ModelsNamespacePrefix + OkReturnType;
             }
         }
@@ -157,7 +157,7 @@ namespace AMF.Tools.Core.ClientGenerator
             {
                 var paramsString = string.Empty;
                 if (HasInputParameter())
-                    paramsString += (Parameter.Type == "string" || CollectionTypeHelper.IsCollection(Parameter.Type)
+                    paramsString += ((CollectionTypeHelper.IsCollection(Parameter.Type) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
                         ? Parameter.Type 
                         : ModelsNamespacePrefix + Parameter.Type) + " " + Parameter.Name;
 
@@ -208,8 +208,8 @@ namespace AMF.Tools.Core.ClientGenerator
         {
             get
             {
-                if (Parameter.Type != "string" && !CollectionTypeHelper.IsCollection(Parameter.Type))
-                    return "Models." + Parameter.Type;
+                if (!CollectionTypeHelper.IsCollection(Parameter.Type) && !NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
+                    return ModelsNamespacePrefix + Parameter.Type;
 
                 return Parameter.Type;
             }

@@ -331,6 +331,10 @@ namespace AMF.Common
             if (File.Exists(fullPath))
                 return fullPath;
 
+            var joinedPath = JoinPath(pathToUse, includeSource);
+            if (File.Exists(joinedPath))
+                return joinedPath;
+
             string fixedPath = FixOverlappingPath(includeSource, pathToUse, "/", "\\");
             if (fixedPath != string.Empty && File.Exists(fixedPath))
                 return fixedPath;
@@ -342,6 +346,20 @@ namespace AMF.Common
             includeToUse = includeSource.Replace("../", string.Empty);
             includeToUse = includeToUse.Replace('/', Path.DirectorySeparatorChar);
             return Path.Combine(path, includeToUse);
+        }
+
+        private static string JoinPath(string pathToUse, string includeSource)
+        {
+            if (pathToUse.EndsWith("/") && includeSource.StartsWith("/"))
+                return pathToUse + includeSource.Substring(1);
+
+            if (pathToUse.EndsWith("\\") && includeSource.StartsWith("\\"))
+                return pathToUse + includeSource.Substring(2);
+
+            if (!pathToUse.EndsWith("/") && !includeSource.StartsWith("/") && !pathToUse.EndsWith("\\") && !includeSource.StartsWith("\\"))
+                return pathToUse + Path.DirectorySeparatorChar + includeSource;
+
+            return pathToUse + includeSource;
         }
 
         private static string FixOverlappingPath(string includeSource, string pathToUse, string folderSeparator, string replaceFolder)

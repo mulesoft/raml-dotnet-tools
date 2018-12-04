@@ -30,6 +30,7 @@ using Newtonsoft.Json.Converters;
 using AMF.Api.Core;
 using $(namespace).Models;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using AMF.Common;
 
 namespace $(namespace)
 {

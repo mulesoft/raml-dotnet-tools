@@ -29,6 +29,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using AMF.Api.Core;
 using $(namespace).Models;
+using AMF.Common;
 
 namespace $(namespace)
 {

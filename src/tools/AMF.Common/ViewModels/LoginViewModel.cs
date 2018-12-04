@@ -65,7 +65,7 @@ namespace AMF.Common.ViewModels
             TryClose();
         }
 
-        public void CancelButton()
+        public void Cancel()
         {
             Token = null;
             TryClose();

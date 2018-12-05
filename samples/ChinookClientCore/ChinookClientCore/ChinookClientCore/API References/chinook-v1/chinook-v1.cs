@@ -17,6 +17,7 @@ using Newtonsoft.Json.Converters;
 using AMF.Api.Core;
 using ChinookClientCore.ChinookV1.Models;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using AMF.Common;
 
 namespace ChinookClientCore.ChinookV1
 {

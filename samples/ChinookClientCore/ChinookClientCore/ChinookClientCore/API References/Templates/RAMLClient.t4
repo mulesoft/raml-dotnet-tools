@@ -1,6 +1,6 @@
 <#
 // title: Client Proxy T4 Template
-// hash: 550362fe928c9e475980ba9c3c6f07f9
+// hash: 51e09a7b59d49dbb642c4c5052e0db8b
 // version: 6.0
 #>
 <#@ template debug="false" hostspecific="false" language="C#" #>
@@ -35,6 +35,7 @@ using Newtonsoft.Json.Converters;
 using AMF.Api.Core;
 using $(namespace).Models;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using AMF.Common;
 
 namespace $(namespace)
 {

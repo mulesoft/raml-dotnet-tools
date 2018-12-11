@@ -15,7 +15,7 @@ namespace AMF.Tools.Core
         public string Type { get; set; }
         public string Example { get; set; }
         public bool Required { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode? StatusCode { get; set; }
 
         public string JSONSchema { get; set; }
         public bool IsEnum { get; set; }

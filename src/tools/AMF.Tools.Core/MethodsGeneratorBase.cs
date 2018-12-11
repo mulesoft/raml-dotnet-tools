@@ -99,16 +99,24 @@ namespace AMF.Tools.Core
                 name = name + response.StatusCode;
 
             var property = new Property
-                           {
-                               Name = name,
-                               Description = response.Description + " " + mimeType.Schema.Description,
-                               Example = ObjectParser.MapExample(mimeType.Schema),
-                               Type = type,
-                               StatusCode = (HttpStatusCode) Enum.Parse(typeof (HttpStatusCode), response.StatusCode),
-                               JSONSchema = mimeType.Schema as SchemaShape == null ? null : ((SchemaShape)mimeType.Schema).Raw.Replace(Environment.NewLine, "").Replace("\r\n", "").Replace("\n", "").Replace("\"", "\\\"")
-                           };
+            {
+                Name = name,
+                Description = response.Description + " " + mimeType.Schema.Description,
+                Example = ObjectParser.MapExample(mimeType.Schema),
+                Type = type,
+                StatusCode = GetStatusCode(response),
+                JSONSchema = mimeType.Schema as SchemaShape == null ? null : ((SchemaShape)mimeType.Schema).Raw.Replace(Environment.NewLine, "").Replace("\r\n", "").Replace("\n", "").Replace("\"", "\\\"")
+            };
 
             properties.Add(property);
+        }
+
+        private static HttpStatusCode? GetStatusCode(Response response)
+        {
+            if (Enum.TryParse(response.StatusCode, out HttpStatusCode result))
+                return result;
+
+            return null;
         }
 
         protected string GetComment(Parser.Model.EndPoint resource, Operation method, string url)

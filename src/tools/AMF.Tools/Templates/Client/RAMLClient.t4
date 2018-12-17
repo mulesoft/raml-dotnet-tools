@@ -519,6 +519,360 @@ namespace $(namespace)
 			client.DefaultRequestHeaders.Add(name, values);
 		}
 
+        // root methods
+
+
+<#
+		foreach (var method in model.Root.Methods)
+		{
+        // Simple method ----------------------------------------------------------------------------------------
+#>
+
+        <#= method.XmlSimpleComment #>
+        public virtual async Task<<#= method.ResponseType #>> <#= method.Name #>(<#= method.SimpleParameterString #>)
+        {
+
+            var url = "<#= method.Url ?? string.Empty #>";
+<#
+	            foreach (var p in method.UriParameters)
+	            {
+#>
+            url = url.Replace("{<#= p.Name #>}", <#= p.Name #>.ToString());
+<#
+        	    }
+
+	            if (method.Query != null)
+	            {
+#>
+            if(<#= method.Query.Name.ToLower() #> != null)
+            {
+                url += "?";
+<#
+		            foreach (var property in method.Query.Properties)
+		            {
+                        if(property.Type == "bool" || property.Type == "bool?")
+                        {
+#>
+                if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
+					url += "&<#= property.OriginalName #>=" + <#= method.Query.Name.ToLower() #>.<#= property.Name #>.ToString().ToLower();
+<#
+                        }
+                        else
+                        {
+#>
+                if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
+					url += "&<#= property.OriginalName #>=" + <#= method.Query.Name.ToLower() #>.<#= property.Name #>;
+<#
+                        }
+        		    }
+#>
+            }
+<#
+	            }
+#>
+
+            url = url.Replace("?&", "?");
+
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+<#
+
+		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
+		        {
+#>
+	        if (string.IsNullOrEmpty(this.OAuthAccessToken))
+				throw new InvalidOperationException("This API call is secured with OAuth, you must provide an access token (set OAuthAccessToken before calling this method)");
+<#
+			        if (((model.Security.Headers == null || !model.Security.Headers.Any())
+			            && (model.Security.QueryParameters == null || !model.Security.QueryParameters.Any()))
+                        || (model.Security.Headers != null && model.Security.Headers.Any()))
+			        {
+#>
+            req.Headers.Add("Authorization", "Bearer " + this.OAuthAccessToken);
+<#
+			        }
+			        else
+			        {
+#>
+            req.RequestUri = new Uri(url + (url.EndsWith("?") || url.EndsWith("&") ? "" : (url.Contains("?") ? "&" : "?")) + "access_token=" + this.OAuthAccessToken, UriKind.Relative);
+<#
+			        }
+		        }
+
+                if (method.Verb != null && method.Verb != "Delete" && method.Verb != "Get")
+                {
+	                if (method.Parameter == null || method.Parameter.Type == "string")
+	                {
+#>
+            req.Content = new StringContent(content);
+<#
+	                }
+	                else
+	                {
+                        if(method.RequestContentTypes.Any(c => c.Contains("xml")) && !method.RequestContentTypes.Any(c => c.Contains("json"))){
+#>
+
+            var stringWriter = new StringWriter();
+        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, <#= method.Parameter.Name #>);
+            req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
+<#
+                        } else {
+#>
+            req.Content = new ObjectContent(typeof(<#= method.QualifiedParameterType #>), <#= method.Parameter.Name #>, new JsonMediaTypeFormatter());                           
+<#                        
+                        }
+        	        }
+                }
+#>
+	        var response = await this.Client.SendAsync(req);
+<#
+            string validationCall = "new Lazy<SchemaValidationResults>(() => new SchemaValidationResults(true), true)";
+            string validationWithException = "";
+
+            if (method.ResponseType != "ApiResponse" && method.ReturnTypeObject != null && !string.IsNullOrWhiteSpace(method.ReturnTypeObject.JSONSchema))
+			{
+                var jsonSchema = !method.ReturnTypeObject.IsMultiple ? 
+					String.Format("\"{0}\"", method.ReturnTypeObject.JSONSchema) : 
+					method.ResponseType + ".GetSchema(response.StatusCode)";
+                
+				validationWithException = String.Format("await SchemaValidator.ValidateWithExceptionAsync({0}, response.Content)", jsonSchema);
+                validationCall = String.Format("new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid({0}, response.Content), true)", jsonSchema);
+#>
+			
+			if (this.SchemaValidation.Enabled)
+		    {
+				if(this.SchemaValidation.RaiseExceptions) 
+				{
+					<#= validationWithException #>;
+				}
+					
+			}
+
+<#
+			}
+#>
+
+<#
+
+	            if (method.ResponseHeaders.Count == 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers);
+<#
+	            }
+	            else if (method.ResponseHeaders.Count > 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers, response.StatusCode);
+<#
+                }
+
+#>
+            return new <#= method.ResponseType #>  
+                                            {
+                                                RawContent = response.Content,
+<#                  if (method.ResponseHeaders != null && method.ResponseHeaders.Any()) { #>
+                                                Headers = headers, 
+<#                  } #>
+                                                RawHeaders = response.Headers, 
+                                                StatusCode = response.StatusCode,
+                                                ReasonPhrase = response.ReasonPhrase,
+												SchemaValidation = <#= validationCall #>
+                                            };
+
+        }
+<#
+// End simple method ----------------------------------------------------------------------------------------
+#>
+
+        <#= method.XmlComment #>
+        public virtual async Task<<#= method.ResponseType #>> <#= method.Name #>(<#= method.ParameterString #>)
+        {
+
+            var url = "<#= method.Url ?? string.Empty #>";
+<#
+			    if (method.UriParameters != null && method.UriParameters.Any())
+			    {
+#>
+			if(request.UriParameters == null)
+				throw new InvalidOperationException("Uri Parameters cannot be null");               
+<#
+    			}
+
+	            foreach (var p in method.UriParameters)
+	            {
+#>
+
+			if(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #> == null)
+				throw new InvalidOperationException("Uri Parameter <#= NetNamingMapper.Capitalize(p.Name) #> cannot be null");
+
+            url = url.Replace("{<#= p.Name #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
+<#
+	            }
+
+	            if (method.Query != null)
+	            {
+#>
+            if(request.Query != null)
+            {
+                url += "?";
+<#
+		            foreach (var property in method.Query.Properties)
+		            {
+                        if(property.Type == "bool" || property.Type == "bool?")
+                        {
+#>
+                if(request.Query.<#= property.Name #> != null)
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + request.Query.<#= property.Name #>.ToString().ToLower();
+<#
+                        }
+                        else
+                        {
+#>
+                if(request.Query.<#= property.Name #> != null)
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + request.Query.<#= property.Name #>;
+<#
+                        }
+		            }
+#>
+            }
+<#
+	            }
+#>
+
+            url = url.Replace("?&", "?");
+
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+
+<#
+		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
+		        {
+#>
+	        if (string.IsNullOrEmpty(this.OAuthAccessToken))
+				throw new InvalidOperationException("This API call is secured with OAuth, you must provide an access token (set OAuthAccessToken before calling this method)");
+<#
+			        if (((model.Security.Headers == null || !model.Security.Headers.Any())
+			            && (model.Security.QueryParameters == null || !model.Security.QueryParameters.Any()))
+                        || (model.Security.Headers != null && model.Security.Headers.Any()))
+			        {
+#>
+            req.Headers.Add("Authorization", "Bearer " + this.OAuthAccessToken);
+<#
+			        }
+			        else
+			        {
+#>
+            req.RequestUri = new Uri(url + (url.EndsWith("?") || url.EndsWith("&") ? "" : (url.Contains("?") ? "&" : "?")) + "access_token=" + this.OAuthAccessToken, UriKind.Relative);
+<#
+			        }
+		        }
+
+			    if (method.Header != null)
+			    {
+#>
+            if(request.Headers != null)
+            {
+                foreach(var header in request.Headers.Headers)
+                {
+                    req.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+<#
+    			}
+			    else
+			    {
+#>
+            if(request.RawHeaders != null)
+            {
+                foreach(var header in request.RawHeaders)
+                {
+                    req.Headers.TryAddWithoutValidation(header.Key, string.Join(",", header.Value));
+                }
+            }
+<#
+			    }
+
+                if (method.Verb != null && method.Verb != "Delete" && method.Verb != "Get")
+                {
+	                if (method.Parameter == null || method.Parameter.Type == "string")
+	                {
+#>
+            req.Content = request.Content;
+<#
+	                }
+	                else
+	                {
+                        if(method.RequestContentTypes.Any(c => c.Contains("xml")) && !method.RequestContentTypes.Any(c => c.Contains("json"))){
+#>
+            var stringWriter = new StringWriter();
+        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, request.Content);
+            req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
+<#
+                        } else {
+#>
+            if(request.Formatter == null)
+                request.Formatter = new JsonMediaTypeFormatter();
+<#
+                        }
+	                }
+                }
+#>
+	        var response = await this.Client.SendAsync(req);
+<#
+            if (method.ResponseType != "ApiResponse" && method.ReturnTypeObject != null && !string.IsNullOrWhiteSpace(method.ReturnTypeObject.JSONSchema))
+			{
+#>
+			if (this.SchemaValidation.Enabled && this.SchemaValidation.RaiseExceptions)
+            {
+				if(this.SchemaValidation.RaiseExceptions)
+				{
+					<#= validationWithException #>;
+				}
+				
+            }
+<#
+			}
+
+	            if (method.ResponseHeaders.Count == 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers);
+<#
+	            }
+	            else if (method.ResponseHeaders.Count > 1)
+	            {
+#>
+            var headers = new <#= method.ResponseHeaderType #>();
+            headers.SetProperties(response.Headers, response.StatusCode);
+<#
+                }
+
+#>
+            return new <#= method.ResponseType #>  
+                                            {
+                                                RawContent = response.Content,
+<#                  if (method.ResponseHeaders != null && method.ResponseHeaders.Any()) { #>
+                                                Headers = headers, 
+<#                  }  #>
+                                                RawHeaders = response.Headers,
+<#                  if (method.ReturnType != "string" && method.ReturnType != "HttpContent") { #>
+	                                            Formatters = responseFormatters,
+<#                  }  #>
+                                                StatusCode = response.StatusCode,
+                                                ReasonPhrase = response.ReasonPhrase,
+												SchemaValidation = <#= validationCall #>
+                                            };
+<#
+                
+#>
+        }
+
+<#
+
+    	}
+#>
 
     }
 

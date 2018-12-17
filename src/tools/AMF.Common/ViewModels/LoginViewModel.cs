@@ -24,6 +24,17 @@ namespace AMF.Common.ViewModels
             }
         }
 
+        private string domain;
+        public string Domain
+        {
+            get { return domain; }
+            set
+            {
+                domain = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         public string Token { get; internal set; }
 
         public async void Login(object parameter)
@@ -45,8 +56,14 @@ namespace AMF.Common.ViewModels
                 return;
             }
 
-            var json = "{ \"username\" : \"" + Username  + "\", \"password\" : \"" + password + "\" }";
             var loginUrl = BaseUrl + "/accounts/login";
+            if (!string.IsNullOrWhiteSpace(Domain))
+            {
+                loginUrl = BaseUrl + "/exchange/login/" + Domain;
+            }
+
+            var json = "{ \"username\" : \"" + Username  + "\", \"password\" : \"" + password + "\" }";
+            
             var response = await client.PostAsync(loginUrl, new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
             if(!response.IsSuccessStatusCode)
             {

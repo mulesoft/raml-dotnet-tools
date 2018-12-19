@@ -8,7 +8,7 @@
                  Background="Gainsboro"
                  Title="Login"
                  Width="400"
-                 Height="220"
+                 Height="180"
 				 WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
@@ -89,7 +89,6 @@
             <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
@@ -119,17 +118,6 @@
                                  Style="{StaticResource DefaultPasswordBox}"
 								 Grid.Column="2"
 								 Grid.Row="2" />
-
-
-        <Label Content="Domain"
-							   Style="{StaticResource DefaultLabel}"
-							   Grid.Column="1"
-							   Grid.Row="3"
-                               Margin="5" />
-        <TextBox Style="{StaticResource DefaultTextBox}"
-                                 Name="Domain"
-								 Grid.Column="2"
-								 Grid.Row="3" />
 
 
         <Grid Grid.Row="4" Grid.ColumnSpan="4">

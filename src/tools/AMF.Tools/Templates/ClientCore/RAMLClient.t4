@@ -118,7 +118,7 @@ namespace $(namespace)
 
             url = url.Replace("?&", "?");
 
-            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url.StartsWith("/") ? url.Substring(1) : url);
 <#
 
 		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
@@ -288,7 +288,7 @@ namespace $(namespace)
 
             url = url.Replace("?&", "?");
 
-            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url.StartsWith("/") ? url.Substring(1) : url);
 
 <#
 		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
@@ -477,6 +477,9 @@ namespace $(namespace)
 				}
 				throw new InvalidOperationException("Please replace parameter/s " + string.Join(", ", parameters) + " in the URL before passing it to the constructor ");
 			}
+            
+            if (!endpointUrl.EndsWith("/"))
+                endpointUrl += "/";
 
             client = new HttpClient {BaseAddress = new Uri(endpointUrl)};
         }
@@ -574,7 +577,7 @@ namespace $(namespace)
 
             url = url.Replace("?&", "?");
 
-            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url.StartsWith("/") ? url.Substring(1) : url);
 <#
 
 		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))
@@ -744,7 +747,7 @@ namespace $(namespace)
 
             url = url.Replace("?&", "?");
 
-            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url);
+            var req = new HttpRequestMessage(<#= method.NetHttpMethod #>, url.StartsWith("/") ? url.Substring(1) : url);
 
 <#
 		        if (method.UseSecurity && model.Security != null && !string.IsNullOrWhiteSpace(model.Security.AccessTokenUri))

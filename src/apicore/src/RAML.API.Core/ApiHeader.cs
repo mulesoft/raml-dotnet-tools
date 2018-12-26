@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 #if PORTABLE
 using System.Reflection;
@@ -17,8 +20,17 @@ namespace AMF.Api.Core
 #else
                 var properties = this.GetType().GetTypeInfo().DeclaredProperties.Where(p => p.Name != "Headers" && p.GetValue(this) != null);
 #endif
-				return properties.ToDictionary(prop => prop.Name, prop => prop.GetValue(this).ToString());
+				return properties.ToDictionary(prop => GetKey(prop), prop => prop.GetValue(this).ToString());
 			}
 		}
-	}
+
+        private string GetKey(PropertyInfo prop)
+        {
+            var jsonProp = prop.GetCustomAttribute<JsonPropertyAttribute>();
+            if (jsonProp != null && !string.IsNullOrWhiteSpace(jsonProp.PropertyName))
+                return jsonProp.PropertyName;
+
+            return prop.Name;
+        }
+    }
 }

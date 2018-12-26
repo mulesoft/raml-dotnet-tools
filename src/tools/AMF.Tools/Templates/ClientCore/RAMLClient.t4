@@ -313,8 +313,6 @@ namespace $(namespace)
 			        }
 		        }
 
-			    if (method.Header != null)
-			    {
 #>
             if(request.Headers != null)
             {
@@ -323,11 +321,6 @@ namespace $(namespace)
                     req.Headers.TryAddWithoutValidation(header.Key, header.Value);
                 }
             }
-<#
-    			}
-			    else
-			    {
-#>
             if(request.RawHeaders != null)
             {
                 foreach(var header in request.RawHeaders)
@@ -336,7 +329,6 @@ namespace $(namespace)
                 }
             }
 <#
-			    }
 
                 if (method.Verb != null && method.Verb != "Delete" && method.Verb != "Get")
                 {
@@ -772,8 +764,6 @@ namespace $(namespace)
 			        }
 		        }
 
-			    if (method.Header != null)
-			    {
 #>
             if(request.Headers != null)
             {
@@ -782,11 +772,6 @@ namespace $(namespace)
                     req.Headers.TryAddWithoutValidation(header.Key, header.Value);
                 }
             }
-<#
-    			}
-			    else
-			    {
-#>
             if(request.RawHeaders != null)
             {
                 foreach(var header in request.RawHeaders)
@@ -795,7 +780,7 @@ namespace $(namespace)
                 }
             }
 <#
-			    }
+
 
                 if (method.Verb != null && method.Verb != "Delete" && method.Verb != "Get")
                 {

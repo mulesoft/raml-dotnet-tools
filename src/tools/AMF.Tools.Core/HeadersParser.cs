@@ -55,7 +55,7 @@ namespace AMF.Tools.Core
                                {
                                    Type = type + typeSuffix,
                                    Name = NetNamingMapper.GetPropertyName(header.Name),
-                                   OriginalName = shape.DisplayName,
+                                   OriginalName = header.Name,
                                    Description = description,
                                    Example = ObjectParser.MapExample(shape),
                                    Required = header.Required

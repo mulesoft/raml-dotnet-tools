@@ -90,15 +90,13 @@ namespace AMF.WebApiExplorer
 		                AddMethods(resource, apiDescription, resource.Methods.Select(m => m.Verb).ToList());
 		            }
 
-		            if (SetResourceProperties != null)
-		                SetResourceProperties(resource, apiDescription);
+                    SetResourceProperties?.Invoke(resource, apiDescription);
 
-		            if (SetResourcePropertiesByAction != null)
-		                SetResourcePropertiesByAction(resource, apiDescription.ActionDescriptor);
+                    SetResourcePropertiesByAction?.Invoke(resource, apiDescription.ActionDescriptor);
 
-		            //if (SetResourcePropertiesByController != null)
-		            //    SetResourcePropertiesByController(resource, apiDescription.ActionDescriptor.ControllerDescriptor);
-		        }
+                    //if (SetResourcePropertiesByController != null)
+                    //    SetResourcePropertiesByController(resource, apiDescription.ActionDescriptor.ControllerDescriptor);
+                }
 		    }
 
 		    raml.Schemas = new List<IDictionary<string, string>> { Schemas };
@@ -109,10 +107,9 @@ namespace AMF.WebApiExplorer
 
 			SetUriParameters(raml.Resources, parameterDescriptionsDic, string.Empty);
 
-			if(SetRamlProperties != null)
-				SetRamlProperties(raml);
+            SetRamlProperties?.Invoke(raml);
 
-			if (SecuritySchemes != null)
+            if (SecuritySchemes != null)
 				raml.SecuritySchemes = SecuritySchemes;
 			
 			if (!string.IsNullOrWhiteSpace(securityType) && securityScheme != null)

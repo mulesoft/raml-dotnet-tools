@@ -61,11 +61,6 @@ namespace AMF.Tools.Core
                         var apiObj = FindObject(baseType, schemaObjects);
                         if (apiObj != null && apiObj.IsScalar)
                             prop.Type = apiObj.Type;
-                        
-                        if(apiObj == null)
-                        {
-                            var a = 1;
-                        }
                     }
                 }
             }

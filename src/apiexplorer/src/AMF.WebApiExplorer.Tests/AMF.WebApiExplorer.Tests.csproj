@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AMF.Api.Core, Version=0.9.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Api.Core.0.9.10\lib\net45\AMF.Api.Core.dll</HintPath>
+    <Reference Include="AMF.Api.Core, Version=0.9.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Api.Core.0.9.12\lib\net45\AMF.Api.Core.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>

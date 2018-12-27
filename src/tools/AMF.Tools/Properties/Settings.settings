@@ -24,7 +24,7 @@
       <Value Profile="(Default)">AMF.Api.Core</Value>
     </Setting>
     <Setting Name="RAMLApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.9.11</Value>
+      <Value Profile="(Default)">0.9.12</Value>
     </Setting>
     <Setting Name="ApiReferencesFolderName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">API References</Value>
@@ -105,7 +105,7 @@
       <Value Profile="(Default)">AMF.NetCore.APICore</Value>
     </Setting>
     <Setting Name="AMFNetCoreApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.0.2</Value>
+      <Value Profile="(Default)">0.0.3</Value>
     </Setting>
   </Settings>
 </SettingsFile>

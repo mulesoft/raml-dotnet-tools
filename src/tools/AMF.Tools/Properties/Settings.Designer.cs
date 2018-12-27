@@ -88,7 +88,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.9.11")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9.12")]
         public string RAMLApiCorePackageVersion {
             get {
                 return ((string)(this["RAMLApiCorePackageVersion"]));
@@ -331,7 +331,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.3")]
         public string AMFNetCoreApiCorePackageVersion {
             get {
                 return ((string)(this["AMFNetCoreApiCorePackageVersion"]));

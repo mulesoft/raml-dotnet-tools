@@ -205,7 +205,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.2.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.2.4")]
         public string RAMLWebApiExplorerPackageVersion {
             get {
                 return ((string)(this["RAMLWebApiExplorerPackageVersion"]));
@@ -295,7 +295,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.2")]
         public string RamlNetCoreApiExplorerPackageVersion {
             get {
                 return ((string)(this["RamlNetCoreApiExplorerPackageVersion"]));

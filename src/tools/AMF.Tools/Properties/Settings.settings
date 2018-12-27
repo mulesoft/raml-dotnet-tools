@@ -63,7 +63,7 @@
       <Value Profile="(Default)">AMF.WebApiExplorer</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1.2.3</Value>
+      <Value Profile="(Default)">1.2.4</Value>
     </Setting>
     <Setting Name="RAMLParserPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">AMF.Parser</Value>
@@ -93,7 +93,7 @@
       <Value Profile="(Default)">AMF.NetCoreApiExplorer</Value>
     </Setting>
     <Setting Name="RamlNetCoreApiExplorerPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.0.1</Value>
+      <Value Profile="(Default)">0.0.2</Value>
     </Setting>
     <Setting Name="RamlParserExpressionsPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">RAML.Parser.Expressions</Value>

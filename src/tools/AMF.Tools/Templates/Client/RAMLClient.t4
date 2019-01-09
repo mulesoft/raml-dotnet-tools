@@ -974,6 +974,7 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
         /// </summary>
 <#
     	}
+<#= property.CustomAttributes #>
         if(property.IsAdditionalProperties)
         {
 #>
@@ -1033,6 +1034,7 @@ foreach (var header in model.HeaderObjects.Values.Where(o => o.Properties.Any())
         /// </summary>
 <#
 		}
+<#= property.CustomAttributes #>
         if(property.IsAdditionalProperties)
         {
 #>
@@ -1129,6 +1131,7 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
         /// </summary>
 <#
 	    }
+<#= property.CustomAttributes #>
         if(property.IsAdditionalProperties)
         {
 #>

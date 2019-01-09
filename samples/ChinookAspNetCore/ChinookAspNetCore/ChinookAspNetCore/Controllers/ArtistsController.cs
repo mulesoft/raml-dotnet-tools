@@ -30,7 +30,7 @@ namespace ChinookAspNetCore.ChinookV1
             if (!artists.ContainsKey(id))
                 return new NotFoundObjectResult("");
 
-            return new ObjectResult(artists[id]);
+            return new OkObjectResult(artists[id]);
         }
 
         /// <param name="content"></param>

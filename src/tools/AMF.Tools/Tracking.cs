@@ -35,17 +35,23 @@ namespace AMF.Tools
 
             var encodedContent = new FormUrlEncodedContent(parameters);
             var client = new HttpClient();
-            var response = client.PostAsync(url, encodedContent).ConfigureAwait(false).GetAwaiter().GetResult();
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                // Do something with response. Example get content:
-                var responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                var response = client.PostAsync(url, encodedContent).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    // Do something with response. Example get content:
+                    var responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                }
+                else
+                {
+                    var a = response.StatusCode;
+                    var responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                }
             }
-            else
-            {
-                var a = response.StatusCode;
-                var responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            }
+            // this is on purpose, if internet fails the tools should continue to work
+            catch (HttpRequestException) { }
+            catch (WebException) { }
         }
 
         public static void Track(string eventDescription)
@@ -73,13 +79,18 @@ namespace AMF.Tools
 
             var encodedContent = new FormUrlEncodedContent(parameters);
             var client = new HttpClient();
-            var response = client.PostAsync(url, encodedContent).ConfigureAwait(false).GetAwaiter().GetResult();
-            if (response.StatusCode != HttpStatusCode.OK)
+            try
             {
-                var statusCode = response.StatusCode;
-                var responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                var response = client.PostAsync(url, encodedContent).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    var statusCode = response.StatusCode;
+                    var responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                }
             }
-
+            // this is on purpose, if internet fails the tools should continue to work
+            catch (HttpRequestException) { }
+            catch (WebException) { }
         }
 
     }

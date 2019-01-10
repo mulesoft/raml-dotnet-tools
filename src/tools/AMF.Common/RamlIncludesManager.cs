@@ -125,16 +125,29 @@ namespace AMF.Common
 
             try
             {
+                FolderHelper.SetCorrectPermissions(writeToFilePath);
                 if (File.Exists(writeToFilePath))
                     new FileInfo(writeToFilePath).IsReadOnly = false;
 
-                File.WriteAllText(writeToFilePath, string.Join(Environment.NewLine, lines).Trim());
+                //var fi = new FileInfo(writeToFilePath);
+
+                FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
+                
+                StreamWriter fileWriter = new StreamWriter(fileStream);
+                foreach (var line in lines)
+                {
+                    fileWriter.WriteLine(line);
+                }
+                fileWriter.Flush();
+                fileWriter.Close();
+
+                //File.WriteAllText(writeToFilePath, string.Join(Environment.NewLine, lines).Trim());
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
                 throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // This is intentional
             }
@@ -433,6 +446,7 @@ namespace AMF.Common
                 var dialogResult = InstallerServices.ShowConfirmationDialog(Path.GetFileName(destinationFilePath));
                 if (dialogResult == MessageBoxResult.Yes)
                 {
+                    FolderHelper.SetCorrectPermissions(destinationFilePath);
                     if (File.Exists(destinationFilePath))
                         new FileInfo(destinationFilePath).IsReadOnly = false;
                     File.WriteAllText(destinationFilePath, contents.Trim());
@@ -440,6 +454,7 @@ namespace AMF.Common
             }
             else
             {
+                FolderHelper.SetCorrectPermissions(destinationFilePath);
                 if (File.Exists(destinationFilePath))
                     new FileInfo(destinationFilePath).IsReadOnly = false;
                 File.WriteAllText(destinationFilePath, contents.Trim());

@@ -58,6 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ActivityLogger.cs" />
+    <Compile Include="UnitTestsScaffoldServiceBase.cs" />
     <Compile Include="Tracking.cs" />
     <Compile Include="Commands\AddReferenceCommand.cs" />
     <Compile Include="Commands\AddReferenceCommandPackage.cs" />
@@ -104,6 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Templates\Tests\ApiControllerTests.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Tests\ApiControllerTestsImplementation.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <VSCTCompile Include="Commands\AddReferenceCommandPackage.vsct">
       <ResourceName>Menus1.ctmenu</ResourceName>
       <SubType>Designer</SubType>

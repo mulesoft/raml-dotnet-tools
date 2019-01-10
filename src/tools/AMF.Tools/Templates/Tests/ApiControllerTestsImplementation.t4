@@ -21,9 +21,9 @@ using $(namespace).Models;
 namespace $(namespace)
 {
 <# if(System.String.IsNullOrWhiteSpace(apiVersion)) { #>
-    public partial class <#= controllerObject.Name #>Controller : I<#= controllerObject.Name #>Controller
+    public class <#= controllerObject.Name #>ControllerTestsImplementation
 <# } else { #>
-    public partial class <#= apiVersion #><#= controllerObject.Name #>Controller : I<#= apiVersion #><#= controllerObject.Name #>Controller
+    public class <#= apiVersion #><#= controllerObject.Name #>ControllerTestsImplementation
 <# } #>
     {
 
@@ -31,29 +31,25 @@ namespace $(namespace)
 		foreach (var method in controllerObject.Methods)
 		{
 #>
-<#= method.XmlComment ?? string.Empty #>
-<# if(useAsyncMethods) { #>
-        public async Task<IActionResult> <#= method.Name #>(<#= method.ParametersStringForAspNet5 #>)
+        // Mock controller depenencies for method <#= method.Name #>
+<# if(System.String.IsNullOrWhiteSpace(apiVersion)) { #>
+        internal <#= apiVersion #><#= controllerObject.Name #> <#= method.Name #>Arrange(<#= apiVersion #><#= controllerObject.Name #> controller)
 <# } else { #>
-        public IActionResult <#= method.Name #>(<#= method.ParametersStringForAspNet5 #>)
+        internal <#= controllerObject.Name #> <#= method.Name #>(<#= controllerObject.Name #> controller)
 <# } #>
         {
-            // TODO: implement <#= method.Name #> - route: <#= controllerObject.PrefixUri + "/" + method.Url #>
-<#
-    if (method.ReturnType != null && method.ReturnType != "string")
-    {
-#>
-			// var result = new <#= method.ReturnType #>();
-			// return new OkObjectResult(result);
-<#
-	}
-#>
-			return new OkObjectResult("");
+            // TODO: mock dependencies
+            return controller;
         }
 
+        // Custom Assertions for method <#= method.Name #>Test
+        internal void <#= method.Name #>Assert(IActionResult result)
+        {
+            // Additional Asserts
+        }
 <#
 
-		}
+		} // end foreach method
 #>
     }
 }

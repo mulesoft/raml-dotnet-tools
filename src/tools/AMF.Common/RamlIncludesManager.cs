@@ -125,21 +125,12 @@ namespace AMF.Common
 
             try
             {
-                FolderHelper.SetCorrectPermissions(writeToFilePath);
                 if (File.Exists(writeToFilePath))
                     new FileInfo(writeToFilePath).IsReadOnly = false;
 
                 //var fi = new FileInfo(writeToFilePath);
 
-                FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
-                
-                StreamWriter fileWriter = new StreamWriter(fileStream);
-                foreach (var line in lines)
-                {
-                    fileWriter.WriteLine(line);
-                }
-                fileWriter.Flush();
-                fileWriter.Close();
+                WriteAllTextWithCorrectPermissions(lines, writeToFilePath);
 
                 //File.WriteAllText(writeToFilePath, string.Join(Environment.NewLine, lines).Trim());
             }
@@ -153,6 +144,30 @@ namespace AMF.Common
             }
             ManageIncludedFiles(destinationFolder, includedFiles, path, relativePath, confirmOvewrite, scopeIncludedFiles, rootRamlPath);
         }
+
+        private static void WriteAllTextWithCorrectPermissions(IList<string> lines, string writeToFilePath)
+        {
+            FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
+
+            StreamWriter fileWriter = new StreamWriter(fileStream);
+            foreach (var line in lines)
+            {
+                fileWriter.WriteLine(line);
+            }
+            fileWriter.Flush();
+            fileWriter.Close();
+        }
+
+        private static void WriteAllTextWithCorrectPermissions(string content, string writeToFilePath)
+        {
+            FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
+
+            StreamWriter fileWriter = new StreamWriter(fileStream);
+            fileWriter.Write(content);
+            fileWriter.Flush();
+            fileWriter.Close();
+        }
+
 
         private void ManageInclude(IList<string> lines, string destinationFolder, ICollection<string> includedFiles, string path,
             string relativePath, bool confirmOvewrite, int i, Collection<string> scopeIncludedFiles, string rootRamlPath, bool isRootFile,
@@ -446,18 +461,20 @@ namespace AMF.Common
                 var dialogResult = InstallerServices.ShowConfirmationDialog(Path.GetFileName(destinationFilePath));
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    FolderHelper.SetCorrectPermissions(destinationFilePath);
                     if (File.Exists(destinationFilePath))
                         new FileInfo(destinationFilePath).IsReadOnly = false;
-                    File.WriteAllText(destinationFilePath, contents.Trim());
+
+                    WriteAllTextWithCorrectPermissions(contents.Trim(), destinationFilePath);
+                    // File.WriteAllText(destinationFilePath, contents.Trim());
                 }
             }
             else
             {
-                FolderHelper.SetCorrectPermissions(destinationFilePath);
                 if (File.Exists(destinationFilePath))
                     new FileInfo(destinationFilePath).IsReadOnly = false;
-                File.WriteAllText(destinationFilePath, contents.Trim());
+
+                WriteAllTextWithCorrectPermissions(contents.Trim(), destinationFilePath);
+                // File.WriteAllText(destinationFilePath, contents.Trim());
             }
         }
 

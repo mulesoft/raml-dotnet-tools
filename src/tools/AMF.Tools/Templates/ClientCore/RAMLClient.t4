@@ -1001,7 +1001,14 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 		{
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
-<#		} 
+<#
+			if(property.IsEnum)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
+		}
 
 		if(property.IsEnum)
 		{
@@ -1059,9 +1066,16 @@ foreach (var header in model.HeaderObjects.Values.Where(o => o.Properties.Any())
         }
 		if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
 		{
+			if(property.IsEnum)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
-<#		}
+<#		
+		}
 
 		if(property.IsEnum)
 		{
@@ -1156,6 +1170,12 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
         }
 		if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
 		{
+			if(property.IsEnum)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
 <#		}
@@ -1429,6 +1449,14 @@ foreach (var apiEnum in model.Enums)
 	{
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
+<#
+			if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
+#>
 		<#= property.Name #><#= i < apiEnum.Values.Count() ? "," : string.Empty #>
 <#	
 		i++;

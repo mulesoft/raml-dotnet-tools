@@ -25,6 +25,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -1001,7 +1002,7 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 		[EnumMember(Value = "<#= property.OriginalName #>")]
 <#			
 			}
-<#		} 
+		} 
 
 		if(property.IsEnum)
 		{
@@ -1068,7 +1069,7 @@ foreach (var header in model.HeaderObjects.Values.Where(o => o.Properties.Any())
 		[EnumMember(Value = "<#= property.OriginalName #>")]
 <#			
 			}
-<#		}
+		}
 
 		if(property.IsEnum)
 		{
@@ -1172,7 +1173,7 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
 		[EnumMember(Value = "<#= property.OriginalName #>")]
 <#			
 			}
-<#		}
+		}
 
 		if(property.IsEnum)
 		{

@@ -64,6 +64,7 @@ namespace AMF.Tools
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Xml.XmlSerializer", "4.3.0", Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Xml", "4.3.0", Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.ComponentModel.Annotations", "4.5.0", Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Primitives", "4.3.0", Settings.Default.NugetExternalPackagesSource);
 
             // AMF.NetCore.APICore
             var ramlNetCoreApiCorePackageId = Settings.Default.AMFNetCoreApiCorePackageId;

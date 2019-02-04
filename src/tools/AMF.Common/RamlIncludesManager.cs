@@ -128,18 +128,46 @@ namespace AMF.Common
                 if (File.Exists(writeToFilePath))
                     new FileInfo(writeToFilePath).IsReadOnly = false;
 
-                File.WriteAllText(writeToFilePath, string.Join(Environment.NewLine, lines).Trim());
+                //var fi = new FileInfo(writeToFilePath);
+
+                WriteAllTextWithCorrectPermissions(lines, writeToFilePath);
+
+                //File.WriteAllText(writeToFilePath, string.Join(Environment.NewLine, lines).Trim());
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
                 throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // This is intentional
             }
             ManageIncludedFiles(destinationFolder, includedFiles, path, relativePath, confirmOvewrite, scopeIncludedFiles, rootRamlPath);
         }
+
+        private static void WriteAllTextWithCorrectPermissions(IList<string> lines, string writeToFilePath)
+        {
+            FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
+
+            StreamWriter fileWriter = new StreamWriter(fileStream);
+            foreach (var line in lines)
+            {
+                fileWriter.WriteLine(line);
+            }
+            fileWriter.Flush();
+            fileWriter.Close();
+        }
+
+        private static void WriteAllTextWithCorrectPermissions(string content, string writeToFilePath)
+        {
+            FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
+
+            StreamWriter fileWriter = new StreamWriter(fileStream);
+            fileWriter.Write(content);
+            fileWriter.Flush();
+            fileWriter.Close();
+        }
+
 
         private void ManageInclude(IList<string> lines, string destinationFolder, ICollection<string> includedFiles, string path,
             string relativePath, bool confirmOvewrite, int i, Collection<string> scopeIncludedFiles, string rootRamlPath, bool isRootFile,
@@ -435,14 +463,18 @@ namespace AMF.Common
                 {
                     if (File.Exists(destinationFilePath))
                         new FileInfo(destinationFilePath).IsReadOnly = false;
-                    File.WriteAllText(destinationFilePath, contents.Trim());
+
+                    WriteAllTextWithCorrectPermissions(contents.Trim(), destinationFilePath);
+                    // File.WriteAllText(destinationFilePath, contents.Trim());
                 }
             }
             else
             {
                 if (File.Exists(destinationFilePath))
                     new FileInfo(destinationFilePath).IsReadOnly = false;
-                File.WriteAllText(destinationFilePath, contents.Trim());
+
+                WriteAllTextWithCorrectPermissions(contents.Trim(), destinationFilePath);
+                // File.WriteAllText(destinationFilePath, contents.Trim());
             }
         }
 

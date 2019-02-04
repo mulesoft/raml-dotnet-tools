@@ -25,6 +25,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using AMF.Api.Core;
@@ -313,6 +315,8 @@ namespace $(namespace)
 			        }
 		        }
 
+			    if (method.Header != null)
+			    {
 #>
             if(request.Headers != null)
             {
@@ -321,6 +325,9 @@ namespace $(namespace)
                     req.Headers.TryAddWithoutValidation(header.Key, header.Value);
                 }
             }
+<#
+    			}
+#>
             if(request.RawHeaders != null)
             {
                 foreach(var header in request.RawHeaders)
@@ -763,7 +770,8 @@ namespace $(namespace)
 <#
 			        }
 		        }
-
+			    if (method.Header != null)
+			    {
 #>
             if(request.Headers != null)
             {
@@ -772,6 +780,9 @@ namespace $(namespace)
                     req.Headers.TryAddWithoutValidation(header.Key, header.Value);
                 }
             }
+<#              
+                } 
+#>
             if(request.RawHeaders != null)
             {
                 foreach(var header in request.RawHeaders)
@@ -978,9 +989,9 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
         /// <summary>
         /// <#= XmlCommentHelper.Escape(property.Description) #>
         /// </summary>
+<#= property.CustomAttributes #>
 <#
     	}
-<#= property.CustomAttributes #>
         if(property.IsAdditionalProperties)
         {
 #>
@@ -991,7 +1002,14 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 		{
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
-<#		} 
+<#
+			if(property.IsEnum)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
+		}
 
 		if(property.IsEnum)
 		{
@@ -1038,9 +1056,9 @@ foreach (var header in model.HeaderObjects.Values.Where(o => o.Properties.Any())
         /// <summary>
         /// <#= XmlCommentHelper.Escape(property.Description) #>
         /// </summary>
+<#= property.CustomAttributes #>
 <#
 		}
-<#= property.CustomAttributes #>
         if(property.IsAdditionalProperties)
         {
 #>
@@ -1049,9 +1067,16 @@ foreach (var header in model.HeaderObjects.Values.Where(o => o.Properties.Any())
         }
 		if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
 		{
+			if(property.IsEnum)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
-<#		}
+<#		
+		}
 
 		if(property.IsEnum)
 		{
@@ -1135,9 +1160,9 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
         /// <summary>
         /// <#= XmlCommentHelper.Escape(property.Description) #>
         /// </summary>
+<#= property.CustomAttributes #>
 <#
 	    }
-<#= property.CustomAttributes #>
         if(property.IsAdditionalProperties)
         {
 #>
@@ -1146,6 +1171,12 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
         }
 		if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
 		{
+			if(property.IsEnum)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
 <#		}
@@ -1419,6 +1450,14 @@ foreach (var apiEnum in model.Enums)
 	{
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
+<#
+			if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
+#>
 		<#= property.Name #><#= i < apiEnum.Values.Count() ? "," : string.Empty #>
 <#	
 		i++;

@@ -15,6 +15,7 @@ namespace AMF.Common.ViewModels
     public class RamlChooserViewModel : Screen
     {
         private const string RamlFileExtension = ".yaml";
+
         // action to execute when clicking Ok button (add RAML Reference, Scaffold Web Api, etc.)
         private Action<RamlChooserActionParams> action;
         private string exchangeUrl;
@@ -86,7 +87,7 @@ namespace AMF.Common.ViewModels
             if(selectedAsset != null)
             {
                 var file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "fat-raml");
-                if(file == null)
+                if (file == null)
                     file = selectedAsset.Files.FirstOrDefault(f => f.Classifier == "raml");
                 if (file == null)
                 {
@@ -99,7 +100,8 @@ namespace AMF.Common.ViewModels
                 var client = new HttpClient();
                 var byteArray = await client.GetByteArrayAsync(uri);
                 var assetName = NetNamingMapper.GetObjectName(selectedAsset.Name);
-                var zipPath = Path.Combine(Path.GetTempPath(), assetName  + ".zip");
+
+                var zipPath = Path.Combine(Path.GetTempPath(), assetName + ".zip");
                 File.WriteAllBytes(zipPath, byteArray);
                 var destinationFolder = Path.Combine(Path.GetTempPath(), assetName + DateTime.Now.Ticks);
                 ZipFile.ExtractToDirectory(zipPath, destinationFolder);

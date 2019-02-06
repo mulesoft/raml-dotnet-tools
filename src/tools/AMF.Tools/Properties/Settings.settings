@@ -107,5 +107,11 @@
     <Setting Name="AMFNetCoreApiCorePackageVersion" Type="System.String" Scope="Application">
       <Value Profile="(Default)">0.0.3</Value>
     </Setting>
+    <Setting Name="BaseControllerTestsTemplateTitle" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Controller Unit Tests Base</Value>
+    </Setting>
+    <Setting Name="ControllerUnitTestsImplementationTemplateTitle" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Controller Unit Tests Implementation</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

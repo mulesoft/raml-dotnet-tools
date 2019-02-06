@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using EnvDTE;
 
 namespace AMF.Tools
@@ -28,6 +29,15 @@ namespace AMF.Tools
                 return Path.Combine(Path.GetDirectoryName(project.FullName), modelsFolder);
 
             return targetFolderPath;
+        }
+
+        internal static string GetUnitTestsFolder(Project proj, string unitTestsFolderName)
+        {
+            if (!string.IsNullOrWhiteSpace(unitTestsFolderName))
+                return Path.Combine(Path.GetDirectoryName(proj.FullName), unitTestsFolderName);
+
+            return Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar + "Tests" +
+                   Path.DirectorySeparatorChar;
         }
     }
 }

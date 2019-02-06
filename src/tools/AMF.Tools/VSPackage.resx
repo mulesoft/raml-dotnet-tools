@@ -173,4 +173,13 @@
   <data name="5400" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\EditPropertiesCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="6110" xml:space="preserve">
+    <value>AddUnitTestsCommand Extension</value>
+  </data>
+  <data name="6112" xml:space="preserve">
+    <value>AddUnitTestsCommand Visual Stuido Extension Detailed Info</value>
+  </data>
+  <data name="6400" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Commands\Resources\AddUnitTestsCommandPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -337,5 +337,23 @@ namespace AMF.Tools.Properties {
                 return ((string)(this["AMFNetCoreApiCorePackageVersion"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Controller Unit Tests Base")]
+        public string BaseControllerTestsTemplateTitle {
+            get {
+                return ((string)(this["BaseControllerTestsTemplateTitle"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Controller Unit Tests Implementation")]
+        public string ControllerUnitTestsImplementationTemplateTitle {
+            get {
+                return ((string)(this["ControllerUnitTestsImplementationTemplateTitle"]));
+            }
+        }
     }
 }

@@ -58,6 +58,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ActivityLogger.cs" />
+    <Compile Include="Commands\AddUnitTestsCommand.cs" />
+    <Compile Include="Commands\AddUnitTestsCommandPackage.cs" />
+    <Compile Include="UnitTestsScaffoldServiceAspNetCore.cs" />
     <Compile Include="UnitTestsScaffoldServiceBase.cs" />
     <Compile Include="Tracking.cs" />
     <Compile Include="Commands\AddReferenceCommand.cs" />
@@ -105,11 +108,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <VSCTCompile Include="Commands\AddUnitTestsCommandPackage.vsct">
+      <ResourceName>Menus4.ctmenu</ResourceName>
+    </VSCTCompile>
+    <Content Include="Commands\Resources\AddUnitTestsCommand.png" />
+    <Content Include="Commands\Resources\AddUnitTestsCommandPackage.ico" />
     <Content Include="Templates\Tests\ApiControllerTests.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Templates\Tests\ApiControllerTestsImplementation.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <VSCTCompile Include="Commands\AddReferenceCommandPackage.vsct">
       <ResourceName>Menus1.ctmenu</ResourceName>

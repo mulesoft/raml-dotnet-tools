@@ -57,11 +57,11 @@ namespace AMF.Tools
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
 
-            var contractsFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, UnitTestsFolderName);
+            var unitTestsFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, UnitTestsFolderName);
             var ramlItem =
-                contractsFolderItem.ProjectItems.Cast<ProjectItem>()
+                unitTestsFolderItem.ProjectItems.Cast<ProjectItem>()
                     .First(i => i.Name.ToLowerInvariant() == parameters.TargetFileName.ToLowerInvariant());
-            var contractsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar +
+            var unitTestsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar +
                                       UnitTestsFolderName + Path.DirectorySeparatorChar;
 
             var templates = new[]
@@ -71,7 +71,7 @@ namespace AMF.Tools
                 ModelTemplateName, 
                 EnumTemplateName
             };
-            if (!templatesManager.ConfirmWhenIncompatibleServerTemplate(contractsFolderPath, templates))
+            if (!templatesManager.ConfirmWhenIncompatibleServerTemplate(unitTestsFolderPath, templates))
                 return;
 
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
@@ -81,8 +81,8 @@ namespace AMF.Tools
             //AddOrUpdateEnums(parameters, contractsFolderPath, ramlItem, model, contractsFolderItem, extensionPath);
             // AddJsonSchemaParsingErrors(model.Warnings, contractsFolderPath, contractsFolderItem, ramlItem);
 
-            AddOrUpdateUnitTestsControllerBase(parameters, contractsFolderPath, ramlItem, model, contractsFolderItem, extensionPath);
-            AddOrUpdateUnitTestsControllerImplementations(parameters, contractsFolderPath, proj, model, contractsFolderItem, extensionPath);
+            AddOrUpdateUnitTestsControllerBase(parameters, unitTestsFolderPath, ramlItem, model, unitTestsFolderItem, extensionPath);
+            AddOrUpdateUnitTestsControllerImplementations(parameters, unitTestsFolderPath, proj, model, unitTestsFolderItem, extensionPath);
         }
 
         private void AddJsonSchemaParsingErrors(IDictionary<string, string> warnings, string contractsFolderPath, 
@@ -118,7 +118,7 @@ namespace AMF.Tools
 
         private static void ScaffoldMainRamlFiles(IEnumerable<string> ramlFiles)
         {
-            var service = GetRamlScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
+            var service = GetScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
 
             foreach (var ramlFile in ramlFiles)
             {
@@ -137,15 +137,15 @@ namespace AMF.Tools
             }
         }
 
-        public static RamlScaffoldServiceBase GetRamlScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider serviceProvider)
+        public static UnitTestsScaffoldServiceBase GetScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider serviceProvider)
         {
             var dte = serviceProvider.GetService(typeof (SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
-            RamlScaffoldServiceBase service;
-            if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
-                service = new RamlScaffoldServiceAspNetCore(new T4Service(serviceProvider), serviceProvider);
-            else
-                service = new RamlScaffoldServiceWebApi(new T4Service(serviceProvider), serviceProvider);
+            UnitTestsScaffoldServiceBase service;
+            //if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
+                service = new UnitTestsScaffoldServiceAspNetCore(new T4Service(serviceProvider), serviceProvider);
+            //else
+            //    service = new RamlScaffoldServiceWebApi(new T4Service(serviceProvider), serviceProvider);
             return service;
         }
 
@@ -199,24 +199,24 @@ namespace AMF.Tools
             return document.Path.ToLowerInvariant().Contains(ContractsFolder.ToLowerInvariant());
         }
 
-        private void AddOrUpdateUnitTestsControllerImplementations(RamlChooserActionParams parameters, string contractsFolderPath, Project proj,
+        private void AddOrUpdateUnitTestsControllerImplementations(RamlChooserActionParams parameters, string unitTestsFolderPath, Project proj,
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
-            templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, UnitTestsControllerImplementationTemplateName,
-                Settings.Default.ControllerImplementationTemplateTitle, TemplateSubFolder);
-            var controllersFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, "Controllers");
+            templatesManager.CopyServerTemplateToProjectFolder(unitTestsFolderPath, UnitTestsControllerImplementationTemplateName,
+                Settings.Default.ControllerUnitTestsImplementationTemplateTitle, TemplateSubFolder);
+            var unitTestsFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, UnitTestsFolderName);
             
-            var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
+            var templatesFolder = Path.Combine(unitTestsFolderPath, "Templates");
             var controllerImplementationTemplateParams =
                 new TemplateParams<ControllerObject>(
                     Path.Combine(templatesFolder, UnitTestsControllerImplementationTemplateName),
-                    controllersFolderItem, "controllerObject", model.Controllers, contractsFolderPath, folderItem,
-                    extensionPath, parameters.TargetNamespace, "Controller", false,
+                    unitTestsFolderItem, "controllerObject", model.Controllers, unitTestsFolderPath, folderItem,
+                    extensionPath, parameters.TargetNamespace, "ControllerTests", false,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
-                    TargetFolder = TargetFolderResolver.GetImplementationControllersFolderPath(proj, parameters.ImplementationControllersFolder),
-                    RelativeFolder = parameters.ImplementationControllersFolder,
-                    Title = Settings.Default.ControllerImplementationTemplateTitle,
+                    TargetFolder = TargetFolderResolver.GetUnitTestsFolder(proj, UnitTestsFolderName),
+                    RelativeFolder = UnitTestsFolderName, //TODO: check
+                    Title = Settings.Default.ControllerUnitTestsImplementationTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
@@ -232,14 +232,14 @@ namespace AMF.Tools
             return includeApiVersionInRoutePrefix ? NetNamingMapper.GetVersionName(apiVersion) : string.Empty;
         }
 
-        private void AddOrUpdateUnitTestsControllerBase(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem,
+        private void AddOrUpdateUnitTestsControllerBase(RamlChooserActionParams parameters, string unitTestFolderPath, ProjectItem ramlItem,
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
-            templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, UnitTestsControllerTemplateName,
-                Settings.Default.BaseControllerTemplateTitle, TemplateSubFolder);
-            var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
+            templatesManager.CopyServerTemplateToProjectFolder(unitTestFolderPath, UnitTestsControllerTemplateName,
+                Settings.Default.BaseControllerTestsTemplateTitle, TemplateSubFolder);
+            var templatesFolder = Path.Combine(unitTestFolderPath, "Templates");
 
-            var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
+            var targetFolderPath = GetTargetFolderPath(unitTestFolderPath, ramlItem.FileNames[0]);
 
             var controllerBaseTemplateParams =
                 new TemplateParams<ControllerObject>(Path.Combine(templatesFolder, UnitTestsControllerTemplateName),
@@ -247,7 +247,7 @@ namespace AMF.Tools
                     parameters.TargetNamespace, "Controller", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
-                    Title = Settings.Default.BaseControllerTemplateTitle,
+                    Title = Settings.Default.BaseControllerTestsTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
@@ -351,7 +351,7 @@ namespace AMF.Tools
             }
         }
 
-        protected void AddContractFromFile(ProjectItem folderItem, string folderPath, RamlChooserActionParams parameters)
+        protected void AddUnitTests(ProjectItem folderItem, string folderPath, RamlChooserActionParams parameters)
         {
             var includesFolderPath = folderPath + Path.DirectorySeparatorChar + InstallerServices.IncludesFolderName;
 
@@ -416,49 +416,6 @@ namespace AMF.Tools
                 ramlProjItem = folderItem.ProjectItems.AddFromFile(ramlDestFile);
             }
             return ramlProjItem;
-        }
-
-        protected void AddEmptyContract(ProjectItem folderItem, string folderPath, RamlChooserActionParams parameters)
-        {
-            
-            var newContractFile = Path.Combine(folderPath, parameters.TargetFileName);
-            var contents = CreateNewRamlContents(parameters.RamlTitle);
-
-            ProjectItem ramlProjItem;
-            if (File.Exists(newContractFile))
-            {
-                var dialogResult = InstallerServices.ShowConfirmationDialog(parameters.TargetFileName);
-                if (dialogResult == MessageBoxResult.Yes)
-                {
-                    File.WriteAllText(newContractFile, contents);
-                    ramlProjItem = folderItem.ProjectItems.AddFromFile(newContractFile);
-                }
-                else
-                {
-                    ramlProjItem = folderItem.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == newContractFile);
-                    if (ramlProjItem == null)
-                        ramlProjItem = folderItem.ProjectItems.AddFromFile(newContractFile);
-                }
-            }
-            else
-            {
-                File.WriteAllText(newContractFile, contents);
-                ramlProjItem = folderItem.ProjectItems.AddFromFile(newContractFile);
-            }
-
-            var props = Map(parameters);
-            var targetFolderPath = GetTargetFolderPath(folderPath, parameters.TargetFileName);
-            var refFilePath = InstallerServices.AddRefFile(newContractFile, targetFolderPath, parameters.TargetFileName, props);
-            ramlProjItem.ProjectItems.AddFromFile(refFilePath);
-        }
-
-
-
-        private static string CreateNewRamlContents(string title)
-        {
-            var contents = "#%RAML " + RamlSpecVersion + Environment.NewLine +
-                           "title: " + title + Environment.NewLine;
-            return contents;
         }
     }
 }

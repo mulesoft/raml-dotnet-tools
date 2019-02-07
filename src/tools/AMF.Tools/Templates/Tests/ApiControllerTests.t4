@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 <# if(hasModels){ #>
 using $(namespace).Models;
 <# } #>
@@ -24,6 +25,7 @@ namespace $(namespace)
 {
     
 <# if(System.String.IsNullOrWhiteSpace(apiVersion)) { #>
+	[TestClass]
     public partial class <#= controllerObject.Name #>ControllerTests
     {
         protected <#= controllerObject.Name #>Controller controller = new <#= controllerObject.Name #>Controller();
@@ -34,7 +36,6 @@ namespace $(namespace)
         protected <#= apiVersion #><#= controllerObject.Name #>Controller controller = new <#= apiVersion #><#= controllerObject.Name #>Controller();
         protected <#= apiVersion #><#= controllerObject.Name #>ControllerTestsImplementation implementation = new <#= apiVersion #><#= controllerObject.Name #>ControllerTestsImplementation();
 <# } #>
-    {
 
 <#
 		foreach (var method in controllerObject.Methods)
@@ -42,18 +43,22 @@ namespace $(namespace)
 #>
 
         // Do not modify this code
+		[TestMethod]
 <# if(useAsyncMethods) { #>
         public virtual async Task<IActionResult> <#= method.Name #>Test()
-        {
 <# } else { #>
-        public virtual IActionResult <#= method.Name #>Base(<#= method.ParametersStringForAspNet5 #>)
+        public virtual void <#= method.Name #>Test()
 <# } #>
-
+		{
             // Arrange
-            implementation.<#= method.Name #>Arrange();
+            implementation.<#= method.Name #>Arrange(controller);
 
             // Act
-<# if(useAsyncMethods) { #>
+<# if(!string.IsNullOrWhiteSpace(method.ParametersStringForAspNet5)) { #>
+			<#= method.ParametersStringForAspNet5 #>;
+<# } #>
+<# 
+if(useAsyncMethods) { #>
             var result = await controller.<#= method.Name #>(<#= method.ParametersCallString #>);
 <# } else { #>
             var result = controller.<#= method.Name #>(<#= method.ParametersCallString #>);

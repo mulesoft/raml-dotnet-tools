@@ -32,10 +32,10 @@ namespace $(namespace)
 		{
 #>
         // Mock controller depenencies for method <#= method.Name #>
-<# if(System.String.IsNullOrWhiteSpace(apiVersion)) { #>
+<# if(!System.String.IsNullOrWhiteSpace(apiVersion)) { #>
         internal <#= apiVersion #><#= controllerObject.Name #> <#= method.Name #>Arrange(<#= apiVersion #><#= controllerObject.Name #> controller)
 <# } else { #>
-        internal <#= controllerObject.Name #> <#= method.Name #>(<#= controllerObject.Name #> controller)
+        internal <#= controllerObject.Name #>Controller <#= method.Name #>Arrange(<#= controllerObject.Name #>Controller controller)
 <# } #>
         {
             // TODO: mock dependencies

@@ -112,6 +112,9 @@ namespace AMF.Tools
 
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
+            // MSTests package
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.4.0", Settings.Default.NugetExternalPackagesSource);
+
             // AMF.Api.Core dependencies
             //NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, newtonsoftJsonPackageId, packageVersion, Settings.Default.NugetExternalPackagesSource);
         }
@@ -211,7 +214,7 @@ namespace AMF.Tools
                 new TemplateParams<ControllerObject>(
                     Path.Combine(templatesFolder, UnitTestsControllerImplementationTemplateName),
                     unitTestsFolderItem, "controllerObject", model.Controllers, unitTestsFolderPath, folderItem,
-                    extensionPath, parameters.TargetNamespace, "ControllerTests", false,
+                    extensionPath, parameters.TargetNamespace, "ControllerTestsImplementation", false,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     TargetFolder = TargetFolderResolver.GetUnitTestsFolder(proj, UnitTestsFolderName),
@@ -244,7 +247,7 @@ namespace AMF.Tools
             var controllerBaseTemplateParams =
                 new TemplateParams<ControllerObject>(Path.Combine(templatesFolder, UnitTestsControllerTemplateName),
                     ramlItem, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
-                    parameters.TargetNamespace, "Controller", true,
+                    parameters.TargetNamespace, "ControllerTests", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     Title = Settings.Default.BaseControllerTestsTemplateTitle,

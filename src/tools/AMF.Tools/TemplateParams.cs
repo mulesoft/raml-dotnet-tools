@@ -6,89 +6,49 @@ namespace AMF.Tools
 {
     public class TemplateParams<TT> where TT : IHasName
     {
-        private string _templatePath;
-        private ProjectItem _projItem;
-        private string _parameterName;
-        private IEnumerable<TT> _parameterCollection;
-        private string _folderPath;
-        private ProjectItem _folderItem;
-        private string _binPath;
-        private string _targetNamespace;
-        private string _suffix;
-        private bool _ovewrite;
-        private string _prefix;
+        private string _testsNamespace;
 
         public TemplateParams(string templatePath, ProjectItem projItem, string parameterName,
             IEnumerable<TT> parameterCollection, string folderPath, ProjectItem folderItem, string binPath,
-            string targetNamespace, string suffix = null, bool ovewrite = true, string prefix = null)
+            string targetNamespace, string suffix = null, bool ovewrite = true, string prefix = null, string testsNamespace = null)
         {
-            _templatePath = templatePath;
-            _projItem = projItem;
-            _parameterName = parameterName;
-            _parameterCollection = parameterCollection;
-            _folderPath = folderPath;
-            _folderItem = folderItem;
-            _binPath = binPath;
-            _targetNamespace = targetNamespace;
-            _suffix = suffix;
-            _ovewrite = ovewrite;
-            _prefix = prefix;
+            TemplatePath = templatePath;
+            ProjItem = projItem;
+            ParameterName = parameterName;
+            ParameterCollection = parameterCollection;
+            FolderPath = folderPath;
+            FolderItem = folderItem;
+            BinPath = binPath;
+            TargetNamespace = targetNamespace;
+            TestsNamespace = testsNamespace;
+            Suffix = suffix;
+            Ovewrite = ovewrite;
+            Prefix = prefix;
         }
 
-        public string TemplatePath
-        {
-            get { return _templatePath; }
-        }
+        public string TemplatePath { get; }
 
-        public ProjectItem ProjItem
-        {
-            get { return _projItem; }
-        }
+        public ProjectItem ProjItem { get; }
 
-        public string ParameterName
-        {
-            get { return _parameterName; }
-        }
+        public string ParameterName { get; }
 
-        public IEnumerable<TT> ParameterCollection
-        {
-            get { return _parameterCollection; }
-        }
+        public IEnumerable<TT> ParameterCollection { get; }
 
-        public string FolderPath
-        {
-            get { return _folderPath; }
-        }
+        public string FolderPath { get; }
 
-        public ProjectItem FolderItem
-        {
-            get { return _folderItem; }
-        }
+        public ProjectItem FolderItem { get; }
 
-        public string BinPath
-        {
-            get { return _binPath; }
-        }
+        public string BinPath { get; }
 
-        public string TargetNamespace
-        {
-            get { return _targetNamespace; }
-        }
+        public string TargetNamespace { get; }
 
-        public string Suffix
-        {
-            get { return _suffix; }
-        }
+        public string TestsNamespace { get; set; }
 
-        public bool Ovewrite
-        {
-            get { return _ovewrite; }
-        }
+        public string Suffix { get; }
 
-        public string Prefix
-        {
-            get { return _prefix; }
-        }
+        public bool Ovewrite { get; }
+
+        public string Prefix { get; }
 
         public string Title { get; set; }
 

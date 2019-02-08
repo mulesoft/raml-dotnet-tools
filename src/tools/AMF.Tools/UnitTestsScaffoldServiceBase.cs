@@ -218,13 +218,14 @@ namespace AMF.Tools
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     TargetFolder = TargetFolderResolver.GetUnitTestsFolder(proj, UnitTestsFolderName),
-                    RelativeFolder = UnitTestsFolderName, //TODO: check
+                    RelativeFolder = UnitTestsFolderName,
                     Title = Settings.Default.ControllerUnitTestsImplementationTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
                     IncludeApiVersionInRoutePrefix = parameters.IncludeApiVersionInRoutePrefix,
-                    ApiVersion = model.ApiVersion
+                    ApiVersion = model.ApiVersion,
+                    TestsNamespace = parameters.TestsNamespace
                 };
 
             codeGenerator.GenerateCodeFromTemplate(controllerImplementationTemplateParams);
@@ -256,7 +257,8 @@ namespace AMF.Tools
                     UseAsyncMethods = parameters.UseAsyncMethods,
                     IncludeApiVersionInRoutePrefix = parameters.IncludeApiVersionInRoutePrefix,
                     ApiVersion = model.ApiVersion,
-                    TargetFolder = targetFolderPath
+                    TargetFolder = targetFolderPath,
+                    TestsNamespace = parameters.TestsNamespace
                 };
             codeGenerator.GenerateCodeFromTemplate(controllerBaseTemplateParams);
         }

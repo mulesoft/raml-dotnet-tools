@@ -10,6 +10,8 @@ using AMF.Parser.Model;
 using System.Linq;
 using Task = System.Threading.Tasks.Task;
 using AMF.Api.Core;
+using EnvDTE;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace AMF.Common.ViewModels
 {
@@ -56,6 +58,8 @@ namespace AMF.Common.ViewModels
         {
             ServiceProvider = serviceProvider;
             RamlTitle = ramlTitle;
+            var dte = serviceProvider.GetService(typeof(SDTE)) as DTE;
+            Projects = VisualStudioAutomationHelper.GetProjects(dte);
         }
 
         public string ImportButtonText
@@ -246,6 +250,39 @@ namespace AMF.Common.ViewModels
                 if (value == resourcesPreview) return;
                 resourcesPreview = value;
                 NotifyOfPropertyChange(() => ResourcesPreview);
+            }
+        }
+
+        private IEnumerable<string> projects;
+        public IEnumerable<string> Projects
+        {
+            get => projects;
+            set {
+                if (value == projects) return;
+                projects = value;
+                NotifyOfPropertyChange(() => Projects);
+            }
+        }
+
+        public string SelectedProject
+        {
+            get { return testsProject; }
+            set
+            {
+                if (value == testsProject) return;
+                testsProject = value;
+                NotifyOfPropertyChange(() => SelectedProject);
+            }
+        }
+
+        public string TestsNamespace
+        {
+            get { return testsNamespace; }
+            set
+            {
+                if (value == testsNamespace) return;
+                testsNamespace = value;
+                NotifyOfPropertyChange(() => TestsNamespace);
             }
         }
 
@@ -463,7 +500,7 @@ namespace AMF.Common.ViewModels
 
                 // Execute action (add RAML Reference, Scaffold Web Api, etc)
                 var parameters = new RamlChooserActionParams(RamlOriginalSource, RamlTempFilePath, RamlTitle, path,
-                    Filename, Namespace, doNotScaffold: isNewContract);
+                    Filename, Namespace, doNotScaffold: isNewContract, testsNamespace: TestsNamespace);
 
                 if (isContractUseCase)
                 {
@@ -531,6 +568,7 @@ namespace AMF.Common.ViewModels
         }
 
         public bool UseAsyncMethods { get; set; }
+        
 
         private readonly char[] invalidPathChars = Path.GetInvalidPathChars().Union((new[] {':'}).ToList()).ToArray();
         private int height;
@@ -540,6 +578,8 @@ namespace AMF.Common.ViewModels
         private bool canImport;
         private string filename;
         private string ns;
+        private string testsNamespace;
+        private string testsProject;
         private Visibility progressBarVisibility;
         private bool addSuffixToGeneratedCode;
         private string proxyClientName;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EnvDTE;
@@ -21,6 +22,37 @@ namespace AMF.Common
             }
 
             return activeProject;
+        }
+
+        public static IEnumerable<string> GetProjects(_DTE dte)
+        {
+            var projects = new List<string>();
+
+            var solutionProjects = dte.Solution.Projects;
+            if (solutionProjects == null)
+                return projects;
+
+            var projs = solutionProjects.Cast<Project>();
+            if (projs == null)
+                return projects;
+
+            return projs.Select(p => p.Name).ToArray();
+        }
+
+        public static Project GetProject(_DTE dte, string projName)
+        {
+            var activeSolutionProjects = dte.ActiveSolutionProjects as Array;
+            if (activeSolutionProjects != null)
+                return null;
+
+            Project proj = null;
+            for (var i = 0; i < activeSolutionProjects.Length; i++)
+            {
+                proj = activeSolutionProjects.GetValue(i) as Project;
+                if (proj?.Name == projName)
+                    return proj;
+            }
+            return null;
         }
 
         public static string GetDefaultNamespace(IServiceProvider serviceProvider)

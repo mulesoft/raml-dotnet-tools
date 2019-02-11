@@ -32,7 +32,7 @@ namespace AMF.Tools
         private readonly string newtonsoftJsonPackageId = Settings.Default.NewtonsoftJsonPackageId;
         
         private readonly CodeGenerator codeGenerator;
-
+        private readonly IT4Service t4Service;
         protected readonly string ContractsFolderName = Settings.Default.ContractsFolderName;
         protected readonly IServiceProvider ServiceProvider;
 
@@ -46,6 +46,7 @@ namespace AMF.Tools
         {
             ServiceProvider = serviceProvider;
             codeGenerator = new CodeGenerator(t4Service);
+            this.t4Service = t4Service;
         }
 
         public void Scaffold(string ramlSource, RamlChooserActionParams parameters)
@@ -90,6 +91,12 @@ namespace AMF.Tools
             AddOrUpdateControllerImplementations(parameters, contractsFolderPath, proj, model, contractsFolderItem, extensionPath);
 
             AddJsonSchemaParsingErrors(model.Warnings, contractsFolderPath, contractsFolderItem, ramlItem);
+
+            if (parameters.GenerateUnitTests.HasValue && parameters.GenerateUnitTests.Value)
+            {
+                var unitTestsScaffoldService = new UnitTestsScaffoldServiceAspNetCore(t4Service, ServiceProvider);
+                unitTestsScaffoldService.Scaffold(ramlSource, parameters);
+            }
         }
 
         private void AddJsonSchemaParsingErrors(IDictionary<string, string> warnings, string contractsFolderPath, 

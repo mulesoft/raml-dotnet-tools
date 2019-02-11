@@ -122,7 +122,7 @@ namespace AMF.Tools
             var ramlChooserViewModel = new RamlChooserViewModel();
             ramlChooserViewModel.Load(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, ramlScaffoldUpdater.AddContract, "Add RAML Contract", true, Settings.Default.RAMLExchangeUrl);
             dynamic settings = new ExpandoObject();
-            settings.Height = 570;
+            settings.Height = 600;
 
             AmfToolsPackage.WindowManager.ShowDialog(ramlChooserViewModel, null, settings);
         }

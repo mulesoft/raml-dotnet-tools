@@ -126,7 +126,7 @@ namespace AMF.Tools.Commands
             ramlChooserViewModel.Load(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, unitTestsScaffoldService.AddTests, "Add Unit Tests", 
                 true, Settings.Default.RAMLExchangeUrl);
             dynamic settings = new ExpandoObject();
-            settings.Height = 570;
+            settings.Height = 600;
 
             AmfToolsPackage.WindowManager.ShowDialog(ramlChooserViewModel, null, settings);
         }

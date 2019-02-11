@@ -26,6 +26,7 @@ namespace AMF.Common.ViewModels
         private bool useApiVersion;
         private bool configFolders;
         private string modelsFolder;
+        private string activeProjectName;
         private Logger logger = new Logger();
 
         public RamlPreviewViewModel(IServiceProvider serviceProvider, Action<RamlChooserActionParams> action, string ramlTempFilePath,
@@ -60,6 +61,7 @@ namespace AMF.Common.ViewModels
             RamlTitle = ramlTitle;
             var dte = serviceProvider.GetService(typeof(SDTE)) as DTE;
             Projects = VisualStudioAutomationHelper.GetProjects(dte);
+            activeProjectName = VisualStudioAutomationHelper.GetActiveProject(dte).Name;
         }
 
         public string ImportButtonText
@@ -132,6 +134,19 @@ namespace AMF.Common.ViewModels
                 NotifyOfPropertyChange(() => ApiVersion);
             }
         }
+
+        private bool generateUnitTests;
+
+        public bool GenerateUnitTests
+        {
+            get { return generateUnitTests; }
+            set
+            {
+                generateUnitTests = value;
+                NotifyOfPropertyChange(() => GenerateUnitTests);
+            }
+        }
+
 
         public bool ConfigFolders
         {
@@ -454,11 +469,17 @@ namespace AMF.Common.ViewModels
                     return;
                 }
 
-                //if (!Filename.ToLowerInvariant().EndsWith(RamlFileExtension))
-                //{
-                //    ShowErrorAndStopProgress("Error: the file must have the .raml extension.");
-                //    return;
-                //}
+                if (IsContractUseCase && GenerateUnitTests && string.IsNullOrWhiteSpace(SelectedProject))
+                {
+                    ShowErrorAndStopProgress("Error: you must select a project to generate the unit tests.");
+                    return;
+                }
+
+                if (IsContractUseCase && GenerateUnitTests && SelectedProject == activeProjectName)
+                {
+                    ShowErrorAndStopProgress("Error: select a different project to generate the unit tests.");
+                    return;
+                }
 
                 if (!IsContractUseCase && !File.Exists(RamlTempFilePath))
                 {
@@ -499,8 +520,8 @@ namespace AMF.Common.ViewModels
                 ResourcesPreview = "Processing. Please wait..." + Environment.NewLine + Environment.NewLine;
 
                 // Execute action (add RAML Reference, Scaffold Web Api, etc)
-                var parameters = new RamlChooserActionParams(RamlOriginalSource, RamlTempFilePath, RamlTitle, path,
-                    Filename, Namespace, doNotScaffold: isNewContract, testsNamespace: TestsNamespace);
+                var parameters = new RamlChooserActionParams(RamlOriginalSource, RamlTempFilePath, RamlTitle, path, Filename, Namespace, 
+                    doNotScaffold: isNewContract);
 
                 if (isContractUseCase)
                 {
@@ -509,6 +530,9 @@ namespace AMF.Common.ViewModels
                     parameters.ImplementationControllersFolder = GetCorrectPath(ImplementationControllersFolder);
                     parameters.ModelsFolder = GetCorrectPath(ModelsFolder);
                     parameters.AddGeneratedSuffixToFiles = AddSuffixToGeneratedCode;
+                    parameters.GenerateUnitTests = GenerateUnitTests;
+                    parameters.TestsProjectName = SelectedProject;
+                    parameters.TestsNamespace = TestsNamespace;
                 }
 
                 if(!isContractUseCase)

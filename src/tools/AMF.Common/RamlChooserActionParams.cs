@@ -2,7 +2,8 @@
 {
     public class RamlChooserActionParams
     {
-        public RamlChooserActionParams(string ramlSource, string ramlFilePath, string ramlTitle, string templatesPath, string targetFileName, string targetNamespace, bool? doNotScaffold, string testsNamespace = null)
+        public RamlChooserActionParams(string ramlSource, string ramlFilePath, string ramlTitle, string templatesPath, string targetFileName, string targetNamespace,
+            bool? doNotScaffold, bool? generateUnitTests = null, string testsProjectName = null, string testsNamespace = null)
         {
             RamlSource = ramlSource;
             RamlFilePath = ramlFilePath;
@@ -11,7 +12,9 @@
             TargetFileName = targetFileName;
             TargetNamespace = targetNamespace;
             DoNotScaffold = doNotScaffold;
+            GenerateUnitTests = generateUnitTests;
             TestsNamespace = testsNamespace;
+            TestsProjectName = testsProjectName;
         }
 
         public string RamlSource { get; private set; } // the original URL or file path of the RAML
@@ -21,7 +24,9 @@
         public string TargetFileName { get; private set; }
         public string TargetNamespace { get; private set; }
         public bool? DoNotScaffold { get; private set; }
-        public string TestsNamespace { get; }
+        public bool? GenerateUnitTests { get; set; }
+        public string TestsNamespace { get; set; }
+        public string TestsProjectName { get; set; }
         public bool UseAsyncMethods { get; set; }
         public string ClientRootClassName { get; set; }
         public bool IncludeApiVersionInRoutePrefix { get; set; }

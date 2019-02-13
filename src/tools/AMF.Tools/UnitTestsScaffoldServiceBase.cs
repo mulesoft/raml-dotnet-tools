@@ -225,7 +225,7 @@ namespace AMF.Tools
 
             var controllerBaseTemplateParams =
                 new TemplateParams<ControllerObject>(Path.Combine(templatesFolder, UnitTestsControllerTemplateName),
-                    null, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
+                    folderItem, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
                     parameters.TargetNamespace, "ControllerTests", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {

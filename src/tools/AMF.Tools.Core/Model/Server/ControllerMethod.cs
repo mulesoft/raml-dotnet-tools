@@ -96,6 +96,43 @@ namespace AMF.Tools.Core.WebApiGenerator
             }
         }
 
+
+        public string ParametersDefinitionAspNetCore
+        {
+            get
+            {
+                var parameters = new Dictionary<string, MethodParameter>();
+
+                if (HasInputParameter())
+                    parameters.Add(Parameter.Name, new MethodParameter(false, (CollectionTypeHelper.IsCollection(Parameter.Type) 
+                        ? Parameter.Type.Substring(1) : Parameter.Type) 
+                        + " " + Parameter.Name + " = default(" + (CollectionTypeHelper.IsCollection(Parameter.Type)
+                                                            ? Parameter.Type.Substring(1) : Parameter.Type) + ");"));
+
+                if (UriParameters != null && UriParameters.Any())
+                    foreach (var parameter in UriParameters.Where(parameter => !parameters.ContainsKey(parameter.Name)))
+                        parameters.Add(parameter.Name, new MethodParameter(false, parameter.Type + " " + parameter.Name + 
+                            " = default(" + parameter.Type + ");"));
+
+
+                if (UseSecurity && SecurityParameters != null && SecurityParameters.Any())
+                    foreach (var prop in SecurityParameters.Where(parameter => !parameters.ContainsKey(parameter.Name.ToLowerInvariant())))
+                        parameters.Add(prop.Name.ToLowerInvariant(),
+                            new MethodParameter(!prop.Required,
+                                prop.Type + " " + prop.Name.ToLowerInvariant() + " = default(" + prop.Type + ");"));
+
+                if (QueryParameters != null && QueryParameters.Any())
+                    foreach (var prop in QueryParameters.Where(parameter => !parameters.ContainsKey(parameter.Name.ToLowerInvariant())))
+                        parameters.Add(prop.Name.ToLowerInvariant(),
+                            new MethodParameter(!prop.Required,
+                                prop.Type + " " + prop.Name.ToLowerInvariant() + " = default(" + prop.Type + ");"));
+
+                var methodParameters = parameters.Values.OrderBy(p => p.IsOptional).ToList();
+                var parametersString = string.Join(Environment.NewLine, methodParameters.Select(p => p.ParameterDeclaration));
+                return parametersString;
+            }
+        }
+
         public string ParametersCallString
         {
             get

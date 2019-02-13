@@ -57,7 +57,7 @@ namespace <#= testsNamespace #>
 
             // Act
 <# if(!string.IsNullOrWhiteSpace(method.ParametersStringForAspNet5)) { #>
-			<#= method.ParametersStringForAspNet5 #>;
+			<#= method.ParametersDefinitionAspNetCore #>
 <# } #>
 <# 
 if(useAsyncMethods) { #>
@@ -76,7 +76,7 @@ if (method.ReturnType != null && method.ReturnType != "string")
             Assert.IsNotNull(objectResult);
             Assert.IsInstanceOfType(objectResult.Value, typeof(<#= method.ReturnType #>));
 <#  } #>
-            implementation.GetByIdAssert(result);
+            implementation.<#= method.Name #>Assert(result);
         }
 <#
 		} // end foreach method

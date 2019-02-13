@@ -48,27 +48,29 @@ namespace AMF.Tools
 
         public void Scaffold(string ramlSource, RamlChooserActionParams parameters)
         {
+            var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
+            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
+
+            ScaffoldToProject(parameters, proj);
+        }
+
+        public void ScaffoldToProject(RamlChooserActionParams parameters, Project proj)
+        {
             var data = parameters.Data;
             if (data == null || data.RamlDocument == null)
                 return;
 
             var model = new WebApiGeneratorService(data.RamlDocument, parameters.TargetNamespace).BuildModel();
 
-            var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
-            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
-
             var unitTestsFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, UnitTestsFolderName);
-            var ramlItem =
-                unitTestsFolderItem.ProjectItems.Cast<ProjectItem>()
-                    .First(i => i.Name.ToLowerInvariant() == parameters.TargetFileName.ToLowerInvariant());
             var unitTestsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar +
                                       UnitTestsFolderName + Path.DirectorySeparatorChar;
 
             var templates = new[]
             {
-                UnitTestsControllerTemplateName, 
+                UnitTestsControllerTemplateName,
                 UnitTestsControllerImplementationTemplateName,
-                ModelTemplateName, 
+                ModelTemplateName,
                 EnumTemplateName
             };
             if (!templatesManager.ConfirmWhenIncompatibleServerTemplate(unitTestsFolderPath, templates))
@@ -76,32 +78,8 @@ namespace AMF.Tools
 
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
 
-            //TODO: should ask if models should be generated or are already generated ?
-            //AddOrUpdateModels(parameters, contractsFolderPath, ramlItem, model, contractsFolderItem, extensionPath);
-            //AddOrUpdateEnums(parameters, contractsFolderPath, ramlItem, model, contractsFolderItem, extensionPath);
-            // AddJsonSchemaParsingErrors(model.Warnings, contractsFolderPath, contractsFolderItem, ramlItem);
-
-            AddOrUpdateUnitTestsControllerBase(parameters, unitTestsFolderPath, ramlItem, model, unitTestsFolderItem, extensionPath);
+            AddOrUpdateUnitTestsControllerBase(parameters, unitTestsFolderPath, model, unitTestsFolderItem, extensionPath);
             AddOrUpdateUnitTestsControllerImplementations(parameters, unitTestsFolderPath, proj, model, unitTestsFolderItem, extensionPath);
-        }
-
-        private void AddJsonSchemaParsingErrors(IDictionary<string, string> warnings, string contractsFolderPath, 
-            ProjectItem contractsFolderItem, ProjectItem ramlItem)
-        {
-            if(warnings.Count == 0)
-                return;
-
-            var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
-
-            JsonSchemaMessagesManager.AddJsonParsingErrors(warnings, contractsFolderItem, targetFolderPath);
-        }
-
-        public static void TriggerScaffoldOnRamlChanged(Document document)
-        {
-            if (!IsInContractsFolder(document)) 
-                return;
-
-             ScaffoldMainRamlFiles(GetMainRamlFiles(document));
         }
 
         protected void InstallNugetDependencies(Project proj, string packageVersion)
@@ -236,18 +214,18 @@ namespace AMF.Tools
             return includeApiVersionInRoutePrefix ? NetNamingMapper.GetVersionName(apiVersion) : string.Empty;
         }
 
-        private void AddOrUpdateUnitTestsControllerBase(RamlChooserActionParams parameters, string unitTestFolderPath, ProjectItem ramlItem,
+        private void AddOrUpdateUnitTestsControllerBase(RamlChooserActionParams parameters, string unitTestFolderPath, 
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(unitTestFolderPath, UnitTestsControllerTemplateName,
                 Settings.Default.BaseControllerTestsTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(unitTestFolderPath, "Templates");
 
-            var targetFolderPath = GetTargetFolderPath(unitTestFolderPath, ramlItem.FileNames[0]);
+            var targetFolderPath = GetTargetFolderPath(unitTestFolderPath, Path.GetFileName(parameters.RamlFilePath));
 
             var controllerBaseTemplateParams =
                 new TemplateParams<ControllerObject>(Path.Combine(templatesFolder, UnitTestsControllerTemplateName),
-                    ramlItem, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
+                    null, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
                     parameters.TargetNamespace, "ControllerTests", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
@@ -261,99 +239,6 @@ namespace AMF.Tools
                     TestsNamespace = parameters.TestsNamespace
                 };
             codeGenerator.GenerateCodeFromTemplate(controllerBaseTemplateParams);
-        }
-
-        private void AddOrUpdateModels(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem, WebApiGeneratorModel model, ProjectItem contractsFolderItem, string extensionPath)
-        {
-            templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ModelTemplateName,
-                Settings.Default.ModelsTemplateTitle, TemplateSubFolder);
-            var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
-            
-            var models = model.Objects;
-            // when is an XML model, skip empty objects
-            if (model.Objects.Any(o => !string.IsNullOrWhiteSpace(o.GeneratedCode)))
-                models = model.Objects.Where(o => o.Properties.Any() || !string.IsNullOrWhiteSpace(o.GeneratedCode));
-
-            // when array has no properties, set it collection on base type
-            foreach(var arrayModel in models.Where(o => o.IsArray && o.Properties.Count == 0 && o.Type != null 
-                            && CollectionTypeHelper.IsCollection(o.Type) && !NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(o.Type))))
-            {
-                arrayModel.BaseClass = arrayModel.Type.Substring(1); // remove the initil "I" to make it a concrete class
-            }
-            // skip array of primitives
-            models = models.Where(o => o.Type == null || !(CollectionTypeHelper.IsCollection(o.Type) 
-                                            && NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(o.Type))));
-            models = models.Where(o => !o.IsScalar); // skip scalar types
-
-            var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
-
-            var apiObjectTemplateParams = new TemplateParams<ApiObject>(
-                Path.Combine(templatesFolder, ModelTemplateName), ramlItem, "apiObject", models,
-                contractsFolderPath, contractsFolderItem, extensionPath, parameters.TargetNamespace,
-                GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion) +
-                (parameters.AddGeneratedSuffixToFiles ? ".generated" : string.Empty))
-            {
-                Title = Settings.Default.ModelsTemplateTitle,
-                RelativeFolder = parameters.ModelsFolder,
-                TargetFolder = TargetFolderResolver.GetModelsTargetFolder(ramlItem.ContainingProject,
-                    targetFolderPath, parameters.ModelsFolder)
-            };
-
-            codeGenerator.GenerateCodeFromTemplate(apiObjectTemplateParams);
-        }
-
-        private void AddOrUpdateEnums(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem, WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
-        {
-            templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, EnumTemplateName,
-                Settings.Default.EnumsTemplateTitle, TemplateSubFolder);
-            var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
-
-            var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
-
-            var apiEnumTemplateParams = new TemplateParams<ApiEnum>(
-                Path.Combine(templatesFolder, EnumTemplateName), ramlItem, "apiEnum", model.Enums,
-                targetFolderPath, folderItem, extensionPath, parameters.TargetNamespace,
-                GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
-            {
-                Title = Settings.Default.ModelsTemplateTitle,
-                RelativeFolder = parameters.ModelsFolder,
-                TargetFolder = TargetFolderResolver.GetModelsTargetFolder(ramlItem.ContainingProject,
-                    targetFolderPath, parameters.ModelsFolder)
-            };
-
-            codeGenerator.GenerateCodeFromTemplate(apiEnumTemplateParams);
-        }
-
-
-        public void UpdateRaml(string ramlFilePath)
-        {
-            var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
-            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
-            var contractsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar + UnitTestsFolderName + Path.DirectorySeparatorChar;
-
-            var refFilePath = InstallerServices.GetRefFilePath(ramlFilePath);
-            var includesFolderPath = contractsFolderPath + Path.DirectorySeparatorChar + InstallerServices.IncludesFolderName;
-            var ramlSource = RamlReferenceReader.GetRamlSource(refFilePath);
-            if (string.IsNullOrWhiteSpace(ramlSource))
-                ramlSource = ramlFilePath;
-
-            var includesManager = new RamlIncludesManager();
-            var result = includesManager.Manage(ramlSource, includesFolderPath, contractsFolderPath + Path.DirectorySeparatorChar);
-            if (result.IsSuccess)
-            {
-                File.WriteAllText(ramlFilePath, result.ModifiedContents);
-                var parameters = new RamlChooserActionParams(ramlFilePath, ramlFilePath, null, null,
-                    Path.GetFileName(ramlFilePath).ToLowerInvariant(), 
-                    RamlReferenceReader.GetRamlNamespace(refFilePath), null)
-                {
-                    UseAsyncMethods = RamlReferenceReader.GetRamlUseAsyncMethods(refFilePath),
-                    IncludeApiVersionInRoutePrefix = RamlReferenceReader.GetRamlIncludeApiVersionInRoutePrefix(refFilePath),
-                    ModelsFolder = RamlReferenceReader.GetModelsFolder(refFilePath),
-                    ImplementationControllersFolder = RamlReferenceReader.GetImplementationControllersFolder(refFilePath),
-                    AddGeneratedSuffixToFiles = RamlReferenceReader.GetAddGeneratedSuffix(refFilePath)
-                };
-                Scaffold(ramlFilePath, parameters);
-            }
         }
 
         protected void AddUnitTests(ProjectItem folderItem, string folderPath, RamlChooserActionParams parameters)

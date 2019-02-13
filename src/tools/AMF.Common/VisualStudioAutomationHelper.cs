@@ -41,18 +41,9 @@ namespace AMF.Common
 
         public static Project GetProject(_DTE dte, string projName)
         {
-            var activeSolutionProjects = dte.ActiveSolutionProjects as Array;
-            if (activeSolutionProjects != null)
-                return null;
-
-            Project proj = null;
-            for (var i = 0; i < activeSolutionProjects.Length; i++)
-            {
-                proj = activeSolutionProjects.GetValue(i) as Project;
-                if (proj?.Name == projName)
-                    return proj;
-            }
-            return null;
+            var solutionProjects = dte.Solution.Projects;
+            var projects = solutionProjects?.Cast<Project>();
+            return projects?.FirstOrDefault(proj => proj?.Name == projName);
         }
 
         public static string GetDefaultNamespace(IServiceProvider serviceProvider)
@@ -60,7 +51,12 @@ namespace AMF.Common
             var dte = serviceProvider.GetService(typeof(SDTE)) as DTE;
             var project = GetActiveProject(dte);
 
-            var namespaceProperty = IsJsonOrXProj(project) ?  "RootNamespace" : "DefaultNamespace";
+            return GetDefaultNamespace(project);
+        }
+
+        public static string GetDefaultNamespace(Project project)
+        {
+            var namespaceProperty = IsJsonOrXProj(project) ? "RootNamespace" : "DefaultNamespace";
             return project.Properties.Item(namespaceProperty).Value.ToString();
         }
 

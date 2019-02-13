@@ -24,7 +24,8 @@ namespace AMF.Common
             private set;
         }
 
-        public Result TransformText(string templatePath, ClientGeneratorModel model, string binPath, string ramlFile, string targetNamespace)
+        public Result TransformText(string templatePath, ClientGeneratorModel model, string binPath, string ramlFile, string targetNamespace, 
+            string testsNamespace = null)
         {
             // Get the T4 engine from VS
             var textTemplating = ServiceProvider.GetService(typeof (STextTemplating)) as ITextTemplating;
@@ -51,7 +52,8 @@ namespace AMF.Common
         }
 
         public Result TransformText<T>(string templatePath, string paramName, T param, string binPath, string targetNamespace, bool useAsyncMethods, 
-            bool includeHasModels = false, bool hasModels = true, bool includeApiVersionInRoutePrefix = false, string apiVersion = null)
+            bool includeHasModels = false, bool hasModels = true, bool includeApiVersionInRoutePrefix = false, string apiVersion = null, 
+            string testsNamespace = null)
         {
             // Get the T4 engine from VS
             var textTemplating = ServiceProvider.GetService(typeof(STextTemplating)) as ITextTemplating;
@@ -74,6 +76,8 @@ namespace AMF.Common
                 host.Session["hasModels"] = hasModels;
             if (includeApiVersionInRoutePrefix)
                 host.Session["apiVersion"] = apiVersion;
+            if(!string.IsNullOrWhiteSpace(testsNamespace))
+                host.Session["testsNamespace"] = testsNamespace;
 
             var content = textTemplating.ProcessTemplate(templatePath, templateFileContent, this, null);
             textTemplating.EndErrorSession();

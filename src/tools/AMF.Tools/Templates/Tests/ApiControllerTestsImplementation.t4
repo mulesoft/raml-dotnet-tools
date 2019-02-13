@@ -20,7 +20,7 @@ using $(namespace);
 using $(namespace).Models;
 <# } #>
 
-namespace <#= testsNamespace =>
+namespace <#= testsNamespace #>
 {
 <# if(System.String.IsNullOrWhiteSpace(apiVersion)) { #>
     public class <#= controllerObject.Name #>ControllerTestsImplementation

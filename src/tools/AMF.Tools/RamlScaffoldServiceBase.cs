@@ -94,8 +94,13 @@ namespace AMF.Tools
 
             if (parameters.GenerateUnitTests.HasValue && parameters.GenerateUnitTests.Value)
             {
+                var testsProj = VisualStudioAutomationHelper.GetProject(dte, parameters.TestsProjectName);
+
+                parameters.TestsNamespace = VisualStudioAutomationHelper.GetDefaultNamespace(testsProj) + "." +
+                        NetNamingMapper.GetObjectName(Path.GetFileNameWithoutExtension(parameters.RamlFilePath));
+
                 var unitTestsScaffoldService = new UnitTestsScaffoldServiceAspNetCore(t4Service, ServiceProvider);
-                unitTestsScaffoldService.Scaffold(ramlSource, parameters);
+                unitTestsScaffoldService.ScaffoldToProject(parameters, testsProj);
             }
         }
 

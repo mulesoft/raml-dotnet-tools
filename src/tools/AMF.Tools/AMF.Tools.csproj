@@ -60,6 +60,7 @@
     <Compile Include="ActivityLogger.cs" />
     <Compile Include="Commands\AddUnitTestsCommand.cs" />
     <Compile Include="Commands\AddUnitTestsCommandPackage.cs" />
+    <Compile Include="UnitTestsScaffoldServiceAspNetWebApi.cs" />
     <Compile Include="UnitTestsScaffoldServiceAspNetCore.cs" />
     <Compile Include="UnitTestsScaffoldServiceBase.cs" />
     <Compile Include="Tracking.cs" />
@@ -108,16 +109,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Templates\Tests\ApiControllerTests.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Tests\ApiControllerTestsImplementation.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <VSCTCompile Include="Commands\AddUnitTestsCommandPackage.vsct">
       <ResourceName>Menus4.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="Commands\Resources\AddUnitTestsCommand.png" />
     <Content Include="Commands\Resources\AddUnitTestsCommandPackage.ico" />
-    <Content Include="Templates\Tests\ApiControllerTests.t4">
+    <Content Include="Templates\TestsCore\ApiControllerTests.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Templates\Tests\ApiControllerTestsImplementation.t4">
+    <Content Include="Templates\TestsCore\ApiControllerTestsImplementation.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

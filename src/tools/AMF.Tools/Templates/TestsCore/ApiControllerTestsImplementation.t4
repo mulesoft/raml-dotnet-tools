@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using $(namespace);
 <# if(hasModels){ #>
 using $(namespace).Models;
@@ -43,15 +44,8 @@ namespace <#= testsNamespace #>
             return controller;
         }
 
-<#
-if (method.ReturnType != null)
-{
-#>
         // Custom Assertions for method <#= method.Name #>Test
-        internal void <#= method.Name #>Assert(<#= method.ReturnType #> result)
-<# } else { #>
-		internal void <#= method.Name #>Assert(object result)
-<# } #>
+        internal void <#= method.Name #>Assert(IActionResult result)
         {
             // Additional Asserts
         }

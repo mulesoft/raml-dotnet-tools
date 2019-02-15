@@ -10,18 +10,18 @@ using NuGet.VisualStudio;
 
 namespace AMF.Tools
 {
-    public class UnitTestsScaffoldServiceAspNetCore : UnitTestsScaffoldServiceBase
+    public class UnitTestsScaffoldServiceAspNetWebApi : UnitTestsScaffoldServiceBase
     {
-        public UnitTestsScaffoldServiceAspNetCore(IT4Service t4Service, IServiceProvider serviceProvider): base(t4Service, serviceProvider){}
+        public UnitTestsScaffoldServiceAspNetWebApi(IT4Service t4Service, IServiceProvider serviceProvider): base(t4Service, serviceProvider){}
 
         public override string TemplateSubFolder
         {
-            get { return "TestsCore"; }
+            get { return "Tests"; }
         }
 
         public override void AddTests(RamlChooserActionParams parameters)
         {
-            Tracking.Track("Unit Tests Scaffold (Asp.Net Core)");
+            Tracking.Track("Unit Tests Scaffold (Asp.Net WebApi)");
 
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
@@ -41,19 +41,25 @@ namespace AMF.Tools
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
-
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
+
             // MSTests package
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.4.0", Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.3.2", Settings.Default.NugetExternalPackagesSource);
 
-            // InstallNugetDependencies(proj, newtonsoftJsonForCorePackageVersion);
+            //// Microsoft.AspNet.WebApi.Core
+            var webApiPackage = "Microsoft.AspNet.WebApi.Core";
+            var webApiVersion = "5.2.4";
+            if (!installerServices.IsPackageInstalled(proj, webApiPackage))
+            {
+                installer.InstallPackage(nugetPackagesSource, proj, webApiPackage, webApiVersion, false);
+            }
 
-            //// AMF.NetCore.APICore
-            //var ramlNetCoreApiCorePackageId = Settings.Default.AMFNetCoreApiCorePackageId;
-            //var ramlNetCoreApiCorePackageVersion = Settings.Default.AMFNetCoreApiCorePackageVersion;
-            //if (!installerServices.IsPackageInstalled(proj, ramlNetCoreApiCorePackageId))
+            //// AMF.Core.APICore
+            //var ramlApiCorePackageId = Settings.Default.RAMLApiCorePackageId;
+            //var ramlApiCorePackageVersion = Settings.Default.RAMLApiCorePackageVersion;
+            //if (!installerServices.IsPackageInstalled(proj, ramlApiCorePackageId))
             //{
-            //    installer.InstallPackage(nugetPackagesSource, proj, ramlNetCoreApiCorePackageId, ramlNetCoreApiCorePackageVersion, false);
+            //    installer.InstallPackage(nugetPackagesSource, proj, ramlApiCorePackageId, webApiVersion, false);
             //}
         }
 

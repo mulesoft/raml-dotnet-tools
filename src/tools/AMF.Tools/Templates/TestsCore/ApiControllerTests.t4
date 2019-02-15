@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using $(namespace);
 <# if(hasModels){ #>
@@ -46,7 +47,7 @@ namespace <#= testsNamespace #>
         // Do not modify this code
 		[TestMethod]
 <# if(useAsyncMethods) { #>
-        public virtual async Task <#= method.Name #>Test()
+        public virtual async Task<IActionResult> <#= method.Name #>Test()
 <# } else { #>
         public virtual void <#= method.Name #>Test()
 <# } #>
@@ -66,11 +67,15 @@ if(useAsyncMethods) { #>
 <# } #>
 
             // Assert
+            Assert.IsInstanceOfType(result, typeof(IActionResult));
 <#
 if (method.ReturnType != null && method.ReturnType != "string")
 {
 #>
-            Assert.IsInstanceOfType(result, typeof(<#= method.ReturnType #>));
+            var objectResult = result as OkObjectResult;
+            if(objectResult != null)
+				Assert.IsInstanceOfType(objectResult.Value, typeof(<#= method.ReturnType #>));
+
 <#  } #>
             implementation.<#= method.Name #>Assert(result);
         }

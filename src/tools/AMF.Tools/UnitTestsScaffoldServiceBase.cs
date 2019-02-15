@@ -82,21 +82,6 @@ namespace AMF.Tools
             AddOrUpdateUnitTestsControllerImplementations(parameters, unitTestsFolderPath, proj, model, unitTestsFolderItem, extensionPath);
         }
 
-        protected void InstallNugetDependencies(Project proj, string packageVersion)
-        {
-            var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
-            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            var installer = componentModel.GetService<IVsPackageInstaller>();
-
-            var packs = installerServices.GetInstalledPackages(proj).ToArray();
-
-            // MSTests package
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.4.0", Settings.Default.NugetExternalPackagesSource);
-
-            // AMF.Api.Core dependencies
-            //NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, newtonsoftJsonPackageId, packageVersion, Settings.Default.NugetExternalPackagesSource);
-        }
-
         private static void ScaffoldMainRamlFiles(IEnumerable<string> ramlFiles)
         {
             var service = GetScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
@@ -123,10 +108,10 @@ namespace AMF.Tools
             var dte = serviceProvider.GetService(typeof (SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             UnitTestsScaffoldServiceBase service;
-            //if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
+            if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
                 service = new UnitTestsScaffoldServiceAspNetCore(new T4Service(serviceProvider), serviceProvider);
-            //else
-            //    service = new RamlScaffoldServiceWebApi(new T4Service(serviceProvider), serviceProvider);
+            else
+                service = new UnitTestsScaffoldServiceAspNetWebApi(new T4Service(serviceProvider), serviceProvider);
             return service;
         }
 

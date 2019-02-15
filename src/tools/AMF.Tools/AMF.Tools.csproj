@@ -111,9 +111,11 @@
     <None Include="App.config" />
     <Content Include="Templates\Tests\ApiControllerTests.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Templates\Tests\ApiControllerTestsImplementation.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <VSCTCompile Include="Commands\AddUnitTestsCommandPackage.vsct">
       <ResourceName>Menus4.ctmenu</ResourceName>

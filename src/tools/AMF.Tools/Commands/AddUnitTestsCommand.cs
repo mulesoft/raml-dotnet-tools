@@ -58,21 +58,18 @@ namespace AMF.Tools.Commands
 
             CommandsUtil.ShowAndEnableCommand(menuCommand, false);
 
-            if (!IsAspNet5OrWebApiCoreInstalled())
+            if (!IsMsTestsInstalled())
                 return;
 
             CommandsUtil.ShowAndEnableCommand(menuCommand, true);
         }
 
-        private static bool IsAspNet5OrWebApiCoreInstalled()
+        private static bool IsMsTestsInstalled()
         {
             var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
 
-            if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
-                return CommandsUtil.IsAspNet5MvcInstalled(proj);
-
-            return CommandsUtil.IsWebApiCoreInstalled(proj);
+            return CommandsUtil.IsPackageInstalled(proj, "MSTest.TestFramework");
         }
 
 

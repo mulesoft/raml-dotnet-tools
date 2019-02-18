@@ -15,9 +15,15 @@ namespace AMF.Tools
 
         public static bool IsWebApiCoreInstalled(Project proj)
         {
+            var package = "Microsoft.AspNet.WebApi.Core";
+            return IsPackageInstalled(proj, package);
+        }
+
+        public static bool IsPackageInstalled(Project proj, string package)
+        {
             var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "Microsoft.AspNet.WebApi.Core");
+            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, package);
             return isWebApiCoreInstalled;
         }
 

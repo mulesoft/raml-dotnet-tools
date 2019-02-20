@@ -9,7 +9,7 @@ namespace AMF.Common
 {
     public static class RamlInfoService
     {
-        public static async Task<RamlInfo> GetRamlInfo(string ramlSource, AmfModel model = null)
+        public static async Task<RamlInfo> GetRamlInfo(string ramlSource, AmfModel model = null, string username = null, string password = null)
         {
             var info = new RamlInfo();
 
@@ -35,7 +35,7 @@ namespace AMF.Common
 
                 try
                 {
-                    info.RamlContents = Downloader.GetContents(uri);
+                    info.RamlContents = Downloader.GetContents(uri, username, password);
                     tempPath = Path.GetTempFileName();
                     File.WriteAllText(tempPath, info.RamlContents);
                 }

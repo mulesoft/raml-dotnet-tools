@@ -147,6 +147,26 @@ namespace AMF.Common.ViewModels
             }
         }
 
+        public string Username
+        {
+            get { return username; }
+            set
+            {
+                username = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
 
         public bool ConfigFolders
         {
@@ -387,7 +407,7 @@ namespace AMF.Common.ViewModels
             try
             {
                 var url = RamlOriginalSource;
-                var result = includesManager.Manage(url, Path.GetTempPath(), Path.GetTempPath());
+                var result = includesManager.Manage(url, Path.GetTempPath(), Path.GetTempPath(), false, Username, Password);
 
                 var raml = result.ModifiedContents;
                 var parser = new AmfParser();
@@ -540,7 +560,7 @@ namespace AMF.Common.ViewModels
 
                 if (!isNewContract)
                 {
-                    var ramlInfo = await RamlInfoService.GetRamlInfo(parameters.RamlFilePath, _model);
+                    var ramlInfo = await RamlInfoService.GetRamlInfo(parameters.RamlFilePath, _model, Username, Password);
                     parameters.Data = ramlInfo;
                 }
                 action(parameters);
@@ -608,6 +628,8 @@ namespace AMF.Common.ViewModels
         private bool addSuffixToGeneratedCode;
         private string proxyClientName;
         private string importButtonText;
+        private string username;
+        private string password;
 
         private bool HasInvalidPath(string folder)
         {

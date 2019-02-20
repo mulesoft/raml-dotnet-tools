@@ -6,6 +6,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,21 +24,32 @@ namespace AMF.Common
         private IDictionary<string, string> scopeFileToInclude = new Dictionary<string, string>();
 
         private HttpClient client;
+        private string username;
+        private string password;
         private readonly ICollection<string> includeSources = new Collection<string>();
 
         private HttpClient Client
         {
             get
             {
-                if(client == null)
+                if (client == null)
+                {
                     client = new HttpClient();
+                    if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+                    {
+                        var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+                    }
+                }
                 return client;
             }
         }
 
-
-        public RamlIncludesManagerResult Manage(string ramlSource, string destinationFolder, string rootRamlPath, bool confirmOverrite = false)
+        public RamlIncludesManagerResult Manage(string ramlSource, string destinationFolder, string rootRamlPath, bool confirmOverrite = false, string username = null, string password = null)
         {
+            this.username = username;
+            this.password = password;
+
             string path;
             string[] lines;
             scopeFileToInclude.Clear();

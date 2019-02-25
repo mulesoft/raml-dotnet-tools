@@ -55,7 +55,7 @@ namespace AMF.Tools
             if (data == null || data.RamlDocument == null)
                 return;
 
-            var model = new WebApiGeneratorService(data.RamlDocument, parameters.TargetNamespace).BuildModel();
+            var model = new WebApiGeneratorService(data.RamlDocument, parameters.ControllersNamespace, parameters.ModelsNamespace).BuildModel();
 
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
@@ -233,7 +233,7 @@ namespace AMF.Tools
                 new TemplateParams<ControllerObject>(
                     Path.Combine(templatesFolder, ControllerImplementationTemplateName),
                     controllersFolderItem, "controllerObject", model.Controllers, contractsFolderPath, folderItem,
-                    extensionPath, parameters.TargetNamespace, "Controller", false,
+                    extensionPath, parameters.ControllersNamespace, "Controller", false,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     TargetFolder = TargetFolderResolver.GetImplementationControllersFolderPath(proj, parameters.ImplementationControllersFolder),
@@ -243,7 +243,8 @@ namespace AMF.Tools
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
                     IncludeApiVersionInRoutePrefix = parameters.IncludeApiVersionInRoutePrefix,
-                    ApiVersion = model.ApiVersion
+                    ApiVersion = model.ApiVersion,
+                    ModelsNamespace = parameters.ModelsNamespace
                 };
 
             codeGenerator.GenerateCodeFromTemplate(controllerImplementationTemplateParams);
@@ -266,7 +267,7 @@ namespace AMF.Tools
             var controllerInterfaceParams =
                 new TemplateParams<ControllerObject>(Path.Combine(templatesFolder, ControllerInterfaceTemplateName),
                     ramlItem, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
-                    parameters.TargetNamespace, "Controller", true,
+                    parameters.ControllersNamespace, "Controller", true,
                     "I" + GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     Title = Settings.Default.ControllerInterfaceTemplateTitle,
@@ -275,7 +276,8 @@ namespace AMF.Tools
                     UseAsyncMethods = parameters.UseAsyncMethods,
                     IncludeApiVersionInRoutePrefix = parameters.IncludeApiVersionInRoutePrefix,
                     ApiVersion = model.ApiVersion,
-                    TargetFolder = targetFolderPath
+                    TargetFolder = targetFolderPath,
+                    ModelsNamespace = parameters.ModelsNamespace
                 };
             codeGenerator.GenerateCodeFromTemplate(controllerInterfaceParams);
         }
@@ -292,7 +294,7 @@ namespace AMF.Tools
             var controllerBaseTemplateParams =
                 new TemplateParams<ControllerObject>(Path.Combine(templatesFolder, ControllerBaseTemplateName),
                     ramlItem, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
-                    parameters.TargetNamespace, "Controller", true,
+                    parameters.ControllersNamespace, "Controller", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     Title = Settings.Default.BaseControllerTemplateTitle,
@@ -301,7 +303,8 @@ namespace AMF.Tools
                     UseAsyncMethods = parameters.UseAsyncMethods,
                     IncludeApiVersionInRoutePrefix = parameters.IncludeApiVersionInRoutePrefix,
                     ApiVersion = model.ApiVersion,
-                    TargetFolder = targetFolderPath
+                    TargetFolder = targetFolderPath,
+                    ModelsNamespace = parameters.ModelsNamespace
                 };
             codeGenerator.GenerateCodeFromTemplate(controllerBaseTemplateParams);
         }
@@ -332,14 +335,15 @@ namespace AMF.Tools
 
             var apiObjectTemplateParams = new TemplateParams<ApiObject>(
                 Path.Combine(templatesFolder, ModelTemplateName), ramlItem, "apiObject", models,
-                contractsFolderPath, contractsFolderItem, extensionPath, parameters.TargetNamespace,
+                contractsFolderPath, contractsFolderItem, extensionPath, parameters.ControllersNamespace,
                 GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion) +
                 (parameters.AddGeneratedSuffixToFiles ? ".generated" : string.Empty))
             {
                 Title = Settings.Default.ModelsTemplateTitle,
                 RelativeFolder = parameters.ModelsFolder,
                 TargetFolder = TargetFolderResolver.GetModelsTargetFolder(ramlItem.ContainingProject,
-                    targetFolderPath, parameters.ModelsFolder)
+                    targetFolderPath, parameters.ModelsFolder),
+                ModelsNamespace = parameters.ModelsNamespace
             };
 
             codeGenerator.GenerateCodeFromTemplate(apiObjectTemplateParams);
@@ -355,13 +359,14 @@ namespace AMF.Tools
 
             var apiEnumTemplateParams = new TemplateParams<ApiEnum>(
                 Path.Combine(templatesFolder, EnumTemplateName), ramlItem, "apiEnum", model.Enums,
-                targetFolderPath, folderItem, extensionPath, parameters.TargetNamespace,
+                targetFolderPath, folderItem, extensionPath, parameters.ControllersNamespace,
                 GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
             {
                 Title = Settings.Default.ModelsTemplateTitle,
                 RelativeFolder = parameters.ModelsFolder,
                 TargetFolder = TargetFolderResolver.GetModelsTargetFolder(ramlItem.ContainingProject,
-                    targetFolderPath, parameters.ModelsFolder)
+                    targetFolderPath, parameters.ModelsFolder),
+                ModelsNamespace = parameters.ModelsNamespace
             };
 
             codeGenerator.GenerateCodeFromTemplate(apiEnumTemplateParams);

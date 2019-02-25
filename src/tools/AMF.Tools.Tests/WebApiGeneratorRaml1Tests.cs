@@ -423,7 +423,7 @@ namespace Raml.Tools.Tests
         {
             //var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(ramlFile);
-            var model = new WebApiGeneratorService(raml, "TargetNamespace").BuildModel();
+            var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
             return model;
         }

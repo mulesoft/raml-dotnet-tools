@@ -9,8 +9,13 @@ namespace AMF.Tools.Core.WebApiGenerator
     public class WebApiGeneratorService : GeneratorServiceBase
 	{
 		private WebApiMethodsGenerator webApiMethodsGenerator;
-        public WebApiGeneratorService(AmfModel raml, string targetNamespace) : base(raml, targetNamespace)
+        private readonly string controllersNamespace;
+        private readonly string modelsNamespace;
+
+        public WebApiGeneratorService(AmfModel raml, string controllersNamespace, string modelsNamespace) : base(raml)
 		{
+            this.controllersNamespace = controllersNamespace;
+            this.modelsNamespace = modelsNamespace;
 		}
 
         public WebApiGeneratorModel BuildModel()
@@ -18,8 +23,6 @@ namespace AMF.Tools.Core.WebApiGenerator
             classesNames = new Collection<string>();
             warnings = new Dictionary<string, string>();
             enums = new Dictionary<string, ApiEnum>();
-
-            var ns = string.IsNullOrWhiteSpace(raml.WebApi?.Name) ? targetNamespace : NetNamingMapper.GetNamespace(raml.WebApi.Name);
 
             //new RamlTypeParser(raml.Shapes, schemaObjects, ns, enums, warnings).Parse();
 
@@ -37,7 +40,8 @@ namespace AMF.Tools.Core.WebApiGenerator
             {
                 return new WebApiGeneratorModel
                 {
-                    Namespace = ns,
+                    ControllersNamespace = controllersNamespace,
+                    ModelsNamespace = modelsNamespace,
                     SchemaObjects = schemaObjects,
                     RequestObjects = schemaRequestObjects,
                     ResponseObjects = schemaResponseObjects,
@@ -54,18 +58,19 @@ namespace AMF.Tools.Core.WebApiGenerator
             uriParametersGenerator = new UriParametersGenerator(schemaObjects);
 
             CleanNotUsedObjects(controllers);
-            
+
             return new WebApiGeneratorModel
-                   {
-                       Namespace = ns,
-                       Controllers = controllers,
-                       SchemaObjects = schemaObjects,
-                       RequestObjects = schemaRequestObjects,
-                       ResponseObjects = schemaResponseObjects,
-                       Warnings = warnings,
-                       Enums = Enums,
-                       ApiVersion = raml.WebApi.Version
-                   };
+            {
+                ControllersNamespace = controllersNamespace,
+                ModelsNamespace = modelsNamespace,
+                Controllers = controllers,
+                SchemaObjects = schemaObjects,
+                RequestObjects = schemaRequestObjects,
+                ResponseObjects = schemaResponseObjects,
+                Warnings = warnings,
+                Enums = Enums,
+                ApiVersion = raml.WebApi.Version
+            };
         }
 
         private void GetRequestObjects()
@@ -81,7 +86,7 @@ namespace AMF.Tools.Core.WebApiGenerator
                     foreach (var payload in payloads)
                     {
                         var newElements = new ObjectParser().ParseObject(GeneratorServiceHelper.GetKeyForResource(operation, endpoint) , payload.Schema, 
-                            schemaObjects, warnings, enums, targetNamespace);
+                            schemaObjects, warnings, enums);
 
                         foreach (var el in newElements.Item1)
                             AddElement(el, schemaRequestObjects);
@@ -142,7 +147,8 @@ namespace AMF.Tools.Core.WebApiGenerator
         }
 
         private ControllerObject CreateControllerAndAddMethods(IList<ControllerObject> classes, ICollection<string> classesNames,
-            IDictionary<string, ControllerObject> classesObjectsRegistry, EndPoint resource, string fullUrl, IDictionary<string, Parameter> parentUriParameters)
+            IDictionary<string, ControllerObject> classesObjectsRegistry, EndPoint resource, string fullUrl, 
+            IDictionary<string, Parameter> parentUriParameters)
         {
             var controller = new ControllerObject
             {
@@ -151,7 +157,7 @@ namespace AMF.Tools.Core.WebApiGenerator
                 Description = resource.Description,
             };
 
-            var methods = webApiMethodsGenerator.GetMethods(resource, fullUrl, controller, controller.Name, parentUriParameters);
+            var methods = webApiMethodsGenerator.GetMethods(resource, fullUrl, controller, controller.Name, parentUriParameters, modelsNamespace);
             foreach (var method in methods)
             {
                 controller.Methods.Add(method);
@@ -163,10 +169,12 @@ namespace AMF.Tools.Core.WebApiGenerator
             return controller;
         }
 
-        private void AddMethodsToRootController(IList<ControllerObject> classes, ICollection<string> classesNames, IDictionary<string, ControllerObject> classesObjectsRegistry,
-            EndPoint resource, string fullUrl, ControllerObject rootController, IDictionary<string, Parameter> parentUriParameters)
+        private void AddMethodsToRootController(IList<ControllerObject> classes, ICollection<string> classesNames, 
+            IDictionary<string, ControllerObject> classesObjectsRegistry, EndPoint resource, string fullUrl, ControllerObject rootController, 
+            IDictionary<string, Parameter> parentUriParameters)
         {
-            var generatedMethods = webApiMethodsGenerator.GetMethods(resource, fullUrl, rootController, rootController.Name, parentUriParameters);
+            var generatedMethods = webApiMethodsGenerator.GetMethods(resource, fullUrl, rootController, rootController.Name, parentUriParameters, 
+                modelsNamespace);
             foreach (var method in generatedMethods)
             {
                 rootController.Methods.Add(method);
@@ -178,14 +186,15 @@ namespace AMF.Tools.Core.WebApiGenerator
         }
 
 
-        private void GetMethodsFromChildResources(EndPoint resource, string url, ControllerObject parentController, IDictionary<string, Parameter> parentUriParameters)
+        private void GetMethodsFromChildResources(EndPoint resource, string url, ControllerObject parentController, 
+            IDictionary<string, Parameter> parentUriParameters)
         {
             if (resource == null)
                 return;
 
             var fullUrl = resource.Path;
 
-            var methods = webApiMethodsGenerator.GetMethods(resource, fullUrl, parentController, parentController.Name, parentUriParameters);
+            var methods = webApiMethodsGenerator.GetMethods(resource, fullUrl, parentController, parentController.Name, parentUriParameters, modelsNamespace);
             foreach (var method in methods)
             {
                 parentController.Methods.Add(method);

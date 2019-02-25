@@ -8,7 +8,8 @@ namespace AMF.Tools.Core.ClientGenerator
     [Serializable]
     public class ClientGeneratorMethod
     {
-        public const string ModelsNamespacePrefix = "Models.";
+        public string ModelsNamespace { get; set; }
+
         public string Name { get; set; }
         public string ReturnType { get; set; }
 
@@ -147,7 +148,7 @@ namespace AMF.Tools.Core.ClientGenerator
                 if (CollectionTypeHelper.IsCollection(ReturnType) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
                     return ReturnType;
                 
-                return ModelsNamespacePrefix + OkReturnType;
+                return ModelsNamespace + OkReturnType;
             }
         }
 
@@ -159,7 +160,7 @@ namespace AMF.Tools.Core.ClientGenerator
                 if (HasInputParameter())
                     paramsString += ((CollectionTypeHelper.IsCollection(Parameter.Type) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
                         ? Parameter.Type 
-                        : ModelsNamespacePrefix + Parameter.Type) + " " + Parameter.Name;
+                        : ModelsNamespace + Parameter.Type) + " " + Parameter.Name;
 
                 if (!string.IsNullOrWhiteSpace(UriParametersString))
                 {
@@ -171,9 +172,9 @@ namespace AMF.Tools.Core.ClientGenerator
                 if (Query != null)
                 {
                     if (string.IsNullOrWhiteSpace(paramsString))
-                        paramsString = ModelsNamespacePrefix + Query.Name + " " + Query.Name.ToLower();
+                        paramsString = ModelsNamespace + Query.Name + " " + Query.Name.ToLower();
                     else
-                        paramsString += ", " + ModelsNamespacePrefix + Query.Name + " " + Query.Name.ToLower();
+                        paramsString += ", " + ModelsNamespace + Query.Name + " " + Query.Name.ToLower();
                 }
 
                 return paramsString;
@@ -209,7 +210,7 @@ namespace AMF.Tools.Core.ClientGenerator
             get
             {
                 if (!CollectionTypeHelper.IsCollection(Parameter.Type) && !NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
-                    return ModelsNamespacePrefix + Parameter.Type;
+                    return ModelsNamespace + Parameter.Type;
 
                 return Parameter.Type;
             }

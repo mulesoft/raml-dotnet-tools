@@ -15,15 +15,13 @@ namespace AMF.Tools.Core
         private IDictionary<string, ApiObject> existingObjects;
         private IDictionary<string, ApiEnum> existingEnums;
         private IDictionary<string, string> warnings;
-        private string targetNamespace;
 
         public Tuple<IDictionary<string, ApiObject>,IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, IDictionary<string, ApiObject> existingObjects, 
-            IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, string targetNamespace, bool isRootType = false)
+            IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, bool isRootType = false)
         {
             this.existingObjects = existingObjects;
             this.existingEnums = existingEnums;
             this.warnings = warnings;
-            this.targetNamespace = targetNamespace;
 
             if (shape is ScalarShape scalar && scalar.Values != null && scalar.Values.Any())
                 return ParseEnum(warnings, existingEnums, scalar);
@@ -170,7 +168,7 @@ namespace AMF.Tools.Core
 
             if (p.Range is NodeShape)
             {
-                var tuple = ParseObject(prop.Name, p.Range, existingObjects, warnings, existingEnums, targetNamespace);
+                var tuple = ParseObject(prop.Name, p.Range, existingObjects, warnings, existingEnums);
                 prop.Type = NetNamingMapper.GetObjectName(prop.Name);
             }
             if (p.Range is ArrayShape array)
@@ -191,7 +189,7 @@ namespace AMF.Tools.Core
                 if (existingObjects.ContainsKey(itemType) || newObjects.ContainsKey(itemType))
                     return prop;
 
-                ParseObject(array.Name, array.Items, existingObjects, warnings, existingEnums, targetNamespace);
+                ParseObject(array.Name, array.Items, existingObjects, warnings, existingEnums);
             }
 
             foreach (var parent in p.Range.Inherits)
@@ -199,7 +197,7 @@ namespace AMF.Tools.Core
                 if(!(parent is ScalarShape) && !NewNetTypeMapper.IsPrimitiveType(prop.Type) 
                     && !(CollectionTypeHelper.IsCollection(prop.Type) && NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(prop.Type)))
                     && string.IsNullOrWhiteSpace(parent.LinkTargetName))
-                    ParseObject(prop.Name, parent, existingObjects, warnings, existingEnums, targetNamespace);
+                    ParseObject(prop.Name, parent, existingObjects, warnings, existingEnums);
             }
             return prop;
         }
@@ -271,38 +269,39 @@ namespace AMF.Tools.Core
         //    return obj;
         //}
 
-        private ApiObject ParseSchema(string key, string schema, IDictionary<string, ApiObject> objects, IDictionary<string, string> warnings, IDictionary<string, ApiEnum> enums, IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects, string targetNamespace)
-		{
-   			if (schema == null)
-				return null;
+  //      private ApiObject ParseSchema(string key, string schema, IDictionary<string, ApiObject> objects, IDictionary<string, string> warnings, 
+  //          IDictionary<string, ApiEnum> enums, IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects, string modelsNamespace)
+		//{
+  // 			if (schema == null)
+		//		return null;
 
-            // is a reference, should then be defined elsewhere
-            if (schema.Contains("<<") && schema.Contains(">>"))
-                return null;
+  //          // is a reference, should then be defined elsewhere
+  //          if (schema.Contains("<<") && schema.Contains(">>"))
+  //              return null;
 
-            if (schema.Trim().StartsWith("<"))
-                return ParseXmlSchema(key, schema, objects, targetNamespace, otherObjects, schemaObjects);
+  //          if (schema.Trim().StartsWith("<"))
+  //              return ParseXmlSchema(key, schema, objects, modelsNamespace, otherObjects, schemaObjects);
 
-            if (!schema.Contains("{"))
-                return null;
+  //          if (!schema.Contains("{"))
+  //              return null;
 
-            // return jsonSchemaParser.Parse(key, schema, objects, warnings, enums, otherObjects, schemaObjects);
-            return null;
-        }
+  //          // return jsonSchemaParser.Parse(key, schema, objects, warnings, enums, otherObjects, schemaObjects);
+  //          return null;
+  //      }
 
-        private ApiObject ParseXmlSchema(string key, string schema, IDictionary<string, ApiObject> objects, string targetNamespace, IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects)
-		{
-            if(objects.ContainsKey(key))
-                return null;
+  //      private ApiObject ParseXmlSchema(string key, string schema, IDictionary<string, ApiObject> objects, string modelsNamespace, IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects)
+		//{
+  //          if(objects.ContainsKey(key))
+  //              return null;
 
-		    var xmlSchemaParser = new XmlSchemaParser();
-            var  obj = xmlSchemaParser.Parse(key, schema, objects, targetNamespace);
+		//    var xmlSchemaParser = new XmlSchemaParser();
+  //          var  obj = xmlSchemaParser.Parse(key, schema, objects, modelsNamespace);
 
-		    if (obj != null && !objects.ContainsKey(key) && !UniquenessHelper.HasSameProperties(obj, objects, otherObjects, schemaObjects))
-		        objects.Add(key, obj); // to associate that key with the main XML Schema object
+		//    if (obj != null && !objects.ContainsKey(key) && !UniquenessHelper.HasSameProperties(obj, objects, otherObjects, schemaObjects))
+		//        objects.Add(key, obj); // to associate that key with the main XML Schema object
 
-		    return obj;
-		}
+		//    return obj;
+		//}
 
     }
 }

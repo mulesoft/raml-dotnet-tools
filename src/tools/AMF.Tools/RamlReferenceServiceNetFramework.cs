@@ -85,7 +85,7 @@ namespace AMF.Tools
             //ramlProjItem.Properties.Item("CustomTool").Value = string.Empty; // to cause a refresh when file already exists
             //ramlProjItem.Properties.Item("CustomTool").Value = "RamlClientTool";
 
-            var model = new ClientGeneratorService(data.RamlDocument, clientRootClassName, targetNamespace).BuildModel();
+            var model = new ClientGeneratorService(data.RamlDocument, clientRootClassName, targetNamespace, targetNamespace + ".Models").BuildModel();
             var directoryName = Path.GetDirectoryName(ramlDestFile).TrimEnd(Path.DirectorySeparatorChar);
             var templateFolder = directoryName.Substring(0, directoryName.LastIndexOf(Path.DirectorySeparatorChar)) +
                                  Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar;

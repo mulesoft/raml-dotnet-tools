@@ -19,7 +19,8 @@ namespace AMF.Tools.Core
             queryParametersParser = new QueryParametersParser(schemaObjects);
         }
 
-        public IEnumerable<ControllerMethod> GetMethods(EndPoint endpoint, string url, ControllerObject parent, string objectName, IDictionary<string, Parameter> parentUriParameters)
+        public IEnumerable<ControllerMethod> GetMethods(EndPoint endpoint, string url, ControllerObject parent, string objectName, 
+            IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
             var methodsNames = new List<string>();
             if (parent != null && parent.Methods != null)
@@ -31,7 +32,7 @@ namespace AMF.Tools.Core
 
             foreach (var method in endpoint.Operations)
             {
-                var generatedMethod = BuildControllerMethod(url, method, endpoint, parent, parentUriParameters);
+                var generatedMethod = BuildControllerMethod(url, method, endpoint, parent, parentUriParameters, modelsNamespace);
 
                 if (IsVerbForMethod(method))
                 {
@@ -57,7 +58,8 @@ namespace AMF.Tools.Core
             return path.Replace(prefixUri, string.Empty);
         }
 
-        private ControllerMethod BuildControllerMethod(string url, Operation method, EndPoint resource, ControllerObject parent, IDictionary<string, Parameter> parentUriParameters)
+        private ControllerMethod BuildControllerMethod(string url, Operation method, EndPoint resource, ControllerObject parent, 
+            IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
             var relativeUri = UrlGeneratorHelper.GetRelativeUri(url, parent.PrefixUri);
 
@@ -65,10 +67,11 @@ namespace AMF.Tools.Core
 
             var operationWithSecurity = resource.Operations.FirstOrDefault(m => m.Method == method.Method && m.Security != null
                                 && m.Security.Any());
-            var securedBy = operationWithSecurity?.Security.Select(s => s.Name).ToArray(); //TODO: check
+            var securedBy = operationWithSecurity?.Security.Select(s => s.Name).ToArray();
 
             return new ControllerMethod
             {
+                ModelsNamespace = modelsNamespace,
                 Name = NetNamingMapper.GetMethodName(method.Method ?? "Get" + resource.Path),
                 Parameter = GetParameter(GeneratorServiceHelper.GetKeyForResource(method, resource), method, resource, url),
                 UriParameters = uriParametersGenerator.GetUriParameters(resource, url, parentUriParameters),

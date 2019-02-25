@@ -110,7 +110,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldBuildNamespace()
         {
             var model = await GetTestGeneratedModel();
-            Assert.AreEqual("RemoteVendingAPI", model.Namespace);
+            Assert.AreEqual("RemoteVendingAPI", model.BaseNamespace);
         }
 
         [Test]
@@ -353,7 +353,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandleJsonSchemaRecursiveTree()
         {
             var raml = await new AmfParser().Load("files/tree-issue63.raml");
-            var model = new ClientGeneratorService(raml, "test", "TargetNamespace").BuildModel();
+            var model = new ClientGeneratorService(raml, "test", "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
             Assert.IsNotNull(model);
             Assert.AreEqual(1, model.Objects.Count());
@@ -478,7 +478,7 @@ namespace Raml.Tools.Tests
         {
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
-            var model = new ClientGeneratorService(raml, "test", "TargetNamespace").BuildModel();
+            var model = new ClientGeneratorService(raml, "test", "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
             return model;
         }
@@ -486,7 +486,7 @@ namespace Raml.Tools.Tests
         private static async Task<ClientGeneratorModel> GetRootGeneratedModel()
         {
             var raml = await new AmfParser().Load("files/root.raml");
-            var model = new ClientGeneratorService(raml, "Root", "TargetNamespace").BuildModel();
+            var model = new ClientGeneratorService(raml, "Root", "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
             return model;
     }

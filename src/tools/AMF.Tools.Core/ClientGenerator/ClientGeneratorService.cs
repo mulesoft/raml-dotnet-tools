@@ -12,7 +12,8 @@ namespace AMF.Tools.Core.ClientGenerator
         private ClientMethodsGenerator clientMethodsGenerator;
 
         private readonly string rootClassName;
-
+        private readonly string modelsNamespace;
+        private readonly string baseNamespace;
         private readonly IDictionary<string, ApiObject> queryObjects = new Dictionary<string, ApiObject>();
         private readonly IDictionary<string, ApiObject> headerObjects = new Dictionary<string, ApiObject>();
         private readonly IDictionary<string, ApiObject> responseHeadersObjects = new Dictionary<string, ApiObject>();
@@ -26,10 +27,11 @@ namespace AMF.Tools.Core.ClientGenerator
         private readonly ApiRequestObjectsGenerator apiRequestGenerator = new ApiRequestObjectsGenerator();
         private readonly ApiResponseObjectsGenerator apiResponseGenerator = new ApiResponseObjectsGenerator();
 
-	    public ClientGeneratorService(AmfModel raml, string rootClassName, string targetNamespace)
-            : base(raml, targetNamespace)
+	    public ClientGeneratorService(AmfModel raml, string rootClassName, string baseNamespace, string modelsNamespace) : base(raml)
         {
             this.rootClassName = rootClassName;
+            this.modelsNamespace = modelsNamespace;
+            this.baseNamespace = baseNamespace;
         }
 
         public ClientGeneratorModel BuildModel()
@@ -41,7 +43,6 @@ namespace AMF.Tools.Core.ClientGenerator
             uriParameterObjects = new Dictionary<string, ApiObject>();
             enums = new Dictionary<string, ApiEnum>();
 
-            var ns = string.IsNullOrWhiteSpace(raml.WebApi?.Name) ? targetNamespace : NetNamingMapper.GetNamespace(raml.WebApi.Name);
             //new RamlTypeParser(raml.Shapes, schemaObjects, ns, enums, warnings).Parse();
 
             ParseSchemas();
@@ -79,7 +80,8 @@ namespace AMF.Tools.Core.ClientGenerator
 
             return new ClientGeneratorModel
             {
-                Namespace = ns,
+                BaseNamespace = baseNamespace,
+                ModelsNamespace = modelsNamespace,
                 SchemaObjects = schemaObjects,
                 RequestObjects = schemaRequestObjects,
                 ResponseObjects = schemaResponseObjects,
@@ -127,7 +129,8 @@ namespace AMF.Tools.Core.ClientGenerator
         }
 
 
-        private ICollection<ClassObject> GetClasses(IEnumerable<EndPoint> resources, EndPoint parent, ClassObject parentClass, string url, IDictionary<string, Parameter> parentUriParameters)
+        private ICollection<ClassObject> GetClasses(IEnumerable<EndPoint> resources, EndPoint parent, ClassObject parentClass, string url, 
+            IDictionary<string, Parameter> parentUriParameters)
         {
             if (resources == null)
                 return classes;
@@ -141,7 +144,8 @@ namespace AMF.Tools.Core.ClientGenerator
                 // when the resource is a parameter dont generate a class but add it's methods and children to the parent
                 if (resource.Path.StartsWith("/{") && resource.Path.EndsWith("}"))
                 {
-                    var generatedMethods = clientMethodsGenerator.GetMethods(resource, fullUrl, parentClass, parentClass.Name, parentUriParameters);
+                    var generatedMethods = clientMethodsGenerator.GetMethods(resource, fullUrl, parentClass, parentClass.Name, parentUriParameters, 
+                        modelsNamespace);
 
                     foreach (var method in generatedMethods)
                     {
@@ -163,7 +167,7 @@ namespace AMF.Tools.Core.ClientGenerator
                                    Name = GetUniqueObjectName(resource, parent),
                                    Description = resource.Description
                                };
-                classObj.Methods = clientMethodsGenerator.GetMethods(resource, fullUrl, null, classObj.Name, parentUriParameters);
+                classObj.Methods = clientMethodsGenerator.GetMethods(resource, fullUrl, null, classObj.Name, parentUriParameters, modelsNamespace);
 
                 GetInheritedUriParams(parentUriParameters, resource);
 

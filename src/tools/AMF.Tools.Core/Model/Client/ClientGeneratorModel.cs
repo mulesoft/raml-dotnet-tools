@@ -102,5 +102,7 @@ namespace AMF.Tools.Core.ClientGenerator
                 return res + ", HttpClient httpClient = null";
             }
         }
+
+        public string BaseNamespace { get; internal set; }
     }
 }

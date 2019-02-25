@@ -32,7 +32,8 @@ namespace AMF.Tools.Core.ClientGenerator
             queryParametersParser = new QueryParametersParser(schemaObjects);
         }
 
-        public ICollection<ClientGeneratorMethod> GetMethods(AMF.Parser.Model.EndPoint resource, string url, ClassObject parent, string objectName, IDictionary<string, Parameter> parentUriParameters)
+        public ICollection<ClientGeneratorMethod> GetMethods(Parser.Model.EndPoint resource, string url, ClassObject parent, string objectName, 
+            IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
             var methodsNames = new List<string>();
             if (parent != null)
@@ -44,16 +45,16 @@ namespace AMF.Tools.Core.ClientGenerator
 
             foreach (var method in resource.Operations)
             {
-                AddGeneratedMethod(resource, url, objectName, method, methodsNames, generatorMethods, parentUriParameters);
+                AddGeneratedMethod(resource, url, objectName, method, methodsNames, generatorMethods, parentUriParameters, modelsNamespace);
             }
 
             return generatorMethods;
         }
 
         private void AddGeneratedMethod(AMF.Parser.Model.EndPoint resource, string url, string objectName, Operation method, ICollection<string> methodsNames, 
-            ICollection<ClientGeneratorMethod> generatorMethods, IDictionary<string, Parameter> parentUriParameters)
+            ICollection<ClientGeneratorMethod> generatorMethods, IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
-            var generatedMethod = BuildClassMethod(url, method, resource);
+            var generatedMethod = BuildClassMethod(url, method, resource, modelsNamespace);
             if (generatedMethod.ReturnType != "string")
             {
                 var returnType = CollectionTypeHelper.GetBaseType(generatedMethod.ReturnType);
@@ -91,7 +92,7 @@ namespace AMF.Tools.Core.ClientGenerator
             return type != null && type.Any() ? type.First().Key : string.Empty;
         }
 
-        private ClientGeneratorMethod BuildClassMethod(string url, Operation operation, AMF.Parser.Model.EndPoint resource)
+        private ClientGeneratorMethod BuildClassMethod(string url, Operation operation, AMF.Parser.Model.EndPoint resource, string modelsNamespace)
         {
             var parentUrl = UrlGeneratorHelper.GetParentUri(url, resource.Path);
 
@@ -102,6 +103,7 @@ namespace AMF.Tools.Core.ClientGenerator
 
             var generatedMethod = new ClientGeneratorMethod
             {
+                ModelsNamespace = modelsNamespace,
                 Name = NetNamingMapper.GetMethodName(operation.Method ?? "Get" + resource.Path),
                 ReturnType = GetReturnType(operation, resource, url),
                 Parameter = GetParameter(GeneratorServiceHelper.GetKeyForResource(operation, resource), operation, resource, url),
@@ -169,7 +171,7 @@ namespace AMF.Tools.Core.ClientGenerator
             }
             else if (generatedMethod.ResponseHeaders.Count == 1)
             {
-                generatedMethod.ResponseHeaderType = ClientGeneratorMethod.ModelsNamespacePrefix + generatedMethod.ResponseHeaders.First().Value.Name;
+                generatedMethod.ResponseHeaderType = generatedMethod.ModelsNamespace + generatedMethod.ResponseHeaders.First().Value.Name;
             }
             else
             {
@@ -192,7 +194,7 @@ namespace AMF.Tools.Core.ClientGenerator
             };
             responseHeadersObjects.Add(new KeyValuePair<string, ApiObject>(name, apiObject));
 
-            generatedMethod.ResponseHeaderType = ClientGeneratorMethod.ModelsNamespacePrefix + name;
+            generatedMethod.ResponseHeaderType = generatedMethod.ModelsNamespace + name;
         }
 
         private static List<Property> BuildProperties(ClientGeneratorMethod generatedMethod)

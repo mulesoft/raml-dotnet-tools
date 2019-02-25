@@ -31,9 +31,9 @@ namespace AMF.Tools.Core.XML
 			Extensions.SetContext( nsmgr );
 		}
 
-        public ApiObject Parse(string key, string schema, IDictionary<string, ApiObject> objects, string targetNamespace)
+        public ApiObject Parse(string key, string schema, IDictionary<string, ApiObject> objects, string modelsNamespace)
         {
-            var codeNamespace = Process(schema, targetNamespace + ".Models");
+            var codeNamespace = Process(schema, modelsNamespace);
 
             var code = GenerateCode(codeNamespace);
 
@@ -47,7 +47,7 @@ namespace AMF.Tools.Core.XML
         }
 
 
-        public static CodeNamespace Process(string xsdSchema, string targetNamespace)
+        public static CodeNamespace Process(string xsdSchema, string modelsNamespace)
         {
             // Load the XmlSchema and its collection.
             XmlSchema xsd;
@@ -61,7 +61,7 @@ namespace AMF.Tools.Core.XML
             // Create the importer for these schemas.
             XmlSchemaImporter importer = new XmlSchemaImporter(schemas);
             // System.CodeDom namespace for the XmlCodeExporter to put classes in.
-            CodeNamespace ns = new CodeNamespace(targetNamespace);
+            CodeNamespace ns = new CodeNamespace(modelsNamespace);
             XmlCodeExporter exporter = new XmlCodeExporter(ns);
             // Iterate schema top-level elements and export code for each.
             foreach (XmlSchemaElement element in xsd.Elements.Values)

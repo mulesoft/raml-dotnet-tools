@@ -8,6 +8,7 @@
 <#@ parameter name="hasModels" type="System.Boolean" #>
 <#@ parameter name="useAsyncMethods" type="System.Boolean" #>
 <#@ parameter name="apiVersion" type="System.String" #>
+<#@ parameter name="modelsNamespace" type="System.String" #>
 <#@ output extension=".cs" #>
 
 using System;
@@ -15,7 +16,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 <# if(hasModels){ #>
-using $(namespace).Models;
+using <#= modelsNamespace #>;
 <# } #>
 
 namespace $(namespace)

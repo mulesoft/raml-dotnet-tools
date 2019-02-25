@@ -148,7 +148,7 @@ namespace AMF.Tools.Core.ClientGenerator
                 if (CollectionTypeHelper.IsCollection(ReturnType) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
                     return ReturnType;
                 
-                return ModelsNamespace + OkReturnType;
+                return ModelsNamespace + "." + OkReturnType;
             }
         }
 
@@ -160,7 +160,7 @@ namespace AMF.Tools.Core.ClientGenerator
                 if (HasInputParameter())
                     paramsString += ((CollectionTypeHelper.IsCollection(Parameter.Type) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
                         ? Parameter.Type 
-                        : ModelsNamespace + Parameter.Type) + " " + Parameter.Name;
+                        : ModelsNamespace + "." + Parameter.Type) + " " + Parameter.Name;
 
                 if (!string.IsNullOrWhiteSpace(UriParametersString))
                 {
@@ -172,9 +172,9 @@ namespace AMF.Tools.Core.ClientGenerator
                 if (Query != null)
                 {
                     if (string.IsNullOrWhiteSpace(paramsString))
-                        paramsString = ModelsNamespace + Query.Name + " " + Query.Name.ToLower();
+                        paramsString = ModelsNamespace + "." + Query.Name + " " + Query.Name.ToLower();
                     else
-                        paramsString += ", " + ModelsNamespace + Query.Name + " " + Query.Name.ToLower();
+                        paramsString += ", " + ModelsNamespace + "." + Query.Name + " " + Query.Name.ToLower();
                 }
 
                 return paramsString;
@@ -210,7 +210,7 @@ namespace AMF.Tools.Core.ClientGenerator
             get
             {
                 if (!CollectionTypeHelper.IsCollection(Parameter.Type) && !NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
-                    return ModelsNamespace + Parameter.Type;
+                    return ModelsNamespace + "." + Parameter.Type;
 
                 return Parameter.Type;
             }

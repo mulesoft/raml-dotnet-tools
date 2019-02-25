@@ -30,14 +30,14 @@ namespace Raml.Tools.Tests
         {
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
-            return new WebApiGeneratorService(raml, "TestNs").BuildModel();
+            return new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
         }
 
         private static async Task<ClientGeneratorModel> BuildClientModel(string ramlFile)
         {
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
-            return new ClientGeneratorService(raml, "root", "TestNs").BuildModel();
+            return new ClientGeneratorService(raml, "root", "TestNs", "TestsNs.Models").BuildModel();
         }
 
     }

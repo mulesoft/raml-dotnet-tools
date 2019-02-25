@@ -32,7 +32,7 @@ namespace AMF.Tools.Core.ClientGenerator
                     IsUnionType = method.ReturnTypeObject != null && method.ReturnTypeObject.IsUnionType
                 };
                 objects.Add(respObject);
-                method.ResponseType = ClientGeneratorMethod.ModelsNamespacePrefix + respObject.Name;
+                method.ResponseType = method.ModelsNamespace + "." + respObject.Name;
             }
             else
             {

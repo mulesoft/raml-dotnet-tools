@@ -226,9 +226,9 @@
                       VerticalAlignment="Center" 
                       />
 
-            <Label x:Name="lblConfigFolder"
-							   Content="Customize output folders"
-                               ToolTip="Customize the folders for generated code"
+            <Label x:Name="lblCustomize"
+							   Content="Enable customization"
+                               ToolTip="Customize the folders and namespaces for generated code"
 							   Style="{StaticResource DefaultLabel}"
                                Visibility="{Binding ContractUseCaseVisibility}"
 							   Grid.Column="1"
@@ -237,9 +237,9 @@
             <CheckBox Grid.Row="5"
                       Grid.Column="2"
                       Margin="0,10,0,10"
-                      Name="chkBoxConfigFolders"
-                      IsChecked="{Binding ConfigFolders}"
-                      ToolTip="Use async method signatures for the actions in the controllers"
+                      Name="chkBoxCustomize"
+                      IsChecked="{Binding CustomizeFoldersAndNamespaces}"
+                      ToolTip="Customize the folders and namespaces for generated code"
                       Visibility="{Binding ContractUseCaseVisibility}"
                       VerticalAlignment="Center" />
 
@@ -254,6 +254,8 @@
                     BorderThickness="1">
                     <Grid >
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -282,13 +284,31 @@
 								 Grid.Row="0"
                                  ToolTip="Folder to place the controllers to be implemented (relative to project root). Leave empty for default."
 								 Width="220" />
-                        
+
+                        <Label x:Name="lblControllersNamespace"
+							   Content="Controllers Namespace"
+							   Style="{StaticResource DefaultLabel}"
+                               Visibility="{Binding ContractUseCaseVisibility}"
+							   Grid.Column="1"
+							   Grid.Row="1"
+                               Margin="5" 
+                               ToolTip="Controller's namespace" />
+                        <TextBox x:Name="txtControllersNamespace"
+								 Style="{StaticResource DefaultTextBox}"
+                                 Visibility="{Binding ContractUseCaseVisibility}"
+                                 IsEnabled="{Binding ConfigFolders}"
+                                 Text="{Binding ControllersNamespace}"
+								 Grid.Column="2"
+								 Grid.Row="1"
+                                 ToolTip="Controller´s namespace"
+								 Width="220" />
+
                         <Label x:Name="lblModels"
 							   Content="Models Folder"
 							   Style="{StaticResource DefaultLabel}"
                                Visibility="{Binding ContractUseCaseVisibility}"
 							   Grid.Column="1"
-							   Grid.Row="1"
+							   Grid.Row="2"
                                Margin="5" 
                                ToolTip="Place to put the generated model classes (relative to project root). Leave empty for default." />
                         <TextBox x:Name="txtModels"
@@ -297,8 +317,26 @@
                                  IsEnabled="{Binding ConfigFolders}"
                                  Text="{Binding ModelsFolder}"
 								 Grid.Column="2"
-								 Grid.Row="1"
+								 Grid.Row="2"
                                  ToolTip="Folder to place the generated model classes (relative to project root). Leave empty for default."
+								 Width="220" />
+
+                        <Label x:Name="lblModelsNamespace"
+							   Content="Models Namespace"
+							   Style="{StaticResource DefaultLabel}"
+                               Visibility="{Binding ContractUseCaseVisibility}"
+							   Grid.Column="1"
+							   Grid.Row="3"
+                               Margin="5" 
+                               ToolTip="Namespace for model classes" />
+                        <TextBox x:Name="txtModelsNamespace"
+								 Style="{StaticResource DefaultTextBox}"
+                                 Visibility="{Binding ContractUseCaseVisibility}"
+                                 IsEnabled="{Binding ConfigFolders}"
+                                 Text="{Binding ModelsNamespace}"
+								 Grid.Column="2"
+								 Grid.Row="3"
+                                 ToolTip="Namespace for model classes"
 								 Width="220" />
 
                         <Label x:Name="lblSuffix"
@@ -306,7 +344,7 @@
 							   Style="{StaticResource DefaultLabel}"
                                Visibility="{Binding ContractUseCaseVisibility}"
 							   Grid.Column="1"
-							   Grid.Row="2"
+							   Grid.Row="4"
                                Margin="5" 
                                ToolTip="Add '.generated' suffix to generated file names (e.g. 'User.generated.cs')" />
                         <CheckBox
@@ -315,7 +353,7 @@
                                  Visibility="{Binding ContractUseCaseVisibility}"
                                  IsEnabled="{Binding ConfigFolders}"
 								 Grid.Column="2"
-								 Grid.Row="2"
+								 Grid.Row="4"
                                  ToolTip="Add '.generated' suffix to generated file names (e.g. 'User.generated.cs')"
                                  VerticalAlignment="Center" 
                               />

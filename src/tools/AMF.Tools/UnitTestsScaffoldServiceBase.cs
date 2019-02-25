@@ -60,7 +60,7 @@ namespace AMF.Tools
             if (data == null || data.RamlDocument == null)
                 return;
 
-            var model = new WebApiGeneratorService(data.RamlDocument, parameters.TargetNamespace).BuildModel();
+            var model = new WebApiGeneratorService(data.RamlDocument, parameters.ControllersNamespace, parameters.ModelsNamespace).BuildModel();
 
             var unitTestsFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, UnitTestsFolderName);
             var unitTestsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar +
@@ -177,7 +177,7 @@ namespace AMF.Tools
                 new TemplateParams<ControllerObject>(
                     Path.Combine(templatesFolder, UnitTestsControllerImplementationTemplateName),
                     unitTestsFolderItem, "controllerObject", model.Controllers, unitTestsFolderPath, folderItem,
-                    extensionPath, parameters.TargetNamespace, "ControllerTestsImplementation", false,
+                    extensionPath, parameters.ControllersNamespace, "ControllerTestsImplementation", false,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     TargetFolder = TargetFolderResolver.GetUnitTestsFolder(proj, UnitTestsFolderName),
@@ -188,7 +188,8 @@ namespace AMF.Tools
                     UseAsyncMethods = parameters.UseAsyncMethods,
                     IncludeApiVersionInRoutePrefix = parameters.IncludeApiVersionInRoutePrefix,
                     ApiVersion = model.ApiVersion,
-                    TestsNamespace = parameters.TestsNamespace
+                    TestsNamespace = parameters.TestsNamespace,
+                    ModelsNamespace = parameters.ModelsNamespace
                 };
 
             codeGenerator.GenerateCodeFromTemplate(controllerImplementationTemplateParams);
@@ -211,7 +212,7 @@ namespace AMF.Tools
             var controllerBaseTemplateParams =
                 new TemplateParams<ControllerObject>(Path.Combine(templatesFolder, UnitTestsControllerTemplateName),
                     folderItem, "controllerObject", model.Controllers, targetFolderPath, folderItem, extensionPath,
-                    parameters.TargetNamespace, "ControllerTests", true,
+                    parameters.ControllersNamespace, "ControllerTests", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
                     Title = Settings.Default.BaseControllerTestsTemplateTitle,
@@ -221,7 +222,8 @@ namespace AMF.Tools
                     IncludeApiVersionInRoutePrefix = parameters.IncludeApiVersionInRoutePrefix,
                     ApiVersion = model.ApiVersion,
                     TargetFolder = targetFolderPath,
-                    TestsNamespace = parameters.TestsNamespace
+                    TestsNamespace = parameters.TestsNamespace,
+                    ModelsNamespace = parameters.ModelsNamespace
                 };
             codeGenerator.GenerateCodeFromTemplate(controllerBaseTemplateParams);
         }

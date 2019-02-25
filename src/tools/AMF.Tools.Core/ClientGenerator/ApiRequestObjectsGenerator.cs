@@ -31,7 +31,7 @@ namespace AMF.Tools.Core.ClientGenerator
                     Properties = requestProperties
                 };
                 objects.Add(reqObject);
-                method.RequestType = ClientGeneratorMethod.ModelsNamespacePrefix + reqObject.Name;
+                method.RequestType = method.ModelsNamespace + "." + reqObject.Name;
             }
             else
             {

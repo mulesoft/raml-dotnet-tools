@@ -35,5 +35,7 @@ namespace AMF.Tools.Core.WebApiGenerator
         }
 
         public string ApiVersion { get; set; }
+
+        public string ControllersNamespace { get; set; }
     }
 }

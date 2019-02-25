@@ -168,7 +168,7 @@ namespace AMF.Common.ViewModels
         }
 
 
-        public bool ConfigFolders
+        public bool CustomizeFoldersAndNamespaces
         {
             get { return configFolders; }
             set
@@ -187,6 +187,27 @@ namespace AMF.Common.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+
+        public string ModelsNamespace
+        {
+            get { return modelsNamespace; }
+            set
+            {
+                modelsNamespace = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public string ControllersNamespace
+        {
+            get { return controllersNamespace; }
+            set
+            {
+                controllersNamespace = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
 
         private string implementationControllersFolder;
         public string ImplementationControllersFolder
@@ -232,7 +253,7 @@ namespace AMF.Common.ViewModels
                     StartProgress();
                     ResourcesPreview = GetResourcesPreview(document);
                     StopProgress();
-                    SetNamespace(RamlTempFilePath);
+                    SetDefaultNamespaces(RamlTempFilePath);
                     if (document.Version != null)
                         ApiVersion = NetNamingMapper.GetVersionName(document.Version);
                     CanImport = true;
@@ -332,10 +353,12 @@ namespace AMF.Common.ViewModels
             }
         }
 
-        private void SetNamespace(string fileName)
+        private void SetDefaultNamespaces(string fileName)
         {
             Namespace = VisualStudioAutomationHelper.GetDefaultNamespace(ServiceProvider) + "." +
                         NetNamingMapper.GetObjectName(Path.GetFileNameWithoutExtension(fileName));
+            ControllersNamespace = Namespace;
+            ModelsNamespace = Namespace + ".Models";
         }
 
         private static string GetResourcesPreview(WebApi ramlDoc)
@@ -489,6 +512,18 @@ namespace AMF.Common.ViewModels
                     return;
                 }
 
+                if (IsContractUseCase && CustomizeFoldersAndNamespaces && string.IsNullOrWhiteSpace(ControllersNamespace))
+                {
+                    ShowErrorAndStopProgress("Error: you must specify a namespace for controllers.");
+                    return;
+                }
+
+                if (IsContractUseCase && CustomizeFoldersAndNamespaces && string.IsNullOrWhiteSpace(ModelsNamespace))
+                {
+                    ShowErrorAndStopProgress("Error: you must specify a namespace for models.");
+                    return;
+                }
+
                 if (IsContractUseCase && GenerateUnitTests && string.IsNullOrWhiteSpace(SelectedProject))
                 {
                     ShowErrorAndStopProgress("Error: you must select a project to generate the unit tests.");
@@ -513,14 +548,14 @@ namespace AMF.Common.ViewModels
                     return;
                 }
 
-                if (IsContractUseCase && ConfigFolders && HasInvalidPath(ModelsFolder))
+                if (IsContractUseCase && CustomizeFoldersAndNamespaces && HasInvalidPath(ModelsFolder))
                 {
                     ShowErrorAndStopProgress("Error: invalid path specified for models. Path must be relative.");
                     //txtModels.Focus();
                     return;
                 }
 
-                if (IsContractUseCase && ConfigFolders && HasInvalidPath(ImplementationControllersFolder))
+                if (IsContractUseCase && CustomizeFoldersAndNamespaces && HasInvalidPath(ImplementationControllersFolder))
                 {
                     ShowErrorAndStopProgress("Error: invalid path specified for controllers. Path must be relative.");
                     //txtImplementationControllers.Focus();
@@ -553,6 +588,13 @@ namespace AMF.Common.ViewModels
                     parameters.GenerateUnitTests = GenerateUnitTests;
                     parameters.TestsProjectName = SelectedProject;
                     parameters.TestsNamespace = TestsNamespace;
+                    if (!CustomizeFoldersAndNamespaces)
+                    {
+                        ControllersNamespace = Namespace;
+                        ModelsNamespace = Namespace + ".Models";
+                    }
+                    parameters.ModelsNamespace = ModelsNamespace;
+                    parameters.ControllersNamespace = ControllersNamespace;
                 }
 
                 if(!isContractUseCase)
@@ -630,6 +672,9 @@ namespace AMF.Common.ViewModels
         private string importButtonText;
         private string username;
         private string password;
+        private string modelsNamespace;
+        private string controllersNamespace;
+
 
         private bool HasInvalidPath(string folder)
         {
@@ -683,7 +728,7 @@ namespace AMF.Common.ViewModels
         public void NewContract()
         {
             SetFilename(RamlTitle + RamlFileExtension);
-            SetNamespace(Filename);
+            SetDefaultNamespaces(Filename);
         }
 
         public async Task FromFile()

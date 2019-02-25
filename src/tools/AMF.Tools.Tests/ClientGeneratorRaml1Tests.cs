@@ -176,7 +176,7 @@ namespace Raml.Tools.Tests
         {
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
-            var model = new ClientGeneratorService(raml, "test", "TargetNamespace").BuildModel();
+            var model = new ClientGeneratorService(raml, "test", "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
             return model;
         }

@@ -36,7 +36,7 @@ namespace AMF.Tools.Core.WebApiGenerator
             }
         }
 
-        public string Namespace { get; set; }
+        public string ModelsNamespace { get; set; }
         public IDictionary<string, ApiObject> SchemaObjects { get; set; }
         public IDictionary<string, ApiObject> ResponseObjects { get; set; }
         public IDictionary<string, ApiObject> RequestObjects { get; set; }

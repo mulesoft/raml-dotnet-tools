@@ -29,7 +29,7 @@ namespace AMF.Tools
                 var destinationFile = Path.Combine(templateParams.TargetFolder, generatedFileName);
 
                 var result = t4Service.TransformText(templateParams.TemplatePath, templateParams.ParameterName, parameter, templateParams.BinPath, 
-                    templateParams.TargetNamespace, templateParams.UseAsyncMethods, templateParams.IncludeHasModels, templateParams.HasModels, 
+                    templateParams.ControllersNamespace, templateParams.ModelsNamespace, templateParams.UseAsyncMethods, templateParams.IncludeHasModels, templateParams.HasModels, 
                     templateParams.IncludeApiVersionInRoutePrefix, templateParams.ApiVersion, templateParams.TestsNamespace);
 
                 var contents = templatesManager.AddServerMetadataHeader(result.Content, Path.GetFileNameWithoutExtension(templateParams.TemplatePath), templateParams.Title);

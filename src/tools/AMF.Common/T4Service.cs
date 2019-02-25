@@ -51,8 +51,8 @@ namespace AMF.Common
             return new Result { Content = content, HasErrors = content.StartsWith("ErrorGeneratingOutput") || !string.IsNullOrWhiteSpace(errors), Errors = errors, Messages = messages };
         }
 
-        public Result TransformText<T>(string templatePath, string paramName, T param, string binPath, string targetNamespace, bool useAsyncMethods, 
-            bool includeHasModels = false, bool hasModels = true, bool includeApiVersionInRoutePrefix = false, string apiVersion = null, 
+        public Result TransformText<T>(string templatePath, string paramName, T param, string binPath, string targetNamespace, string modelsNamespace, 
+            bool useAsyncMethods, bool includeHasModels = false, bool hasModels = true, bool includeApiVersionInRoutePrefix = false, string apiVersion = null, 
             string testsNamespace = null)
         {
             // Get the T4 engine from VS
@@ -78,6 +78,7 @@ namespace AMF.Common
                 host.Session["apiVersion"] = apiVersion;
             if(!string.IsNullOrWhiteSpace(testsNamespace))
                 host.Session["testsNamespace"] = testsNamespace;
+            host.Session["modelsNamespace"] = modelsNamespace;
 
             var content = textTemplating.ProcessTemplate(templatePath, templateFileContent, this, null);
             textTemplating.EndErrorSession();

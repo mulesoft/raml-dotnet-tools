@@ -27,7 +27,6 @@ namespace AMF.Tools.Core
 		protected IDictionary<string, string> warnings;
 	    protected IDictionary<string, ApiEnum> enums;
 		protected readonly AmfModel raml;
-	    protected readonly string targetNamespace;
 	    protected ICollection<string> classesNames;
 		protected IDictionary<string, ApiObject> uriParameterObjects;
         
@@ -38,10 +37,9 @@ namespace AMF.Tools.Core
 
         public IEnumerable<ApiEnum> Enums { get { return enums.Values; } }
 
-		protected GeneratorServiceBase(AmfModel raml, string targetNamespace)
+		protected GeneratorServiceBase(AmfModel raml)
 		{
 			this.raml = raml;
-		    this.targetNamespace = targetNamespace;
 		    //ApplyResourceTypesAndTraits(raml.WebApi.EndPoints);
             //raml1TypesParser = new RamlTypeParser(raml.Shapes, schemaObjects, targetNamespace, enums, warnings);
 		}
@@ -192,7 +190,7 @@ namespace AMF.Tools.Core
 
                 var key = shape.Name;
 
-                var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace, true);
+                var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, isRootType:true);
 
                 AddNewElements(newElements);
             }
@@ -343,7 +341,7 @@ namespace AMF.Tools.Core
 
         private void ParseObjects(string key, IDictionary<string, ApiObject> objects, Shape shape)
         {
-            var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, targetNamespace);
+            var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums);
             AddNewEnums(newElements.Item2);
             AddObjects(objects, newElements.Item1);
         }

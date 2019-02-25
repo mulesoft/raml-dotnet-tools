@@ -7,8 +7,11 @@ namespace AMF.Tools.Core.WebApiGenerator
 {
     public class ModelsGeneratorService : GeneratorServiceBase
     {
-        public ModelsGeneratorService(AmfModel raml, string targetNamespace) : base(raml, targetNamespace)
+        private readonly string modelsNamespace;
+
+        public ModelsGeneratorService(AmfModel raml, string modelsNamespace) : base(raml)
         {
+            this.modelsNamespace = modelsNamespace;
         }
 
         public ModelsGeneratorModel BuildModel()
@@ -16,8 +19,6 @@ namespace AMF.Tools.Core.WebApiGenerator
             classesNames = new Collection<string>();
             warnings = new Dictionary<string, string>();
             enums = new Dictionary<string, ApiEnum>();
-
-            var ns = string.IsNullOrWhiteSpace(raml.WebApi?.Name) ? targetNamespace : NetNamingMapper.GetNamespace(raml.WebApi.Name);
 
             //new RamlTypeParser(raml.Shapes, schemaObjects, ns, enums, warnings).Parse();
 
@@ -27,6 +28,7 @@ namespace AMF.Tools.Core.WebApiGenerator
 
             return new ModelsGeneratorModel
             {
+                ModelsNamespace = modelsNamespace,
                 SchemaObjects = schemaObjects,
                 RequestObjects = schemaRequestObjects,
                 ResponseObjects = schemaResponseObjects,

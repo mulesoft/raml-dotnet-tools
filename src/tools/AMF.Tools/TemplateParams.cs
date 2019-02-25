@@ -10,7 +10,7 @@ namespace AMF.Tools
 
         public TemplateParams(string templatePath, ProjectItem projItem, string parameterName,
             IEnumerable<TT> parameterCollection, string folderPath, ProjectItem folderItem, string binPath,
-            string targetNamespace, string suffix = null, bool ovewrite = true, string prefix = null, string testsNamespace = null)
+            string controllersNamespace, string suffix = null, bool ovewrite = true, string prefix = null, string testsNamespace = null)
         {
             TemplatePath = templatePath;
             ProjItem = projItem;
@@ -19,7 +19,7 @@ namespace AMF.Tools
             FolderPath = folderPath;
             FolderItem = folderItem;
             BinPath = binPath;
-            TargetNamespace = targetNamespace;
+            ControllersNamespace = controllersNamespace;
             TestsNamespace = testsNamespace;
             Suffix = suffix;
             Ovewrite = ovewrite;
@@ -40,7 +40,7 @@ namespace AMF.Tools
 
         public string BinPath { get; }
 
-        public string TargetNamespace { get; }
+        public string ControllersNamespace { get; }
 
         public string TestsNamespace { get; set; }
 
@@ -61,6 +61,7 @@ namespace AMF.Tools
 
         public string TargetFolder { get; set; }
         public string RelativeFolder { get; set; }
+        public string ModelsNamespace { get; internal set; }
     }
 
 

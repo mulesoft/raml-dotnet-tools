@@ -292,6 +292,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -314,31 +315,33 @@
 							Grid.Column="1">
                     </Button>
 
-                    <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                    <CheckBox Grid.Row="1"
+                        Grid.ColumnSpan="2" x:Name="EnableBasicAuth"
+                            Content="Use Basic Authentication"
+                                  HorizontalContentAlignment="Left"
+                            Style="{StaticResource DefaultCheckBox}"></CheckBox>
+
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" x:Name="EnableBasicAuth"
-                            Content="Basic Auth"
-                            Style="{StaticResource DefaultCheckBox}"></CheckBox>
                         <Label Content="Username"
                                Style="{StaticResource DefaultLabel}"
-                               Grid.Column="1"></Label>
+                               Grid.Column="0"></Label>
                         <TextBox x:Name="Username"
                                  IsEnabled="{Binding EnableBasicAuth}"
                                  Style="{StaticResource DefaultTextBox}"
-                                 Grid.Column="2"></TextBox>
+                                 Grid.Column="1"></TextBox>
                         <Label Content="Password"
                                Style="{StaticResource DefaultLabel}"
-                               Grid.Column="3"></Label>
+                               Grid.Column="2"></Label>
                         <PasswordBox x:Name="UserPassword"
                                      IsEnabled="{Binding EnableBasicAuth}"
                                      Style="{StaticResource DefaultPasswordBox}"
-                                     Grid.Column="4"></PasswordBox>
+                                     Grid.Column="3"></PasswordBox>
                     </Grid>
 
                 </Grid>

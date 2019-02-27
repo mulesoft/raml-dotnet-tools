@@ -27,11 +27,12 @@ namespace AMF.Common.ViewModels
         private bool configFolders;
         private string modelsFolder;
         private string activeProjectName;
+        private readonly bool useBasicAuth;
         private Logger logger = new Logger();
 
         public RamlPreviewViewModel(IServiceProvider serviceProvider, Action<RamlChooserActionParams> action, string ramlTempFilePath,
-            string ramlOriginalSource, string ramlTitle, bool isContractUseCase)
-            : this(serviceProvider, ramlTitle)
+            string ramlOriginalSource, string ramlTitle, bool isContractUseCase, bool useBasicAuth, string username, string password)
+            : this(serviceProvider, ramlTitle, useBasicAuth, username, password)
         {
             DisplayName = "Import RAML";
             ImportButtonText = "Import";
@@ -42,8 +43,9 @@ namespace AMF.Common.ViewModels
             Height = isContractUseCase ? 660 : 480;
         }
 
-        public RamlPreviewViewModel(IServiceProvider serviceProvider, Action<RamlChooserActionParams> action, string ramlTitle)
-            : this(serviceProvider, ramlTitle)
+        public RamlPreviewViewModel(IServiceProvider serviceProvider, Action<RamlChooserActionParams> action, string ramlTitle, 
+            bool useBasicAuth, string username, string password)
+            : this(serviceProvider, ramlTitle, useBasicAuth, username, password)
         {
             DisplayName = "Create New RAML Contract";
             ImportButtonText = "Create";
@@ -55,13 +57,16 @@ namespace AMF.Common.ViewModels
             NotifyOfPropertyChange(() => NewContractVisibility);
         }
 
-        private RamlPreviewViewModel(IServiceProvider serviceProvider, string ramlTitle)
+        private RamlPreviewViewModel(IServiceProvider serviceProvider, string ramlTitle, bool useBasicAuth, string username, string password)
         {
             ServiceProvider = serviceProvider;
             RamlTitle = ramlTitle;
             var dte = serviceProvider.GetService(typeof(SDTE)) as DTE;
             Projects = VisualStudioAutomationHelper.GetProjects(dte);
             activeProjectName = VisualStudioAutomationHelper.GetActiveProject(dte).Name;
+            this.useBasicAuth = useBasicAuth;
+            this.username = username;
+            this.password = password;
         }
 
         public string ImportButtonText

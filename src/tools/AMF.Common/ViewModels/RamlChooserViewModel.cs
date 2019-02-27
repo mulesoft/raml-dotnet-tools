@@ -9,6 +9,8 @@ using AMF.Api.Core;
 using System.Net.Http;
 using System.Linq;
 using System.IO.Compression;
+using System.Security;
+using System.Runtime.InteropServices;
 
 namespace AMF.Common.ViewModels
 {
@@ -32,6 +34,38 @@ namespace AMF.Common.ViewModels
         private bool isNewRamlOption;
         private bool existingRamlOption;
         private IWindowManager windowManager;
+
+        private string username;
+        private bool enableBasicAuth;
+
+        public string Username
+        {
+            get { return username; }
+            set
+            {
+                username = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private string ConvertToUnsecureString(SecureString securePassword)
+        {
+            if (securePassword == null)
+            {
+                return string.Empty;
+            }
+
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+                return Marshal.PtrToStringUni(unmanagedString);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+            }
+        }
 
         private bool IsContractUseCase
         {
@@ -114,7 +148,7 @@ namespace AMF.Common.ViewModels
                 }
 
                 var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, RamlTempFilePath,
-                    Path.GetFileName(RamlTempFilePath), isContractUseCase);
+                    Path.GetFileName(RamlTempFilePath), isContractUseCase, useBasicAuth: false, username: string.Empty, password: string.Empty);
 
                 try
                 {
@@ -176,7 +210,7 @@ namespace AMF.Common.ViewModels
             RamlOriginalSource = fd.FileName;
 
             var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, RamlOriginalSource,
-                Path.GetFileName(fd.FileName), isContractUseCase);
+                Path.GetFileName(fd.FileName), isContractUseCase, useBasicAuth: false, username: string.Empty, password: string.Empty);
 
             try
             {
@@ -278,10 +312,30 @@ namespace AMF.Common.ViewModels
         }
 
 
-        public async void AddExistingRamlFromUrl()
+        public async void AddExistingRamlFromUrl(object parameter)
         {
             SelectExistingRamlOption();
-            var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, Url, "title", isContractUseCase);
+            var password = string.Empty;
+            if (EnableBasicAuth)
+            {
+                if (string.IsNullOrWhiteSpace(Username))
+                {
+                    MessageBox.Show("Please type your username.");
+                    return;
+                }
+                if (parameter is IHavePassword passwordContainer)
+                {
+                    var secureString = passwordContainer.Password;
+                    password = ConvertToUnsecureString(secureString);
+                }
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    MessageBox.Show("Please type your password.");
+                    return;
+                }
+            }
+
+            var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, RamlTempFilePath, Url, "title", isContractUseCase, EnableBasicAuth, Username, password);
 
             try
             {
@@ -357,6 +411,17 @@ namespace AMF.Common.ViewModels
 
         public string NewRamlFilename { get; set; }
 
+        public bool EnableBasicAuth
+        {
+            get { return enableBasicAuth; }
+            set
+            {
+                if (value == enableBasicAuth) return;
+                enableBasicAuth = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         private string GetNamespace(string fileName)
         {
             return VisualStudioAutomationHelper.GetDefaultNamespace(ServiceProvider) + "." +
@@ -383,7 +448,8 @@ namespace AMF.Common.ViewModels
 
         public void AddNewContract()
         {
-            var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, Title);
+            var previewViewModel = new RamlPreviewViewModel(ServiceProvider, action, Title, useBasicAuth: false, username: string.Empty, 
+                password: string.Empty);
             previewViewModel.NewContract();
             dynamic settings = new ExpandoObject();
             settings.Height = 420;

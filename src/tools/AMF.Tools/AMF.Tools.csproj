@@ -109,122 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="Templates\Tests\ApiControllerTests.t4">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Templates\Tests\ApiControllerTestsImplementation.t4">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <VSCTCompile Include="Commands\AddUnitTestsCommandPackage.vsct">
-      <ResourceName>Menus4.ctmenu</ResourceName>
-    </VSCTCompile>
-    <Content Include="Commands\Resources\AddUnitTestsCommand.png" />
-    <Content Include="Commands\Resources\AddUnitTestsCommandPackage.ico" />
-    <Content Include="Templates\TestsCore\ApiControllerTests.t4">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Templates\TestsCore\ApiControllerTestsImplementation.t4">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <VSCTCompile Include="Commands\AddReferenceCommandPackage.vsct">
-      <ResourceName>Menus1.ctmenu</ResourceName>
-      <SubType>Designer</SubType>
-    </VSCTCompile>
-    <Content Include="edge\x64\edge_nativeclr.node">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="edge\x86\edge_nativeclr.node">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <None Include="Key.snk" />
-    <None Include="MetadataPackage\Content\Controllers\RamlController.class" />
-    <None Include="MetadataPackage\Content\Views\Raml\Index.cshtml" />
-    <None Include="MetadataPackage\Content\Views\Raml\oauth1.cshtml" />
-    <None Include="MetadataPackage\Content\Views\Raml\oauth2.cshtml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\array.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\box.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\discriminator.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\documentation.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\example.json" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\example.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\examples.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\extensions.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\facets.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\github.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\includes.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\inline-schema.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\instagram.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\leagues.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\another-types.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\file-type.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\person-schema.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\security.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\type.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\library-security.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\library.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\linkedin.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\mini-library.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\person.json" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\properties-08.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\properties.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\simple.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\stripe.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\twitter.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\types.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro-2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2" />
-    <VSCTCompile Include="Commands\ExtractRAMLCommandPackage.vsct">
-      <ResourceName>Menus2.ctmenu</ResourceName>
-      <SubType>Designer</SubType>
-    </VSCTCompile>
-    <VSCTCompile Include="Commands\EditPropertiesCommandPackage.vsct">
-      <ResourceName>Menus3.ctmenu</ResourceName>
-      <SubType>Designer</SubType>
-    </VSCTCompile>
-    <Content Include="license.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html" />
-    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth2.html" />
-    <Content Include="MetadataPackage\Content\wwwroot\favicon.ico" />
-    <Content Include="MetadataPackage\Content\wwwroot\img\spinner.gif" />
-    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console-vendor.js" />
-    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console.js" />
-    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-dark-theme.css" />
-    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-light-theme.css" />
-    <Content Include="node_modules\ajv\.tonic_example.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="node_modules\ajv\dist\ajv.bundle.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -425,6 +309,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="node_modules\amf-client-js\test.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="node_modules\amf-shacl-node\shacl.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -442,38 +330,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="node_modules\parser.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\ajv\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-shacl-node\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\fast-deep-equal\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\fast-json-stable-stringify\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\json-schema-traverse\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\punycode\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -533,10 +389,122 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\uri-js\package.json">
+    <Content Include="node_modules\uri-js\rollup.config.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Templates\Tests\ApiControllerTests.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\Tests\ApiControllerTestsImplementation.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <VSCTCompile Include="Commands\AddUnitTestsCommandPackage.vsct">
+      <ResourceName>Menus4.ctmenu</ResourceName>
+    </VSCTCompile>
+    <Content Include="Commands\Resources\AddUnitTestsCommand.png" />
+    <Content Include="Commands\Resources\AddUnitTestsCommandPackage.ico" />
+    <Content Include="Templates\TestsCore\ApiControllerTests.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\TestsCore\ApiControllerTestsImplementation.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <VSCTCompile Include="Commands\AddReferenceCommandPackage.vsct">
+      <ResourceName>Menus1.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
+    </VSCTCompile>
+    <Content Include="edge\x64\edge_nativeclr.node">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="edge\x86\edge_nativeclr.node">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="Key.snk" />
+    <None Include="MetadataPackage\Content\Controllers\RamlController.class" />
+    <None Include="MetadataPackage\Content\Views\Raml\Index.cshtml" />
+    <None Include="MetadataPackage\Content\Views\Raml\oauth1.cshtml" />
+    <None Include="MetadataPackage\Content\Views\Raml\oauth2.cshtml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\array.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\box.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\discriminator.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\documentation.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\example.json" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\example.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\examples.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\extensions.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\facets.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\github.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\includes.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\inline-schema.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\instagram.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\leagues.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\another-types.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\file-type.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\person-schema.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\security.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\type.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\library-security.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\library.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\linkedin.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\mini-library.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\person.json" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\properties-08.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\properties.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\simple.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\stripe.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\twitter.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\examples\types.raml" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro-2.woff2" />
+    <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2" />
+    <VSCTCompile Include="Commands\ExtractRAMLCommandPackage.vsct">
+      <ResourceName>Menus2.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
+    </VSCTCompile>
+    <VSCTCompile Include="Commands\EditPropertiesCommandPackage.vsct">
+      <ResourceName>Menus3.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
+    </VSCTCompile>
+    <Content Include="license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html" />
+    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth2.html" />
+    <Content Include="MetadataPackage\Content\wwwroot\favicon.ico" />
+    <Content Include="MetadataPackage\Content\wwwroot\img\spinner.gif" />
+    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console-vendor.js" />
+    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console.js" />
+    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-dark-theme.css" />
+    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-light-theme.css" />
     <Content Include="node_modules\ajv\lib\dot\allOf.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -653,7 +621,43 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="node_modules\ajv\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\amf-client-js\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\amf-shacl-node\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\fast-deep-equal\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\fast-json-stable-stringify\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\json-schema-traverse\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\punycode\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="node_modules\uri-js\bower.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\uri-js\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -666,10 +670,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="node_modules\uri-js\rollup.config.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="Templates\Client\RAMLClient.t4">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -758,8 +758,8 @@
     <Reference Include="AMF.Api.Core, Version=0.9.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AMF.Api.Core.0.9.12\lib\net45\AMF.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="AMF.Parser, Version=0.9.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Parser.0.9.4\lib\net462\AMF.Parser.dll</HintPath>
+    <Reference Include="AMF.Parser, Version=0.9.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AMF.Parser.0.9.5.0\lib\net462\AMF.Parser.dll</HintPath>
     </Reference>
     <Reference Include="Analytics.NET, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Analytics.3.0.0\lib\Analytics.NET.dll</HintPath>
@@ -967,7 +967,6 @@
     <Analyzer Include="..\packages\Microsoft.VisualStudio.SDK.Analyzers.15.7.4\analyzers\cs\Microsoft.VisualStudio.SDK.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.7.17\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

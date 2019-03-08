@@ -146,6 +146,7 @@ namespace AMF.Tools.Core
 
             if (p.Range is ScalarShape scalar)
             {
+                prop.Pattern = scalar.Pattern;
                 prop.MaxLength = scalar.MaxLength;
                 prop.MinLength = scalar.MinLength;
                 prop.Maximum = string.IsNullOrWhiteSpace(scalar.Maximum) ? (double?)null : Convert.ToDouble(scalar.Maximum);

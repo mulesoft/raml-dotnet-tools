@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace AMF.Tools.Core
 {
@@ -25,6 +26,12 @@ namespace AMF.Tools.Core
         public int? MaxLength { get; set; }
         public int? MinLength { get; set; }
 
+        public double? Maximum { get; set; }
+        public double? Minimum { get; set; }
+
+        public string Pattern { get; internal set; }
+
+
         public string CustomAttributes
         {
             get
@@ -45,6 +52,9 @@ namespace AMF.Tools.Core
                 if (Minimum != null || Maximum != null)
                     BuildRangeAttribute(attributes, identation);
                 
+                if(!string.IsNullOrWhiteSpace(Pattern) && IsValidEcmaRegex(Pattern))
+                    attributes.Add(string.Format("[RegularExpression({0})]", Pattern).Insert(0, identation));
+
                 if (!attributes.Any())
                     return string.Empty;
 
@@ -70,7 +80,20 @@ namespace AMF.Tools.Core
             }
         }
 
-        public double? Maximum { get; set; }
-        public double? Minimum { get; set; }
+        private static bool IsValidEcmaRegex(string pattern)
+        {
+            if (string.IsNullOrEmpty(pattern)) return false;
+
+            try
+            {
+                Regex.Match("", pattern, RegexOptions.ECMAScript);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

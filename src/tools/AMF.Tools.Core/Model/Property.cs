@@ -53,7 +53,7 @@ namespace AMF.Tools.Core
                     BuildRangeAttribute(attributes, identation);
                 
                 if(!string.IsNullOrWhiteSpace(Pattern) && IsValidEcmaRegex(Pattern))
-                    attributes.Add(string.Format("[RegularExpression({0})]", Pattern).Insert(0, identation));
+                    attributes.Add(string.Format("[RegularExpression(\"{0}\")]", Pattern).Insert(0, identation));
 
                 if (!attributes.Any())
                     return string.Empty;

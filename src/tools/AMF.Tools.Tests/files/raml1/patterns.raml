@@ -1,0 +1,39 @@
+#%RAML 1.0
+title: Patterns
+types:
+  myObj:
+    type: object
+    properties:
+        prop1:
+            type: string
+            pattern: ^/dev/[^/]+(/[^/]+)*$
+        guid:
+            type: string
+            pattern: ^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$
+        prop2:
+            type: string
+            pattern: ^(/[^/]+)+$
+        prop3:
+            type: string
+            pattern: \\d{3}-\\w{12}
+        prop4:
+            type: string
+            pattern: |
+                [0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}
+        url:
+            type: string
+            pattern: (https?):\/\/((?:[a-z0-9.-]|%[0-9A-F]{2}){3,})(?::(\d+))?((?:\/(?:[a-z0-9-._~!$&'()*+,;=:@]|%[0-9A-F]{2})*)*)
+  customString:
+    type: string
+    pattern: (locale=([a-zA-Z]){3},tz=([a-zA-Z]){3,4})
+/foo:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: customString
+  post:
+    body:
+      application/json:
+        type: myObj

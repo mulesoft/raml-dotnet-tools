@@ -761,7 +761,7 @@
       <HintPath>..\packages\AMF.Api.Core.0.9.12\lib\net45\AMF.Api.Core.dll</HintPath>
     </Reference>
     <Reference Include="AMF.Parser, Version=0.9.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Parser.0.9.5.0\lib\net462\AMF.Parser.dll</HintPath>
+      <HintPath>..\packages\AMF.Parser.0.9.5\lib\net462\AMF.Parser.dll</HintPath>
     </Reference>
     <Reference Include="Analytics.NET, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Analytics.3.0.0\lib\Analytics.NET.dll</HintPath>

@@ -440,12 +440,6 @@
     <None Include="files\xml-sample.raml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="node_modules\ajv\dist\ajv.min.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\ajv\lib\dotjs\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="node_modules\ajv\lib\dot\allOf.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -536,9 +530,6 @@
     <None Include="node_modules\ajv\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="node_modules\ajv\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="node_modules\amf-client-js\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -548,22 +539,10 @@
     <None Include="node_modules\fast-deep-equal\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="node_modules\fast-deep-equal\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\fast-json-stable-stringify\benchmark\test.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="node_modules\fast-json-stable-stringify\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="node_modules\fast-json-stable-stringify\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="node_modules\json-schema-traverse\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\json-schema-traverse\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="node_modules\package.json">
@@ -572,52 +551,10 @@
     <None Include="node_modules\punycode\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="node_modules\punycode\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="node_modules\uri-js\bower.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="node_modules\uri-js\dist\es5\uri.all.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\es5\uri.all.min.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\index.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\regexps-iri.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\regexps-uri.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\schemes\http.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\schemes\https.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\schemes\mailto.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\schemes\urn-uuid.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\schemes\urn.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\uri.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\dist\esnext\util.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="node_modules\uri-js\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="node_modules\uri-js\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="node_modules\uri-js\tsconfig.json">
@@ -806,16 +743,10 @@
     <Content Include="node_modules\amf-client-js\amf.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="node_modules\amf-client-js\test.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="node_modules\amf-shacl-node\shacl.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="node_modules\fast-deep-equal\index.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="node_modules\fast-json-stable-stringify\benchmark\index.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="node_modules\fast-json-stable-stringify\example\key_cmp.js">
@@ -925,84 +856,8 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="node_modules\ajv\lib\ajv.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\amf-client-js\typings\amf-client-js.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\fast-deep-equal\index.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\es5\uri.all.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\es5\uri.all.min.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\index.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\regexps-iri.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\regexps-uri.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\schemes\http.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\schemes\https.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\schemes\mailto.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\schemes\urn-uuid.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\schemes\urn.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\uri.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\dist\esnext\util.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\index.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\punycode.d.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\regexps-iri.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\regexps-uri.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\schemes\http.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\schemes\https.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\schemes\mailto.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\schemes\urn-uuid.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\schemes\urn.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\uri.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="node_modules\uri-js\src\util.ts">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
+    <Folder Include="node_modules\amf-client-js\typings\" />
+    <Folder Include="node_modules\uri-js\src\schemes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -393,9 +393,10 @@
                      Grid.Column="1"
                      Visibility="{Binding NewContractVisibility}"
                      HorizontalAlignment="Center"
-							 ScrollViewer.VerticalScrollBarVisibility="Visible"
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible"
+							 HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Visible"
                              Width="500"
+                             Height="130"
 							 Text=""
 							 Style="{StaticResource TextBlockStyle}"
 							 x:Name="ResourcesPreview" />

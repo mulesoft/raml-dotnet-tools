@@ -183,7 +183,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <RadioButton Content="New RAML/OAS contract"
+                <RadioButton Content="New RAML contract"
 							 x:Name="IsNewRamlOption"
                              Visibility="{Binding ContractUseCaseVisibility}"
 							 Style="{StaticResource DefaultRadioButton}"

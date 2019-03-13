@@ -247,7 +247,7 @@ namespace AMF.Common.ViewModels
         private void ShowPreviewViewAndClose(RamlPreviewViewModel previewViewModel)
         {
             dynamic settings = new ExpandoObject();
-            settings.Height = isContractUseCase ? 660 : 480;
+            settings.Height = isContractUseCase ? 680 : 520;
             WindowManager.ShowDialog(previewViewModel, null, settings);
 
             if (previewViewModel.WasImported)

@@ -51,9 +51,15 @@ namespace AMF.Tools.Core
 
                 if (Minimum != null || Maximum != null)
                     BuildRangeAttribute(attributes, identation);
-                
-                if(!string.IsNullOrWhiteSpace(Pattern) && IsValidEcmaRegex(Pattern))
-                    attributes.Add(string.Format("[RegularExpression(\"{0}\")]", Pattern).Insert(0, identation));
+
+                if (!string.IsNullOrWhiteSpace(Pattern))
+                {
+                    Pattern = Pattern.Replace("\\\\", "\\");
+                    if (IsValidEcmaRegex(Pattern))
+                    {
+                        attributes.Add(string.Format("[RegularExpression(@\"{0}\")]", Pattern).Insert(0, identation));
+                    }
+                }
 
                 if (!attributes.Any())
                     return string.Empty;

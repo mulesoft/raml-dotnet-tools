@@ -43,13 +43,13 @@ namespace Raml.Tools.Tests
         {
             var model = await BuildModel("files/raml1/patterns.raml");
             Assert.AreEqual(2, model.Objects.Count());
-            Assert.IsTrue( model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop1").CustomAttributes.Contains("[RegularExpression(\""));
+            Assert.IsTrue( model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop1").CustomAttributes.Contains("[RegularExpression(@\""));
             Assert.AreEqual("^/dev/[^/]+(/[^/]+)*$", model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop1").Pattern);
             Assert.AreEqual("^(/[^/]+)+$", model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop2").Pattern);
-            //Assert.AreEqual("\\d{3}-\\w{12}", model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop3").Pattern);
-            //Assert.AreEqual(@"(https?):\/\/((?:[a-z0-9.-]|%[0-9A-F]{2}){3,})(?::(\d+))?((?:\/(?:[a-z0-9-._~!$&'()*+,;=:@]|%[0-9A-F]{2})*)*)", 
+            Assert.IsTrue(model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop3").CustomAttributes.Contains("[RegularExpression(@\"^\\d{3}-\\w{12}$\")]"));
+            //Assert.AreEqual(@"(https?):\/\/((?:[a-z0-9.-]|%[0-9A-F]{2}){3,})(?::(\d+))?((?:\/(?:[a-z0-9-._~!$&'()*+,;=:@]|%[0-9A-F]{2})*)*)",
             //    model.Objects.First(o => o.Name == "CustomString").Properties.First().Pattern);
-            
+
         }
 
         [Test]

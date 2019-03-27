@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using AMF.Tools.Core.ClientGenerator;
  
 namespace AMF.Tools.Core.WebApiGenerator
@@ -10,6 +11,42 @@ namespace AMF.Tools.Core.WebApiGenerator
     {
         public string Name { get; set; }
         public string ReturnType { get; set; }
+        public string OkConcreteType
+        {
+            get
+            {
+                if (OkReturnType == null)
+                    return null;
+
+                if(CollectionTypeHelper.IsCollection(OkReturnType))
+                    return ReturnType.Substring(1);
+
+                return ReturnType;
+            }
+        }
+
+        public string ResponseStatusCode { get; set; }
+
+        public string OkReturnType
+        {
+            get
+            {
+                if (ResponseStatusCode != "200" && ResponseStatusCode != "OK")
+                    return null;
+
+                if (ResponseStatusCode == "200" || ResponseStatusCode == "OK")
+                    return ReturnType;
+
+                if (ReturnTypeObject == null)
+                    return null;
+
+                if (ReturnTypeObject.IsMultiple && ReturnTypeObject.Properties.Any(p => p.StatusCode == HttpStatusCode.OK))
+                    return ReturnTypeObject.Properties.First(p => p.StatusCode == HttpStatusCode.OK).Type;
+
+                return null;
+            }
+        }
+
         public ApiObject ReturnTypeObject { get; set; }
 
         public GeneratorParameter Parameter { get; set; }
@@ -43,7 +80,6 @@ namespace AMF.Tools.Core.WebApiGenerator
                     foreach (var parameter in UriParameters.Where(parameter => !parameters.ContainsKey(parameter.Name)))
                         parameters.Add(parameter.Name, new MethodParameter(false, "[FromUri] " + parameter.Type + " " + parameter.Name));
 
-                
                 if (UseSecurity && SecurityParameters != null && SecurityParameters.Any())
                     foreach (var prop in SecurityParameters.Where(parameter => !parameters.ContainsKey(parameter.Name.ToLowerInvariant())))
                         parameters.Add(prop.Name.ToLowerInvariant(),

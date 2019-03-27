@@ -36,6 +36,8 @@ namespace AMF.Tools
 
         public abstract void AddTests(RamlChooserActionParams parameters);
 
+        public abstract void InstallDependencies(Project project);
+
         public abstract string TemplateSubFolder { get; }
 
         protected abstract string GetTargetFolderPath(string testsFolderPath, string fileName);

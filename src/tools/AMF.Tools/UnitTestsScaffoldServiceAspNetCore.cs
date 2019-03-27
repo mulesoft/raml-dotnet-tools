@@ -26,6 +26,8 @@ namespace AMF.Tools
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
 
+            InstallDependencies(proj);
+
             var folderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, UnitTestsFolderName);
             var contractsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar + UnitTestsFolderName + Path.DirectorySeparatorChar;
 
@@ -36,7 +38,7 @@ namespace AMF.Tools
             AddUnitTests(folderItem, contractsFolderPath, parameters);
         }
 
-        private void InstallDependencies(Project proj, string newtonsoftJsonForCorePackageVersion)
+        public override void InstallDependencies(Project proj)
         {
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();

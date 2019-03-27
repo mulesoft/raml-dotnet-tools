@@ -99,7 +99,8 @@ namespace AMF.Tools
                 parameters.TestsNamespace = VisualStudioAutomationHelper.GetDefaultNamespace(testsProj) + "." +
                         NetNamingMapper.GetObjectName(Path.GetFileNameWithoutExtension(parameters.RamlFilePath));
 
-                var unitTestsScaffoldService = new UnitTestsScaffoldServiceAspNetCore(t4Service, ServiceProvider);
+                var unitTestsScaffoldService = UnitTestsScaffoldServiceBase.GetScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
+                unitTestsScaffoldService.InstallDependencies(testsProj);
                 unitTestsScaffoldService.ScaffoldToProject(parameters, testsProj);
             }
         }

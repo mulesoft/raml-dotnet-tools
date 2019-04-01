@@ -58,8 +58,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ActivityLogger.cs" />
-    <Compile Include="Commands\AddUnitTestsCommand.cs" />
-    <Compile Include="Commands\AddUnitTestsCommandPackage.cs" />
     <Compile Include="UnitTestsScaffoldServiceAspNetWebApi.cs" />
     <Compile Include="UnitTestsScaffoldServiceAspNetCore.cs" />
     <Compile Include="UnitTestsScaffoldServiceBase.cs" />
@@ -413,9 +411,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <VSCTCompile Include="Commands\AddUnitTestsCommandPackage.vsct">
-      <ResourceName>Menus4.ctmenu</ResourceName>
-    </VSCTCompile>
     <Content Include="Commands\Resources\AddUnitTestsCommand.png" />
     <Content Include="Commands\Resources\AddUnitTestsCommandPackage.ico" />
     <Content Include="Templates\TestsCore\ApiControllerTests.t4">

@@ -4,6 +4,14 @@
 
 :!numbered:
 
+== Announcement
+We have released https://github.com/mulesoft/amf-dotnet-tools/releases/tag/v0.0.1-beta[a beta version of our new tool: AMF.Net.Tools].
+The main benefit of the new tool is that it supports both RAML and OAS (swagger) specifications.
+Also, it has new features and many of the issues reported here were addressed in the new tool.
+You can check it out by downloading the vsix file from https://github.com/mulesoft/amf-dotnet-tools/releases/tag/v0.0.1-beta[the new repository].
+We'll happy to receive your feedback, if you have any https://github.com/mulesoft/amf-dotnet-tools/issues[issues] please report them there too.
+
+
 The RAML Tools for .NET allows developers to easily integrate and consume APIs that expose a RAML definition, or create a new ASP.NET implementation using a contract-first approach from a previously created RAML definition. See http://raml.org for information on RAML (RESTful API Markup Language). 
 
 The tools are provided as a Visual Studio extension, allowing simple and natural integration of RAML into a normal development workflow.

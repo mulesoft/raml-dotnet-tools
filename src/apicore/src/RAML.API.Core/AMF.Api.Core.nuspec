@@ -19,15 +19,15 @@
       </dependencies>
   </metadata>
     <files>
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\net45\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\wpa81\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\win8\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\MonoAndroid10\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\xamarinios10\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\MonoTouch10\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\portable-net45+win+wpa81\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\Xamarin.iOS10\AMF.Api.Core.dll" />
-        <file src="bin\debug\AMF.Api.Core.dll" target="lib\dotnet\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\net45\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\wpa81\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\win8\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\MonoAndroid10\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\xamarinios10\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\MonoTouch10\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\portable-net45+win+wpa81\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\Xamarin.iOS10\AMF.Api.Core.dll" />
+        <file src="bin\Release\AMF.Api.Core.dll" target="lib\dotnet\AMF.Api.Core.dll" />
     </files>
 </package>

@@ -1,0 +1,36 @@
+pipeline {
+
+    agent {
+        label 'windows10'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+           		bat 'nuget restore src/apicore/src/AMF.Api.Core.sln'
+        		bat "msbuild src/apicore/src/AMF.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=0.9.12.${env.BUILD_NUMBER}"            }
+        }
+        stage('Test') {
+            steps {
+                // dir("source/AMF.Parser.TestRunner/bin/Release/"){
+                //     bat 'ConsoleApp2.exe'
+                // }
+            }
+        }
+        stage('Pack') {
+            steps {
+        		bat 'nuget pack src/apicore/src/AMF.Api.Core/AMF.Api.Core.csproj -Prop Configuration=Release'
+            }
+        }        
+    }
+
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+            
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" /xml=nunit-result.xml'
+                bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml;format=nunit2'
             }
         }
         stage('Pack') {

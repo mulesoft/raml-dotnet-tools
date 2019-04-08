@@ -5,21 +5,65 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
-            steps {
-           		bat 'nuget restore src/apicore/src/AMF.Api.Core.sln'
-        		bat "msbuild src/apicore/src/AMF.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=0.9.12.${env.BUILD_NUMBER}"            }
-        }
-        stage('Test') {
-            steps {
-                bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml'
+        stage('AMF.Api.Core')
+        {
+            stages {
+                stage('Build') {
+                    steps {
+                        bat 'nuget restore src/apicore/src/AMF.Api.Core.sln'
+                        bat "msbuild src/apicore/src/AMF.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                    }
+                }
+                // stage('Test') {
+                //     steps {
+                //         bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml'
+                //     }
+                // }
+                stage('Pack') {
+                    steps {
+                        bat 'nuget pack src/apicore/src/RAML.API.Core/AMF.Api.Core.csproj -Prop Configuration=Release'
+                    }
+                }
             }
         }
-        stage('Pack') {
-            steps {
-        		bat 'nuget pack src/apicore/src/RAML.API.Core/AMF.Api.Core.csproj -Prop Configuration=Release'
+
+        stage('RAML.Parser.Model')
+        {
+            stages {
+                stage('Build') {
+                    steps {
+                        bat "msbuild src/raml/Raml.Parser.Model.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                    }
+                }
+                stage('Pack') {
+                    steps {
+                        bat 'nuget pack src/raml/RAML.Parser.Model/RAML.Parser.Model.csproj -Prop Configuration=Release'
+                    }
+                }
             }
-        }        
+        }
+
+        stage('AMF.ApiExplorer')
+        {
+            stages {
+                stage('Build') {
+                    steps {
+                        bat 'nuget restore src/apiexplorer/src/AMF.WebApiExplorer.sln'
+                        bat "msbuild src/apiexplorer/src/AMF.WebApiExplorer.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\apiexplorer\\src\\AMF.WebApiExplorer.Tests\\bin\\Release\\AMF.WebApiExplorer.Tests.dll" --result=TestWebApiExplorer.xml'
+                    }
+                }
+                stage('Pack') {
+                    steps {
+                        bat 'nuget pack src/apiexplorer/src/AMF.WebApiExplorer/AMF.WebApiExplorer.csproj -Prop Configuration=Release'
+                    }
+                }
+            }
+        }
     }
 
     post {

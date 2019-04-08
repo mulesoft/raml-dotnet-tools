@@ -58,7 +58,7 @@ pipeline {
                     }
                 }
             }
-        }        
+        }
 
         stage('AMF.ApiExplorer')
         {
@@ -81,6 +81,29 @@ pipeline {
                 }
             }
         }
+
+        stage('AMF.NetCore.ApiExplorer'){
+            stages{
+                stage('Build'){
+                    steps {
+                        bat "dotnet restore src/core-apiexplorer/AMF.NetCoreAPIExplorer.sln"
+                        bat "dotnet build src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/AMF.NetCoreAPIExplorer.csproj"
+                        bat "dotnet build src/core-apiexplorer/src/AMF.NetCoreAPIExplorer.Tests/AMF.NetCoreAPIExplorer.Tests.csproj"
+                    }
+                }
+                stage('Test'){
+                    steps{
+                        bat 'nunit-console.exe src/apiexplorer/src/AMF.WebApiExplorer.Tests/bin/Release/AMF.WebApiExplorer.Tests.dll --result=TestWebApiExplorer.xml'
+                    }
+                }
+                stage('Pack'){
+                    steps {
+                        bat "dotnet pack src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/AMF.NetCoreAPIExplorer.csproj"
+                    }
+                }
+            }
+        }
+
     }
 
     post {

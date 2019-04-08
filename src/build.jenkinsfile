@@ -109,18 +109,18 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
-                        bat 'nuget restore src/tools/src/AMF.Tools.sln'
-                        bat "msbuild src/tools/src/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                        bat 'nuget restore src/tools/AMF.Tools.sln'
+                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
                 }
                 stage('Test') {
                     steps {
-                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\src\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
+                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
                     }
                 }
                 // stage('Sing Vsix') {
                 //     steps {
-                //         bat 'nuget pack src/tools/src/AMF.Tools/AMF.Tools.csproj -Prop Configuration=Release'
+                //         bat 'nuget pack src/tools/AMF.Tools/AMF.Tools.csproj -Prop Configuration=Release'
                 //     }
                 // }
             }

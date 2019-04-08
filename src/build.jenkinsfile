@@ -65,7 +65,7 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
-                        // bat 'nuget restore src/apiexplorer/src/AMF.WebApiExplorer.sln'
+                        bat 'nuget restore src/apiexplorer/src/AMF.WebApiExplorer.sln'
                         bat "msbuild src/apiexplorer/src/AMF.WebApiExplorer.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
                 }

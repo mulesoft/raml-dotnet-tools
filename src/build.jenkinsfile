@@ -43,12 +43,25 @@ pipeline {
             }
         }
 
+        stage('AMF.NetCore.APICore'){
+            stages{
+                stage('Build'){
+                    bat "dotnet restore src/core-apicore/AMF.NetCore.APICore.sln"
+                    bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
+                    bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore.Tests/AMF.NetCore.APICore.Tests.csproj"
+                }
+                stage('Pack'){
+                    bat "dotnet pack src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
+                }
+            }
+        }        
+
         stage('AMF.ApiExplorer')
         {
             stages {
                 stage('Build') {
                     steps {
-                        bat 'nuget restore src/apiexplorer/src/AMF.WebApiExplorer.sln'
+                        // bat 'nuget restore src/apiexplorer/src/AMF.WebApiExplorer.sln'
                         bat "msbuild src/apiexplorer/src/AMF.WebApiExplorer.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
                 }

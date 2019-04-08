@@ -115,7 +115,7 @@ pipeline {
                 }
                 stage('Test') {
                     steps {
-                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\src\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
+                        bat 'dotnet test src/core-apiexplorer/src/AMF.NetCoreApiExplorer.Tests/AMF.NetCoreApiExplorer.Tests.csproj --result=Testtools.xml'
                     }
                 }
                 // stage('Sing Vsix') {

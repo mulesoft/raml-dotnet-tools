@@ -93,7 +93,7 @@ pipeline {
                 }
                 stage('Test'){
                     steps{
-                        bat 'nunit3-console.exe src/apiexplorer/src/AMF.WebApiExplorer.Tests/bin/Release/AMF.WebApiExplorer.Tests.dll --result=TestWebApiExplorer.xml'
+                        bat 'nunit3-console.exe src/core-apiexplorer/src/AMF.NetCoreAPIExplorer.Tests/bin/Release/AMF.NetCoreAPIExplorer.Tests.dll --result=TestNetCoreAPIExplorer.xml'
                     }
                 }
                 stage('Pack'){
@@ -103,6 +103,29 @@ pipeline {
                 }
             }
         }
+
+        stage('AMF.Tools')
+        {
+            stages {
+                stage('Build') {
+                    steps {
+                        bat 'nuget restore src/tools/src/AMF.Tools.sln'
+                        bat "msbuild src/tools/src/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\src\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
+                    }
+                }
+                // stage('Sing Vsix') {
+                //     steps {
+                //         bat 'nuget pack src/tools/src/AMF.Tools/AMF.Tools.csproj -Prop Configuration=Release'
+                //     }
+                // }
+            }
+        }
+
 
     }
 

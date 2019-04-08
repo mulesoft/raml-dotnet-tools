@@ -5,13 +5,6 @@ VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.WebApiExplorer", "AMF.WebApiExplorer\AMF.WebApiExplorer.csproj", "{D88ED636-5C91-453C-A599-D968E5289FA4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{29EB84DD-88F1-4B5B-9020-114D397EFD30}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.WebApiExplorer.Tests", "AMF.WebApiExplorer.Tests\AMF.WebApiExplorer.Tests.csproj", "{4DEE024E-5FB9-427E-8666-7B0CA27975E3}"
 EndProject
 Global

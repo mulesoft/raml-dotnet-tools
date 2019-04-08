@@ -46,12 +46,16 @@ pipeline {
         stage('AMF.NetCore.APICore'){
             stages{
                 stage('Build'){
-                    bat "dotnet restore src/core-apicore/AMF.NetCore.APICore.sln"
-                    bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
-                    bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore.Tests/AMF.NetCore.APICore.Tests.csproj"
+                    steps {
+                        bat "dotnet restore src/core-apicore/AMF.NetCore.APICore.sln"
+                        bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
+                        bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore.Tests/AMF.NetCore.APICore.Tests.csproj"
+                    }
                 }
                 stage('Pack'){
-                    bat "dotnet pack src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
+                    steps {
+                        bat "dotnet pack src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
+                    }
                 }
             }
         }        

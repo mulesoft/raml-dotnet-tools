@@ -119,7 +119,8 @@ namespace AMF.Tools.Tests
             var proxy = new Movies.MoviesApi(client);
             proxy.SchemaValidation.RaiseExceptions = true;
 
-            Assert.Throws<SchemaValidationException>(async () => { var movies = await proxy.Movies.Get(); });
+            // Assert.Throws<SchemaValidationException>(async () => { await proxy.Movies.Get(); });
+            Assert.That(async () => await proxy.Movies.Get(), Throws.Exception.TypeOf<SchemaValidationException>());
         }
 
         [Test]

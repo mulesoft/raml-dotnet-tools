@@ -23,7 +23,7 @@ namespace AMF.WebApiExplorer.Tests
 		public void ShouldParseTypeWithNestedTypes()
 		{
 			var raml1Type = raml1TypeBuilder.Add(typeof (ForksPostResponse));
-            Assert.IsNotNullOrEmpty(raml1Type);
+            Assert.That(!string.IsNullOrWhiteSpace(raml1Type));
             Assert.IsTrue(raml1Types.ContainsKey("ForksPostResponse"));
             Assert.IsTrue(raml1Types.ContainsKey("Owner"));
 		}
@@ -99,13 +99,13 @@ namespace AMF.WebApiExplorer.Tests
             Assert.AreEqual(6, raml1Types.Count);
 		}
 
-        [Test, Ignore] // it should not be necesary
-        public void ShouldGetSubclassesOfType()
-        {
-            raml1TypeBuilder.Add(typeof(Entry));
-            Assert.AreEqual(6, raml1Types.Count);
-            Assert.AreEqual("Storage", raml1Types.GetByKey("StoragediskUUID").Type);
-        }
+        //[Test]
+        //public void ShouldGetSubclassesOfType()
+        //{
+        //    raml1TypeBuilder.Add(typeof(Entry));
+        //    Assert.AreEqual(1, raml1Types.Count);
+        //    Assert.AreEqual("Storage", raml1Types.GetByKey("StoragediskUUID").Type);
+        //}
 
         [Test]
         public void ShouldParseTypeWithRecursiveTypes()

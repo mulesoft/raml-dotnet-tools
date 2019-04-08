@@ -14,11 +14,11 @@ pipeline {
                         bat "msbuild src/apicore/src/AMF.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
                 }
-                // stage('Test') {
-                //     steps {
-                //         bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml'
-                //     }
-                // }
+                stage('Test') {
+                    steps {
+                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml'
+                    }
+                }
                 stage('Pack') {
                     steps {
                         bat 'nuget pack src/apicore/src/RAML.API.Core/AMF.Api.Core.csproj -Prop Configuration=Release'

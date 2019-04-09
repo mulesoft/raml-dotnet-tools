@@ -98,7 +98,7 @@ pipeline {
                 }
                 stage('Pack'){
                     steps {
-                        bat "dotnet pack src/core-apiexplorer/src/AMF.NetCoreApiExplorer/AMF.NetCoreApiExplorer.csproj"
+                        bat "dotnet pack src/core-apiexplorer/src/RAML.Parser.Expressions/RAML.Parser.Expressions.csproj"
                         bat "dotnet pack src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/AMF.NetCoreAPIExplorer.csproj"
                     }
                 }
@@ -132,7 +132,8 @@ pipeline {
         always {
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
-            archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/bin/Debug/*.nupkg'
+            archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'
+            src\core-apiexplorer\src\AMF.NetCoreApiExplorer\bin\Debug\
             nunit testResultsPattern: '*.xml'
         }
         cleanup {

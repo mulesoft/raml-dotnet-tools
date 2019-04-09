@@ -98,6 +98,7 @@ pipeline {
                 }
                 stage('Pack'){
                     steps {
+                        bst "dotnet pack src/core-apiexplorer/src/AMF.NetCoreApiExplorer/AMF.NetCoreApiExplorer.csproj"
                         bat "dotnet pack src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/AMF.NetCoreAPIExplorer.csproj"
                     }
                 }
@@ -132,7 +133,9 @@ pipeline {
     post {
         always {
             archiveArtifacts '*.nupkg'
-            nunit testResults: '*.xml'
+            archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
+            archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/bin/Debug/*.nupkg'
+            nunit '*.xml'
         }
         cleanup {
             cleanWs()

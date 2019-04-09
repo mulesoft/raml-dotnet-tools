@@ -133,7 +133,6 @@ pipeline {
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
             archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'
-            src\core-apiexplorer\src\AMF.NetCoreApiExplorer\bin\Debug\
             nunit testResultsPattern: '*.xml'
         }
         cleanup {

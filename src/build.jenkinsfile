@@ -104,27 +104,27 @@ pipeline {
             }
         }
 
-        stage('AMF.Tools')
-        {
-            stages {
-                stage('Build') {
-                    steps {
-                        bat 'nuget restore src/tools/AMF.Tools.sln'
-                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
-                    }
-                }
-                // stage('Sing Vsix') {
-                //     steps {
-                //         bat 'nuget pack src/tools/AMF.Tools/AMF.Tools.csproj -Prop Configuration=Release'
-                //     }
-                // }
-            }
-        }
+        // stage('AMF.Tools')
+        // {
+        //     stages {
+        //         stage('Build') {
+        //             steps {
+        //                 bat 'nuget restore src/tools/AMF.Tools.sln'
+        //                 bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+        //             }
+        //         }
+        //         stage('Test') {
+        //             steps {
+        //                 bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
+        //             }
+        //         }
+        //         // stage('Sing Vsix') {
+        //         //     steps {
+        //         //         bat 'nuget pack src/tools/AMF.Tools/AMF.Tools.csproj -Prop Configuration=Release'
+        //         //     }
+        //         // }
+        //     }
+        // }
 
 
     }
@@ -132,7 +132,7 @@ pipeline {
     post {
         always {
             archiveArtifacts '*.nupkg'
-            
+            nunit testResults: '*.xml'
         }
         cleanup {
             cleanWs()

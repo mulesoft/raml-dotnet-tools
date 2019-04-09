@@ -133,7 +133,7 @@ pipeline {
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
             archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/bin/Debug/*.nupkg'
-            nunit testResults: *.xml
+            nunit testResults: '*.xml'
         }
         cleanup {
             cleanWs()

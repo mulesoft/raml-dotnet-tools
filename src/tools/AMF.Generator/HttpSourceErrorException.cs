@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     public class HttpSourceErrorException : HttpRequestException
     {

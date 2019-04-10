@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TextTemplating;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     //The text template transformation engine is responsible for running 
     //the transformation process.

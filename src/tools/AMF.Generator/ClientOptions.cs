@@ -3,7 +3,7 @@ using System.Text;
 using CommandLine;
 using CommandLine.Text;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     [Verb("client", HelpText = "client proxy generation, type 'RAMLGen help client' for more info")]
     public class ClientOptions : Options

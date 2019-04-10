@@ -7,7 +7,7 @@ using AMF.Parser;
 using AMF.Parser.Model;
 using Task = System.Threading.Tasks.Task;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     public class RamlGenerator
     {

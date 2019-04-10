@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TextTemplating;
 using AMF.Tools.Core;
 using AMF.Tools.Core.WebApiGenerator;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     public abstract class RamlBaseGenerator
     {

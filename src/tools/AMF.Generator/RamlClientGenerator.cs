@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TextTemplating;
 using AMF.Parser.Model;
 using AMF.Tools.Core.ClientGenerator;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     public class RamlClientGenerator
     {

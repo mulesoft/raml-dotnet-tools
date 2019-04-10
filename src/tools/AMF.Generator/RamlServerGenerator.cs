@@ -6,7 +6,7 @@ using AMF.Tools.Core.WebApiGenerator;
 using System.Reflection;
 
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     public class RamlServerGenerator : RamlBaseGenerator
     {

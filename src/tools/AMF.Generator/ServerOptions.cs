@@ -2,7 +2,7 @@
 using CommandLine;
 using CommandLine.Text;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     [Verb("server", HelpText = "ASP.MVC 6 or WebApi 2 scaffold generation, type 'RAMLGen help server' for more info")]
     public class ServerOptions : Options

@@ -7,8 +7,8 @@
     <ProjectGuid>{87CF74C6-B74C-40D0-BBC6-3576EF3DFAB4}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MuleSoft.RAMLGen</RootNamespace>
-    <AssemblyName>RAMLGen</AssemblyName>
+    <RootNamespace>AMF.CLI</RootNamespace>
+    <AssemblyName>AMF.CLI</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

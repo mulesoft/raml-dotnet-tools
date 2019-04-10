@@ -4,13 +4,13 @@ using CommandLine;
 using Error = CommandLine.Error;
 
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     class Program
     {
         static int Main(string[] args)
         {
-            Parser.Default.ParseArguments<ClientOptions, ServerOptions, ModelsOptions, string>(args)
+            CommandLine.Parser.Default.ParseArguments<ClientOptions, ServerOptions, ModelsOptions, string>(args)
                 .MapResult(
                     (ClientOptions opts) => RunReferenceAndReturnExitCode(opts),
                     (ServerOptions opts) => RunContractAndReturnExitCode(opts),

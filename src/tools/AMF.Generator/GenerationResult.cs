@@ -1,7 +1,7 @@
 ﻿using System.CodeDom.Compiler;
 using System.Text;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     public class GenerationResult
     {

@@ -2,7 +2,7 @@
 using CommandLine;
 using CommandLine.Text;
 
-namespace MuleSoft.RAMLGen
+namespace AMF.CLI
 {
     [Verb("models", HelpText = "Model classes scaffold generation, type 'RAMLGen help models' for more info")]
     public class ModelsOptions : Options

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RAMLGen")]
-[assembly: AssemblyDescription("RAMLGenerator is a command line for generating client and server code based on a RAML spec.")]
+[assembly: AssemblyTitle("AMF.CLI")]
+[assembly: AssemblyDescription("AMF.CLI is a command line for generating client and server code based on a RAML or OAS specification")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MuleSoft Inc")]
-[assembly: AssemblyProduct("RAMLGen")]
+[assembly: AssemblyProduct("AMF.CLI")]
 [assembly: AssemblyCopyright("MuleSoft Inc Copyright © 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

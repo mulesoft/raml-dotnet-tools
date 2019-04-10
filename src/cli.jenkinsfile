@@ -1,0 +1,29 @@
+pipeline {
+
+    agent {
+        label 'windows10'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                bat 'nuget restore src/tools/AMF.Generator.sln'
+                bat "msbuild src/tools/AMF.Generator.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+            }
+        }
+        stage('Pack') {
+            steps {
+                bat 'nuget pack src/tools/AMF.Generator/AMF.Generator.csproj -Prop Configuration=Release'
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

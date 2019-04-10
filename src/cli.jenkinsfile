@@ -14,6 +14,7 @@ pipeline {
         stage('Pack') {
             steps {
                 bat 'nuget pack src/tools/AMF.Generator/AMF.Generator.csproj -Prop Configuration=Release'
+                zip dir:'src/tools/AMF.Generator/bin/Release/', zipFile: 'AMF.CLI.zip'
             }
         }
     }
@@ -21,6 +22,7 @@ pipeline {
     post {
         always {
             archiveArtifacts '*.nupkg'
+            archiveArtifacts '*.zip'
         }
         cleanup {
             cleanWs()

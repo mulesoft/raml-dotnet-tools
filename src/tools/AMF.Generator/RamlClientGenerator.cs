@@ -20,7 +20,7 @@ namespace MuleSoft.RAMLGen
                 : templatesFolder;
 
 
-            var model = new ClientGeneratorService(ramlDoc, targetFileName + "Client", targetNamespace).BuildModel();
+            var model = new ClientGeneratorService(ramlDoc, targetFileName + "Client", targetNamespace, targetNamespace + ".Models").BuildModel();
 
             var templateFilePath = Path.Combine(templatesFolder, ClientT4TemplateName);
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;

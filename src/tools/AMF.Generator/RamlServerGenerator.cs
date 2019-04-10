@@ -42,7 +42,7 @@ namespace MuleSoft.RAMLGen
 
         public void Generate()
         {
-            var model = new WebApiGeneratorService(ramlDoc, targetNamespace).BuildModel();
+            var model = new WebApiGeneratorService(ramlDoc, targetNamespace, targetNamespace + ".Models").BuildModel();
 
             var models = model.Objects;
             // when is an XML model, skip empty objects

@@ -133,6 +133,7 @@ pipeline {
 
     post {
         always {
+            archiveArtifacts 'src/tools/AMF.Tools/bin/Release/*.vsix'
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
             archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'

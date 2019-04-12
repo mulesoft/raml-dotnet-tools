@@ -116,7 +116,10 @@ pipeline {
                 }
                 stage('Test') {
                     steps {
-                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
+                        dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
+                            bat 'AMF.Tools.TestRunner.exe'
+                        }
+                        // bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
                     }
                 }
                 // stage('Sing Vsix') {

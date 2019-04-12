@@ -111,7 +111,7 @@ pipeline {
                 stage('Build') {
                     steps {
                         bat 'nuget restore src/tools/AMF.Tools.sln'
-                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
                     }
                 }
                 stage('Test') {

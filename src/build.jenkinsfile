@@ -124,8 +124,8 @@ pipeline {
                 }
                 stage('Sing Vsix') {
                     steps {
-                        fileDownloadOperation url: 'https://www.nuget.org/api/v2/package/Microsoft.VSSDK.Vsixsigntool/16.0.28727', userName: '', password: '', targetLocation: '', targetFileName: 'vsixsigntool.nupkg'
-                        unzip zipFile: 'vsixsigntool.nupkg'
+                        fileDownloadOperation url: 'https://www.nuget.org/api/v2/package/Microsoft.VSSDK.Vsixsigntool/16.0.28727', userName: '', password: '', targetLocation: 'tool', targetFileName: 'vsixsigntool.nupkg'
+                        unzip zipFile: 'tool/vsixsigntool.nupkg'
                         bat 'openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt'
                         bat 'tools/vssdk/vsixsigntool.exe sign /f mulesoft.pfx /p foo /sha1 1b4f5c8bc7fa3748f025b4bc1b19f62d8dd25b11 src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix'
                     }

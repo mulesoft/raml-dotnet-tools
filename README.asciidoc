@@ -74,14 +74,22 @@ When enabling metadata, a local endpoint is registered to provide a browser-acce
 === Not Supported
     - Visual Studio for Mac
     - Visual Studio Code
+    - Visual Studio 2019
 
 === Not tested
-    - Xamarin 
+    - Xamarin
 
-== Supported versions
-    - ASP.NET Core 1.0, 1.1 and 2.0
-    - ASP.NET WebApi
-    - .Net Framework 4.6 - 4.7.2
+== Supported specific versions
+    - Visual Studio 2017
+    - For the client proxy generation functionality:
+        - .Net Framework 4.5 - 4.7.2
+        - .Net Standard 2.0
+        - ASP.NET Core 2.0 - 2.2
+        - ASP.NET WebApi
+    - For the server scaffolding and extract RAML functionalities:
+        - ASP.NET Core 2.0 - 2.2
+        - ASP.NET WebApi (.Net Framework 4.5 - 4.7.2)
+
 
 == Prerequisites
 

@@ -16,6 +16,7 @@ Contents:
 ** <<API Client Code from a RAML/OAS Definition>>
 ** <<ASP.NET Implementation from a RAML/OAS Definition>>
 ** <<Extract a RAML definition from an ASP.NET Core or WebApi 2 app>>
+* <<Supported and not supported information>>
 * <<Prerequisites>>
 * <<Installation>>
 * <<Generating an API Client>>
@@ -68,6 +69,19 @@ You can generate a RAML 1 or 0.8 definition from your ASP .NET Core or WebAPI 2 
 
 When enabling metadata, a local endpoint is registered to provide a browser-accessible API Console for the RAML-enabled implementation. This gives an easily navigable view of the API, including full documentation of routes, resource schema, and includes examples.
 
+== Supported and not supported information
+
+=== Not Supported
+    - Visual Studio for Mac
+    - Visual Studio Code
+
+=== Not tested
+    - Xamarin 
+
+== Supported versions
+    - ASP.NET Core 1.0, 1.1 and 2.0
+    - ASP.NET WebApi
+    - .Net Framework 4.6 - 4.7.2
 
 == Prerequisites
 

@@ -124,9 +124,9 @@ pipeline {
                 }
                 stage('Sing Vsix') {
                     steps {
-                        if (fileExists('/tool/vsixsigntool.nupkg')) {
-                            echo 'vsix sing tool already present'
-                        } else {
+                        // if (fileExists('/tool/vsixsigntool.nupkg')) {
+                        //     echo 'vsix sing tool already present'
+                        // } else {
                             echo 'download vsix tool package'
                             fileDownloadOperation url: 'https://www.nuget.org/api/v2/package/Microsoft.VSSDK.Vsixsigntool/16.0.28727', userName: '', password: '', targetLocation: '/tool', targetFileName: 'vsixsigntool.nupkg'
                             //powershell script: 'New-Item -ItemType "directory" -Path "\\tools"'
@@ -134,7 +134,7 @@ pipeline {
                             //powershell script: 'Invoke-WebRequest "https://www.nuget.org/api/v2/package/Microsoft.VSSDK.Vsixsigntool/16.0.28727" -outfile "\\tools\\vsixtool.nupkg" -PassThru'
                             echo 'vsix sing tool package downloaded'
                             unzip zipFile: '/tool/vsixsigntool.nupkg'
-                        }
+                        // }
                         bat 'openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt -password pass:$env:PFX_PASSWORD'
                         bat '/tool/tools/vssdk/vsixsigntool.exe sign /f mulesoft.pfx /p foo /sha1 1b4f5c8bc7fa3748f025b4bc1b19f62d8dd25b11 src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix'
                     }

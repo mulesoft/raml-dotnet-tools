@@ -123,8 +123,10 @@ pipeline {
                     }
                 }
                 stage('Sing Vsix') {
-                    steps {
+                    node {
                         def secrets = vault.read("secret/keys/AMF-Net-Tools")
+                    }
+                    steps {
                         writeFile file:"certificate.crt", text:"${secrets.cert}"
                         writeFile file:"private-key.pem", text:"${secrets.private}"
                         bat 'openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt -password pass:${secrets.password}'

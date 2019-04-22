@@ -128,10 +128,17 @@ pipeline {
                 }
                 stage('Sing Vsix') {
                     steps {
-                        writeFile file:"certificate.crt", text:"${secrets.cert}"
-                        writeFile file:"private-key.pem", text:"${secrets.private}"
-                        bat 'openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt -password pass:${secrets.password}'
-                        bat '"src/tools/packages/Microsoft.VSSDK.VsixSignTool.16.0.28727/tools/vssdk/vsixsigntool.exe" sign /f mulesoft.pfx /p ${secrets.password} /sha1 1b4f5c8bc7fa3748f025b4bc1b19f62d8dd25b11 src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix'
+                        withCredentials([file(credentialsId: 'AMF-Net-Crt', variable: 'CERT')]) {
+                            withCredentials([file(credentialsId: 'AMF-Net-Key', variable: 'KEY')]) {
+                                // writeFile file:"certificate.crt", text:"${secrets.cert}"
+                                // writeFile file:"private-key.pem", text:"${secrets.private}"
+                                withCredentials([string(credentialsId: 'AMF-Net-pw', variable: 'PWD')]) {
+                                    //  openssl pkcs12 -export -out mulesoft.pfx -inkey private-key.pem -in certificate.crt
+                                    bat "openssl pkcs12 -export -out mulesoft.pfx -inkey $KEY -in $CERT -password pass:$PWD"
+                                    bat '"src/tools/packages/Microsoft.VSSDK.VsixSignTool.16.0.28727/tools/vssdk/vsixsigntool.exe" sign /f mulesoft.pfx /p $PWD /sha1 1b4f5c8bc7fa3748f025b4bc1b19f62d8dd25b11 src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix'
+                                }
+                            }
+                        }
                     }
                 }
             }

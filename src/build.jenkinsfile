@@ -1,7 +1,3 @@
-node {
-    def secrets = vault.read("secret/keys/AMF-Net-Tools")
-}
-
 pipeline {
 
     agent {

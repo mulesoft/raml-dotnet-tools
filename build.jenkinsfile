@@ -1,0 +1,45 @@
+pipeline {
+
+    agent {
+        label 'windows10'
+    }
+
+    stages {
+        stages {
+            stage('Build') {
+                steps {
+                    bat 'nuget restore RAML.NET.sln'
+                    bat "msbuild RAML.NET.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
+                }
+            }
+            stage('Test') {
+                steps {
+                    bat 'nunit3-console.exe "RAML.Tools.Tests\\bin\\Release\\RAML.Tools.Tests.dll" --result=TestTools.xml'
+                }
+            }
+            stage('Sing Vsix') {
+                steps {
+                    withCredentials([file(credentialsId: 'AMF-Net-Crt', variable: 'CERT')]) {
+                        withCredentials([file(credentialsId: 'AMF-Net-Key', variable: 'KEY')]) {
+                            withCredentials([string(credentialsId: 'AMF-Net-Pw', variable: 'PWD')]) {
+                                bat "openssl pkcs12 -export -out mulesoft.pfx -inkey $KEY -in $CERT -password pass:$PWD"
+                                bat "\"packages/Microsoft.VSSDK.VsixSignTool.16.0.28727/tools/vssdk/vsixsigntool.exe\" sign /f mulesoft.pfx /p $PWD /sha1 1b4f5c8bc7fa3748f025b4bc1b19f62d8dd25b11 RAML.Tools/bin/Release/RAML.Tools.vsix"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+
+    post {
+        always {
+            archiveArtifacts 'RAML.Tools/bin/Release/*.vsix'
+            nunit testResultsPattern: '*.xml'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

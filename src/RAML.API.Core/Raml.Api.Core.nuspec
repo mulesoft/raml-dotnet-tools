@@ -19,15 +19,15 @@
       </dependencies>
   </metadata>
     <files>
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\net45\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\wpa81\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\win8\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\MonoAndroid10\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\xamarinios10\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\MonoTouch10\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\portable-net45+win+wpa81\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\Xamarin.iOS10\Raml.Api.Core.dll" />
-        <file src="bin\debug\Raml.Api.Core.dll" target="lib\dotnet\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\net45\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\wpa81\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\win8\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\MonoAndroid10\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\xamarinios10\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\MonoTouch10\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\portable-net45+win+wpa81\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\Xamarin.iOS10\Raml.Api.Core.dll" />
+        <file src="bin\Release\Raml.Api.Core.dll" target="lib\dotnet\Raml.Api.Core.dll" />
     </files>
 </package>

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Builders;
 using Raml.Tools.ClientGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class QueryParametersParserTests
     {
-        [Test]
+        [TestMethod]
         public void should_parse_query_parameters()
         {
             var parameterDynamicRaml = new Dictionary<string, object>
@@ -30,7 +30,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("One", parsedParameters.First().Name);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_query_object()
         {
             var parameterDynamicRaml = new Dictionary<string, object>
@@ -56,7 +56,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("One", parsedParameters.First().Name);
         }
 
-        [Test]
+        [TestMethod]
         public void should_keep_original_names()
         {
             var parameterDynamicRaml = new Dictionary<string, object>

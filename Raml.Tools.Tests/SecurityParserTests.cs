@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Builders;
 using Raml.Parser.Expressions;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class SecurityParserTests
     {
-        [Test]
+        [TestMethod]
         public void should_parse_whewn_oauth2()
         {
             var dynamicRaml = new Dictionary<string, object>();
@@ -37,7 +37,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("https://authorization.com", security.AuthorizationUri);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_whewn_oauth1()
         {
             var dynamicRaml = new Dictionary<string, object>();

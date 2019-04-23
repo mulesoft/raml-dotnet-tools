@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class HeadersParserTests
     {
-        [Test]
+        [TestMethod]
         public void should_parse_headers()
         {
             //Given
@@ -40,21 +40,19 @@ namespace Raml.Tools.Tests
             //Then
             Assert.AreEqual(headers.Count(), parsedParameters.Count, "The number of headers returned do not match with the number of headers sent");
 
-            Assert.DoesNotThrow(
-                () => parsedParameters.First(x => x.Type == headerOne.Type 
-                    && x.Description == headerOne.Description 
-                    && x.Example == headerOne.Example 
-                    && x.Required == headerOne.Required 
-                    && x.Name.Equals(headers.First().Key, StringComparison.InvariantCultureIgnoreCase)),
-                "There should be one header with all the same properties as the original header");
+            // "There should be one header with all the same properties as the original header"
+            parsedParameters.First(x => x.Type == headerOne.Type
+                    && x.Description == headerOne.Description
+                    && x.Example == headerOne.Example
+                    && x.Required == headerOne.Required
+                    && x.Name.Equals(headers.First().Key, StringComparison.InvariantCultureIgnoreCase));
 
-            Assert.DoesNotThrow(
-                () => parsedParameters.First(x => x.Type == headerTwo.Type 
+            // "There should be one header with all the same properties as the original header"
+            parsedParameters.First(x => x.Type == headerTwo.Type 
                     && x.Description == headerTwo.Description 
                     && x.Example == headerTwo.Example 
                     && x.Required == headerTwo.Required 
-                    && x.Name.Equals(headers.Last().Key, StringComparison.InvariantCultureIgnoreCase)),
-                "There should be one header with all the same properties as the original header");
+                    && x.Name.Equals(headers.Last().Key, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public void should_keep_original_names()

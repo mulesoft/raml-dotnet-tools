@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser;
 using Raml.Tools.ClientGenerator;
 using System.Linq;
@@ -7,32 +7,32 @@ using System.Threading.Tasks;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class ClientGeneratorRaml1Tests
     {
 
-        [Test, Ignore]
-        public async Task ShouldBuild_WhenAnnotationTargets()
-        {
-            var model = await GetAnnotationTargetsModel();
-            Assert.IsNotNull(model);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuild_WhenAnnotationTargets()
+        //{
+        //    var model = await GetAnnotationTargetsModel();
+        //    Assert.IsNotNull(model);
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuild_WhenAnnotations()
-        {
-            var model = await GetAnnotationsModel();
-            Assert.IsNotNull(model);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuild_WhenAnnotations()
+        //{
+        //    var model = await GetAnnotationsModel();
+        //    Assert.IsNotNull(model);
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenCustomScalar()
         {
             var model = await GetCustomScalarModel();
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildUriParameter_WhenCustomScalar()
         {
             var model = await GetCustomScalarModel();
@@ -42,14 +42,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("DateTime", model.Classes.First().Methods.First().UriParameters.First().Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenMovieType()
         {
             var model = await GetMovieTypeModel();
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildTypes_WhenMovies()
         {
             var model = await GetMoviesModel();
@@ -58,7 +58,7 @@ namespace Raml.Tools.Tests
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildArrayTypes()
         {
             var model = await GetArraysModel();
@@ -79,7 +79,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(6, model.Objects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildMapTypes()
         {
             var model = await GetMapsModel();
@@ -97,14 +97,14 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenParameters()
         {
             var model = await GetParametersModel();
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleTypeExpressions()
         {
             var model = await GetTypeExpressionsModel();
@@ -113,7 +113,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("string", model.Classes.First().Methods.First(m => m.Verb == "Post").Parameter.Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleInlinedTypes()
         {
             var model = await BuildModel("files/raml1/inlinetype.raml");
@@ -122,7 +122,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("UsersPostRequestContent", model.Classes.First().Methods.First(m => m.Verb == "Post").Parameter.Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleEnums()
         {
             var model = await BuildModel("files/raml1/enums.raml");
@@ -131,7 +131,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("two_years", model.Enums.First(e => e.Name == "Something").Values.Last().Name);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleShortcutsSyntacticSugar()
         {
             var model = await BuildModel("files/raml1/shortcuts.raml");
@@ -139,14 +139,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(3, model.Objects.First(o => o.Name == "Person").Properties.Count);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleArrayItemAsScalar()
         {
             var model = await BuildModel("files/raml1/array-scalar-item.raml");
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleArrayAsExpression()
         {
             var model = await BuildModel("files/raml1/array-type-expression.raml");

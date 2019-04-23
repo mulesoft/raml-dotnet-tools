@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 using Raml.Tools.ClientGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class ClientMethodsGeneratorTests
     {
-        [Test]
+        [TestMethod]
         public void Should_Generate_One_Method_Per_Verb()
         {
             var methods = new List<Method>
@@ -50,7 +50,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(2, generatorMethods.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_parse_parameters_in_descriptions()
         {
             var methods = new List<Method>

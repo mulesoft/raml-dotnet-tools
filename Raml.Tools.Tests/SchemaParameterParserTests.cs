@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser;
 using Raml.Parser.Expressions;
 using Raml.Tools.Pluralization;
@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class SchemaParameterParserTests
     {
         private Resource searchResource;
@@ -15,7 +15,7 @@ namespace Raml.Tools.Tests
         private Resource foldersResource;
         private readonly SchemaParameterParser schemaParameterParser = new SchemaParameterParser(new EnglishPluralizationService());
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             var raml = new RamlParser().Load("files/box.raml");
@@ -26,70 +26,70 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
+        [TestMethod]
         public void ShouldPluralize()
         {
             var actual = schemaParameterParser.Parse("<<resourcePathName | !pluralize>>", searchResource, searchResource.Methods.First(), searchResource.RelativeUri);
             Assert.AreEqual("searches", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldPluralize_WhenNoSpace()
         {
             var actual = schemaParameterParser.Parse("<<resourcePathName|!pluralize>>", searchResource, searchResource.Methods.First(), searchResource.RelativeUri);
             Assert.AreEqual("searches", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldSingularize_WhenIrregular()
         {
             var actual = schemaParameterParser.Parse("<<resourcePathName | !singularize>>", deliveriesResource, deliveriesResource.Methods.First(), deliveriesResource.RelativeUri);
             Assert.AreEqual("delivery", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldSingularize_WhenRegular()
         {
             var actual = schemaParameterParser.Parse("<<resourcePathName | !singularize>>", foldersResource, deliveriesResource.Methods.First(), deliveriesResource.RelativeUri);
             Assert.AreEqual("folder", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldSingularize_WhenNoSpace()
         {
             var actual = schemaParameterParser.Parse("<<resourcePathName|!singularize>>", deliveriesResource, deliveriesResource.Methods.First(), deliveriesResource.RelativeUri);
             Assert.AreEqual("delivery", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldGetResourcePathName()
         {
             var actual = schemaParameterParser.Parse("<<resourcePathName>>", deliveriesResource, deliveriesResource.Methods.First(), deliveriesResource.RelativeUri);
             Assert.AreEqual("deliveries", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldGetResourcePath()
         {
             var actual = schemaParameterParser.Parse("<<resourcePath>>", deliveriesResource, deliveriesResource.Methods.First(), deliveriesResource.RelativeUri);
             Assert.AreEqual("/deliveries", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldGetMethod()
         {
             var actual = schemaParameterParser.Parse("<<methodName>>", deliveriesResource, deliveriesResource.Methods.First(), deliveriesResource.RelativeUri);
             Assert.AreEqual("get", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldGetMixedParameter()
         {
             var actual = schemaParameterParser.Parse("<<methodName>>new<<resourcePathName | !singularize>>", deliveriesResource, deliveriesResource.Methods.First(), deliveriesResource.RelativeUri);
             Assert.AreEqual("getnewdelivery", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldGetParameter_WhenChildResource()
         {
             var resource = new Resource
@@ -100,7 +100,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("song", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldGetParameter_WhenChildResourceAddSlash()
         {
             var resource = new Resource
@@ -111,7 +111,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("song", actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ShoudParseCustomParameters()
         {
             var type = new Dictionary<string, IDictionary<string, string>>();

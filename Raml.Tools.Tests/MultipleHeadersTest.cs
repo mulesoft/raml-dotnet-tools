@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 using Raml.Tools.ClientGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class MultipleHeadersTest
     {
 
 
-        [Test]
+        [TestMethod]
         public void Should_Build_Multiple_Headers_When_Many_Response_With_Headers()
         {
             var doc = new RamlDocument {Title = "test"};

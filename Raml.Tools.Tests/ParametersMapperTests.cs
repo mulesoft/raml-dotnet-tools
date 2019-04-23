@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Builders;
 using Raml.Parser.Expressions;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class ParametersMapperTests
     {
-        [Test]
+        [TestMethod]
         public void should_map_paremeters()
         {
             var dynRaml = new Dictionary<string, object>();

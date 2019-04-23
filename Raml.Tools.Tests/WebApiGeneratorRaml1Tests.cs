@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,39 +7,39 @@ using Raml.Tools.WebApiGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class WebApiGeneratorRaml1Tests
     {
 
-        [Test, Ignore]
-        public async Task ShouldBuild_WhenAnnotationTargets()
-        {
-            var model = await GetAnnotationTargetsModel();
-            Assert.IsNotNull(model);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuild_WhenAnnotationTargets()
+        //{
+        //    var model = await GetAnnotationTargetsModel();
+        //    Assert.IsNotNull(model);
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuild_WhenAnnotations()
-        {
-            var model = await GetAnnotationsModel();
-            Assert.IsNotNull(model);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuild_WhenAnnotations()
+        //{
+        //    var model = await GetAnnotationsModel();
+        //    Assert.IsNotNull(model);
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildArrays()
         {
             var model = await BuildModel("files/raml1/arrayTypes.raml");
             Assert.AreEqual(5, model.Objects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenCustomScalar()
         {
             var model = await GetCustomScalarModel();
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldMapAttributes_WhenCustomScalarInObject()
         {
             var model = await BuildModel("files/raml1/customscalar-in-object.raml");
@@ -52,14 +52,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(255, model.Objects.First(o => o.Name == "CustomString").Properties.First().MaxLength);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenMovieType()
         {
             var model = await GetMovieTypeModel();
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildTypes_WhenMovies()
         {
             var model = await GetMoviesModel();
@@ -68,7 +68,7 @@ namespace Raml.Tools.Tests
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldDetectArrayTypes_WhenMovies()
         {
             var model = await GetMoviesModel();
@@ -78,21 +78,21 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Movie"), model.Controllers.First(o => o.Name == "Movies").Methods.First(m => m.Name == "Post").Parameter.Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenParameters()
         {
             var model = await GetParametersModel();
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenTypeExpressions()
         {
             var model = await GetTypeExpressionsModel();
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_EvenWithDisorderedTypes()
         {
             var model = await BuildModel("files/raml1/typesordering.raml");
@@ -130,7 +130,7 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_WhenChinook()
         {
             var model = await BuildModel("files/raml1/chinook-v1.raml");
@@ -161,7 +161,7 @@ namespace Raml.Tools.Tests
 
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleUnionTypes()
         {
             var model = await BuildModel("files/raml1/uniontypes.raml");
@@ -180,7 +180,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Company", model.Objects.First(c => c.Name == "Group").Properties.First(c => c.Name == "Company").Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleXml()
         {
             var model = await BuildModel("files/raml1/ordersXml-v1.raml");
@@ -191,7 +191,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(11, model.Objects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleCasing()
         {
             var model = await BuildModel("files/raml1/case.raml");
@@ -204,7 +204,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Controllers.First(c => c.Name == "Persons").Methods.First(m => m.Verb == "Get").ReturnType);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldDiffientiateBetweenTypesAndBaseTypes()
         {
             var model = await BuildModel("files/raml1/underscore.raml");
@@ -213,7 +213,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Link", model.Objects.First(o => o.Name == "Links").Properties.First(c => c.Name == "Self").Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildDependentTypes()
         {
             var model = await BuildModel("files/raml1/dependentTypes.raml");
@@ -221,7 +221,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("TypeA", model.Controllers.First().Methods.First().Parameter.Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleComplexQueryParams()
         {
             var model = await BuildModel("files/raml1/queryParams.raml");
@@ -230,7 +230,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("string", model.Controllers.First().Methods.First().QueryParameters.First().Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleDates()
         {
             var model = await BuildModel("files/raml1/dates.raml");
@@ -247,7 +247,7 @@ namespace Raml.Tools.Tests
             
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleNumberFormats()
         {
             var model = await BuildModel("files/raml1/numbers.raml");
@@ -263,7 +263,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("decimal", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Numberprop").Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleNumberFormatsOnRaml08_v3Schema()
         {
             var model = await BuildModel("files/numbers.raml");
@@ -273,7 +273,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("short?", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Shortprop").Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleNumberFormatsOnRaml08_v4Schema()
         {
             var model = await BuildModel("files/numbers-v4.raml");
@@ -283,21 +283,21 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("short?", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Shortprop").Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandle_SalesOrdersCase()
         {
             var model = await BuildModel("files/raml1/salesOrders.raml");
             Assert.AreEqual(18, model.Objects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandle_FileTypes()
         {
             var model = await BuildModel("files/raml1/file-type.raml");
             Assert.AreEqual(1, model.Objects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandle_TraitsAtMethodLevel()
         {
             var model = await BuildModel("files/raml1/method-level-traits.raml");
@@ -307,7 +307,7 @@ namespace Raml.Tools.Tests
             Assert.IsFalse(model.Controllers.First().Methods.First(m => m.Verb.ToLower() == "post").ParametersString.Contains("offset"));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandle_TraitsAtResourceLevel()
         {
             var model = await BuildModel("files/raml1/resource-level-traits.raml");
@@ -317,7 +317,7 @@ namespace Raml.Tools.Tests
             Assert.IsTrue(model.Controllers.First().Methods.First(m => m.Verb.ToLower() == "post").ParametersString.Contains("offset"));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldParse_RequiredScalarInProperty()
         {
             var model = await BuildModel("files/raml1/movietype.raml");
@@ -325,7 +325,7 @@ namespace Raml.Tools.Tests
 
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldParse_OptionalInProperty()
         {
             var model = await BuildModel("files/raml1/movietype.raml");
@@ -337,7 +337,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("bool?", model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Rented").Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldApplyParametersOfResourceType()
         {
             var model = await BuildModel("files/raml1/resource-types.raml");
@@ -347,7 +347,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(3, model.Controllers.First(c => c.Name == "Users").Methods.First(m => m.Verb == "Get").QueryParameters.Count);
         }
 
-        [Test]
+        [TestMethod]
         public async Task StringArrayTest()
         {
             var model = await BuildModel("files/raml1/string-array.raml");
@@ -358,7 +358,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Other", model.Controllers.First(c => c.Name == "Messages").Methods.First(m => m.Verb == "Get").ReturnType);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleSimilarSchemas()
         {
             var model = await BuildModel("files/raml1/similar-schemas-ignored.raml");
@@ -367,7 +367,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Thingy", model.Controllers.First(o => o.Name == "Thingys").Methods.First().ReturnType);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleRouteNameContainedInUriParam()
         {
             var model = await BuildModel("files/raml1/applicationId.raml");
@@ -375,7 +375,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("{applicationId}", model.Controllers.First().Methods.Last(m => m.UriParameters.Any()).Url);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleTraitsInLibraries()
         {
             var model = await BuildModel("files/raml1/lib-traits.raml");
@@ -383,14 +383,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Year", model.Controllers.First().Methods.First().QueryParameters.First().Name);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleNullDescription()
         {
             var model = await BuildModel("files/service-test.raml");
             Assert.AreEqual(2, model.Controllers.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHandleAnyType()
         {
             var model = await BuildModel("files/raml1/anytype.raml");
@@ -400,14 +400,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("object", model.Objects.First(o => o.Name != "Foo").Properties.First(p => p.Name == "Baz").Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_EnumsAtRoot()
         {
             var model = await BuildModel("files/raml1/enums-root.raml");
             Assert.AreEqual(2, model.Enums.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuild_EvenWithIncludedDisorderedTypes()
         {
             var model = await BuildModel("files/raml1/types-order-includes.raml");

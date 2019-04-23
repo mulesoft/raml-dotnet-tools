@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 using Raml.Tools.ClientGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class UriParametersTests
     {
-        [Test]
+        [TestMethod]
         public void should_build_uri_parameter_objects()
         {
             var doc = new RamlDocument { Title = "test" };
@@ -69,7 +69,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(1, model.Objects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public void should_keep_original_names()
         {
             var doc = new RamlDocument { Title = "test" };

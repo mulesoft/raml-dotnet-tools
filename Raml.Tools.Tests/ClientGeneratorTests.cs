@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser;
 using Raml.Tools.ClientGenerator;
 using System.Linq;
@@ -8,60 +8,60 @@ using System.Xml;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class ClientGeneratorTests
     {
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildMethodsWithTheFullPath_WhenEmptyResourceParents()
         {
             var model = await GetContactsGeneratedModel();
             Assert.AreEqual(5, model.Classes.SelectMany(c => c.Methods).Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildQueryObjects_WhenMovies()
         {
             var model = await GetMoviesGeneratedModel();
             Assert.AreEqual(1, model.QueryObjects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Warnings_WhenBox()
         {
             var model = await GetBoxGeneratedModel();
             Assert.AreEqual(48, model.Warnings.Count());
         }
 
-        [Test, Ignore]
-        public async Task Warnings_WhenTwitter()
-        {
-            var model = await GetTwitterGeneratedModel();
-            Assert.AreEqual(60, model.Warnings.Count());
-        }
+        //[Test, Ignore]
+        //public async Task Warnings_WhenTwitter()
+        //{
+        //    var model = await GetTwitterGeneratedModel();
+        //    Assert.AreEqual(60, model.Warnings.Count());
+        //}
 
-        [Test, Ignore]
-        public async Task Warnings_WhenGithub()
-        {
-            var model = await GetGitHubGeneratedModel();
-            Assert.AreEqual(60, model.Warnings.Count());
-        }
+        //[Test, Ignore]
+        //public async Task Warnings_WhenGithub()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    Assert.AreEqual(60, model.Warnings.Count());
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHaveNoWarnings_WhenCongo()
         {
             var model = await GetCongoGeneratedModel();
             Assert.AreEqual(0, model.Warnings.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHaveNoWarnings_WhenMovies()
         {
             var model = await GetMoviesGeneratedModel();
             Assert.AreEqual(0, model.Warnings.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHaveNoWarnings_WhenFstab()
         {
             var model = await GetFstabGeneratedModel();
@@ -69,7 +69,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, model.Warnings.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldGetConcreteImplementationsForDefinitions_WhenFstab()
         {
             var model = await GetFstabGeneratedModel();
@@ -81,14 +81,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(4, implementations.Length);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldHaveNoWarnings_WhenContacts()
         {
             var model = await GetContactsGeneratedModel();
             Assert.AreEqual(0, model.Warnings.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildQueryObjectsFromTest()
         {
             var model = await GetTestGeneratedModel();
@@ -96,7 +96,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(1, model.Classes.SelectMany(c => c.Methods).Count(m => m.Query != null));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildQueryObjectsFromCongo()
         {
             var model = await GetCongoGeneratedModel();
@@ -104,7 +104,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(2, model.QueryObjects.Values.Count(m => m.Properties.Any()));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildQueryObjectsFromBox()
         {
             var model = await GetBoxGeneratedModel();
@@ -112,71 +112,71 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(13, model.Classes.SelectMany(c => c.Methods).Count(m => m.Query != null));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildMethodsFromTest()
         {
             var model = await GetTestGeneratedModel();
             Assert.AreEqual(4, model.Classes.SelectMany(c => c.Methods).Count());
         }
 
-        [Test, Ignore]
-        public async Task ShouldBuildMethodsFromBox()
-        {
-            var model = await GetBoxGeneratedModel();
-            Assert.AreEqual(52, model.Classes.SelectMany(c => c.Methods).Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildMethodsFromBox()
+        //{
+        //    var model = await GetBoxGeneratedModel();
+        //    Assert.AreEqual(52, model.Classes.SelectMany(c => c.Methods).Count());
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuildMethodsFromLarge()
-        {
-            var model = await GetLargeGeneratedModel();
-            Assert.AreEqual(52, model.Classes.SelectMany(c => c.Methods).Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildMethodsFromLarge()
+        //{
+        //    var model = await GetLargeGeneratedModel();
+        //    Assert.AreEqual(52, model.Classes.SelectMany(c => c.Methods).Count());
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuildMethodsFromRegression()
-        {
-            var model = await GetRegressionGeneratedModel();
-            Assert.AreEqual(18, model.Classes.SelectMany(c => c.Methods).Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildMethodsFromRegression()
+        //{
+        //    var model = await GetRegressionGeneratedModel();
+        //    Assert.AreEqual(18, model.Classes.SelectMany(c => c.Methods).Count());
+        //}
 
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildNamespace()
         {
             var model = await GetTestGeneratedModel();
             Assert.AreEqual("RemoteVendingAPI", model.Namespace);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldGetRequestObjectsFromResourceTypes_FromTest()
         {
             var model = await GetTestGeneratedModel();
             Assert.IsNotNull(model.Classes.First(c => c.Name == "Sales").Methods.First(m => m.Verb == "Post").Parameter);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildRequestObjects_FromBox()
         {
             var model = await GetBoxGeneratedModel();
             Assert.AreEqual(9, model.RequestObjects.Count);
         }
 
-        [Test, Ignore]
-        public async Task ShouldBuildResponseObjects_FromInstagram()
-        {
-            var model = await GetInstagramGeneratedModel();
-            Assert.AreEqual(11, model.ResponseObjects.Count);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildResponseObjects_FromInstagram()
+        //{
+        //    var model = await GetInstagramGeneratedModel();
+        //    Assert.AreEqual(11, model.ResponseObjects.Count);
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuildClasses_FromTwitter()
-        {
-            var model = await GetTwitterGeneratedModel();
-            Assert.AreEqual(107, model.Classes.Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildClasses_FromTwitter()
+        //{
+        //    var model = await GetTwitterGeneratedModel();
+        //    Assert.AreEqual(107, model.Classes.Count());
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromTest()
         {
             var model = await GetTestGeneratedModel();
@@ -184,35 +184,35 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildPropertiosOnClasses_FromBox()
         {
             var model = await GetBoxGeneratedModel();
             Assert.AreEqual(16, model.Classes.SelectMany(c => c.Properties).Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildPropertiosOnrOOTClass_FromCongo()
         {
             var model = await GetCongoGeneratedModel();
             Assert.AreEqual(2, model.Root.Properties.Count());
         }
 
-        [Test, Ignore]
-        public async Task ShouldBuildPropertiosOnClasses_FromGitHub()
-        {
-            var model = await GetGitHubGeneratedModel();
-            Assert.AreEqual(91, model.Classes.SelectMany(c => c.Properties).Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildPropertiosOnClasses_FromGitHub()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    Assert.AreEqual(91, model.Classes.SelectMany(c => c.Properties).Count());
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuildPropertiosOnClasses_FromTwitter()
-        {
-            var model = await GetTwitterGeneratedModel();
-            Assert.AreEqual(91, model.Classes.SelectMany(c => c.Properties).Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildPropertiosOnClasses_FromTwitter()
+        //{
+        //    var model = await GetTwitterGeneratedModel();
+        //    Assert.AreEqual(91, model.Classes.SelectMany(c => c.Properties).Count());
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildPropertiosOnClasses_FromContacts()
         {
             var model = await GetContactsGeneratedModel();
@@ -220,84 +220,84 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromContacts()
         {
             var model = await GetContactsGeneratedModel();
             Assert.AreEqual(4, model.Classes.Count());
         }
 
-        [Test, Ignore]
-        public async Task ShouldBuildClasses_FromGithub()
-        {
-            var model = await GetGitHubGeneratedModel();
-            Assert.AreEqual(108, model.Classes.Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildClasses_FromGithub()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    Assert.AreEqual(108, model.Classes.Count());
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromCongo()
         {
             var model = await GetCongoGeneratedModel();
             Assert.AreEqual(3, model.Classes.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromBox()
         {
             var model = await GetBoxGeneratedModel();
             Assert.AreEqual(26, model.Classes.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldExcludeOptionsFromMethods()
         {
             var model = await GetBoxGeneratedModel();
             Assert.AreEqual(0, model.Classes.SelectMany(c => c.Methods).Count(m => m.Verb == "Options"));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldIncludePatchFromMethods()
         {
             var model = await GetCongoGeneratedModel();
             Assert.IsTrue(model.Classes.SelectMany(c => c.Methods).Count(m => m.Verb == "Patch") > 0);
         }
 
-        [Test, Ignore]
-        public async Task ShouldBuildResponseObjects_FromTwitter()
-        {
-            var model = await GetTwitterGeneratedModel();
-            Assert.AreEqual(62, model.ResponseObjects.Count);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildResponseObjects_FromTwitter()
+        //{
+        //    var model = await GetTwitterGeneratedModel();
+        //    Assert.AreEqual(62, model.ResponseObjects.Count);
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuildRequestObjects_FromGitHub()
-        {
-            var model = await GetGitHubGeneratedModel();
-            Assert.AreEqual(47, model.RequestObjects.Count);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildRequestObjects_FromGitHub()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    Assert.AreEqual(47, model.RequestObjects.Count);
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldAvoidObjectsWithFrameworkNames()
-        {
-            var model = await GetGitHubGeneratedModel();
-            Assert.IsFalse(model.Objects.Any(o => o.Name == "Get"));
-        }
+        //[Test, Ignore]
+        //public async Task ShouldAvoidObjectsWithFrameworkNames()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    Assert.IsFalse(model.Objects.Any(o => o.Name == "Get"));
+        //}
 
-        [Test, Ignore]
-        public async Task ShouldBuildResponseObjects_FromGitHub()
-        {
-            var model = await GetGitHubGeneratedModel();
-            Assert.AreEqual(79, model.ResponseObjects.Count);
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildResponseObjects_FromGitHub()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    Assert.AreEqual(79, model.ResponseObjects.Count);
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldParseArrays()
         {
             var model = await GetTestGeneratedModel();
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Sales"), model.Objects.First(o => o.Name == "GetSales").Properties[1].Type);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldParseCommonObjects()
         {
             var model = await GetTestGeneratedModel();
@@ -305,7 +305,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(3, model.SchemaObjects["exchange"].Properties.Count);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldParse_Congo()
         {
             var model = await GetCongoGeneratedModel();
@@ -313,21 +313,21 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(13, model.Objects.Count());
         }
 
-        [Test, Ignore]
-        public async Task ShouldBuildUriParametersObjects_FromTwitter()
-        {
-            var model = await GetTwitterGeneratedModel();
-            Assert.AreEqual(95, model.UriParameterObjects.Count());
-        }
+        //[Test, Ignore]
+        //public async Task ShouldBuildUriParametersObjects_FromTwitter()
+        //{
+        //    var model = await GetTwitterGeneratedModel();
+        //    Assert.AreEqual(95, model.UriParameterObjects.Count());
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromDars()
         {
             var model = await GetDarsGeneratedModel();
             Assert.AreEqual(2, model.SchemaObjects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromDarsWithParams()
         {
             var model = await GetDarsWithParamsGeneratedModel();
@@ -335,21 +335,21 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromEpi()
         {
             var model = await GetEpiGeneratedModel();
             Assert.AreEqual(2, model.Classes.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldBuildClasses_FromFoo()
         {
             var model = await GetFooGeneratedModel();
             Assert.AreEqual(2, model.Classes.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async void Should_Name_Schemas_Using_Keys()
         {
             var model = await GetSchemaTestsGeneratedModel();
@@ -359,105 +359,105 @@ namespace Raml.Tools.Tests
             Assert.IsTrue(model.Objects.Any(o => o.Name == "ThingRequest"));
         }
 
-        [Test]
+        [TestMethod]
         public async void Should_Generate_Properties_When_Movies()
         {
             var model = await GetMoviesGeneratedModel();
             Assert.AreEqual(88, model.Objects.Sum(c => c.Properties.Count));
         }
 
-        [Test, Ignore]
-        public async void Should_Generate_Properties_When_Box()
-        {
-            var model = await GetBoxGeneratedModel();
-            Assert.AreEqual(78, model.Objects.Sum(c => c.Properties.Count));
-        }
+        //[Test, Ignore]
+        //public async void Should_Generate_Properties_When_Box()
+        //{
+        //    var model = await GetBoxGeneratedModel();
+        //    Assert.AreEqual(78, model.Objects.Sum(c => c.Properties.Count));
+        //}
 
-        [Test, Ignore]
-        public async void Should_Generate_Properties_When_Congo()
-        {
-            var model = await GetCongoGeneratedModel();
-            Assert.AreEqual(42, model.Objects.Sum(c => c.Properties.Count));
-        }
+        //[Test, Ignore]
+        //public async void Should_Generate_Properties_When_Congo()
+        //{
+        //    var model = await GetCongoGeneratedModel();
+        //    Assert.AreEqual(42, model.Objects.Sum(c => c.Properties.Count));
+        //}
 
-        [Test]
+        [TestMethod]
         public async void Should_Generate_Properties_When_Contacts()
         {
             var model = await GetContactsGeneratedModel();
             Assert.AreEqual(5, model.Objects.Sum(c => c.Properties.Count));
         }
 
-        [Test, Ignore]
-        public async void Should_Generate_Properties_When_GitHub()
-        {
-            var model = await GetGitHubGeneratedModel();
-            Assert.AreEqual(1006, model.Objects.Sum(c => c.Properties.Count));
-        }
+        //[Test, Ignore]
+        //public async void Should_Generate_Properties_When_GitHub()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    Assert.AreEqual(1006, model.Objects.Sum(c => c.Properties.Count));
+        //}
 
-        [Test, Ignore]
-        public async void Should_Generate_Properties_When_Instagram()
-        {
-            var model = await GetInstagramGeneratedModel();
-            Assert.AreEqual(128, model.Objects.Sum(c => c.Properties.Count));
-        }
+        //[Test, Ignore]
+        //public async void Should_Generate_Properties_When_Instagram()
+        //{
+        //    var model = await GetInstagramGeneratedModel();
+        //    Assert.AreEqual(128, model.Objects.Sum(c => c.Properties.Count));
+        //}
 
-        [Test]
+        [TestMethod]
         public async void Should_Generate_Properties_When_Large()
         {
             var model = await GetLargeGeneratedModel();
             Assert.AreEqual(77, model.Objects.Sum(c => c.Properties.Count));
         }
 
-        [Test, Ignore]
-        public async void Should_Generate_Properties_When_Regression()
-        {
-            var model = await GetRegressionGeneratedModel();
-            Assert.AreEqual(144, model.Objects.Sum(c => c.Properties.Count));
-        }
+        //[Test, Ignore]
+        //public async void Should_Generate_Properties_When_Regression()
+        //{
+        //    var model = await GetRegressionGeneratedModel();
+        //    Assert.AreEqual(144, model.Objects.Sum(c => c.Properties.Count));
+        //}
 
-        [Test, Ignore]
-        public async void Should_Generate_Properties_When_Test()
-        {
-            var model = await GetTestGeneratedModel();
-            Assert.AreEqual(39, model.Objects.Sum(c => c.Properties.Count));
-        }
+        //[Test, Ignore]
+        //public async void Should_Generate_Properties_When_Test()
+        //{
+        //    var model = await GetTestGeneratedModel();
+        //    Assert.AreEqual(39, model.Objects.Sum(c => c.Properties.Count));
+        //}
 
-        [Test, Ignore]
-        public async void Should_Generate_Properties_When_Twitter()
-        {
-            var model = await GetTwitterGeneratedModel();
-            Assert.AreEqual(673, model.Objects.Sum(c => c.Properties.Count));
-        }
+        //[Test, Ignore]
+        //public async void Should_Generate_Properties_When_Twitter()
+        //{
+        //    var model = await GetTwitterGeneratedModel();
+        //    Assert.AreEqual(673, model.Objects.Sum(c => c.Properties.Count));
+        //}
 
-        [Test, Ignore]
-        public async Task Should_Generate_Valid_XML_Comments_WhenGithub()
-        {
-            var model = await GetGitHubGeneratedModel();
-            var xmlDoc = new XmlDocument();
-            foreach (var method in model.Classes.SelectMany(c => c.Methods))
-            {
-                var xmlComment = GetXml(method.XmlComment);
-                var xmlSimpleComment = GetXml(method.XmlSimpleComment);
-                Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlComment));
-                Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlSimpleComment));
-            }
-        }
+        //[Test, Ignore]
+        //public async Task Should_Generate_Valid_XML_Comments_WhenGithub()
+        //{
+        //    var model = await GetGitHubGeneratedModel();
+        //    var xmlDoc = new XmlDocument();
+        //    foreach (var method in model.Classes.SelectMany(c => c.Methods))
+        //    {
+        //        var xmlComment = GetXml(method.XmlComment);
+        //        var xmlSimpleComment = GetXml(method.XmlSimpleComment);
+        //        Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlComment));
+        //        Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlSimpleComment));
+        //    }
+        //}
 
-        [Test, Ignore]
-        public async Task Should_Generate_Valid_XML_Comments_WhenTwitter()
-        {
-            var model = await GetTwitterGeneratedModel();
-            var xmlDoc = new XmlDocument();
-            foreach (var method in model.Classes.SelectMany(c => c.Methods))
-            {
-                var xmlComment = GetXml(method.XmlComment);
-                var xmlSimpleComment = GetXml(method.XmlSimpleComment);
-                Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlComment));
-                Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlSimpleComment));
-            }
-        }
+        //[Test, Ignore]
+        //public async Task Should_Generate_Valid_XML_Comments_WhenTwitter()
+        //{
+        //    var model = await GetTwitterGeneratedModel();
+        //    var xmlDoc = new XmlDocument();
+        //    foreach (var method in model.Classes.SelectMany(c => c.Methods))
+        //    {
+        //        var xmlComment = GetXml(method.XmlComment);
+        //        var xmlSimpleComment = GetXml(method.XmlSimpleComment);
+        //        Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlComment));
+        //        Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlSimpleComment));
+        //    }
+        //}
 
-        [Test]
+        [TestMethod]
         public async Task Should_Generate_Valid_XML_Comments_WhenMovies()
         {
             var model = await GetMoviesGeneratedModel();
@@ -466,12 +466,12 @@ namespace Raml.Tools.Tests
             {
                 var xmlComment = GetXml(method.XmlComment);
                 var xmlSimpleComment = GetXml(method.XmlSimpleComment);
-                Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlComment));
-                Assert.DoesNotThrow(() => xmlDoc.LoadXml(xmlSimpleComment));
+                xmlDoc.LoadXml(xmlComment);
+                xmlDoc.LoadXml(xmlSimpleComment);
             }
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldGenerateEnums_WhenFstab()
         {
             var model = await GetFstabGeneratedModel();
@@ -479,28 +479,28 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(5, model.Objects.Sum(o => o.Properties.Count(p => p.IsEnum)));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldGenerateModels_WhenExternalRefs()
         {
             var model = await GetExternalRefsGeneratedModel();
             Assert.AreEqual(4, model.Objects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldGenerateDifferentModels_WhenDifferentPropertiesWithSameName()
         {
             var model = await GetSameNameGeneratedModel();
             Assert.AreEqual(2, model.Objects.Count(o => o.Name.ToLowerInvariant().Contains("director")));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldGenerateProperties_Issue17()
         {
             var model = await GetIssue17GeneratedModel();
             Assert.IsTrue(model.SchemaObjects.Where(o => o.Key.EndsWith("Content")).All(o => o.Value.Properties.Count == 4));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldNotDuplicateClasses()
         {
             var model = await GetDuplicationGeneratedModel();
@@ -508,7 +508,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(1, model.Objects.Count(o => o.Name.Equals("User")));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldGenerateMethodsForPatch()
         {
             var model = await GetPatchGeneratedModel();
@@ -516,13 +516,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(2, model.Objects.Count(o => o.Name.Contains("Patch")));
         }
 
-        [Test, Ignore]
-        public async Task ShouldAcceptDigestSecurity()
-        {
-            var model = await BuildModel("files/raml1/digest.raml");
-            Assert.IsNotNull(model.Security);
-        }
-        [Test]
+        //[Test, Ignore]
+        //public async Task ShouldAcceptDigestSecurity()
+        //{
+        //    var model = await BuildModel("files/raml1/digest.raml");
+        //    Assert.IsNotNull(model.Security);
+        //}
+
+        [TestMethod]
         public async Task ShouldGenerateRootResource()
         {
             var model = await GetRootGeneratedModel();
@@ -530,22 +531,22 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(3, model.Classes.First(c => c.Name == "RootUrl").Methods.Count);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldAcceptWithoutBaseUri()
         {
             var model = await BuildModel("files/raml1/baseUri.raml");
-            Assert.IsEmpty(model.BaseUri);
+            Assert.IsTrue(string.IsNullOrEmpty(model.BaseUri));
         }
 
-        [Test, Ignore] // JSON.NET issue
-        public async Task ShouldHandleJsonSchemaRecursiveTree()
-        {
-            var raml = await new RamlParser().LoadAsync("files/tree-issue63.raml");
-            var model = new ClientGeneratorService(raml, "test", "TargetNamespace").BuildModel();
+        //[Test, Ignore] // JSON.NET issue
+        //public async Task ShouldHandleJsonSchemaRecursiveTree()
+        //{
+        //    var raml = await new RamlParser().LoadAsync("files/tree-issue63.raml");
+        //    var model = new ClientGeneratorService(raml, "test", "TargetNamespace").BuildModel();
 
-            Assert.IsNotNull(model);
-            Assert.AreEqual(1, model.Objects.Count());
-        }
+        //    Assert.IsNotNull(model);
+        //    Assert.AreEqual(1, model.Objects.Count());
+        //}
 
         private static string GetXml(string comment)
         {

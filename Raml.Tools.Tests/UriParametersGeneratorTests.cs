@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 using Raml.Tools.ClientGenerator;
 using Raml.Tools.WebApiGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class UriParametersGeneratorTests
     {
 
-        [Test]
+        [TestMethod]
         public void Should_Build_Uri_Parameters()
         {
             var uriParameters = new Dictionary<string, Parameter>
@@ -52,7 +52,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(uriParameterObjects.First().Value.Name, generatorMethod.UriParametersType);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Build_Uri_Parameters_From_Resources()
         {
             var doc = new RamlDocument { Title = "test" };
@@ -111,7 +111,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(4, directorsUriParamObj.Properties.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Build_Uri_Parameters_When_Nested_Resources()
         {
             var doc = new RamlDocument { Title = "test" };
@@ -176,7 +176,7 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
+        [TestMethod]
         public void Should_Inherit_Uri_Parameters_When_Nested_Resources()
         {
             var doc = new RamlDocument { Title = "test" };
@@ -263,7 +263,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("int", model.Controllers.First().Methods.First(m => m.Name.Contains("Deep")).UriParameters.First(p => p.Name == "id").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Inherit_Uri_Parameters_When_Nested_Resources_Case2()
         {
             var doc = new RamlDocument { Title = "test" };
@@ -342,7 +342,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("int", model.Controllers.First().Methods.First(m => m.Name.Contains("Deep")).UriParameters.First(p => p.Name == "id").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Inherit_Uri_Parameters_When_Nested_Resources_Client()
         {
             var doc = new RamlDocument { Title = "test" };
@@ -429,7 +429,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("int", model.Classes.First(m => m.Name.Contains("Deep")).Methods.First().UriParameters.First(p => p.Name == "id").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Inherit_Uri_Parameters_When_Nested_Resources_ClientCase2()
         {
             var doc = new RamlDocument { Title = "test" };
@@ -508,7 +508,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("int", model.Classes.First(m => m.Name.Contains("Deep")).Methods.First().UriParameters.First(p => p.Name == "id").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Build_Uri_Parameters_When_Custom_Scalars()
         {
             var uriParameters = new Dictionary<string, Parameter>

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Tools.ClientGenerator;
 using Raml.Tools.WebApiGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class ApiObjectsCleanerTests
     {
-        [Test]
+        [TestMethod]
         public void should_clean_objects_not_used_as_parameters_client()
         {
             var property = new Property
@@ -80,7 +80,7 @@ namespace Raml.Tools.Tests
             Assert.IsFalse(schemaRequestObjects.ContainsKey("obj3"));
         }
 
-        [Test]
+        [TestMethod]
         public void should_clean_objects_not_used_as_return_types_client()
         {
             var property = new Property
@@ -147,7 +147,7 @@ namespace Raml.Tools.Tests
             Assert.IsFalse(schemaResponseObjects.ContainsKey("obj3"));
         }
 
-        [Test]
+        [TestMethod]
         public void should_clean_objects_not_used_as_parameters_server()
         {
             var property = new Property
@@ -218,7 +218,7 @@ namespace Raml.Tools.Tests
             Assert.IsFalse(schemaRequestObjects.ContainsKey("obj3"));
         }
 
-        [Test]
+        [TestMethod]
         public void should_clean_objects_not_used_as_return_types_server()
         {
             var property = new Property

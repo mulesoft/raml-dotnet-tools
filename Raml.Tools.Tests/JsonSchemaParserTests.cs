@@ -1,5 +1,5 @@
 ﻿using System;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,10 +7,10 @@ using Raml.Tools.JSON;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class JsonSchemaParserTests
     {
-        [Test]
+        [TestMethod]
         public void should_parse_v4_schema()
         {
            
@@ -109,7 +109,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Name", obj.Name);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_enums()
         {
             const string schema = @"{
@@ -136,7 +136,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(1, enums.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_schema_when_object()
          {
              const string schema = "{\r\n" +
@@ -164,7 +164,7 @@ namespace Raml.Tools.Tests
              Assert.AreEqual("int", obj.Properties.First(p => p.Name == "Id").Type);
          }
 
-        [Test]
+        [TestMethod]
         public void should_parse_schema_when_array()
         {
             const string schema = "{\r\n" +
@@ -196,7 +196,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("int", obj.Properties.First(p => p.Name == "ToAddressId").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_keep_original_names()
         {
             const string schema = "{\r\n" +
@@ -225,7 +225,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("order_item_id", obj.Properties.First(p => p.Name == "Order_item_id").OriginalName);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_recursive_schemas()
         {
             const string schema = "      { \r\n" +
@@ -284,7 +284,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Employee", obj.Properties[2].Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_array_in_type_object()
         {
             const string schema = @"{
@@ -314,7 +314,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, warnings.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_array_in_type_integer()
         {
             const string schema = @"{
@@ -338,7 +338,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, warnings.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_array_in_type_number()
         {
             const string schema = @"{
@@ -362,7 +362,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, warnings.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_array_in_type_boolean()
         {
             const string schema = @"{
@@ -386,7 +386,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, warnings.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_array_in_type_string()
         {
             const string schema = @"{
@@ -410,7 +410,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, warnings.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_booleans()
         {
             const string schema = 
@@ -435,7 +435,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, warnings.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_integers()
         {
             const string schema =
@@ -460,7 +460,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, warnings.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_bodyless_arrays()
         {
             const string schema =
@@ -495,7 +495,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Titles"), obj.Properties.First(p => p.Name == "Titles").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_bodyless_objects()
         {
             const string schema =
@@ -526,7 +526,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("object", obj.Properties.First(p => p.Name == "Ipname").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_properties_as_nullable_when_not_required()
         {
             const string schema = "{\r\n" +
@@ -559,7 +559,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("string", obj.Properties.First(p => p.Name == "Comment").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_properties_as_nullable_when_not_required_v4()
         {
             const string schema = "{\r\n" +
@@ -593,7 +593,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("string", obj.Properties.First(p => p.Name == "Comment").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_additionalProperties_as_dictionary()
         {
             const string schema = "{\r\n" +
@@ -617,7 +617,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("IDictionary<string, object>", obj.Properties.First(p => p.Name == "AdditionalProperties").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_additionalProperties_as_dictionary_v4()
         {
             const string schema = "{\r\n" +
@@ -642,7 +642,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("IDictionary<string, object>", obj.Properties.First(p => p.Name == "AdditionalProperties").Type);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_primitive_arrays()
         {
             const string schema = @"
@@ -670,7 +670,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, obj.Properties.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_required_as_array_in_object_v4()
         {
             const string schema = @"
@@ -697,7 +697,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(false, obj.Properties.First(c => c.Name == "Observations").Required);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_required_as_array_inside_array_v4()
         {
             const string schema = @"
@@ -738,7 +738,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(false, obj.Properties.First(c => c.Name == "Observations").Required);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_attributes()
         {
             const string schema = @"
@@ -783,7 +783,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(true, obj.Properties.First(c => c.Name == "Ipname").Required);
         }
 
-        [Test]
+        [TestMethod]
         public void should_build_custom_attributes()
         {
             const string schema = @"
@@ -826,7 +826,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("        [Required]" + Environment.NewLine + "        [Range(18,int.MaxValue)]", obj.Properties.First(c => c.Name == "Age").CustomAttributes);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_attributes_v4()
         {
             const string schema = @"
@@ -870,7 +870,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(true, obj.Properties.First(c => c.Name == "Ipname").Required);
         }
 
-        [Test]
+        [TestMethod]
         public void should_build_custom_attributes_v4()
         {
             const string schema = @"

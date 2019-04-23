@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Tools.ClientGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class ApiResponseObjectsGeneratorTests
     {
-        [Test]
+        [TestMethod]
         public void Should_Generate_One_Response_Object_Per_Methods()
         {
             var generatorMethods = new Collection<ClientGeneratorMethod>();
@@ -54,7 +54,7 @@ namespace Raml.Tools.Tests
             Assert.IsFalse(string.IsNullOrWhiteSpace(classes.SelectMany(c => c.Methods).First(m => m.Name == "m3").ResponseType));
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Set_Response_Types()
         {
             var generatorMethods = new Collection<ClientGeneratorMethod>();

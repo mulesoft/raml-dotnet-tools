@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class RamlTypeParserTests
     {
-        [Test]
+        [TestMethod]
         public void ShouldParseRequiredAttribute()
         {
             var ramlTypesOrderedDictionary = new RamlTypesOrderedDictionary();
@@ -45,7 +45,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(true, objects.First().Value.Properties.First().Required);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldParseStringArrayProperty()
         {
             var ramlTypesOrderedDictionary = new RamlTypesOrderedDictionary();
@@ -76,7 +76,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Messages", objects.First().Value.Properties.First().Name);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldParseOptionalStringArrayProperty()
         {
             var ramlTypesOrderedDictionary = new RamlTypesOrderedDictionary();
@@ -108,7 +108,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(false, objects.First().Value.Properties.First().Required);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldParseStringArrayPropertyLongFormat()
         {
             var ramlTypesOrderedDictionary = new RamlTypesOrderedDictionary();

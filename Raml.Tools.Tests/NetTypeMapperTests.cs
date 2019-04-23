@@ -1,150 +1,150 @@
 ﻿using Newtonsoft.Json.Schema;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class NetTypeMapperTests
     {
-        [Test]
+        [TestMethod]
         public void ShouldConvertIntegerToInt()
         {
             Assert.AreEqual("int", NetTypeMapper.GetNetType(JsonSchemaType.Integer, null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToString()
         {
             Assert.AreEqual("string", NetTypeMapper.GetNetType(JsonSchemaType.String, null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToBool()
         {
             Assert.AreEqual("bool", NetTypeMapper.GetNetType(JsonSchemaType.Boolean, null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDecimal()
         {
             Assert.AreEqual("decimal", NetTypeMapper.GetNetType(JsonSchemaType.Float, null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToByteArrayWhenFile()
         {
             Assert.AreEqual("byte[]", NetTypeMapper.GetNetType("file", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDateTimeWhenDate()
         {
             Assert.AreEqual("DateTime", NetTypeMapper.GetNetType("date", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDateTimeWhenDatetime()
         {
             Assert.AreEqual("DateTime", NetTypeMapper.GetNetType("datetime", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDateTimeWhenDateOnly()
         {
             Assert.AreEqual("DateTime", NetTypeMapper.GetNetType("date-only", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDateTimeWhenTimeOnly()
         {
             Assert.AreEqual("DateTime", NetTypeMapper.GetNetType("time-only", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDateTimeWhenDatetimeOnly()
         {
             Assert.AreEqual("DateTime", NetTypeMapper.GetNetType("datetime-only", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDateTimeOffsetWhenRfc2616()
         {
             Assert.AreEqual("DateTimeOffset", NetTypeMapper.GetNetType("datetime", "rfc2616"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDateTimeWhenRfc3339()
         {
             Assert.AreEqual("DateTime", NetTypeMapper.GetNetType("datetime", "rfc3339"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToLongWhenFormatIsLong()
         {
             Assert.AreEqual("long", NetTypeMapper.GetNetType("number", "long"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToLongWhenFormatIsInt64()
         {
             Assert.AreEqual("long", NetTypeMapper.GetNetType("number", "int64"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToIntWhenFormatIsInt32()
         {
             Assert.AreEqual("int", NetTypeMapper.GetNetType("number", "int32"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToIntWhenFormatIsInt()
         {
             Assert.AreEqual("int", NetTypeMapper.GetNetType("number", "int"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToShortWhenFormatIsInt16()
         {
             Assert.AreEqual("short", NetTypeMapper.GetNetType("number", "int16"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToByteWhenFormatIsInt8()
         {
             Assert.AreEqual("byte", NetTypeMapper.GetNetType("number", "int8"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToIntWhenInteger()
         {
             Assert.AreEqual("int", NetTypeMapper.GetNetType("integer", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDecimalWhenNumber()
         {
             Assert.AreEqual("decimal", NetTypeMapper.GetNetType("number", null));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToFloatWhenFormatIsFloat()
         {
             Assert.AreEqual("float", NetTypeMapper.GetNetType("number", "float"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToDoubleWhenFormatIsDouble()
         {
             Assert.AreEqual("double", NetTypeMapper.GetNetType("number", "double"));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldTrimBeforeConvertingString()
         {
             Assert.AreEqual("string", NetTypeMapper.Map(" string "));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldTrimBeforeConvertingInt()
         {
             Assert.AreEqual("int", NetTypeMapper.Map(" integer "));

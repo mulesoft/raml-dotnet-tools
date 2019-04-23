@@ -1,22 +1,22 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
 using Raml.Tools.XML;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class XmlSchemaParserTests
     {
         private static XmlSchemaParser parser;
 
-        [SetUp]
+        [TestInitialize]
         public void SetUp()
         {
             parser = new XmlSchemaParser();
         }
 
-        [Test]
+        [TestMethod]
         public void should_not_add_object_to_collection_when_no_properties()
         {
             const string emptySchema = "<xsd:schema targetNamespace=\"http://www.example.com/IPO\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:ipo=\"http://www.example.com/IPO\"></xsd:schema>";
@@ -26,7 +26,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, apiObjects.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_avoid_types_duplication()
         {
             var schema = File.ReadAllText(@"files\ipo.xsd");
@@ -39,7 +39,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(1, apiObjects.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_all_objects_in_schema_ipo()
         {
             var schema = File.ReadAllText(@"files\ipo.xsd");
@@ -49,7 +49,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(11, objects.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_all_objects_in_schema_75039()
         {
             var schema = File.ReadAllText(@"files\75039.xsd");
@@ -59,7 +59,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(3, objects.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_0_objects_when_only_annotations()
         {
             var schema = File.ReadAllText(@"files\annotations00101m1.xsd");
@@ -69,7 +69,7 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(0, objects.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void should_parse_all_objects_in_schema_test67200()
         {
             var schema = File.ReadAllText(@"files\test67200.xsd");

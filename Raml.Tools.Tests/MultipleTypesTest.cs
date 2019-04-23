@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 using Raml.Tools.ClientGenerator;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class MultipleTypesTest
     {
 
@@ -48,7 +48,7 @@ namespace Raml.Tools.Tests
                                      + "           }\r\n"
                                      + "         }\r\n";
 
-        [Test]
+        [TestMethod]
         public void Should_Get_Multiple_Type_When_Many_Response_Schemas_On_Root()
         {
             var doc = new RamlDocument {Title = "test"};
@@ -141,7 +141,7 @@ namespace Raml.Tools.Tests
 
         }
 
-        [Test]
+        [TestMethod]
         public void Should_Get_Multiple_Type_When_Many_Response_Schemas_On_Resource()
         {
             var doc = new RamlDocument { Title = "test" };

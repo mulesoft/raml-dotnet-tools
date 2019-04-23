@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 using Fstab.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Raml.Api.Core.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class ComplexJsonSchemaTests
     {
-        [Test]
+        [TestMethod]
         public async Task ShouldDeserializeContent()
         {
             var content = new StringContent("{ storage: { remotePath : 'path', server : 'server' } }",
@@ -46,7 +46,7 @@ namespace Raml.Api.Core.Tests
             Assert.IsNotNull(device);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldNotValidateSchema_WhenItHasDefinitions()
         {
             var content = new StringContent("{ storage: { remotePath : 'path', server : 'server' } }",

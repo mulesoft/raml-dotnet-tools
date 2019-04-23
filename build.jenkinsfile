@@ -1,0 +1,35 @@
+pipeline {
+
+    agent {
+        label 'windows10'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+           		bat 'nuget restore src/Raml.Api.Core.sln'
+        		bat "msbuild src/Raml.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+            }
+        }
+        stage('Test') {
+            steps {
+                bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\Common7\\IDE\\Extensions\\TestPlatform\\vstest.console.exe" "source\\Raml.Api.Core.Tests\\bin\\Release\\Raml.Api.Core.Tests.dll"'
+            }
+        }
+        stage('Pack') {
+            steps {
+        		bat 'nuget pack source/RAML.API.Core/RAML.Api.Core.csproj -Prop Configuration=Release'
+            }
+        }      
+    }
+
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+            
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

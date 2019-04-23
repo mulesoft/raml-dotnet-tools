@@ -2,15 +2,15 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RAML.Api.Core;
 
 namespace Raml.Tools.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class SchemaValidationTests
     {
-        [Test]
+        [TestMethod]
         public async Task ShouldNotValidateSchema()
         {
             var content = new StringContent("{ name: 'foo' }",
@@ -33,7 +33,7 @@ namespace Raml.Tools.Tests
                         
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldValidateV3Schema()
         {
             var content = new StringContent("[{ id : 1, name: 'Big Fish', director: 'Tim Burton', genre: 'Drama, Fantasy', cast: 'Ewan McGregor, Albert Finney, Billy Crudup', duration: 90, storyline: 'none', language: 'English', rented: false }]",
@@ -56,7 +56,7 @@ namespace Raml.Tools.Tests
 
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldValidateNulls()
         {
             var content = new StringContent("[{ id : 1, name: 'Big Fish', director: 'Tim Burton', genre: null, cast: 'Ewan McGregor, Albert Finney, Billy Crudup', duration: null, storyline: 'none', language: 'English', rented: false }]",
@@ -79,7 +79,7 @@ namespace Raml.Tools.Tests
 
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldIgnoreNonJsonSchemas()
         {
             var content = new StringContent("content",
@@ -102,7 +102,8 @@ namespace Raml.Tools.Tests
 
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(SchemaValidationException))]
         public async Task ShouldThrowExceptionForInvalidSchema()
         {
             var content = new StringContent("{ name: 'foo' }",
@@ -119,10 +120,10 @@ namespace Raml.Tools.Tests
             var proxy = new Movies.MoviesApi(client);
             proxy.SchemaValidation.RaiseExceptions = true;
 
-            Assert.Throws<SchemaValidationException>(async () => { var movies = await proxy.Movies.Get(); });
+            var movies = await proxy.Movies.Get();
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldNotThrowExceptionForValidSchema()
         {
             var content = new StringContent("[{ id : 1, name: 'Big Fish', director: 'Tim Burton', genre: 'Drama, Fantasy', cast: 'Ewan McGregor, Albert Finney, Billy Crudup', duration: 90, storyline: 'none', language: 'English', rented: false }]",
@@ -144,7 +145,7 @@ namespace Raml.Tools.Tests
             Assert.IsNotNull(movies);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldNotThrowExceptionForNonJSONSchema()
         {
             var content = new StringContent("data",
@@ -166,7 +167,7 @@ namespace Raml.Tools.Tests
             Assert.IsNotNull(movies);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ShouldValidateV4Schema()
         {
             var content = new StringContent("{ Component: 'component', Version: 'version' }",

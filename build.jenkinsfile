@@ -33,7 +33,6 @@ pipeline {
     post {
         always {
             archiveArtifacts 'MuleSoft.RAML.Tools/bin/Release/*.vsix'
-            nunit testResultsPattern: '*.xml'
         }
         cleanup {
             cleanWs()

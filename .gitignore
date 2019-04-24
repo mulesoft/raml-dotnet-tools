@@ -173,3 +173,4 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 *.DotSettings
+.vs

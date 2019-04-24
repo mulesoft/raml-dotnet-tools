@@ -33,6 +33,7 @@ pipeline {
     post {
         always {
             archiveArtifacts 'MuleSoft.RAML.Tools/bin/Release/*.vsix'
+            mstest testResultsFile:"**/*.trx", keepLongStdio: true
         }
         cleanup {
             cleanWs()

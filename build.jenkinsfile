@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\Common7\\IDE\\Extensions\\TestPlatform\\vstest.console.exe" "src\\Raml.Api.Core.Tests\\bin\\Release\\Raml.Api.Core.Tests.dll" /resultsfile:"%WORKSPACE%\Results.trx"'
+                bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\Common7\\IDE\\Extensions\\TestPlatform\\vstest.console.exe" "src\\Raml.Api.Core.Tests\\bin\\Release\\Raml.Api.Core.Tests.dll"'
             }
         }
         stage('Pack') {

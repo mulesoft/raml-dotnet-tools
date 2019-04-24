@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\Common7\\IDE\\Extensions\\TestPlatform\\vstest.console.exe" "RAML.Tools.Tests\\bin\\Release\\RAML.Tools.Tests.dll"'
+                bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\Common7\\IDE\\Extensions\\TestPlatform\\vstest.console.exe" "RAML.Tools.Tests\\bin\\Release\\RAML.Tools.Tests.dll" /logger:trx;LogFileName=RamlTools.trx'
             }
         }
         stage('Sing Vsix') {

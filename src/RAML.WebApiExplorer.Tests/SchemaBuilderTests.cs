@@ -2,17 +2,17 @@
 using FstabExplorerTest.Fstab.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RAML.WebApiExplorer.Tests.Types;
 
 namespace RAML.WebApiExplorer.Tests
 {
-	[TestFixture]
+	[TestClass]
     public class SchemaBuilderTests
 	{
 	    private readonly SchemaBuilder schemaBuilder = new SchemaBuilder();
 
-		[Test]
+		[TestMethod]
 		public void ShouldParseTypeWithNestedTypes()
 		{
 			var schema = schemaBuilder.Get(typeof (ForksPostResponse));
@@ -21,7 +21,7 @@ namespace RAML.WebApiExplorer.Tests
 			Assert.IsNotNull(obj);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ShouldParseTypeWithNestedTypeWhereFirstTypeHasNoSettableProperties() {
 			var schema = schemaBuilder.Get(typeof(WebLocation));
 			Assert.IsTrue(schema.Contains("\"Location\":"));
@@ -29,7 +29,7 @@ namespace RAML.WebApiExplorer.Tests
 			Assert.IsNotNull(obj);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ShouldParseArray()
 		{
 			var schema = schemaBuilder.Get(typeof(Owner[]));
@@ -38,7 +38,7 @@ namespace RAML.WebApiExplorer.Tests
 			Assert.AreEqual(JsonSchemaType.Array, obj.Type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ShouldParseComplexType()
 		{
 			var schema = schemaBuilder.Get(typeof(SearchGetResponse));
@@ -46,7 +46,7 @@ namespace RAML.WebApiExplorer.Tests
 			Assert.IsNotNull(obj);
 		}
 
-        [Test]
+        [TestMethod]
         public void ShouldParseTypeWithSubclasses()
         {
             var schema = schemaBuilder.Get(typeof(Entry));
@@ -56,7 +56,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsNotNull(obj);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldParseTypeWithRecursiveTypes()
         {
             var schema = schemaBuilder.Get(typeof(Employee));
@@ -65,7 +65,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsNotNull(obj);
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldGenerateAnnotations()
         {
             var schema = schemaBuilder.Get(typeof(AnnotatedObject));

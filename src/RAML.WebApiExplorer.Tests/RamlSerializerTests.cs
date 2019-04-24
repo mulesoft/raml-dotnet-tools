@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class RamlSerializerTests
     {
         private RamlSerializer serializer = new RamlSerializer();
 
-        [Test]
+        [TestMethod]
         public void ShouldSerializeObjectRamlType()
         {
             var ramlTypesOrderedDictionary = new RamlTypesOrderedDictionary();
@@ -37,7 +37,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsTrue(res.Contains("          firstname?:"+ Environment.NewLine));           
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldSerializeArrayRamlType()
         {
             var ramlTypesOrderedDictionary = new RamlTypesOrderedDictionary();
@@ -72,7 +72,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsTrue(res.Contains("      type: Person[]" + Environment.NewLine));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldSerializeDictionaryRamlType()
         {
             var ramlTypesOrderedDictionary = new RamlTypesOrderedDictionary();
@@ -114,7 +114,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsTrue(res.Contains("              type: Person" + Environment.NewLine));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldSerializeRaml1Header()
         {
             var doc = new RamlDocument {RamlVersion = RamlVersion.Version1};
@@ -122,7 +122,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.IsTrue(res.Contains("#%RAML 1.0"));
         }
 
-        [Test]
+        [TestMethod]
         public void DefaultRamlVersionIs08()
         {
             var doc = new RamlDocument();

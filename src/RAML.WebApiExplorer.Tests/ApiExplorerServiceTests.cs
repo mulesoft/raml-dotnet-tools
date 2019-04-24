@@ -5,15 +5,15 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Web.Http.Routing;
 using Moq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raml.Parser.Expressions;
 
 namespace RAML.WebApiExplorer.Tests
 {
-	[TestFixture]
+	[TestClass]
 	public class ApiExplorerServiceTests
 	{
-		[Test]
+		[TestMethod]
 		public void TestV08()
 		{
 			//var apiExplorer = new Mock<IApiExplorer>();
@@ -41,7 +41,7 @@ namespace RAML.WebApiExplorer.Tests
             Assert.AreEqual(RamlVersion.Version08, ramlDoc.RamlVersion);
 		}
 
-        [Test]
+        [TestMethod]
         public void Testv1()
         {
             var routes = new HttpRouteCollection();

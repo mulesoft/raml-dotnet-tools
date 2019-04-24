@@ -1,79 +1,79 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace RAML.WebApiExplorer.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class Raml1TypeMapperTests
     {
 
-		[Test]
+		[TestMethod]
 		public void ShouldConvertToInteger()
 		{
 			Assert.AreEqual("integer", Raml1TypeMapper.Map(typeof(int)));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ShouldConvertToString()
 		{
 			Assert.AreEqual("string", Raml1TypeMapper.Map(typeof(string)));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ShouldConvertToBoolean()
 		{
 			Assert.AreEqual("boolean", Raml1TypeMapper.Map(typeof(bool)));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ShouldConvertToNumber_WhenDecimal()
 		{
 			Assert.AreEqual("number", Raml1TypeMapper.Map(typeof(decimal)));
 		}
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToNumber_WhenFloat()
         {
             Assert.AreEqual("number", Raml1TypeMapper.Map(typeof(float)));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToString_WhenDateTime()
         {
             Assert.AreEqual("date", Raml1TypeMapper.Map(typeof(DateTime)));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToFile_WhenByteArray()
         {
             Assert.AreEqual("file", Raml1TypeMapper.Map(typeof(byte[])));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToInteger_WhenNullable()
         {
             Assert.AreEqual("integer", Raml1TypeMapper.Map(typeof(int?)));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToBoolean_WhenNullable()
         {
             Assert.AreEqual("boolean", Raml1TypeMapper.Map(typeof(bool?)));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToNumber_WhenNullableDecimal()
         {
             Assert.AreEqual("number", Raml1TypeMapper.Map(typeof(decimal?)));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToNumber_WhenNullableFloat()
         {
             Assert.AreEqual("number", Raml1TypeMapper.Map(typeof(float?)));
         }
 
-        [Test]
+        [TestMethod]
         public void ShouldConvertToString_WhenNullableDateTime()
         {
             Assert.AreEqual("date", Raml1TypeMapper.Map(typeof(DateTime?)));

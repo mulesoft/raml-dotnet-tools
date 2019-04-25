@@ -1,0 +1,14 @@
+Release Notes:
+
+- Updated to AMF js Parser 3.1.0
+- Updated client .net core sample
+- Updated asp.net core sample
+- Updated client full .net sample
+- Updated asp.net WebApi sample
+- Fixed: endpoints with uri parameters on root do not generate methods
+- Fixed: errors with Linkedin API
+- Fixed: errors with client .net and .net core generated code
+- Fixed: handle paths relative to root web paths
+- Fixed: UI - incorrect cancel button action called
+- Fixed: namespace incorrectly included on primitive types
+- Fixed: code generated with invalid characters

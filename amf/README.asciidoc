@@ -23,8 +23,8 @@ Contents:
 ** <<Consuming an API>>
 ** <<Calling an Authenticated API with OAuth>>
 ** <<Consuming the HTTP Response>>
-* <<Implementing an ASP.NET 5 (MVC 6)>>
-* <<Implementing an ASP.NET Web API>>
+* <<Implementing an ASP.NET Core Web Application>>
+* <<Implementing an ASP.NET Web API Application>>
 * <<Updating your RAML/OAS specification>>
 * <<Implementing a Controller in ASP.NET Web API>>
 * <<Customizing the Generated Code>>
@@ -37,6 +37,7 @@ Contents:
 ** <<Downloading the RAML>>
 ** <<Customizing the Generated RAML on your ASP.NET Core app>>
 ** <<Customizing the Generated RAML on your ASP.NET WebApi 2 app>>
+* <<Exchange>>
 * <<XML Schemas>>
 * <<Fine tuning generated .NET primitive types>>
 ** <<Numeric types>>
@@ -52,13 +53,12 @@ You can generate API client code from a RAML/OAS definition, which lets client a
 
 In Visual Studio .NET, you can add a reference to a RAML/OAS definition, and a strongly-typed client proxy is generated in the project. A local copy of the RAML/OAS definition stores as a file within the Visual Studio project, which is kept in sync with the original RAML/OAS definition.
  
-If the remote API does not provide a RAML/OAS definition, you can use a self-managed local definition to allow rapid generation of the client code in a declarative manner.
 
 === ASP.NET Implementation from a RAML/OAS Definition
 
-You can generate an ASP .NET MVC 6 or Web API 2 implementation from a new or existing RAML/OAS definition.
+You can generate an ASP .NET Core or Web API 2 implementation from a new or existing RAML/OAS definition.
 
-From within Visual Studio .NET, you can add a RAML/OAS definition from which the tool generates an initial ASP .NET MVC 6, or Web API 2 implementation, depending if you are invoking the command from a Visual Studio 2017 project type (.xproj) or the traditional project type (.csproj). This implementation includes controller classes and route registrations that map to the resources exposed in the RAML/OAS definition and also includes model classes for their representation. The model classes are generated from the available RAML/OAS types or JSON schemas.
+From within Visual Studio .NET, you can add a RAML/OAS definition from which the tool generates an initial ASP .NET Core, or Web API 2 implementation, depending if you are invoking the command from a Visual Studio 2017 project type (.xproj) or the traditional project type (.csproj). This implementation includes controller classes and route registrations that map to the resources exposed in the RAML/OAS definition and also includes model classes for their representation. The model classes are generated from the available RAML/OAS types or JSON schemas.
 
 In code, the controllers definition and implementation are logically separated. The generated code representing the definition is driven by the RAML/OAS definition allowing you to focus exclusively on the implementation classes. This separation of concerns allows iterative evolution of the API with non-destructive forward engineering of the code-based definition.
 
@@ -92,24 +92,24 @@ image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
 +
 image::./docimages/RAML_NET_SolutionExplorer.png[align="center"]
 +
-. Specify the URL of the RAML definition and click the *Go* button, use the *Upload* button to select the file from the local filesystem or choose an existing RAML definition from the *Exchange* library.
+. Specify the URL of the RAML/OAS definition and click the *Go* button, use the *Upload* button to select the file from the local filesystem or choose a REST API from Exchange.
 +
 image::./docimages/RAML_NET_AddRAMLReference.png[align="center"]
 +
-. The RAML definition is presented together a preview of the available resources. When ready, click the *OK* button to begin generating the API client. Optionally change the filename or namespace for the generated code.
+. The RAML/OAS definition is presented together a preview of the available resources. When ready, click the *OK* button to begin generating the API client. Optionally change the filename or namespace for the generated code.
 +
-A folder called API References containing the generated assets is added to the project. These assets include the original RAML file as well as any include dependencies, generated code, and a hidden .ref file with metadata for the code-generation tools.
+A folder called API References containing the generated assets is added to the project. These assets include the original RAML/OAS file as well as any include dependencies, generated code, and a hidden .ref file with metadata for the code-generation tools.
 +
 image::./docimages/RAML_NET_APIRef.png[align="center"]
 +
-The RAML.Api.Core, Newtonsoft.Json and Microsoft.AspNet.WebApi.Client NuGet packages are installed and referenced by the project.
+Newtonsoft.Json, Microsoft.AspNet.WebApi.Client and other NuGet packages are installed and referenced by the project.
 +
-. The C# classes nested beneath the parent RAML file contain the generated code to consume the Web API. At this point, the generated code is ready to be used.
+. The C# classes nested beneath the parent RAML/OAS file contain the generated code to consume the Web API. At this point, the generated code is ready to be used.
 
 
 == Using the API Client with the Movies Sample
 
-The RAML .NET installation package includes a sample project for a Movies API,
+The AMF .NET Tools installation package includes a sample project for a Movies API,
 which is a fictitious video library service where users browse a movie catalog,  rent or return movies, and add movies to a wishlist for future watching.
 
 The main constructor of the project's MoviesClient client uses an endpoint URI. The overload for the constructor allows a custom HttpClient implementation to be injected, such as an HttpClient instance configured with a MessageHandler. You can use this instance for unit testing.
@@ -199,27 +199,27 @@ var created = headers.Created;
 var code = headers.Code;
 ----
 
-== Implementing an ASP.NET 5 (MVC 6)
+== Implementing an ASP.NET Core Web Application
 
-To implement an ASP.NET MVC 6:
+To implement an ASP.NET Core web app:
 
-. Start Visual Studio 2017 and create a new ASP.NET Web Application.
+. Start Visual Studio 2017 and create a new ASP.NET Core Web Application.
 . In the New ASP.NET Project menu, select a template:
 +
 image::./docimages/webapi-vs2015.png[align="center", width="550"]
 +
-. In the Solution Explorer, right-click the project node and click the *Add RAML Contract* command.
+. In the Solution Explorer, right-click the project node and click the *Add RAML/OAS Contract* command.
 +
 image::./docimages/RAML_NETAddRAMLContract.png[align="center", width="550"]
 +
-. The dialog lets you create a RAML definition or import an existing one. If you import an existing one, click  the *Go* button to download the RAML definition from an URL, or browse to use a local copy from your file system. 
+. The dialog lets you create a RAML definition or import a RAML or OAS existing specification. If you import an existing one, click  the *Go* button to download the RAML/OAS definition from an URL, browse to use a local copy from your file system or select from Exchange.
 
 The preview screen has several options to customize the generated code. You can change the filename, namespace, or choose asynchronous methods.
 
 Also you can customize the location of the generated classes. Check the "Customize output folders" and enter the path for the controllers and/or the models. 
 Select the check box if you want to add "generated.cs" to the model filenames.
 
-A Contracts folder is added to the project containing the generated assets. These assets include a local copy of the RAML definition, the generated model classes (inferred from the RAML types or JSON schemas in the RAML definition), and .NET interfaces representing the contracts for the ASP.NET Controllers.
+A Contracts folder is added to the project containing the generated assets. These assets include a local copy of the RAML/OAS definition, the generated model classes (inferred from the RAML types or JSON schemas in the RAML/OAS definition), and .NET interfaces representing the contracts for the ASP.NET Controllers.
 
 If you want to customize the location of the generated classes, select the "Customize output folders", specify the paths, and choose if you want to add ".generated.cs" suffix to the Models. **Specified paths will be relative to the project's root folder**.
 If you leave these fields empty, it will place the generated controllers in the "Controllers" folder and the rest of the assets under the Contracts folder.
@@ -231,7 +231,7 @@ image::docimages/RAML_NETAddRAMLContractScreen.png[align="center", width=550]
 
 
 
-== Implementing an ASP.NET Web API
+== Implementing an ASP.NET Web API Application
 
 To implement an ASP.NET Web API:
 
@@ -240,18 +240,18 @@ To implement an ASP.NET Web API:
 +
 image::./docimages/RAML_NET_NewASPProject.png[align="center", width="550"]
 +
-. In the Solution Explorer, right-click the project node and click the *Add RAML Contract* command.
+. In the Solution Explorer, right-click the project node and click the *Add RAML/OAS Contract* command.
 +
 image::./docimages/RAML_NETAddRAMLContract.png[align="center", width="550"]
 +
-. The dialog lets you create a RAML definition or import an existing one. If you import an existing one, click  the *Go* button to download the RAML definition from an URL, or browse to use a local copy from your file system. 
+. The dialog lets you create a RAML definition or import an existing RAML or OAS specification. If you import an existing one, click  the *Go* button to download the RAML/OAS definition from an URL, browse to use a local copy from your file system or choose one from Exchange.
 
 . On the preview screen you have several options to customize the generated code. You can change the filename, namespace, or choose asynchronous methods.
 
 Also you can customize the location of the generated classes. Check the "Customize output folders" and enter the path for the controllers and/or the models. 
 Select the check box if you want to add "generated.cs" to the model filenames.
 
-A Contracts folder is added to the project containing the generated assets. These assets include a local copy of the RAML definition, the generated model classes (inferred from the RAML types or JSON schemas in the RAML definition), and .NET interfaces representing the contracts for the ASP.NET Controllers.
+A Contracts folder is added to the project containing the generated assets. These assets include a local copy of the RAML/OAS definition, the generated model classes (inferred from the RAML types or JSON schemas in the RAML/OAS definition), and .NET interfaces representing the contracts for the ASP.NET Controllers.
 
 If you want to customize the location of the generated classes, select the "Customize output folders", specify the paths, and choose if you want to add ".generated.cs" suffix to the Models. **Specified paths will be relative to the project's root folder**.
 If you leave these fields empty, it will place the generated controllers in the "Controllers" folder and the rest of the assets under the Contracts folder.
@@ -265,7 +265,7 @@ image::docimages/RAML_NETAddRAMLContractScreen.png[align="center", width=550]
 
 == Updating your RAML/OAS specification
 
-The tool also supports updating the generated ASP.NET MVC 6 or Web API when a change is made to the RAML definition. This lets you keep the contract definition in a RAML file with the implementation, so that both stay in sync. The classes get re-generated when you save changes made to any the RAML files in your project. This only affects the existing .NET contract interfaces and adds ASP.NET MVC 6 or Web API controller implementations for any new resource in the RAML definition. The existing controller implementations remain untouched.
+The tool also supports updating the generated ASP.NET Core or Web API when a change is made to the RAML/OAS definition. This lets you keep the contract definition in a RAML/OAS file with the implementation, so that both stay in sync. The classes get re-generated when you save changes made to any the RAML files in your project. This only affects the existing .NET contract interfaces and adds ASP.NET Core or Web API controller implementations for any new resource in the RAML/OAS definition. The existing controller implementations remain untouched.
 
 If new resources or methods have been added, the implementation controller won't match the interface. You will have to implement those methods manually.
 
@@ -278,7 +278,7 @@ In short, interfaces and base controllers will be updated automatically, but exi
 
 == Implementing a Controller in ASP.NET Web API
 
-The generated controllers provide the starting point for the implementation. The tool generates a class that implements the .NET interface or contract for the resource defined in RAML. The following example illustrates the controller Movies for the Movies RAML file:
+The generated controllers provide the starting point for the implementation. The tool generates a class that implements the .NET interface or contract for the resource defined in RAML/OAS. The following example illustrates the controller Movies for the Movies RAML file:
 
 [source, c#]
 ----
@@ -500,7 +500,7 @@ This is done with the following line of code:
 
 [source, c#]
 ----
-options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
+options.Conventions.Add(new AMF.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
 ----
 
 You will need to add it to the *ConfigureServices* method of your *StartUp.cs* class:
@@ -513,9 +513,9 @@ You will need to add it to the *ConfigureServices* method of your *StartUp.cs* c
         services.AddScoped<MyApiExplorerDataFilter>();
         services.AddMvc(options =>
             {
-                options.Filters.AddService(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));
-                options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());
-				options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
+                options.Filters.AddService(typeof(AMF.WebApiExplorer.ApiExplorerDataFilter));
+                options.Conventions.Add(new AMF.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());
+				options.Conventions.Add(new AMF.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(DefaultRoutingController)));
             });
     }
 ----
@@ -571,7 +571,7 @@ You will also need to add in the Register method of your WebApi configuration a 
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            RAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();
+            AMF.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();
         }
     }
 ----
@@ -598,6 +598,16 @@ For example:
 
 Some aspects of your API-like security are not automatically detected. You can customize the RAML generation process and further adjust it to your API.
 To see how check the *Customizing the Generated RAML* section https://github.com/mulesoft-labs/raml-dotnet-apiexplorer[here]
+
+
+== Exchange
+
+Both when generating a client proxy (Add RAML/OAS Reference) or scaffolding an ASP.Net Core/WebApi Application (Add RAML/OAS Contract) you can select an existing REST API from Mulesoft's Anypoint Exchange platform.
+Click on the *Exchange* button to see the list of public REST APIs or search for an specific API. If you have a Anypoint Mulesoft account you can also login to see your private APIs.
+
+image::./docimages/exchange-rest-apis.png[align="center", width="550"]
+
+
 
 
 

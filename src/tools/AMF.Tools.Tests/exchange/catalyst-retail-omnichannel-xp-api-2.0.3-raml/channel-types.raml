@@ -1,0 +1,52 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides data types for the experience
+  layer channel resources
+  
+uses:
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+  
+types:
+
+  ChannelType:
+    type: string
+    description: Type of channel
+    enum: [
+      STORE, WEB, MOBILE
+    ]
+
+  Channel:
+    type: object
+    description: Describes specific channel. One of StoreChannel, WebChannel or MobileChannel.
+    discriminator: channelType
+    properties:
+      channelType: ChannelType
+
+  StoreChannel:
+    type: Channel
+    discriminatorValue: STORE
+    description: Store channel
+    properties:
+      storeNumber:
+        description: Number of store
+        type: string
+
+  WebChannel:
+    type: Channel
+    description: Web channel
+    discriminatorValue: WEB
+    properties:
+      url:
+        description: Website URL
+        type: common.url
+
+  MobileChannel:
+    type: Channel
+    description: Mobile channel
+    discriminatorValue: MOBILE
+    properties:
+      name:
+        description: Name of mobile channel
+        type: string
+    

@@ -1,0 +1,1840 @@
+#%RAML 1.0
+title: HERE Geocoder API - Reverse
+version: 6.2
+baseUri: https://reverse.geocoder.api.here.com/6.2
+baseUriParameters: {}
+protocols:
+- HTTPS
+documentation:
+- title: HERE Geocoder API - Reverse
+  content: "The HERE Geocoder API is a REST API that allows you to:\n  * Obtain geocoordinates for addresses\n  * Obtain addresses or administrative areas for locations \n  * Obtain geocoordinates for known landmarks\n\n\n[Terms of service](https://legal.here.com/en-gb/terms)"
+types:
+  ResponseType:
+    displayName: ResponseType
+    description: Abstract response entity
+    type: object
+    properties:
+      Response:
+        required: false
+        displayName: Response
+        description: |
+          The *SearchResponse* structure is the top level element returned by the search service. It contains the search results along with *Meta information*, search paths, and scores. Search results are grouped in views, where two different derived view types exist.
+
+          SearchSuggestionsViewType is used to reflect auto-completion suggestions. SearchResultsViewType is used if Search analyzes free-form input and potentially makes more than one assumption regarding the user's search intention.
+        type: Response
+  Response:
+    example:
+      value:
+        Response:
+          MetaInfo:
+            Timestamp: 2016-11-02T13:24:11.0000000Z
+          View:
+            _type: SearchResultsViewType
+            ViewId: 0
+            Result:
+            - Relevance: 1
+              MatchLevel: houseNumber
+              MatchQuality:
+                City: 1
+                Street:
+                - 0.9
+                HouseNumber: 1
+              MatchType: pointAddress
+              Location:
+                LocationId: NT_Opil2LPZVRLZjlWNLJQuWB_0ITN
+                LocationType: point
+                DisplayPosition:
+                  Latitude: 41.88432
+                  Longitude: -87.6387699
+                NavigationPosition:
+                - Latitude: 41.88449
+                  Longitude: -87.6387699
+                MapView:
+                  TopLeft:
+                    Latitude: 41.8854442
+                    Longitude: -87.6402799
+                  BottomRight:
+                    Latitude: 41.8831958
+                    Longitude: -87.6372599
+                Address:
+                  Label: 425 W Randolph St, Chicago, IL 60606, United States
+                  Country: USA
+                  State: IL
+                  County: Cook
+                  City: Chicago
+                  District: West Loop
+                  Street: W Randolph St
+                  HouseNumber: 425
+                  PostalCode: 60606
+                  AdditionalData:
+                  - value: United States
+                    key: CountryName
+                  - value: Illinois
+                    key: StateName
+                  - value: Cook
+                    key: CountyName
+                  - value: N
+                    key: PostalCodeType
+    displayName: Response
+    description: |
+      The *SearchResponse* structure is the top level element returned by the search service. It contains the search results along with *Meta information*, search paths, and scores. Search results are grouped in views, where two different derived view types exist.
+
+      SearchSuggestionsViewType is used to reflect auto-completion suggestions. SearchResultsViewType is used if Search analyzes free-form input and potentially makes more than one assumption regarding the user's search intention.
+    type: object
+    properties:
+      MetaInfo:
+        required: false
+        displayName: MetaInfo
+        description: This type is comprised of attributes which are not particularly related to the search functionality.
+        type: MetaInfoType
+      View:
+        required: false
+        displayName: View
+        type: array
+        items:
+          type: ViewType
+  MetaInfoType:
+    displayName: MetaInfoType
+    description: This type is comprised of attributes which are not particularly related to the search functionality.
+    type: object
+    properties:
+      RequestId:
+        required: false
+        displayName: RequestId
+        description: Mirrored RequestId value from the request structure. Can be usedto trace requests.
+        type: string
+      Timestamp:
+        required: false
+        displayName: Timestamp
+        description: Time at which the search was performed.
+        type: string
+      NextPageInformation:
+        required: false
+        displayName: NextPageInformation
+        description: Key which can be used in subsequent requests to acquire the next results. This element is only provided if paging has been activated in the request.
+        type: string
+      PreviousPageInformation:
+        required: false
+        displayName: PreviousPageInformation
+        description: Key which can be used in subsequent requests to acquire the previous results. This element is only provided if paging has been activated in the request.
+        type: string
+      AdditionalData:
+        required: false
+        displayName: AdditionalData
+        description: List of KeyValuePairType elements as generic container to attach additional information to the request.
+        type: array
+        items:
+          type: KeyValuePairType
+  ViewType:
+    displayName: ViewType
+    type: object
+    properties:
+      _type:
+        required: false
+        displayName: _type
+        type: string
+      ViewId:
+        required: false
+        displayName: ViewId
+        description: A key to distinguish between different types of views. Always set to 0.
+        type: string
+      PerformedSearch:
+        required: false
+        displayName: PerformedSearch
+        description: Search path which was performed for this search run. In case of free-form searches, this element holds structured information, which indicates how user input has been interpreted by Search. The Performed Search has the same structure as a search request and can thus be used to repeat the same search.
+        type: string
+      Result:
+        required: false
+        displayName: Result
+        description: The resulting items which have been found along with attributes indicating the quality of the search result.
+        type: array
+        items:
+          type: SearchResultType
+  SearchResultType:
+    displayName: SearchResultType
+    description: The SearchResult contains the actual result as a [Location](https://developer.here.com/documentation/geocoder/topics/resource-type-response-geocode.html#resource-type-response-geocode__location) object together with information on how good the result matches the search request.
+    type: object
+    properties:
+      Relevance:
+        required: false
+        displayName: Relevance
+        description: Indicates the relevance of the results found; the higher the score the more relevant the alternative. The score is a normalized value between  0 and 1.
+        type: string
+      Distance:
+        required: false
+        displayName: Distance
+        description: "Distance between the identified location object and the specified client position in meters. Only provided if a proximity was specified in the request (parameter prox). For areas like admin or landmark areas the distance is defined as the distance between the input coordinate and the boundary of the area. If the area covers the input coordinate the distance will be negative. \n\n\n**Note:** With gen<6 the distance for admin area results is calculated from the given point to the center of the area."
+        type: string
+      Direction:
+        required: false
+        displayName: Direction
+        description: |
+          Direction of the location object seen from the specified client position measured clockwise in degrees starting with 0 at true north.
+
+
+          Currently only provided for Reverse Geocode *mode=retrieveAreas* results. It is the direction from the specified client position to the center of the area.
+        type: string
+      MatchLevel:
+        required: false
+        displayName: MatchLevel
+        description: |
+          The most detailed address field that matches the geocoding or reverse geocoding query. The most detailed address field that matches the geocoding query.
+
+
+          **Enumeration** [country, state, county, city, district, street,  intersection, houseNumber, postalCode, landmark].
+
+
+          *intersection* is only supported with gen >= 1; for gen<1 requests street is returned for intersection matches.
+        type: string
+        enum:
+        - country
+        - state
+        - county
+        - city
+        - district
+        - street
+        - intersection
+        - houseNumber
+        - postalCode
+        - landmark
+      MatchQuality:
+        required: false
+        displayName: MatchQuality
+        description: MatchQuality provides detailed information about the match quality of a result at attribute level. Match quality is a value between 0.0 and 1.0. 1.0 represents a 100% match.
+        type: MatchQualityType
+      MatchType:
+        required: false
+        displayName: MatchType
+        description: |
+          Quality of the location match.
+
+            * *pointAddress* Location matches exactly as Point Address.
+            * *interpolated* Location was interpolated.
+
+            With *gen<3* address results from reverse geocoding always have MatchType *interpolated*; only with *gen>=3* reverse geocoding returns Point Address results with MatchType *pointAddress*.
+        type: string
+        enum:
+        - pointAddress
+        - interpolated
+      MatchCode:
+        required: false
+        displayName: MatchCode
+        description: |
+          Code indicating how well the result matches the request.
+
+
+          **Enumeration** [exact, ambiguous, upHierarchy, ambiguousUpHierarchy].
+        type: string
+        enum:
+        - exact
+        - ambiguous
+        - upHierarchy
+        - ambiguousUpHierarchy
+      ParsedRequest:
+        required: false
+        displayName: ParsedRequest
+        description: ParsedRequest shows how the various components of the request were derived from search terms.
+        type: ParsedRequestType
+      Location:
+        required: false
+        displayName: Location
+        description: The location type refers to a physical location including the physical extent. A location can be referenced either by Location ID or by specifying the address.
+        type: LocationType
+      AdditionalData:
+        required: false
+        displayName: AdditionalData
+        description: |
+          Generic key/value container to keep additional attributes. The defined
+
+          key/values are:
+            *  houseNumberFallback
+            true/false. This attribute is included, if MatchLevel is houseNumber. It is set to false, if Search could find the requested house number. If set to true, it indicates that the requested house number was corrected to match the nearest known house number
+            * houseNumberFallbackDifference
+            Difference between the requested house number and the matched house number. This attribute is only included if houseNumberFallback is set to true.
+            * houseNumberExtrapolation
+            true/false. An extrapolated address is marked true. House number extrapolation can be activated with an additional data parameter HouseNumberMod, Extrapolation.
+            * houseNumberExtrapolationDistance
+            For an extrapolated address, this attribute provides the distance in meters from an existing point or range address
+            *  houseNumberExtrapolationDifference
+            For an extrapolated address, this attribute provides the difference in house numbers from an existing point or range address.
+        type: array
+        items:
+          type: KeyValuePairType
+  MatchQualityType:
+    displayName: MatchQualityType
+    description: MatchQuality provides detailed information about the match quality of a result at attribute level. Match quality is a value between 0.0 and 1.0. 1.0 represents a 100% match.
+    type: object
+    properties:
+      Country:
+        required: false
+        displayName: Country
+        description: Match quality of the result with respect to country information in the request.
+        type: number
+        format: double
+      State:
+        required: false
+        displayName: State
+        description: Match quality of the result with respect to state information in the request.
+        type: number
+        format: double
+      County:
+        required: false
+        displayName: County
+        description: Match quality of the result with respect to county information in the request.
+        type: number
+        format: double
+      City:
+        required: false
+        displayName: City
+        description: Match quality of the result with respect to city information in the request.
+        type: number
+        format: double
+      District:
+        required: false
+        displayName: District
+        description: Match quality of the result with respect to district informationin the request.
+        type: number
+        format: double
+      Name:
+        required: false
+        displayName: Name
+        description: Match quality of the result wrt. the name input (if any). The match quality is a value between 0.0 and 1.0, 1.0 representing a 100% match.
+        type: number
+        format: double
+      Subdistrict:
+        required: false
+        displayName: Subdistrict
+        description: Match quality of the result with respect to sub-district informationin the request.
+        type: number
+        format: double
+      Street:
+        required: false
+        displayName: Street
+        description: Match quality of the result with respect to street informationin the request. There are two values of 'Street' when you specify anintersection.
+        type: array
+        items:
+          type: number
+          format: double
+      HouseNumber:
+        required: false
+        displayName: HouseNumber
+        description: Match quality of the result with respect to house number information in the request.
+        type: number
+        format: double
+      PostalCode:
+        required: false
+        displayName: PostalCode
+        description: Match quality of the result with respect to postal codeinformation in the request.
+        type: number
+        format: double
+      Building:
+        required: false
+        displayName: Building
+        description: Match quality of the result with respect to building informationin the request.
+        type: number
+        format: double
+      Unit:
+        required: false
+        displayName: Unit
+        description: Match quality of the result wrt. the unit name input (if any). The match quality is a value between 0.0 and 1.0, 1.0 representing a 100% match.
+        type: number
+        format: double
+  ParsedRequestType:
+    displayName: ParsedRequestType
+    description: ParsedRequest shows how the various components of the request were derived from search terms.
+    type: object
+    properties:
+      Name:
+        required: false
+        displayName: Name
+        description: Input token(s) the parser has categorized as the name of a landmark.
+        type: string
+      Label:
+        required: false
+        displayName: Label
+        description: Assembled address value built out of the parsed address components.
+        type: string
+      Country:
+        required: false
+        displayName: Country
+        description: Input token(s) the parser has categorized as the country part of an address.
+        type: string
+      State:
+        required: false
+        displayName: State
+        description: Input token(s) the parser has categorized as the state part of an address.
+        type: string
+      County:
+        required: false
+        displayName: County
+        description: Input token(s) the parser has categorized as the county part of an address.
+        type: string
+      City:
+        required: false
+        displayName: City
+        description: Input token(s) the parser has categorized as the city part of an address.
+        type: string
+      District:
+        required: false
+        displayName: District
+        description: Input token(s) the parser has categorized as the district part of an address.
+        type: string
+      Subdistrict:
+        required: false
+        displayName: Subdistrict
+        description: Input token(s) the parser has categorized as the sub-district part of an address.
+        type: string
+      Street:
+        required: false
+        displayName: Street
+        description: Input token(s) the parser has categorized as the street part of an address (including intersections which are defined by two streets).
+        type: string
+      HouseNumber:
+        required: false
+        displayName: HouseNumber
+        description: Input token(s) the parser has categorized as the house number part of an address.
+        type: string
+      PostalCode:
+        required: false
+        displayName: PostalCode
+        description: Input token(s) the parser has categorized as the postal code part of an address.
+        type: string
+      Building:
+        required: false
+        displayName: Building
+        description: Input token(s) the parser has categorized as the building part of an address.
+        type: string
+      AddressLine:
+        required: false
+        displayName: AddressLine
+        description: Formatted address lines built out of the parsed address components. The first line consists of street name, including prefix, directional and street type, and house number. The second line consists of the city name and postal code, plus in some countries the state name or abbreviation. These elements are only populated if the *MatchLevel* is street or better. A city match does not contain address lines.
+        type: string
+      AdditionalData:
+        required: false
+        displayName: AdditionalData
+        description: |
+          Secondary address units as defined by the US Postal Service can be recognized and returned if the PreserveUnitDesignators switch was set to true in the SearchRequest additionalData field.
+
+
+          Recognized address units are returned in the AdditionalData field,  where the designator is the key and the unit value is the value of the entry:
+
+            *  *APT* recognized value of unit type Apartment
+            *  *BLDG* recognized value of unit type Building
+            *  *FL* recognized value of unit type Floor
+            *  *STE* recognized value of unit type Suite
+            *  *UNIT* recognized value of unit type Unit
+            *  *DEPT* recognized value of unit type Department
+            *  *UnknownUnit* unrecognized address unit value, which is usually printed with a pound (#) sign
+        type: array
+        items:
+          type: KeyValuePairType
+  LocationType:
+    displayName: LocationType
+    description: The location type refers to a physical location including the physical extent. A location can be referenced either by Location ID or by specifying the address.
+    type: object
+    properties:
+      LocationId:
+        required: false
+        displayName: LocationId
+        description: A key uniquely identifying a physical location.
+        type: string
+      LocationType:
+        required: false
+        displayName: LocationType
+        description: |
+          Indicates the type of the location. The following types are supported:
+
+            * area
+            * address
+            * trail
+            * park
+            * lake
+            * mountainPeak
+            * volcano
+            * river
+            * golfCourse
+            * industrialComplex
+            * island
+            * woodland
+            * cemetery
+            * canalWaterChannel
+            * bayHarbor
+            * airport
+            * hospital
+            * sportsComplex
+            * shoppingCentre
+            * universityCollege
+            * nativeAmericanReservation
+            * railroad
+            * militaryBase
+            * parkingLot
+            * parkingGarage
+            * animalPark
+            * beach
+            * distanceMarker
+
+          For *gen<5* the location type is set to point.
+        type: string
+      Name:
+        required: false
+        displayName: Name
+        description: The name of a location. This is relevant for landmarks like parks and lakes.
+        type: string
+      DisplayPosition:
+        required: false
+        displayName: DisplayPosition
+        description: The coordinate represents a geographical position. As most of the use cases currently do not consider height information the altitude is defined as optional.
+        type: GeoCoordinateType
+      NavigationPosition:
+        required: false
+        displayName: NavigationPosition
+        type: array
+        items:
+          type: GeoCoordinateType
+      MapView:
+        required: false
+        displayName: MapView
+        description: As the bounding box is specified by its top-left and bottom-right corner the box, it is not necessarily the smallest rectangle spanned by these two points; it is possible to define bounding boxes that are wider than 180 degrees or higher than 90 degrees (e.g. by setting the longitude of top-left corner to a bigger value than the longitude of the bottom-right corner). A bounding box with longitude of  180 degrees for the top-left corner and a longitude of 180 degrees for the bottom-right corner constructs an area that encircles the globe whereas a bounding box with the same longitude values for both corners constructs a bounding box of width 0 degrees.
+        type: GeoAreaType
+      Shape:
+        required: false
+        displayName: Shape
+        description: Shape of the location. This is only relevant for areas.
+        type: string
+      Address:
+        required: false
+        displayName: Address
+        description: Address record of a Location. Attributes are normalized to US feature names and can be mapped to the local feature levels (for example, State matches "Bundesland" in Germany) using mapping tables.
+        type: AddressType
+      AddressDetails:
+        required: false
+        displayName: AddressDetails
+        description: The address details type provides additional information about the address. The names for address elements are listed together with the language information for this name.
+        type: AddressDetailsType
+      AddressNames:
+        required: false
+        displayName: AddressNames
+        description: Additional information about the address. Address information in all primary languages for bi-lingual regions. Currently limited to Spain. In Spain, some regions have multiple primary languages such as Spanish, Catalan, Basque, or Galician.
+        type: AddressNamesType
+      MapReference:
+        required: false
+        displayName: MapReference
+        description: Reference to a Map Object
+        type: MapReferenceType
+      LinkInfo:
+        required: false
+        displayName: LinkInfo
+        description: |
+          The Link Info type provides additional information about the link in a road network.
+
+
+          **Note:** All link info attributes are subject to additional licensing. We reserve the right to require authorization on API level for all or individual attributes with future releases. Currently, only the *SpeedLimit* attribute requires authorization and the attribute is not included in *LinkInfo* if the client application is not authorized to receive this information.
+        type: LinkInfoType
+      Related:
+        required: false
+        displayName: Related
+        description: A related location object defines and classifies an association between two related locations.
+        type: RelatedLocation
+      AdditionalData:
+        required: false
+        displayName: AdditionalData
+        description: "Generic key/value container to keep additional attributes. The defined key/values are:\n\n* ExtendedTopLeftLatitude\n  Latitude of the top-left coordinate of the extended bounding box which completely encloses the physical extent of the location.\n* ExtendedTopLeftLongitude\n  Latitude of the top-left coordinate of the extended bounding box\n* ExtendedBottomRightLatitude\n  Latitude of the bottom-left coordinate of the extended bounding box\n* ExtendedBottomRightLongitude\n  Longitude of the bottom-right coordinate of the extended bounding box \n* \"additionalAddressProvider\"  ProviderId if Location data is provided by an external address provider. The use of external address providers has to be activated through an additional data field \"AdditionalAddressProvider\" in the request."
+        type: array
+        items:
+          type: KeyValuePairType
+      AdminInfo:
+        required: false
+        displayName: AdminInfo
+        description: The Admin Info type provides additional information about an administrative area covering country or state meta information like the timezone or the currency used.
+        type: AdminInfo
+  MapReferenceType:
+    displayName: MapReferenceType
+    description: Reference to a Map Object
+    type: object
+    properties:
+      ReferenceId:
+        required: false
+        displayName: ReferenceId
+        description: PVID of the link (for address level results).
+        type: string
+      MapVersion:
+        required: false
+        displayName: MapVersion
+        description: 'Version of the map schema. Format: QQ/YYYY, e.g.Q1/2015'
+        type: string
+      MapReleaseDate:
+        required: false
+        displayName: MapReleaseDate
+        description: 'Release date of the map data. Format: YYYY-MM-DD'
+        type: string
+      MapId:
+        required: false
+        displayName: MapId
+        description: |
+          Map version details containing the base line for the map schema and an identifier for the weeklyupdate.
+
+
+          Format: <4-letter region>YYQ<weekly update>
+
+
+
+          Example: NAAM15135 (region: North America (NAAM), map schema:Q1/2015
+
+          (151), weekly update 35)
+        type: string
+      Spot:
+        required: false
+        displayName: Spot
+        description: Relative position of the location along the link. Spot is defined asthe fractional distance from the link's reference-node to thenon-reference node, i.e. the value range is between 0 and 1. This attribute is only relevant if a link is referenced.
+        type: string
+      SideOfStreet:
+        required: false
+        displayName: SideOfStreet
+        description: "Indicates whether the referenced location is on the left orright side of the link (if heading from the reference node to thenon-reference node). \n\n**Enumeration** [left,right, neither]."
+        type: string
+        enum:
+        - left
+        - right
+        - neither
+      CountryId:
+        required: false
+        displayName: CountryId
+        description: PVID of the country admin area.
+        type: string
+      StateId:
+        required: false
+        displayName: StateId
+        description: PVID of the state admin area.
+        type: string
+      CountyId:
+        required: false
+        displayName: CountyId
+        description: PVID of the county admin area.
+        type: string
+      CityId:
+        required: false
+        displayName: CityId
+        description: PVID of the city admin area.
+        type: string
+      DistrictId:
+        required: false
+        displayName: DistrictId
+        description: PVID of the district admin area.
+        type: string
+      BuildingId:
+        required: false
+        displayName: BuildingId
+        description: External reference to additional building information (currently for internal use only)
+        type: string
+      AddressId:
+        required: false
+        displayName: AddressId
+        description: PVID of the Point Address. Only available for results with *matchLevel houseNumber* and *matchType pointAddress*. Not availablefor interpolated results.
+        type: string
+      PlaceId:
+        required: false
+        displayName: PlaceId
+        type: string
+  AddressType:
+    displayName: AddressType
+    description: Address record of a Location. Attributes are normalized to US feature names and can be mapped to the local feature levels (for example, State matches "Bundesland" in Germany) using mapping tables.
+    type: object
+    properties:
+      Label:
+        required: false
+        displayName: Label
+        description: Assembled address value for displaying purposes.
+        type: string
+      Country:
+        required: false
+        displayName: Country
+        description: ISO 3166-alpha-3 country code
+        type: string
+      State:
+        required: false
+        displayName: State
+        description: Includes the first subdivision level below the country. Where commonly used, this is a state code such as CA for California.
+        type: string
+      County:
+        required: false
+        displayName: County
+        description: List of key/value pairs with county name together with the language information
+        type: string
+      City:
+        required: false
+        displayName: City
+        description: Refers to the locality of the address.
+        type: string
+      District:
+        required: false
+        displayName: District
+        description: Includes the subdivision level below the city. Use of this field is optional if a second subdivision level is not available.
+        type: string
+      Subdistrict:
+        required: false
+        displayName: Subdistrict
+        description: Includes the subdivision level below the district. This field is currently only used for India results. In India, it is typical to use the names of areas below district level in addressing.
+        type: string
+      Street:
+        required: false
+        displayName: Street
+        description: Refers to the street name.
+        type: string
+      HouseNumber:
+        required: false
+        displayName: HouseNumber
+        description: House number. Depending on regional characteristics, can also be house name.
+        type: string
+      PostalCode:
+        required: false
+        displayName: PostalCode
+        description: Postal code
+        type: string
+      Building:
+        required: false
+        displayName: Building
+        description: Building name. Building names are currently only supported for Hong Kong addresses.
+        type: string
+      DistanceMarker:
+        required: false
+        displayName: DistanceMarker
+        description: Distance Markers are sequentially numbered markers placed along roads at regular intervals that serve as reference location signs.
+        type: DistanceMarker
+      AddressLine:
+        required: false
+        displayName: AddressLine
+        description: Formatted address lines. The first line consists of street name (including pre-fix, directional, street type) and house number. The second line consists of the city name and postal code plus in some countries the state name or abbreviation. These elements are only populated if *MatchLevel* is street or better.
+        type: string
+      AdditionalData:
+        required: false
+        displayName: AdditionalData
+        description: "Generic key/value container to keep additional attributes. The defined key/values are: \n\n  * \"CrossingStreet0\" \n  First cross street near matched address\n  * \"CrossingStreet1\" \n  Second cross street near matched address. This value is omitted by the search module, if the location's distance to CrossingStreet0 is less than half of the distance to CrossingStreet1.\n  * \"CountryName\" \n  Non-abbreviated, full name of the country.\n  * \"StateName\" \n  Non-abbreviated, full name of the state.\n  * \"CountyName\" \n  Non-abbreviated, full name of the county. \n  * \"Country2\" \n  If requested by passing &additionaldata=Country2,true, this field provides the ISO-3166 alpha-2 country code. By default, two-letter codes are not returned. \n  * Secondary address units as defined by the US Postal Service can be recognized and returned if the PreserveUnitDesignators switch was set to true in SearchRequest.additionalData. Recognized address units are returned in the AdditionalData field, where the designator is the key and the unit value is the value of the entry:\n      *  \"APT\" - recognized value of unit type \"Apartment\" \n      *  \"BLDG\" - recognized value of unit type \"Building\" \n      *  \"FL\" - recognized value of unit type \"Floor\" \n      *  \"STE\" - recognized value of unit type \"Suite\" \n      *  \"UNIT\" - recognized value of unit type \"Unit\" \n      *  \"RM\" - recognized value of unit type \"Room\" \n      *  \"DEPT\" - recognized value of unit type \"Department\" \n      *  \"UnknownUnit\" - unrecognized address unit value, which is usually printed with a pound (\"#\") sign.\n      *  \"PostalCodeType\" \n  * For the USA, the Geocoder result shows supplementary information that describes the type of the 5-Digit ZIP, as according to the USPS. The values are as follows:\n      *  \"N\" = Non-Unique\n      *  \"M\" = Military\n      *  \"P\" = PO Box\n      *  \"U\" = Unique Zip"
+        type: array
+        items:
+          type: KeyValuePairType
+  AddressDetailsType:
+    displayName: AddressDetailsType
+    description: The address details type provides additional information about the address. The names for address elements are listed together with the language information for this name.
+    type: object
+    properties:
+      CountryCode:
+        required: false
+        displayName: CountryCode
+        description: ISO 3166-alpha-3 country code
+        type: string
+      Country:
+        required: false
+        displayName: Country
+        description: Country name together with the language information
+        type: string
+      State:
+        required: false
+        displayName: State
+        description: State name together with the language information
+        type: string
+      County:
+        required: false
+        displayName: County
+        description: County name together with the language information
+        type: string
+      City:
+        required: false
+        displayName: City
+        description: City name together with the language information
+        type: string
+      District:
+        required: false
+        displayName: District
+        description: District name together with the language information
+        type: string
+      Street:
+        required: false
+        displayName: Street
+        description: Street name together with the language information
+        type: string
+      StreetDetails:
+        required: false
+        displayName: StreetDetails
+        description: The Street Details type decomposes the street name into its name parts like the base name, the street type, etc.
+        type: StreetDetails
+      HouseNumber:
+        required: false
+        displayName: HouseNumber
+        description: House number together with the language information (if available)
+        type: string
+      PostalCode:
+        required: false
+        displayName: PostalCode
+        description: Postal code
+        type: string
+      Building:
+        required: false
+        displayName: Building
+        description: Building name together with the language information.
+        type: string
+  AddressNamesType:
+    displayName: AddressNamesType
+    description: Additional information about the address. Address information in all primary languages for bi-lingual regions. Currently limited to Spain. In Spain, some regions have multiple primary languages such as Spanish, Catalan, Basque, or Galician.
+    type: object
+    properties:
+      Country:
+        required: false
+        displayName: Country
+        description: List of key/value pairs with country name together with the language information.
+        type: array
+        items:
+          type: KeyValuePairType
+      State:
+        required: false
+        displayName: State
+        description: List of key/value pairs with state name together with the language information.
+        type: array
+        items:
+          type: KeyValuePairType
+      County:
+        required: false
+        displayName: County
+        description: List of key/value pairs with county name together with the language information.
+        type: array
+        items:
+          type: KeyValuePairType
+      City:
+        required: false
+        displayName: City
+        description: List of key/value pairs with city name together with the language information.
+        type: array
+        items:
+          type: KeyValuePairType
+      District:
+        required: false
+        displayName: District
+        description: List of key/value pairs with district name together with the language information.
+        type: array
+        items:
+          type: KeyValuePairType
+      Subdistrict:
+        required: false
+        displayName: Subdistrict
+        description: List of key/value pairs with sub-district name together with the language information.
+        type: array
+        items:
+          type: KeyValuePairType
+      Street:
+        required: false
+        displayName: Street
+        description: List of key/value pairs with street name together with the language information.
+        type: array
+        items:
+          type: KeyValuePairType
+  StreetDetails:
+    displayName: StreetDetails
+    description: The Street Details type decomposes the street name into its name parts like the base name, the street type, etc.
+    type: object
+    properties:
+      BaseName:
+        required: false
+        displayName: BaseName
+        description: Base name part of the street name. The base name is a numbered route, local name, or commonly accepted name for a street.
+        type: string
+      StreetType:
+        required: false
+        displayName: StreetType
+        description: Street type part of the street name. Street type is the local municipality designator of each road, such as "street", "road", "strasse", "straat", "via", or "rue de la". Street types are defined as either "preceding" or "following" the base name and "attached" or "unattached" to the base name.
+        type: string
+      StreetTypeBefore:
+        required: false
+        displayName: StreetTypeBefore
+        description: Defines if the street type is before or after the base name.
+        type: string
+      StreetTypeAttached:
+        required: false
+        displayName: StreetTypeAttached
+        description: Defines if the street type is attached or unattached to the base name.
+        type: string
+      Prefix:
+        required: false
+        displayName: Prefix
+        description: A prefix is a directional identifier that precedes, but is not included in, the base name of a road.
+        type: string
+      Suffix:
+        required: false
+        displayName: Suffix
+        description: A suffix is a directional identifier that follows, but is not included in, the base name of a road.
+        type: string
+      Direction:
+        required: false
+        displayName: Direction
+        description: Indicates the official directional identifiers assigned to highways, typically either "North/South" or "East/West"
+        type: string
+  DistanceMarker:
+    displayName: DistanceMarker
+    description: Distance Markers are sequentially numbered markers placed along roads at regular intervals that serve as reference location signs.
+    type: object
+    properties:
+      Value:
+        required: false
+        displayName: Value
+        description: Distance Marker value
+        type: string
+      Offset:
+        required: false
+        displayName: Offset
+        description: Distance in the local units along the highway from the lowest Distance Marker nearest to the matched position on the road.
+        type: string
+      Unit:
+        required: false
+        displayName: Unit
+        description: Local unit of measure used for the offset, either *mi* or *km*.
+        type: string
+      DirectionOnSign:
+        required: false
+        displayName: DirectionOnSign
+        description: The direction given on the highway signs (if available).
+        type: string
+  LinkInfoType:
+    displayName: LinkInfoType
+    description: |
+      The Link Info type provides additional information about the link in a road network.
+
+
+      **Note:** All link info attributes are subject to additional licensing. We reserve the right to require authorization on API level for all or individual attributes with future releases. Currently, only the *SpeedLimit* attribute requires authorization and the attribute is not included in *LinkInfo* if the client application is not authorized to receive this information.
+    type: object
+    properties:
+      FunctionalClass:
+        required: false
+        displayName: FunctionalClass
+        description: The functional class is used to classify roads depending on the speed, importance and connectivity of the road.
+        type: string
+      TravelDirection:
+        required: false
+        displayName: TravelDirection
+        description: Cardinal (*N*, *E*, *S*, *W*) or ordinal direction (*NE*, *SE*, *SW*, *NW*) for the navigable link following the direction of traffic on the street. If traffic is allowed in both directions two values will be returned.
+        type: string
+      SpeedCategory:
+        required: false
+        displayName: SpeedCategory
+        description: Classifies the general speed trend of a navigable link based on posted or legal speed. (see [SpeedCategoryType](https://developer.here.com/documentation/geocoder/topics/resource-type-speed-category.html) enumeration for possible values)
+        type: string
+      SpeedLimit:
+        required: false
+        displayName: SpeedLimit
+        description: Speed limit indicating the legal speed for a vehicle in each travel direction. If traffic is allowed in both directions two speed limit values might be returned. Depending on the country the value is returned in kph or mph. Speed limit is subject to additional licensing and the attribute is not included in the result if the client application is not authorized to receive this information.
+        type: string
+      LinkFlags:
+        required: false
+        displayName: LinkFlags
+        description: "Flags that describe special characteristics of the link like *Motorway*, *Tollroad*, *Paved*, etc. (see [LinkFlagType](https://developer.here.com/documentation/geocoder/topics/resource-type-link-flag.html) enumeration for possible values).\n\n**LinkFlagType**\n\nValues to describe special characteristics of a link. The following enumeration values are available for LinkFlagType:\n  *  ControlledAccess\n    Identifies roads with limited entrances and exits that allow uninterrupted high speed traffic flow.\n  *  MultiDigitized\n    Indicates if the navigable link is part of a road network where each driving direction is separately digitized.\n  *  Frontage\n    Indication if the navigable link is a frontage road. Frontage roads are local roads that run parallel to and usually contain the name(s) and addresses of a road with a higher traffic flow.\n  *  Paved\n    Indication if the navigable link is paved.\n  *  Ramp\n    Indication if the navigable link represents a Ramp. Ramps are connectors that provide access between roads that do not cross at grade.\n  *  Private\n    Identifies roads not maintained by an organization responsible for maintenance of public roads.\n  *  Tollway\n    Identifies a navigable link for which a fee must be paid to use the road.\n  *  PoiAccess\n    Indication if a navigable link is a POI Access Road. POI Access Roads connect Points of Interest (POIs) to the road network. These roads provide the only means of entrance or exit from a POI to a public road.\n  *  FourWheelDrive\n    Indicates roads which are only suitable for vehicles with four-wheel drive.\n  *  ParkingLotRoad \n    Indication if a Link is internal to a parking lot area.\n  *  CarpoolRoad\n    Identifies a Link where, at specific times, all lanes serve as Carpool lane.\n  *  Reversible\n    Indicates that a Link is fully reversible, which implies that traffic changes direction for a specific time frame.\n  *  ExpressLane\n    Indication if the link serves as an Express Lane."
+        type: string
+      AccessFlags:
+        required: false
+        displayName: AccessFlags
+        description: |
+          Flags that describe access characteristics of the link like *Automobiles*, *Buses*, *Pedestrians*, etc. (see [LinkAccessFlagType](https://developer.here.com/documentation/geocoder/topics/resource-type-link-access-flag.html) enumeration for possible values).
+
+
+          **LinkAccessFlagType**
+
+
+          Defines a list of access characteristics for a link. The following enumeration values are available for LinkAccessFlagType:
+            *  Automobiles
+            *  Buses
+            *  Taxis
+            *  Carpools
+            *  Pedestrians
+            *  Trucks
+            *  Deliveries
+            *  EmergencyVehicle
+            *  ThroughTraffic
+            *  Motorcycles
+        type: string
+  AdminInfo:
+    displayName: AdminInfo
+    description: The Admin Info type provides additional information about an administrative area covering country or state meta information like the timezone or the currency used.
+    type: object
+    properties:
+      TimeZone:
+        required: false
+        displayName: TimeZone
+        description: The Timezone type provides detailed time zone information including offsets and daylight savings.
+        type: Timezone
+      LocalTime:
+        required: false
+        displayName: LocalTime
+        description: Local wall clock date and time in UTC format (ISO 8601).
+        type: string
+      Currency:
+        required: false
+        displayName: Currency
+        description: ISO 4217 currency code used in the country.
+        type: string
+      DrivingSide:
+        required: false
+        displayName: DrivingSide
+        description: Driving side for road traffic used in the country, either *left* or *right*.
+        type: string
+      SystemOfMeasure:
+        required: false
+        displayName: SystemOfMeasure
+        description: System of measure used in the country, either *imperial* or *metric*.
+        type: string
+  Timezone:
+    displayName: Timezone
+    description: The Timezone type provides detailed time zone information including offsets and daylight savings.
+    type: object
+    properties:
+      id:
+        required: false
+        displayName: id
+        description: Identifier for the timezone taken from the Java 8 platform.
+        type: string
+      offset:
+        required: false
+        displayName: offset
+        description: Time zone offset in seconds, for current date, modified in case of daylight savings. This is the offset to add to UTC to get local time.
+        type: string
+      rawOffset:
+        required: false
+        displayName: rawOffset
+        description: The amount of time in seconds to add to UTC to get standard time in this time zone. The current UTC offset is equal to rawOffset + dstSavings.
+        type: string
+      nameShort:
+        required: false
+        displayName: nameShort
+        description: A short standard time name of this time zone.
+        type: string
+      nameLong:
+        required: false
+        displayName: nameLong
+        description: A long standard time name of this time zone.
+        type: string
+      nameDstShort:
+        required: false
+        displayName: nameDstShort
+        description: A short Daylight Saving Time name of this time zone.
+        type: string
+      nameDstLong:
+        required: false
+        displayName: nameDstLong
+        description: A long Daylight Saving Time name of this time zone.
+        type: string
+      inDaylightTime:
+        required: false
+        displayName: inDaylightTime
+        description: True, if the time zone is currently in Daylight Saving Time.
+        type: string
+      dstSavings:
+        required: false
+        displayName: dstSavings
+        description: The amount of time to be added to local standard time to get local wall clock time during daylight saving time. Time in seconds saved during Daylight Saving Time.
+        type: string
+  RelatedLocation:
+    displayName: RelatedLocation
+    description: A related location object defines and classifies an association between two related locations.
+    type: object
+    properties:
+      Type:
+        required: false
+        displayName: Type
+        description: |
+          The type of the relationship to the associated location. The following types of related locations are supported:
+            * nearByDistanceMarker
+              Location of a nearby distance marker on the highway.
+
+              Retrieving distance markers is supported for the Reverse Geocoding mode *retrieveAddresses* and is enabled by the flag
+              *&additionaldata=IncludeDistanceMarkers,true*
+            * nearByAddress
+              Location of a nearby address on the same link.
+
+              Retrieving nearby addresses is supported for the Reverse Geocoding mode *trackPosition* and is enabled by the flag
+              *&locationattributes=related.nearByAddress*
+            * microPointAddress
+              Location of a secondary address for a point address. Retrieving micro point unit addresses issupported for the Forward Geocoding mode and is enabled by the flag
+              *&additionaldata=IncludeMicroPointAddresses,true*
+        type: string
+      MatchType:
+        required: false
+        displayName: MatchType
+        description: |
+          Relevant for *nearByAddress* relations. Information about the quality of the related location match.
+            * *pointAddress* Related location is based on a Point Address
+            * *interpolated* Related location was interpolated.
+        type: string
+      RouteDistance:
+        required: false
+        displayName: RouteDistance
+        description: Distance to the associated location. The distance is calculated based on the underlying road geometry.
+        type: string
+      Direction:
+        required: false
+        displayName: Direction
+        description: Relevant for *nearByAddress* relations. Bearing (measured clockwisefrom true north) from the projected coordinate on the street to thedisplay position of the related location.
+        type: string
+      Location:
+        required: false
+        displayName: Location
+        description: |
+          Associated location.
+
+
+          For a *nearByDistanceMarker* relation this is the location of the reference Distance Marker(s).
+
+
+          For a *nearByAddress* relation this is the location of the closest  house on the link.
+
+
+          For a *microPointAddress* this contains details about the micro point unit.
+        type: string
+  KeyValuePairType:
+    displayName: KeyValuePairType
+    description: Generic key/value pair to reflect exotic attributes or attributes not supported.
+    type: object
+    properties:
+      value:
+        required: false
+        displayName: value
+        type: string
+      key:
+        required: false
+        displayName: key
+        type: string
+  MultiSearchResponseType:
+    displayName: MultiSearchResponseType
+    description: Abstract response entity
+    type: object
+    properties:
+      Response:
+        required: false
+        displayName: Response
+        type: MultiSearchResponse
+  MultiSearchResponse:
+    displayName: MultiSearchResponse
+    type: object
+    properties:
+      MetaInfo:
+        required: false
+        displayName: MetaInfo
+        description: Meta Information about the Request
+        type: MultiSearchResponseMetaInfoType
+      Item:
+        required: false
+        displayName: Item
+        type: array
+        items:
+          type: MultiSearchResponseItemType
+  MultiSearchResponseMetaInfoType:
+    displayName: MultiSearchResponseMetaInfoType
+    description: Meta Information about the Request
+    type: object
+    properties:
+      RequestId:
+        required: false
+        displayName: RequestId
+        description: Mirrored RequestId value from the request structure. Used to trace requests.
+        type: string
+      Timestamp:
+        required: false
+        displayName: Timestamp
+        description: Time at which the search was performed.
+        type: string
+      AdditionalData:
+        required: false
+        displayName: AdditionalData
+        description: List of KeyValuePairType elements as generic container to attach additional information to the request.
+        type: array
+        items:
+          type: KeyValuePairType
+  MultiSearchResponseItemType:
+    displayName: MultiSearchResponseItemType
+    type: object
+    properties:
+      ItemId:
+        required: false
+        displayName: ItemId
+        description: This element contains the key which was specified in the corresponding request item. If no ItemId has been specified in the request the ItemId is constructed as the counter of the input items starting with 0.
+        type: string
+      Result:
+        required: false
+        displayName: Result
+        type: array
+        items:
+          type: SearchResultType
+  GeoCoordinateType:
+    displayName: GeoCoordinateType
+    description: The coordinate represents a geographical position. As most of the use cases currently do not consider height information the altitude is defined as optional.
+    type: object
+    properties:
+      Latitude:
+        required: false
+        displayName: Latitude
+        description: Latitude in degrees. -90 <= latitude <= 90.
+        type: number
+        format: double
+      Longitude:
+        required: false
+        displayName: Longitude
+        description: Longitude in degrees. -180 <= longitude <= 180.
+        type: number
+        format: double
+      Altitude:
+        required: false
+        displayName: Altitude
+        description: Altitude in meters
+        type: number
+        format: double
+  GeoAreaType:
+    displayName: GeoAreaType
+    description: As the bounding box is specified by its top-left and bottom-right corner the box, it is not necessarily the smallest rectangle spanned by these two points; it is possible to define bounding boxes that are wider than 180 degrees or higher than 90 degrees (e.g. by setting the longitude of top-left corner to a bigger value than the longitude of the bottom-right corner). A bounding box with longitude of  180 degrees for the top-left corner and a longitude of 180 degrees for the bottom-right corner constructs an area that encircles the globe whereas a bounding box with the same longitude values for both corners constructs a bounding box of width 0 degrees.
+    type: object
+    properties:
+      TopLeft:
+        required: false
+        displayName: TopLeft
+        description: The coordinate represents a geographical position. As most of the use cases currently do not consider height information the altitude is defined as optional.
+        type: GeoCoordinateType
+      BottomRight:
+        required: false
+        displayName: BottomRight
+        description: The coordinate represents a geographical position. As most of the use cases currently do not consider height information the altitude is defined as optional.
+        type: GeoCoordinateType
+  AdditionalDatum:
+    displayName: AdditionalDatum
+    type: object
+    properties:
+      value:
+        required: false
+        displayName: value
+        type: string
+      key:
+        required: false
+        displayName: key
+        type: string
+  ReversegeocodeByFormat_GETException:
+    displayName: ReversegeocodeByFormat_GETException
+    type: object
+    properties:
+      Details:
+        required: false
+        displayName: Details
+        type: string
+      AdditionalData:
+        required: false
+        displayName: AdditionalData
+        type: array
+        items:
+          type: AdditionalDatum
+      type:
+        required: false
+        displayName: type
+        type: string
+      subtype:
+        required: false
+        displayName: subtype
+        type: string
+  ReversegeocodeByFormat_GETException1:
+    displayName: ReversegeocodeByFormat_GETException1
+    type: object
+    properties:
+      type:
+        required: false
+        displayName: type
+        type: string
+      subtype:
+        required: false
+        displayName: subtype
+        type: string
+      Details:
+        required: false
+        displayName: Details
+        type: string
+/reversegeocode.json:
+  get:
+    displayName: ReversegeocodeByFormat_GET
+    description: Request geo coordinates for an address, also known as *forward geocoding* - submit an address to request the corresponding geo coordinates. Addresses may use structured input or free-form search strings with complete or partial address information. The more detailed the address you submit, the higher the potential match accuracy.
+    queryParameters:
+      format:
+        required: true
+        displayName: format
+        type: string
+        enum:
+        - json
+        - xml
+      app_id:
+        required: true
+        displayName: app_id
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      app_code:
+        required: true
+        displayName: app_code
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      mode:
+        required: true
+        displayName: mode
+        description: |
+          One of five values:
+            * retrieveAddresses - Search for the closest street address or addresses
+            * retrieveAreas - Retrieve the administrative area information for the position provided in the request
+            * retrieveLandmarks - Search for landmarks like parks and lakes in the proximity provided in the request
+            * retrieveAll - Search for streets, administrative areas and landmarks. This mode aggregates the results of the three different modes in one call
+            * trackPosition - Retrieve street and address information based on a position and bearing
+        type: string
+        enum:
+        - retrieveAddresses
+        - retrieveAreas
+        - retrieveLandmarks
+        - retrieveAll
+        - trackPosition
+      pos:
+        required: false
+        displayName: pos
+        description: |
+          A position with latitude, longitude, and bearing. Bearing expresses the direction in which an asset is heading in degrees starting at true north and continuing clockwise around the compass. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees.
+
+
+          **Example:** pos=lat,lon,bearing
+        type: string
+      prox:
+        required: false
+        displayName: prox
+        description: "A type of SpatialFilter. A spatial filter limits the search for any other attributes on the request. Proximity specifies a circle to search using a latitude, a longitude, and a radius in meters. Search is similar to *mapview*. Matches from inside set area are ranked higher. Relevant global results are also returned.\n\n    prox=lat,lon,radius \n\nsee also [GeoProximityType](https://developer.here.com/documentation/geocoder/topics/resource-type-proximity.html)\n\n**Example:** prox=37.7890649,-122.4027371,1000"
+        type: string
+      addressattributes:
+        required: false
+        displayName: addressattributes
+        description: |
+          A comma-separated list whose elements are present in the response data.
+
+
+          **Enumeration** [country, state, county, city, district, subdistrict, street, houseNumber, postalCode, addressLines, additionalData]
+
+
+
+          Abbreviated forms: [ctr, sta, cty, cit, dis, sdi, str, hnr, pst, aln, add]
+
+
+
+          **Default in response:** All except addressLines.
+
+
+
+          **Note:** The value names are case-sensitive.
+        type: array
+        items:
+          type: string
+          enum:
+          - country
+          - state
+          - county
+          - city
+          - district
+          - subdistrict
+          - street
+          - houseNumber
+          - postalCode
+          - addressLines
+          - additionalData
+      gen:
+        required: false
+        default: 9
+        displayName: gen
+        description: |
+          The gen parameter enables or disables backward incompatible behavior in the API. Please see details and the generation history in chapter [Different Generations of the Same API](https://developer.here.com/documentation/geocoder/topics/backwards-compatibility.html#backwards-compatibility__api-different-generations).
+
+          The latest generation is always recommended.
+
+
+          This is currently gen=9.
+        type: integer
+        format: int32
+      jsonattributes:
+        required: false
+        default: 0
+        displayName: jsonattributes
+        description: |
+          If set to 1, the first character of each JSON response attribute name is set to lower case.
+
+
+          Default value is 0.
+        type: integer
+        format: int32
+        enum:
+        - 0
+        - 1
+      jsoncallback:
+        required: false
+        displayName: jsoncallback
+        description: Specifies the name of a user-defined function used to wrap the JSON response.
+        type: string
+      language:
+        required: false
+        displayName: language
+        description: The preferred language of address elements in the result. Without a preferred language, the Geocoder will return results in an official country language or in a regional primary language so that local people will understand. Language code must be provided according to RFC 4647 standard. Note that the plural form of the parameter (languages) is supported as well. But only the last specified language in the list is used. All preceding language preferences are ignored at this time.
+        type: string
+      level:
+        required: false
+        displayName: level
+        description: Target match level of the search result. One of [*country*, *state*, *county*, *city*, *district*, *postalCode*]. Only valid in combination with gen=2 or higher.
+        type: string
+        enum:
+        - country
+        - state
+        - county
+        - city
+        - district
+        - postalCode
+      locationattributes:
+        required: false
+        displayName: locationattributes
+        description: "A comma-separated list whose elements are present in the response data.\n\n**Enumeration** [address, mapReference, mapView, addressDetails, streetDetails, additionalData, adminIds, linkInfo, adminInfo, timeZone, addressNamesBilingual, related.nearByAddress] \n\n**Abbreviated forms:** [ar, mr, mv, dt, sd, ad, ai, li, in, tz, nb, rn] \n\nThe *adminIds* switch is available with forward geocoding only.\n\nIn reverse geocoding results, *adminIds* are always present unless turned off through *locationattributes=none*. *locationattributes=-adminIds* has no effect on reverse geocoding results.\n\nThe *related.nearByAddress* switch is available with the trackPosition mode of reverse geocoding only.\n\nDefault in reverse geocoding response: address, mapView, additionalData, mapReference, adminIds.\n\nDefault in forward geocoding response: address, mapView, additionalData.\n\nWith *mapReference* link PVID, side of street, and admin area PVIDs are present in the response data. With *adminIds*, only admin area PVIDs are present.\n\n**Note:** The value names are case-sensitive."
+        type: array
+        items:
+          type: string
+          enum:
+          - address
+          - mapReference
+          - mapView
+          - addressDetails
+          - streetDetails
+          - additionalData
+          - adminIds
+          - linkInfo
+          - adminInfo
+          - timeZone
+          - addressNamesBilingual
+          - related.nearByAddress
+      maxresults:
+        required: false
+        displayName: maxresults
+        description: |
+          Defines the maximum number of items in the response structure, limiting the number of results included in each response page. When more results than the defined maximum are available, then these are returned on additional, separate pages. Each response structure (page) contains a handle to the next page. **For example**, maxresults=5 produces a maximum of 5 results per response page. If there are eight results in total, the first page contains five results and indicates that there is a second page with further results.
+
+              "metaInfo: {
+              timestamp: 2012-05-10T15:10:06.227+0000
+              nextPageInformation: 2
+              }"
+        type: integer
+        format: int32
+      minresults:
+        required: false
+        default: 0
+        displayName: minresults
+        description: Indicates that the service is to ignore the specified radius until *minResults* results are found. The default is 0. Currently only supported for Reverse Geocode *mode=retrieveAreas*.
+        type: integer
+        format: int32
+      pageinformation:
+        required: false
+        displayName: pageinformation
+        description: "A key which identifies the page to be returned when the response is separated into multiple pages. Only relevant, if *maxresults* has been specified in a the original request and the request response indicates that there is a further page. \n\n**Example**: \n\n\n    \"metaInfo: {\n    timestamp: 2012-05-10T15:10:06.227+0000\n    nextPageInformation: 2\n    }\""
+        type: string
+      politicalview:
+        required: false
+        displayName: politicalview
+        description: "Specify the political view. Available territories will be seen through the point of view of this country. If this parameter is not specified the neutral international view is made available, where territories may have unresolved claims.\n\n**Currently Supported Disputes**\n\n  * ARE: Abu Musa Island, Tunb Islands\n  * ARG: Argentina\n  * EGY: Halaib Triangle\n  * GRC: Northern Cyprus\n  * IND: India\n  * ISR: Israel view on East Jerusalem\n  * KEN: Ilemi Triangle\n  * MAR: Western Sahara\n  * PAK: Pakistan\n  * RUS: Crimea, Kuril Islands (Shikotan, Iturup, Habomai, and Kunashir)\n  * TUR: Northern Cyprus, Southern Cyprus, Kosovo\n  * VNM: Vietnam\n\n\nFor a complete list of supported views please see the appendix [Political View](https://developer.here.com/documentation/geocoder/topics/political-views.html#political-views). \n\n\nFor any political view that is unsupported the Geocoder, falls back to the default view. \n\n\n**Example** *politicalview=USA* or *politicalview=FRA* does not impact a response in any way."
+        type: string
+        enum:
+        - ARE
+        - ARG
+        - EGY
+        - GRC
+        - IND
+        - ISR
+        - KEN
+        - MAR
+        - PAK
+        - RUS
+        - TUR
+        - VNM
+      responseattributes:
+        required: false
+        displayName: responseattributes
+        description: |
+          A comma-separated list whose elements are present in the response data.
+
+
+          **Enumeration** [performedSearch, matchQuality, matchType, matchCode, parsedRequest]
+
+
+          **Abbreviated forms:** [ps, mq, mt, mc, pr]
+
+
+          Default in response: matchQuality, matchType
+
+
+          **Note:** The value names are case-sensitive.
+        type: array
+        items:
+          type: string
+          enum:
+          - performedSearch
+          - matchQuality
+          - matchType
+          - matchCode
+          - parsedRequest
+      sortby:
+        required: false
+        default: distance
+        displayName: sortby
+        description: |
+          Sort results by distance (default), population count, or size (approximate area size). One of [distance, population, size].
+
+
+          Currently only supported for Reverse Geocode *mode=retrieveAreas*. If population count is not available for an entity the service falls back to sort by area size.
+        type: string
+        enum:
+        - distance
+        - population
+        - size
+      strictlanguagemode:
+        required: false
+        displayName: strictlanguagemode
+        description: |
+          * *True* - if the value is available in the first language specified in the *language* parameter the attribute value is set directly in *Address*, *Place*, *Location*, and *Category* elements. Values in alternative languages are returned in the *AlternativeValues* element.
+
+
+          * *False* - the best available attribute value based on the language priorities given in *language* parameter is returned directly in *Address*, *Place*, *Location*, and *Category* elements. No alternatives are returned.
+        type: string
+        enum:
+        - "'true'"
+        - "'false'"
+      additionaldata:
+        required: false
+        displayName: additionaldata
+        description: "Key-value pairs that provide additional input to requests. See [Additional Data Parameter](https://developer.here.com/documentation/geocoder/topics/resource-params-additional.html) for a full list.\n\nKey and value are separated using a ,. Multiple key-value pairs are separated using a ;: \n\n      additionaldata=<Key1>,<Value1>;<Key2>,<Value2>;...\n\n**Example:**\n\n      additionaldata=PreserveUnitDesignators,true;\n      IncludeZipAddon,true"
+        type: string
+    responses:
+      200:
+        description: Ok
+        headers:
+          cache-control:
+            displayName: cache-control
+            type: string
+          content-type:
+            displayName: content-type
+            type: string
+        body:
+          application/json:
+            displayName: response
+            description: Ok
+            type: ResponseType
+      400:
+        description: Application Error. Invalid input data.
+        body:
+          application/json:
+            description: Application Error. Invalid input data.
+            type: ReversegeocodeByFormat_GETException
+      401:
+        description: Permission Error. Invalid Credentials.
+        body:
+          application/json:
+            description: Permission Error. Invalid Credentials.
+            type: ReversegeocodeByFormat_GETException1
+/multi-reversegeocode.json:
+  post:
+    displayName: MultiReversegeocodeByFormat_POST
+    description: |
+      Request geo coordinates for an address, also known as *forward geocoding* - submit an address to request the corresponding geo coordinates. Addresses may use structured input or free-form search strings with complete or partial address information. The more detailed the address you submit, the higher the potential match accuracy.
+
+      This section contains a list of all Multi Reverse Geocode request parameters. Multi Reverse Geocode requests are POST requests.
+
+       The HTTP Body in the POST request is used to specify the multiple reverse geocode request items. Each line in the HTTP body represents one reverse geocode request. The parameters passed in the query string serve as default values for any of those requests and can be overridden in the HTTP body. The format for every line follows the same syntax as the URL query string:
+
+              name1=value1&name2=value2
+    body:
+      text/plain:
+        displayName: body
+        description: |
+          **Request Body Example:**
+
+              id=0001&prox=52.5309,13.3845,50
+              id=0002&prox=50.1618,8.5334,50
+              id=0003&prox=40.7296,-73.9868,50
+              id=0004&prox=47.6098,-122.3425,50
+              id=0005&prox=-22.9804,-43.1897,50
+              id=0006&prox=-8.4943,115.2533,50
+              id=0007&prox=28.6338,77.2191,50
+              id=0008&prox=-33.9204,18.4208,50
+              id=0009&prox=21.0027,-89.6224,50
+              id=0010&prox=24.6607,46.712,50
+        type: string
+    queryParameters:
+      format:
+        required: true
+        displayName: format
+        type: string
+        enum:
+        - json
+        - xml
+      app_id:
+        required: true
+        displayName: app_id
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      app_code:
+        required: true
+        displayName: app_code
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      mode:
+        required: true
+        displayName: mode
+        description: |
+          One of five values:
+            * retrieveAddresses - Search for the closest street address or addresses
+            * retrieveAreas - Retrieve the administrative area information for the position provided in the request
+            * retrieveLandmarks - Search for landmarks like parks and lakes in the proximity provided in the request
+            * retrieveAll - Search for streets, administrative areas and landmarks. This mode aggregates the results of the three different modes in one call
+            * trackPosition - Retrieve street and address information based on a position and bearing
+        type: string
+        enum:
+        - retrieveAddresses
+        - retrieveAreas
+        - retrieveLandmarks
+        - retrieveAll
+        - trackPosition
+      addressattributes:
+        required: false
+        displayName: addressattributes
+        description: |
+          A comma-separated list whose elements are present in the response data.
+
+
+          **Enumeration** [country, state, county, city, district, subdistrict, street, houseNumber, postalCode, addressLines, additionalData]
+
+
+
+          Abbreviated forms: [ctr, sta, cty, cit, dis, sdi, str, hnr, pst, aln, add]
+
+
+
+          **Default in response:** All except addressLines.
+
+
+
+          **Note:** The value names are case-sensitive.
+        type: array
+        items:
+          type: string
+          enum:
+          - country
+          - state
+          - county
+          - city
+          - district
+          - subdistrict
+          - street
+          - houseNumber
+          - postalCode
+          - addressLines
+          - additionalData
+      gen:
+        required: false
+        default: 9
+        displayName: gen
+        description: |
+          The gen parameter enables or disables backward incompatible behavior in the API. Please see details and the generation history in chapter [Different Generations of the Same API](https://developer.here.com/documentation/geocoder/topics/backwards-compatibility.html#backwards-compatibility__api-different-generations).
+
+          The latest generation is always recommended.
+
+
+          This is currently gen=9.
+        type: integer
+        format: int32
+      jsonattributes:
+        required: false
+        default: 0
+        displayName: jsonattributes
+        description: |
+          If set to 1, the first character of each JSON response attribute name is set to lower case.
+
+
+          Default value is 0.
+        type: integer
+        format: int32
+        enum:
+        - 0
+        - 1
+      jsoncallback:
+        required: false
+        displayName: jsoncallback
+        description: Specifies the name of a user-defined function used to wrap the JSON response.
+        type: string
+      language:
+        required: false
+        displayName: language
+        description: The preferred language of address elements in the result. Without a preferred language, the Geocoder will return results in an official country language or in a regional primary language so that local people will understand. Language code must be provided according to RFC 4647 standard. Note that the plural form of the parameter (languages) is supported as well. But only the last specified language in the list is used. All preceding language preferences are ignored at this time.
+        type: string
+      level:
+        required: false
+        displayName: level
+        description: Target match level of the search result. One of [*country*, *state*, *county*, *city*, *district*, *postalCode*]. Only valid in combination with gen=2 or higher.
+        type: string
+        enum:
+        - country
+        - state
+        - county
+        - city
+        - district
+        - postalCode
+      locationattributes:
+        required: false
+        displayName: locationattributes
+        description: "A comma-separated list whose elements are present in the response data.\n\n**Enumeration** [address, mapReference, mapView, addressDetails, streetDetails, additionalData, adminIds, linkInfo, adminInfo, timeZone, addressNamesBilingual, related.nearByAddress] \n\n**Abbreviated forms:** [ar, mr, mv, dt, sd, ad, ai, li, in, tz, nb, rn] \n\nThe *adminIds* switch is available with forward geocoding only.\n\nIn reverse geocoding results, *adminIds* are always present unless turned off through *locationattributes=none*. *locationattributes=-adminIds* has no effect on reverse geocoding results.\n\nThe *related.nearByAddress* switch is available with the trackPosition mode of reverse geocoding only.\n\nDefault in reverse geocoding response: address, mapView, additionalData, mapReference, adminIds.\n\nDefault in forward geocoding response: address, mapView, additionalData.\n\nWith *mapReference* link PVID, side of street, and admin area PVIDs are present in the response data. With *adminIds*, only admin area PVIDs are present.\n\n**Note:** The value names are case-sensitive."
+        type: array
+        items:
+          type: string
+          enum:
+          - address
+          - mapReference
+          - mapView
+          - addressDetails
+          - streetDetails
+          - additionalData
+          - adminIds
+          - linkInfo
+          - adminInfo
+          - timeZone
+          - addressNamesBilingual
+          - related.nearByAddress
+      maxresults:
+        required: false
+        displayName: maxresults
+        description: |
+          Defines the maximum number of items in the response structure, limiting the number of results included in each response page. When more results than the defined maximum are available, then these are returned on additional, separate pages. Each response structure (page) contains a handle to the next page. **For example**, maxresults=5 produces a maximum of 5 results per response page. If there are eight results in total, the first page contains five results and indicates that there is a second page with further results.
+
+              "metaInfo: {
+              timestamp: 2012-05-10T15:10:06.227+0000
+              nextPageInformation: 2
+              }"
+        type: integer
+        format: int32
+      minresults:
+        required: false
+        default: 0
+        displayName: minresults
+        description: Indicates that the service is to ignore the specified radius until *minResults* results are found. The default is 0. Currently only supported for Reverse Geocode *mode=retrieveAreas*.
+        type: integer
+        format: int32
+      pageinformation:
+        required: false
+        displayName: pageinformation
+        description: "A key which identifies the page to be returned when the response is separated into multiple pages. Only relevant, if *maxresults* has been specified in a the original request and the request response indicates that there is a further page. \n\n**Example**: \n\n\n    \"metaInfo: {\n    timestamp: 2012-05-10T15:10:06.227+0000\n    nextPageInformation: 2\n    }\""
+        type: string
+      politicalview:
+        required: false
+        displayName: politicalview
+        description: "Specify the political view. Available territories will be seen through the point of view of this country. If this parameter is not specified the neutral international view is made available, where territories may have unresolved claims.\n\n**Currently Supported Disputes**\n\n  * ARE: Abu Musa Island, Tunb Islands\n  * ARG: Argentina\n  * EGY: Halaib Triangle\n  * GRC: Northern Cyprus\n  * IND: India\n  * ISR: Israel view on East Jerusalem\n  * KEN: Ilemi Triangle\n  * MAR: Western Sahara\n  * PAK: Pakistan\n  * RUS: Crimea, Kuril Islands (Shikotan, Iturup, Habomai, and Kunashir)\n  * TUR: Northern Cyprus, Southern Cyprus, Kosovo\n  * VNM: Vietnam\n\n\nFor a complete list of supported views please see the appendix [Political View](https://developer.here.com/documentation/geocoder/topics/political-views.html#political-views). \n\n\nFor any political view that is unsupported the Geocoder, falls back to the default view. \n\n\n**Example** *politicalview=USA* or *politicalview=FRA* does not impact a response in any way."
+        type: string
+        enum:
+        - ARE
+        - ARG
+        - EGY
+        - GRC
+        - IND
+        - ISR
+        - KEN
+        - MAR
+        - PAK
+        - RUS
+        - TUR
+        - VNM
+      responseattributes:
+        required: false
+        displayName: responseattributes
+        description: |
+          A comma-separated list whose elements are present in the response data.
+
+
+          **Enumeration** [performedSearch, matchQuality, matchType, matchCode, parsedRequest]
+
+
+          **Abbreviated forms:** [ps, mq, mt, mc, pr]
+
+
+          Default in response: matchQuality, matchType
+
+
+          **Note:** The value names are case-sensitive.
+        type: array
+        items:
+          type: string
+          enum:
+          - performedSearch
+          - matchQuality
+          - matchType
+          - matchCode
+          - parsedRequest
+      sortby:
+        required: false
+        default: distance
+        displayName: sortby
+        description: |
+          Sort results by distance (default), population count, or size (approximate area size). One of [distance, population, size].
+
+
+          Currently only supported for Reverse Geocode *mode=retrieveAreas*. If population count is not available for an entity the service falls back to sort by area size.
+        type: string
+        enum:
+        - distance
+        - population
+        - size
+      strictlanguagemode:
+        required: false
+        displayName: strictlanguagemode
+        description: |
+          * *True* - if the value is available in the first language specified in the *language* parameter the attribute value is set directly in *Address*, *Place*, *Location*, and *Category* elements. Values in alternative languages are returned in the *AlternativeValues* element.
+
+
+          * *False* - the best available attribute value based on the language priorities given in *language* parameter is returned directly in *Address*, *Place*, *Location*, and *Category* elements. No alternatives are returned.
+        type: string
+        enum:
+        - "'true'"
+        - "'false'"
+      additionaldata:
+        required: false
+        displayName: additionaldata
+        description: "Key-value pairs that provide additional input to requests. See [Additional Data Parameter](https://developer.here.com/documentation/geocoder/topics/resource-params-additional.html) for a full list.\n\nKey and value are separated using a ,. Multiple key-value pairs are separated using a ;: \n\n      additionaldata=<Key1>,<Value1>;<Key2>,<Value2>;...\n\n**Example:**\n\n      additionaldata=PreserveUnitDesignators,true;\n      IncludeZipAddon,true"
+        type: string
+    responses:
+      200:
+        description: Ok
+        headers:
+          cache-control:
+            displayName: cache-control
+            type: string
+          content-type:
+            displayName: content-type
+            type: string
+        body:
+          application/json:
+            displayName: response
+            description: Ok
+            type: MultiSearchResponseType
+      400:
+        description: Application Error. Invalid input data.
+        body:
+          application/json:
+            description: Application Error. Invalid input data.
+            type: ReversegeocodeByFormat_GETException
+      401:
+        description: Permission Error. Invalid Credentials.
+        body:
+          application/json:
+            description: Permission Error. Invalid Credentials.
+            type: ReversegeocodeByFormat_GETException1

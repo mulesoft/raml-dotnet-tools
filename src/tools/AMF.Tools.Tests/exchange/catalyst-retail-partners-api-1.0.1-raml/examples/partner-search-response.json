@@ -1,0 +1,17 @@
+{
+  "searchCriteria": {
+    "name": "Best"
+  },
+  "results": [
+    {
+      "partnerId": "2d9df8be-a185-4dde-9577-d6edf6cdb398",
+      "name": "Best Amazing Store",
+      "description": "",
+      "email": "info@luckystore.example.com",
+      "phone": "+1-202-555-0119",
+      "url": "www.luckystore.example.com",
+      "shippingPrice": 5.5,
+      "rating": 4
+    }
+  ]
+}

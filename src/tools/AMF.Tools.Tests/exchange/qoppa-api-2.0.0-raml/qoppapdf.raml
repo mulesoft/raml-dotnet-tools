@@ -1,0 +1,1225 @@
+#%RAML 1.0
+title: "Qoppa PDF Processing REST API"
+version: "1.0"
+protocols:
+- "HTTP"
+baseUri: "http://www.baseuri.com"
+mediaType:
+- "*/*"
+types:
+  WidgetModel:
+    type: "object"
+    properties:
+      rectangle:
+        type: "RectangleModel"
+      pageIndex:
+        type: "integer"
+        format: "int32"
+  ImageHandlerModel:
+    type: "object"
+    properties:
+      compression:
+        type: "integer"
+        format: "int32"
+      colorSpace:
+        type: "integer"
+        format: "int32"
+      dpi:
+        type: "integer"
+        format: "int32"
+      jpegQuality:
+        type: "number"
+        format: "float"
+  RectangleModel:
+    type: "object"
+    properties:
+      x:
+        type: "number"
+        format: "double"
+      y:
+        type: "number"
+        format: "double"
+      width:
+        type: "number"
+        format: "double"
+      height:
+        type: "number"
+        format: "double"
+  StreamingOutput:
+    type: "object"
+  LinkModel:
+    type: "object"
+    properties:
+      REF_FILE:
+        type: "string"
+      REF_FOLDER:
+        type: "string"
+      REF_ANNOTATIONS:
+        type: "string"
+      REF_FIELDS:
+        type: "string"
+      REF_PAGES:
+        type: "string"
+      REF_PAGE:
+        type: "string"
+      REF_PASSWORD_PERMISSIONS:
+        type: "string"
+      REF_ALL_PERMISSIONS:
+        type: "string"
+      REF_SIGNATURE_FIELDS:
+        type: "string"
+      REF_CONTENT:
+        type: "string"
+      REF_TEXT:
+        type: "string"
+      rel:
+        type: "string"
+      href:
+        type: "string"
+  DocumentModel:
+    type: "FileModel"
+  FileModel:
+    type: "object"
+    properties:
+      path:
+        type: "string"
+      link:
+        type: "LinkModel"
+  FieldsModel:
+    type: "object"
+    properties:
+      fields:
+        type: "array"
+        items:
+          type: "FieldModel"
+      link:
+        type: "LinkModel"
+      content:
+        type: "LinkModel"
+  DigitalIDModel:
+    type: "object"
+    properties:
+      keystorePassword:
+        type: "string"
+      keyAlias:
+        type: "string"
+      keyPassword:
+        type: "string"
+      signReason:
+        type: "string"
+      signLocation:
+        type: "string"
+      signContactInformation:
+        type: "string"
+      certifyingSignature:
+        type: "boolean"
+      certifyingPermissions:
+        type: "integer"
+        format: "int32"
+      format:
+        type: "integer"
+        format: "int32"
+  PagesModel:
+    type: "object"
+    properties:
+      pageCount:
+        type: "integer"
+        format: "int32"
+      pages:
+        type: "array"
+        items:
+          type: "PageModel"
+      link:
+        type: "LinkModel"
+      content:
+        type: "LinkModel"
+      text:
+        type: "LinkModel"
+  PageModel:
+    type: "object"
+    properties:
+      width:
+        type: "number"
+        format: "double"
+      height:
+        type: "number"
+        format: "double"
+      index:
+        type: "integer"
+        format: "int32"
+      annotationCount:
+        type: "integer"
+        format: "int32"
+      link:
+        type: "LinkModel"
+  FieldModel:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      type:
+        type: "string"
+      userName:
+        type: "string"
+      widgetCount:
+        type: "integer"
+        format: "int32"
+      widget:
+        type: "array"
+        items:
+          type: "WidgetModel"
+  PageActionModel:
+    type: "object"
+  SignatureFieldModel:
+    type: "FieldModel"
+  JobStateModel:
+    type: "object"
+    properties:
+      jobStateXML:
+        type: "string"
+  OptimizeProfileModel:
+    type: "object"
+    properties:
+      profileName:
+        type: "string"
+      clearSignature:
+        type: "boolean"
+      discardAltImages:
+        type: "boolean"
+      discardAnnotations:
+        type: "boolean"
+      discardBookmarks:
+        type: "boolean"
+      discardDocumentInfo:
+        type: "boolean"
+      discardFileAttachments:
+        type: "boolean"
+      discardFormFields:
+        type: "boolean"
+      discardJSActions:
+        type: "boolean"
+      discardLinks:
+        type: "boolean"
+      discardPageThumbnails:
+        type: "boolean"
+      discardUnusedResources:
+        type: "boolean"
+      discardXMPMetadata:
+        type: "boolean"
+      flateUncompressedStreams:
+        type: "boolean"
+      flattenAnnotations:
+        type: "boolean"
+      flattenFormFields:
+        type: "boolean"
+      linearize:
+        type: "boolean"
+      mergeDuplicateFonts:
+        type: "boolean"
+      mergeDuplicateImages:
+        type: "boolean"
+      compressObjectsIntoStreams:
+        type: "boolean"
+      colorImageHandler:
+        type: "ImageHandlerModel"
+      grayImageHandler:
+        type: "ImageHandlerModel"
+      bwImageHandler:
+        type: "ImageHandlerModel"
+  void:
+    type: "object"
+  ChoiceModel:
+    type: "object"
+    properties:
+      position:
+        type: "integer"
+        format: "int32"
+      save:
+        type: "string"
+      text:
+        type: "string"
+  AnnotationsModel:
+    type: "object"
+    properties:
+      annotations:
+        type: "array"
+        items:
+          type: "AnnotationModel"
+      link:
+        type: "LinkModel"
+      content:
+        type: "LinkModel"
+  Response:
+    type: "object"
+  OptimizeProfilesModel:
+    type: "object"
+    properties:
+      optimizeProfiles:
+        type: "array"
+        items:
+          type: "OptimizeProfileModel"
+  ChoiceListModel:
+    type: "object"
+    properties:
+      choiceList:
+        type: "array"
+        items:
+          type: "ChoiceModel"
+  SignatureFieldsModel:
+    type: "object"
+    properties:
+      signatureFields:
+        type: "array"
+        items:
+          type: "SignatureFieldModel"
+  PreflightResultRecordModel:
+    type: "object"
+    properties:
+      rectangle:
+        type: "RectangleModel"
+      detail:
+        type: "string"
+      header:
+        type: "string"
+      pageNumber:
+        type: "integer"
+        format: "int32"
+  DocumentOverviewModel:
+    type: "object"
+    properties:
+      author:
+        type: "string"
+      creationDate:
+        type: "date-only"
+      creator:
+        type: "string"
+      modDate:
+        type: "date-only"
+      pageCount:
+        type: "integer"
+        format: "int32"
+      producer:
+        type: "string"
+      subject:
+        type: "string"
+      title:
+        type: "string"
+  AnnotationModel:
+    type: "object"
+    properties:
+      contents:
+        type: "string"
+      creator:
+        type: "string"
+      modifiedDate:
+        type: "date-only"
+      subject:
+        type: "string"
+      rectangle:
+        type: "RectangleModel"
+  PreflightInformationModel:
+    type: "object"
+    properties:
+      profile:
+        type: "string"
+      pasVersion:
+        type: "string"
+      date:
+        type: "date-only"
+      duration:
+        type: "integer"
+        format: "int64"
+  PDFPermissionsModel:
+    type: "object"
+    properties:
+      passwordPermissions:
+        type: "PermissionsModel"
+      docMDPPermissions:
+        type: "PermissionsModel"
+      usageRightsPermissions:
+        type: "PermissionsModel"
+      signaturePermissions:
+        type: "PermissionsModel"
+  PreflightResultsModel:
+    type: "object"
+    properties:
+      resultRecords:
+        type: "array"
+        items:
+          type: "PreflightResultRecordModel"
+      preflightInfo:
+        type: "PreflightInformationModel"
+      documentInfo:
+        type: "DocumentOverviewModel"
+  JobStatesModel:
+    type: "object"
+    properties:
+      jobStates:
+        type: "array"
+        items:
+          type: "JobStateModel"
+  PermissionsModel:
+    type: "object"
+    properties:
+      assembleDocumentAllowed:
+        type: "boolean"
+      changeDocumentAllowed:
+        type: "boolean"
+      extractTextAllowed:
+        type: "boolean"
+      extractTextForAccessibilityAllowed:
+        type: "boolean"
+      fillFormFieldsAllowed:
+        type: "boolean"
+      modifyAnnotationsAllowed:
+        type: "boolean"
+      printAllowed:
+        type: "boolean"
+      printHighResolutionAllowed:
+        type: "boolean"
+  FolderModel:
+    type: "FileModel"
+/pdfmarkup/v1/documents/{filePath}.pdf:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get document (pdfmarkup)"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "DocumentModel"
+          application/xml:
+            type: "DocumentModel"
+/pdfmarkup/v1/documents/{filePath}.pdf/pages/{pageIndex}/prepareForPrint:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    pageIndex:
+      type: "string"
+      required: false
+  post:
+    displayName: "Prepare page for print (pdfmarkup)"
+    body:
+      application/vnd.adobe.xfdf:
+        type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+/pdfmarkup/v1/documents/{filePath}.pdf/annotations/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get annotation content (pdfmarkup)"
+    responses:
+      200:
+        body:
+          application/vnd.adobe.xfdf:
+            type: "Response"
+/pdfmarkup/v1/documents/{filePath}.pdf/annotations/delete:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Delete annotations (pdfmarkup)"
+    body:
+      application/vnd.adobe.xfdf:
+        type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "AnnotationsModel"
+          application/xml:
+            type: "AnnotationsModel"
+/pdfmarkup/v1/documents/{filePath}.pdf/prepareForPrint:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Prepare document for print (pdfmarkup)"
+    body:
+      application/vnd.adobe.xfdf:
+        type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+/pdfmarkup/v1/documents/{filePath}.pdf/pages/{pageIndex}/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    pageIndex:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get page content (pdfmarkup)"
+    queryParameters:
+      print:
+        type: "boolean"
+        default: false
+        required: false
+    responses:
+      200:
+        body:
+          image/svg+xml:
+            type: "Response"
+/pdfmarkup/v1/documents/{filePath}.pdf/fields/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Post field content (pdfmarkup)"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "void"
+          application/xml:
+            type: "void"
+  get:
+    displayName: "Get field content (pdfmarkup)"
+    responses:
+      200:
+        body:
+          application/xml:
+            type: "Response"
+/pdfmarkup/v1/documents/{filePath}.pdf/pages/order:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Post page order (pdfmarkup)"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+/pdfmarkup/v1/documents/{filePath}.pdf/annotations:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Post annotations (pdfmarkup)"
+    body:
+      application/vnd.adobe.xfdf:
+        type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "AnnotationsModel"
+          application/xml:
+            type: "AnnotationsModel"
+/pdfmarkup/v1/documents/{filePath}.pdf/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get document content (pdfmarkup)"
+    queryParameters:
+      attachment:
+        type: "boolean"
+        default: false
+        required: false
+    headers:
+      accept:
+        type: "string"
+    responses:
+      200:
+        body:
+          application/pdf:
+            type: "Response"
+          image/svg+xml:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Perform a document action"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+  get:
+    displayName: "Get document"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "DocumentModel"
+          application/xml:
+            type: "DocumentModel"
+  delete:
+    displayName: "Delete document"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+  put:
+    displayName: "Upload document"
+    queryParameters:
+      dpi:
+        type: "integer"
+        format: "int32"
+        default: 72
+        required: false
+    headers:
+      Content-Type:
+        type: "string"
+        default: "application/pdf"
+        required: false
+    body:
+      application/pdf:
+        type: "file"
+      image/gif:
+        type: "file"
+      image/jpeg:
+        type: "file"
+      image/png:
+        type: "file"
+      image/tiff:
+        type: "file"
+      text/plain:
+        type: "file"
+      application/msword:
+        type: "file"
+      application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+        type: "file"
+      application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+        type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get document content"
+    queryParameters:
+      dpi:
+        type: "integer"
+        format: "int32"
+        default: 72
+        required: false
+      attachment:
+        type: "boolean"
+        default: false
+        required: false
+    headers:
+      accept:
+        type: "string"
+        default: "application/pdf"
+        required: false
+    responses:
+      200:
+        body:
+          application/pdf:
+            type: "Response"
+          text/html:
+            type: "Response"
+          image/tiff:
+            type: "Response"
+          image/svg+xml:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/annotations:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Post annotations"
+    headers:
+      content-type:
+        type: "string"
+        default: "application/vnd.adobe.xfdf"
+        required: false
+    body:
+      application/vnd.fdf:
+        type: "file"
+      application/vnd.adobe.xfdf:
+        type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "AnnotationsModel"
+          application/xml:
+            type: "AnnotationsModel"
+  get:
+    displayName: "Get annotations"
+    queryParameters:
+      pageIndex:
+        type: "integer"
+        format: "int32"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "AnnotationsModel"
+          application/xml:
+            type: "AnnotationsModel"
+/qoppapdf/v1/documents/{filePath}.pdf/annotations/annotations:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  delete:
+    displayName: "Delete annotations"
+    queryParameters:
+      pageIndex:
+        type: "integer"
+        format: "int32"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "AnnotationsModel"
+          application/xml:
+            type: "AnnotationsModel"
+/qoppapdf/v1/documents/{filePath}.pdf/annotations/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get annotation content"
+    queryParameters:
+      attachment:
+        type: "boolean"
+        default: false
+        required: false
+    headers:
+      accept:
+        type: "string"
+        default: "application/vnd.adobe.xfdf"
+        required: false
+    responses:
+      200:
+        body:
+          application/vnd.fdf:
+            type: "Response"
+          application/vnd.adobe.xfdf:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/fields:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Post fields"
+    headers:
+      content-type:
+        type: "string"
+        default: "application/vnd.adobe.xfdf"
+        required: false
+    body:
+      application/vnd.fdf:
+        type: "file"
+      application/vnd.adobe.xfdf:
+        type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "FieldsModel"
+          application/xml:
+            type: "FieldsModel"
+  get:
+    displayName: "Get fields"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "FieldsModel"
+          application/xml:
+            type: "FieldsModel"
+  delete:
+    displayName: "Delete fields"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "FieldsModel"
+          application/xml:
+            type: "FieldsModel"
+/qoppapdf/v1/documents/{filePath}.pdf/fields/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get field content"
+    queryParameters:
+      exportEmptyFields:
+        type: "boolean"
+        default: false
+        required: false
+      attachment:
+        type: "boolean"
+        default: false
+        required: false
+    headers:
+      accept:
+        type: "string"
+        default: "application/vnd.adobe.xfdf"
+        required: false
+    responses:
+      200:
+        body:
+          application/vnd.fdf:
+            type: "Response"
+          application/vnd.adobe.xfdf:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/fields/signature-fields:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get signature fields"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "SignatureFieldsModel"
+          application/xml:
+            type: "SignatureFieldsModel"
+  delete:
+    displayName: "Clear signature fields"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "SignatureFieldsModel"
+          application/xml:
+            type: "SignatureFieldsModel"
+/qoppapdf/v1/documents/{filePath}.pdf/fields/signature-fields/{fieldName}/default-signature:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    fieldName:
+      type: "string"
+      required: false
+  post:
+    displayName: "Sign with default signature"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "SignatureFieldModel"
+          application/xml:
+            type: "SignatureFieldModel"
+/qoppapdf/v1/documents/{filePath}.pdf/fields/signature-fields/{fieldName}/signature:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    fieldName:
+      type: "string"
+      required: false
+  post:
+    displayName: "Sign"
+    body:
+      multipart/form-data:
+        type: "object"
+        properties:
+          file:
+            type: "file"
+          digitalID:
+            type: "DigitalIDModel"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "SignatureFieldModel"
+          application/xml:
+            type: "SignatureFieldModel"
+/qoppapdf/v1/documents/{filePath}.pdf/fields/signature-fields/{fieldName}:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    fieldName:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get signature field"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "SignatureFieldModel"
+          application/xml:
+            type: "SignatureFieldModel"
+  delete:
+    displayName: "Clear signature field"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "SignatureFieldModel"
+          application/xml:
+            type: "SignatureFieldModel"
+  put:
+    displayName: "Create signature field"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/pages:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Perform a page action"
+    body:
+      multipart/form-data:
+        type: "object"
+        properties:
+          pageAction:
+            type: "PageActionModel"
+          file:
+            type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PagesModel"
+          application/xml:
+            type: "PagesModel"
+  get:
+    displayName: "Get pages"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PagesModel"
+          application/xml:
+            type: "PagesModel"
+/qoppapdf/v1/documents/{filePath}.pdf/pages/{pageIndex}/content:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    pageIndex:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get page content"
+    queryParameters:
+      dpi:
+        type: "integer"
+        format: "int32"
+        default: 72
+        required: false
+      quality:
+        type: "number"
+        format: "float"
+        default: 0.8
+        required: false
+      attachment:
+        type: "boolean"
+        default: false
+        required: false
+    headers:
+      accept:
+        type: "string"
+    responses:
+      200:
+        body:
+          image/gif:
+            type: "Response"
+          image/jpeg:
+            type: "Response"
+          image/png:
+            type: "Response"
+          image/tiff:
+            type: "Response"
+          image/svg+xml:
+            type: "Response"
+          application/pdf:
+            type: "Response"
+          text/html:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/pages/{pageIndex}/text:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    pageIndex:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get page text"
+    responses:
+      200:
+        body:
+          text/plain:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/pages/text:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get text of all pages"
+    responses:
+      200:
+        body:
+          text/plain:
+            type: "Response"
+/qoppapdf/v1/documents/{filePath}.pdf/pages/{pageIndex}:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+    pageIndex:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get page"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PageModel"
+          application/xml:
+            type: "PageModel"
+  delete:
+    displayName: "Delete page"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PagesModel"
+          application/xml:
+            type: "PagesModel"
+/qoppapdf/v1/documents/{filePath}.pdf/permissions:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get document permissions"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PDFPermissionsModel"
+          application/xml:
+            type: "PDFPermissionsModel"
+/qoppapdf/v1/documents/{filePath}.pdf/permissions/usage-rights:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  delete:
+    displayName: "Clear usage rights"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PDFPermissionsModel"
+          application/xml:
+            type: "PDFPermissionsModel"
+/qoppapdf/v1/documents/{filePath}.pdf/permissions/password-permissions:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get password permissions"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PermissionsModel"
+          application/xml:
+            type: "PermissionsModel"
+  delete:
+    displayName: "Clear password permissions"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PermissionsModel"
+          application/xml:
+            type: "PermissionsModel"
+  put:
+    displayName: "Set password permissions"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PermissionsModel"
+          application/xml:
+            type: "PermissionsModel"
+/qoppapdf/v1/documents/{filePath}.pdf/preflight-results:
+  uriParameters:
+    filePath:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get preflight results"
+    queryParameters:
+      profile:
+        type: "string"
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: "PreflightResultsModel"
+          application/xml:
+            type: "PreflightResultsModel"
+/qoppapdf/v1/documents/{folderPath}:
+  uriParameters:
+    folderPath:
+      type: "string"
+      required: false
+  post:
+    displayName: "Upload document to folder"
+    queryParameters:
+      namingMode:
+        type: "integer"
+        format: "int32"
+        default: 2
+        required: false
+      dpi:
+        type: "integer"
+        format: "int32"
+        default: 72
+        required: false
+    body:
+      multipart/form-data:
+        type: "object"
+        properties:
+          file:
+            type: "file"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+  get:
+    displayName: "Get folder"
+    queryParameters:
+      details:
+        type: "boolean"
+        default: false
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: "FolderModel"
+          application/xml:
+            type: "FolderModel"
+  delete:
+    displayName: "Delete folder"
+    queryParameters:
+      recursive:
+        type: "boolean"
+        default: false
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+  put:
+    displayName: "Create folder"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+/qoppapdf/v1/optimize-profiles:
+  get:
+    displayName: "Get optimize profiles"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "OptimizeProfilesModel"
+          application/xml:
+            type: "OptimizeProfilesModel"
+/qoppapdf/v1/optimize-profiles/{profileName}:
+  uriParameters:
+    profileName:
+      type: "string"
+      required: false
+  get:
+    displayName: "Get optimize profile"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "OptimizeProfileModel"
+          application/xml:
+            type: "OptimizeProfileModel"
+  delete:
+    displayName: "Delete optimize profile"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"
+  put:
+    displayName: "Create optimize profile"
+    responses:
+      200:
+        body:
+          application/json:
+            type: "Response"
+          application/xml:
+            type: "Response"

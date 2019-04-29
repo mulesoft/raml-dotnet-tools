@@ -1,0 +1,75 @@
+#%RAML 1.0
+title: DevRel-Quick Start Products API
+version: v1.0
+baseUri: http://quick-start-store.us-w1.cloudhub.io/api
+
+securitySchemes:
+  basic:
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+          
+securedBy: [basic]
+
+types:
+  product:
+    properties:
+      identifier?: string
+      identifiers: IdentifierMap
+      brand: string
+      model: string
+      rating: number
+      description?: string
+      pictures: string[]
+      price: price
+  
+  price:
+    properties:
+      amount: amount
+      salesUnit: salesUnit
+      
+  amount:
+    properties:
+      currency: string
+      currencyValue: number
+      name : string
+  
+  salesUnit:
+    properties:
+      code: string
+      name: string
+  
+  Identifier:
+    type: string
+    pattern: ^[0-9A-Za-z-]+
+    minLength: 3
+    maxLength: 36
+
+  IdentifierMap:
+    type: array
+    items:
+      type: object
+      properties:
+        /[0-9A-Z-]+/:
+          type: Identifier
+
+/products:
+  /{productId}:
+      uriParameters:
+        productId: string
+      get:
+        responses: 
+          200:
+            body:
+              application/json:
+                type: product
+                examples: !include exchange_modules/org.mule.examples/devrel-quick_start_product_example/1.0.1/devrel-quick_start_product_example.raml
+          404:
+            body: 
+              application/json:
+                properties:
+                  message: string
+                example: |
+                  {
+                    "message" : "Product not found"
+                  }

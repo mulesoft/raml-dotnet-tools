@@ -1,0 +1,40 @@
+[
+  {
+    "id": "e14298e8-86eb-11e6-ae22-56b6b6499611",
+    "label": "Checking account",
+    "number": "31926819",
+    "currency": "EUR",
+    "type": "checking",
+    "owners": [
+      {
+        "user_id": "af990662-cd5b-4113-a21e-d829892e3be7",
+        "ssn": "123-45-6789",
+        "display_name": "Jane Thompson"
+      }
+    ],
+    "IBAN": "GB29NWBK60161331926819",
+    "overdraft": false,
+    "bank_id": "Anypoint bank",
+    "created_at": "2016-02-28T16:41:41.090Z",
+    "updated_at": "2016-02-28T16:41:41.090Z"
+  },
+  {
+    "id": "84fdeea7-af77-4036-8697-934ee67163ee",
+    "label": "Savings account",
+    "number": "31948585",
+    "currency": "EUR",
+    "type": "savings",
+    "owners": [
+      {
+        "user_id": "af990662-cd5b-4113-a21e-d829892e3be7",
+        "ssn": "123-45-6789",
+        "display_name": "Jane Thompson"
+      }
+    ],
+    "IBAN": "GB29NWBK60161331948585",
+    "overdraft": false,
+    "bank_id": "Anypoint bank",
+    "created_at": "2016-02-22T16:12:00.000Z",
+    "updated_at": "2016-02-22T16:12:00.000Z"
+  }
+]

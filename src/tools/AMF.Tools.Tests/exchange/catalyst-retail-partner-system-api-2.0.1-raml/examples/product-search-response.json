@@ -1,0 +1,39 @@
+{
+  "searchCriteria": {
+    "productId": "7c9be8ad-0791-4362-b195-a53dcca4e1d7",
+    "variantId": "6a3c6342-af6c-402a-9f63-55e76a0de99a",
+    "quantity": 1
+  },
+  "results": [
+    {
+      "quantityInStock": 55,
+      "productPrice": 24.9,
+      "tax": 2.49,
+      "partnerInfo": {
+        "partnerId": "84c95f82-c435-4de0-8964-82e16bd23689",
+        "name": "Shop For You",
+        "description": "",
+        "email": "info@shopforyou.example.com",
+        "phone": "+1-202-555-0146",
+        "url": "www.shopforyou.example.com",
+        "shippingPrice": 7.5,
+        "rating": 4
+      }
+    },
+    {
+      "quantityInStock": 66,
+      "productPrice": 27.9,
+      "tax": 2.79,
+      "partnerInfo": {
+        "partnerId": "c9f1723a-0c23-4c06-952d-69958b2fdcdb",
+        "name": "Lady Marmalade Shop",
+        "description": "",
+        "email": "info@ladymarmalade.example.com",
+        "phone": "+1-202-555-0122",
+        "url": "www.ladymarmalade.example.com",
+        "shippingPrice": 6.99,
+        "rating": 4
+      }
+    }
+  ]
+}

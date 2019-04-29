@@ -1,0 +1,27 @@
+[
+  {
+    "id" : "7f5454e5-be39-47ad-8129-b0ad1e832a9c",
+    "number": "31926819",
+    "balance": {
+      "amount": "7452.05",
+      "currency": "EUR"
+      },
+    "available_balance": {
+      "amount": "7452.05",
+      "currency": "EUR"
+      }
+  },
+  {
+    "id" : "cdd99cbf-4719-4e3a-83d4-6acf4471a2ec",
+    "number": "31948585",
+    "balance": {
+      "amount": "9282.01",
+      "currency": "EUR"
+    },
+    "available_balance": {
+      "amount": "9282.01",
+      "currency": "EUR"
+    }
+  }
+]
+  

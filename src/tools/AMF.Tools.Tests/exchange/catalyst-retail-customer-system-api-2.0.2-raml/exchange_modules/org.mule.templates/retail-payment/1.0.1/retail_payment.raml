@@ -1,0 +1,88 @@
+#%RAML 1.0 Library
+
+usage: |
+  data type definitions for payment processing
+
+types:
+
+  maskedAccountNumber:
+    type: string
+    description: |
+      the last four digits of an account number
+    pattern: |
+      [0-9]{4}
+
+  PaymentMediumType:
+    type: string
+    description: |
+      payment type
+    enum: [
+      PHYSICAL, DIGITAL, VOUCHER, COUPON, CERTIFICATE, DOCUMENT, CARD, ACCOUNT
+    ]
+
+  PaymentIssuerType:
+    type: string
+    description: |
+      issuer type
+    enum: [
+      GOVT, BANK, MANUFACTURER, BRAND, DOCUMENT, INSTITUTION
+    ]
+
+  PaymentMethodType:
+    type: object
+    description: |
+      payment method type
+    properties:
+      medium?: PaymentMediumType | nil
+      issuer?: PaymentIssuerType | nil
+      name?:
+        type: string?
+    examples:
+      cash:
+        medium: PHYSICAL
+        issuer: GOVT
+        name: Cash
+      check:
+        medium: PHYSICAL
+        issuer: BANK
+        name: Check
+      visa:
+        medium: CARD
+        issuer: BANK
+        name: Visa
+      paypal:
+        medium: DIGITAL
+        issuer: INSTITUTION
+        name: PayPal
+
+  PaymentMethod:
+    type: object
+    description: |
+      payment method
+    properties:
+      identifier?: string
+      paymentMethodType:
+        type: PaymentMethodType
+
+  PaymentCard:
+    type: PaymentMethod
+    description: |
+      an abstract data type that is the super type for
+      payment card data types
+    properties:
+      cvv2:
+        type: string
+        pattern: /\d{3}/
+      accountHolderName:
+        type: string
+      expiration:
+        type: object
+        properties:
+          month:
+            type: integer
+            minimum: 1
+            maximum: 12
+          year:
+            type: integer
+            minimum: 2017
+            maximum: 2025

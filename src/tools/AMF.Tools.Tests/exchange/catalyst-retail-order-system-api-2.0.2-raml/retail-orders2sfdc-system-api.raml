@@ -1,0 +1,173 @@
+#%RAML 1.0
+title: Retail Orders System API
+version: v2.0
+# baseUri: http://localhost:8081/api
+
+uses:
+  order: /exchange_modules/org.mule.templates/retail-order-types/1.0.1/retail_order_types.raml
+
+types:   
+  StatusRequest:
+    properties:
+      status: order.Status
+
+  OrderResponse:
+    type: order.OrderSummary
+
+  OrderCollectionResponse:
+    type: order.OrderSummary[]
+
+  MessageResponse: 
+    properties: 
+      message: string
+      identifier?: string  
+
+/orders:
+  /customer/{customerId}:
+    get:
+      displayName: Retrieve customer orders
+      description: Lists the user orders
+      queryParameters:
+        trackingNumber:
+          displayName: Order Tracking Number
+          required: false
+          type: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: OrderCollectionResponse
+              example: !include ./examples/order_collection_get_response.raml
+    post:
+      displayName: Create new order
+      description: Create a new Order.
+      body:
+        application/json:
+          type: OrderResponse
+          example: !include ./examples/order_post_request.raml
+      responses:
+        201:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order was created",
+                  "identifier": "51c0bde6-7e64-11e7-bb31-be2e44b06b34"
+                }
+        400:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order not created"
+                }
+        404:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Customer not found"
+                }        
+  /{orderId}:
+    get:
+      displayName: Retrieve customer order
+      responses:
+        200:
+          body:
+            application/json:
+              type: OrderResponse              
+              example: !include ./examples/order_get_response.raml
+
+        404:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order not found"
+                }
+    put:
+      displayName: Update customer order
+      body:
+        application/json:
+          type: OrderResponse
+          example:  !include ./examples/order_put_request.raml
+      responses:
+        200:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order was updated"
+                }
+        400:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order not updated"
+                }
+        404:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order not found"
+                }                    
+    delete:
+      displayName: Delete customer order
+      responses:
+        200:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order was deleted"
+                }
+        400:
+          body:
+            application/json:
+              type: MessageResponse
+              example: |
+                {
+                  "message": "Order not deleted"
+                }
+    /status:
+      put:
+        displayName: Update order status
+        body:
+          application/json:
+            type: StatusRequest
+            example: !include ./examples/order_status_put_request.raml
+        responses:
+          200:
+            body:
+              application/json:
+                type: MessageResponse
+                example: |
+                  {
+                    "message": "Order status was updated"
+                  }
+          400:
+            body:
+              application/json:
+                type: MessageResponse
+                example: |
+                  {
+                    "message": "Order status not updated"
+                  }
+          404:
+            body:
+              application/json:
+                type: MessageResponse
+                example: |
+                  {
+                    "message": "Order not found"
+                  }

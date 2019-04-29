@@ -1,0 +1,67 @@
+#%RAML 1.0
+title: Retail Salesforce Customer System API
+version: v2.0
+baseUri: https://localhost:8082/api
+
+uses:
+  customer: exchange_modules/org.mule.templates/retail-customer-types/1.0.1/retail_customer_types.raml
+
+types:
+  Contact:
+    type: customer.Customer
+    description: Contact information
+    properties:
+      customerId?: 
+        type: string
+        description: identifier of customer
+      phone?: 
+        type: string
+        description: phone number
+      email?: 
+        type: string
+        description: email address
+
+/customers:
+  post:
+    displayName: Create customer contact
+    description: Create customer contact  
+    body:
+      application/json:
+        type: Contact
+        example: !include examples/post_contact_example.json
+    responses:
+      201:
+        body: 
+          application/json: 
+            example: !include examples/post_contact_response_example.json    
+              
+  /{customerId}:          
+    get:
+      displayName: Retrieve customer contact
+      description: Return customer information by customerId 
+      responses:
+        200: 
+          body:
+            application/json:
+              type: Contact
+              example: !include examples/get_contact_example.json
+    put:
+      displayName: Update customer contact
+      description: Update customer contact by customerId  
+      body:
+        application/json:
+          type: Contact
+          example: !include examples/put_contact_example.json 
+      responses:
+        200:
+          body: 
+              application/json: 
+                example: !include examples/put_contact_response_example.json
+    delete:
+      displayName: Delete customer contact
+      description: Delete customer contact by customerId  
+      responses:
+        200:
+          body: 
+            application/json: 
+              example: !include examples/delete_contact_response_example.json

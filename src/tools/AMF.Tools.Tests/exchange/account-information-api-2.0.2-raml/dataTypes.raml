@@ -1,0 +1,34 @@
+#%RAML 1.0 Library
+
+uses: 
+  account: exchange_modules/org.mule.templates/banking-account/1.0.0/banking_account.raml
+  transaction: exchange_modules/org.mule.templates/banking-transaction/1.0.0/banking_transaction.raml
+
+types:
+
+  AccountBalanceAISP:
+    type: account.AccountBalance
+    description: account balance information
+
+  AccountAISP:
+    type: account.Account
+    description: detailed bank account information
+    properties:
+      currency:
+        type: string
+        description: system of money in general use in a particular country
+        enum: [USD, EUR, CHF, GBP, CZK, PLN, HUF, HRK, BGN, SEK, RON, DKK]
+
+  AccountTransaction:
+    type: transaction.TransactionDetails
+    description: detailed information about transaction
+    properties:
+      id: 
+        type: string
+        description: identifier of transaction 
+      account_id:
+        type: string
+        description: identifier of source account
+      description: 
+        type: string
+        description: description of transaction 

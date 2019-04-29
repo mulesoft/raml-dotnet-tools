@@ -1,0 +1,126 @@
+#%RAML 1.0
+title: Banking AS400 System API
+version: v2.0
+baseUri: http://localhost:8081
+
+uses: 
+  user: exchange_modules/org.mule.templates/banking-user/1.0.0/banking_user.raml
+  transaction: exchange_modules/org.mule.templates/banking-transaction/1.0.0/banking_transaction.raml
+  account: exchange_modules/org.mule.templates/banking-account/1.0.0/banking_account.raml
+
+traits:
+  transactionSearch: !include traits/transactionSearch.raml
+  accountSearch: !include traits/accountSearch.raml
+  userSearch: !include traits/userSearch.raml
+
+/users:
+  description: |
+    Working with users:
+    * Retrieving all users
+  get:
+    displayName: Retrieve all users
+    description: Retrieve all the Users according to the filtering.
+    is: [userSearch]
+    responses:
+        200:
+          body:
+            application/json:
+              type: user.User[]
+              example: !include examples/get_user.raml
+
+  /{id}:
+    description: |
+      Working with users:
+      * Retrieving specific user
+    uriParameters:
+      id:
+        type: string
+        example: "8f19cb50-3f57-4d38-b1ab-b7529d98df6b"
+        description: Bank user ID
+    get:
+      displayName: Retrieve specific user
+      description: Get User by ID
+      responses:
+        200:
+          body:
+            application/json:
+              type: user.User
+              example: !include examples/get_user_id.raml
+
+    /transactions:
+      description: |
+        Working with Transactions
+        * Retrieving all user's transactionx
+      get:
+        displayName: Retrieve all user transactions
+        description: Retrieve all user's transactions according to the filtering.
+        is: [transactionSearch]
+        responses:
+          200:
+            body:
+              application/json:
+                type: transaction.Transaction[]
+                example: !include examples/get_transactions.raml
+    /accounts:
+      description: |
+        Working with Accounts
+        * Retrieving all user's accounts
+      get:
+        displayName: Retrieve all user accounts
+        description: Retrieve all user's accounts according to the filtering.
+        responses:
+          200:
+            body:
+              application/json:
+                type: account.Account[]
+                example: !include examples/get_account.raml
+
+/accounts:
+  description: |
+    Working with Accounts
+    * Retrieving all accounts
+  get:
+    displayName: Retrieve all accounts
+    description: Retrieve all accounts according to the filtering.
+    is: [accountSearch]
+    responses:
+      200:
+        body:
+          application/json:
+            type: account.Account[]
+            example: !include examples/get_account.raml
+
+  /{id}:
+    description: |
+      Working with accounts:
+      * Retrieving specific account
+    uriParameters:
+      id:
+        description: Account ID
+        type: string | integer
+
+    get:
+      displayName: Retrieve specific account
+      description: Get account by id
+      queryParameters:
+      responses:
+        200:
+          body:
+            application/json:
+              type: account.Account
+              example: !include examples/get_account_id.raml
+
+    /transactions:
+      description: |
+        Working with transactions:
+        * Retrieving account's transactions
+      get:
+        displayName: Retrieve all account transactions
+        description: Retrieve all account's transactions according to the filtering.
+        is: [transactionSearch]
+        responses:
+          200:
+            body:
+              application/json:
+                type: transaction.Transaction[]
+                example: !include examples/get_transactions.raml

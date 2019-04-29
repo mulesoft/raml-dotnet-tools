@@ -1,0 +1,47 @@
+#%RAML 1.0 Library
+
+usage: |
+  definitions of data types that describe order fulfillment
+  and delivery options
+
+
+uses:
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+
+types:
+
+  ReceiptType:
+    type: string
+    description: Enumeration type for receipt
+    enum: [
+      PICKUP, SELFSERVE, SHIPMENT
+    ]
+
+  CarrierType:
+    type: string
+    description: Enumeration type for carrier
+    enum: [
+      POSTAL, COMMERCIAL, FREIGHT, NONE
+    ]
+
+  TimeframeType:
+    type: string
+    description: Enumeration type for time frame
+    enum: [
+      HOURS, DAYS, WEEKS
+    ]
+
+  Fulfillment:
+    type: object
+    description: Order fulfillment
+    properties:
+      receipt:
+        type: ReceiptType
+        description: Receipt of order - one of PICKUP, SELFSERVE or SHIPMENT
+      carrier:
+        type: CarrierType
+        displayName: Carrier type of order - one of POSTAL, COMMERCIAL, FREIGHT or NONE
+      deliveryAddress?:
+        type: common.PostalAddress | nil
+        description: Address where the order will be delivered
+

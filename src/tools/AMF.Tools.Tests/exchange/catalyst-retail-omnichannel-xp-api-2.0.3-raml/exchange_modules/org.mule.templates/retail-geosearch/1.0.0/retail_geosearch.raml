@@ -1,0 +1,35 @@
+#%RAML 1.0 Trait
+
+description: Query parameters for geographic search.
+queryParameters: 
+  
+  latitude: 
+    required: false
+    type: number
+    format: double
+    description: |
+      Latitude of a point to search stores from. Must be used with latitude and radius parameters.
+    example: 37.7875925
+
+  longitude: 
+    required: false
+    type: number
+    format: double
+    description: |
+      Longitude of a point to search stores from. Must be used with latitude and radius parameters.
+    example: -122.404736
+
+  radius:
+    type: integer
+    required: false
+    default: 30
+    description: |
+      Distance in miles. Must be used in combination with latitude and longitude parameters. 
+      You can use kilometers by setting 'metric' parameter to true.
+
+  metric:
+    type: boolean
+    required: false
+    default: false
+    description: | 
+      Flag indicating if the response distances to stores should be returned using the metric system. By default, responses return distances in miles.

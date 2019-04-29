@@ -1,0 +1,146 @@
+#%RAML 1.0 Library
+usage: |
+  data types specific to omnichannel api and orders system api
+uses:
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+  product: /exchange_modules/org.mule.templates/retail-product/1.0.0/retail_product.raml
+  fulfillment: /exchange_modules/org.mule.templates/retail-fulfillment/1.0.1/retail_fulfillment.raml
+  
+types:
+
+  SalesOrderItem:
+    type: object
+    description: |
+      an individual component of an order
+    properties:
+      identifier?: common.resourceId
+      quantity:
+        type: common.Quantity
+      location: common.Location
+      item:
+        type: product.ProductVariant
+      itemUnitPrice:
+        type: common.Price
+      itemExtendedPrice?:
+        type: common.MonetaryValue | nil
+
+  SalesOrderItems:
+    type: object
+    description: Collection of sales order items
+    properties:
+      orderItems:
+        type: SalesOrderItem[] 
+
+  SalesOrderHeader:
+    type: object
+    description: Sales order header - info about fulfillment of order
+    properties:
+      customerId: common.resourceId
+      fulfillment?:
+        type: fulfillment.Fulfillment
+
+  SalesOrder:
+    type: SalesOrderHeader
+    description: Collection of sales order items including fulfillment info
+    properties:
+      identifier?: common.resourceId | nil
+      orderItems:
+        type: SalesOrderItem[]
+
+  OrderSummary:
+    properties:
+      identifier? :
+        type: string
+        description: |
+          Identifier of order
+      customerId?:
+        type: string
+        description: |
+          Identifier of customer
+      billingAddress?:
+        type: common.PostalAddress | nil
+        description: |
+          full billing address
+      shippingAddress?:
+        type: common.PostalAddress | nil
+        description: |
+          full address for shipping of products
+      orderItems?:
+        type: OrderItemsSummary
+        description: |
+          Lists of ordered products
+      trackingNumber?:
+        type: string
+        description: Order tracking number
+      status?:
+        type: Status
+        description: |
+          Status of order
+      subtotal?:
+        type: string
+        description: |
+          price for order (without tax and shipping)
+      taxPrice?:
+        type: string
+        description: Product tax
+      shippingPrice?:
+        type: string
+        description: Product shipping price
+      total?:
+        type: string
+        description: |
+          total price for order (with tax and shipping)
+
+
+  OrderItemSummary:
+    type: object
+    description: |
+          Information about ordered product (variant)
+    properties:
+      orderItemId:
+        type: string
+        description: |
+          Identifier of item which represents variantId
+      productId:
+        type: string
+        description: |
+          Identifier of product
+      productName:
+        type: string
+        description: |
+          Name of product
+      location?: 
+        type: common.Location
+        description: product location
+      quantity:
+        type: integer
+        description: |
+          Number of ordered product
+      price:
+        type: string
+        description: |
+          Price of ordered item       
+
+  OrderItemsSummary:
+    type: object
+    description: |
+      Lists of ordered products (variant)
+    properties:
+      pickupItems?:
+        type: OrderItemSummary[]
+        description: |
+            Order Items in stores
+      shipmentItems?:
+        type: OrderItemSummary[]
+        description: |
+            Order Items in warehouses
+      partnersItems?:
+        type: OrderItemSummary[]
+        description: |
+            Order Items in partners shops
+
+  Status:
+    type: string
+    enum: [Draft, Completed, Processing]
+
+  

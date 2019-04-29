@@ -1,0 +1,339 @@
+#%RAML 1.0
+title: HERE Geocoder Autocomplete API
+version: 6.2
+baseUri: https://autocomplete.geocoder.api.here.com/6.2
+baseUriParameters: {}
+protocols:
+- HTTPS
+documentation:
+- title: HERE Geocoder Autocomplete API
+  content: |
+    The HERE Geocoder Autocomplete API is a REST API that allows you to:
+      * Integrate into web applications to help users obtain better results for address searches with fewer keystrokes. Spatial and region filters can be used to return suggestions with greater relevance to end users, such as results that are within a specified country or in the proximity of the current location.
+      * Geocode the address based on the ID and thus obtain the geographic coordinates of the address.
+
+    [Terms of service](https://legal.here.com/en-gb/terms)
+types:
+  Error:
+    displayName: Error
+    type: object
+    properties:
+      code:
+        required: true
+        displayName: code
+        type: string
+      message:
+        required: true
+        displayName: message
+        type: string
+  Response_Structure:
+    example:
+      value:
+       suggestions:
+        - label: Deutschland, Berlin, Berlin, 10117, Berlin, Pariser Platz 1
+          language: de
+          countryCode: DEU
+          locationId: NT_5mGkj3z90Fbj4abzMbUE4C_xA
+          address:
+            country: Deutschland
+            state: Berlin
+            county: Berlin
+            city: Berlin
+            district: Mitte
+            street: Pariser Platz
+            houseNumber: '1'
+            postalCode: '10117'
+          matchLevel: houseNumber
+    displayName: Response_Structure
+    description: 'The Geocoder Autocomplete API response is in JSON format. attributes:'
+    type: object
+    properties:
+      suggestions:
+        required: false
+        displayName: suggestions
+        description: Top-most element holding list of suggestions. The element is absent in case of an error.
+        type: array
+        items:
+          type: Suggestion
+  Address:
+    displayName: Address
+    description: |
+      Structured address block. The address elements support match highlighting. address: { country: "Deutschland", state: "Berlin", county: "Berlin", city: "Berlin", district: "Mitte", street: "Pariser Platz", houseNumber: "1", postalCode: "10117" }
+
+      For addresses from Australia, New Zealand and Canada a unit number can be included in the result if it was part of the query.
+
+      address: { country: "New Zealand", state: "Canterbury", county: "Christchurch City", city: "Christchurch", district: "Edgeware", street: "Allard St", houseNumber: "9", unit: "3", postalCode: "8013" }
+    type: object
+    properties:
+      country:
+        required: false
+        displayName: country
+        type: string
+      state:
+        required: false
+        displayName: state
+        type: string
+      county:
+        required: false
+        displayName: county
+        type: string
+      city:
+        required: false
+        displayName: city
+        type: string
+      district:
+        required: false
+        displayName: district
+        type: string
+      street:
+        required: false
+        displayName: street
+        type: string
+      houseNumber:
+        required: false
+        displayName: houseNumber
+        type: string
+      unit:
+        required: false
+        displayName: unit
+        type: string
+      postalCode:
+        required: false
+        displayName: postalCode
+        type: string
+  Suggestion:
+    displayName: Suggestion
+    type: object
+    properties:
+      label:
+        required: false
+        displayName: label
+        description: Formatted response label including support for match highlights.
+        type: string
+      language:
+        required: false
+        displayName: language
+        description: Language of the match. 2-letter ISO language code.
+        type: string
+      countryCode:
+        required: false
+        displayName: countryCode
+        description: Country of the location. 3-letter ISO country code.
+        type: string
+      locationId:
+        required: false
+        displayName: locationId
+        description: Client applications use the locationId for location lookup.
+        type: string
+      address:
+        required: false
+        displayName: address
+        description: |
+          Structured address block. The address elements support match highlighting. address: { country: "Deutschland", state: "Berlin", county: "Berlin", city: "Berlin", district: "Mitte", street: "Pariser Platz", houseNumber: "1", postalCode: "10117" }
+
+          For addresses from Australia, New Zealand and Canada a unit number can be included in the result if it was part of the query.
+
+          address: { country: "New Zealand", state: "Canterbury", county: "Christchurch City", city: "Christchurch", district: "Edgeware", street: "Allard St", houseNumber: "9", unit: "3", postalCode: "8013" }
+        type: Address
+      distance:
+        required: false
+        displayName: distance
+        description: Distance in meters from the search center. Only available for queries with mapview or prox parameter.
+        type: number
+        format: double
+      matchLevel:
+        required: false
+        displayName: matchLevel
+        description: 'Match precision. One of: houseNumber, intersection, street, postalCode, district, city, county, state, country'
+        type: string
+        enum:
+        - houseNumber
+        - intersection
+        - street
+        - postalCode
+        - district
+        - city
+        - county
+        - state
+        - country
+/suggest.json:
+  get:
+    displayName: RetrievesacompleteaddressandanID
+    description: The Geocoder Autocomplete API is very simple. It supports a small number of request parameters. Among them, only the authorization parameters (app_id, app_code) and query are mandatory.
+    queryParameters:
+      app_id:
+        required: true
+        displayName: app_id
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      app_code:
+        required: true
+        displayName: app_code
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      query:
+        required: true
+        displayName: query
+        description: |
+          The search text which is the basis of the query.
+
+
+          **Example:**
+
+              query=Pariser Pl
+        type: string
+      maxresults:
+        required: false
+        displayName: maxresults
+        description: |
+          The upper limit the for number of suggestions to be included in the response. Default is set to 5.
+
+          Valid range: 1 to 20
+
+          **Example:**
+
+              query=Pariser Pl
+              &maxresults=10
+        type: integer
+        minimum: 1
+        maximum: 20
+        format: int32
+      country:
+        required: false
+        displayName: country
+        description: |
+          A type of Spatial Filter. The spatial filter limits the search for any other attributes in the request. The country parameter limits suggestions to a country or set of countries.
+
+          country=*ISO3 country code*
+
+          Can be combined with the *mapview* or *prox* spatial filters.
+
+
+              query=Rue du Froma
+              &country=FRA
+
+          **Example:**
+
+              query=Rue du Froma
+              &country=FRA,BEL
+        type: string
+      mapview:
+        required: false
+        displayName: mapview
+        description: |
+          A type of Spatial Filter. Sets a focus on a geographic area represented by the top-left and the bottom-right corners of a bounding box so the results within this area are more important than results outside of this area.
+
+              mapview=
+              TopLeft.Latitude,
+              TopLeft.Longitude;
+              BottomRight.Latitude,
+              BottomRight.Longitude
+
+          Can be combined with the *country* spatial filter.
+
+
+          **Example:**
+
+              mapview=41.90852,-87.67629;
+              41.86827,-87.60419
+        type: string
+      prox:
+        required: false
+        displayName: prox
+        description: |
+          A type of Spatial Filter. Sets a focus on a geographic area represented by a single geo-coordinate pair and optionally a radius (in meters) so the results within this area are more important than results outside of this area.
+
+              prox=Latitude,Longitude
+              prox=Latitude,Longitude,Radius
+
+            Can be combined with the country spatial filter.
+
+          **Example:**
+
+              prox=37.86946,-122.26811,10000
+        type: string
+      beginHighlight:
+        required: false
+        displayName: beginHighlight
+        description: |
+          Mark the beginning of the match in a token. This can be any character sequence. Common usage is a HTML tag such as < b > for bold. But it can also be a square bracket, "[".
+
+          **Default:** no marker
+
+              query=Barcelo
+              &beginHighlight=<b>
+              &endHighlight=</b>
+
+          **Result:**
+
+              "label": "Espanya, Catalunya,
+              <b>Barcelo</b>na"
+        type: string
+      endHighlight:
+        required: false
+        displayName: endHighlight
+        description: |
+          Mark the end of the match in a token.
+
+          See [beginHighlight](https://developer.here.com/documentation/geocoder-autocomplete/topics/resource-suggest.html#param-begin-highlight)
+        type: string
+      language:
+        required: false
+        displayName: language
+        description: |
+          The preferred language of address elements in the result.
+
+          The language parameter must be provided as 2-letter ISO language code. The plural form of the parameter (languages) is not supported and ignored. Only one language can be provided. The language setting changes the language of result elements where available in the map data. The language setting has no impact on matching or ranking and it does not express any regional preference.
+
+          The default response language is the language that is most relevant to the query.
+
+              language=it&query=champs elys
+
+          **Result:**
+
+              "label": "Francia, Pariggi, Avenue des Champs-Elysees"
+        type: string
+      resultType:
+        required: false
+        displayName: resultType
+        description: |
+          The *resultType=areas* mode will filter results to return areas. Results with matchLevels of *houseNumber* , *postalCode*, *street* and *intersection* will not be returned.
+
+
+          **Example:**
+
+              resultType=areas&query=High
+        type: string
+        enum:
+        - houseNumber
+        - postalCode
+        - street
+        - intersection
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            displayName: response
+            description: OK
+            type: Response_Structure
+      400:
+        description: Missing *app_id* or *app_code* parameter
+        body:
+          application/json:
+            description: Missing *app_id* or *app_code* parameter
+            type: Error
+      401:
+        description: Validation of *app_id*/*app_code* pair failed. Either *app_code* does not match the *app_id* or the *app_id* is not entitled to use the Geocoder Autocomplete API.
+        body:
+          application/json:
+            description: Validation of *app_id*/*app_code* pair failed. Either *app_code* does not match the *app_id* or the *app_id* is not entitled to use the Geocoder Autocomplete API.
+            type: Error

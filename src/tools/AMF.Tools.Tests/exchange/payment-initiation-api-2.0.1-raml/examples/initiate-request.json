@@ -1,0 +1,31 @@
+{
+  "iss": "https://demo-merchant.example.com",
+  "aud": "https://example-bank.cloudhub.io",  
+  "exp": 1490172650,
+  "client_id": "grOmvYA89jsdhkshdIYhGtpvztofAAjz", 
+  "redirect_uri": "http://demo-merchant.example.com/afterPayment", 
+  "scope": "openid accounts payment", 
+  "iat":  "1462517645809",
+  "claims": {
+      "payment": {
+          "type": "sepa_credit_transfer", 
+          "to": {
+              "account_number": "31926819", 
+              "bank_id": "gk.40.uk",
+              "bic": "NWBKGB2L", 
+              "IBAN": "GB29NWBK60161331926819", 
+              "name": "demo merchant online store" 
+          },
+          "value": {
+              "currency": "EUR", 
+              "amount": "200.00"
+          },
+          "additional": {
+              "subject": "Online Purchase",     
+              "booking_code": "2SFBJ28553",     
+              "booking_date": "1462517645809",  
+              "value_date": "1462517645809"     
+          }              
+      }
+  }
+}

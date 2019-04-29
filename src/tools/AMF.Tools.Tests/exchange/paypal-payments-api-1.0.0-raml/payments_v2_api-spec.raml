@@ -1,0 +1,1632 @@
+#%RAML 1.0
+annotationTypes:
+  serviceName: any
+  publicDocsPath: any
+  oas-info:
+    properties:
+      termsOfService?: string
+      contact?:
+        properties:
+          name?: string
+          url?: string
+          email?: string
+      license?:
+        properties:
+          name?: string
+          url?: string
+    allowedTargets: API
+  oas-tags-definition:
+    allowedTargets: API
+    type: array
+    items:
+      properties:
+        name: string
+        description?: string
+        externalDocs?:
+          properties:
+            url: string
+            description?: string
+  oas-externalDocs:
+    properties:
+      description?: string
+      url: string
+    allowedTargets:
+      - API
+      - Method
+      - TypeDeclaration
+  errors: any
+  requestValidationIssues: any
+  oas-readOnly:
+    type: boolean
+    allowedTargets: TypeDeclaration
+  publicDocsSchemaName: any
+  oas-schema-title:
+    type: string
+    allowedTargets: TypeDeclaration
+  visibility: any
+  enum: any
+  oas-format:
+    type: string
+    allowedTargets: TypeDeclaration
+  oas-responses-default:
+    type: any
+    allowedTargets: Method
+  oas-summary:
+    type: string
+    allowedTargets: Method
+  oas-tags:
+    type: 'string[]'
+    allowedTargets: Method
+  slo: any
+  oas-body-name:
+    type: string
+    allowedTargets: TypeDeclaration
+title: PayPal Payments v2
+description: 'Call the Payments API to authorize payments, capture authorized payments, refund payments that have already been captured, and show payment information. Use the Payments API in conjunction with the <a href="/docs/limited-release/orders/api/">Orders API</a>.'
+version: '2.0'
+(oas-info):
+  (serviceName): paymentapiplatserv
+  (publicDocsPath): payments
+(oas-tags-definition):
+  - name: authorizations
+    description: 'Use the `/authorizations` resource to show details for, capture payment for, reauthorize, and void authorized payments.'
+  - name: captures
+    description: Use the `/captures` resource to show details for and refund a captured payment.
+  - name: refunds
+    description: Use the `/refunds` resource to show refund details.
+mediaType: application/json
+protocols:
+  - HTTPS
+baseUri: 'https://api.paypal.com/v2/payments'
+(oas-externalDocs):
+  url: /docs/limited-release/checkout/v2/
+(errors):
+  - name: ACCOUNT_CLOSED
+    message: Refund failed as payer account is closed.
+    description: Payments cannot be made to an account that is closed. Contact the payer to find alternate method to refund the payment.
+  - name: AUTHORIZATION_ALREADY_CAPTURED
+    message: Authorization has already been captured.
+    description: 'If `final_capture` is set to to `true`, additional captures are not possible against the authorization.'
+  - name: AUTHORIZATION_DENIED
+    message: A denied authorization cannot be captured.
+    description: You cannot capture a denied authorization.
+  - name: AUTHORIZATION_EXPIRED
+    message: The authorization has expired.
+    description: You cannot capture an expired authorization.
+  - name: AUTHORIZATION_VOIDED
+    message: The authorization is voided.
+    description: You cannot capture a voided authorization.
+  - name: CANNOT_BE_NEGATIVE_OR_ZERO
+    message: The value of the field should be greater than zero.
+    description: Specify a different value and try the request again.
+  - name: CAPTURE_FULLY_REFUNDED
+    message: The capture has already been fully refunded.
+    description: You cannot capture additional refunds against this capture.
+  - name: CURRENCY_MISMATCH_REFUND
+    message: Refund must be in the same currency as the capture.
+    description: Verify the currency of the refund and try the request again.
+  - name: DECIMAL_PRECISION_EXCEEDED
+    message: The value of the field should not be more than two decimal places.
+    description: Verify the number of decimals places and try the request again.
+  - name: DECIMALS_NOT_SUPPORTED
+    message: Currency does not support decimals.
+    description: 'For more information, see [Currency Codes](/docs/integration/direct/rest/currency-codes/).'
+  - name: DUPLICATE_INVOICE_ID
+    message: Requested invoice number has been previously captured.
+    description: Payment for this invoice was already captured.
+  - name: EXCEEDED_MAXIMUM_REFUND_ATTEMPTS
+    message: You have exceeded the maximum number of refund attempts for this capture.
+    description: 'To confirm the number of allowed refunds and captures for the merchant account, contact Customer Support.'
+  - name: EXCEEDS_MAX_CAPTURE_AMOUNT
+    message: Capture amount specified exceeded allowable limit.
+    description: 'Specify a different amount and try the request again. Alternately, contact Customer Support to increase your limits.'
+  - name: INTERNAL_SERVER_ERROR
+    message: An internal server error has occurred.
+    description: Try your request again later.
+  - name: INVALID_CURRENCY_CODE
+    message: Currency code should be a three-character ISO-4217 currency code.
+    description: 'For the list of valid currency codes, see [Currency Codes](/docs/integration/direct/rest/currency-codes/).'
+  - name: INVALID_PARAMETER_SYNTAX
+    message: The value of the field does not conform to the expected format.
+    description: Verify the specification for supported `pattern` and try the request again.
+  - name: INVALID_PAYEE_ACCOUNT
+    message: Payee account is invalid.
+    description: Verify the payee account information and try the request again.
+  - name: INVALID_PLATFORM_FEES_AMOUNT
+    message: The `platform_fees` amount cannot be greater than the capture amount.
+    description: Verify the `platform_fees` amount and try the request again.
+  - name: INVALID_RESOURCE_ID
+    message: Specified resource ID does not exist.
+    description: Verify the resource ID and try the request again.
+  - name: INVALID_STRING_LENGTH
+    message: The value of a field is either too short or too long.
+    description: Verify the specification for the supported `min` and `max` values and try the request again.
+  - name: MAX_CAPTURE_EXCEEDED
+    message: Maximum number of allowable captures has been reached.
+    description: You cannot make additional captures.
+  - name: MISSING_REQUIRED_PARAMETER
+    message: A required field or parameter is missing.
+    description: Verify the specification for `required` fields and try the request again.
+  - name: NOT_AUTHORIZED
+    message: You do not have permission to access or perform operations on this resource.
+    description: 'To make API calls on behalf of a merchant, ensure that you have sufficient permissions to proceed with this transaction.'
+  - name: PARTIAL_REFUND_NOT_ALLOWED
+    message: You cannot do a refund for an amount less than the original capture amount.
+    description: 'Specify an amount equal to the capture amount or omit the `amount` object from the request. Then, try the request again.'
+  - name: PAYEE_ACCOUNT_LOCKED_OR_CLOSED
+    message: Payee account locked or closed.
+    description: 'To get more information about the status of the account, call Customer Support.'
+  - name: PAYEE_ACCOUNT_RESTRICTED
+    message: Payee account is restricted.
+    description: 'To get more information about the status of the account, call Customer Support.'
+  - name: PAYER_CANNOT_PAY
+    message: 'The combination of payer and payee settings prevent this payer from paying this payee, or merchant.'
+    description: Verify that the merchant account does not define rules that automatically decline payments from certain types of payers.
+  - name: PENDING_CAPTURE
+    message: Cannot initiate a refund as the capture is pending.
+    description: Capture is typically pending when the payer has funded the transaction by using an e-check or bank account.
+  - name: PERMISSION_DENIED
+    message: You do not have permission to access or perform operations on this resource.
+    description: 'To make API calls on behalf of a merchant, ensure that you have sufficient permissions to proceed with this transaction.'
+  - name: PERMISSION_NOT_GRANTED
+    message: Payee of the authorization has not granted permission to perform capture on the authorization.
+    description: 'To make API calls on behalf of a merchant, ensure that you have sufficient permissions to capture the authorization.'
+  - name: REFUND_AMOUNT_EXCEEDED
+    message: The refund amount must be less than or equal to the capture amount that has not yet been refunded.
+    description: Verify the refund amount and try the request again.
+  - name: REFUND_FAILED_INSUFFICIENT_FUNDS
+    message: Capture could not be refunded due to insufficient funds.
+    description: Verify that either you have sufficient funds in your PayPal account or the bank account that is linked to your PayPal account is verified and has sufficient funds.
+  - name: REFUND_ISSUED
+    message: Refund was already issued for capture.
+    description: You cannot make additional refunds against this capture.
+  - name: REFUND_TIME_LIMIT_EXCEEDED
+    message: You are over the time limit to perform a refund on this capture.
+    description: The refund cannot be issued at this time.
+  - name: TRANSACTION_ALREADY_REFUNDED
+    message: The capture was already refunded.
+    description: You cannot make additional refunds against this capture.
+  - name: TRANSACTION_REFUSED
+    message: PayPal's internal controls prevent authorization from being captured.
+    description: 'For more information about this transaction, contact customer support.'
+  - name: AUTHENTICATION_FAILURE
+    message: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+    description: Account validations failed for the user.
+(requestValidationIssues):
+  - name: AmountDetailsInvalidHere
+    issue: The amount object in this resource type must not include amount details
+    details: Do not provide an amount object in this resource type.
+  - name: AmountNotZero
+    issue: Amount cannot be zero
+    details: Provide an amount that is not zero (0).
+  - name: AmountCannotBeNegative
+    issue: Amount cannot be negative.
+    details: Provide a positive amount.
+  - name: CreditCardNumberNotValidForSpecifiedType
+    issue: The credit card number is not valid for the specified credit card type
+    details: Provide a credit card that matches the credit card type.
+  - name: Cvv2InvalidForCreditCardType
+    issue: The cvv2 length is invalid for the specified credit card type
+    details: Provide a CVV2 length that matches the specified credit card type.
+  - name: Cvv2InvalidForCreditCardType
+    issue: The cvv2 length is invalid for the specified credit card type
+    details: Provide a CVV2 length that matches the specified credit card type.
+  - name: ExternalFundingAmountExceeded
+    issue: External funding currency must match transaction currency
+    details: Specify an external funding currency that matches the transaction currency.
+  - name: ExternalFundingCurrencyMismatch
+    issue: External funding amount cannot exceed transaction amount
+    details: Make sure that the external funding amount does not exceed the transaction amount.
+  - name: ExternalFundingNotAllowed
+    issue: One or more funding types are not supported with external funding
+    details: 'One or more funding types are not supported with external funding. '
+  - name: ExternalFundingNotUnique
+    issue: External funding object should be unique
+    details: Remove any funding objects that are not supported and try the request again.
+  - name: FractionDigitsNotAllowed
+    issue: Fraction digits are not allowed with this currency
+    details: Do not include any fractional digits in the currency value.
+  - name: InvalidAccountNumberType
+    issue: Value is invalid (must be BBAN or IBAN)
+    details: Correct the value for the account number type.
+  - name: InvalidAlphanumeric
+    issue: Must be alphanumeric
+    details: Specify an alphanumeric value.
+  - name: InvalidAlphanumericSpaceHyphen
+    issue: 'Must contain only alphanumeric, space, and hyphen characters'
+    details: 'Ensure all characters in the field, such as the name, are valid.'
+  - name: InvalidAlphaNumPlus
+    issue: 'Must contain only these characters: a-z, A-Z, 0-9, punctuation(.,#-''), and embedded spaces'
+    details: Correct the value.
+  - name: InvalidCurrencyCode
+    issue: Currency code must be 3-character ISO 4217 value (upper case)
+    details: 'Provide a valid [currency code](/integration/direct/rest_api_payment_country_currency_support/) in the request.'
+  - name: InvalidCountryCodeFormat
+    issue: Country code must be 2-character ISO 3166-1 value (upper case)
+    details: 'Provide a valid [country code](/integration/direct/rest_api_payment_country_currency_support/) in the request in the request.'
+  - name: InvalidCreditCardType
+    issue: 'Value is invalid (must be visa, mastercard, amex, or discover)'
+    details: Provide an acceptable card type and resend the request.
+  - name: InvalidDateFormat
+    issue: Must be a valid date string of format YYYY-MM-DD
+    details: Provide a valid date format. Format is 1YYYY-MM-DD1.
+  - name: InvalidDateTime
+    issue: 'The date_time, although formatted properly, does not represent a valid date_time'
+    details: Provide a `date_time` value that is valid.
+  - name: InvalidDateTimeFormat
+    issue: 'Must be a date_time string of form yyyy-mm-ddThh:mm:ss(.sss)?Z'
+    details: Provide a properly formatted `date_time`.
+  - name: InvalidExpireMonthYear
+    issue: Invalid expiration (cannot be in the past)
+    details: Provide an expiration date in the future for the credit card.
+  - name: InvalidFeePayer
+    issue: Value is invalid (must be payer or payee)
+    details: The fee payer must be either `payer` or `payee`.
+  - name: InvalidFieldCreditCardPayment
+    issue: This field invalid when payment_method is 'credit_card'
+    details: Provide the required field for this credit card payment.
+  - name: InvalidFormatCurrencyAmount
+    issue: 'Currency amount must be non-negative number, may optionally contain exactly 2 decimal places separated by ''.'', optional thousands separator '','', limited to 7 digits before the decimal point'
+    details: Provide a valid currency amount.
+  - name: InvalidFormatEmail
+    issue: Email format must be username@domain.com
+    details: Ensure that all email addresses in the request use the proper format.
+  - name: InvalidFormatLabel
+    issue: 'Must start with a letter and contain only letters, hyphens, commas and spaces'
+    details: 'Ensure the format of the field, such as a first or last name, is valid.'
+  - name: InvalidFormatPhone
+    issue: 'Phone number must be in this format: optional leading ''+'' followed by [0-9], spaces, hyphens, periods, and matching parentheses (not nested)'
+    details: Provide a valid phone number.
+  - name: InvalidFormatUrl
+    issue: 'Invalid URL. After ''protocol://'' in the URL, the valid characters allowed are alphanumericals, ''.'', and ''-'' '
+    details: Provide a valid URL in the request.
+  - name: InvalidFormatYear
+    issue: Must be numeric (YYYY)
+    details: Provide the year in a valid format.
+  - name: InvalidIntegerFormat
+    issue: Invalid value
+    details: The value for this field must be a valid integer.
+  - name: InvalidIntegerFormat
+    issue: Invalid value
+    details: The value for this field must be a valid integer.
+  - name: InvalidItemAmountSums
+    issue: Item amount must add up to specified amount subtotal (or total if amount details not specified)
+    details: Ensure that the sum of all item amounts equals the subtotal amount or the total amount if the amount details are not specified.
+  - name: InvalidItemCurrencyCode
+    issue: Item currency code should be same as the transaction currency code
+    details: Make sure that currency code for the item matches the transaction currency code.
+  - name: InvalidLength3to4
+    issue: 'Length is invalid (must be 3 or 4, depending on card type)'
+    details: Provide a valid CVV.
+  - name: InvalidNonNegativeInt
+    issue: Must be a non-negative integer
+    details: Provide a positive integer.
+  - name: InvalidNumeric
+    issue: Must be numeric
+    details: Provide a number in the request.
+  - name: InvalidPaymentIntent
+    issue: Value is invalid (must be sale or authorize)
+    details: Ensure that the `intent` is set to `sale` or `authorize`.
+  - name: InvalidPaymentMethod
+    issue: Value is invalid (must be credit_card or paypal)
+    details: Ensure that the `payment_method` is either `credit_card` or `paypal`.
+  - name: InvalidPercentageValue
+    issue: Percentage Value Should be in between 0 and 100
+    details: Specify a percentage value from 0 to 100.
+  - name: InvalidPositiveNumber
+    issue: Must be a positive integer
+    details: Do not specify negative numbers in this request.
+  - name: InvalidProperty
+    issue: This field name is not defined for this resource type
+    details: Ensure that all field names in the request are correct.
+  - name: InvalidQueryParams
+    issue: Invalid to specify both start_id and start_index query params
+    details: 'Provide either `start_id` or `start_index`, but not both.'
+  - name: InvalidTransactionAmountSums
+    issue: 'Transaction amount details (subtotal, tax, shipping) must add up to specified amount total'
+    details: 'Make sure that the sum of the subtotal, tax, and shipping amounts equals the total amount.'
+  - name: InvalidValue
+    issue: Value is invalid
+    details: Provide a valid value for the request.
+  - name: MaxLengthExceeded
+    issue: Value exceeds allowed maximum length
+    details: Correct the number of characters in the value to be less than or equal to the maximum alloed length.
+  - name: MinAgeLimitNotMet
+    issue: Minimum age limit not met
+    details: Make sure that the minimum age limit is met.
+  - name: MustNotBeBlank
+    issue: Must not be blank
+    details: Ensure that the fields in the request are not empty.
+  - name: NegativeOrZeroValue
+    issue: Negative value or zero should not be given
+    details: 'Ensure that the value is non-zero, positive number.'
+  - name: OnlyOneFundingInstrumentSupported
+    issue: Only single funding instrument currently supported
+    details: You can only provide one funding instrument in a request.
+  - name: OnlyOnePaymentTransactionSupported
+    issue: Only single payment transaction currently supported
+    details: You can only provide one transaction in a request.
+  - name: OutOfRange1to12
+    issue: Value out of range (1-12)
+    details: Provide a month that is from 1 (January) to 12 (December).
+  - name: PaymentMethodIdMissing
+    issue: Payment method id is missing
+    details: Include the required payment method ID.
+  - name: PaymentTokenNotValid
+    issue: Payment token is invalid.
+    details: Correct the payment token value.
+  - name: PostalCodeMissing
+    issue: The specified country requires a postal code
+    details: Provide a postal code.
+  - name: ReadonlyField
+    issue: Not valid to specify this field in a request
+    details: Do not include this field in the request.
+  - name: RefundAmountCannotBeZero
+    issue: The refund amount cannot be zero
+    details: Provide a positive refund amount.
+  - name: RequiredFieldMissing
+    issue: Required field missing
+    details: Ensure that all required fields are present and resend the request.
+  - name: RequiredFieldMissingPUIPayment
+    issue: This field required when payment_method is 'pay_upon_invoice'
+    details: Provide the required field for the pay upon invoice (PUI) payment.
+  - name: RequiredFieldMissingPaypalPayment
+    issue: This field required when payment_method is 'paypal'
+    details: Provide the required field for this PayPal payment.
+  - name: TooLong10
+    issue: Value too long (max length 10)
+    details: Provide a value that is ten or fewer characters.
+  - name: TooLong20
+    issue: Value too long (max length 20)
+    details: Provide a value that is 20 or fewer characters.
+  - name: TooLong25
+    issue: Value too long (max length 25)
+    details: Provide a value that is 25 or fewer characters.
+  - name: TooLong34
+    issue: Value too long (max length 34)
+    details: Provide a value that is 34 or fewer characters.
+  - name: TooLong40
+    issue: Value too long (max length 40)
+    details: Provide a value that is 40 or fewer characters.
+  - name: TooLong50
+    issue: Value too long (max length 50)
+    details: Provide a value that is 50 or fewer characters.
+  - name: TooLong64
+    issue: Value too long (max length 64)
+    details: Provide a value that is 64 or fewer characters.
+  - name: TooLong100
+    issue: Value too long (max length 100)
+    details: Provide a value that is 100 or fewer characters.
+  - name: TooLong165
+    issue: Value too long (max length 165)
+    details: Provide a value that is 165 or fewer characters.
+  - name: TooLong127
+    issue: Value too long (max length 127)
+    details: Provide a value that is 127 or fewer characters.
+  - name: TooLong256
+    issue: Value too long (max length 256)
+    details: Provide a value that is 256 or fewer characters.
+  - name: UnableToDecryptPaymentToken
+    issue: Unable to decrypt payment token.
+    details: This payment token cannot be decrypted.
+  - name: UndefinedField
+    issue: This field is not defined for this resource type
+    details: This field is not part of this resource type.
+  - name: UniqueExternalFundingAccountExceeded
+    issue: Number of external funding exceeds allowed maximum
+    details: You have specified too many external funding accounts.
+  - name: UnsupportedField
+    issue: This field currently not supported in this request
+    details: Remove the unsupported field and resend the request.
+  - name: UnsupportedPayeeByEmail
+    issue: Specification of payee by email is not currently supported
+    details: You cannot currently use an email to indicate the payee.
+  - name: UnsupportedPayeeByPhone
+    issue: Specification of payee by phone is not currently supported
+    details: You cannot currently use a phone number to indicate the payee.
+  - name: UnsupportedPayeeOtherThanCaller
+    issue: Specification of payee other than the API caller is not currently supported
+    details: You must use a payer other than the API caller.
+  - name: UnsupportedPaymentIntent
+    issue: Only payment intent value sale is currently supported
+    details: The `intent` must be `sale`.
+  - name: UnsupportedValue
+    issue: Value is not supported at this time
+    details: The value is not supported.
+  - name: UnwantedField
+    issue: Not valid to specify this field in a request
+    details: You cannot specify this field in a request.
+  - name: ValueCanNotBeReplacedSupportedIsAdd
+    issue: REPLACE is an invalid value for the target specified. Supported values are ADD.
+    details: Specify `ADD` for the action. The `REPLACE` action is not supported.
+securitySchemes:
+  Oauth2:
+    description: OAuth 2.0 authentication
+    type: OAuth 2.0
+    settings:
+      accessTokenUri: 'https://api.paypal.com/v1/oauth2/token'
+      authorizationGrants:
+        - client_credentials
+      scopes:
+        - 'https://uri.paypal.com/services/payments/payment/authcapture'
+        - 'https://uri.paypal.com/services/payments/refund'
+types:
+  MCCS-v1-schema-authorization_json:
+    description: The authorized payment transaction.
+    type:
+      - MCCS-v1-schema-authorization_status_json
+      - MCCS-v1-schema-activity_timestamps_json
+    properties:
+      id:
+        description: The PayPal-generated ID for the authorized payment.
+        type: string
+        (oas-readOnly): true
+      amount:
+        description: The amount for this authorized payment.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+        (oas-readOnly): true
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      seller_protection:
+        type: MCCS-v1-schema-seller_protection_json
+        (oas-readOnly): true
+      expiration_time:
+        description: 'The date and time when the authorized payment expires, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-date_time_json
+        (oas-readOnly): true
+      links:
+        description: 'An array of related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-link_description_json
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+    (oas-schema-title): Authorization
+    (visibility):
+      extent: EXTERNAL
+  MCCS-v1-schema-authorization_status_json:
+    description: The status fields for an authorized payment.
+    type: object
+    properties:
+      status:
+        description: The status for the authorized payment.
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: CREATED
+            description: The authorized payment is created. No captured payments have been made for this authorized payment.
+          - value: CAPTURED
+            description: The authorized payment has one or more captures against it. The sum of these captured payments is greater than the amount of the original authorized payment.
+          - value: DENIED
+            description: PayPal cannot authorize funds for this authorized payment.
+          - value: EXPIRED
+            description: The authorized payment has expired.
+          - value: PARTIALLY_CAPTURED
+            description: A captured payment was made for the authorized payment for an amount that is less than the amount of the original authorized payment.
+          - value: VOIDED
+            description: The authorized payment was voided. No more captured payments can be made against this authorized payment.
+    (oas-schema-title): Authorization Status
+  MCCS-v1-scc-v3-s-j-oa-2_0-money_json:
+    description: 'The currency and amount for a financial transaction, such as a balance or payment due.'
+    type: object
+    properties:
+      currency_code:
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-currency_code_json
+      value:
+        description: 'The value, which might be:<ul><li>An integer for currencies like `JPY` that are not typically fractional.</li><li>A decimal fraction for currencies like `TND` that are subdivided into thousandths.</li></ul>For the required number of decimal places for a currency code, see [Currency Codes](/docs/integration/direct/rest/currency-codes/).'
+        maxLength: 32
+        pattern: '^((-?[0-9]+)|(-?([0-9]+)?[.][0-9]+))$'
+        type: string
+    (oas-schema-title): Money
+  MCCS-v1-scc-v3-s-j-oa-2_0-currency_code_json:
+    description: 'The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies the currency.'
+    minLength: 3
+    maxLength: 3
+    type: string
+    (oas-format): ppaas_common_currency_code_v2
+  MCCS-v1-schema-seller_protection_json:
+    description: 'The level of protection offered as defined by [PayPal Seller Protection for Merchants](https://www.paypal.com/us/webapps/mpp/security/seller-protection).'
+    type: object
+    properties:
+      status:
+        description: 'Indicates whether the transaction is eligible for seller protection. For information, see [PayPal Seller Protection for Merchants](https://www.paypal.com/us/webapps/mpp/security/seller-protection).'
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: ELIGIBLE
+            description: Your PayPal balance remains intact if the customer claims that he or she did not receive an item or the account holder claims that he or she did not authorize the payment.
+          - value: PARTIALLY_ELIGIBLE
+            description: Your PayPal balance remains intact if the customer claims that he or she did not receive an item.
+          - value: NOT_ELIGIBLE
+            description: This transaction is not eligible for seller protection.
+      dispute_categories:
+        description: An array of conditions that are covered for the transaction.
+        type: array
+        items:
+          description: The condition that is covered for the transaction.
+          type: string
+          (publicDocsSchemaName): dispute_category
+          (enum):
+            - value: ITEM_NOT_RECEIVED
+              description: The payer paid for an item that he or she did not receive.
+            - value: UNAUTHORIZED_TRANSACTION
+              description: The payer did not authorize the payment.
+        (oas-readOnly): true
+    (oas-schema-title): Seller Protection
+  MCCS-v1-scc-v3-s-j-oa-2_0-date_time_json:
+    description: 'The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6). Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular expression provides guidance but does not reject all invalid dates.</blockquote>'
+    minLength: 20
+    maxLength: 64
+    pattern: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])[T,t]([0-1][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)([.][0-9]+)?([Zz]|[+-][0-9]{2}:[0-9]{2})$'
+    type: string
+    (oas-format): ppaas_date_time_v3
+  MCCS-v1-scc-v3-s-j-oa-2_0-link_description_json:
+    description: 'The request-related [HATEOAS link](/docs/api/overview/#hateoas-links) information.'
+    type: object
+    properties:
+      href:
+        description: 'The complete target URL. To make the related call, combine the method with this [URI Template-formatted](https://tools.ietf.org/html/rfc6570) link. For pre-processing, include the `$`, `(`, and `)` characters. The `href` is the key HATEOAS component that links a completed call with a subsequent call.'
+        type: string
+        (visibility):
+          extent: EXTERNAL
+      rel:
+        description: 'The [link relation type](https://tools.ietf.org/html/rfc5988#section-4), which serves as an ID for a link that unambiguously describes the semantics of the link. See [Link Relations](https://www.iana.org/assignments/link-relations/link-relations.xhtml).'
+        type: string
+        (visibility):
+          extent: EXTERNAL
+      method:
+        description: The HTTP method required to make the related call.
+        type: string
+        enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - HEAD
+          - CONNECT
+          - OPTIONS
+          - PATCH
+        (visibility):
+          extent: EXTERNAL
+        required: false
+      title:
+        description: The link title.
+        type: string
+        (visibility):
+          extent: INTERNAL
+        required: false
+      mediaType:
+        description: 'The media type, as defined by [RFC 2046](https://www.ietf.org/rfc/rfc2046.txt). Describes the link target.'
+        type: string
+        (publicDocsSchemaName): media_type
+        (visibility):
+          extent: INTERNAL
+        required: false
+      encType:
+        description: The media type in which to submit the request data.
+        default: application/json
+        type: string
+        (publicDocsSchemaName): enc_type
+        (visibility):
+          extent: INTERNAL
+        required: false
+      schema:
+        description: The schema that describes the request data.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-link_schema_json
+        (visibility):
+          extent: INTERNAL
+        required: false
+      targetSchema:
+        description: The schema that describes the link target.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-link_schema_json
+        (publicDocsSchemaName): target_schema
+        (visibility):
+          extent: INTERNAL
+        required: false
+    (oas-schema-title): Link Description
+  MCCS-v1-scc-v3-s-j-oa-2_0-link_schema_json:
+    description: The request data or link target.
+    type: object
+    properties:
+      additionalItems:
+        description: Any additional items.
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Additional Items
+        (publicDocsSchemaName): additional_items
+      dependencies:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Dependencies
+      items:
+        description: An item.
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Items
+      definitions:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Definitions
+      patternProperties:
+        description: The pattern properties.
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Pattern Properties
+        (publicDocsSchemaName): pattern_properties
+      properties:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Properties
+      allOf:
+        description: An array of sub-schemas. The data must validate against all sub-schemas.
+        type: array
+        items:
+          description: A sub-schema against which the data must validate.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): All Of Item
+          (publicDocsSchemaName): all_of_item
+        (publicDocsSchemaName): all_of
+      anyOf:
+        description: An array of sub-schemas. The data must validate against one or more sub-schemas.
+        type: array
+        items:
+          description: A sub-schema against which the data must validate.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): Any Of Item
+          (publicDocsSchemaName): any_of_item
+        (publicDocsSchemaName): any_of
+      oneOf:
+        description: An array of sub-schemas. The data must validate against one sub-schema.
+        type: array
+        items:
+          description: A sub-schema against which the data must validate.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): One Of Item
+          (publicDocsSchemaName): one_of_item
+        (publicDocsSchemaName): one_of
+      not:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Not
+      links:
+        description: An array of links.
+        type: array
+        items:
+          description: A link.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): Link
+          (oas-readOnly): true
+          (publicDocsSchemaName): link
+        (oas-readOnly): true
+      fragmentResolution:
+        description: The fragment resolution.
+        type: string
+        (publicDocsSchemaName): fragment_resolution
+      media:
+        description: The media type and context-encoding scheme.
+        type: object
+        properties:
+          type:
+            description: 'The media type. See [Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types](https://tools.ietf.org/html/rfc2046).'
+            type: string
+          binaryEncoding:
+            description: 'The content-encoding scheme. See [Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies](https://tools.ietf.org/html/rfc2045).'
+            type: string
+            (publicDocsSchemaName): binary_encoding
+        (oas-schema-title): Media
+      pathStart:
+        description: 'To apply this schema to the instances'' URIs, start the URIs with this value.'
+        type: string
+        (oas-format): uri
+        (publicDocsSchemaName): path_start
+    additionalProperties: true
+    (oas-schema-title): Link Schema
+  MCCS-v1-schema-activity_timestamps_json:
+    description: 'The date and time stamps that are common to authorized payment, captured payment, and refund transactions.'
+    type: object
+    properties:
+      create_time:
+        description: 'The date and time when the transaction occurred, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-date_time_json
+        (oas-readOnly): true
+      update_time:
+        description: 'The date and time when the transaction was last updated, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-date_time_json
+        (oas-readOnly): true
+    (oas-schema-title): Transaction Date and Time Stamps
+  MCCS-v1-scc-v3-s-j-oa-2_0-error_json:
+    description: The error details.
+    type: object
+    properties:
+      name:
+        description: 'The human-readable, unique name of the error.'
+        type: string
+      message:
+        description: The message that describes the error.
+        type: string
+      debug_id:
+        description: The PayPal internal ID that is used for correlation purposes.
+        type: string
+      information_link:
+        description: 'The information link, or URI, that shows detailed information about this error for the developer.'
+        type: string
+        (oas-readOnly): true
+        required: false
+      details:
+        description: An array of additional details about the error.
+        type: array
+        items:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-error_details_json
+          (publicDocsSchemaName): error_details
+        required: false
+      links:
+        description: 'An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-link_description_json
+          (oas-readOnly): true
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+        required: false
+    (oas-schema-title): Error
+  MCCS-v1-scc-v3-s-j-oa-2_0-error_details_json:
+    description: The error details. Required for client-side `4XX` errors.
+    type: object
+    properties:
+      field:
+        description: 'The field that caused the error. If the field is in the body, set this value to the JSON pointer to that field. Required for client-side errors.'
+        type: string
+        required: false
+      value:
+        description: The value of the field that caused the error.
+        type: string
+        required: false
+      location:
+        description: 'The location of the field that caused the error. Value is `body`, `path`, or `query`.'
+        default: body
+        type: string
+        required: false
+      issue:
+        description: The unique and fine-grained application-level error code.
+        type: string
+      description:
+        description: 'The human-readable description for an issue. The description MAY change over the lifetime of an API, so clients **MUST NOT** depend on this value.'
+        type: string
+        required: false
+    (oas-schema-title): Error Details
+  capture_request_json:
+    description: Captures either a portion or the full authorized amount of an authorized payment.
+    type: object
+    properties:
+      amount:
+        description: 'The amount to capture. To capture a portion of the full authorized amount, specify an amount. If amount is not specified, the full authorized amount is captured. The amount must be a positive number and in the same currency as the authorization against which the payment is being captured.'
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        maxLength: 127
+        type: string
+      final_capture:
+        description: Indicates whether you can make additional captures against the authorized payment. Set to `true` if you do not intend to capture additional payments against the authorization. Set to `false` if you intend to capture additional payments against the authorization.
+        default: false
+        type: boolean
+      payment_instruction:
+        type: MCCS-v1-schema-payment_instruction_json
+        required: false
+    (oas-schema-title): Capture Request
+    (visibility):
+      extent: LIMITED_RELEASE
+  MCCS-v1-schema-payment_instruction_json:
+    description: 'Any additional payment instructions for PayPal for Partner customers. Enables features for partners and marketplaces, such as delayed disbursement and collection of a platform fee. Applies during order creation for captured payments or during capture of authorized payments.'
+    type: object
+    properties:
+      platform_fees:
+        description: 'An array of various fees, commissions, tips, or donations.'
+        minItems: 0
+        maxItems: 1
+        type: array
+        items:
+          type: MCCS-v1-schema-platform_fee_json
+          (publicDocsSchemaName): platform_fee
+      disbursement_mode:
+        type: MCCS-v1-schema-disbursement_mode_json
+    (oas-schema-title): Payment Instruction
+  MCCS-v1-schema-platform_fee_json:
+    description: 'The platform or partner fee, commission, or brokerage fee that is associated with the transaction. Not a separate or isolated transaction leg from the external perspective. The platform fee is limited in scope and is always associated with the original payment for the purchase unit.'
+    type: object
+    properties:
+      amount:
+        description: The fee for this transaction.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+        (publicDocsSchemaName): amount
+      payee:
+        description: 'The recipient of the fee for this transaction. If you omit this value, the default is the API caller.'
+        type: MCCS-v1-schema-payee_base_json
+        (publicDocsSchemaName): payee
+        required: false
+    (oas-schema-title): Platform Fee
+  MCCS-v1-schema-payee_base_json:
+    description: The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
+    type: object
+    properties:
+      email_address:
+        description: The email address of merchant.
+        type: MCCS-v1-schema-email_json
+      merchant_id:
+        description: The encrypted PayPal account ID of the merchant.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-payer_id_json
+      client_id:
+        description: The public identifier for app created by the merchant/payee. Introduced to support use cases (for e.g. BrainTree integration with PayPal) where payee email_address or merchant_id is not available.
+        maxLength: 80
+        type: string
+        (visibility):
+          extent: INTERNAL
+    (oas-schema-title): Merchant Base
+  MCCS-v1-schema-email_json:
+    description: 'The internationalized email address.<blockquote><strong>Note:</strong> Up to 64 characters are allowed before and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign exists.</blockquote>'
+    maxLength: 254
+    pattern: '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
+    type: string
+    (oas-format): merchant_common_email_address_v2
+  MCCS-v1-scc-v3-s-j-oa-2_0-payer_id_json:
+    description: 'The PayPal payer ID, which is a masked version of the PayPal account number intended for use with third parties. The account number is reversibly encrypted and a proprietary variant of Base32 is used to encode the result.'
+    minLength: 13
+    maxLength: 13
+    pattern: '^[2-9A-HJ-NP-Z]{13}$'
+    type: string
+    (oas-format): ppaas_payer_id_v3
+  MCCS-v1-schema-disbursement_mode_json:
+    description: The funds that are held on behalf of the merchant.
+    default: INSTANT
+    type: string
+    (oas-schema-title): Disbursement Mode
+    (enum):
+      - value: INSTANT
+        description: The funds are released to the merchant immediately.
+        default: INSTANT
+      - value: DELAYED
+        description: 'The funds are held for a finite number of days. The actual duration depends on the region and type of integration. You can release the funds through a referenced payout. Otherwise, the funds disbursed automatically after the specified duration.'
+  MCCS-v1-schema-capture_json:
+    description: A captured payment.
+    type:
+      - MCCS-v1-schema-capture_status_json
+      - MCCS-v1-schema-activity_timestamps_json
+    properties:
+      id:
+        description: The PayPal-generated ID for the captured payment.
+        type: string
+        (oas-readOnly): true
+      amount:
+        description: The amount for this captured payment.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+        (oas-readOnly): true
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      seller_protection:
+        type: MCCS-v1-schema-seller_protection_json
+        (oas-readOnly): true
+      final_capture:
+        description: Indicates whether you can make additional captures against the authorized payment. Set to `true` if you do not intend to capture additional payments against the authorization. Set to `false` if you intend to capture additional payments against the authorization.
+        default: false
+        type: boolean
+        (oas-readOnly): true
+      seller_receivable_breakdown:
+        description: The detailed breakdown of the captured payment.
+        type: object
+        properties:
+          gross_amount:
+            description: The amount for this captured payment.
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+          paypal_fee:
+            description: The applicable fee for this captured payment.
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+          net_amount:
+            description: The net amount that the payee receives for this captured payment in their PayPal account. The net amount is computed as <code>gross_amount</code> minus the <code>paypal_fee</code> minus the <code>platform_fees</code>.
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+          receivable_amount:
+            description: The net amount that is credited to the payee's PayPal account. Returned only when the currency of the captured payment is different from the currency of the PayPal account where the payee wants to credit the funds. The amount is computed as <code>net_amount</code> times <code>exchange_rate</code>.
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+          exchange_rate:
+            description: The exchange rate that determines the amount that is credited to the payee's PayPal account. Returned when the currency of the captured payment is different from the currency of the PayPal account where the payee wants to credit the funds.
+            type: MCCS-v1-schema-exchange_rate_json
+          platform_fees:
+            description: 'An array of platform or partner fees, commissions, or brokerage fees that associated with the captured payment.'
+            minItems: 0
+            maxItems: 1
+            type: array
+            items:
+              type: MCCS-v1-schema-platform_fee_json
+              (publicDocsSchemaName): platform_fee
+        (oas-schema-title): Merchant Receivable Breakdown
+        (oas-readOnly): true
+      disbursement_mode:
+        type: MCCS-v1-schema-disbursement_mode_json
+      links:
+        description: 'An array of related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-link_description_json
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+    (oas-schema-title): Capture
+    (visibility):
+      extent: EXTERNAL
+  MCCS-v1-schema-capture_status_json:
+    description: The status of a captured payment.
+    type: object
+    properties:
+      status:
+        description: The status of the captured payment.
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: COMPLETED
+            description: The funds for this captured payment were credited to the payee's PayPal account.
+          - value: DECLINED
+            description: The funds could not be captured.
+          - value: PARTIALLY_REFUNDED
+            description: An amount less than this captured payment's amount was partially refunded to the payer.
+          - value: PENDING
+            description: 'The funds for this captured payment was not yet credited to the payee''s PayPal account. For more information, see <code>status.details</code>'
+          - value: REFUNDED
+            description: An amount greater than or equal to this captured payment's amount was refunded to the payer.
+      status_details:
+        description: The details of the captured payment status.
+        type: object
+        properties:
+          reason:
+            description: The reason why the captured payment status is `PENDING` or `DENIED`.
+            type: string
+            (enum):
+              - value: BUYER_COMPLAINT
+                description: The payer initiated a dispute for this captured payment with PayPal.
+              - value: CHARGEBACK
+                description: The captured funds were reversed in response to the payer disputing this captured payment with the issuer of the financial instrument used to pay for this captured payment.
+              - value: ECHECK
+                description: The payer paid by an eCheck that has not yet cleared.
+              - value: INTERNATIONAL_WITHDRAWAL
+                description: 'Visit your online account. In your **Account Overview**, accept and deny this payment.'
+              - value: OTHER
+                description: 'No additional specific reason can be provided. For more information about this captured payment, visit your account online or contact PayPal.'
+              - value: PENDING_REVIEW
+                description: The captured payment is pending manual review.
+              - value: RECEIVING_PREFERENCE_MANDATES_MANUAL_ACTION
+                description: 'The payee has not yet set up appropriate receiving preferences for their account. For more information about how to accept or deny this payment, visit your account online. This reason is typically offered in scenarios such as when the currency of the captured payment is different from the primary holding currency of the payee.'
+              - value: REFUNDED
+                description: The captured funds were refunded.
+              - value: TRANSACTION_APPROVED_AWAITING_FUNDING
+                description: The payer must send the funds for this captured payment. This code generally appears for manual EFTs.
+              - value: UNILATERAL
+                description: The payee does not have a PayPal account.
+              - value: VERIFICATION_REQUIRED
+                description: The payee's PayPal account is not verified.
+        (oas-schema-title): Status Details
+        (oas-readOnly): true
+    (oas-schema-title): Capture Status
+  MCCS-v1-schema-exchange_rate_json:
+    description: The exchange rate that determines the amount to convert from one currency to another currency.
+    type: object
+    properties:
+      source_currency:
+        description: The source currency from which to convert an amount.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-currency_code_json
+      target_currency:
+        description: The target currency into which to convert an amount.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-currency_code_json
+      value:
+        description: The target currency amount. Equivalent to one unit of the source currency. Formatted as integer or decimal value with one to 15 digits to the right of the decimal point.
+        type: string
+    (oas-schema-title): Exchange Rate
+    (oas-readOnly): true
+  reauthorize_request_json:
+    description: 'Reauthorizes an authorized PayPal account payment, by ID. To ensure that funds are still available, reauthorize a payment after its initial three-day honor period expires. You can reauthorize a payment only once from days four to 29.<br/><br/>If 30 days have transpired since the date of the original authorization, you must create an authorized payment instead of reauthorizing the original authorized payment.<br/><br/>A reauthorized payment itself has a new honor period of three days.<br/><br/>You can reauthorize an authorized payment once for up to 115% of the original authorized amount, not to exceed an increase of $75 USD.<br/><br/>Supports only the `amount` request parameter.<blockquote><strong>Note:</strong> This request is currently not supported for Partner usecases.</blockquote>'
+    type: object
+    properties:
+      amount:
+        description: The amount to reauthorize for an authorized payment.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+    (oas-schema-title): Reauthorize Request
+    (visibility):
+      extent: LIMITED_RELEASE
+  refund_request_json:
+    description: 'Refunds a captured payment, by ID. For a full refund, include an empty request body. For a partial refund, include an <code>amount</code> object in the request body.'
+    type: object
+    properties:
+      amount:
+        description: 'The amount to refund. To refund a portion of the captured amount, specify an amount. If amount is not specified, an amount equal to <code>captured amount - previous refunds</code> is refunded. The amount must be a positive number and in the same currency as the one in which the payment was captured.'
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        maxLength: 127
+        type: string
+      note_to_payer:
+        description: The reason for the refund. Appears in both the payer's transaction history and the emails that the payer receives.
+        maxLength: 255
+        type: string
+    (oas-schema-title): Refund Request
+    (visibility):
+      extent: LIMITED_RELEASE
+  MCCS-v1-schema-refund_json:
+    description: The refund information.
+    type:
+      - MCCS-v1-schema-refund_status_json
+      - MCCS-v1-schema-activity_timestamps_json
+    properties:
+      id:
+        description: The PayPal-generated ID for the refund.
+        type: string
+        (oas-readOnly): true
+      amount:
+        description: The amount that the payee refunded to the payer.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+        (oas-readOnly): true
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      note_to_payer:
+        description: The reason for the refund. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      seller_payable_breakdown:
+        description: The breakdown of the refund.
+        type: object
+        properties:
+          gross_amount:
+            description: The amount that the payee refunded to the payer.
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+            (oas-readOnly): true
+          paypal_fee:
+            description: The PayPal fee that was refunded to the payer. This fee might not match the PayPal fee that the payee paid when the payment was captured.
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+            (oas-readOnly): true
+          net_amount:
+            description: 'The net amount that the payee''s account is debited, if the payee holds funds in the currency for this refund. The net amount is calculated as <code>gross_amount</code> minus <code>paypal_fee</code> minus <code>platform_fees</code>.'
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+            (oas-readOnly): true
+          platform_fees:
+            description: 'An array of platform or partner fees, commissions, or brokerage fees for the refund.'
+            minItems: 0
+            maxItems: 1
+            type: array
+            items:
+              type: MCCS-v1-schema-platform_fee_json
+              (publicDocsSchemaName): platform_fee
+          net_amount_breakdown:
+            description: An array of breakdown values for the net amount. Returned when the currency of the refund is different from the currency of the PayPal account where the payee holds their funds.
+            type: array
+            items:
+              type: MCCS-v1-schema-net_amount_breakdown_item_json
+              (publicDocsSchemaName): net_amount_breakdown_item
+            (oas-readOnly): true
+          total_refunded_amount:
+            description: 'The total amount refunded from the original capture to date. For example, if a payer makes a $100 purchase and was refunded $20 a week ago and was refunded $30 in this refund, the `gross_amount` is $30 for this refund and the `total_refunded_amount` is $50.'
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+        (oas-schema-title): Merchant Payable Breakdown
+        (oas-readOnly): true
+      links:
+        description: 'An array of related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-link_description_json
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+    (oas-schema-title): Refund
+    (visibility):
+      extent: EXTERNAL
+  MCCS-v1-schema-refund_status_json:
+    description: The refund status.
+    type: object
+    properties:
+      status:
+        description: The status of the capture.
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: CANCELLED
+            description: The refund was cancelled.
+          - value: PENDING
+            description: 'The refund is pending. For more information, see <code>status_details.reason</code>.'
+          - value: COMPLETED
+            description: The funds for this transaction were debited to the customer's account.
+      status_details:
+        description: The details of the refund status.
+        type: object
+        properties:
+          reason:
+            description: The reason why the refund has the `PENDING` or `FAILED` status.
+            type: string
+            (enum):
+              - value: ECHECK
+                description: 'The customer''s account is funded through an eCheck, which has not yet cleared.'
+        (oas-schema-title): Status Details
+        (oas-readOnly): true
+    (oas-schema-title): Refund Status
+  MCCS-v1-schema-net_amount_breakdown_item_json:
+    description: The net amount. Returned when the currency of the refund is different from the currency of the PayPal account where the merchant holds their funds.
+    type: object
+    properties:
+      payable_amount:
+        description: The net amount debited from the merchant's PayPal account.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+        (oas-readOnly): true
+      converted_amount:
+        description: The converted payable amount.
+        type: MCCS-v1-scc-v3-s-j-oa-2_0-money_json
+        (oas-readOnly): true
+      exchange_rate:
+        description: The exchange rate that determines the amount that was debited from the merchant's PayPal account.
+        type: MCCS-v1-schema-exchange_rate_json
+        (oas-readOnly): true
+    (oas-schema-title): Net Amount Breakdown Item
+'/authorizations/{authorization_id}':
+  get:
+    description: 'Shows details for an authorized payment, by ID.'
+    displayName: authorizations.get
+    securedBy:
+      - Oauth2:
+          scopes:
+            - 'https://uri.paypal.com/services/payments/payment/authcapture'
+    (oas-responses-default):
+      description: The error response.
+      body:
+        application/json:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+    responses:
+      '200':
+        description: A successful request returns the HTTP <code>200 OK</code> status code and a JSON response body that shows authorization details.
+        body:
+          application/json:
+            type: MCCS-v1-schema-authorization_json
+      '401':
+        description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '403':
+        description: The request failed because the caller has insufficient permissions.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '404':
+        description: The request failed because the resource does not exist.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '500':
+        description: The request failed because an internal server error occurred.
+    headers:
+#      Authorization:
+#        description: 'To make REST API calls, include the bearer token in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme. The value is <code>Bearer &lt;Access-Token&gt;</code> or <code>Basic &lt;client_id&gt;:&lt;secret&gt;</code>.'
+#        type: string
+#      Content-Type:
+#        description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#        type: string
+    (oas-summary): Show details for authorized payment
+    (oas-tags):
+      - authorizations
+    (slo):
+      response_time_95th_percentile: 1000
+      error_rate: 0.1
+    (visibility):
+      extent: LIMITED_RELEASE
+  uriParameters:
+    authorization_id:
+      description: The ID of the authorized payment for which to show details.
+      type: string
+  /capture:
+    post:
+      description: 'Captures an authorized payment, by ID.'
+      displayName: authorizations.capture
+      securedBy:
+        - Oauth2:
+            scopes:
+              - 'https://uri.paypal.com/services/payments/payment/authcapture'
+      (oas-responses-default):
+        description: The error response.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      responses:
+        '201':
+          description: A successful request returns the HTTP <code>201 Created</code> status code and a JSON response body that shows captured payment details.
+          body:
+            application/json:
+              type: MCCS-v1-schema-capture_json
+        '400':
+          description: The request failed because it is not well-formed or is syntactically incorrect or violates schema.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '401':
+          description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '403':
+          description: The request failed because the caller has insufficient permissions.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '404':
+          description: The request failed because the resource does not exist.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '422':
+          description: The request failed because it is semantically incorrect or failed business validation.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '500':
+          description: The request failed because an internal server error occurred.
+      headers:
+        PayPal-Request-Id:
+          description: The server stores keys for 45 days.
+          required: false
+          type: string
+        Prefer:
+          description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+          required: false
+          default: return=minimal
+          type: string
+#        Authorization:
+#          description: 'To make REST API calls, include the bearer token in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme. The value is <code>Bearer &lt;Access-Token&gt;</code> or <code>Basic &lt;client_id&gt;:&lt;secret&gt;</code>.'
+#          type: string
+#        Content-Type:
+#          description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#          type: string
+      body:
+        application/json:
+          example:
+            amount:
+              value: '10.99'
+              currency_code: USD
+            invoice_id: INVOICE-123
+            final_capture: true
+          type: capture_request_json
+          required: false
+          (oas-body-name): capture
+      (oas-summary): Capture authorized payment
+      (oas-tags):
+        - authorizations
+      (slo):
+        response_time_95th_percentile: 1000
+        error_rate: 0.1
+      (visibility):
+        extent: LIMITED_RELEASE
+  /reauthorize:
+    post:
+      description: 'Reauthorizes an authorized PayPal account payment, by ID. To ensure that funds are still available, reauthorize a payment after its initial three-day honor period expires. You can reauthorize a payment only once from days four to 29.<br/><br/>If 30 days have transpired since the date of the original authorization, you must create an authorized payment instead of reauthorizing the original authorized payment.<br/><br/>A reauthorized payment itself has a new honor period of three days.<br/><br/>You can reauthorize an authorized payment once for up to 115% of the original authorized amount, not to exceed an increase of $75 USD.<br/><br/>Supports only the `amount` request parameter.<blockquote><strong>Note:</strong> This request is currently not supported for Partner usecases.</blockquote>'
+      displayName: authorizations.reauthorize
+      securedBy:
+        - Oauth2:
+            scopes:
+              - 'https://uri.paypal.com/services/payments/payment/authcapture'
+      (oas-responses-default):
+        description: The error response.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      responses:
+        '201':
+          description: A successful request returns the HTTP <code>201 Created</code> status code and a JSON response body that shows the reauthorized payment details.
+          body:
+            application/json:
+              type: MCCS-v1-schema-authorization_json
+        '400':
+          description: The request failed because it is not well-formed or is syntactically incorrect or violates schema.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '401':
+          description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '403':
+          description: The request failed because the caller has insufficient permissions.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '404':
+          description: The request failed because the resource does not exist.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '422':
+          description: The request failed because it either is semantically incorrect or failed business validation.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '500':
+          description: The request failed because an internal server error occurred.
+      headers:
+        PayPal-Request-Id:
+          description: The server stores keys for 45 days.
+          required: false
+          type: string
+        Prefer:
+          description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+          required: false
+          default: return=minimal
+          type: string
+#        Authorization:
+#          description: 'To make REST API calls, include the bearer token in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme. The value is <code>Bearer &lt;Access-Token&gt;</code> or <code>Basic &lt;client_id&gt;:&lt;secret&gt;</code>.'
+#          type: string
+#        Content-Type:
+#          description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#          type: string
+      body:
+        application/json:
+          example:
+            amount:
+              value: '10.99'
+              currency_code: USD
+          type: reauthorize_request_json
+          required: false
+          (oas-body-name): reauthorize_request
+      (oas-summary): Reauthorize authorized payment
+      (oas-tags):
+        - authorizations
+      (slo):
+        response_time_95th_percentile: 1000
+        error_rate: 0.1
+      (visibility):
+        extent: LIMITED_RELEASE
+  /void:
+    post:
+      description: 'Voids, or cancels, an authorized payment, by ID. You cannot void an authorized payment that has been fully captured.'
+      displayName: authorizations.void
+      securedBy:
+        - Oauth2:
+            scopes:
+              - 'https://uri.paypal.com/services/payments/payment/authcapture'
+      (oas-responses-default):
+        description: The error response.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      responses:
+        '204':
+          description: A successful request returns the HTTP <code>204 No Content</code> status code with no JSON response body.
+        '400':
+          description: The request failed because it is not well-formed or is syntactically incorrect or violates schema.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '401':
+          description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '403':
+          description: The request failed because the caller has insufficient permissions.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '404':
+          description: The request failed because the resource does not exist.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '422':
+          description: The request failed because it either is semantically incorrect or failed business validation.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '500':
+          description: The request failed because an internal server error occurred.
+      headers:
+#        Authorization:
+#          description: 'To make REST API calls, include the bearer token in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme. The value is <code>Bearer &lt;Access-Token&gt;</code> or <code>Basic &lt;client_id&gt;:&lt;secret&gt;</code>.'
+#          type: string
+#        Content-Type:
+#          description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#          type: string
+      (oas-summary): Void authorized payment
+      (oas-tags):
+        - authorizations
+      (slo):
+        response_time_95th_percentile: 1000
+        error_rate: 0.1
+      (visibility):
+        extent: LIMITED_RELEASE
+'/captures/{capture_id}':
+  get:
+    description: 'Shows details for a captured payment, by ID.'
+    displayName: captures.get
+    securedBy:
+      - Oauth2:
+          scopes:
+            - 'https://uri.paypal.com/services/payments/payment/authcapture'
+    (oas-responses-default):
+      description: The error response.
+      body:
+        application/json:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+    responses:
+      '200':
+        description: A successful request returns the HTTP <code>200 OK</code> status code and a JSON response body that shows captured payment details.
+        body:
+          application/json:
+            type: MCCS-v1-schema-capture_json
+      '401':
+        description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '403':
+        description: The request failed because the caller has insufficient permissions.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '404':
+        description: The request failed because the resource does not exist.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '500':
+        description: The request failed because an internal server error occurred.
+    headers:
+#      Authorization:
+#        description: 'To make REST API calls, include the bearer token in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme. The value is <code>Bearer &lt;Access-Token&gt;</code> or <code>Basic &lt;client_id&gt;:&lt;secret&gt;</code>.'
+#        type: string
+#      Content-Type:
+#        description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#        type: string
+    (oas-summary): Show captured payment details
+    (oas-tags):
+      - captures
+    (slo):
+      response_time_95th_percentile: 1000
+      error_rate: 0.1
+    (visibility):
+      extent: LIMITED_RELEASE
+  uriParameters:
+    capture_id:
+      description: The PayPal-generated ID for the captured payment for which to show details.
+      type: string
+  /refund:
+    post:
+      description: 'Refunds a captured payment, by ID. For a full refund, include an empty payload in the JSON request body. For a partial refund, include an <code>amount</code> object in the JSON request body.'
+      displayName: captures.refund
+      securedBy:
+        - Oauth2:
+            scopes:
+              - 'https://uri.paypal.com/services/payments/payment/authcapture'
+      (oas-responses-default):
+        description: The error response.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      responses:
+        '201':
+          description: A successful request returns the HTTP <code>201 Created</code> status code and a JSON response body that shows refund details.
+          body:
+            application/json:
+              type: MCCS-v1-schema-refund_json
+        '400':
+          description: The request failed because it is not well-formed or is syntactically incorrect or violates schema.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '401':
+          description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '403':
+          description: The request failed because the caller has insufficient permissions.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '404':
+          description: The request failed because the resource does not exist.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '422':
+          description: The request failed because it either is semantically incorrect or failed business validation.
+          body:
+            application/json:
+              type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+        '500':
+          description: The request failed because an internal server error occurred.
+      headers:
+        PayPal-Request-Id:
+          description: The server stores keys for 45 days.
+          required: false
+          type: string
+        Prefer:
+          description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+          required: false
+          default: return=minimal
+          type: string
+#        Authorization:
+#          description: 'To make REST API calls, include the bearer token in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme. The value is <code>Bearer &lt;Access-Token&gt;</code> or <code>Basic &lt;client_id&gt;:&lt;secret&gt;</code>.'
+#          type: string
+#        Content-Type:
+#          description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#          type: string
+      body:
+        application/json:
+          example:
+            amount:
+              value: '10.99'
+              currency_code: USD
+            invoice_id: INVOICE-123
+            note_to_payer: Defective product
+          type: refund_request_json
+          required: false
+          (oas-body-name): refund_request
+      (oas-summary): Refund captured payment
+      (oas-tags):
+        - captures
+      (slo):
+        response_time_95th_percentile: 1000
+        error_rate: 0.1
+      (visibility):
+        extent: LIMITED_RELEASE
+'/refunds/{refund_id}':
+  get:
+    description: 'Shows details for a refund, by ID.'
+    displayName: refunds.get
+    securedBy:
+      - Oauth2:
+          scopes:
+            - 'https://uri.paypal.com/services/payments/payment/authcapture'
+    (oas-responses-default):
+      description: The error response.
+      body:
+        application/json:
+          type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+    responses:
+      '200':
+        description: A successful request returns the HTTP <code>200 OK</code> status code and a JSON response body that shows refund details.
+        body:
+          application/json:
+            type: MCCS-v1-schema-refund_json
+      '401':
+        description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '403':
+        description: The request failed because the caller has insufficient permissions.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '404':
+        description: The request failed because the resource does not exist.
+        body:
+          application/json:
+            type: MCCS-v1-scc-v3-s-j-oa-2_0-error_json
+      '500':
+        description: The request failed because an internal server error occurred.
+    headers:
+#      Authorization:
+#        description: 'To make REST API calls, include the bearer token in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme. The value is <code>Bearer &lt;Access-Token&gt;</code> or <code>Basic &lt;client_id&gt;:&lt;secret&gt;</code>.'
+#        type: string
+#      Content-Type:
+#        description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#        type: string
+    (oas-summary): Show refund details
+    (oas-tags):
+      - refunds
+    (slo):
+      response_time_95th_percentile: 1000
+      error_rate: 0.1
+    (visibility):
+      extent: LIMITED_RELEASE
+  uriParameters:
+    refund_id:
+      description: The PayPal-generated ID for the refund for which to show details.
+      type: string

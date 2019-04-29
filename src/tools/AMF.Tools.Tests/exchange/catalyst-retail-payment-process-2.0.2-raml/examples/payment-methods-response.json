@@ -1,0 +1,12 @@
+{
+  "paymentMethods": [
+    {
+      "identifier": "deb89058-77fb-4e97-8c83-6506c38c4444",
+      "paymentMethodType": {
+        "medium": "CARD",
+        "issuer": "BANK",
+        "name": "VISA"
+      }
+    }
+  ]
+}

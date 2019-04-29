@@ -1,0 +1,9 @@
+{
+  "name": "Shop For You",
+  "description": "",
+  "email": "info@shopforyou.example.com",
+  "phone": "+1-202-555-0146",
+  "url": "www.shopforyou.example.com",
+  "shippingPrice": 7.5,
+  "rating": 4
+}

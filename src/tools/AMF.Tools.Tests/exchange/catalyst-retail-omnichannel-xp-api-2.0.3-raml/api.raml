@@ -1,0 +1,2508 @@
+#%RAML 1.0
+version: v2.0
+baseUri: http://localhost:8081/api
+title: Retail Omnichannel Experience API
+
+traits:
+  geoSearch: !include /exchange_modules/org.mule.templates/retail-geosearch/1.0.0/retail_geosearch.raml
+
+uses:
+
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+  collection: /collections.raml
+  payment: /exchange_modules/org.mule.templates/retail-payment/1.0.1/retail_payment.raml
+  contact: /exchange_modules/org.mule.templates/retail-contact/1.0.0/retail_contact.raml
+  fulfillment: /exchange_modules/org.mule.templates/retail-fulfillment/1.0.1/retail_fulfillment.raml
+  taxonomy: /exchange_modules/org.mule.templates/retail-taxonomy/1.0.0/retail_taxonomy.raml
+  customer: /exchange_modules/org.mule.templates/retail-customer-types/1.0.1/retail_customer_types.raml
+  channel: /channel-types.raml
+  order: /exchange_modules/org.mule.templates/retail-order-types/1.0.1/retail_order_types.raml
+  product: /exchange_modules/org.mule.templates/retail-product/1.0.0/retail_product.raml
+  session: /exchange_modules/org.mule.templates/retail-shopping-cart-types/1.0.1/retail_shopping_cart_types.raml
+  inventory: /exchange_modules/org.mule.templates/retail-inventory/1.0.0/retail_inventory.raml
+  store: /exchange_modules/org.mule.templates/retail-store/1.0.0/retail_store.raml
+  partner: /exchange_modules/org.mule.templates/retail-partner/1.0.0/retail_partner.raml
+
+types:
+
+  ContactMethodCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      contact method response collection
+    properties:
+      contactMethods: contact.ContactMethod[]
+
+  ContactMethodResponse:
+    type: contact.ContactMethod
+    description: |
+      contact method response
+
+  ChannelCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      channel response collection
+    properties:
+      channels: channel.Channel[]
+
+  ChannelResponse:
+    type: channel.Channel
+    description: |
+      channel response
+
+  FulfillmentMethodCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      fulfillment method response collection
+    properties:
+      fulfillmentMethods: fulfillment.Fulfillment[]
+
+  StoreCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      store response collection
+    properties:
+      stores: store.StoreInfo[]
+
+  StoreResponse:
+    type: store.StoreInfo
+    description: |
+      store response
+
+  PartnerCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      partner response collection
+    properties:
+      partners: partner.PartnerInfo[]
+
+  PartnerResponse:
+    type: partner.PartnerInfo
+    description: |
+      partner response
+
+  CategoryCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      category response collection
+    properties:
+      categories: taxonomy.Category[]
+
+  CategoryResponse:
+    type: taxonomy.Category
+    description: |
+      category response
+
+  SalesOrderCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      sales order response collection
+    properties:
+      orders: order.SalesOrder[]
+
+  OrderCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      order response collection
+    properties:
+      orders: order.OrderSummary[]
+
+  SalesOrderResponse:
+    type: order.SalesOrderHeader
+    description: |
+      sales order response
+
+  SalesOrderPaymentMethodResponse:
+    type: payment.PaymentMethod
+    description: |
+      sales order payment method response
+
+  SalesOrderFulfillmentResponse:
+    type: fulfillment.Fulfillment
+    description: |
+      sales order fulfillment response
+
+  SalesOrderItemCollectionResponse:
+    type: order.SalesOrderItems
+    description: |
+      sales order item response collection
+
+  ProductResponse:
+    type: product.Product
+    description: |
+      product response
+
+  ProductCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      product response collection
+    properties:
+      products: product.Product[]
+
+  FeatureCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      feature response collection
+    properties:
+      features: product.ProductFeature[]
+
+  FeatureResponse:
+    type: product.ProductFeature
+    description: |
+      feature response
+    properties:
+
+  ProductVariantCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      product variant response collection
+    properties:
+      variants: product.ProductVariant[]
+
+  ProductVariantResponse:
+    type: product.ProductVariant
+    description: |
+      product variant response
+
+  ProductVariantAvailabilityResponse:
+    type: inventory.Availability
+    description: |
+      product variant availability response
+    properties:
+
+  ShoppingCartCollectionResponse:
+    type: common.CollectionResponse
+    description: |
+      shopping cart response collection
+    properties:
+      shoppingCarts: session.ShoppingCart[]
+
+  ShoppingCartResponse:
+    type: session.ShoppingCart
+    description: |
+      shopping cart response
+
+#  InventoryCollectionResponse:
+#    type: common.CollectionResponse
+#    description: |
+#      inventory response collection
+#    properties:
+#      inventory: inventory.WarehouseInventory[]
+
+#  InventoryResponse:
+#    type: inventory.WarehouseInventory
+#    description: |
+#      inventory response
+
+/customers:
+  description: |
+    Consists of information about customers: name, delivery addresses, payment methods etc.
+  type:
+    collection.collection:
+      collectionResponseType: customer.CustomerCollectionResponse
+      collectionMemberPrototypeType: customer.Customer
+      collectionMemberResponseType: customer.CustomerResponse
+  post:
+    displayName: Create customer
+    body:
+      application/json:
+        example: |
+          {
+                "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                "firstName": "Jason",
+                "lastName": "Bourne",
+                "paymentMethods": [
+                    {
+                      "paymentMethodType":{
+                        "medium":"CARD",
+                        "issuer":"BANK",
+                        "name":"VISA"
+                      }
+                    }
+                ],
+                "deliveryAddresses": [
+                    {
+                      "type": "BILLING",
+                      "identifier":"deb89058-77fb-4e97-8c83-6506c3855555",
+                      "address":"Main street 122",
+                      "city":"San Francisco",
+                      "state":"California",
+                      "postalCode":"90210",
+                      "recipient":"Jason Bourne",
+                      "country":"US",
+                      "secondaryAddress": null,
+                      "mailStopCode": null,
+                      "attention": null
+                    }
+                ]
+              }
+
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {
+                "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                "firstName": "Jason",
+                "lastName": "Bourne",
+                "paymentMethods": [
+                    {
+                      "identifier":"deb89058-77fb-4e97-8c83-6506c38c4444",
+                      "paymentMethodType":{
+                        "medium":"CARD",
+                        "issuer":"BANK",
+                        "name":"VISA"
+                      }
+                    }
+                ],
+                "deliveryAddresses": [
+                    {
+                      "type": "BILLING",
+                      "identifier":"deb89058-77fb-4e97-8c83-6506c3855555",
+                      "address":"Main street 122",
+                      "city":"San Francisco",
+                      "state":"California",
+                      "postalCode":"90210",
+                      "recipient":"Jason Bourne",
+                      "country":"US",
+                      "secondaryAddress": null,
+                      "mailStopCode": null,
+                      "attention": null
+                    }
+                ]
+              }
+
+  get: 
+    displayName: Get customers
+    is: &queryableCollection [ collection.pageable, collection.sortable ]
+    queryParameters:
+      firstName: string
+      lastName: string
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "_meta": {
+                  "messages": []
+                },
+                "customers": [
+                  {
+                    "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                    "firstName": "Jason",
+                    "lastName": "Bourne",
+                    "paymentMethods": [
+                        {
+                          "paymentMethodType":{
+                            "medium":"CARD",
+                            "issuer":"BANK",
+                            "name":"VISA"
+                          }
+                        }
+                    ],
+                    "deliveryAddresses": [
+                        {
+                          "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                          "type": "BILLING",
+                          "address":"Main street 122",
+                          "city":"San Francisco",
+                          "state":"California",
+                          "postalCode":"90210",
+                          "recipient":"Jason Bourne",
+                          "country":"US",
+                          "secondaryAddress":"",
+                          "mailStopCode":"",
+                          "attention":""
+                        }
+                    ]
+                  }
+                ]
+              }
+
+  /{customerId}:
+    uriParameters:
+      customerId:
+        type: string
+    type:
+      collection.collectionMember:
+        collectionMemberResponseType: customer.CustomerResponse
+        collectionMemberPrototypeType: customer.Customer
+    get:
+      displayName: Get customer
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "identifier":"deb89058-77fb-4e97-8c83-6506c38cacf8",
+                  "firstName":"Jason",
+                  "lastName":"Bourne",
+                  "paymentMethods":[
+                    {
+                      "paymentMethodType":{
+                        "medium":"CARD",
+                        "issuer":"BANK",
+                        "name":"VISA"
+                      }
+                    }
+                  ],
+                  "deliveryAddresses":[
+                    {
+                      "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                      "address":"Main street 122",
+                      "type": "BILLING",
+                      "city":"San Francisco",
+                      "state":"California",
+                      "postalCode":"90210",
+                      "recipient":"Jason Bourne",
+                      "country":"US",
+                      "secondaryAddress":null,
+                      "mailStopCode":null,
+                      "attention":null
+                    },
+                    {
+                      "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                      "address":"Main street 122",
+                      "type": "SHIPPING",
+                      "city":"San Francisco",
+                      "state":"California",
+                      "postalCode":"90210",
+                      "recipient":"Jason Bourne",
+                      "country":"US",
+                      "secondaryAddress":null,
+                      "mailStopCode":null,
+                      "attention":null
+                    }
+                  ]
+                }
+    put:
+      displayName: Update customer
+      body:
+            application/json:
+              example:
+                  {
+                    "identifier":"deb89058-77fb-4e97-8c83-6506c38cacf8",
+                    "firstName":"Jason",
+                    "lastName":"Bourne",
+                    "paymentMethods":[
+                      {
+                        "paymentMethodType":{
+                          "medium":"CARD",
+                          "issuer":"BANK",
+                          "name":"VISA"
+                        }
+                      }
+                    ],
+                    "deliveryAddresses":[
+                      {
+                        "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                        "type": "BILLING",
+                        "address":"Main street 122",
+                        "city":"San Francisco",
+                        "state":"California",
+                        "postalCode":"90210",
+                        "recipient":"Jason Bourne",
+                        "country":"US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention":null
+                      },
+                      {
+                        "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                        "type": "SHIPPING",
+                        "address":"Main street 122",
+                        "city":"San Francisco",
+                        "state":"California",
+                        "postalCode":"90210",
+                        "recipient":"Jason Bourne",
+                        "country":"US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention": null
+                      }
+                    ]
+                  }
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+
+                  {
+                    "identifier":"deb89058-77fb-4e97-8c83-6506c38cacf8",
+                    "firstName":"Jason",
+                    "lastName":"Bourne",
+                    "paymentMethods":[
+                      {
+                        "paymentMethodType":{
+                          "medium":"CARD",
+                          "issuer":"BANK",
+                          "name":"VISA"
+                        }
+                      }
+                    ],
+                    "deliveryAddresses":[
+                      {
+                        "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                        "type": "BILLING",
+                        "address":"Main street 122",
+                        "city":"San Francisco",
+                        "state":"California",
+                        "postalCode":"90210",
+                        "recipient":"Jason Bourne",
+                        "country":"US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention": null
+                      },
+                      {
+                        "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                        "type": "SHIPPING",
+                        "address":"Main street 122",
+                        "city":"San Francisco",
+                        "state":"California",
+                        "postalCode":"90210",
+                        "recipient":"Jason Bourne",
+                        "country":"US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention": null
+                      }
+                    ]
+                  }
+
+
+    /deliveryAddresses:
+      description: |
+        Address where product should be delivered for the customer.
+      type:
+        collection.collection:
+          collectionResponseType: customer.DeliveryAddressCollectionResponse
+          collectionMemberPrototypeType: common.PostalAddress
+          collectionMemberResponseType: customer.DeliveryAddressResponse
+      get:
+        displayName: Get delivery addresses for customer
+        is: *queryableCollection
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "deliveryAddresses": [
+                      {
+                        "type": "BILLING",
+                        "identifier":"deb89058-77fb-4e97-8c83-6506c3855555",
+                        "address":"Main street 122",
+                        "city":"San Francisco",
+                        "state":"California",
+                        "postalCode":"90210",
+                        "recipient":"Jason Bourne",
+                        "country":"US",
+                        "secondaryAddress":null,
+                        "mailStopCode":null,
+                        "attention":null
+                      }
+                    ]
+                  }
+
+
+      /{deliveryAddressId}:
+        uriParameters:
+          deliveryAddressId:
+            type: common.resourceId
+        type:
+          collection.collectionMember:
+            collectionMemberResponseType: customer.DeliveryAddressResponse
+            collectionMemberPrototypeType: common.PostalAddress
+
+        get:
+          displayName: Get delivery address for customer
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "identifier": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                      "type": "BILLING",
+                      "address": "Main street 122",
+                      "city": "San Francisco",
+                      "state": "California",
+                      "postalCode": "90210",
+                      "recipient": "Jason Bourne",
+                      "country": "US",
+                      "secondaryAddress": null,
+                      "mailStopCode": null,
+                      "attention": null
+                    }
+    /contactMethods:
+      description: |
+        The way that a store can contact to a customer.
+      type:
+        collection.collection:
+          collectionResponseType: ContactMethodCollectionResponse
+          collectionMemberPrototypeType: contact.ContactMethod
+          collectionMemberResponseType: ContactMethodResponse
+      get:
+        displayName: Get contact methods for customer
+        is: *queryableCollection
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "contactMethods": [
+                      {
+                        "contactMethodType": "EMAIL",
+                        "emailAddress": "jason.bourne@example.com"
+                      }
+                    ]
+                  }
+      /{contactMethodId}:
+        uriParameters:
+          contactMethodId:
+            type: common.resourceId
+        type:
+          collection.collectionMember:
+            collectionMemberResponseType: ContactMethodResponse
+            collectionMemberPrototypeType: contact.ContactMethod
+        get:
+          displayName: Get contact method for customer
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "contactMethodType": "EMAIL",
+                      "emailAddress": "jason.bourne@example.com"
+                    }
+    /paymentMethods:
+      description: |
+        Represents of different payment methods are suitable for the customer to pay for a products.
+      type:
+        collection.collection:
+          collectionResponseType: customer.PaymentMethodCollectionResponse
+          collectionMemberPrototypeType: payment.PaymentMethod
+          collectionMemberResponseType: customer.PaymentMethodResponse
+      get:
+        displayName: Get payment methods for customer
+        is: *queryableCollection
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": [],
+                      "totalItems": 1,
+                      "offset": 0,
+                      "limit": 10
+                    },
+                    "paymentMethods": [
+                      {
+                        "identifier":"deb89058-77fb-4e97-8c83-6506c38c4444",
+                        "paymentMethodType":{
+                          "medium":"CARD",
+                          "issuer":"BANK",
+                          "name":"VISA"
+                        }
+                      }
+                    ]
+                  }
+      /{paymentMethodId}:
+        uriParameters:
+          paymentMethodId:
+            type: common.resourceId
+        type:
+          collection.collectionMember:
+            collectionMemberResponseType: customer.PaymentMethodResponse
+            collectionMemberPrototypeType: payment.PaymentMethod
+        get:
+          displayName: Get payment method for customer
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "identifier":"deb89058-77fb-4e97-8c83-6506c38c4444",
+                      "paymentMethodType": {
+                        "medium": "CARD",
+                        "issuer": "BANK",
+                        "name": "VISA"
+                      }
+                    }
+    /orders:
+      description: |
+        Orders of selected customer.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: OrderCollectionResponse
+      get:
+        displayName: Get orders for customer
+        is: *queryableCollection
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "orders": [
+                        {
+                          "identifier": "8010J0000022iETQAY",
+                          "customerId": "951",
+                          "taxPrice": "4.25",
+                          "shippingPrice": "5.00",
+                          "shippingAddress": {
+                            "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                            "type": "SHIPPING",
+                            "address": "Main Street 40",
+                            "city": "San Francisco",
+                            "postalCode": "94210",
+                            "state": "CA",
+                            "country": "US"
+                          },
+                          "billingAddress": {
+                            "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                            "type": "SHIPPING",
+                            "address": "Main Street 40",
+                            "city": "San Francisco",
+                            "postalCode": "94210",
+                            "state": "CA",
+                            "country": "US"
+                          },
+                          "subtotal": "125.43",
+                          "status": "Draft",
+                          "trackingNumber": "8010J0000022iETQAY",
+                          "orderItems": {
+                            "pickupItems": [
+                              {
+                                "orderItemId": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                                "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                                "productName": "Smart Slim Micro Stripe Shirt",
+                                "location": {
+                                  "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                                  "deliveryMethod": "PICKUP",
+                                  "locationType": "STORE"
+                                },
+                                "price" : "50",
+                                "quantity": 1
+                              },
+                              {
+                                "orderItemId": "dfc25820-c37d-456c-8867-4a89a51b7f75",
+                                "productId": "7c9be8ad-0791-4362-b195-a53dcca4e1d7",
+                                "productName": "Men's Regular Fit V-Neck Knit Sweater",
+                                "location": {
+                                  "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                                  "deliveryMethod": "PICKUP",
+                                  "locationType": "STORE"
+                                },
+                                "price" : "60",
+                                "quantity": 2
+                              }
+                            ],
+                            "shipmentItems": [
+                              {
+                                "orderItemId": "3c1eb223-811c-4e86-8ea3-4a06a002a79a",
+                                "productId": "cd67cd8a-8901-48c5-890b-0a21f4a0f8ad",
+                                "productName": "Men's Chino Jogger Pants",
+                                "location": {
+                                  "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                                  "deliveryMethod": "SHIPMENT",
+                                  "locationType": "WAREHOUSE"
+                                },
+                                "price" : "30",
+                                "quantity": 3
+                              }
+                            ],
+                            "partnersItems": [
+                              {
+                                "orderItemId": "fc3d4900-c5ac-4649-8bc8-cbbef4fe8fde",
+                                "productId": "e1c515f9-102d-4830-b353-18fe48065732",
+                                "productName": "Uniforms Modern Fit Short Sleeve Polo Shirt",
+                                "location": {
+                                  "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                                  "deliveryMethod": "SHIPMENT",
+                                  "locationType": "PARTNER"
+                                },
+                                "price" : "20",
+                                "quantity": 1
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+
+    /shoppingCarts:
+      description: |
+        Represents a set of products which selected customer wants to order.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: ShoppingCartCollectionResponse
+      get:
+        displayName: Get shopping carts for customer
+        is: *queryableCollection
+        responses:
+          200:
+            body:
+                application/json:
+                  example: |
+                      {
+                          "_meta": {
+                            "messages": []
+                          },
+                         "shoppingCarts": [
+                                  {
+                                    "identifier": "734a04dc-2f30-11e7-93ae-92361f002671",
+                                    "customerId": "11e7-93ae-92361f002671",
+                                    "items": [
+                                      {
+                                        "location": {
+                                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                                          "deliveryMethod": "PICKUP",
+                                          "locationType": "STORE"
+                                        },
+                                        "item": {
+                                          "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                                          "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051"
+                                        },
+                                        "quantity": {
+                                          "amount": 2,
+                                          "quantityType": "DISCRETE",
+                                          "unit": "EA"
+                                        },
+                                        "tax": 5.00,
+                                        "shipping": 9.00
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "identifier": "734a04dc-2f30-11e7-93ae-92361f002675",
+                                    "customerId": "11e7-93ae-92361f002671",
+                                    "items": [
+                                      {
+                                        "location": {
+                                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                                          "deliveryMethod": "PICKUP",
+                                          "locationType": "STORE"
+                                        },
+                                        "item": {
+                                          "productId": "eb8c8ca7-3c42-5489-a820-3aa138430b70",
+                                          "identifier": "8866846-2c6d-4fa7-9e17-4b2c42e0f051"
+                                        },
+                                        "quantity": {
+                                          "amount": 1,
+                                          "quantityType": "DISCRETE",
+                                          "unit": "EA"
+                                        },
+                                        "tax": 5.00,
+                                        "shipping": 9.00
+                                      }
+                                    ]
+                                  }
+                          ]
+                       }
+
+/channels:
+  description: |
+    Consists of the most common channels to cover use-cases with WEB,
+    mobile and brick-and-mortar(store) based application delivering the Omnichannel user experience.
+  type:
+    collection.readOnlyCollection:
+      collectionResponseType: ChannelCollectionResponse
+  get:
+    displayName: Get channels
+    is: &queryableCollection [ collection.pageable, collection.sortable ]
+    queryParameters:
+      paymentMedium?: payment.PaymentMediumType
+      paymentIssuer?: payment.PaymentIssuerType
+      receipt?: fulfillment.ReceiptType
+      carrier?: fulfillment.CarrierType
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "_meta": {
+                  "messages": []
+                },
+                "channels": [
+                  {
+                    "channelType": "WEB",
+                    "url": "http://www.example.com"
+                  },
+                  {
+                    "channelType": "STORE",
+                    "storeNumber": "ae42643a-6d19-483c-82a2-54939d9da13e"
+                  },
+                  {
+                    "channelType": "MOBILE",
+                    "name": "iOS"
+                  }
+                ]
+              }
+  /{channelId}:
+    uriParameters:
+      channelId: common.resourceId
+    type:
+       collection.readOnlyCollectionMember:
+         collectionMemberResponseType: ChannelResponse
+    get:
+      displayName: Get channel
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "channelType": "WEB",
+                  "url": "http://www.example.com"
+                }
+    /paymentMethods:
+      description: |
+        Channel basically could have different payment methods according to channel type like VISA card, bank transfer, cash.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: customer.PaymentMethodCollectionResponse
+      get:
+        displayName: Get payment methods for channel
+        is: *queryableCollection
+        queryParameters:
+          paymentMedium: payment.PaymentMediumType
+          paymentIssuer: payment.PaymentIssuerType
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": [],
+                      "totalItems": 1,
+                      "offset": 0,
+                      "limit": 5
+                    },
+                    "paymentMethods": [
+                         {
+                            "paymentMethodType": {
+                                "medium": "PHYSICAL",
+                                "issuer": "GOVT",
+                                "name": "CASH"
+                            }
+                         },
+                         {
+                            "paymentMethodType": {
+                                "medium": "PHYSICAL",
+                                "issuer": "BANK",
+                                "name": "CHECK"
+                            }
+                         },
+                         {
+                            "paymentMethodType": {
+                                "medium": "CARD",
+                                "issuer": "BANK",
+                                "name": "VISA"
+                            }
+                         }
+                    ]
+                  }
+
+    /fulfillmentMethods:
+      description: |
+        Fulfillment methods are provided in selected channel.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: FulfillmentMethodCollectionResponse
+      get:
+        displayName: Get fulfillment methods for channel
+        is: *queryableCollection
+        queryParameters:
+          receipt: fulfillment.ReceiptType
+          carrier: fulfillment.CarrierType
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "fulfillmentMethods": [
+                      {
+                        "carrier": "POSTAL",
+                        "deliveryAddress": {
+                            "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                            "type": "SHIPPING",
+                            "address": "Main street 122",
+                            "city": "San Francisco",
+                            "state": "California",
+                            "postalCode": "90210",
+                            "recipient": "Jason Bourne",
+                            "country": "US",
+                            "secondaryAddress": null,
+                            "mailStopCode": null,
+                            "attention": null
+                        },
+                      "receipt": "PICKUP"
+                      }
+                    ]
+                  }
+    /products:
+      description: |
+        Products are provided by particular channel.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: ProductCollectionResponse
+      get:
+        displayName: Get products for channel
+        is: *queryableCollection
+        queryParameters:
+          name?: string
+          minPrice?: integer
+          maxPrice?: integer
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "products": [
+                      {
+                        "brand": "Anypoint",
+                        "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "categoryId" : ["5e5b095e-8b60-429c-98bf-da36afeb1f1c"],
+                        "model": "Smart Slim Micro Stripe Shirt",
+                        "rating": 5,
+                        "description": "Shirt by ASOS Tall. Stripe woven fabric. Added stretch for comfort. Spread collar. Button placket. Slim fit - cut close to the body. Machine wash. 98% Cotton, 2% Elastane. Our model wears a size Medium Long and is 193cm/6'4\" tall",
+                        "pictures": [
+                          "https://launderkart.com/wp-content/uploads/2016/07/Shirt.jpg",
+                          "https://cdni.llbean.net/is/image/wim/251423_47_41?wid=428&hei=494"
+                        ],
+                        "price": {
+                          "amount": {
+                            "currency": "USD",
+                            "currencyValue": 34.90,
+                            "name": "Amount"
+                          },
+                           "salesUnit": {
+                            "code": "EA",
+                            "name": "Each"
+                          }
+                        }
+                      }
+                    ]
+                  }
+    /categories:
+      description: |
+        Categories of products are provided by selected channel.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: CategoryCollectionResponse
+      get:
+        displayName: Get categories for channel
+        is: *queryableCollection
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "categories": [
+                      {
+
+                          "identifier": "fe3d0325-be8c-45b8-aa96-2331f25542be",
+                          "name": "Sweaters",
+                          "description": "Sweaters"
+                      },
+                      {
+
+                          "identifier": "d3d0d1fd-b33c-4d40-b559-04665aa9ead6",
+                          "name": "Hats",
+                          "description": "Hats"
+                      },
+                      {
+                          "identifier": "5e5b095e-8b60-429c-98bf-da36afeb1f1c",
+                          "name": "Shirts",
+                          "description": "Shirts"
+                      }
+                    ]
+                  }
+
+/categories:
+  description: |
+    Category is a way to organize products in a store by type of products.
+  type:
+    collection.readOnlyCollection:
+      collectionResponseType: CategoryCollectionResponse
+  get:
+    displayName: Get categories
+    is: *queryableCollection
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "_meta": {
+                  "messages": []
+                },
+                "categories": [
+                      {
+                          "identifier": "49ed1d7f-9583-40aa-8e80-bfea709b16a4",
+                          "name": "Most popular items",
+                          "description": "Most popular items",
+                          "abstract": true
+                      },
+                      {
+                          "identifier": "fe3d0325-be8c-45b8-aa96-2331f25542be",
+                          "name": "Sweaters",
+                          "description": "Sweaters"
+                      },
+                      {
+                          "identifier": "d3d0d1fd-b33c-4d40-b559-04665aa9ead6",
+                          "name": "Jeans",
+                          "description": "Jeans"
+                      },
+                      {
+                          "identifier": "5e5b095e-8b60-429c-98bf-da36afeb1f1c",
+                          "name": "Shirts",
+                          "description": "Shirts"
+                      },
+                      {   "parentId" : "49ed1d7f-9583-40aa-8e80-bfea709b16a4",
+                          "identifier": "67912d0b-1dfa-4a62-a552-f0d01d5b0c79",
+                          "name": "Hats",
+                          "description": "Hats"
+                      },
+                      {
+                          "parentId" : "49ed1d7f-9583-40aa-8e80-bfea709b16a4",
+                          "identifier": "c9032941-b3a5-4e8e-8134-baee3a751eb9",
+                          "name": "Shoes",
+                          "description": "Shoes"
+                      }
+                    ]
+                  }
+  /{categoryId}:
+    uriParameters:
+      categoryId: string
+    type:
+       collection.readOnlyCollectionMember:
+         collectionMemberResponseType: CategoryResponse
+    get:
+      displayName: Get category
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                    "parentId" : "49ed1d7f-9583-40aa-8e80-bfea709b16a4",
+                    "identifier": "5e5b095e-8b60-429c-98bf-da36afeb1f1c",
+                    "name": "Shirts",
+                    "description": "Shirts"
+                }
+
+    /products:
+      description: |
+        Products are related to selected category.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: ProductCollectionResponse
+      get:
+        displayName: Get products for category
+        is: *queryableCollection
+        queryParameters:
+            name?: string
+            minPrice?: integer
+            maxPrice?: integer
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "products":[
+                        {
+                           "brand":"Anypoint",
+                           "identifier":"eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                           "categoryId": ["5e5b095e-8b60-429c-98bf-da36afeb1f1c"],
+                           "model":"Smart Slim Micro Stripe Shirt",
+                           "rating":5,
+                           "description":"Shirt by ASOS Tall. Stripe woven fabric. Added stretch for comfort. Spread collar. Button placket. Slim fit - cut close to the body. Machine wash. 98% Cotton, 2% Elastane. Our model wears a size Medium Long and is 193cm/6'4\" tall",
+                           "pictures":[
+                              "https://cdni.llbean.net/is/image/wim/251423_0_52??wid=428&hei=494",
+                              "https://cdni.llbean.net/is/image/wim/251423_47_41?wid=428&hei=494"
+                           ],
+                           "price":{
+                              "amount":{
+                                 "currency":"USD",
+                                 "currencyValue":34.90,
+                                 "name":"Amount"
+                              },
+                              "salesUnit":{
+                                 "code":"EA",
+                                 "name":"Each"
+                              }
+                           }
+                        },
+                        {
+                           "brand":"Anypoint",
+                           "identifier":"e1c515f9-102d-4830-b353-18fe48065732",
+                           "categoryId" : ["5e5b095e-8b60-429c-98bf-da36afeb1f1c"],
+                           "model":"Uniforms Modern Fit Short Sleeve Polo Shirt",
+                           "rating":5,
+                           "description":"Machine Wash, Tumble Dry. True to Size.",
+                           "pictures":[
+                              "https://images-na.ssl-images-amazon.com/images/I/41p0XBBb6vL.jpg"
+                           ],
+                           "price":{
+                              "amount":{
+                                 "currency":"USD",
+                                 "currencyValue":12.95,
+                                 "name":"Amount"
+                              },
+                              "salesUnit":{
+                                 "code":"EA",
+                                 "name":"Each"
+                              }
+                           }
+                        }
+                     ]
+                  }
+/stores:
+  description: |
+    Stores which can provide products to customers.
+  type:
+    collection.readOnlyCollection:
+      collectionResponseType: StoreCollectionResponse
+  get:
+    displayName: Get stores
+    is: *queryableCollection
+    queryParameters:
+      paymentMedium?: payment.PaymentMediumType
+      paymentIssuer?: payment.PaymentIssuerType
+      receipt?: fulfillment.ReceiptType
+      carrier?: fulfillment.CarrierType
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+               {
+                  "_meta": {
+                    "messages": []
+                  },
+                 "stores": [
+                    {
+                      "storeId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                      "name": "Anypoint Store 1",
+                      "description": "Department store chain providing brand-name c",
+                      "notes": "Department store chain providing brand-name c",
+                      "openingHours": "Mo,Tu,We,Th,Fr 09:00-20:00",
+                      "address": {
+                        "address": "170 O'Farrell St",
+                        "city": "San Francisco",
+                        "postalCode": "94102",
+                        "state": "California",
+                        "country": "USA"
+                      },
+                      "contact": {
+                        "email": "store1@anypointstore.example.com",
+                        "phone": "+1-202-555-0111"
+                      },
+                      "geo": {
+                        "latitude": 37.78703308105469,
+                        "longitude": -122.4060287475586
+                      }
+                    }
+                 ]
+               }
+  /{storeId}:
+    uriParameters:
+      storeId: string
+    type:
+       collection.readOnlyCollectionMember:
+         collectionMemberResponseType: StoreResponse
+    get:
+      displayName: Get store
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                  {
+                    "storeId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                    "name": "Anypoint Store 1",
+                    "description": "Department store chain providing brand-name c",
+                    "notes": "Department store chain providing brand-name c",
+                    "openingHours": "Mo,Tu,We,Th,Fr 09:00-20:00",
+                    "address": {
+                      "address": "170 O'Farrell St",
+                      "city": "San Francisco",
+                      "postalCode": "94102",
+                      "state": "California",
+                      "country": "USA"
+                    },
+                    "contact": {
+                      "email": "store1@anypointstore.example.com",
+                      "phone": "+1-202-555-0111"
+                    },
+                    "geo": {
+                      "latitude": 37.78703308105469,
+                      "longitude": -122.4060287475586
+                    }
+                  }
+    /paymentMethods:
+      description: |
+        Represents of different payment methods for particular store.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: customer.PaymentMethodCollectionResponse
+      get:
+        displayName: Get payment methods for store
+        is: *queryableCollection
+        queryParameters:
+          paymentMedium: payment.PaymentMediumType
+          paymentIssuer: payment.PaymentIssuerType
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": [],
+                      "totalItems": 1,
+                      "offset": 0,
+                      "limit": 10
+                    },
+                    "paymentMethods": [
+                      {
+                        "paymentMethodType":{
+                          "medium":"CARD",
+                          "issuer":"BANK",
+                          "name":"VISA"
+                        }
+                      }
+                    ]
+                  }
+    /fulfillmentMethods:
+      description: |
+        Fulfillment methods are provided by selected store.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: FulfillmentMethodCollectionResponse
+      get:
+        displayName: Get fulfillment methods for store
+        is: *queryableCollection
+        queryParameters:
+          receipt: fulfillment.ReceiptType
+          carrier: fulfillment.CarrierType
+    /products:
+      description: |
+        Products are provided by selected store.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: ProductCollectionResponse
+      get:
+        displayName: Get products in store
+        is: *queryableCollection
+    /categories:
+      description: |
+        Categories are provided by selected store.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: ProductCollectionResponse
+      get:
+        displayName: Get categories in store
+        is: *queryableCollection
+    /nearbyStores:
+      description: |
+        Stores are located nearby.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: StoreCollectionResponse
+      get:
+        displayName: Get the nearest located stores
+        is: *queryableCollection
+        queryParameters:
+          radius:
+            type: number
+            default: 5
+            minimum: 0.5
+            maximum: 50
+            required: true
+
+/partners:
+  description: |
+    Represents partners of a store.
+  type:
+    collection.readOnlyCollection:
+      collectionResponseType: PartnerCollectionResponse
+  get:
+    displayName: Get partners
+    is: *queryableCollection
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+               {
+                  "_meta": {
+                    "messages": []
+                  },
+                 "partners": [
+                      {
+                        "partnerId": "2d9df8be-a185-4dde-9577-d6edf6cdb398",
+                        "name": "Best Amazing Store",
+                        "description": "",
+                        "email": "info@luckystore.example.com",
+                        "phone": "+1-202-555-0119",
+                        "url": "www.luckystore.example.com",
+                        "shippingPrice": 5.5,
+                        "rating": 4
+                      },
+                      {
+                        "partnerId": "84c95f82-c435-4de0-8964-82e16bd23689",
+                        "name": "Shop For You",
+                        "description": "",
+                        "email": "info@shopforyou.example.com",
+                        "phone": "+1-202-555-0146",
+                        "url": "www.shopforyou.example.com",
+                        "shippingPrice": 7.5,
+                        "rating": 4
+                      }
+                    ]
+                 }
+  /{partnerId}:
+    uriParameters:
+      partnerId: string
+    type:
+       collection.readOnlyCollectionMember:
+         collectionMemberResponseType: PartnerResponse
+    get:
+      displayName: Get partner
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                  {
+                    "partnerId": "2d9df8be-a185-4dde-9577-d6edf6cdb398",
+                    "name": "Best Amazing Store",
+                    "description": "",
+                    "email": "info@luckystore.example.com",
+                    "phone": "+1-202-555-0119",
+                    "url": "www.luckystore.example.com",
+                    "shippingPrice": 5.5,
+                    "rating": 4
+                  }
+/orders:
+  description: |
+    Order is a document issued by a customer to a store, indicating types, quantities and prices for selected products.
+  type:
+    collection.collection:
+      collectionResponseType: SalesOrderCollectionResponse
+      collectionMemberPrototypeType: order.SalesOrder
+      collectionMemberResponseType: SalesOrderResponse
+  get:
+    displayName: Get orders
+    is: &queryableCollection [ collection.pageable, collection.sortable ]
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "_meta": {
+                  "messages": []
+                },
+                "orders": [
+                  {
+                    "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                    "customerId": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                    "orderItems": [
+                      {
+                        "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "quantity": {
+                          "quantityType": "DISCRETE",
+                          "unit": "EA",
+                          "amount": 1
+                        },
+                        "location": {
+                              "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                              "deliveryMethod": "PICKUP",
+                              "locationType": "STORE"
+                        },
+                        "item": {
+                          "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                          "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                          "identifiers": {
+                            "SKU": "UGG-BB-PUR-06"
+                          }
+                        },
+                        "itemUnitPrice": {
+                          "amount": {
+                            "currency": "USD",
+                            "currencyValue": 34.9,
+                            "name": "Amount"
+                          },
+                          "salesUnit": {
+                            "code": "EA",
+                            "name": "Each"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+  post:
+    displayName: Create order
+    body:
+      application/json:
+        example: |
+            {
+              "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+              "customerId": "facebook_1234567890123456",
+              "orderItems": [
+                {
+                  "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                  "quantity": {
+                    "quantityType": "DISCRETE",
+                    "unit": "EA",
+                    "amount": 1
+                  },
+                  "location": {
+                              "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                              "deliveryMethod": "PICKUP",
+                              "locationType": "STORE"
+                  },
+                  "item": {
+                    "configuration": [
+                      {
+                        "characteristic": {
+                          "code": "size",
+                          "description": "Size",
+                          "name": "Size of item"
+                        },
+                        "characteristicValue": {
+                          "code": "M",
+                          "name": "Medium"
+                        }
+                      },
+                      {
+                        "characteristic": {
+                          "code": "color",
+                          "description": "Color",
+                          "name": "Color"
+                        },
+                        "characteristicValue": {
+                          "code": "blue",
+                          "name": "Blue"
+                        }
+                      }
+                    ],
+                    "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                    "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                    "identifiers": {
+                      "SKU": "UGG-BB-PUR-06"
+                    },
+                    "pictures": [
+                      "https://cdni.llbean.net/is/image/wim/251423_0_52??wid=428&hei=494",
+                      "https://cdni.llbean.net/is/image/wim/251423_47_41?wid=428&hei=494"
+                    ]
+                  },
+                  "itemUnitPrice": {
+                    "amount": {
+                      "currency": "USD",
+                      "currencyValue": 34.9,
+                      "name": "Amount"
+                    },
+                    "salesUnit": {
+                      "code": "EA",
+                      "name": "Each"
+                    }
+                  },
+                  "itemExtendedPrice": {
+                    "currency": "USD",
+                    "currencyValue": 34.9,
+                    "name": "Amount"
+                  }
+                },
+                {
+                  "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                  "quantity": {
+                    "quantityType": "DISCRETE",
+                    "unit": "EA",
+                    "amount": 1
+                  },
+                  "location": {
+                      "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                      "deliveryMethod": "PICKUP",
+                      "locationType": "STORE"
+                  },
+                  "item": {
+                    "configuration": [
+                      {
+                        "characteristic": {
+                          "code": "size",
+                          "description": "Size",
+                          "name": "Size of item"
+                        },
+                        "characteristicValue": {
+                          "code": "L",
+                          "name": "Large"
+                        }
+                      },
+                      {
+                        "characteristic": {
+                          "code": "color",
+                          "description": "Color",
+                          "name": "Color"
+                        },
+                        "characteristicValue": {
+                          "code": "tan",
+                          "name": "Tan"
+                        }
+                      }
+                    ],
+                    "identifier": "355d4130-1e3a-4795-aada-c960c89f6d9f",
+                    "productId": "cd67cd8a-8901-48c5-890b-0a21f4a0f8ad",
+                    "identifiers": {
+                      "SKU": "UGG-BB-PUR-06"
+                    },
+                    "pictures": [
+                      "https://images-na.ssl-images-amazon.com/images/I/61Ezqhc-8AL._UX342_.jpg"
+                    ]
+                  },
+                  "itemUnitPrice": {
+                    "amount": {
+                      "currency": "USD",
+                      "currencyValue": 47.95,
+                      "name": "Amount"
+                    },
+                    "salesUnit": {
+                      "code": "EA",
+                      "name": "Each"
+                    }
+                  },
+                  "itemExtendedPrice": {
+                    "currency": "USD",
+                    "currencyValue": 47.95,
+                    "name": "Amount"
+                  }
+                }
+              ]
+            }
+    responses:
+      201:
+        body:
+          application/json:
+           example: |
+            {
+              "customerId": "facebook_1234567890123456"
+            }
+
+  /{salesOrderId}:
+    uriParameters:
+      salesOrderId:
+        type: string
+    type:
+      collection.collectionMember:
+        collectionMemberResponseType: SalesOrderResponse
+        collectionMemberPrototypeType: order.SalesOrder
+    get:
+      displayName: Get order
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "customerId": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                  "fulfillment": {
+                    "receipt": "SHIPMENT",
+                    "carrier": "POSTAL",
+                    "deliveryAddress": {
+                        "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "type": "SHIPPING",
+                        "address": "Main street 122",
+                        "city": "San Francisco",
+                        "state": "California",
+                        "postalCode": "90210",
+                        "recipient": "Jason Bourne",
+                        "country": "US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention": null
+                    }
+                  }
+                }
+    put:
+      displayName: Update order
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "customerId": "deb89058-77fb-4e97-8c83-6506c38cacf8",
+                  "fulfillment": {
+                    "receipt": "SHIPMENT",
+                    "carrier": "POSTAL",
+                    "deliveryAddress": {
+                      "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "type": "SHIPPING",
+                        "address": "Main street 122",
+                        "city": "San Francisco",
+                        "state": "California",
+                        "postalCode": "90210",
+                        "recipient": "Jason Bourne",
+                        "country": "US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention": null
+                      }
+                  }
+                }
+    delete:
+      displayName: Delete order
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "_meta": {
+                    "messages": []
+                  }
+                }
+    /paymentMethod:
+      description: |
+        The way that a customer chooses to pay to the seller for a product.
+      type:
+        collection.updatableCollectionMember:
+          collectionMemberPrototypeType: payment.PaymentMethod
+          collectionMemberResponseType: SalesOrderPaymentMethodResponse
+      get:
+        displayName: Get payment method for order
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "paymentMethodType": {
+                        "medium": "CARD",
+                        "issuer": "BANK",
+                        "name": "VISA"
+                      }
+                  }
+      put:
+        displayName: Update payment method for order
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "paymentMethodType": {
+                        "medium": "CARD",
+                        "issuer": "BANK",
+                        "name": "VISA"
+                      }
+                  }
+    /fulfillment:
+      description: |
+        Order fulfillment is represented by steps involved in receiving, processing and delivering orders to customers.
+      type:
+        collection.updatableCollectionMember:
+          collectionMemberPrototypeType: fulfillment.Fulfillment
+          collectionMemberResponseType: SalesOrderFulfillmentResponse
+      get:
+        displayName: Get fulfillment for order
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "carrier": "POSTAL",
+                    "deliveryAddress": {
+                      "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "type": "SHIPPING",
+                        "address": "Main street 122",
+                        "city": "San Francisco",
+                        "state": "California",
+                        "postalCode": "90210",
+                        "recipient": "Jason Bourne",
+                        "country": "US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention": null
+                    },
+                    "receipt": "PICKUP"
+                  }
+      put:
+        displayName: Update fulfillment for order
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "carrier": "POSTAL",
+                    "deliveryAddress": {
+                      "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "type": "SHIPPING",
+                        "address": "Main street 122",
+                        "city": "San Francisco",
+                        "state": "California",
+                        "postalCode": "90210",
+                        "recipient": "Jason Bourne",
+                        "country": "US",
+                        "secondaryAddress": null,
+                        "mailStopCode": null,
+                        "attention": null
+                    },
+                    "receipt": "PICKUP"
+                  }
+    /orderItems:
+      description: |
+        Represents products in selected order.
+      type:
+        collection.updatableCollectionMember:
+          collectionMemberPrototypeType: order.SalesOrderItems
+          collectionMemberResponseType: SalesOrderItemCollectionResponse
+      get:
+        displayName: Get order items
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "orderItems": [
+                      {
+                        "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "location": {
+                              "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                              "deliveryMethod": "PICKUP",
+                              "locationType": "STORE"
+                        },
+                        "item": {
+                          "configuration": [
+                            {
+                              "characteristic": {
+                                "code": "size",
+                                "description": "Size",
+                                "name": "Size of item"
+                              },
+                              "characteristicValue": {
+                                "code": "M",
+                                "name": "Medium"
+                              }
+                            },
+                            {
+                              "characteristic": {
+                                "code": "color",
+                                "name": "Color",
+                                "description": "Color"
+                              },
+                              "characteristicValue": {
+                                "code": "blue",
+                                "name": "Blue"
+                              }
+                            }
+                          ],
+                          "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                          "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                          "identifiers": {
+                            "SKU": "UGG-BB-PUR-06"
+                          }
+                        },
+                        "itemExtendedPrice": {
+                          "currency": "EUR",
+                          "currencyValue": 31.93,
+                          "name": "Amount"
+                        },
+                        "itemUnitPrice": {
+                          "amount": {
+                            "currency": "USD",
+                            "currencyValue": 34.90,
+                            "name": "Amount"
+                          },
+                          "salesUnit": {
+                            "code": "EA",
+                            "name": "Each"
+                          }
+                        },
+                        "quantity": {
+                          "amount": 2,
+                          "quantityType": "CONTINUOUS",
+                          "unit": "EA"
+                        }
+                      }
+                    ]
+                  }
+      put:
+        displayName: Update order items
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "orderItems": [
+                      {
+                        "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "location": {
+                              "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                              "deliveryMethod": "PICKUP",
+                              "locationType": "STORE"
+                        },
+                        "item": {
+                          "configuration": [
+                            {
+                              "characteristic": {
+                                "code": "size",
+                                "description": "Size",
+                                "name": "Size of item"
+                              },
+                              "characteristicValue": {
+                                "code": "M",
+                                "name": "Medium"
+                              }
+                            },
+                            {
+                              "characteristic": {
+                                "code": "color",
+                                "name": "Color",
+                                "description": "Color"
+                              },
+                              "characteristicValue": {
+                                "code": "blue",
+                                "name": "Blue"
+                              }
+                            }
+                          ],
+                          "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                          "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                          "identifiers": {
+                            "SKU": "UGG-BB-PUR-06"
+                          }
+                        },
+                        "itemExtendedPrice": {
+                          "currency": "EUR",
+                          "currencyValue": 31.93,
+                          "name": "Amount"
+                        },
+                        "itemUnitPrice": {
+                          "amount": {
+                            "currency": "USD",
+                            "currencyValue": 34.90,
+                            "name": "Amount"
+                          },
+                          "salesUnit": {
+                            "code": "EA",
+                            "name": "Each"
+                          }
+                        },
+                        "quantity": {
+                          "amount": 2,
+                          "quantityType": "CONTINUOUS",
+                          "unit": "EA"
+                        }
+                      }
+                    ]
+                  }
+
+
+/products:
+  description: |
+    Product is a single item (some goods or a service) which can be provided by a store.
+  type:
+    collection.readOnlyCollection:
+      collectionResponseType: ProductCollectionResponse
+  get:
+    displayName: Get products
+    is: &queryableCollection [ collection.pageable, collection.sortable ]
+    queryParameters:
+      name?: string
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "_meta": {
+                  "messages": []
+                },
+                "products": [
+                      {
+                        "brand": "Anypoint",
+                        "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "categoryId" : ["5e5b095e-8b60-429c-98bf-da36afeb1f1c"],
+                        "model": "Smart Slim Micro Stripe Shirt",
+                        "rating": 5,
+                        "description": "Shirt by ASOS Tall. Stripe woven fabric. Added stretch for comfort. Spread collar. Button placket. Slim fit - cut close to the body. Machine wash. 98% Cotton, 2% Elastane. Our model wears a size Medium Long and is 193cm/6'4\" tall",
+                        "pictures": [
+                          "https://launderkart.com/wp-content/uploads/2016/07/Shirt.jpg",
+                          "https://cdni.llbean.net/is/image/wim/251423_47_41?wid=428&hei=494"
+                        ],
+                        "price": {
+                          "amount": {
+                            "currency": "USD",
+                            "currencyValue": 34.90,
+                            "name": "Amount"
+                          },
+                           "salesUnit": {
+                            "code": "EA",
+                            "name": "Each"
+                          }
+                        }
+                      }
+                    ]
+                  }
+  /{productId}:
+    uriParameters:
+      productId: string
+    type:
+       collection.readOnlyCollectionMember:
+         collectionMemberResponseType: ProductResponse
+    get:
+      displayName: Get product
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "brand": "Anypoint",
+                  "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                  "categoryId" : ["5e5b095e-8b60-429c-98bf-da36afeb1f1c"],
+                  "model": "Smart Slim Micro Stripe Shirt",
+                  "rating": 5,
+                  "description": "Shirt by ASOS Tall. Stripe woven fabric. Added stretch for comfort. Spread collar. Button placket. Slim fit - cut close to the body. Machine wash. 98% Cotton, 2% Elastane. Our model wears a size Medium Long and is 193cm/6'4\" tall",
+                  "pictures": [
+                    "https://launderkart.com/wp-content/uploads/2016/07/Shirt.jpg",
+                    "https://cdni.llbean.net/is/image/wim/251423_47_41?wid=428&hei=494"
+                  ],
+                  "price": {
+                    "amount": {
+                      "currency": "USD",
+                      "currencyValue": 34.90,
+                      "name": "Amount"
+                    },
+                     "salesUnit": {
+                      "code": "EA",
+                      "name": "Each"
+                    }
+                  }
+                }
+
+    /features:
+      description: |
+        Distinguishing characteristics of particular product which can help to sell it to potential customers.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: FeatureCollectionResponse
+      get:
+        displayName: Get features for product
+        is: &queryableCollection [ collection.pageable, collection.sortable ]
+
+      /{featureId}:
+        uriParameters:
+          featureId: common.resourceId
+        type:
+           collection.readOnlyCollectionMember:
+             collectionMemberResponseType: FeatureResponse
+
+
+    /variants:
+      description: |
+        Set of characteristics of particular product.
+      type:
+        collection.readOnlyCollection:
+          collectionResponseType: ProductVariantCollectionResponse
+      get:
+        displayName: Get variants for product
+        is: &queryableCollection [ collection.pageable, collection.sortable ]
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "_meta": {
+                      "messages": []
+                    },
+                    "variants":[
+                      {
+                         "productId":"eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                         "identifier":"88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                         "identifiers":{
+                            "SKU":"UGG-BB-PUR-06"
+                         },
+                         "pictures":[
+                            "https://cdni.llbean.net/is/image/wim/251423_0_52??wid=428&hei=494",
+                            "https://cdni.llbean.net/is/image/wim/251423_47_41?wid=428&hei=494"
+                         ],
+                         "price": {
+                            "amount": {
+                              "currency": "USD",
+                              "currencyValue": 47.95,
+                              "name": "Amount"
+                            },
+                            "salesUnit": {
+                              "code": "EA",
+                              "name": "EACH"
+                            }
+                          },
+                         "configuration":[
+                            {
+                               "characteristic":{
+                                  "code":"size",
+                                  "description":"Size",
+                                  "name":"Size of item"
+                               },
+                               "characteristicValue":{
+                                  "code":"M",
+                                  "name":"Medium"
+                               }
+                            },
+                            {
+                               "characteristic":{
+                                  "code":"color",
+                                  "description":"Color",
+                                  "name":"Color"
+                               },
+                               "characteristicValue":{
+                                  "code":"blue",
+                                  "name":"Blue"
+                               }
+                            }
+                         ]
+                      }
+                    ]
+                  }
+      /{productVariantId}:
+        uriParameters:
+          productVariantId: string
+        type:
+           collection.readOnlyCollectionMember:
+             collectionMemberResponseType: ProductVariantResponse
+        get:
+          displayName: Get variant for product
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                       "productId":"eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                       "identifier":"88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                       "identifiers":{
+                          "SKU":"UGG-BB-PUR-06"
+                       },
+                       "pictures":[
+                          "https://cdni.llbean.net/is/image/wim/251423_0_52??wid=428&hei=494",
+                          "https://cdni.llbean.net/is/image/wim/251423_47_41?wid=428&hei=494"
+                       ],
+                       "price": {
+                          "amount": {
+                            "currency": "USD",
+                            "currencyValue": 47.95,
+                            "name": "Amount"
+                          },
+                          "salesUnit": {
+                            "code": "EA",
+                            "name": "EACH"
+                          }
+                        },
+                       "configuration":[
+                          {
+                             "characteristic":{
+                                "code":"size",
+                                "description":"Size",
+                                "name":"Size of item"
+                             },
+                             "characteristicValue":{
+                                "code":"M",
+                                "name":"Medium"
+                             }
+                          },
+                          {
+                             "characteristic":{
+                                "code":"color",
+                                "description":"Color",
+                                "name":"Color"
+                             },
+                             "characteristicValue":{
+                                "code":"blue",
+                                "name":"Blue"
+                             }
+                          }
+                       ]
+                    }
+        /availability:
+          description: |
+            Represents information about availability of products in stores.
+          type:
+             collection.readOnlyCollectionMember:
+               collectionMemberResponseType: ProductVariantAvailabilityResponse
+          get:
+            displayName: Get availability for product variant
+            is: [ geoSearch]
+            queryParameters:
+              quantity:
+                required: false
+                description: |
+                  Quantity requested. If quantity in particular store is less than requested, the store will not show up in the results.
+                type: number
+                default: 0
+            responses:
+              200:
+                body:
+                  application/json:
+                    example: |
+                        {
+                          "productId": "122332665555",
+                          "variantId": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                          "warehousesAvailability": [
+                            {
+                              "warehouseId": "1",
+                              "name": "Central Warehouse",
+                              "availableCount": 100
+                            }
+                          ],
+                          "partnersAvailability": [
+                            {
+                              "quantityInStock": 20,
+                              "productPrice": 36.9,
+                              "tax": 3.69,
+                              "partnerInfo": {
+                                "partnerId": "2d9df8be-a185-4dde-9577-d6edf6cdb398",
+                                "name": "Best Amazing Store",
+                                "description": "",
+                                "email": "info@luckystore.example.com",
+                                "phone": "+1-202-555-0119",
+                                "url": "www.luckystore.example.com",
+                                "shippingPrice": 5.5
+                              }
+                            }
+                          ],
+                          "storesAvailability": [
+                              {
+                              "quantityInStock" : 55,
+                              "storeInfo": {
+                                "storeId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                                "name": "Anypoint Store 1",
+                                "description": "Department store chain providing brand-name c",
+                                "notes": "",
+                                "openingHours": "Mo,Tu,We,Th,Fr 08:00-18:00",
+                                "address": {
+                                  "address": "170 O'Farrell St",
+                                  "city": "San Francisco",
+                                  "postalCode": "94102",
+                                  "state": "California",
+                                  "country": "USA"
+                                },
+                                "contact": {
+                                  "email": "store1@anypointstore.example.com",
+                                  "phone": "+1-202-555-0111"
+                                },
+                                "geo": {
+                                  "latitude": 37.78703308105469,
+                                  "longitude": -122.4060287475586
+                                },
+                                "distance": 0.12951756569805717,
+                                "distanceUnit": "km"
+                              }
+                            }
+                          ]
+                        }
+
+/shoppingCarts:
+  description: |
+    Represents a set of products which customer wants to order.
+  type:
+    collection.collection:
+      collectionResponseType: ShoppingCartCollectionResponse
+      collectionMemberPrototypeType: session.ShoppingCart
+      collectionMemberResponseType: ShoppingCartResponse
+  get:
+    displayName: Get shopping carts
+    is: &queryableCollection [ collection.pageable, collection.sortable ]
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "_meta": {
+                  "messages": []
+                },
+                "shoppingCarts": [
+                  {
+                    "identifier": "734a04dc-2f30-11e7-93ae-92361f002671",
+                    "customerId": "11e7-93ae-92361f002671",
+                    "items": [
+                      {
+                        "location": {
+                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                          "deliveryMethod": "PICKUP",
+                          "locationType": "STORE"
+                        },
+                        "item": {
+                          "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                          "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                          "identifiers": {
+                            "SKU": "UGG-BB-PUR-06"
+                          },
+                          "configuration": [
+                            {
+                              "characteristic": {
+                                "code": "size",
+                                "description": "Size",
+                                "name": "Size of item"
+                              },
+                              "characteristicValue": {
+                                "code": "M",
+                                "name": "Medium"
+                              }
+                            },
+                            {
+                              "characteristic": {
+                                "code": "color",
+                                "description": "Color",
+                                "name": "Color"
+                              },
+                              "characteristicValue": {
+                                "code": "blue",
+                                "name": "Blue"
+                              }
+                            }
+                          ]
+                        },
+                        "quantity": {
+                          "amount": 2,
+                          "quantityType": "DISCRETE",
+                          "unit": "EA"
+                        },
+                        "tax": 5.00,
+                        "shipping": 9.00
+                      }
+                    ]
+                  }
+                ]
+              }
+  post:
+    displayName: Create shopping cart
+    body:
+      application/json:
+        example: |
+            {
+              "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+              "customerId": "provider_0123456789",
+              "items":
+                  [
+                    {
+                      "location": {
+                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                          "deliveryMethod": "PICKUP",
+                          "locationType": "STORE"
+                       },
+                      "item": {
+                        "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051"
+
+                      },
+                      "quantity": {
+                        "amount": 2,
+                        "quantityType": "DISCRETE",
+                        "unit": "EA"
+                      }
+                    },
+                    {
+                      "location": {
+                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                          "deliveryMethod": "PICKUP",
+                          "locationType": "STORE"
+                        },
+                      "item": {
+                        "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051"
+                      },
+                      "quantity": {
+                        "amount": 2,
+                        "quantityType": "DISCRETE",
+                        "unit": "EA"
+                      }
+                    }
+                  ]
+              }
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+                {
+                  "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75"
+                }
+
+  /{shoppingCartId}:
+    uriParameters:
+      shoppingCartId: string
+    type:
+       collection.collectionMember:
+         collectionMemberPrototypeType: session.ShoppingCart
+         collectionMemberResponseType: ShoppingCartResponse
+    get:
+      displayName: Get shopping cart
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "identifier": "734a04dc-2f30-11e7-93ae-92361f002671",
+                  "customerId": "11e7-93ae-92361f002671",
+                  "items": [
+                    {
+                      "location": {
+                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                          "deliveryMethod": "PICKUP",
+                          "locationType": "STORE"
+                        },
+                      "item": {
+                        "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                        "identifiers": {
+                          "SKU": "UGG-BB-PUR-06"
+                        },
+                        "configuration": [
+                          {
+                            "characteristic": {
+                              "code": "size",
+                              "description": "Size",
+                              "name": "Size of item"
+                            },
+                            "characteristicValue": {
+                              "code": "M",
+                              "name": "Medium"
+                            }
+                          },
+                          {
+                            "characteristic": {
+                              "code": "color",
+                              "description": "Color",
+                              "name": "Color"
+                            },
+                            "characteristicValue": {
+                              "code": "blue",
+                              "name": "Blue"
+                            }
+                          }
+                        ]
+                      },
+                      "quantity": {
+                        "amount": 2,
+                        "quantityType": "DISCRETE",
+                        "unit": "EA"
+                      },
+                      "tax": 5.00,
+                      "shipping": 9.00
+                    }
+                  ]
+                }
+    put:
+      displayName: Update shopping cart
+      body:
+        application/json:
+          example: |
+            {
+              "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+              "items":
+                [
+                    {
+                      "location": {
+                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                          "deliveryMethod": "PICKUP",
+                          "locationType": "STORE"
+                        },
+                      "item": {
+                        "productId": "eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                        "identifier": "88668866-2c6d-4fa6-9e17-4b2c42e0f051"
+                      },
+                      "quantity": {
+                        "amount": 2,
+                        "quantityType": "DISCRETE",
+                        "unit": "EA"
+                      }
+                    },
+                    {
+                      "location": {
+                          "locationId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                          "deliveryMethod": "PICKUP",
+                          "locationType": "STORE"
+                        },
+                      "item": {
+                        "productId": "cd67cd8a-8901-48c5-890b-0a21f4a0f8ad",
+                        "identifier": "355d4130-1e3a-4795-aada-c960c89f6d9f"
+                      },
+                      "quantity": {
+                        "amount": 2,
+                        "quantityType": "DISCRETE",
+                        "unit": "EA"
+                      }
+                    }
+               ]
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "identifier": "eb8c8ca7-3c42-4489-a820-3aa138430b75"
+                }
+    delete:
+      displayName: Delete shopping cart
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "_meta": {
+                    "messages": []
+                  }
+                }

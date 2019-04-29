@@ -1,0 +1,3056 @@
+#%RAML 1.0
+annotationTypes:
+  serviceName: any
+  publicDocsPath: any
+  oas-info:
+    properties:
+      termsOfService?: string
+      contact?:
+        properties:
+          name?: string
+          url?: string
+          email?: string
+      license?:
+        properties:
+          name?: string
+          url?: string
+    allowedTargets: API
+  oas-tags-definition:
+    allowedTargets: API
+    type: array
+    items:
+      properties:
+        name: string
+        description?: string
+        externalDocs?:
+          properties:
+            url: string
+            description?: string
+  oas-externalDocs:
+    properties:
+      description?: string
+      url: string
+    allowedTargets:
+      - API
+      - Method
+      - TypeDeclaration
+  errors: any
+  requestValidationIssues: any
+  oas-readOnly:
+    type: boolean
+    allowedTargets: TypeDeclaration
+  publicDocsSchemaName: any
+  oas-schema-title:
+    type: string
+    allowedTargets: TypeDeclaration
+  visibility: any
+  links: any
+  oas-format:
+    type: string
+    allowedTargets: TypeDeclaration
+  enum: any
+  pattern: any
+  oas-responses-default:
+    type: any
+    allowedTargets: Method
+  oas-body-name:
+    type: string
+    allowedTargets: TypeDeclaration
+  oas-summary:
+    type: string
+    allowedTargets: Method
+  oas-tags:
+    type: 'string[]'
+    allowedTargets: Method
+  slo: any
+title: PayPal Orders v2
+description: 'Use the Orders API to create, update, show details for, authorize and capture payments for, save, and void orders.'
+version: '2.0'
+(oas-info):
+  (serviceName): checkoutsellerplatserv
+  (publicDocsPath): orders
+(oas-tags-definition):
+  - name: orders
+    description: 'Use the `/orders` resource to create, update, show details for, authorize and capture payments for, save, and void orders.'
+mediaType: application/json
+protocols:
+  - HTTPS
+baseUri: 'https://api.paypal.com/v2/checkout'
+(oas-externalDocs):
+  url: ../doc/USERGUIDE.md
+(errors):
+  - name: ACTION_DOES_NOT_MATCH_INTENT
+    message: Order was created with an intent to `CAPTURE`.
+    description: 'To complete the transaction, call [capture payment for order](/docs/limited-release/orders/api/#orders_capture) or create an order with an intent of `AUTHORIZE`.'
+  - name: AGREEMENT_ALREADY_CANCELLED
+    message: The requested agreement is already cancelled.
+    description: The specified agreement ID cannot be used for this transaction.
+  - name: AMOUNT_MISMATCH
+    message: The amount specified does not match the breakdown.
+    description: The amount must equal `item_total` + `tax_total` + `shipping` + `handling` + `insurance` - `shipping_discount`.
+  - name: AUTHENTICATION_FAILURE
+    message: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+    description: Account validations failed for the user.
+  - name: BILLING_AGREEMENT_NOT_FOUND
+    message: The requested Billing Agreement token was not found.
+    description: Verify the token and try the request again.
+  - name: CANNOT_BE_NEGATIVE
+    message: Must be greater than or equal to zero.
+    description: Try the request again with a different value.
+  - name: CANNOT_BE_ZERO_OR_NEGATIVE
+    message: Must be greater than zero.
+    description: Try the request again with a different value.
+  - name: CITY_REQUIRED
+    message: The specified country requires a city (`address.admin_area_2`).
+    description: Specify a city and try the request again.
+  - name: COMPLIANCE_VIOLATION
+    message: Transaction cannot be processed due to a possible compliance violation.
+    description: 'To get more information about the transaction, call customer support.'
+  - name: CONSENT_NEEDED
+    message: Authorization failed due to insufficient permissions.
+    description: 'To continue with this transaction, payer consent is required.'
+  - name: DECIMAL_PRECISION
+    message: The value of the field should not be more than two decimal places.
+    description: Verify the number of decimal places and try the request again.
+  - name: DOMESTIC_TRANSACTION_REQUIRED
+    message: This transaction requires the payee and payer to be resident in the same country.
+    description: 'To create this payment, a domestic transaction is required.'
+  - name: DUPLICATE_INVOICE_ID
+    message: Duplicate Invoice ID detected.
+    description: 'To avoid a duplicate transaction, verify that the invoice ID is unique for each transaction.'
+  - name: DUPLICATE_REQUEST_ID
+    message: The value of PayPal-Request-Id header has already been used.
+    description: Try a different value and try the request again.
+  - name: INSTRUMENT_DECLINED
+    message: The funding instrument presented was either declined by the processor or bank.
+    description: The specified funding instrument cannot be used for this payment.
+  - name: INTERNAL_SERVER_ERROR
+    message: An internal server error has occurred.
+    description: Retry the request later.
+  - name: INVALID_ACCOUNT_STATUS
+    message: Account validations failed for the user.
+    description: 'To continue with this transaction, payer consent is required.'
+  - name: INVALID_COUNTRY_CODE
+    message: Country code is invalid.
+    description: 'For list of supported country codes, see [Country and Region Codes](/docs/integration/direct/rest/country-codes/).'
+  - name: INVALID_CURRENCY_CODE
+    message: Currency code is invalid or is not currently supported.
+    description: 'For a list of supported currency codes, see [Currency Codes](/docs/integration/direct/rest/currency-codes/).'
+  - name: INVALID_JSON_POINTER_FORMAT
+    message: 'Path should be a valid [JavaScript Object Notation (JSON) Pointer](https://tools.ietf.org/html/rfc6901) that references a location within the request where the operation is performed.'
+    description: The path is not valid.
+  - name: INVALID_PARAMETER
+    message: Cannot be specified as part of the request.
+    description: Check that the API supports this parameter and try the request again.
+  - name: INVALID_PARAMETER_SYNTAX
+    message: The value of a field does not conform to the expected format.
+    description: Verify that the pattern is supported and try the request again.
+  - name: INVALID_PARAMETER_VALUE
+    message: The value of a field is invalid.
+    description: Verify the parameter value and try the request again.
+  - name: INVALID_PAYER_ID
+    message: The payer ID is not valid.
+    description: Verify the payer ID and try the request again.
+  - name: INVALID_RESOURCE_ID
+    message: Specified resource ID does not exist.
+    description: Verify the resource ID and try the request again.
+  - name: INVALID_STRING_LENGTH
+    message: The value of a field is either too short or too long.
+    description: Verify the minimum and maximum values and try the request again.
+  - name: ITEM_TOTAL_MISMATCH
+    description: Should equal sum of (`unit_amount` * `quantity`) across all items for a given `purchase_unit`.
+    message: Verify the corresponding values and try the request again.
+  - name: ITEM_TOTAL_REQUIRED
+    message: If item details are specified (`items.unit_amount` and `items.quantity`) corresponding `amount.breakdown.item_total` is required.
+    description: The `amount.breakdown.item_total` value was not found.
+  - name: MAX_NUMBER_OF_PAYMENT_ATTEMPTS_EXCEEDED
+    message: You have exceeded the maximum number of payment attempts.
+    description: 'To review the maximum number of payment attempts allowed and retry this transaction, call customer support.'
+  - name: MAX_VALUE_EXCEEDED
+    message: Should be less than or equal to 9999999.99.
+    description: Try the request again with a different value.
+  - name: MISSING_REQUEST_BODY
+    message: Request body cannot be empty.
+    description: Specify a request body and try the request again.
+  - name: MISSING_REQUIRED_PARAMETER
+    message: A required field or parameter is missing.
+    description: Verify that you have specified all required parameters and try the request again.
+  - name: MISSING_SHIPPING_ADDRESS
+    message: The shipping address is required when `shipping_preference=SET_PROVIDED_ADDRESS`.
+    description: Verify that you have provided the shipping address and try the request again.
+  - name: MULTI_CURRENCY_ORDER
+    message: Multiple differing values of `currency_code` are not supported.
+    description: The entire order request must have the same currency code.
+  - name: MULTIPLE_SHIPPING_ADDRESS_NOT_SUPPORTED
+    message: Multiple shipping addresses are not supported.
+    description: Try the request again with the same `shipping_address`.
+  - name: NOT_AUTHORIZED
+    message: Authorization failed due to insufficient permissions.
+    description: 'To check that your application has sufficient permissions, log in to the PayPal Developer Portal.'
+  - name: NOT_PATCHABLE
+    message: Cannot be patched.
+    description: You cannot patch this field.
+  - name: NOT_SUPPORTED
+    message: This field is not currently supported.
+    description: Specify only supported parameters and try the request again.
+  - name: ORDER_NOT_APPROVED
+    message: Payer has not yet approved the Order for payment.
+    description: 'The payer has not yet approved payment for the order. Redirect the payer to the `rel:approve` URL that was returned in the HATEOAS links in the create order response or provide a valid `payment_source` in the request.'
+  - name: ORDER_ALREADY_AUTHORIZED
+    message: Order already authorized. If 'intent=AUTHORIZE' only one authorization per order is allowed.
+    description: The order was already authorized and you can create one authorization for an order.
+  - name: ORDER_ALREADY_CAPTURED
+    message: Order already captured. If 'intent=CAPTURE' only one capture per order is allowed.
+    description: The order was already captured and you can capture only one payment for an order.
+  - name: PARAMETER_VALUE_NOT_SUPPORTED
+    message: The value specified for this field is not currently supported.
+    description: The specified parameter value is not supported.
+  - name: PATCH_VALUE_REQUIRED
+    message: Please specify a 'value' to for the field that is being patched.
+    description: Try your request again.
+  - name: PATCH_PATH_REQUIRED
+    message: Specify a `path` for the field for which the operation needs to be performed.
+    description: 'To complete the operation for this field, specify a `path` for the field.'
+  - name: PAYEE_ACCOUNT_INVALID
+    message: Mismatch between request `payeeId` and `payeeEmail`.
+    description: Specify either `payee.merchant_id` or `payee.email_address`.
+  - name: PAYEE_ACCOUNT_LOCKED_OR_CLOSED
+    message: Payee account is locked or closed.
+    description: 'To get more information about the status of the account, call customer support.'
+  - name: PAYEE_ACCOUNT_RESTRICTED
+    message: The merchant account is restricted.
+    description: 'To get more information about the status of the account, call customer support.'
+  - name: PAYEE_BLOCKED_TRANSACTION
+    message: The fraud settings for this seller are such that this payment cannot be executed.
+    description: 'Verify the fraud settings. Then, retry the transaction.'
+  - name: PAYER_ACCOUNT_LOCKED_OR_CLOSED
+    message: Payer account is locked or closed.
+    description: 'To get more information about the status of the account, call customer support.'
+  - name: PAYER_ACCOUNT_RESTRICTED
+    message: Payer account is restricted.
+    description: 'To get more information about the status of the account, call customer support.'
+  - name: PAYER_CANNOT_PAY
+    message: The combination of payer and payee settings mean that this payer can't pay this payee.
+    description: Verify the settings and try the request again.
+  - name: PAYER_CONSENT_REQUIRED
+    message: The payer has not provided appropriate consent to proceed with this transaction.
+    description: 'To proceed with the transaction, you must get payer consent.'
+  - name: PAYMENT_INSTRUCTION_REQUIRED
+    message: You must provide the payment instruction when you capture an authorized payment for `intent=AUTHORIZE`.
+    description: 'For details, see <a href="/docs/api/payments/#authorization_capture">Capture authorization</a>. For `intent=CAPTURE`, send the payment instruction when you create the order.'
+  - name: PERMISSION_DENIED
+    message: You do not have permission to access or perform operations on this resource.
+    description: 'If you are make API calls on behalf of a merchant or payee, ensure that you have been granted appropriate permissions to continue with this request.'
+  - name: POSTAL_CODE_REQUIRED
+    message: The specified country requires a postal code.
+    description: Specify a postal code and try the request again.
+  - name: REDIRECT_PAYER_FOR_ALTERNATE_FUNDING
+    message: Transaction failed. Redirect the payer to select another funding source.
+    description: The transaction failed. Redirect the payer to select another funding source.
+  - name: REFERENCE_ID_NOT_FOUND
+    message: Filter expression value is incorrect.
+    description: Check the value of the `reference_id` and try the request again.
+  - name: TAX_TOTAL_MISMATCH
+    message: Should equal sum of (`tax` * `quantity`) across all items for a given `purchase_unit`.
+    description: The tax total must equal the sum of (`tax` * `quantity`) across all items for a `purchase_unit`.
+  - name: TAX_TOTAL_REQUIRED
+    message: 'If item details are specified (`items.tax_total` and `items.quantity`), the corresponding `amount.breakdown.tax_total` is required.'
+    description: The `amount.breakdown.tax_total` is a required field.
+  - name: TRANSACTION_AMOUNT_EXCEEDS_MONTHLY_MAX_LIMIT
+    message: The transaction amount exceeds monthly maximum limit.
+    description: 'To review the monthly transaction limits and retry this transaction, call customer support.'
+  - name: TRANSACTION_LIMIT_EXCEEDED
+    message: Total payment amount exceeded transaction limit.
+    description: 'To review the transaction limit and retry this transaction, call customer support.'
+  - name: TRANSACTION_RECEIVING_LIMIT_EXCEEDED
+    message: The transaction exceeds the payee's receiving limit.
+    description: 'To review the transaction limit and retry this transaction, call customer support.'
+  - name: TRANSACTION_REFUSED
+    message: The transaction was refused.
+    description: Verify the transaction and try the request again.
+  - name: UNSUPPORTED_PATCH_PARAMETER_VALUE
+    message: The value specified for this field is not currently supported.
+    description: Try the request again with a different value.
+  - name: UNSUPPORTED_PAYMENT_INSTRUCTION
+    message: Only supported when the `intent=CAPTURE`.
+    description: 'If intent is `AUTHORIZE`, you must provide a `payment_instruction` when you capture payment for the authorization. For details, see [capture authorized payment](/docs/limited-release/payments/api/#authorizations_capture).'
+  - name: VALUE_REQUIRED
+    message: Specify a `value to` for the field that is being patched.
+    description: You must specify `value to` for this request.
+(requestValidationIssues): []
+securitySchemes:
+  Oauth2:
+    description: Oauth 2.0 authentication
+    type: OAuth 2.0
+    settings:
+      accessTokenUri: 'https://api.paypal.com/v1/oauth2/token'
+      authorizationGrants:
+        - client_credentials
+      scopes:
+        - 'https://uri.paypal.com/services/payments/payment'
+        - 'https://uri.paypal.com/services/checkout/orders/readwrite'
+types:
+  order-json:
+    description: The order details.
+    type: MerchantsCommonComponentsSpecification-v1-schema-activity_timestamps-json
+    properties:
+      id:
+        description: The ID of the order.
+        type: string
+        (oas-readOnly): true
+      intent:
+        type: MerchantsCommonComponentsSpecification-v1-schema-checkout_payment_intent-json
+      payer:
+        type: MerchantsCommonComponentsSpecification-v1-schema-payer-json
+      purchase_units:
+        description: An array of purchase units. Each purchase unit establishes a contract between a customer and merchant. Each purchase unit represents either a full or partial order that the customer intends to purchase from the merchant.
+        minItems: 1
+        maxItems: 10
+        type: array
+        items:
+          description: A purchase unit. Establishes a contract between a customer and merchant.
+          type: purchase_unit-json
+          (publicDocsSchemaName): purchase_unit
+      status:
+        type: order_status-json
+        (oas-readOnly): true
+      links:
+        description: 'An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links). To complete payer approval, use the `approve` link with the `GET` method.'
+        type: array
+        items:
+          description: 'A request-related [HATEOAS link](/docs/api/overview/#hateoas-links). To complete payer approval, use the `approve` link with the `GET` method.'
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-link_description-json
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+    (oas-schema-title): Order
+    (visibility):
+      extent: LIMITED_RELEASE
+    (links):
+      - href: 'https://api.paypal.com/v2/checkout/orders/{id}'
+        rel: self
+        method: GET
+      - href: 'https://api.paypal.com/v2/checkout/orders/{id}/refund'
+        rel: refund
+        method: POST
+      - href: 'https://www.paypal.com/checkoutnow?token={id}'
+        rel: approve
+        method: POST
+      - href: 'https://www.paypal.com/webapps/helios?action=resolve&flow=3ds&cart_id={id}'
+        rel: 3ds-contingency-resolution
+        method: GET
+  MerchantsCommonComponentsSpecification-v1-schema-activity_timestamps-json:
+    description: 'The date and time stamps that are common to authorized payment, captured payment, and refund transactions.'
+    type: object
+    properties:
+      create_time:
+        description: 'The date and time when the transaction occurred, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-date_time-json
+        (oas-readOnly): true
+      update_time:
+        description: 'The date and time when the transaction was last updated, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-date_time-json
+        (oas-readOnly): true
+    (oas-schema-title): Transaction Date and Time Stamps
+  MCCS-v1-schema-CC-v3-json-openapi-2-date_time-json:
+    description: 'The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6). Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular expression provides guidance but does not reject all invalid dates.</blockquote>'
+    minLength: 20
+    maxLength: 64
+    pattern: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])[T,t]([0-1][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)([.][0-9]+)?([Zz]|[+-][0-9]{2}:[0-9]{2})$'
+    type: string
+    (oas-format): ppaas_date_time_v3
+  MerchantsCommonComponentsSpecification-v1-schema-checkout_payment_intent-json:
+    description: The intent to either capture payment immediately or authorize a payment for an order after order creation.
+    type: string
+    (oas-schema-title): Checkout Payment Intent
+    (enum):
+      - value: CAPTURE
+        description: The merchant intends to capture payment immediately after the customer makes a payment.
+      - value: AUTHORIZE
+        description: 'The merchant intends to authorize a payment and place funds on hold after the customer makes a payment. Authorized payments are guaranteed for up to three days but are available to capture for up to 29 days. After the three-day honor period, the original authorized payment expires and you must re-authorize the payment. You must make a separate request to capture payments on demand.'
+  MerchantsCommonComponentsSpecification-v1-schema-payer-json:
+    description: The customer who approves and pays for the order. The customer is also known as the payer.
+    type: object
+    properties:
+      name:
+        description: The name of the payer. Supports only the `given_name` and `surname` properties.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-name-json
+      email_address:
+        description: The email address of the payer.
+        type: MerchantsCommonComponentsSpecification-v1-schema-email-json
+      payer_id:
+        description: The PayPal assigned ID for the payer.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-payer_id-json
+        (oas-readOnly): true
+      phone:
+        description: 'The phone number of the customer. Available only when you enable the **Contact Telephone Number** option in the <a href="https://www.paypal.com/cgi-bin/customerprofileweb?cmd=_profile-website-payments">**Profile & Settings**</a> for the merchant''s PayPal account. The `phone.phone_number` supports only `national_number`.'
+        type: MerchantsCommonComponentsSpecification-v1-schema-phone_with_type-json
+      birth_date:
+        description: The birth date of the payer in `YYYY-MM-DD` format.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-date_no_time-json
+      tax_info:
+        description: The tax information of the payer. Required only for Brazilian payer's. Both `tax_id` and `tax_id_type` are required.
+        type: MerchantsCommonComponentsSpecification-v1-schema-tax_info-json
+      address:
+        description: 'The address of the payer. Supports only the `address_line_1`, `address_line_2`, `admin_area_1`, `admin_area_2`, `postal_code`, and `country_code` properties. Also referred to as the billing address of the customer.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-address_portable-json
+    (oas-schema-title): Customer
+  MCCS-v1-schema-CC-v3-json-openapi-2-name-json:
+    description: The name of the party.
+    type: object
+    properties:
+      prefix:
+        description: 'The prefix, or title, to the party''s name.'
+        maxLength: 140
+        type: string
+      given_name:
+        description: 'When the party is a person, the party''s given, or first, name.'
+        maxLength: 140
+        type: string
+      surname:
+        description: 'When the party is a person, the party''s surname or family name. Also known as the last name. Required when the party is a person. Use also to store multiple surnames including the matronymic, or mother''s, surname.'
+        maxLength: 140
+        type: string
+      middle_name:
+        description: 'When the party is a person, the party''s middle name. Use also to store multiple middle names including the patronymic, or father''s, middle name.'
+        maxLength: 140
+        type: string
+      suffix:
+        description: The suffix for the party's name.
+        maxLength: 140
+        type: string
+      alternate_full_name:
+        description: 'DEPRECATED. The party''s alternate name. Can be a business name, nickname, or any other name that cannot be split into first, last name. Required when the party is a business.'
+        maxLength: 300
+        type: string
+      full_name:
+        description: 'When the party is a person, the party''s full name.'
+        maxLength: 300
+        type: string
+    (oas-schema-title): Name
+    (pattern):
+      oneOf:
+      - country_code: AD
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: AN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AX
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: AZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: BA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: BB
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BD
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: BH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BJ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BQ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: BY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: BZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CD
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[－\uFF21-\uFF3A\uFF3E\uFF40-\uFF5A\uFF07\u3000\u3400-\u4DB5\u4E00-\u9FCC\uF900-\uFA6D\uFA70-\uFAD9]|[\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD87E[\uDC00-\uDE1D]'
+      - country_code: CO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CV
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: CZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: DE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: DJ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: DK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: DM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: DO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: DZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: EC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: EE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: EG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: EH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ER
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ES
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ET
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: FI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: FJ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: FK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: FM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: FO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: FR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GB
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GD
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GP
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GQ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0342-\u0345\u037A-\u037D\u037F\u0384-\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03D7\u03F3\u1F00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FC4\u1FC6-\u1FD3\u1FD6-\u1FDB\u1FDD-\u1FEF\u1FF2-\u1FF4\u1FF6-\u1FFE]'
+      - country_code: GT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: GY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: HK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[－\uFF21-\uFF3A\uFF3E\uFF40-\uFF5A\uFF07\u3000\u3400-\u4DB5\u4E00-\u9FCC\uF900-\uFA6D\uFA70-\uFAD9]|[\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD87E[\uDC00-\uDE1D]'
+      - country_code: HN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: HR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: HT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: HU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ID
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: IE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: IL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0591-\u05C7\u05D0-\u05EA\u05F0-\u05F4\uFB1D-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFB4F]'
+      - country_code: IM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: IN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: IQ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: IR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: IS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: IT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: JE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: JM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: JO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: JP
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u3005\uFF07\u3041-\u3096\u3099-\u309F\u30A1-\u30FF\u31F0-\u31FF\uFF65-\uFF9F\uFF0D\uFF21-\uFF3A\uFF3E\uFF40-\uFF5A\u3000\u3400-\u4DB5\u4E00-\u9FCC\uF900-\uFA6D\uFA70-\uFAD9]|[\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD87E[\uDC00-\uDE1D]'
+      - country_code: KE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: KH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KP
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[－\uFF21-\uFF3A\uFF3E\uFF40-\uFF5A\uFF07\u1100-\u11FF\u302E\u302F\u3131-\u318E\uAC00-\uD7A3\uFFA0-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC\u3000\u3400-\u4DB5\u4E00-\u9FCC\uF900-\uFA6D\uFA70-\uFAD9]|[\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD87E[\uDC00-\uDE1D]'
+      - country_code: KW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: KZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: LA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LB
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: LU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: LV
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: LY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MD
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ME
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: MF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: ML
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: MO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MP
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MQ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MV
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MX
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: MZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: 'NO'
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NP
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: NZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: OM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: PY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: QA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: RE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: RO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: RS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: RU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: RW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SB
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SD
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[－\uFF21-\uFF3A\uFF3E\uFF40-\uFF5A\uFF07\u3000\u3400-\u4DB5\u4E00-\u9FCC\uF900-\uFA6D\uFA70-\uFAD9]|[\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD87E[\uDC00-\uDE1D]'
+      - country_code: SH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SJ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ST
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SV
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SX
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: SZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TD
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TH
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0E01-\u0E3A\u0E40-\u0E4F]'
+      - country_code: TJ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: TK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TL
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: TN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TO
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TR
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TV
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: TW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[－\uFF21-\uFF3A\uFF3E\uFF40-\uFF5A\uFF07\u3000\u3400-\u4DB5\u4E00-\u9FCC\uF900-\uFA6D\uFA70-\uFAD9]|[\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD87E[\uDC00-\uDE1D]'
+      - country_code: TZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: UA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[\u0400-\u0481\u048A-\u052F]'
+      - country_code: UG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: US
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: UY
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: UZ
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: VA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: VC
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: VE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: VG
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: VI
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: VN
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: VU
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: WF
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: WS
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: XK
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: YE
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: YT
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ZA
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ZM
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: ZW
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]'
+      - country_code: C2
+        validation_regex: '[A-Za-z\xAA\xBA\xC0-\xD6\xD8-\xF6\u00F8-\u024F\u02B0-\u02DD\u02E0-\u02E4\u0300-\u0341\u0357-\u0361\u1E00-\u1EFF\u2C60-\u2C7F\uFB00-\uFB06\u0020\u0027\u002D\u002E\u002C]|[－\uFF21-\uFF3A\uFF3E\uFF40-\uFF5A\uFF07\u3000\u3400-\u4DB5\u4E00-\u9FCC\uF900-\uFA6D\uFA70-\uFAD9]|[\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD87E[\uDC00-\uDE1D]'
+  MerchantsCommonComponentsSpecification-v1-schema-email-json:
+    description: 'The internationalized email address.<blockquote><strong>Note:</strong> Up to 64 characters are allowed before and 255 characters are allowed after the <code>@</code> sign. However, the generally accepted maximum length for an email address is 254 characters. The pattern verifies that an unquoted <code>@</code> sign exists.</blockquote>'
+    maxLength: 254
+    pattern: '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
+    type: string
+    (oas-format): merchant_common_email_address_v2
+  MCCS-v1-schema-CC-v3-json-openapi-2-payer_id-json:
+    description: 'The PayPal payer ID, which is a masked version of the PayPal account number intended for use with third parties. The account number is reversibly encrypted and a proprietary variant of Base32 is used to encode the result.'
+    minLength: 13
+    maxLength: 13
+    pattern: '^[2-9A-HJ-NP-Z]{13}$'
+    type: string
+    (oas-format): ppaas_payer_id_v3
+  MerchantsCommonComponentsSpecification-v1-schema-phone_with_type-json:
+    description: The phone information.
+    type: object
+    properties:
+      phone_type:
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-phone_type-json
+        required: false
+      phone_number:
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-phone-json
+    (oas-schema-title): Phone
+  MCCS-v1-schema-CC-v3-json-openapi-2-phone_type-json:
+    description: The phone type.
+    type: string
+    enum:
+      - FAX
+      - HOME
+      - MOBILE
+      - OTHER
+      - PAGER
+    (oas-schema-title): Phone Type
+  MCCS-v1-schema-CC-v3-json-openapi-2-phone-json:
+    description: 'The phone number, in its canonical international [E.164 numbering plan format](https://www.itu.int/rec/T-REC-E.164/en).'
+    type: object
+    properties:
+      country_code:
+        description: 'The country calling code (CC), in its canonical international [E.164 numbering plan format](https://www.itu.int/rec/T-REC-E.164/en). The combined length of the CC and the national number must not be greater than 15 digits. The national number consists of a national destination code (NDC) and subscriber number (SN).'
+        minLength: 1
+        maxLength: 3
+        pattern: '^[0-9]{1,3}?$'
+        type: string
+        (publicDocsSchemaName): country_calling_code
+      national_number:
+        description: 'The national number, in its canonical international [E.164 numbering plan format](https://www.itu.int/rec/T-REC-E.164/en). The combined length of the country calling code (CC) and the national number must not be greater than 15 digits. The national number consists of a national destination code (NDC) and subscriber number (SN).'
+        minLength: 1
+        maxLength: 14
+        pattern: '^[0-9]{1,14}?$'
+        type: string
+      extension_number:
+        description: The extension number.
+        minLength: 1
+        maxLength: 15
+        pattern: '^[0-9]{1,15}?$'
+        type: string
+        required: false
+    (oas-schema-title): Phone
+  MCCS-v1-schema-CC-v3-json-openapi-2-date_no_time-json:
+    description: 'The stand-alone date, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6). To represent special legal values, such as a date of birth, you should use dates with no associated time or time-zone data. Whenever possible, use the standard `date_time` type. This regular expression does not validate all dates. For example, February 31 is valid and nothing is known about leap years.'
+    minLength: 10
+    maxLength: 10
+    pattern: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$'
+    type: string
+    (oas-format): ppaas_date_notime_v2
+  MerchantsCommonComponentsSpecification-v1-schema-tax_info-json:
+    description: The tax ID of the customer. The customer is also known as the payer. Both `tax_id` and `tax_id_type` are required.
+    type: object
+    properties:
+      tax_id:
+        description: 'The customer''s tax ID. Supported for the PayPal payment method only. Typically, the tax ID is 11 characters long for individuals and 14 characters long for businesses.'
+        maxLength: 14
+        type: string
+      tax_id_type:
+        description: The customer's tax ID type. Supported for the PayPal payment method only.
+        type: string
+        (enum):
+          - value: BR_CPF
+            description: The individual tax ID type.
+          - value: BR_CNPJ
+            description: The business tax ID type.
+    (oas-schema-title): Tax Information
+  MCCS-v1-schema-CC-v3-json-openapi-2-address_portable-json:
+    description: 'The portable international postal address. Maps to [AddressValidationMetadata](https://github.com/googlei18n/libaddressinput/wiki/AddressValidationMetadata) and HTML 5.1 [Autofilling form controls: the autocomplete attribute](https://www.w3.org/TR/html51/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute).'
+    type: object
+    properties:
+      address_line_1:
+        description: 'The first line of the address. For example, number or street. For example, `173 Drury Lane`. Required for data entry and compliance and risk checks. Must contain the full address.'
+        maxLength: 300
+        type: string
+        required: false
+      address_line_2:
+        description: 'The second line of the address. For example, suite or apartment number.'
+        maxLength: 300
+        type: string
+        required: false
+      address_line_3:
+        description: 'The third line of the address, if needed. For example, a street complement for Brazil, direction text, such as `next to Walmart`, or a landmark in an Indian address.'
+        maxLength: 100
+        type: string
+        required: false
+      admin_area_4:
+        description: 'The neighborhood, ward, or district. Smaller than `admin_area_level_3` or `sub_locality`. Value is:<ul><li>The postal sorting code that is used in Guernsey and many French territories, such as French Guiana.</li><li>The fine-grained administrative levels in China.</li></ul>'
+        maxLength: 100
+        type: string
+        required: false
+      admin_area_3:
+        description: 'A sub-locality, suburb, neighborhood, or district. Smaller than `admin_area_level_2`. Value is:<ul><li>Brazil. Suburb, bairro, or neighborhood.</li><li>India. Sub-locality or district. Street name information is not always available but a sub-locality or district can be a very small area.</li></ul>'
+        maxLength: 100
+        type: string
+        required: false
+      admin_area_2:
+        description: 'A city, town, or village. Smaller than `admin_area_level_1`.'
+        maxLength: 120
+        type: string
+        required: false
+      admin_area_1:
+        description: 'The highest level sub-division in a country, which is usually a province, state, or ISO-3166-2 subdivision. Format for postal delivery. For example, `CA` and not `California`. Value, by country, is:<ul><li>UK. A county.</li><li>US. A state.</li><li>Canada. A province.</li><li>Japan. A prefecture.</li><li>Switzerland. A kanton.</li></ul>'
+        maxLength: 300
+        type: string
+        required: false
+      postal_code:
+        description: 'The postal code, which is the zip code or equivalent. Typically required for countries with a postal code or an equivalent. See [postal code](https://en.wikipedia.org/wiki/Postal_code).'
+        maxLength: 60
+        type: string
+        required: false
+      country_code:
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-country_code-json
+      address_details:
+        description: 'The non-portable additional address details that are sometimes needed for compliance, risk, or other scenarios where fine-grain address information might be needed. Not portable with common third party and opensource. Redundant with core fields. For example, `address_portable.address_line_1` is usually a combination of `address_details.street_number` and `street_name` and `street_type`.'
+        type: object
+        properties:
+          street_number:
+            description: The street number.
+            maxLength: 100
+            type: string
+          street_name:
+            description: The street name. Just `Drury` in `Drury Lane`.
+            maxLength: 100
+            type: string
+          street_type:
+            description: 'The street type. For example, avenue, boulevard, road, or expressway.'
+            maxLength: 100
+            type: string
+          delivery_service:
+            description: 'The delivery service. Post office box, bag number, or post office name.'
+            maxLength: 100
+            type: string
+          building_name:
+            description: 'A named locations that represents the premise. Usually a building name or number or collection of buildings with a common name or number. For example, <code>Craven House</code>.'
+            maxLength: 100
+            type: string
+          sub_building:
+            description: 'The first-order entity below a named building or location that represents the sub-premise. Usually a single building within a collection of buildings with a common name. Can be a flat, story, floor, room, or apartment.'
+            maxLength: 100
+            type: string
+        (oas-schema-title): Address Details
+        required: false
+    (oas-schema-title): Portable Postal Address (Medium-Grained)
+    (pattern):
+      oneOf:
+      - country_code: AL
+        validation_regex: '\d{4}'
+      - country_code: AR
+        validation_regex: '([A-HJ-NP-Z])?\d{4}([A-Z]{3})?'
+      - country_code: AT
+        validation_regex: '\d{4}'
+      - country_code: AU
+        validation_regex: '\d{4}'
+      - country_code: BE
+        validation_regex: '[1-9]\d{3}'
+      - country_code: BG
+        validation_regex: '\d{4}'
+      - country_code: BN
+        validation_regex: '[A-Z]{2}[ ]?\d{4}'
+      - country_code: BR
+        validation_regex: '\d{5}[\-]?\d{3}'
+      - country_code: BT
+        validation_regex: '\d{5}'
+      - country_code: BY
+        validation_regex: '\d{6}'
+      - country_code: CA
+        validation_regex: '[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]?\d[ABCEGHJ-NPRSTV-Z]\d'
+      - country_code: CH
+        validation_regex: '\d{4}'
+      - country_code: CL
+        validation_regex: '\d{7}'
+      - country_code: CN
+        validation_regex: '\d{6}'
+      - country_code: CO
+        validation_regex: '\d{6}'
+      - country_code: CR
+        validation_regex: '\d{4,5}|\d{3}-\d{4}'
+      - country_code: CY
+        validation_regex: '\d{4}'
+      - country_code: CZ
+        validation_regex: '\d{3}[ ]?\d{2}'
+      - country_code: DE
+        validation_regex: '(0[1-9]|[1-9]\d)\d{3}'
+      - country_code: DK
+        validation_regex: '\d{4}'
+      - country_code: DO
+        validation_regex: '\d{5}'
+      - country_code: EC
+        validation_regex: '\d{6}'
+      - country_code: EE
+        validation_regex: '\d{5}'
+      - country_code: ES
+        validation_regex: '\d{5}'
+      - country_code: FI
+        validation_regex: '\d{5}'
+      - country_code: FM
+        validation_regex: '(9694[1-4])(?:[ \-]?(\d{4}))?'
+      - country_code: FO
+        validation_regex: '(FO[ \-]?)?\d{3}'
+      - country_code: FR
+        validation_regex: '\d{2}[ ]?\d{3}'
+      - country_code: GB
+        validation_regex: 'GIR[ ]?0AA|(?:(?:AB|AL|B|BA|BB|BD|BF|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(?:\d[\dA-Z]?[ ]?\d[ABD-HJLN-UW-Z]{2}))|BFPO[ ]?\d{1,4}'
+      - country_code: GF
+        validation_regex: '9[78]3\d{2}'
+      - country_code: GL
+        validation_regex: '(DK-?)?39\d{2}'
+      - country_code: GP
+        validation_regex: '9[78][01]\d{2}'
+      - country_code: GR
+        validation_regex: '\d{3}[ ]?\d{2}'
+      - country_code: HR
+        validation_regex: '\d{5}'
+      - country_code: HU
+        validation_regex: '\d{4}'
+      - country_code: ID
+        validation_regex: '\d{5}'
+      - country_code: IE
+        validation_regex: '[A-Za-z0-9 \-]{1,10}'
+      - country_code: IL
+        validation_regex: '\d{5}(\d{2})?'
+      - country_code: IN
+        validation_regex: '\d{3}[ ]?\d{3}'
+      - country_code: IS
+        validation_regex: '\d{3}'
+      - country_code: IT
+        validation_regex: '\d{5}'
+      - country_code: JP
+        validation_regex: '\d{3}-?\d{4}'
+      - country_code: KG
+        validation_regex: '\d{6}'
+      - country_code: KH
+        validation_regex: '\d{5}'
+      - country_code: KR
+        validation_regex: '\d{5}'
+      - country_code: KW
+        validation_regex: '\d{5}'
+      - country_code: KZ
+        validation_regex: '\d{6}'
+      - country_code: LA
+        validation_regex: '\d{5}'
+      - country_code: LK
+        validation_regex: '\d{5}'
+      - country_code: LT
+        validation_regex: '\d{5}'
+      - country_code: LU
+        validation_regex: '\d{4}'
+      - country_code: LV
+        validation_regex: 'LV-\d{4}'
+      - country_code: MA
+        validation_regex: '\d{5}'
+      - country_code: MC
+        validation_regex: '980\d{2}'
+      - country_code: MD
+        validation_regex: '\d{4}'
+      - country_code: ME
+        validation_regex: '8\d{4}'
+      - country_code: MK
+        validation_regex: '\d{4}'
+      - country_code: MN
+        validation_regex: '\d{5}'
+      - country_code: MQ
+        validation_regex: '9[78]2\d{2}'
+      - country_code: MT
+        validation_regex: '[A-Z]{3}[ ]?\d{2,4}'
+      - country_code: MU
+        validation_regex: '\d{3}(?:\d{2}|[A-Z]{2}\d{3})'
+      - country_code: MV
+        validation_regex: '\d{5}'
+      - country_code: MX
+        validation_regex: '\d{5}'
+      - country_code: MY
+        validation_regex: '\d{5}'
+      - country_code: NG
+        validation_regex: '\d{6}'
+      - country_code: NL
+        validation_regex: '\d{4}[ ]?[A-Z]{2}'
+      - country_code: 'NO'
+        validation_regex: '\d{4}'
+      - country_code: NP
+        validation_regex: '\d{5}'
+      - country_code: NZ
+        validation_regex: '\d{4}'
+      - country_code: OM
+        validation_regex: '(?:PC )?\d{3}'
+      - country_code: PE
+        validation_regex: '(?:LIMA[ ]?\d{1,2}|CALLAO[ ]?0?\d)|[0-2]?\d{1,4}'
+      - country_code: PH
+        validation_regex: '\d{4}'
+      - country_code: PL
+        validation_regex: '\d{2}-\d{3}'
+      - country_code: PT
+        validation_regex: '\d{4}([\-]?\d{3})?'
+      - country_code: PY
+        validation_regex: '\d{4}'
+      - country_code: RE
+        validation_regex: '9[78]4\d{2}'
+      - country_code: RO
+        validation_regex: '\d{6}'
+      - country_code: RS
+        validation_regex: '\d{5,6}'
+      - country_code: RU
+        validation_regex: '[1-9]\d{5}'
+      - country_code: SA
+        validation_regex: '\d{5}([\-]?\d{4})?'
+      - country_code: SE
+        validation_regex: '\d{3}[ ]?\d{2}'
+      - country_code: SG
+        validation_regex: '\d{6}'
+      - country_code: SI
+        validation_regex: '\d{4}'
+      - country_code: SK
+        validation_regex: '\d{3}[ ]?\d{2}'
+      - country_code: SM
+        validation_regex: 4789\d
+      - country_code: SV
+        validation_regex: '(?:CP[ ]?)?[1-3][1-7][0-2]\d'
+      - country_code: TH
+        validation_regex: '\d{5}'
+      - country_code: TR
+        validation_regex: '\d{5}'
+      - country_code: TW
+        validation_regex: '\d{3}(\d{2})?'
+      - country_code: UA
+        validation_regex: '\d{5}'
+      - country_code: US
+        validation_regex: '\d{5}([ \-]?\d{4})?'
+      - country_code: UY
+        validation_regex: '[1-9]\d{4}'
+      - country_code: VA
+        validation_regex: '00120'
+      - country_code: VE
+        validation_regex: '[1-8]\d{3}([\-]?[A-Z])?'
+      - country_code: VN
+        validation_regex: '\d{6}'
+      - country_code: YT
+        validation_regex: '976\d{2}'
+      - country_code: ZA
+        validation_regex: '\d{4}'
+      - country_code: C2
+        validation_regex: '\d{6}'
+  MCCS-v1-schema-CC-v3-json-openapi-2-country_code-json:
+    description: 'The [two-character ISO 3166-1 code](/docs/integration/direct/rest/country-codes/) that identifies the country or region.<blockquote><strong>Note:</strong> The country code for Great Britain is <code>GB</code> and not <code>UK</code> as used in the top-level domain names for that country. Use the `C2` country code for China worldwide for comparable uncontrolled price (CUP) method, bank card, and cross-border transactions.</blockquote>'
+    maxLength: 2
+    minLength: 2
+    pattern: '^([A-Z]{2}|C2)$'
+    type: string
+    (oas-format): ppaas_common_country_code_v2
+  purchase_unit-json:
+    description: The purchase unit details. Used to capture required information for the payment contract.
+    type: object
+    properties:
+      reference_id:
+        description: The API caller-provided external ID for the purchase unit. Required for multiple purchase units when you must update the order through `PATCH`.
+        maxLength: 256
+        type: string
+      amount:
+        type: MerchantsCommonComponentsSpecification-v1-schema-amount_with_breakdown-json
+      payee:
+        description: The merchant who receives payment for this transaction.
+        type: MerchantsCommonComponentsSpecification-v1-schema-payee-json
+      payment_instruction:
+        type: MerchantsCommonComponentsSpecification-v1-schema-payment_instruction-json
+      description:
+        description: The purchase description.
+        maxLength: 127
+        type: string
+      custom_id:
+        description: The API caller-provided external ID. Used to reconcile API caller-initiated transactions with PayPal transactions. Appears in transaction and settlement reports.
+        maxLength: 127
+        type: string
+      invoice_id:
+        description: The API caller-provided external invoice ID for this order.
+        maxLength: 127
+        type: string
+      id:
+        description: 'PayPal Generated identifier for the purchase_unit. This identifier appears in both the payer''s transaction history and the emails that the payer receives. In addition, this identifier will be available in transaction/settlement reports that can be used by merchants/API Caller to reconcile transaction. This identifier is only available when an order is saved by calling v2/checkout/orders/id/save.'
+        maxLength: 19
+        type: string
+        (visibility):
+          extent: LIMITED_RELEASE
+      soft_descriptor:
+        description: The payment descriptor on the customer's credit card statement of account transactions.
+        maxLength: 22
+        type: string
+      items:
+        description: An array of items that the customer is purchasing from the merchant.
+        type: array
+        items:
+          description: An item.
+          type: MerchantsCommonComponentsSpecification-v1-schema-item-json
+          (publicDocsSchemaName): item
+      shipping:
+        description: The shipping address and method.
+        type: MerchantsCommonComponentsSpecification-v1-schema-shipping_detail-json
+      payments:
+        description: The comprehensive history of payments for the purchase unit.
+        type: payment_collection-json
+        (oas-readOnly): true
+    (oas-schema-title): Purchase Unit
+    (visibility):
+      extent: LIMITED_RELEASE
+  MerchantsCommonComponentsSpecification-v1-schema-amount_with_breakdown-json:
+    description: 'The total order amount with an optional breakdown that provides details, such as the total item amount, total tax amount, shipping, handling, insurance, and discounts, if any.<br/>If you specify `amount.breakdown`, the amount equals `item_total` plus `tax_total` plus `shipping` plus `handling` plus `insurance` minus `shipping_discount`.<br/>The amount must be a positive number. For listed of supported currencies and decimal precision, see the PayPal REST APIs <a href="/docs/integration/direct/rest/currency-codes/">Currency Codes</a>.'
+    type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+    properties:
+      breakdown:
+        type: MerchantsCommonComponentsSpecification-v1-schema-amount_breakdown-json
+        required: false
+    (oas-schema-title): Amount with Breakdown
+  MCCS-v1-schema-CC-v3-json-openapi-2-money-json:
+    description: 'The currency and amount for a financial transaction, such as a balance or payment due.'
+    type: object
+    properties:
+      currency_code:
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-currency_code-json
+      value:
+        description: 'The value, which might be:<ul><li>An integer for currencies like `JPY` that are not typically fractional.</li><li>A decimal fraction for currencies like `TND` that are subdivided into thousandths.</li></ul>For the required number of decimal places for a currency code, see [Currency Codes](/docs/integration/direct/rest/currency-codes/).'
+        maxLength: 32
+        pattern: '^((-?[0-9]+)|(-?([0-9]+)?[.][0-9]+))$'
+        type: string
+    (oas-schema-title): Money
+  MCCS-v1-schema-CC-v3-json-openapi-2-currency_code-json:
+    description: 'The [three-character ISO-4217 currency code](/docs/integration/direct/rest/currency-codes/) that identifies the currency.'
+    minLength: 3
+    maxLength: 3
+    type: string
+    (oas-format): ppaas_common_currency_code_v2
+  MerchantsCommonComponentsSpecification-v1-schema-amount_breakdown-json:
+    description: 'The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping, handling, insurance, and discounts, if any.'
+    type: object
+    properties:
+      item_total:
+        description: 'The subtotal for all items. Required if the request includes `purchase_units[].items[].unit_amount`. Must equal the sum of `(items[].unit_amount * items[].quantity)` for all items.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+      shipping:
+        description: The shipping fee for all items within a given `purchase_unit`.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+      handling:
+        description: The handling fee for all items within a given `purchase_unit`.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+      tax_total:
+        description: 'The total tax for all items. Required if the request includes `purchase_units.items.tax`. Must equal the sum of `(items[].tax * items[].quantity)` for all items.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+      insurance:
+        description: The insurance fee for all items within a given `purchase_unit`.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+      shipping_discount:
+        description: The shipping discount for all items within a given `purchase_unit`.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+    (oas-schema-title): Amount Breakdown
+  MerchantsCommonComponentsSpecification-v1-schema-payee-json:
+    description: The merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
+    type: MerchantsCommonComponentsSpecification-v1-schema-payee_base-json
+    properties:
+      display_data:
+        type: MerchantsCommonComponentsSpecification-v1-schema-payee_displayable-json
+        (visibility):
+          extent: INTERNAL
+    (oas-schema-title): Payee
+  MerchantsCommonComponentsSpecification-v1-schema-payee_base-json:
+    description: The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the payee.
+    type: object
+    properties:
+      email_address:
+        description: The email address of merchant.
+        type: MerchantsCommonComponentsSpecification-v1-schema-email-json
+      merchant_id:
+        description: The encrypted PayPal account ID of the merchant.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-payer_id-json
+      client_id:
+        description: The public identifier for app created by the merchant/payee. Introduced to support use cases (for e.g. BrainTree integration with PayPal) where payee email_address or merchant_id is not available.
+        maxLength: 80
+        type: string
+        (visibility):
+          extent: INTERNAL
+    (oas-schema-title): Merchant Base
+  MerchantsCommonComponentsSpecification-v1-schema-payee_displayable-json:
+    description: 'The merchant information. The merchant is also known as the payee. Appears to the customer in checkout, transactions, email receipts, and transaction history.'
+    type: object
+    properties:
+      business_email:
+        description: 'The email address of the merchant. Appears to the customer in checkout, transactions, email receipts, and transaction history.'
+        type: MerchantsCommonComponentsSpecification-v1-schema-email-json
+      business_phone:
+        description: 'The phone number of the merchant. Appears to the customer in checkout, payment transactions, email receipts, and transaction history.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-phone-json
+      brand_name:
+        description: 'The name of the merchant. Appears to the customer in checkout, payment transactions, email receipts, and transaction history.'
+        maxLength: 127
+        type: string
+    (oas-schema-title): Displayable Merchant Information
+  MerchantsCommonComponentsSpecification-v1-schema-payment_instruction-json:
+    description: 'Any additional payment instructions for PayPal for Partner customers. Enables features for partners and marketplaces, such as delayed disbursement and collection of a platform fee. Applies during order creation for captured payments or during capture of authorized payments.'
+    type: object
+    properties:
+      platform_fees:
+        description: 'An array of various fees, commissions, tips, or donations.'
+        minItems: 0
+        maxItems: 1
+        type: array
+        items:
+          type: MerchantsCommonComponentsSpecification-v1-schema-platform_fee-json
+          (publicDocsSchemaName): platform_fee
+      disbursement_mode:
+        type: MerchantsCommonComponentsSpecification-v1-schema-disbursement_mode-json
+    (oas-schema-title): Payment Instruction
+  MerchantsCommonComponentsSpecification-v1-schema-platform_fee-json:
+    description: 'The platform or partner fee, commission, or brokerage fee that is associated with the transaction. Not a separate or isolated transaction leg from the external perspective. The platform fee is limited in scope and is always associated with the original payment for the purchase unit.'
+    type: object
+    properties:
+      amount:
+        description: The fee for this transaction.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (publicDocsSchemaName): amount
+      payee:
+        description: 'The recipient of the fee for this transaction. If you omit this value, the default is the API caller.'
+        type: MerchantsCommonComponentsSpecification-v1-schema-payee_base-json
+        (publicDocsSchemaName): payee
+        required: false
+    (oas-schema-title): Platform Fee
+  MerchantsCommonComponentsSpecification-v1-schema-disbursement_mode-json:
+    description: The funds that are held on behalf of the merchant.
+    default: INSTANT
+    type: string
+    (oas-schema-title): Disbursement Mode
+    (enum):
+      - value: INSTANT
+        description: The funds are released to the merchant immediately.
+        default: INSTANT
+      - value: DELAYED
+        description: 'The funds are held for a finite number of days. The actual duration depends on the region and type of integration. You can release the funds through a referenced payout. Otherwise, the funds disbursed automatically after the specified duration.'
+  MerchantsCommonComponentsSpecification-v1-schema-item-json:
+    description: The details for the items to be purchased.
+    type: object
+    properties:
+      name:
+        description: The item name or title.
+        minLength: 1
+        maxLength: 127
+        type: string
+      unit_amount:
+        description: 'The item price or rate per unit. If you specify <code>unit_amount</code>, <code>purchase_units[].amount.breakdown.item_total</code> is required. Must equal <code>unit_amount * quantity</code> for all items.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+      tax:
+        description: 'The item tax for each unit. If <code>tax</code> is specified, <code>purchase_units[].amount.breakdown.tax_total</code> is required. Must equal <code>tax * quantity</code> for all items.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        required: false
+      quantity:
+        description: The item quantity. Must be a whole number.
+        maxLength: 10
+        pattern: '^[1-9][0-9]{0,9}$'
+        type: string
+      description:
+        description: The detailed item description.
+        maxLength: 127
+        type: string
+        required: false
+      sku:
+        description: The stock keeping unit (SKU) for the item.
+        maxLength: 127
+        type: string
+        required: false
+      category:
+        description: The item category type.
+        minLength: 1
+        maxLength: 20
+        type: string
+        (enum):
+          - value: DIGITAL_GOODS
+            description: 'Goods that are stored, delivered, and used in their electronic format.'
+          - value: PHYSICAL_GOODS
+            description: A tangible item that can be shipped with proof of delivery.
+        required: false
+    (oas-schema-title): Item
+  MerchantsCommonComponentsSpecification-v1-schema-shipping_detail-json:
+    description: The shipping details.
+    type: object
+    properties:
+      name:
+        description: The name of the person to whom to ship the items. Supports only the `full_name` property.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-name-json
+      options:
+        description: Includes options presented by the payee/merchant to the payer to ship or pick up their item(s)
+        type: MerchantsCommonComponentsSpecification-v1-schema-shipping_options_request-json
+        (visibility):
+          extent: INTERNAL
+      address:
+        description: 'The address of the person to whom to ship the items Supports only the `address_line_1`, `address_line_2`, `admin_area_1`, `admin_area_2`, `postal_code`, and `country_code` properties.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-address_portable-json
+    (oas-schema-title): Shipping Details
+  MerchantsCommonComponentsSpecification-v1-schema-shipping_options_request-json:
+    description: Includes options presented by the payee/merchant to the payer to ship or pick up their item(s). Also includes the shipping options elected by the payer.
+    type: object
+    properties:
+      id:
+        description: A unique identifier to identify a shipping option chosen by the payer.
+        maxLength: 127
+        type: string
+      label:
+        description: 'A description shown to the payer to help them choose the most appropriate shipping option (e.g. Free Shipping, USPS Priority Shipping, Expédition prioritaire USPS, USPS yōuxiān fā huò). It is recommended that the description be localized to the locale of the payer.'
+        maxLength: 127
+        type: string
+      type:
+        description: The method by which the payer wants to get their item(s). Supported options are 'SHIPPING' or 'PICKUP'.
+        type: string
+        (enum):
+          - value: SHIPPING
+            description: Payer intends to receive the item(s) at the address specified.
+            default: true
+          - value: PICKUP
+            description: 'Payer intends to pickup/collect the item(s) at the address specified. For example, this could be the address for a store.'
+        required: false
+      amount:
+        description: The shipping cost associated with the option chosen.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+    (oas-schema-title): Shipping Options
+  payment_collection-json:
+    description: 'The collection of payments, or transactions, for a purchase unit in an order. For example, authorized payments, captured payments, and refunds.'
+    type: object
+    properties:
+      authorizations:
+        description: An array of authorized payments for a purchase unit. A purchase unit can have zero or more authorized payments.
+        type: array
+        items:
+          description: An authorized payment for a purchase unit.
+          type: MerchantsCommonComponentsSpecification-v1-schema-authorization-json
+          (publicDocsSchemaName): authorizations
+      captures:
+        description: An array of captured payments for a purchase unit. A purchase unit can have zero or more captured payments.
+        type: array
+        items:
+          description: A captured payment for a purchase unit.
+          type: MerchantsCommonComponentsSpecification-v1-schema-capture-json
+          (publicDocsSchemaName): capture
+      refunds:
+        description: An array of refunds for a purchase unit. A purchase unit can have zero or more refunds.
+        type: array
+        items:
+          description: A refund for a purchase unit.
+          type: MerchantsCommonComponentsSpecification-v1-schema-refund-json
+          (publicDocsSchemaName): refund
+    (oas-schema-title): Payment Collection
+    (visibility):
+      extent: LIMITED_RELEASE
+  MerchantsCommonComponentsSpecification-v1-schema-authorization-json:
+    description: The authorized payment transaction.
+    type:
+      - MerchantsCommonComponentsSpecification-v1-schema-authorization_status-json
+      - MerchantsCommonComponentsSpecification-v1-schema-activity_timestamps-json
+    properties:
+      id:
+        description: The PayPal-generated ID for the authorized payment.
+        type: string
+        (oas-readOnly): true
+      amount:
+        description: The amount for this authorized payment.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (oas-readOnly): true
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      seller_protection:
+        type: MerchantsCommonComponentsSpecification-v1-schema-seller_protection-json
+        (oas-readOnly): true
+      expiration_time:
+        description: 'The date and time when the authorized payment expires, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-date_time-json
+        (oas-readOnly): true
+      links:
+        description: 'An array of related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-link_description-json
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+    (oas-schema-title): Authorization
+    (visibility):
+      extent: EXTERNAL
+  MerchantsCommonComponentsSpecification-v1-schema-authorization_status-json:
+    description: The status fields for an authorized payment.
+    type: object
+    properties:
+      status:
+        description: The status for the authorized payment.
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: CREATED
+            description: The authorized payment is created. No captured payments have been made for this authorized payment.
+          - value: CAPTURED
+            description: The authorized payment has one or more captures against it. The sum of these captured payments is greater than the amount of the original authorized payment.
+          - value: DENIED
+            description: PayPal cannot authorize funds for this authorized payment.
+          - value: EXPIRED
+            description: The authorized payment has expired.
+          - value: PARTIALLY_CAPTURED
+            description: A captured payment was made for the authorized payment for an amount that is less than the amount of the original authorized payment.
+          - value: VOIDED
+            description: The authorized payment was voided. No more captured payments can be made against this authorized payment.
+    (oas-schema-title): Authorization Status
+  MerchantsCommonComponentsSpecification-v1-schema-seller_protection-json:
+    description: 'The level of protection offered as defined by [PayPal Seller Protection for Merchants](https://www.paypal.com/us/webapps/mpp/security/seller-protection).'
+    type: object
+    properties:
+      status:
+        description: 'Indicates whether the transaction is eligible for seller protection. For information, see [PayPal Seller Protection for Merchants](https://www.paypal.com/us/webapps/mpp/security/seller-protection).'
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: ELIGIBLE
+            description: Your PayPal balance remains intact if the customer claims that he or she did not receive an item or the account holder claims that he or she did not authorize the payment.
+          - value: PARTIALLY_ELIGIBLE
+            description: Your PayPal balance remains intact if the customer claims that he or she did not receive an item.
+          - value: NOT_ELIGIBLE
+            description: This transaction is not eligible for seller protection.
+      dispute_categories:
+        description: An array of conditions that are covered for the transaction.
+        type: array
+        items:
+          description: The condition that is covered for the transaction.
+          type: string
+          (publicDocsSchemaName): dispute_category
+          (enum):
+            - value: ITEM_NOT_RECEIVED
+              description: The payer paid for an item that he or she did not receive.
+            - value: UNAUTHORIZED_TRANSACTION
+              description: The payer did not authorize the payment.
+        (oas-readOnly): true
+    (oas-schema-title): Seller Protection
+  MCCS-v1-schema-CC-v3-json-openapi-2-link_description-json:
+    description: 'The request-related [HATEOAS link](/docs/api/overview/#hateoas-links) information.'
+    type: object
+    properties:
+      href:
+        description: 'The complete target URL. To make the related call, combine the method with this [URI Template-formatted](https://tools.ietf.org/html/rfc6570) link. For pre-processing, include the `$`, `(`, and `)` characters. The `href` is the key HATEOAS component that links a completed call with a subsequent call.'
+        type: string
+        (visibility):
+          extent: EXTERNAL
+      rel:
+        description: 'The [link relation type](https://tools.ietf.org/html/rfc5988#section-4), which serves as an ID for a link that unambiguously describes the semantics of the link. See [Link Relations](https://www.iana.org/assignments/link-relations/link-relations.xhtml).'
+        type: string
+        (visibility):
+          extent: EXTERNAL
+      method:
+        description: The HTTP method required to make the related call.
+        type: string
+        enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - HEAD
+          - CONNECT
+          - OPTIONS
+          - PATCH
+        (visibility):
+          extent: EXTERNAL
+        required: false
+      title:
+        description: The link title.
+        type: string
+        (visibility):
+          extent: INTERNAL
+        required: false
+      mediaType:
+        description: 'The media type, as defined by [RFC 2046](https://www.ietf.org/rfc/rfc2046.txt). Describes the link target.'
+        type: string
+        (publicDocsSchemaName): media_type
+        (visibility):
+          extent: INTERNAL
+        required: false
+      encType:
+        description: The media type in which to submit the request data.
+        default: application/json
+        type: string
+        (publicDocsSchemaName): enc_type
+        (visibility):
+          extent: INTERNAL
+        required: false
+      schema:
+        description: The schema that describes the request data.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-link_schema-json
+        (visibility):
+          extent: INTERNAL
+        required: false
+      targetSchema:
+        description: The schema that describes the link target.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-link_schema-json
+        (publicDocsSchemaName): target_schema
+        (visibility):
+          extent: INTERNAL
+        required: false
+    (oas-schema-title): Link Description
+  MCCS-v1-schema-CC-v3-json-openapi-2-link_schema-json:
+    description: The request data or link target.
+    type: object
+    properties:
+      additionalItems:
+        description: Any additional items.
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Additional Items
+        (publicDocsSchemaName): additional_items
+      dependencies:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Dependencies
+      items:
+        description: An item.
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Items
+      definitions:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Definitions
+      patternProperties:
+        description: The pattern properties.
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Pattern Properties
+        (publicDocsSchemaName): pattern_properties
+      properties:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Properties
+      allOf:
+        description: An array of sub-schemas. The data must validate against all sub-schemas.
+        type: array
+        items:
+          description: A sub-schema against which the data must validate.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): All Of Item
+          (publicDocsSchemaName): all_of_item
+        (publicDocsSchemaName): all_of
+      anyOf:
+        description: An array of sub-schemas. The data must validate against one or more sub-schemas.
+        type: array
+        items:
+          description: A sub-schema against which the data must validate.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): Any Of Item
+          (publicDocsSchemaName): any_of_item
+        (publicDocsSchemaName): any_of
+      oneOf:
+        description: An array of sub-schemas. The data must validate against one sub-schema.
+        type: array
+        items:
+          description: A sub-schema against which the data must validate.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): One Of Item
+          (publicDocsSchemaName): one_of_item
+        (publicDocsSchemaName): one_of
+      not:
+        type: object
+        additionalProperties: true
+        (oas-schema-title): Not
+      links:
+        description: An array of links.
+        type: array
+        items:
+          description: A link.
+          type: object
+          additionalProperties: true
+          (oas-schema-title): Link
+          (oas-readOnly): true
+          (publicDocsSchemaName): link
+        (oas-readOnly): true
+      fragmentResolution:
+        description: The fragment resolution.
+        type: string
+        (publicDocsSchemaName): fragment_resolution
+      media:
+        description: The media type and context-encoding scheme.
+        type: object
+        properties:
+          type:
+            description: 'The media type. See [Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types](https://tools.ietf.org/html/rfc2046).'
+            type: string
+          binaryEncoding:
+            description: 'The content-encoding scheme. See [Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies](https://tools.ietf.org/html/rfc2045).'
+            type: string
+            (publicDocsSchemaName): binary_encoding
+        (oas-schema-title): Media
+      pathStart:
+        description: 'To apply this schema to the instances'' URIs, start the URIs with this value.'
+        type: string
+        (oas-format): uri
+        (publicDocsSchemaName): path_start
+    additionalProperties: true
+    (oas-schema-title): Link Schema
+  MerchantsCommonComponentsSpecification-v1-schema-capture-json:
+    description: A captured payment.
+    type:
+      - MerchantsCommonComponentsSpecification-v1-schema-capture_status-json
+      - MerchantsCommonComponentsSpecification-v1-schema-activity_timestamps-json
+    properties:
+      id:
+        description: The PayPal-generated ID for the captured payment.
+        type: string
+        (oas-readOnly): true
+      amount:
+        description: The amount for this captured payment.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (oas-readOnly): true
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      seller_protection:
+        type: MerchantsCommonComponentsSpecification-v1-schema-seller_protection-json
+        (oas-readOnly): true
+      final_capture:
+        description: Indicates whether you can make additional captures against the authorized payment. Set to `true` if you do not intend to capture additional payments against the authorization. Set to `false` if you intend to capture additional payments against the authorization.
+        default: false
+        type: boolean
+        (oas-readOnly): true
+      seller_receivable_breakdown:
+        description: The detailed breakdown of the captured payment.
+        type: object
+        properties:
+          gross_amount:
+            description: The amount for this captured payment.
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+          paypal_fee:
+            description: The applicable fee for this captured payment.
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+          net_amount:
+            description: The net amount that the payee receives for this captured payment in their PayPal account. The net amount is computed as <code>gross_amount</code> minus the <code>paypal_fee</code> minus the <code>platform_fees</code>.
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+          receivable_amount:
+            description: The net amount that is credited to the payee's PayPal account. Returned only when the currency of the captured payment is different from the currency of the PayPal account where the payee wants to credit the funds. The amount is computed as <code>net_amount</code> times <code>exchange_rate</code>.
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+          exchange_rate:
+            description: The exchange rate that determines the amount that is credited to the payee's PayPal account. Returned when the currency of the captured payment is different from the currency of the PayPal account where the payee wants to credit the funds.
+            type: MerchantsCommonComponentsSpecification-v1-schema-exchange_rate-json
+          platform_fees:
+            description: 'An array of platform or partner fees, commissions, or brokerage fees that associated with the captured payment.'
+            minItems: 0
+            maxItems: 1
+            type: array
+            items:
+              type: MerchantsCommonComponentsSpecification-v1-schema-platform_fee-json
+              (publicDocsSchemaName): platform_fee
+        (oas-schema-title): Merchant Receivable Breakdown
+        (oas-readOnly): true
+      disbursement_mode:
+        type: MerchantsCommonComponentsSpecification-v1-schema-disbursement_mode-json
+      links:
+        description: 'An array of related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-link_description-json
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+    (oas-schema-title): Capture
+    (visibility):
+      extent: EXTERNAL
+  MerchantsCommonComponentsSpecification-v1-schema-capture_status-json:
+    description: The status of a captured payment.
+    type: object
+    properties:
+      status:
+        description: The status of the captured payment.
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: COMPLETED
+            description: The funds for this captured payment were credited to the payee's PayPal account.
+          - value: DECLINED
+            description: The funds could not be captured.
+          - value: PARTIALLY_REFUNDED
+            description: An amount less than this captured payment's amount was partially refunded to the payer.
+          - value: PENDING
+            description: 'The funds for this captured payment was not yet credited to the payee''s PayPal account. For more information, see <code>status.details</code>'
+          - value: REFUNDED
+            description: An amount greater than or equal to this captured payment's amount was refunded to the payer.
+      status_details:
+        description: The details of the captured payment status.
+        type: object
+        properties:
+          reason:
+            description: The reason why the captured payment status is `PENDING` or `DENIED`.
+            type: string
+            (enum):
+              - value: BUYER_COMPLAINT
+                description: The payer initiated a dispute for this captured payment with PayPal.
+              - value: CHARGEBACK
+                description: The captured funds were reversed in response to the payer disputing this captured payment with the issuer of the financial instrument used to pay for this captured payment.
+              - value: ECHECK
+                description: The payer paid by an eCheck that has not yet cleared.
+              - value: INTERNATIONAL_WITHDRAWAL
+                description: 'Visit your online account. In your **Account Overview**, accept and deny this payment.'
+              - value: OTHER
+                description: 'No additional specific reason can be provided. For more information about this captured payment, visit your account online or contact PayPal.'
+              - value: PENDING_REVIEW
+                description: The captured payment is pending manual review.
+              - value: RECEIVING_PREFERENCE_MANDATES_MANUAL_ACTION
+                description: 'The payee has not yet set up appropriate receiving preferences for their account. For more information about how to accept or deny this payment, visit your account online. This reason is typically offered in scenarios such as when the currency of the captured payment is different from the primary holding currency of the payee.'
+              - value: REFUNDED
+                description: The captured funds were refunded.
+              - value: TRANSACTION_APPROVED_AWAITING_FUNDING
+                description: The payer must send the funds for this captured payment. This code generally appears for manual EFTs.
+              - value: UNILATERAL
+                description: The payee does not have a PayPal account.
+              - value: VERIFICATION_REQUIRED
+                description: The payee's PayPal account is not verified.
+        (oas-schema-title): Status Details
+        (oas-readOnly): true
+    (oas-schema-title): Capture Status
+  MerchantsCommonComponentsSpecification-v1-schema-exchange_rate-json:
+    description: The exchange rate that determines the amount to convert from one currency to another currency.
+    type: object
+    properties:
+      source_currency:
+        description: The source currency from which to convert an amount.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-currency_code-json
+      target_currency:
+        description: The target currency into which to convert an amount.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-currency_code-json
+      value:
+        description: The target currency amount. Equivalent to one unit of the source currency. Formatted as integer or decimal value with one to 15 digits to the right of the decimal point.
+        type: string
+    (oas-schema-title): Exchange Rate
+    (oas-readOnly): true
+  MerchantsCommonComponentsSpecification-v1-schema-refund-json:
+    description: The refund information.
+    type:
+      - MerchantsCommonComponentsSpecification-v1-schema-refund_status-json
+      - MerchantsCommonComponentsSpecification-v1-schema-activity_timestamps-json
+    properties:
+      id:
+        description: The PayPal-generated ID for the refund.
+        type: string
+        (oas-readOnly): true
+      amount:
+        description: The amount that the payee refunded to the payer.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (oas-readOnly): true
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      note_to_payer:
+        description: The reason for the refund. Appears in both the payer's transaction history and the emails that the payer receives.
+        type: string
+        (oas-readOnly): true
+      seller_payable_breakdown:
+        description: The breakdown of the refund.
+        type: object
+        properties:
+          gross_amount:
+            description: The amount that the payee refunded to the payer.
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+            (oas-readOnly): true
+          paypal_fee:
+            description: The PayPal fee that was refunded to the payer. This fee might not match the PayPal fee that the payee paid when the payment was captured.
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+            (oas-readOnly): true
+          net_amount:
+            description: 'The net amount that the payee''s account is debited, if the payee holds funds in the currency for this refund. The net amount is calculated as <code>gross_amount</code> minus <code>paypal_fee</code> minus <code>platform_fees</code>.'
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+            (oas-readOnly): true
+          platform_fees:
+            description: 'An array of platform or partner fees, commissions, or brokerage fees for the refund.'
+            minItems: 0
+            maxItems: 1
+            type: array
+            items:
+              type: MerchantsCommonComponentsSpecification-v1-schema-platform_fee-json
+              (publicDocsSchemaName): platform_fee
+          net_amount_breakdown:
+            description: An array of breakdown values for the net amount. Returned when the currency of the refund is different from the currency of the PayPal account where the payee holds their funds.
+            type: array
+            items:
+              type: MerchantsCommonComponentsSpecification-v1-schema-net_amount_breakdown_item-json
+              (publicDocsSchemaName): net_amount_breakdown_item
+            (oas-readOnly): true
+          total_refunded_amount:
+            description: 'The total amount refunded from the original capture to date. For example, if a payer makes a $100 purchase and was refunded $20 a week ago and was refunded $30 in this refund, the `gross_amount` is $30 for this refund and the `total_refunded_amount` is $50.'
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (oas-schema-title): Merchant Payable Breakdown
+        (oas-readOnly): true
+      links:
+        description: 'An array of related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-link_description-json
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+    (oas-schema-title): Refund
+    (visibility):
+      extent: EXTERNAL
+  MerchantsCommonComponentsSpecification-v1-schema-refund_status-json:
+    description: The refund status.
+    type: object
+    properties:
+      status:
+        description: The status of the capture.
+        type: string
+        (oas-readOnly): true
+        (enum):
+          - value: CANCELLED
+            description: The refund was cancelled.
+          - value: PENDING
+            description: 'The refund is pending. For more information, see <code>status_details.reason</code>.'
+          - value: COMPLETED
+            description: The funds for this transaction were debited to the customer's account.
+      status_details:
+        description: The details of the refund status.
+        type: object
+        properties:
+          reason:
+            description: The reason why the refund has the `PENDING` or `FAILED` status.
+            type: string
+            (enum):
+              - value: ECHECK
+                description: 'The customer''s account is funded through an eCheck, which has not yet cleared.'
+        (oas-schema-title): Status Details
+        (oas-readOnly): true
+    (oas-schema-title): Refund Status
+  MerchantsCommonComponentsSpecification-v1-schema-net_amount_breakdown_item-json:
+    description: The net amount. Returned when the currency of the refund is different from the currency of the PayPal account where the merchant holds their funds.
+    type: object
+    properties:
+      payable_amount:
+        description: The net amount debited from the merchant's PayPal account.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (oas-readOnly): true
+      converted_amount:
+        description: The converted payable amount.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (oas-readOnly): true
+      exchange_rate:
+        description: The exchange rate that determines the amount that was debited from the merchant's PayPal account.
+        type: MerchantsCommonComponentsSpecification-v1-schema-exchange_rate-json
+        (oas-readOnly): true
+    (oas-schema-title): Net Amount Breakdown Item
+  order_status-json:
+    description: The order status.
+    type: string
+    (oas-schema-title): Order Status
+    (visibility):
+      extent: LIMITED_RELEASE
+    (enum):
+      - value: CREATED
+        description: The order was created with the specified context.
+      - value: SAVED
+        description: Order is saved / persisted. Order status continues to be in progress till a capture is made with final_capture = true for all PU within the Order.
+      - value: APPROVED
+        description: 'The customer approved the payment through the PayPal wallet or another form of guest or unbranded payment. For example, a card, bank account, or so on.'
+      - value: VOIDED
+        description: All the Purchase Units within the Order are voided.
+      - value: COMPLETED
+        description: The order was authorized or payment was captured for the order.
+  MCCS-v1-schema-CC-v3-json-openapi-2-error-json:
+    description: The error details.
+    type: object
+    properties:
+      name:
+        description: 'The human-readable, unique name of the error.'
+        type: string
+      message:
+        description: The message that describes the error.
+        type: string
+      debug_id:
+        description: The PayPal internal ID that is used for correlation purposes.
+        type: string
+      information_link:
+        description: 'The information link, or URI, that shows detailed information about this error for the developer.'
+        type: string
+        (oas-readOnly): true
+        required: false
+      details:
+        description: An array of additional details about the error.
+        type: array
+        items:
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-error_details-json
+          (publicDocsSchemaName): error_details
+        required: false
+      links:
+        description: 'An array of request-related [HATEOAS links](/docs/api/overview/#hateoas-links).'
+        type: array
+        items:
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-link_description-json
+          (oas-readOnly): true
+          (publicDocsSchemaName): link_description
+        (oas-readOnly): true
+        required: false
+    (oas-schema-title): Error
+  MCCS-v1-schema-CC-v3-json-openapi-2-error_details-json:
+    description: The error details. Required for client-side `4XX` errors.
+    type: object
+    properties:
+      field:
+        description: 'The field that caused the error. If the field is in the body, set this value to the JSON pointer to that field. Required for client-side errors.'
+        type: string
+        required: false
+      value:
+        description: The value of the field that caused the error.
+        type: string
+        required: false
+      location:
+        description: 'The location of the field that caused the error. Value is `body`, `path`, or `query`.'
+        default: body
+        type: string
+        required: false
+      issue:
+        description: The unique and fine-grained application-level error code.
+        type: string
+      description:
+        description: 'The human-readable description for an issue. The description MAY change over the lifetime of an API, so clients **MUST NOT** depend on this value.'
+        type: string
+        required: false
+    (oas-schema-title): Error Details
+  order_request-json:
+    description: The order request details.
+    type: object
+    properties:
+      intent:
+        type: MerchantsCommonComponentsSpecification-v1-schema-checkout_payment_intent-json
+      processing_instruction:
+        type: processing_instruction-json
+        (visibility):
+          extent: LIMITED_RELEASE
+        required: false
+      payer:
+        type: MerchantsCommonComponentsSpecification-v1-schema-payer-json
+        required: false
+      purchase_units:
+        description: An array of purchase units. At present only 1 purchase_unit is supported. Each purchase unit establishes a contract between a payer and the payee. Each purchase unit represents either a full or partial order that the payer intends to purchase from the payee.
+        minItems: 1
+        type: array
+        items:
+          description: The purchase unit. Establishes a contract between a payer and the payee.
+          type: purchase_unit_request-json
+          (publicDocsSchemaName): purchase_unit
+      application_context:
+        description: Customize the payer experience during the approval process for the payment with PayPal.
+        type: application_context-json
+        required: false
+    (oas-schema-title): Order Request
+    (visibility):
+      extent: LIMITED_RELEASE
+  processing_instruction-json:
+    description: The different instructions to process an order.
+    default: NO_INSTRUCTION
+    type: string
+    (oas-schema-title): Instruction for processing an order
+    (enum):
+      - value: ORDER_SAVED_EXPLICITLY
+        description: The API caller will 'save' the Order for future payment processing by making an explicit API call 'v2/checkout/orders/id/save' after the Payer has approved the order.
+      - value: ORDER_SAVED_ON_BUYER_APPROVAL
+        description: 'PayPal will ''save'' the Order on behalf of the API Caller, implicitly once the order has been approved by the Payer. Please note that this option is not currently supported.'
+      - value: NO_INSTRUCTION
+        description: The API Caller intends to Authorize 'v2/checkout/orders/id/authorize' or Capture 'v2/checkout/orders/id/capture' after Payer approval.
+        default: true
+  purchase_unit_request-json:
+    description: The purchase unit request. Includes required information for the payment contract.
+    type: object
+    properties:
+      reference_id:
+        description: The ID for the purchase unit. Required for multiple `purchase_units` or if an order must be updated by using `PATCH`.
+        maxLength: 256
+        type: string
+        required: false
+      amount:
+        type: MerchantsCommonComponentsSpecification-v1-schema-amount_with_breakdown-json
+      payee:
+        description: The merchant who receives payment for this transaction.
+        type: MerchantsCommonComponentsSpecification-v1-schema-payee-json
+        required: false
+      payment_instruction:
+        type: MerchantsCommonComponentsSpecification-v1-schema-payment_instruction-json
+        required: false
+      description:
+        description: The purchase description.
+        maxLength: 127
+        type: string
+        required: false
+      custom_id:
+        description: The API caller-provided external ID. Used to reconcile client transactions with PayPal transactions. Appears in transaction and settlement reports but is not visible to the payer.
+        maxLength: 127
+        type: string
+        required: false
+      invoice_id:
+        description: The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.
+        maxLength: 127
+        type: string
+        required: false
+      soft_descriptor:
+        description: The payment descriptor on the payer's credit card statement.
+        maxLength: 22
+        type: string
+        required: false
+      items:
+        description: An array of items that the customer is purchasing from the merchant.
+        type: array
+        items:
+          description: An item.
+          type: MerchantsCommonComponentsSpecification-v1-schema-item-json
+          (publicDocsSchemaName): item
+        required: false
+      shipping:
+        description: The name and address of the person to whom the item(s) need to be shipped.
+        type: MerchantsCommonComponentsSpecification-v1-schema-shipping_detail-json
+        required: false
+    (oas-schema-title): Purchase Unit Request
+    (visibility):
+      extent: LIMITED_RELEASE
+  application_context-json:
+    description: 'Customizes the payer experience during the approval process for the payment with PayPal.<blockquote><strong>Note:</strong> Partners and Marketplaces might have <code>brand_name</code> and <code>shipping_preference</code> configured during partner account setup that will override the request values.</blockquote>'
+    type: object
+    properties:
+      brand_name:
+        description: The label that overrides the business name in the PayPal account on the PayPal site.
+        maxLength: 127
+        type: string
+      locale:
+        description: 'The BCP 47-formatted locale of pages that the PayPal payment experience shows. PayPal supports a five-character code. For example, `da-DK`, `he-IL`, `id-ID`, `ja-JP`, `no-NO`, `pt-BR`, `ru-RU`, `sv-SE`, `th-TH`, `zh-CN`, `zh-HK`, or `zh-TW`.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-language-json
+      landing_page:
+        description: The type of landing page to show on the PayPal site for customer checkout.
+        default: LOGIN
+        type: string
+        (enum):
+          - value: LOGIN
+            description: 'When the customer clicks <strong>PayPal Checkout</strong>, the customer is redirected to a page to log in to PayPal and approve the payment.'
+          - value: BILLING
+            description: 'When the customer clicks <strong>PayPal Checkout</strong>, the customer is redirected to a page to enter credit or debit card and other relevant billing information required to complete the purchase.'
+      shipping_preference:
+        description: 'The shipping preference:<ul><li>Displays the shipping address to the customer.</li><li>Enables the customer to choose an address on the PayPal site.</li><li>Restricts the customer from changing the address during the payment-approval process.'
+        default: GET_FROM_FILE
+        type: string
+        (enum):
+          - value: GET_FROM_FILE
+            description: Use the customer-provided shipping address on the PayPal site.
+            default: true
+          - value: NO_SHIPPING
+            description: Redact the shipping address from the PayPal site. Recommended for digital goods.
+          - value: SET_PROVIDED_ADDRESS
+            description: Use the merchant-provided address. The customer cannot change this address on the PayPal site.
+      user_action:
+        description: Configures a <strong>Continue</strong> or <strong>Pay Now</strong> checkout flow.
+        default: CONTINUE
+        type: string
+        (enum):
+          - value: CONTINUE
+            description: 'After you redirect the customer to the PayPal payment page, a <strong>Continue</strong> button appears. Use this option when the final amount is not known when the checkout flow is initiated and you want to redirect the customer to the merchant page without processing the payment.'
+            default: true
+          - value: PAY_NOW
+            description: 'After you redirect the customer to the PayPal payment page, a <strong>Pay Now</strong> button appears. Use this option when the final amount is known when the checkout is initiated and you want to process the payment immediately when the customer clicks <strong>Pay Now</strong>.'
+      payment_method:
+        type: MerchantsCommonComponentsSpecification-v1-schema-payment_method-json
+      return_url:
+        description: The URL where the customer is redirected after the customer approves the payment.
+        type: string
+        (oas-format): uri
+      cancel_url:
+        description: The URL where the customer is redirected after the customer cancels the payment.
+        type: string
+        (oas-format): uri
+      payment_token:
+        maxLength: 19
+        description: The internal client-generated token.
+        type: string
+        (visibility):
+          extent: INTERNAL
+    (oas-schema-title): Application Context
+    (visibility):
+      extent: LIMITED_RELEASE
+  MCCS-v1-schema-CC-v3-json-openapi-2-language-json:
+    description: 'The [language tag](https://tools.ietf.org/html/bcp47#section-2) for the language in which to localize the error-related strings, such as messages, issues, and suggested actions. The tag is made up of the [ISO 639-2 language code](https://www.loc.gov/standards/iso639-2/php/code_list.php), the optional [ISO-15924 script tag](https://www.unicode.org/iso15924/codelists.html), and the [ISO-3166 alpha-2 country code](/docs/integration/direct/rest/country-codes/).'
+    maxLength: 10
+    minLength: 2
+    pattern: '^[a-z]{2}(?:-[A-Z][a-z]{3})?(?:-(?:[A-Z]{2}))?$'
+    type: string
+    (oas-format): ppaas_common_language_v3
+  MerchantsCommonComponentsSpecification-v1-schema-payment_method-json:
+    description: The customer and merchant payment preferences.
+    type: object
+    properties:
+      payer_selected:
+        description: The customer-selected payment method on the merchant site.
+        minLength: 1
+        pattern: '^[0-9A-Z_]+$'
+        default: PAYPAL
+        type: string
+        (enum):
+          - value: PAYPAL_CREDIT
+            description: When payer chooses PayPal Credit as the payment method.
+            x-visibility:
+              extent: LIMITED_RELEASE
+          - value: PAYPAL
+            description: When payer chooses PayPal as the payment method
+            x-visibility:
+              extent: LIMITED_RELEASE
+      payee_preferred:
+        description: The merchant-preferred payment sources.
+        minLength: 1
+        pattern: '^[0-9A-Z_]+$'
+        default: UNRESTRICTED
+        type: string
+        (enum):
+          - value: UNRESTRICTED
+            description: Accepts any type of payment from the customer.
+            default: true
+          - value: IMMEDIATE_PAYMENT_REQUIRED
+            description: 'Accepts only immediate payment from the customer. For example, credit card, PayPal balance, or instant ACH. Ensures that at the time of capture, the payment does not have the `pending` status.'
+    (oas-schema-title): Payment Method
+  MCCS-v1-schema-CC-v3-json-openapi-2-patch_request-json:
+    description: An array of JSON patch objects to apply partial updates to resources.
+    type: array
+    items:
+      type: MCCS-v1-schema-CC-v3-json-openapi-2-patch-json
+      (publicDocsSchemaName): patch
+    (oas-schema-title): Patch Request
+  MCCS-v1-schema-CC-v3-json-openapi-2-patch-json:
+    description: The JSON patch object to apply partial updates to resources.
+    type: object
+    properties:
+      op:
+        description: The operation to complete.
+        type: string
+        enum:
+          - add
+          - remove
+          - replace
+          - move
+          - copy
+          - test
+      path:
+        description: The JSON pointer to the target document location at which to complete the operation.
+        type: string
+        required: false
+      value:
+        description: The value to apply. The `remove` operation does not require a value.
+        type: object
+        (oas-schema-title): Patch Value
+        required: false
+      from:
+        description: The JSON pointer to the target document location from which to move the value. Required for the `move` operation.
+        type: string
+        required: false
+    (oas-schema-title): Patch
+  order_action_request-json:
+    description: Completes an action for an order.
+    type: object
+    properties:
+      payment_source:
+        description: 'The source of payment for the order, which can be a token or a card. Use this object only if you have not redirected the user after order creation to approve the payment. In such cases, the user-selected payment method in the PayPal flow is implicitly used.'
+        type: MerchantsCommonComponentsSpecification-v1-schema-payment_source-json
+    (oas-schema-title): Order Action Request
+    (visibility):
+      extent: LIMITED_RELEASE
+  MerchantsCommonComponentsSpecification-v1-schema-payment_source-json:
+    description: The payment source definition.
+    type: object
+    properties:
+      card:
+        type: MerchantsCommonComponentsSpecification-v1-schema-card-json
+      token:
+        type: MerchantsCommonComponentsSpecification-v1-schema-token-json
+        required: false
+    (oas-schema-title): Payment Source
+  MerchantsCommonComponentsSpecification-v1-schema-card-json:
+    description: The payment card to use to fund a payment. Can be a credit or debit card.
+    type: object
+    properties:
+      id:
+        description: The PayPal-generated ID for the card.
+        type: string
+        (oas-readOnly): true
+        required: false
+      name:
+        description: The card holder's name as it appears on the card.
+        maxLength: 300
+        type: string
+        required: false
+      number:
+        description: The primary account number (PAN) for the payment card.
+        minLength: 13
+        maxLength: 19
+        type: string
+      expiry:
+        description: 'The card expiration year and month, in [Internet date format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-date_year_month-json
+      security_code:
+        description: 'The three- or four-digit security code of the card. Also known as the CVV, CVC, CVN, CVE, or CID.'
+        pattern: '[0-9]{3,4}'
+        type: string
+        required: false
+      last_digits:
+        description: The last digits of the payment card.
+        pattern: '[0-9]{2,}'
+        type: string
+        (oas-readOnly): true
+        required: false
+      card_type:
+        description: The card brand or network. Typically used in the response.
+        type: MerchantsCommonComponentsSpecification-v1-schema-card_type-json
+        (oas-readOnly): true
+        required: false
+      billing_address:
+        description: 'The billing address for this card. Supports only the `address_line_1`, `address_line_2`, `admin_area_1`, `admin_area_2`, `postal_code`, and `country_code` properties.'
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-address_portable-json
+        required: false
+    (oas-schema-title): Card
+  MCCS-v1-schema-CC-v3-json-openapi-2-date_year_month-json:
+    description: 'The year and month, in ISO-8601 `YYYY-MM` date format. See [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6).'
+    minLength: 7
+    maxLength: 7
+    pattern: '^[0-9]{4}-(0[1-9]|1[0-2])$'
+    type: string
+  MerchantsCommonComponentsSpecification-v1-schema-card_type-json:
+    description: 'The card network or brand. Applies to credit, debit, gift, and payment cards.'
+    minLength: 1
+    maxLength: 255
+    pattern: '^[A-Z_]+$'
+    type: string
+    (oas-schema-title): Card Type
+    (enum):
+      - value: VISA
+        description: Visa card.
+      - value: MASTERCARD
+        description: MasterCard card.
+      - value: DISCOVER
+        description: Discover card.
+      - value: AMEX
+        description: American Express card.
+      - value: SOLO
+        description: Solo debit card.
+      - value: JCB
+        description: Japan Credit Bureau card.
+      - value: STAR
+        description: Military Star card.
+      - value: DELTA
+        description: Delta Airlines card.
+      - value: SWITCH
+        description: Switch credit card.
+      - value: MAESTRO
+        description: Maestro credit card.
+      - value: CB_NATIONALE
+        description: Carte Bancaire (CB) credit card.
+      - value: CONFIGOGA
+        description: Configoga credit card.
+      - value: CONFIDIS
+        description: Confidis credit card.
+      - value: ELECTRON
+        description: Visa Electron credit card.
+      - value: CETELEM
+        description: Cetelem credit card.
+      - value: CHINA_UNION_PAY
+        description: China union pay credit card.
+  MerchantsCommonComponentsSpecification-v1-schema-token-json:
+    description: The tokenized payment source to fund a payment.
+    type: object
+    properties:
+      id:
+        description: The PayPal-generated ID for the token.
+        minLength: 1
+        maxLength: 255
+        type: string
+      type:
+        description: The tokenization method that was used to generate the ID.
+        minLength: 1
+        maxLength: 255
+        pattern: '^[0-9A-Z_-]+$'
+        type: string
+        (enum):
+          - value: NONCE
+            description: 'A secure, one-time-use reference to a payment source, such as payment card, PayPal account, and so on.'
+            x-visibility:
+              extent: LIMITED_RELEASE
+          - value: PAYMENT_METHOD_TOKEN
+            description: 'The payment method token, which is a reference to a transactional payment source. Typically stored on the merchant''s server.'
+            x-visibility:
+              extent: LIMITED_RELEASE
+          - value: BILLING_AGREEMENT
+            description: The PayPal billing agreement ID. References an approved recurring payment for goods or services.
+    (oas-schema-title): Token
+  authorize_request-json:
+    description: Authorize an order.
+    type: order_action_request-json
+    properties:
+      reference_id:
+        description: The API caller-provided external ID for the purchase unit. Required for multiple purchase units.
+        maxLength: 256
+        type: string
+        (visibility):
+          extent: LIMITED_RELEASE
+      amount:
+        description: The amount to authorize.
+        type: MCCS-v1-schema-CC-v3-json-openapi-2-money-json
+        (visibility):
+          extent: LIMITED_RELEASE
+    (oas-schema-title): Authorize Request
+    (visibility):
+      extent: LIMITED_RELEASE
+/orders:
+  post:
+    description: Creates an order. Supports only orders with one purchase unit.
+    displayName: orders.create
+    (oas-responses-default):
+      description: The error response.
+      body:
+        application/json:
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+    responses:
+      '201':
+        description: 'A successful request returns the HTTP `201 Created` status code and a JSON response body that includes by default a minimal response with the ID, status, and HATEOAS links. If you require the complete order resource representation, you must pass the <a href="/docs/limited-release/orders/api/#orders-create-header-parameters"><code>Prefer: return=representation</code> request header</a>. This header value is not the default.'
+        body:
+          application/json:
+            type: order-json
+      '400':
+        description: 'The request is not well-formed, is syntactically incorrect, or violates the schema.'
+        body:
+          application/json:
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+      '401':
+        description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+        body:
+          application/json:
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+      '422':
+        description: 'The requested action could not be completed, was semantically incorrect, or failed business validation.'
+        body:
+          application/json:
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+    headers:
+      PayPal-Partner-Attribution-Id:
+        required: true
+        type: string
+        minLength: 1
+        maxLength: 32
+        pattern: '^MULESOFTINC_SP$'
+        description: 'The value of PayPal-Partner-Attribution-Id parameter should always be MULESOFTINC_SP'
+#          regex: '^PAYPAL-PARTNER-ATTRIBUTION-ID$'
+      Prefer:
+        description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+        required: false
+        default: return=minimal
+        type: string
+#      Authorization:
+#        description: 'To make REST API calls, include the bearer token in this header with the `Bearer` authentication scheme. The value is `Bearer <Access-Token>` or `Basic <client_id;secret>`.'
+#        type: string
+#        required: false
+#      Content-Type:
+ #       description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+  #      type: string
+#      Content-Length:
+#        type: string
+#        required: false
+    body:
+      application/json:
+        example:
+          intent: CAPTURE
+          purchase_units:
+            - amount:
+                currency_code: USD
+                value: '100.00'
+        type: order_request-json
+        (oas-body-name): order
+    securedBy:
+      - Oauth2:
+          scopes:
+            - 'https://uri.paypal.com/services/checkout/orders/readwrite'
+    (oas-summary): Create order
+    (oas-tags):
+      - orders
+    (slo):
+      response_time_95th_percentile: 1000
+      error_rate: 0.1
+    (visibility):
+      extent: LIMITED_RELEASE
+  '/{order_id}':
+    get:
+      description: 'Shows details for an order, by ID.'
+      displayName: orders.get
+      (oas-responses-default):
+        description: The error response.
+        body:
+          application/json:
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+      responses:
+        '200':
+          description: A successful request returns the HTTP `200 OK` status code and a JSON response body that shows order details.
+          body:
+            application/json:
+              type: order-json
+        '401':
+          description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        '404':
+          description: The specified resource does not exist.
+      headers:
+#        Authorization:
+#          description: 'To make REST API calls, include the bearer token in this header with the `Bearer` authentication scheme. The value is `Bearer <Access-Token>` or `Basic <client_id;secret>`.'
+#          type: string
+#        Content-Type:
+#          description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#          type: string
+      securedBy:
+        - Oauth2:
+            scopes:
+              - 'https://uri.paypal.com/services/payments/payment'
+      (oas-summary): Show order details
+      (oas-tags):
+        - orders
+      (slo):
+        response_time_95th_percentile: 600
+        error_rate: 0.1
+      (visibility):
+        extent: LIMITED_RELEASE
+    patch:
+      description: 'Updates an order with the `CREATED` or `APPROVED` status. You cannot update an order with the `COMPLETED` status. You can patch these attributes and objects:<table><thead><tr><th>Attribute or object</th><th>Operations</th></tr></thead><tbody><tr><td><code>intent</code></td><td>replace</td></tr><tr><td><code>purchase_units</code></td><td>replace, add</td></tr><tr><td><code>purchase_units[].custom_id</code></td><td>replace, add, remove</td></tr><tr><td><code>purchase_units[].description</code></td><td>replace, add, remove</td></tr><tr><td><code>purchase_units[].payee.email</code></td><td>replace, add</td></tr><tr><td><code>purchase_units[].shipping</code></td><td>replace, add, remove</td></tr><tr><td><code>purchase_units[].soft_descriptor</code></td><td>replace, add, remove</td></tr><tr><td><code>purchase_units[].amount</code></td><td>replace</td></tr><tr><td><code>purchase_units[].invoice_id</code></td><td>replace, add, remove</td></tr><tr><td><code>purchase_units[].payment_instruction</code></td><td><blockquote><strong>Note:</strong> Currently, you cannot patch this field when you <code>replace</code> a <code>purchase_unit</code>.</blockquote></td></tr></tbody></table>'
+      displayName: orders.patch
+      (oas-responses-default):
+        description: The error response.
+        body:
+          application/json:
+            type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+      responses:
+        '204':
+          description: A successful request returns the HTTP `204 No Content` status code with an empty object in the JSON response body.
+        '400':
+          description: 'The request is not well-formed, is syntactically incorrect, or violates the schema.'
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        '401':
+          description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        '404':
+          description: The specified resource does not exist.
+        '422':
+          description: 'The requested action could not be completed, was semantically incorrect, or failed business validation.'
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+      headers:
+#        Authorization:
+#          description: 'To make REST API calls, include the bearer token in this header with the `Bearer` authentication scheme. The value is `Bearer <Access-Token>` or `Basic <client_id;secret>`.'
+#          type: string
+#        Content-Type:
+#          description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#          type: string
+      body:
+        application/json:
+          type: MCCS-v1-schema-CC-v3-json-openapi-2-patch_request-json
+          required: false
+          (oas-body-name): patch_request
+      securedBy:
+        - Oauth2:
+            scopes:
+              - 'https://uri.paypal.com/services/payments/payment'
+      (oas-summary): Update order
+      (oas-tags):
+        - orders
+      (slo):
+        response_time_95th_percentile: 1000
+        error_rate: 0.1
+      (visibility):
+        extent: LIMITED_RELEASE
+    uriParameters:
+      order_id:
+        description: The ID of the order to update.
+        type: string
+    /authorize:
+      post:
+        description: Authorizes payment for an order. The response shows details of authorizations. You can make this call only if you specified `intent=AUTHORIZE` in the create order call.
+        displayName: orders.authorize
+        (oas-responses-default):
+          description: The error response.
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        responses:
+          '200':
+            description: A successful response to an idempotent request returns the HTTP `200 OK` status code with a JSON response body that shows authorized payment details.
+            body:
+              application/json:
+                type: order-json
+          '201':
+            description: 'A successful response to a non-idempotent request returns the HTTP `201 Created` status code with a JSON response body that shows authorized payment details. If a duplicate response is retried, returns the HTTP `200 OK` status code. By default, the response is minimal. If you need the complete resource representation, you must pass the <a href="/docs/limited-release/orders/api/#orders-authorize-header-parameters"><code>Prefer: return=representation</code> request header</a>.'
+            body:
+              application/json:
+                type: order-json
+          '400':
+            description: 'The request is not well-formed, is syntactically incorrect, or violates the schema.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '401':
+            description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '403':
+            description: The authorized payment failed due to insufficient permissions.
+          '404':
+            description: The specified resource does not exist.
+          '422':
+            description: 'The requested action could not be completed, was semantically incorrect, or failed business validation.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '500':
+            description: An internal server error has occurred.
+        headers:
+          PayPal-Request-Id:
+            description: The server stores keys for 45 days.
+            required: false
+            type: string
+          Prefer:
+            description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+            required: false
+            default: return=minimal
+            type: string
+          PayPal-Client-Metadata-Id:
+            required: false
+            type: string
+#          Authorization:
+#            description: 'To make REST API calls, include the bearer token in this header with the `Bearer` authentication scheme. The value is `Bearer <Access-Token>` or `Basic <client_id;secret>`.'
+#            type: string
+          PayPal-Auth-Assertion:
+            description: 'An API-caller-provided JSON Web Token (JWT) assertion that identifies the merchant. For details, see <a href="/docs/api/overview/#paypal-auth-assertion">PayPal-Auth-Assertion</a>.'
+            required: false
+            type: string
+#          Content-Type:
+#            description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#            type: string
+        body:
+          application/json:
+            type: authorize_request-json
+            required: false
+            (oas-body-name): authorize_request
+        securedBy:
+          - Oauth2:
+              scopes:
+                - 'https://uri.paypal.com/services/payments/payment'
+        (oas-summary): Authorize payment for order
+        (oas-tags):
+          - orders
+        (slo):
+          response_time_95th_percentile: 1000
+          error_rate: 0.1
+        (visibility):
+          extent: LIMITED_RELEASE
+    /capture:
+      post:
+        description: Captures a payment for an order.
+        displayName: orders.capture
+        (oas-responses-default):
+          description: The error response.
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        responses:
+          '200':
+            description: A successful response to an idempotent request returns the HTTP `200 OK` status code with a JSON response body that shows captured payment details.
+            body:
+              application/json:
+                type: order-json
+          '201':
+            description: 'A successful response to a non-idempotent request returns the HTTP `201 Created` status code with a JSON response body that shows captured payment details. If a duplicate response is retried, returns the HTTP `200 OK` status code. By default, the response is minimal. If you need the complete resource representation, pass the <a href="/docs/limited-release/orders/api/#orders-authorize-header-parameters"><code>Prefer: return=representation</code> request header</a>.'
+            body:
+              application/json:
+                type: order-json
+          '400':
+            description: 'The request is not well-formed, is syntactically incorrect, or violates the schema.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '401':
+            description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '403':
+            description: The authorized payment failed due to insufficient permissions.
+          '404':
+            description: The specified resource does not exist.
+          '422':
+            description: 'The requested action could not be completed, was semantically incorrect, or failed business validation.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '500':
+            description: An internal server error has occurred.
+        headers:
+          PayPal-Request-Id:
+            description: The server stores keys for 45 days.
+            required: false
+            type: string
+          Prefer:
+            description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+            required: false
+            default: return=minimal
+            type: string
+          PayPal-Client-Metadata-Id:
+            required: false
+            type: string
+#          Authorization:
+#            description: 'To make REST API calls, include the bearer token in this header with the `Bearer` authentication scheme. The value is `Bearer <Access-Token>` or `Basic <client_id;secret>`.'
+#            type: string
+          PayPal-Auth-Assertion:
+            description: 'An API-caller-provided JSON Web Token (JWT) assertion that identifies the merchant. For details, see <a href="/docs/api/overview/#paypal-auth-assertion">PayPal-Auth-Assertion</a>.'
+            required: false
+            type: string
+#          Content-Type:
+#            description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#            type: string
+        body:
+          application/json:
+            type: order_action_request-json
+            required: false
+            (oas-body-name): order_action_request
+        securedBy:
+          - Oauth2:
+              scopes:
+                - 'https://uri.paypal.com/services/payments/payment'
+        (oas-summary): Capture payment for order
+        (oas-tags):
+          - orders
+        (slo):
+          response_time_95th_percentile: 1000
+          error_rate: 0.1
+        (visibility):
+          extent: LIMITED_RELEASE
+    /save:
+      post:
+        description: Saves an order. Supports multiple authorize and capture.
+        displayName: orders.save
+        (oas-responses-default):
+          description: The error response.
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        responses:
+          '200':
+            description: A successful response to an idempotent request returns the HTTP `200 OK` status code with a JSON response body that shows order details.
+            body:
+              application/json:
+                type: order-json
+          '201':
+            description: 'A successful response to a non-idempotent request returns the HTTP `201 Created` status code with a JSON response body that shows order details. If a duplicate response is retried, returns the HTTP `200 OK` status code. By default, the response is minimal. If you need the complete resource representation, pass the <a href="/docs/limited-release/orders/api/#orders-authorize-header-parameters"><code>Prefer: return=representation</code> request header</a>.'
+            body:
+              application/json:
+                type: order-json
+          '400':
+            description: 'The request is not well-formed, is syntactically incorrect, or violates the schema.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '403':
+            description: The save failed due to insufficient permissions.
+          '404':
+            description: The specified resource does not exist.
+          '422':
+            description: 'The requested action could not be completed, was semantically incorrect, or failed business validation.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '500':
+            description: An internal server error has occurred.
+        headers:
+          PayPal-Request-Id:
+            description: The server stores keys for 45 days.
+            required: false
+            type: string
+          Prefer:
+            description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+            required: false
+            default: return=minimal
+            type: string
+          PayPal-Client-Metadata-Id:
+            required: false
+            type: string
+        securedBy:
+          - Oauth2:
+              scopes:
+                - 'https://uri.paypal.com/services/payments/payment'
+        (oas-summary): Save order
+        (oas-tags):
+          - orders
+        (slo):
+          response_time_95th_percentile: 1000
+          error_rate: 0.1
+        (visibility):
+          extent: LIMITED_RELEASE
+    /validate-payment-method:
+      post:
+        description: Validates a payment method and checks it for contingencies.
+        displayName: orders.validate
+        (oas-responses-default):
+          description: The error response.
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        responses:
+          '200':
+            description: A successful request indicates that no contingengies were detected. A successful request returns the HTTP `200 OK` status code with a JSON response body that shows order details.
+            body:
+              application/json:
+                type: order-json
+          '400':
+            description: 'The request is not well-formed, is syntactically incorrect, or violates the schema.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '401':
+            description: 'Authentication failed due to missing authorization header, or invalid authentication credentials.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '422':
+            description: One or more contingencies were detected for the payment method.
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        headers:
+          PayPal-Client-Metadata-Id:
+            required: false
+            type: string
+#          Authorization:
+#            description: 'To make REST API calls, include the bearer token in this header with the `Bearer` authentication scheme. The value is `Bearer <Access-Token>` or `Basic <client_id;secret>`.'
+#            type: string
+#          Content-Type:
+#            description: Required for operations with a request body. The value is application/<format>. Where the 'format' is 'json'.
+#            type: string
+        body:
+          application/json:
+            example:
+              payment_source:
+                card:
+                  number: '4111111111111111'
+                  expiry: 2020-02
+            type: order_action_request-json
+            required: false
+            (oas-body-name): order_action_request
+        securedBy:
+          - Oauth2:
+              scopes:
+                - 'https://uri.paypal.com/services/payments/payment'
+        (oas-summary): Validate payment method
+        (oas-tags):
+          - orders
+        (slo):
+          response_time_95th_percentile: 1000
+          error_rate: 0.1
+        (visibility):
+          extent: INTERNAL
+        (serviceName): checkoutsellerplatserv
+    /void:
+      post:
+        description: 'Voids an order, by ID.'
+        displayName: orders.void
+        (oas-responses-default):
+          description: The error response.
+          body:
+            application/json:
+              type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+        responses:
+          '200':
+            description: A successful response to an idempotent request returns the HTTP `200 OK` status code with a JSON response body that shows order details. The header `return` value is `representation`.
+            body:
+              application/json:
+                type: order-json
+          '204':
+            description: 'A successful request returns the HTTP `204 No Content` status code with an empty object in the JSON response body. The header `return` value is `minimal`. By default, the response is minimal.'
+          '400':
+            description: 'The request is not well-formed, is syntactically incorrect, or violates the schema.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '403':
+            description: The void failed due to insufficient permissions.
+          '404':
+            description: The specified resource does not exist.
+          '422':
+            description: 'The requested action could not be completed, was semantically incorrect, or failed business validation.'
+            body:
+              application/json:
+                type: MCCS-v1-schema-CC-v3-json-openapi-2-error-json
+          '500':
+            description: An internal server error has occurred.
+        headers:
+          PayPal-Request-Id:
+            description: The server stores keys for 45 days.
+            required: false
+            type: string
+          Prefer:
+            description: 'The preferred server response upon successful completion of the request. Value is:<ul><li><code>return=minimal</code>. The server returns a minimal response to optimize communication between the API caller and the server. A minimal response includes the <code>id</code>, <code>status</code> and HATEOAS links.</li><li><code>return=representation</code>. The server returns a complete resource representation, including the current state of the resource.</li></ul>'
+            required: false
+            default: return=minimal
+            type: string
+          PayPal-Client-Metadata-Id:
+            required: false
+            type: string
+        securedBy:
+          - Oauth2:
+              scopes:
+                - 'https://uri.paypal.com/services/payments/payment'
+        (oas-summary): Void order
+        (oas-tags):
+          - orders
+        (slo):
+          response_time_95th_percentile: 1000
+          error_rate: 0.1
+        (visibility):
+          extent: LIMITED_RELEASE

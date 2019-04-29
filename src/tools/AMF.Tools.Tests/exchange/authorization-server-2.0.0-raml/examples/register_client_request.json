@@ -1,0 +1,6 @@
+{
+  "client_name": "New client",
+  "redirect_uris": [
+    "https://example.com/callback"
+  ]
+}

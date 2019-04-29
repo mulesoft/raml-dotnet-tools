@@ -1,0 +1,51 @@
+#%RAML 1.0 Library
+
+usage:
+  defines reusable data types for customer contact methods for experience layer APIs
+
+uses:
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+
+types:
+
+  ContactMethodType:
+    type: string
+    description: Enumeration type for Contact methods.
+    enum: [
+      PHONE, EMAIL, POSTAL
+    ]
+
+  ContactMethod:
+    type: object
+    description: Describes specific contact method. One of PhoneContactMethod, EmailContactMethod or PostalContactMethod
+    discriminator: contactMethodType
+    properties:
+      contactMethodType: ContactMethodType
+
+  PhoneContactMethod:
+    type: ContactMethod
+    description: Phone contact method
+    discriminatorValue: PHONE
+    properties:
+      phoneNumber:
+        type: string
+        pattern: "[0-9]{3}[ -][0-9]{3}[ -][0-9]{4}"
+        description: Phone number of contact
+
+  EmailContactMethod:
+    type: ContactMethod
+    description: Email contact method
+    discriminatorValue: EMAIL
+    properties:
+      emailAddress:
+        type: string
+        description: Email address of contact
+
+  PostalContactMethod:
+    type: ContactMethod
+    description: Postal contact method
+    discriminatorValue: POSTAL
+    properties:
+      postalAddress:
+        type: common.PostalAddress
+        description: Postal address of contact

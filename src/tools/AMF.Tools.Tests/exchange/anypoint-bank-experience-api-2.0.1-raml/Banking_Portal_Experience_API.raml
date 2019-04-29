@@ -1,0 +1,175 @@
+#%RAML 1.0
+title: Banking_Portal_Experience_API
+version: v2.0
+baseUri: http://localhost:8081/api/
+
+uses: 
+  common: exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml  
+  portal: dataTypes.raml
+
+traits:
+  secured:
+    headers:
+      Authorization:
+        description: |
+          Access token in encrypted JWT form obtained by using the /login endpoint. Example: "Bearer <token>"
+        required: true
+
+/login:
+  post:
+    description: Logs in the user by providing JWT access token
+    displayName: Log in user 
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          username: 
+            required: true
+            description: Username
+          password:
+            required: true
+            description: Password   
+        example: !include examples/session/signin-request.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: portal.LoginResponse
+            example: !include examples/session/signin-response.raml
+      401:
+        body:
+          application/json:
+            type: common.ErrorResponse
+            example: !include examples/session/signin-error-response.raml
+
+/checkssn :
+    get:
+      displayName: Check user ssn existence
+      description: Check User's ssn existence
+      queryParameters:
+        ssn:
+          type: common.SSN
+          description: SSN
+      responses:
+        200:
+          body:
+            application/json:
+              type: portal.Ssnresponse
+              example: !include examples/checkssn-response.raml
+                            
+/user:              
+  /info:
+    is: [secured]
+    get:
+      displayName: Retrieve user info
+      description: GET User info
+      responses:
+        200:
+          body:
+            application/json:
+              type: portal.UserInfo
+              example: !include examples/user-portal-response.raml
+    put:
+      displayName: Update user info
+      description: PUT user info from Portal
+      body:
+        application/json:
+          type: portal.UserInfo
+          example: !include examples/user-portal-request.raml
+      responses:
+        200:
+          body:
+            application/json:
+
+  /accounts:
+    is: [secured]
+    get:
+      displayName: Retrieve user accounts info
+      description: GET user's accounts info from AISP interfaces of banks
+      responses:
+        200:
+          body:
+            application/json:
+              type: portal.AllAccountsInfo
+              example: !include examples/accounts-response.raml
+
+  /transactions/bank/{bankId}/account/{accountId}:
+    is: [secured]
+    uriParameters:
+      accountId:
+        type: string | integer
+        description: Account ID
+      bankId:
+        type: string | integer
+        description: Bank ID
+    get:
+      displayName: Retrieve transaction history
+      description: Get transaction history of account of user from AISP interfaces of banks
+      responses:
+        200:
+          body:
+            application/json:
+              type: portal.TransactionInfo[]
+              example: !include examples/transactions-response.raml
+
+  /register/bank/{bankId}:
+    is: [secured]
+    uriParameters:
+      bankId:
+        type: string | integer
+        description: Bank ID
+    post:
+      displayName: Register user
+      description: Finish security dance with Auth Server using user's code and clientId and secret of registered app
+      body:
+        application/json:
+          type: portal.RegisterRequest
+          example: !include examples/register/register-request.raml
+      responses:
+        200:
+        400:
+          body:
+            application/json:
+              type: common.ErrorResponse
+              example: !include examples/register/register-error-response.raml
+
+  /revoke/bank/{bankId}:
+    is: [secured]
+    uriParameters:
+      bankId:
+        type: string | integer
+        description: Bank ID
+    post:
+      displayName: Revoke user
+      description: Finish security dance with Auth Server using user's code and clientId and secret of registered app
+      body:
+        application/json:
+          type: portal.RegisterRequest
+          example: !include examples/revoke/revoke-request.raml
+      responses:
+        200:
+        400:
+          body:
+            application/json:
+              type: common.ErrorResponse
+              example: !include examples/revoke/revoke-error-response.raml
+
+
+/signup:
+  post:
+    displayName: Sign up user 
+    description: Signs up user
+    body:
+      application/json:
+        type: portal.SignUpUser
+        example: !include examples/onboarding/signup-request.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: common.ErrorResponse
+            example: !include examples/onboarding/signup-response.raml
+      400:
+        body:
+          application/json:
+            type: common.ErrorResponse
+            example: !include examples/onboarding/signup-error-response.raml

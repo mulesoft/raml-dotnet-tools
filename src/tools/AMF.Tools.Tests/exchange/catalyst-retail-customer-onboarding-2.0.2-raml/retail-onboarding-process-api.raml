@@ -1,0 +1,47 @@
+#%RAML 1.0
+title: Retail Customer Onboarding Process API
+version: v2.0
+mediaType: application/json
+baseUri: https://localhost:8082/api
+
+uses:
+  customer: /exchange_modules/org.mule.templates/retail-customer-types/1.0.1/retail_customer_types.raml
+
+types: 
+  customer:
+    type: customer.Customer
+    properties:
+      userId?: 
+        type: string
+        description: identifier of user
+      customerId?: 
+        type: string
+        description: idenitifier of customer
+      firstName?: 
+        type: string
+        description: first name
+      lastName: 
+        type: string
+        description: last name
+      middleName?: 
+        type: string
+        description: middle name
+      phone?: 
+        type: string
+        description: phone number
+      email: 
+        type: string
+        description: email address
+  
+/customers:
+  post:
+    displayName: Create customer contact
+    description: Create customer contact  
+    body:
+      application/json:
+        type: customer
+        example: !include examples/post_customer_request.raml
+    responses:
+      201:
+        body:
+          example: !include examples/post_customer_response.raml

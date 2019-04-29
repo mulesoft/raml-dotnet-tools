@@ -1,0 +1,65 @@
+#%RAML 1.0 NamedExample
+value: |
+  {  
+    "subtotal":"100.21",
+    "taxPrice":"15.22",
+    "shippingPrice":"10.00", 
+    "total":"125.43",
+    "status":"Draft",
+    "orderItems": {  
+            "pickupItems": [  
+                {  
+                    "orderItemId":"88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+                    "productId":"eb8c8ca7-3c42-4489-a820-3aa138430b75",
+                    "productName":"Smart Slim Micro Stripe Shirt",
+                    "location": {
+                      "locationId":"1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                      "deliveryMethod":"PICKUP",
+                      "locationType": "STORE"
+                    },
+                    "price" : "50",
+                    "quantity":1
+                },
+                {  
+                    "orderItemId":"dfc25820-c37d-456c-8867-4a89a51b7f75",
+                    "productId":"7c9be8ad-0791-4362-b195-a53dcca4e1d7",
+                    "productName":"Men's Regular Fit V-Neck Knit Sweater",
+                    "location": {
+                      "locationId":"1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                      "deliveryMethod":"PICKUP",
+                      "locationType": "STORE"
+                    },
+                    "price" : "50",
+                    "quantity":2
+                } 
+            ],
+            "shipmentItems": [  
+                {  
+                    "orderItemId":"3c1eb223-811c-4e86-8ea3-4a06a002a79a",
+                    "productId":"cd67cd8a-8901-48c5-890b-0a21f4a0f8ad",
+                    "productName":"Men's Chino Jogger Pants",
+                    "location": {
+                      "locationId":"1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                      "deliveryMethod":"SHIPMENT",
+                      "locationType": "WAREHOUSE"
+                    },
+                    "price" : "50",
+                    "quantity":3
+                }
+            ],
+            "partnersItems": [  
+                {  
+                    "orderItemId":"fc3d4900-c5ac-4649-8bc8-cbbef4fe8fde",
+                    "productId":"e1c515f9-102d-4830-b353-18fe48065732",
+                    "productName":"Uniforms Modern Fit Short Sleeve Polo Shirt",
+                    "location": {
+                      "locationId":"1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+                      "deliveryMethod":"SHIPMENT",
+                      "locationType": "PARTNER"
+                    },
+                    "price" : "50",
+                    "quantity":1
+                }
+            ]
+        }
+  }

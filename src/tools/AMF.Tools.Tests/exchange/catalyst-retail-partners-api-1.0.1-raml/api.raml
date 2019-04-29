@@ -1,0 +1,147 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/3d160205-9872-4212-94d2-838d392deda3/mocks/f9b10bd0-f5f6-46d7-88ca-707c0a63d3eb # baseUri: https://mocksvc.mulesoft.com/mocks/f9b10bd0-f5f6-46d7-88ca-707c0a63d3eb
+title: Catalyst Retail - Partners API
+version: v1.0
+
+traits: 
+  productSearch: !include traits/productSearch.raml
+      
+types:
+  PartnerInfo:
+    type: object
+    properties: 
+      partnerId?: string
+      name: string
+      description?: string
+      phone: string
+      email: string
+      url: string
+      shippingPrice:
+        type: number
+        format: double
+      rating: number
+
+  ItemAvailabilityResponse:
+    type: object
+    properties: 
+      searchCriteria: SearchCriteria
+      results: PartnerAvailabilityData[]
+      
+  SearchCriteria:
+    type: object
+    properties: 
+      name?: string?
+      productId?: string?
+      variantId?: string?
+      quantity?: integer
+      
+  PartnerSearchResponse:
+    type: object
+    properties:
+      searchCriteria: SearchCriteria
+      results: PartnerInfo[]
+      
+  PartnerAvailabilityData:
+    type: object
+    properties: 
+      partnerInfo: PartnerInfo
+      quantityInStock: integer
+      productPrice: number
+      tax: number
+      quantityReserved?: integer
+      
+  Reservation: 
+    type: object
+    properties:
+      productId: string
+      variantId: string
+      customerId: string
+      quantity: integer
+      partnerId: string
+      
+/partners:
+  get:
+    queryParameters: 
+      name: 
+        type: string
+        required: false
+        description: |
+          Partner name
+    responses: 
+      200:
+        body:
+          application/json:
+            type: PartnerSearchResponse
+            example: !include examples/partner-search-response.json
+  post:
+    description: creates new Partner record
+    body: 
+      application/json:
+        type: PartnerInfo
+        example: !include examples/create-partner-request.json
+    responses: 
+      201:
+        headers: 
+          Location:
+        body: 
+          application/json:
+            type: PartnerInfo
+            example: !include examples/partner-response.json
+  
+  /{partnerId}:
+    uriParameters: 
+      partnerId: 
+        description: Partner identifier
+    get:
+      description: |
+        Retrieve info about particular partner (address, name, etc.)
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: PartnerInfo
+              example: !include examples/partner-response.json
+              
+    put:
+      description: | 
+        Updates information about particular partner
+      body: 
+        application/json:
+          type: PartnerInfo
+          example: !include examples/partner-response.json
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: PartnerInfo
+              example: !include examples/partner-response.json
+      
+
+/productSearch:
+  get:
+    description: |
+      Searches for a product identified by productId and variantId. If quantity is provided as search parameter, only partners that have required number of items in stock are included in the response.
+    is: [ productSearch ]
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: ItemAvailabilityResponse
+            example: !include examples/product-search-response.json
+            
+            
+/reservation:
+  post:
+    description: reservation of product
+    body: 
+      application/json:
+        type: Reservation
+        example: !include examples/product-reserve-request.json
+    responses: 
+      201: 
+        body: 
+          application/json: 
+            example: |
+              {
+                "message": "Product was reserved" 
+              } 

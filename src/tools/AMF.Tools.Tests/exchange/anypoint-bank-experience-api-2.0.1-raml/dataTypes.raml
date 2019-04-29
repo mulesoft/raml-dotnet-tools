@@ -1,0 +1,128 @@
+#%RAML 1.0 Library
+
+uses: 
+  common: exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml 
+
+types:  
+  TransactionInfo:
+    properties:
+      description: 
+        type: string
+        description: information about transaction 
+      amount: 
+        type: string
+        description: payment amount
+      currency: 
+        type: string
+        description: system of money in general use in a particular country
+      balance: 
+        type: string
+        description: amount of money held in an account
+      transactionDate: 
+        type: datetime
+        description: date and time of completed transaction
+      isIncome: 
+        type: boolean
+        description: information about realization of payment
+
+  AllAccountsInfo:
+    properties:
+      anypointBank: 
+        type: BankInfo
+        description: Information about Anypoint Bank
+      registeredBanks: 
+        type: BankInfo[]
+        description: List of external bank with information about them
+
+  AccountInfo:
+    properties:
+      accountId:  
+        type: string
+        description: account identifier 
+      amount: 
+        type: string
+        description: price quantity
+      currency: 
+        type: string
+        description: system of money in general use in a particular country
+      lastTransactionDate: 
+        type: datetime
+        description: date and time of last completed transaction
+
+  BankInfo:
+    properties:
+      bankName: 
+        type: string
+        description: name of bank institution
+      bankId: 
+        type: string
+        description: identifier of bank institution
+      checking: 
+        type: AccountInfo
+        description: account where user can dispose of their money
+      savings: 
+        type: AccountInfo
+        description: account where user can dispose of their money in future, not now
+
+  UserInfo:
+    type: object
+    properties:
+      id?: 
+        type: string
+        description: user identifier
+      gender:
+        type: string
+        enum: [male, female]
+        description: gender 
+      ssn: 
+        type: common.SSN
+        description: Social Security Number
+      email: 
+        type: string
+        description: email address
+      phone:
+        type: string
+        description: phone number
+      name:
+        type: string
+        description: first name and last name
+      username:
+        type: string
+        description: login name
+      address: 
+        type: common.Address
+        description: postal address
+
+  SignUpUser: 
+    type: UserInfo
+    properties:
+      password: 
+        type: string
+        description: User password
+
+  RegisterRequest:
+    type: object
+    properties: 
+      code?: 
+        type: string
+        description: Code 
+      scope: 
+        type: string
+        description: Scope
+
+  Ssnresponse: 
+    type: common.ErrorResponse
+    properties: 
+      exists: 
+        type: boolean
+        description: Exists ssn 
+
+
+  LoginResponse: 
+    type: object
+    properties: 
+      access_token: 
+        type: string
+        description: Access token
+  
+         

@@ -1,0 +1,460 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides a set of reusable data types that commonly
+  occur in type definitions
+
+types:
+
+  url:
+    type: string
+
+  resourceId:
+    type: string
+   # pattern: ^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$
+    description: |
+      the unique object identifier exposed to external clients of a service.
+      this is a synthetic key and should NEVER be equal to any internal property
+      or key of the object. it is recommended that these values follow
+      the format specified in RFC 4122 [https://www.ietf.org/rfc/rfc4122.txt].
+
+  # Identified:
+  #   type: object
+  #   description: |
+  #     abstract object with unique identifier
+  #   properties:
+  #     identifier: resourceId
+
+  Lifetime:
+    type: object
+    description: |
+      an object that has a finite lifespan. the object is considered
+      to be valid at a point in time if:
+      ```
+      validFrom <= pointInTime < validUntil
+      ```
+    properties:
+      validFrom:
+        type: datetime
+        description: |
+          the instant when the object becomes valid
+        required: false
+        default: 1970-01-01T00:00:00.000Z
+      validUntil:
+        type: datetime
+        description: |
+          the instant at which the object is no longer valid
+        required: false
+        default: 2100-01-01T00:00:00.000Z
+
+  language:
+    type: string
+    enum: [
+      hy, zh, nl, en, eo, fr, ka, de, el, it,
+      ja, ko, fa, pl, pt, ro, es, sv, tr, ur,
+      ar, eu, be, bn, bo, bs, bg, my, ca, cs,
+      da, fi, ka, ga, he, hi, hu, is, id, lv,
+      li, lt, lb, ne, no, pa, ro, ru, sl, sw,
+      tl, th, uk
+    ]
+
+  AddressUnitWithRequiredUnitNumber:
+    type: object
+    description: |
+      the unit address with required unit number
+    properties:
+      unitType:
+        type: string
+        description: |
+          the unit type abbreviations recognized by the USPS for
+          secondary units that require a unit number
+        enum: [ APT, \#, BLDG, DEPT, FL, HNGR, KEY, LOT, PIER, RM, SLIP, SPC, STOP, STE, TRLR, UNIT ]
+      unitNumber:
+        type: string
+        description: |
+          the unit number
+        required: true
+
+  AddressUnitWithOptionalUnitNumber:
+    type: object
+    description: |
+      the unit address with optional unit number
+    properties:
+      unitType:
+        type: string
+        description: |
+          the unit type abbreviations recognized by the USPS for
+          secondary units for which a unit number may not be necessary
+        enum: [ BSMT, FRNT, LBBY, LOWR, OFC, PH, REAR, SIDE, UPPR ]
+      unitNumber:
+        type: string
+        description: |
+          the unit number
+        required: false
+
+  AddressUnit:
+    type: AddressUnitWithRequiredUnitNumber | AddressUnitWithOptionalUnitNumber
+    description: |
+      address unit
+
+  PostalAddress:
+    type: object
+    description: |
+      postal address of internal organization
+    properties:
+      identifier?: 
+        type: string
+      mailStopCode?:
+        type: string?
+        description: |
+          an internal organization mail delivery location
+          or box number
+      attention?:
+        type: string?
+        description:
+          the name of an individual who should receive
+          deliveries on behalf of a recipient organization
+      type?:
+        type: string
+        description: |
+          type of address
+        enum: [ BILLING, SHIPPING]
+      recipient?:
+        type: string?
+        description: |
+          the name of the party responsible for receiving
+          deliveries to this address
+      address?:
+        type: string?
+        description: |
+          the unit number and street name
+      addressUnit?:
+        type: string
+        description: |
+          a subdivision within the address, such as an apartment or floor
+      secondaryAddress?:
+        type: string?
+        description: |
+          any additional addressing information needed to describe a
+          delivery location that does not fit within address or
+          secondaryUnit
+      city?:
+        type: string?
+        description: |
+          the municipality of the address
+      state?:
+        type: string?
+        description: |
+          the state or other national region of the address
+      postalCode?:
+        type: string?
+        description: |
+          the delivery code assigned to this address by a national
+          or governmental postal agency
+      country?:
+        type: string?
+        description: |
+          the two character ISO 3166 country code
+          [http://www.iso.org/iso/home/standards/country_codes.htm]
+        default: US
+#        minLength: 2
+#        maxLength: 2
+
+  Link:
+    type: object
+    description: |
+      a hypermedia link
+    properties:
+      href:
+        type: url
+      title?:
+        type: string
+
+  Links:
+    type: object
+    description: |
+      collection of hypermedia links
+    properties:
+      //:
+        type: Link
+
+  HypermediaMessage:
+    type: Message
+    description: |
+      a hypermedia message
+    properties:
+      href?: Link
+
+  CollectionPagingLinks:
+    type: Links
+    description: |
+      collection of paging links
+    properties:
+      self?:
+        type: Link
+        description: |
+          conveys an identifier for the link's context.
+      first?:
+        type: Link
+        description: |
+          a link to the first document in the series
+      prev?:
+        type: Link
+        description: |
+          a link to the previous document in the series
+      next?:
+        type: Link
+        description: |
+          a link to the next document in the series
+      last?:
+        type: Link
+        description: |
+          a link to the last document in the series
+
+  HypermediaResponseMetadata:
+    type: ResponseMetadata
+    description: |
+      hypermedia response metadata
+    properties:
+      messages:
+        type: Message[]
+
+  HypermediaDefaultResponse:
+    type: DefaultResponse
+    description: |
+      hypermedia default response
+
+  HypermediaCollectionResponse:
+    type: DefaultResponse
+    description: |
+      hypermedia collection response
+    properties:
+      _meta: ResponseMetadata
+      _links: CollectionPagingLinks
+
+  HypermediaErrorResponse:
+    type: DefaultResponse
+    description: |
+      hypermedia error response
+
+#metadata
+  collectionTotalItems:
+    type: integer
+    description: |
+      total amount of items
+    minimum: 0
+
+  pagingOffset:
+    type: integer
+    description: |
+      offset is the beggining item number
+    minimum: 0
+    default: 0
+
+  pagingLimit:
+    type: integer
+    description: |
+      maximum number of items to return
+    minimum: 5
+    default: 10
+    maximum: 20
+
+  sortingSortKey:
+    type: string
+    description: |
+      sorting key
+
+  Message:
+    type: object
+    description: |
+      a message object
+    properties:
+      severity:
+        type: string
+        enum: [ INFO, WARN, ERROR, FATAL ]
+      code: string
+      description: string
+
+  ResponseMetadata:
+    type: object
+    description: |
+      a response metadata
+    properties:
+      messages?:
+        type: Message[]
+
+  CollectionResponseMetadata:
+    type: ResponseMetadata
+    description: |
+      collection of response messages
+    properties:
+      totalItems?: collectionTotalItems
+      offset?: pagingOffset
+      limit?: pagingLimit
+      sortBy?: sortingSortKey
+
+  DefaultResponse:
+    type: object
+    description: |
+      default response
+    properties:
+      _meta:
+        type: ResponseMetadata
+
+  CollectionResponse:
+    type: DefaultResponse
+    description: |
+      collection of response messages
+    properties:
+      _meta: CollectionResponseMetadata
+
+  ErrorResponse:
+    type: DefaultResponse
+    description: |
+      error response
+
+  CurrencyType:
+    type: string
+    description: |
+      describes the currency of the amount of a monetary value
+    enum: [
+      USD, EUR, CAD, MEX, GBP
+    ]
+
+  MonetaryValue:
+    type: object
+    description: |
+      represents an amount in a given currency
+    properties:
+      name: string
+      currency:
+        type: CurrencyType
+        default: USD
+      currencyValue:
+        type: number
+        minimum: 0
+
+  SalesUnit:
+    description: |
+      sales unit
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+    examples:
+      each:
+        code: EA
+        name: Each
+      case:
+        code: CS
+        name: case
+
+  Price:
+    type: object
+    description: |
+      a price
+    properties:
+      salesUnit: SalesUnit
+      amount: MonetaryValue
+
+  Measure:
+    type: object
+    description: |
+      a physical property that can be quantified with a numeric value
+    properties:
+      name: string
+      description: string
+    examples:
+      length:
+        name: length
+        description: the greatest dimension of an object
+      temperature:
+        name: temperature
+        description: the degree of heat held in an object
+      time:
+        name: time
+        description: a duration of existence
+
+  MeasurementSystem:
+    type: object
+    description: |
+      a standard that codifies a set of UnitOfMeasure, typically defined by a governmental
+      or international agency.
+    properties:
+      code: string
+      name: string
+      description: string
+    example:
+      code: SI
+      name: International System of Units
+      description: Defined by NIST. Commonly referred to as the "metric system".
+
+  QuantityType:
+    type: string
+    description: |
+      a quantity type
+    enum: [
+      DISCRETE, CONTINUOUS
+    ]
+
+  QuantityUnit:
+    type: string
+    description: |
+      a quantity unit
+    enum: [
+      EA
+    ]
+
+  Quantity:
+    type: object
+    description: |
+      a quantity
+    discriminator: quantityType
+    properties:
+      quantityType: QuantityType
+      amount:
+        type: number
+        minimum: 0
+      unit:
+        type: QuantityUnit
+        default: EA
+
+  DiscreteQuantity:
+    type: Quantity
+    description: |
+      discrete quantity
+    discriminatorValue: DISCRETE
+    properties:
+      amount:
+        type: integer
+
+  ContinuousQuantity:
+    type: Quantity
+    description: |
+      continuous quantity
+    discriminatorValue: CONTINUOUS
+    properties:
+      amount:
+        type: number
+
+  Location:
+    type: object
+    description: |
+      location
+    properties:
+      locationId:
+        type: string?
+        description: |
+          Identifier of location (storeId or warehouseId or partnerId)
+      locationType:
+        type: string
+        description: |
+          Type of location
+        enum: [STORE, WAREHOUSE, PARTNER]
+      deliveryMethod:
+        type: string
+        description: |
+          Type of delivery
+        enum: [SHIPMENT, PICKUP]

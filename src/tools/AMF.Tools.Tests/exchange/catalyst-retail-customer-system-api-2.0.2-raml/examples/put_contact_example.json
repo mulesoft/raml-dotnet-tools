@@ -1,0 +1,25 @@
+{
+  "customerId": "provider|0123456789",
+  "firstName": "John2",
+  "lastName": "Doe2",
+  "phone": "+1-202-555-0180",
+  "email": "john.doe@example.com",
+  "deliveryAddresses": [
+    {
+      "type": "SHIPPING",
+      "address": "44 Shirley Ave.",
+      "city": "West Chicago",
+      "postalCode": "60185",
+      "state": "IL",
+      "country": "USA"
+    },
+    {
+      "type": "BILLING",
+      "address": "44 Shirley Ave.",
+      "city": "West Chicago",
+      "postalCode": "60185",
+      "state": "IL",
+      "country": "USA"
+    }
+  ]
+}

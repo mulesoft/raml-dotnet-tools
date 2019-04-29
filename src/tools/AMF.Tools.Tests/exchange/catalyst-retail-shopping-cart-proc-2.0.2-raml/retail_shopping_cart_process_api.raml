@@ -1,0 +1,117 @@
+#%RAML 1.0
+title: Retail_Shopping_Cart_Process_API
+version: v2.0
+  
+uses: 
+  shoppingCart:  /exchange_modules/org.mule.templates/retail-shopping-cart-types/1.0.1/retail_shopping_cart_types.raml  
+
+types:
+  ShoppingCartCollectionResponse:
+    type: shoppingCart.ShoppingCart[]
+
+  ShoppingCartResponse:
+    type: shoppingCart.ShoppingCart  
+
+  MessageResponse: 
+    properties:
+      identifier?: string
+      message: string
+
+
+/shoppingCarts:
+  post:
+    displayName: Create shopping cart
+    description: Create shopping Cart
+    body:
+      application/json:
+          type: ShoppingCartCollectionResponse
+          example: !include examples/shopping-carts_post_request.raml
+              
+    responses:
+      201:
+        body: 
+          application/json:
+            type: MessageResponse 
+            example: 
+              {
+                "message": "Shopping cart was created"
+              }
+
+              
+  /{shoppingCartId}:          
+    get:
+      displayName: Retrieve shopping cart
+      description: Return shopping cart 
+      responses:
+        200:
+          body: 
+            application/json: 
+              type: ShoppingCartResponse
+              example: !include examples/shopping-cart_get_response.raml         
+        404:
+          body: 
+            application/json:
+              type: MessageResponse 
+              example: 
+                {
+                  "message": "Shopping cart not found"
+                }
+    put:
+      displayName: Update shopping cart
+      description: Update shopping cart  
+      body:
+        application/json:
+          type: ShoppingCartResponse
+          example:  !include examples/shopping-cart_put_request.raml  
+        
+      responses:
+        200:
+          body: 
+            application/json: 
+              type: MessageResponse
+              example: 
+                {
+                  "message": "Shopping cart was updated"
+                }
+        404:
+          body: 
+            application/json:
+              type: MessageResponse 
+              example: 
+                {
+                  "message": "Shopping cart not found"
+                }
+            
+    delete:
+      displayName: Remove shopping cart
+      description: Remove shopping cart
+      responses:
+        200:
+          body:
+            application/json: 
+              example: 
+                {
+                  "message": "Shopping Cart was deleted"
+                }
+        404:
+          body: 
+            application/json:
+              type: MessageResponse 
+              example: 
+                {
+                  "message": "Shopping cart not found"
+                }
+/customers:
+  /{customerId}: 
+    /shoppingCarts: 
+      get: 
+        displayName: Retrieve shopping carts of customer
+        description: Return Shopping Carts of customer
+        responses:
+            200:
+              body:
+                application/json:
+                  type: ShoppingCartCollectionResponse
+                  example: !include examples/shopping-cart_customer_get_response.raml
+ 
+ 

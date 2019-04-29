@@ -1,0 +1,522 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "American Flights API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/flights": {
+      "get": {
+        "parameters": [
+          {
+            "name": "destination",
+            "required": false,
+            "in": "query",
+            "enum": [
+              "SFO",
+              "LAX",
+              "CLE"
+            ],
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "x-amf-examples": {
+                "value": [
+                  {
+                    "destination": "SFO",
+                    "departureDate": "2017/07/26",
+                    "plane": {
+                      "type": "Boeing 737",
+                      "totalSeats": 150
+                    },
+                    "ID": 1,
+                    "emptySeats": 0,
+                    "origin": "CLE",
+                    "price": 400,
+                    "code": "ER38sd"
+                  },
+                  {
+                    "origin": "SFO",
+                    "ID": 2,
+                    "plane": {
+                      "type": "Boeing 777",
+                      "totalSeats": 300
+                    },
+                    "code": "ER45if",
+                    "price": 540.99,
+                    "emptySeats": 54,
+                    "destination": "ORD",
+                    "departureDate": "2017/07/27"
+                  }
+                ]
+              },
+              "type": "array",
+              "items": {
+                "x-amf-examples": {
+                  "value": {
+                    "origin": "ORD",
+                    "emptySeats": 200,
+                    "price": 399,
+                    "departureDate": "2016/12/20",
+                    "code": "GQ574",
+                    "plane": {
+                      "type": "Boeing 747",
+                      "totalSeats": 400
+                    },
+                    "destination": "SFO"
+                  },
+                  "example_0": {
+                    "departureDate": "2016/12/20",
+                    "destination": "SFO",
+                    "ID": 1,
+                    "emptySeats": 200,
+                    "plane": {
+                      "type": "Boeing 747",
+                      "totalSeats": 400
+                    },
+                    "code": "GQ574",
+                    "origin": "ORD",
+                    "price": 399
+                  }
+                },
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "code",
+                  "price",
+                  "departureDate",
+                  "origin",
+                  "destination",
+                  "emptySeats"
+                ],
+                "properties": {
+                  "ID": {
+                    "type": "integer"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "departureDate": {
+                    "type": "string"
+                  },
+                  "origin": {
+                    "type": "string"
+                  },
+                  "destination": {
+                    "type": "string"
+                  },
+                  "emptySeats": {
+                    "type": "integer"
+                  },
+                  "plane": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                      "type",
+                      "totalSeats"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "totalSeats": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "x-amf-examples": {
+                "value": {
+                  "origin": "ORD",
+                  "emptySeats": 200,
+                  "price": 399,
+                  "departureDate": "2016/12/20",
+                  "code": "GQ574",
+                  "plane": {
+                    "type": "Boeing 747",
+                    "totalSeats": 400
+                  },
+                  "destination": "SFO"
+                },
+                "example_0": {
+                  "departureDate": "2016/12/20",
+                  "destination": "SFO",
+                  "ID": 1,
+                  "emptySeats": 200,
+                  "plane": {
+                    "type": "Boeing 747",
+                    "totalSeats": 400
+                  },
+                  "code": "GQ574",
+                  "origin": "ORD",
+                  "price": 399
+                }
+              },
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "code",
+                "price",
+                "departureDate",
+                "origin",
+                "destination",
+                "emptySeats"
+              ],
+              "properties": {
+                "ID": {
+                  "type": "integer"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "departureDate": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "string"
+                },
+                "destination": {
+                  "type": "string"
+                },
+                "emptySeats": {
+                  "type": "integer"
+                },
+                "plane": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "type",
+                    "totalSeats"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "totalSeats": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Flight added (but not really)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights/{ID}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "ID",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "x-amf-examples": {
+                "value": {
+                  "origin": "ORD",
+                  "emptySeats": 200,
+                  "price": 399,
+                  "departureDate": "2016/12/20",
+                  "code": "GQ574",
+                  "plane": {
+                    "type": "Boeing 747",
+                    "totalSeats": 400
+                  },
+                  "destination": "SFO"
+                },
+                "example_0": {
+                  "departureDate": "2016/12/20",
+                  "destination": "SFO",
+                  "ID": 1,
+                  "emptySeats": 200,
+                  "plane": {
+                    "type": "Boeing 747",
+                    "totalSeats": 400
+                  },
+                  "code": "GQ574",
+                  "origin": "ORD",
+                  "price": 399
+                }
+              },
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "code",
+                "price",
+                "departureDate",
+                "origin",
+                "destination",
+                "emptySeats"
+              ],
+              "properties": {
+                "ID": {
+                  "type": "integer"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "departureDate": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "string"
+                },
+                "destination": {
+                  "type": "string"
+                },
+                "emptySeats": {
+                  "type": "integer"
+                },
+                "plane": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "type",
+                    "totalSeats"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "totalSeats": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "name": "ID",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Flight deleted (but not really)"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "name": "ID",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "x-amf-examples": {
+                "value": {
+                  "origin": "ORD",
+                  "emptySeats": 200,
+                  "price": 399,
+                  "departureDate": "2016/12/20",
+                  "code": "GQ574",
+                  "plane": {
+                    "type": "Boeing 747",
+                    "totalSeats": 400
+                  },
+                  "destination": "SFO"
+                },
+                "example_0": {
+                  "departureDate": "2016/12/20",
+                  "destination": "SFO",
+                  "ID": 1,
+                  "emptySeats": 200,
+                  "plane": {
+                    "type": "Boeing 747",
+                    "totalSeats": 400
+                  },
+                  "code": "GQ574",
+                  "origin": "ORD",
+                  "price": 399
+                }
+              },
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "code",
+                "price",
+                "departureDate",
+                "origin",
+                "destination",
+                "emptySeats"
+              ],
+              "properties": {
+                "ID": {
+                  "type": "integer"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "departureDate": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "string"
+                },
+                "destination": {
+                  "type": "string"
+                },
+                "emptySeats": {
+                  "type": "integer"
+                },
+                "plane": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "type",
+                    "totalSeats"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "totalSeats": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Flight updated (but not really)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

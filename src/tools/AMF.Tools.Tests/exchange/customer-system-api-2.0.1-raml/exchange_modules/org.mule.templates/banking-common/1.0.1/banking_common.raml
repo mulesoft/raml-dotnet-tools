@@ -1,0 +1,83 @@
+#%RAML 1.0 Library
+
+types: 
+
+  SSN: 
+    type: string
+    description: Social Security Number - 9-digit number used for taxpayer identification
+    pattern: ^\d{3}-?\d{2}-?\d{4}$
+  
+  Money:
+    type: object
+    description: current medium of exchange
+    properties:
+      currency: 
+        type: string
+        description: system of money in general use in a particular country
+        pattern: ^[A-Z]{3,3}$
+        example: EUR
+      amount: 
+        type: string
+        description: price quantity
+        pattern: ^[+|-]?\d*\.\d{2}$
+        example: "154.44"
+
+  Bank: 
+    type: object
+    description: institution for saving money
+    properties: 
+      national_identifier: 
+        type: string
+        description: national identifier of bank
+      name: 
+        type: string
+        description: name of bank institution
+  
+  SuccessResponse:
+    type: object
+    properties:
+      id?: 
+        type: string
+        description: identifier
+      status: 
+        type: string
+        description: response status
+
+  
+  ErrorResponse:
+    type: object
+    properties:
+      message: 
+        type: string
+        description: error message
+
+  Metadata:
+    type: object
+    properties:
+      url: 
+        type: string
+        description: link
+      created: 
+      
+  Address:
+    type: object
+    description: client address
+    properties:
+      address_line_1?: 
+        type: string
+        description: street and identification number
+      address_line_2?: 
+        type: string
+        description: another street and identification number
+      city?: 
+        type: string
+        description: location
+      zip_code?: 
+        type: string
+        description: postal code
+      state?: 
+        type: string
+        description: district with own government
+      country?: 
+        type: string
+        description: nation with own government, occupying a particular territory

@@ -1,0 +1,58 @@
+#%RAML 1.0 Library
+
+uses:
+  common: /exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml
+  account: /exchange_modules/org.mule.templates/banking-account/1.0.0/banking_account.raml
+  
+
+types:
+
+  TransactionAccount: 
+    type: account.Account
+    properties: 
+      bank: 
+        type: common.Bank
+        description: basic bank institute information
+
+  Transaction:
+    type: object
+    description: An instance of buying or selling something.
+    properties:
+      uuid: 
+        type: string
+        description: a universally unique identifier 
+      id: 
+        type: string
+        description: identifier of transaction 
+      this_account: 
+        type: TransactionAccount
+        description: sender account 
+      other_account: 
+        type: TransactionAccount
+        description: recepient account
+      details: 
+        type: TransactionDetails
+        description: detail information about transaction
+  
+  TransactionDetails: 
+    type: object
+    description: detail information about transaction
+    properties:
+      type: 
+        enum: [atm, charge, check, deposit, online, pos, sepa_direct_transfer, withdrawal]
+        description: type of transaction
+      label?: 
+        type: string
+        description: display name of transaction
+      posted: 
+        type: datetime
+        description: date and time of created transaction
+      completed:
+        type: datetime
+        description: date and time of completed transaction
+      value: 
+        type: common.Money
+        description: amount of money in transaction 
+      new_balance: 
+        type: common.Money
+        description: new amount of money held in an account

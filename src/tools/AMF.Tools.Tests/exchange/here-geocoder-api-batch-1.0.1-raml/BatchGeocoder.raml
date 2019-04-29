@@ -1,0 +1,1166 @@
+#%RAML 1.0
+title: HERE Batch Geocoder API
+version: 6.2
+baseUri: https://batch.geocoder.api.here.com/6.2
+baseUriParameters: {}
+protocols:
+- HTTPS
+documentation:
+- title: HERE Batch Geocoder API
+  content: |
+    The HERE Batch Geocoder API is a REST API that allows you to geocode and reverse geocode large data sets.
+
+
+    [Terms of service](https://legal.here.com/en-gb/terms)
+types:
+  JobsResponseType:
+    displayName: JobsResponseType
+    type: object
+    properties:
+      Response:
+        required: false
+        displayName: Response
+        type: Response
+  POSTResponseType:
+    displayName: POSTResponseType
+    type: object
+    properties:
+      Response:
+        required: false
+        displayName: Response
+        type: Response
+  Response:
+    displayName: Response
+    type: object
+    properties:
+      MetaInfo:
+        required: false
+        displayName: MetaInfo
+        type: MetaInfo
+      Status:
+        required: false
+        displayName: Status
+        type: string
+      TotalCount:
+        required: false
+        displayName: TotalCount
+        type: integer
+        format: int32
+      ValidCount:
+        required: false
+        displayName: ValidCount
+        type: integer
+        format: int32
+      InvalidCount:
+        required: false
+        displayName: InvalidCount
+        type: integer
+        format: int32
+      ProcessedCount:
+        required: false
+        displayName: ProcessedCount
+        type: integer
+        format: int32
+      PendingCount:
+        required: false
+        displayName: PendingCount
+        type: integer
+        format: int32
+      SuccessCount:
+        required: false
+        displayName: SuccessCount
+        type: integer
+        format: int32
+      ErrorCount:
+        required: false
+        displayName: ErrorCount
+        type: integer
+        format: int32
+  MetaInfo:
+    displayName: MetaInfo
+    type: object
+    properties:
+      RequestId:
+        required: false
+        displayName: RequestId
+        type: string
+/jobs:
+  post:
+    displayName: Createsabatchjob.Startsthejob.ReturnsaRequestID
+    description: Allows a single action or a batch of actions to be uploaded in the post body.
+    body:
+      text/plain:
+        displayName: body
+        description: |
+          **Example: Body**
+
+              recId|searchText|country
+              0001|Invalidenstrasse 116 10115 Berlin|DEU
+              0002|Am Kronberger Hang 8 65824 Schwalbach|DEU
+              0003|425 W Randolph St Chicago IL 60606|USA
+              0004|One Main Street Cambridge MA 02142|USA
+              0005|200 S Mathilda Ave Sunnyvale CA 94086|USA
+        type: string
+    queryParameters:
+      app_id:
+        required: true
+        displayName: app_id
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      app_code:
+        required: true
+        displayName: app_code
+        description: |
+          A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+          To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+        type: string
+      outdelim:
+        required: true
+        displayName: outdelim
+        description: Field delimeter in the output data.
+        type: string
+      outcols:
+        required: true
+        displayName: outcols
+        description: List of columns to return in the output.
+        type: string
+      outputcombined:
+        required: true
+        displayName: outputcombined
+        description: |
+          If true, the output of successful and unsuccessful (empty response) Geocoder queries are combined into a single result_YYYYMMDD-HH-MM__out.txt file. If false, they are returned in two separate files
+            * result_YYYYMMDD-HH-MM__out.txt
+            * result_YYYYMMDD-HH-MM__err.txt
+        type: boolean
+      indelim:
+        required: false
+        displayName: indelim
+        description: Field delimeter in the input data.
+        type: string
+      mailto:
+        required: false
+        displayName: mailto
+        description: Email address where completion notification is sent. The email address provided is only used to submit the notification.
+        type: string
+      action:
+        required: false
+        displayName: action
+        description: |
+          Type of request, one of:
+            * *run* run a previously uploaded job
+            * *status* inquire about job RequestID
+            * *cancel* cancel job RequestID
+        type: string
+        enum:
+        - run
+        - status
+        - cancel
+      header:
+        required: false
+        displayName: header
+        description: If true, a header row is included before the results in the output.
+        type: boolean
+      maxresults:
+        required: false
+        default: 10
+        displayName: maxresults
+        description: Limits the number of items in the response.
+        type: integer
+        format: int32
+      minresults:
+        required: false
+        default: 0
+        displayName: minresults
+        description: Ignore the specified radius until minResults results are found. Supported for Reverse Geocode *mode=retrieveAreas* and *mode=retrieveAddresses*.
+        type: integer
+        format: int32
+      allowUnknownInputColumns:
+        required: false
+        default: false
+        displayName: allowUnknownInputColumns
+        description: "Option to ignore unknown input columns. Column names that the Batch Geocoder API does not recognize will be ignored. This option disables spell checking. For example, if the input column \"city\" is misspelled as \"citty\" this column will be ignored. Without *allowUnknownInputColumns* parameter or with *allowUnknownInputColumns=false*, the Batch Geocoder API returns an invalid input data error. \nIf combined with *includeInputFields* all ignored fields are also included in the output."
+        type: boolean
+      includeInputFields:
+        required: false
+        default: false
+        displayName: includeInputFields
+        description: |
+          Option to include all input fields in the output. In case of naming conflicts with other output columns, input fields are prefixed by "in".
+
+
+          **Example:**
+
+              searchText|in:city|in:postalCode|in:country.
+        type: boolean
+      includeInvalidInput:
+        required: false
+        default: false
+        displayName: includeInvalidInput
+        description: Option to include invalid input lines in the output file. Invalid input lines are for example lines with a wrong number of fields. This option works for invalid lines in a similar way as *outputcombined* for Geocoder empty results. Together with *outputcombined=true*, for each input line one corresponding line in the output file exists. The Batch Geocoder API ignores this option if the input file contains a column *recId*. The output is then sorted by *recId*, but for invalid lines the Batch Geocoder API cannot be sure which of the fields the *recId* is. Regardless of this option, invalid input lines are always reported in the error file result_YYYYMMDD-HH-MM__inv.txt.
+        type: boolean
+      locationattributes:
+        required: false
+        displayName: locationattributes
+        description: Query parameter to request special location attributes. For details, see Customizing the Response with Attribute Switches in the Geocoder API Developer's Guide.
+        type: number
+        format: double
+      addressattributes:
+        required: false
+        displayName: addressattributes
+        description: Query parameter to request special address attributes. For details, see Customizing the Response with Attribute Switches in the Geocoder API Developer's Guide.
+        type: number
+        format: double
+      responseattributes:
+        required: false
+        displayName: responseattributes
+        description: Query parameter to request special response attributes. For details, see Customizing the Response with Attribute Switches in the Geocoder API Developer's Guide.
+        type: number
+        format: double
+      mapview:
+        required: false
+        displayName: mapview
+        description: |
+          Find out more [GeoBoundingBoxType](https://developer.here.com/documentation/geocoder/topics/resource-type-bounding-box.html)
+
+          Specify the map coordinates of the app's viewport. The mapview is specified by two latitude / longitude pairs; the first pair defines the top left corner of the bounding box, the second set the lower right. Matches from within the set map view plus an extended area are ranked highest. Relevant global results are also returned.
+
+
+          **Example:**
+
+              mapview=<TopLeft.Latitude>,<TopLeft.Longitude>;
+              <BottomRight.Latitude>,<BottomRight.Longitude>
+
+          **Example:**
+
+              mapview=41.9085286,-87.6762943;41.8682739,-87.6041965
+        type: string
+      countryfocus:
+        required: false
+        displayName: countryfocus
+        description: |
+          Results from the specified country are preferred. This is a soft filter. Spelled out country names are not supported for country focus.
+
+            * If both hard country filter and soft country focus parameter are set in the request the country filter takes precedence over the focus. This means results are limited to countries specified with country filter.
+            * bbox or mapview filter take precedence over the country focus if there is a conflict.
+        type: string
+      bbox:
+        required: false
+        displayName: bbox
+        description: |
+          Find out more  (https://developer.here.com/documentation/geocoder/topics/resource-type-bounding-box.html)
+
+
+          A type of Spatial Filter. A spatial filter limits the search for any other attributes in the request. A bounding box bbox is specified by two latitude / longitude pairs; the first pair defines the top left corner of the bounding box, the second set the lower right. The bbox search is currently similar to mapview but it is not extended. Relevant global results are also returned.
+
+          **Example:**
+
+              bbox=<TopLeft.Latitude>,<TopLeft.Longitude>;
+              <BottomRight.Latitude>,<BottomRight.Longitude>
+
+          **Example:**
+
+              bbox=41.9085286,-87.6762943;41.8682739,-87.6041965
+        type: string
+      prox:
+        required: false
+        displayName: prox
+        description: "A type of SpatialFilter. A spatial filter limits the search for any other attributes on the request. Proximity specifies a circle to search using a latitude, a longitude, and a radius in meters. Search is similar to *mapview*. Matches from inside set area are ranked higher. Relevant global results are also returned. \nSee also [GeoProximityType](https://developer.here.com/documentation/geocoder/topics/resource-type-proximity.html)\n**Example:** \n\n    prox=lat,lon,radius"
+        type: string
+      locationid:
+        required: false
+        displayName: locationid
+        description: A key uniquely identifying a physical location. Each record in a geocode response contains a location Id. Use the Id to retrieve the exact same location information. For example, the location Id for "1 Market Street, 94105 San Francisco" is NT_NVpegjQLOBQa8ORYk3jV7A_xA.
+        type: string
+      gen:
+        required: false
+        default: 9
+        displayName: gen
+        description: The gen parameter enables or disables backward incompatible behavior in the API. Please see details and the generation history in chapter [Different Generations of the Same API](https://developer.here.com/documentation/geocoder/topics/backwards-compatibility.html#backwards-compatibility__api-different-generations). The latest generation is always recommended.
+        type: integer
+        format: int32
+      additionaldata:
+        required: false
+        displayName: additionaldata
+        description: |
+          Key-value pairs that provide additional input to requests. See Additional Data Parameter for a full list. Key and value are separated using a ,. Multiple key-value pairs are separated using a ;
+
+                additionaldata=<Key1>,<Value1>;<Key2>,<Value2>;...
+
+          **Example:**
+
+                additionaldata=PreserveUnitDesignators,true;
+                IncludeZipAddon,true
+        type: string
+      language:
+        required: false
+        displayName: language
+        description: The preferred language of address elements in the result. Without a preferred language, the Geocoder will return results in an official country language or in a regional primary language so that local people will understand. Language code must be provided according to RFC 4647 standard. Note that the plural form of the parameter (languages) is supported as well. But only the last specified language in the list is used. All preceding language preferences are ignored at this time.
+        type: string
+      level:
+        required: false
+        displayName: level
+        description: Target match level of the search result. One of [country, state, county, city, district, postalCode]. Only valid in combination with *gen=2* or higher.
+        type: string
+        enum:
+        - country
+        - state
+        - county
+        - city
+        - district
+        - postalCode
+      sortby:
+        required: false
+        default: distance
+        displayName: sortby
+        description: |
+          Sort results by distance (default), population count, or size (approximate area size). One of [distance, population, size].
+
+          Currently only supported for Reverse Geocode mode=retrieveAreas. If population count is not available for an entity the service falls back to sort by area size.
+        type: string
+        enum:
+        - distance
+        - population
+        - size
+      politicalview:
+        required: false
+        displayName: politicalview
+        description: |
+          Specify the political view. Available territories will be seen through the point of view of this country. If this parameter is not specified the neutral international view is made available, where territories may have unresolved claims.
+
+          **Currently Supported Disputes**
+
+            * ARE: Abu Musa Island, Tunb Islands
+            * ARG: Argentina
+            * EGY: Halaib Triangle
+            * GRC: Northern Cyprus
+            * IND: India
+            * ISR: Israel view on East Jerusalem
+            * KEN: Ilemi Triangle
+            * MAR: Western Sahara
+            * PAK: Pakistan
+            * RUS: Crimea, Kuril Islands (Shikotan, Iturup, Habomai, and Kunashir)
+            * TUR: Northern Cyprus, Southern Cyprus, Kosovo
+            * VNM: Vietnam
+
+          For a complete list of supported views please see the appendix [Political View](https://developer.here.com/documentation/geocoder/topics/political-views.html#political-views).
+
+
+          For any political view that is unsupported the Geocoder, falls back to the default view.
+
+
+          **Example** politicalview=USA or politicalview=FRA does not impact a response in any way.
+        type: string
+      outputcompressed:
+        required: false
+        default: true
+        displayName: outputcompressed
+        description: If true (the default) the result files available at jobs/{REQUEST_ID}/result jobs/{REQUEST_ID}/errors jobs/{REQUEST_ID}/no-matches are compressed in a zip file. If false the above endpoints will return uncompressed text files (HTTP Content-Type text/plain)
+        type: boolean
+      mode:
+        required: false
+        displayName: mode
+        description: |
+          One of five values:
+            * *retrieveAddresses* - Search for the closest street address or addresses
+            * *retrieveAreas* - Retrieve the administrative area information for the position provided in the request
+            * *retrieveLandmarks* - Search for landmarks like parks and lakes in the proximity provided in the request
+            * *retrieveAll* - Search for streets, administrative areas and landmarks. This mode aggregates the results of the three different modes in one call
+            * *trackPosition* - Retrieve street and address information based on a position and bearing
+        type: string
+        enum:
+        - retrieveAddresses
+        - retrieveAreas
+        - retrieveLandmarks
+        - retrieveAll
+        - trackPosition
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            displayName: response
+            description: OK
+            type: POSTResponseType
+      400:
+        description: Bad request. Invalid parameter value in the request.
+        body: {}
+      401:
+        description: Unauthorized. Invalid authentication.
+        body: {}
+      403:
+        description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+        body: {}
+      404:
+        description: Not found. Resource not found.
+        body: {}
+      500:
+        description: Internal error. There is a server configuration issue.
+        body: {}
+      503:
+        description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+        body: {}
+  /{request-id}:
+    uriParameters:
+      request-id:
+        required: true
+        displayName: request-id
+        description: Identifies the job created for the request which you can use to track the job progress and to request the results when the job is complete
+        type: string
+    put:
+      displayName: Startsthebatchjobwiththegivenparameters.Cancelsthebatchjob.
+      description: |
+        To start the batch job with the given parameters set parameter *action=run*.
+
+        To cancel the batch job set parameter *action=cancel*.
+      queryParameters:
+        app_id:
+          required: true
+          displayName: app_id
+          description: |
+            A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+            To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+          type: string
+        app_code:
+          required: true
+          displayName: app_code
+          description: |
+            A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+            To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+          type: string
+        outdelim:
+          required: true
+          displayName: outdelim
+          description: Field delimeter in the output data.
+          type: string
+        outcols:
+          required: true
+          displayName: outcols
+          description: List of columns to return in the output.
+          type: string
+        outputcombined:
+          required: true
+          displayName: outputcombined
+          description: |
+            If true, the output of successful and unsuccessful (empty response) Geocoder queries are combined into a single result_YYYYMMDD-HH-MM__out.txt file. If false, they are returned in two separate files
+              * result_YYYYMMDD-HH-MM__out.txt
+              * result_YYYYMMDD-HH-MM__err.txt
+          type: boolean
+        indelim:
+          required: false
+          displayName: indelim
+          description: Field delimeter in the input data.
+          type: string
+        mailto:
+          required: false
+          displayName: mailto
+          description: Email address where completion notification is sent. The email address provided is only used to submit the notification.
+          type: string
+        action:
+          required: false
+          displayName: action
+          description: |
+            Type of request, one of:
+              * *run* run a previously uploaded job
+              * *status* inquire about job RequestID
+              * *cancel* cancel job RequestID
+          type: string
+          enum:
+          - run
+          - status
+          - cancel
+        header:
+          required: false
+          displayName: header
+          description: If true, a header row is included before the results in the output.
+          type: boolean
+        maxresults:
+          required: false
+          default: 10
+          displayName: maxresults
+          description: Limits the number of items in the response.
+          type: integer
+          format: int32
+        minresults:
+          required: false
+          default: 0
+          displayName: minresults
+          description: Ignore the specified radius until minResults results are found. Supported for Reverse Geocode *mode=retrieveAreas* and *mode=retrieveAddresses*.
+          type: integer
+          format: int32
+        allowUnknownInputColumns:
+          required: false
+          default: false
+          displayName: allowUnknownInputColumns
+          description: "Option to ignore unknown input columns. Column names that the Batch Geocoder API does not recognize will be ignored. This option disables spell checking. For example, if the input column \"city\" is misspelled as \"citty\" this column will be ignored. Without *allowUnknownInputColumns* parameter or with *allowUnknownInputColumns=false*, the Batch Geocoder API returns an invalid input data error. \nIf combined with *includeInputFields* all ignored fields are also included in the output."
+          type: boolean
+        includeInputFields:
+          required: false
+          default: false
+          displayName: includeInputFields
+          description: |
+            Option to include all input fields in the output. In case of naming conflicts with other output columns, input fields are prefixed by "in".
+
+
+            **Example:**
+
+                searchText|in:city|in:postalCode|in:country.
+          type: boolean
+        includeInvalidInput:
+          required: false
+          default: false
+          displayName: includeInvalidInput
+          description: Option to include invalid input lines in the output file. Invalid input lines are for example lines with a wrong number of fields. This option works for invalid lines in a similar way as *outputcombined* for Geocoder empty results. Together with *outputcombined=true*, for each input line one corresponding line in the output file exists. The Batch Geocoder API ignores this option if the input file contains a column *recId*. The output is then sorted by *recId*, but for invalid lines the Batch Geocoder API cannot be sure which of the fields the *recId* is. Regardless of this option, invalid input lines are always reported in the error file result_YYYYMMDD-HH-MM__inv.txt.
+          type: boolean
+        outputcompressed:
+          required: false
+          default: true
+          displayName: outputcompressed
+          description: If true (the default) the result files available at jobs/{REQUEST_ID}/result jobs/{REQUEST_ID}/errors jobs/{REQUEST_ID}/no-matches are compressed in a zip file. If false the above endpoints will return uncompressed text files (HTTP Content-Type text/plain)
+          type: boolean
+        mode:
+          required: false
+          displayName: mode
+          description: |
+            One of five values:
+              * *retrieveAddresses* - Search for the closest street address or addresses
+              * *retrieveAreas* - Retrieve the administrative area information for the position provided in the request
+              * *retrieveLandmarks* - Search for landmarks like parks and lakes in the proximity provided in the request
+              * *retrieveAll* - Search for streets, administrative areas and landmarks. This mode aggregates the results of the three different modes in one call
+              * *trackPosition* - Retrieve street and address information based on a position and bearing
+          type: string
+          enum:
+          - retrieveAddresses
+          - retrieveAreas
+          - retrieveLandmarks
+          - retrieveAll
+          - trackPosition
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              displayName: response
+              description: OK
+              type: POSTResponseType
+        400:
+          description: Bad request. Invalid parameter value in the request.
+          body: {}
+        401:
+          description: Unauthorized. Invalid authentication.
+          body: {}
+        403:
+          description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+          body: {}
+        404:
+          description: Not found. Resource not found.
+          body: {}
+        500:
+          description: Internal error. There is a server configuration issue.
+          body: {}
+        503:
+          description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+          body: {}
+    get:
+      displayName: Returnsthestatusforthebatchjob.Startsadownloadoffiles.
+      description: To get the status for the batch job set parameter *action=status*.
+      queryParameters:
+        app_id:
+          required: true
+          displayName: app_id
+          description: |
+            A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+            To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+          type: string
+        app_code:
+          required: true
+          displayName: app_code
+          description: |
+            A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+            To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+          type: string
+        outdelim:
+          required: true
+          displayName: outdelim
+          description: Field delimeter in the output data.
+          type: string
+        outcols:
+          required: true
+          displayName: outcols
+          description: List of columns to return in the output.
+          type: string
+        outputcombined:
+          required: true
+          displayName: outputcombined
+          description: |
+            If true, the output of successful and unsuccessful (empty response) Geocoder queries are combined into a single result_YYYYMMDD-HH-MM__out.txt file. If false, they are returned in two separate files
+              * result_YYYYMMDD-HH-MM__out.txt
+              * result_YYYYMMDD-HH-MM__err.txt
+          type: boolean
+        indelim:
+          required: false
+          displayName: indelim
+          description: Field delimeter in the input data.
+          type: string
+        mailto:
+          required: false
+          displayName: mailto
+          description: Email address where completion notification is sent. The email address provided is only used to submit the notification.
+          type: string
+        action:
+          required: false
+          displayName: action
+          description: |
+            Type of request, one of:
+              * *run* run a previously uploaded job
+              * *status* inquire about job RequestID
+              * *cancel* cancel job RequestID
+          type: string
+          enum:
+          - run
+          - status
+          - cancel
+        header:
+          required: false
+          displayName: header
+          description: If true, a header row is included before the results in the output.
+          type: boolean
+        maxresults:
+          required: false
+          default: 10
+          displayName: maxresults
+          description: Limits the number of items in the response.
+          type: integer
+          format: int32
+        minresults:
+          required: false
+          default: 0
+          displayName: minresults
+          description: Ignore the specified radius until minResults results are found. Supported for Reverse Geocode *mode=retrieveAreas* and *mode=retrieveAddresses*.
+          type: integer
+          format: int32
+        allowUnknownInputColumns:
+          required: false
+          default: false
+          displayName: allowUnknownInputColumns
+          description: "Option to ignore unknown input columns. Column names that the Batch Geocoder API does not recognize will be ignored. This option disables spell checking. For example, if the input column \"city\" is misspelled as \"citty\" this column will be ignored. Without *allowUnknownInputColumns* parameter or with *allowUnknownInputColumns=false*, the Batch Geocoder API returns an invalid input data error. \nIf combined with *includeInputFields* all ignored fields are also included in the output."
+          type: boolean
+        includeInputFields:
+          required: false
+          default: false
+          displayName: includeInputFields
+          description: |
+            Option to include all input fields in the output. In case of naming conflicts with other output columns, input fields are prefixed by "in".
+
+
+            **Example:**
+
+                searchText|in:city|in:postalCode|in:country.
+          type: boolean
+        includeInvalidInput:
+          required: false
+          default: false
+          displayName: includeInvalidInput
+          description: Option to include invalid input lines in the output file. Invalid input lines are for example lines with a wrong number of fields. This option works for invalid lines in a similar way as *outputcombined* for Geocoder empty results. Together with *outputcombined=true*, for each input line one corresponding line in the output file exists. The Batch Geocoder API ignores this option if the input file contains a column *recId*. The output is then sorted by *recId*, but for invalid lines the Batch Geocoder API cannot be sure which of the fields the *recId* is. Regardless of this option, invalid input lines are always reported in the error file result_YYYYMMDD-HH-MM__inv.txt.
+          type: boolean
+        locationattributes:
+          required: false
+          displayName: locationattributes
+          description: Query parameter to request special location attributes. For details, see Customizing the Response with Attribute Switches in the Geocoder API Developer's Guide.
+          type: number
+          format: double
+        addressattributes:
+          required: false
+          displayName: addressattributes
+          description: Query parameter to request special address attributes. For details, see Customizing the Response with Attribute Switches in the Geocoder API Developer's Guide.
+          type: number
+          format: double
+        responseattributes:
+          required: false
+          displayName: responseattributes
+          description: Query parameter to request special response attributes. For details, see Customizing the Response with Attribute Switches in the Geocoder API Developer's Guide.
+          type: number
+          format: double
+        mapview:
+          required: false
+          displayName: mapview
+          description: |
+            Find out more [GeoBoundingBoxType](https://developer.here.com/documentation/geocoder/topics/resource-type-bounding-box.html)
+
+            Specify the map coordinates of the app's viewport. The mapview is specified by two latitude / longitude pairs; the first pair defines the top left corner of the bounding box, the second set the lower right. Matches from within the set map view plus an extended area are ranked highest. Relevant global results are also returned.
+
+
+            **Example:**
+
+                mapview=<TopLeft.Latitude>,<TopLeft.Longitude>;
+                <BottomRight.Latitude>,<BottomRight.Longitude>
+
+            **Example:**
+
+                mapview=41.9085286,-87.6762943;41.8682739,-87.6041965
+          type: string
+        countryfocus:
+          required: false
+          displayName: countryfocus
+          description: |
+            Results from the specified country are preferred. This is a soft filter. Spelled out country names are not supported for country focus.
+
+              * If both hard country filter and soft country focus parameter are set in the request the country filter takes precedence over the focus. This means results are limited to countries specified with country filter.
+              * bbox or mapview filter take precedence over the country focus if there is a conflict.
+          type: string
+        bbox:
+          required: false
+          displayName: bbox
+          description: |
+            Find out more  (https://developer.here.com/documentation/geocoder/topics/resource-type-bounding-box.html)
+
+
+            A type of Spatial Filter. A spatial filter limits the search for any other attributes in the request. A bounding box bbox is specified by two latitude / longitude pairs; the first pair defines the top left corner of the bounding box, the second set the lower right. The bbox search is currently similar to mapview but it is not extended. Relevant global results are also returned.
+
+            **Example:**
+
+                bbox=<TopLeft.Latitude>,<TopLeft.Longitude>;
+                <BottomRight.Latitude>,<BottomRight.Longitude>
+
+            **Example:**
+
+                bbox=41.9085286,-87.6762943;41.8682739,-87.6041965
+          type: string
+        prox:
+          required: false
+          displayName: prox
+          description: "A type of SpatialFilter. A spatial filter limits the search for any other attributes on the request. Proximity specifies a circle to search using a latitude, a longitude, and a radius in meters. Search is similar to *mapview*. Matches from inside set area are ranked higher. Relevant global results are also returned. \nSee also [GeoProximityType](https://developer.here.com/documentation/geocoder/topics/resource-type-proximity.html)\n**Example:** \n\n    prox=lat,lon,radius"
+          type: string
+        locationid:
+          required: false
+          displayName: locationid
+          description: A key uniquely identifying a physical location. Each record in a geocode response contains a location Id. Use the Id to retrieve the exact same location information. For example, the location Id for "1 Market Street, 94105 San Francisco" is NT_NVpegjQLOBQa8ORYk3jV7A_xA.
+          type: string
+        gen:
+          required: false
+          default: 9
+          displayName: gen
+          description: The gen parameter enables or disables backward incompatible behavior in the API. Please see details and the generation history in chapter [Different Generations of the Same API](https://developer.here.com/documentation/geocoder/topics/backwards-compatibility.html#backwards-compatibility__api-different-generations). The latest generation is always recommended.
+          type: integer
+          format: int32
+        additionaldata:
+          required: false
+          displayName: additionaldata
+          description: |
+            Key-value pairs that provide additional input to requests. See Additional Data Parameter for a full list. Key and value are separated using a ,. Multiple key-value pairs are separated using a ;
+
+                  additionaldata=<Key1>,<Value1>;<Key2>,<Value2>;...
+
+            **Example:**
+
+                  additionaldata=PreserveUnitDesignators,true;
+                  IncludeZipAddon,true
+          type: string
+        language:
+          required: false
+          displayName: language
+          description: The preferred language of address elements in the result. Without a preferred language, the Geocoder will return results in an official country language or in a regional primary language so that local people will understand. Language code must be provided according to RFC 4647 standard. Note that the plural form of the parameter (languages) is supported as well. But only the last specified language in the list is used. All preceding language preferences are ignored at this time.
+          type: string
+        level:
+          required: false
+          displayName: level
+          description: Target match level of the search result. One of [country, state, county, city, district, postalCode]. Only valid in combination with *gen=2* or higher.
+          type: string
+          enum:
+          - country
+          - state
+          - county
+          - city
+          - district
+          - postalCode
+        sortby:
+          required: false
+          default: distance
+          displayName: sortby
+          description: |
+            Sort results by distance (default), population count, or size (approximate area size). One of [distance, population, size].
+
+            Currently only supported for Reverse Geocode mode=retrieveAreas. If population count is not available for an entity the service falls back to sort by area size.
+          type: string
+          enum:
+          - distance
+          - population
+          - size
+        politicalview:
+          required: false
+          displayName: politicalview
+          description: |
+            Specify the political view. Available territories will be seen through the point of view of this country. If this parameter is not specified the neutral international view is made available, where territories may have unresolved claims.
+
+            **Currently Supported Disputes**
+
+              * ARE: Abu Musa Island, Tunb Islands
+              * ARG: Argentina
+              * EGY: Halaib Triangle
+              * GRC: Northern Cyprus
+              * IND: India
+              * ISR: Israel view on East Jerusalem
+              * KEN: Ilemi Triangle
+              * MAR: Western Sahara
+              * PAK: Pakistan
+              * RUS: Crimea, Kuril Islands (Shikotan, Iturup, Habomai, and Kunashir)
+              * TUR: Northern Cyprus, Southern Cyprus, Kosovo
+              * VNM: Vietnam
+
+            For a complete list of supported views please see the appendix [Political View](https://developer.here.com/documentation/geocoder/topics/political-views.html#political-views).
+
+
+            For any political view that is unsupported the Geocoder, falls back to the default view.
+
+
+            **Example** politicalview=USA or politicalview=FRA does not impact a response in any way.
+          type: string
+        outputcompressed:
+          required: false
+          default: true
+          displayName: outputcompressed
+          description: If true (the default) the result files available at jobs/{REQUEST_ID}/result jobs/{REQUEST_ID}/errors jobs/{REQUEST_ID}/no-matches are compressed in a zip file. If false the above endpoints will return uncompressed text files (HTTP Content-Type text/plain)
+          type: boolean
+        mode:
+          required: false
+          displayName: mode
+          description: |
+            One of five values:
+              * *retrieveAddresses* - Search for the closest street address or addresses
+              * *retrieveAreas* - Retrieve the administrative area information for the position provided in the request
+              * *retrieveLandmarks* - Search for landmarks like parks and lakes in the proximity provided in the request
+              * *retrieveAll* - Search for streets, administrative areas and landmarks. This mode aggregates the results of the three different modes in one call
+              * *trackPosition* - Retrieve street and address information based on a position and bearing
+          type: string
+          enum:
+          - retrieveAddresses
+          - retrieveAreas
+          - retrieveLandmarks
+          - retrieveAll
+          - trackPosition
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              displayName: response
+              description: OK
+              type: JobsResponseType
+        400:
+          description: Bad request. Invalid parameter value in the request.
+          body: {}
+        401:
+          description: Unauthorized. Invalid authentication.
+          body: {}
+        403:
+          description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+          body: {}
+        404:
+          description: Not found. Resource not found.
+          body: {}
+        500:
+          description: Internal error. There is a server configuration issue.
+          body: {}
+        503:
+          description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+          body: {}
+    delete:
+      displayName: Deletesthebatchjob.
+      description: Note that the difference between this request and others is the HTTP type, which is DELETE. You do not use an action to delete a job.
+      queryParameters:
+        app_id:
+          required: true
+          displayName: app_id
+          description: |
+            A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+            To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+          type: string
+        app_code:
+          required: true
+          displayName: app_code
+          description: |
+            A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+            To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+          type: string
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              displayName: response
+              description: OK
+              type: JobsResponseType
+        400:
+          description: Bad request. Invalid parameter value in the request.
+          body: {}
+        401:
+          description: Unauthorized. Invalid authentication.
+          body: {}
+        403:
+          description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+          body: {}
+        404:
+          description: Not found. Resource not found.
+          body: {}
+        500:
+          description: Internal error. There is a server configuration issue.
+          body: {}
+        503:
+          description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+          body: {}
+    /result:
+      get:
+        displayName: Startsadownloadofallfiles.
+        description: Starts a download of all files. The result file contains all geocoded results. If "OutputCombined" is specified, this will also contain "no-matches". Errors are not included.
+        queryParameters:
+          app_id:
+            required: true
+            displayName: app_id
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+          app_code:
+            required: true
+            displayName: app_code
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+          outputcompressed:
+            required: false
+            default: true
+            displayName: outputcompressed
+            description: If true (the default) the result files available at jobs/{REQUEST_ID}/result jobs/{REQUEST_ID}/errors jobs/{REQUEST_ID}/no-matches are compressed in a zip file. If false the above endpoints will return uncompressed text files (HTTP Content-Type text/plain)
+            type: boolean
+        responses:
+          200:
+            description: OK
+            headers:
+              Content-Type:
+                default: application/octet-
+                displayName: Content-Type
+                type: string
+            body:
+              text/plain:
+                displayName: response
+                description: OK
+                type: file
+          400:
+            description: Bad request. Invalid parameter value in the request.
+            body: {}
+          401:
+            description: Unauthorized. Invalid authentication.
+            body: {}
+          403:
+            description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+            body: {}
+          404:
+            description: Not found. Resource not found.
+            body: {}
+          500:
+            description: Internal error. There is a server configuration issue.
+            body: {}
+          503:
+            description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+            body: {}
+    /errors:
+      get:
+        displayName: Startsadownloadoftheerrorfile.
+        description: Starts a download of the error file. The errors file contains all invalid lines from the input data.
+        queryParameters:
+          app_id:
+            required: true
+            displayName: app_id
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+          app_code:
+            required: true
+            displayName: app_code
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+          outputcompressed:
+            required: false
+            default: true
+            displayName: outputcompressed
+            description: If true (the default) the result files available at jobs/{REQUEST_ID}/result jobs/{REQUEST_ID}/errors jobs/{REQUEST_ID}/no-matches are compressed in a zip file. If false the above endpoints will return uncompressed text files (HTTP Content-Type text/plain)
+            type: boolean
+        responses:
+          200:
+            description: OK
+            headers:
+              Content-Type:
+                default: application/octet-stream
+                displayName: Content-Type
+                type: string
+            body:
+              text/plain:
+                displayName: response
+                description: OK
+                type: file
+          400:
+            description: Bad request. Invalid parameter value in the request.
+            body: {}
+          401:
+            description: Unauthorized. Invalid authentication.
+            body: {}
+          403:
+            description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+            body: {}
+          404:
+            description: Not found. Resource not found.
+            body: {}
+          500:
+            description: Internal error. There is a server configuration issue.
+            body: {}
+          503:
+            description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+            body: {}
+    /no-matches:
+      get:
+        displayName: Downloadstheno-matchesfile.
+        description: Download all results that the geocoder could not match to an address ("no-match") Downloads the no-matches file only.
+        queryParameters:
+          app_id:
+            required: true
+            displayName: app_id
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+          app_code:
+            required: true
+            displayName: app_code
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+          outputcompressed:
+            required: false
+            default: true
+            displayName: outputcompressed
+            description: If true (the default) the result files available at jobs/{REQUEST_ID}/result jobs/{REQUEST_ID}/errors jobs/{REQUEST_ID}/no-matches are compressed in a zip file. If false the above endpoints will return uncompressed text files (HTTP Content-Type text/plain)
+            type: boolean
+        responses:
+          200:
+            description: OK
+            headers:
+              Content-Type:
+                default: application/octet-stream
+                displayName: Content-Type
+                type: string
+            body:
+              text/plain:
+                displayName: response
+                description: OK
+                type: file
+          400:
+            description: Bad request. Invalid parameter value in the request.
+            body: {}
+          401:
+            description: Unauthorized. Invalid authentication.
+            body: {}
+          403:
+            description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+            body: {}
+          404:
+            description: Not found. Resource not found.
+            body: {}
+          500:
+            description: Internal error. There is a server configuration issue.
+            body: {}
+          503:
+            description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+            body: {}
+    /all:
+      get:
+        displayName: Downloadsallavailablefilesinonezipfile.
+        description: |
+          Downloads all the files
+              - result,
+              - errors (optional)
+              - invalid
+              - report
+        queryParameters:
+          app_id:
+            required: true
+            displayName: app_id
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+          app_code:
+            required: true
+            displayName: app_code
+            description: |
+              A 20 byte Base64 URL-safe encoded string used for the authentication of the client application.
+
+
+              To get an app_id and app_code assigned to you please [login](https://developer.here.com/projects?utm_medium=referral&utm_source=Mulesoft-Anypoint) or [get started for FREE](https://developer.here.com/ref/Mulesoft-Anypoint?create=Freemium-Basic).
+            type: string
+        responses:
+          200:
+            description: OK
+            headers:
+              Content-Type:
+                default: application/octet-stream
+                displayName: Content-Type
+                type: string
+            body:
+              text/plain:
+                displayName: response
+                description: OK
+                type: file
+          400:
+            description: Bad request. Invalid parameter value in the request.
+            body: {}
+          401:
+            description: Unauthorized. Invalid authentication.
+            body: {}
+          403:
+            description: Forbidden. Incorrect app_code or app_id in the request. See [Acquiring Credentials](https://developer.here.com/documentation/places/common/credentials.html#credentials) for more information.
+            body: {}
+          404:
+            description: Not found. Resource not found.
+            body: {}
+          500:
+            description: Internal error. There is a server configuration issue.
+            body: {}
+          503:
+            description: Service Unavailable. Indicates that the service is temporarily unavailable due to system overload or maintenance or the resource is currently disabled.
+            body: {}

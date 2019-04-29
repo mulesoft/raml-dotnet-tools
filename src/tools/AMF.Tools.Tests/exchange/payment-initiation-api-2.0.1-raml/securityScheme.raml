@@ -1,0 +1,19 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+description: |
+  Supports OAuth 2.0 for authenticating all API requests.
+describedBy:
+  headers:
+    Authorization:
+      description: |
+        Used to send a valid OAuth 2 / OpenID Connect access token.
+      type: string
+  responses:
+    401:
+      description: |
+        Bad or expired token. To fix, you should re-authenticate the user.
+settings:
+  authorizationUri: https://example-bank-auth-server.cloudhub.io/api/authorize
+  accessTokenUri: https://example-bank-auth-server.cloudhub.io/api/token
+  authorizationGrants: [ authorization_code, implicit ]
+  scopes: [READ]

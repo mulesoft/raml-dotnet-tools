@@ -1,0 +1,34 @@
+[
+  {
+    "id": "6fd5f219-d1e4-449e-ba52-d39358f7a732",
+    "account_id": "a6fd39cd-b982-46dc-a12d-deef88d95610",
+    "type": "sepa_direct_transfer",
+    "description": "Rent",
+    "posted": "2016-02-28T16:41:41.090Z",
+    "completed": "2016-02-28T16:41:41.090Z",
+    "value": {
+      "amount": "-205.00",
+      "currency": "EUR"
+    },
+    "new_balance" : {
+      "amount": "2022.00",
+      "currency": "EUR"
+    }
+  },
+  {
+    "id": "624b2d33-8b08-44ec-929d-018f51b63747",
+    "account_id": "a6fd39cd-b982-46dc-a12d-deef88d95610",
+    "type": "sepa_direct_transfer",
+    "description": "Amazon.com | 12312444",
+    "posted": "2016-02-22T12:00:00.000Z",
+    "completed": "2016-02-22T12:00:00.000Z",
+    "value": {
+      "amount": "-205.00",
+      "currency": "EUR"
+    },
+    "new_balance" : {
+      "amount": "2081.00",
+      "currency": "EUR"
+    }
+  }  
+]

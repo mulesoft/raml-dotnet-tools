@@ -1,0 +1,11 @@
+#%RAML 1.0 Trait
+
+uses: 
+  common: exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml
+
+queryParameters:
+  ssn: 
+    description: SSN number of the specific User
+    type: common.SSN
+    required: false
+    example: "123-45-6789"

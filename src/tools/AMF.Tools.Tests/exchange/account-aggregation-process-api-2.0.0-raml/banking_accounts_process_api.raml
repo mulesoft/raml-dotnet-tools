@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: Banking_Accounts_Process_API
+version: v2
+baseUri: https://localhost:8081/api
+mediaType: application/json
+
+uses: 
+  account: exchange_modules/org.mule.templates/banking-account/1.0.0/banking_account.raml
+  common: exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml
+  transaction: exchange_modules/org.mule.templates/banking-transaction/1.0.0/banking_transaction.raml
+
+types: 
+  AccountDetails:
+    type: account.Account
+    description: detailed account information
+    properties:
+      resource_url:
+        type: string
+        description: address url of account request
+
+  TransactionDetails:
+    type: transaction.Transaction
+    description: detailed transaction information
+    properties:
+      resource_url:
+        type: string
+        description: address url of transaction request      
+
+/accounts/aggregate:
+  get:
+    displayName: Aggregate user accounts
+    description: Return aggregated Accounts of user specified by SSN  
+    queryParameters:
+      ssn:
+        type: common.SSN
+        example: 123-45-6789
+    responses:
+      200:
+        body:
+          application/json:
+            type: AccountDetails[]
+            example: !include examples/get_accounts_aggregate_example.raml
+
+/transactions/aggregate:
+  get:
+    displayName: Aggregate user transactions  
+    description: Return aggregated Transactions of user specified by SSN  
+    queryParameters:
+      ssn:
+        type: common.SSN
+        example: 123-45-6789
+    responses:
+      200:
+        body:
+          application/json:
+            type: TransactionDetails[]
+            example: !include examples/get_transactions_aggregate_example.raml

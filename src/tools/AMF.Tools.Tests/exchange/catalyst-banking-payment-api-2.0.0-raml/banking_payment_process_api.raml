@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: Banking_Payment_Process_API
+version: v2.0
+baseUri: http://localhost:8081/api
+
+uses: 
+  common: exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml
+
+types:
+  PaymentRequest:
+    type: object
+    properties:
+      amount: 
+        type: common.Money
+        description: amount 
+      label: 
+        type: string
+        description: name of payment 
+      receiver_IBAN: 
+        type: string
+        description: receiver IBAN
+      description: 
+        type: string
+        description: notes for receiver
+
+  PaymentStatus:
+    type: object
+    properties:
+      transaction_id: 
+        type: string
+        description: identifier of transaction
+      status:
+        type: string 
+        enum: [accepted, rejected]
+        description: payment status 
+      additional_info?: 
+        type: string
+        description: additional information
+
+/accounts/{id}/transactions:
+  post:
+    displayName: Create payment
+    description: Use to make a new payment.
+    body: 
+      application/json:
+        type: PaymentRequest
+        example: !include ./examples/post_transaction.raml
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: PaymentStatus
+            example: !include ./examples/post_transaction_response.raml
+      422:
+        body: 
+          application/json:
+            type: PaymentStatus

@@ -1,0 +1,83 @@
+#%RAML 1.0
+types:
+  OrderDetails:
+    description: Once order is placed, these details are returned from the API
+    example:
+      strict: true
+      value:
+        OrderID: 50122
+        TrackingNo: Z34342211
+        ETA: 2018-11-13T11:15:45
+    type: object
+  Order:
+    description: This is what the API takes in as the body when adding a new order. It contains details about the Salesforce opportunity that is being converted and product information
+    example:
+      strict: true
+      value:
+        OppId: fsjf3439d993
+        OrderAmount: 500000
+        orderdate: 2018-11-13T11:15:45
+        productInfo:
+          SKU: CKS0
+          productID: CK111274
+          category: Small
+          productName: Old School Classic Kicks
+          inventory: 9999
+    type: object
+  Orders:
+    description: Multiple orders
+    example:
+      strict: true
+      value:
+        "0":
+          orderid: 1
+          customerid: B89RR
+          orderdate: 2018-11-13T11:15:45
+          status: In-process
+          customer_email: 7NzoR+%~n@wUueg6RRo
+          billingInfo:
+            billing_st: 84250 Sage Place
+            payment_card: 6787-6543-2567-6969
+            shippingcarrier: FedEx
+            billing_state: LA
+            billing_city: Alexandria
+            billing_zip: 71307
+        "1":
+          status: Completed
+          orderid: 2
+          customerid: B89RR
+          orderdate: 2018-11-13T11:15:45
+          customer_email: B5#c?.ZZcur@xjd4rBuC4NdbGhUx
+          billingInfo:
+            billing_city: San Francisco
+            billing_st: 412 Mission St
+            shippingcarrier: FedEx
+            billing_zip: 4532
+            payment_card: 8880-6959-4307-9696
+            billing_state: CA
+    type: object
+title: NTO Orders API
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/ea6cfff5-e197-4fee-8a07-6ef622275871/
+description: "This is the Order API for Northern Trail Outfitters. This API is a way to interact with NTO's order management systems (like SAP) providing a simple interface to place and retrieve orders. "
+version: 1.0.0
+/orders:
+  post:
+    body:
+      application/json:
+        description: Opportunity details and product information need to be posted on this resource
+        type:
+          - Order
+    responses:
+      "201":
+        description: Indicates if the order was created or not
+        body:
+          application/json:
+            type:
+              - OrderDetails
+  get:
+    responses:
+      "200":
+        body:
+          application/json:
+            type:
+              - Orders

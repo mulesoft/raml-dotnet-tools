@@ -1,0 +1,26 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+description: 
+describedBy: 
+  headers:
+    Authorization:
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use
+        with the "access_token" query string parameter.
+      type: string
+  queryParameters:
+    access_token:
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use with
+        the "Authorization" header.
+      type: string
+  
+settings: 
+  authorizationUri: https://prd-banking-auth-server-41.us-e2.cloudhub.io/api/authorize
+  accessTokenUri: https://prd-banking-auth-server-41.us-e2.cloudhub.io/api/token
+  # customize the authorization grants depending on need
+  authorizationGrants: [authorization_code]
+  scopes: [READ]
+
+
+  

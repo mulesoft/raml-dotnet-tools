@@ -1,0 +1,148 @@
+#%RAML 1.0
+title: Banking_PISP_Experience_API
+version: v2
+baseUri: https://localhost:8082/api
+mediaType: application/json
+protocols: [HTTPS]
+
+uses: 
+  common: exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml
+  pisp: dataTypes.raml
+
+securitySchemes: 
+  oAuth_2_0: !include securityScheme.raml
+
+# Securing the API with Basic Authorization and OAuth 2.0
+securedBy: [oAuth_2_0]
+
+
+/key:
+  get:
+    displayName: Retrieve payment identifier
+    queryParameters:
+      client_id?:
+        type: string
+        description: client identifier 
+    description: |
+      Use client_id and client_secret generated via Anypoint Platform's developer portal as basic authentication credentials.
+      This endpoint returns short-lived paymentId (key under which info about payment is stored in the PISP) and signingKey
+      (used by merchant to sign the payment JWT token, also used by PISP to sign the response back to the merchant's URL defined in the payment token) 
+    responses: 
+      200:
+        body:
+          application/json:
+            type: pisp.Key
+            example: !include examples/key-response.json
+          
+
+/initiate:
+  description: |
+    Initiates payment to payee from consumer. Before transfer of funds can be processed, customer authentication and consent must occur. A nonce will be used to prevent replay attacks and inadvertent duplicate transfers.   
+    The payee information is provided to the API as a JWT token with the set of payment claims. The JWT token (https://jwt.io/introduction/) is signed with the client secret of the registered app to ensure that it is not tampered with.
+    This endpoint redirects to the configured authorization server where user is authenticated.
+  get:
+    displayName: Initiate payment
+    queryParameters:
+      paymentId:
+        type: string
+        description: ID generated in the first step (/key endpoint) to link payment token to the one time signing key.  
+      scope?:
+        type: string
+        description: |
+          Scope of the Access Token requested. Space separated list of the following options: openid, accounts, payment.
+        default: 'openid accounts payment'
+        enum: ['openid accounts payment']
+      request:
+        type: string     
+        description: |
+          The JWT token with all the relevant payment claims signed with the signingKey received using the /key endpoint.
+          After decoding, the request should provide payment info and be similar to: 
+          {
+            "iss": "https://demo-merchant.example.com",
+            "aud": "https://example-bank.cloudhub.io",  
+            "exp": 1490172650,
+            "client_id": "grOmvYA89jsdhkshdIYhGtpvztofAAjz", 
+            "redirect_uri": "http://demo-merchant.example.com/afterPayment", 
+            "scope": "openid accounts payment", 
+            "iat":  "1462517645809",
+            "claims": {
+                "payment": {
+                    "type": "sepa_credit_transfer", 
+                    "to": {
+                        "account_number": "31926819", 
+                        "bank_id": "gk.40.uk",
+                        "bic": "NWBKGB2L", 
+                        "IBAN": "GB29NWBK60161331926819", 
+                        "name": "demo merchant online store" 
+                    },
+                    "value": {
+                        "currency": "EUR", 
+                        "amount": "200.00"
+                    },
+                    "additional": {
+                        "subject": "Online Purchase",     
+                        "booking_code": "2SFBJ28553",     
+                        "booking_date": "1462517645809",  
+                        "value_date": "1462517645809"     
+                    }              
+                }
+            }
+          }  
+        
+    responses:
+      302:
+        headers:
+          Location:   
+ 
+/consent:
+  get:
+    displayName: Retrieve information about payment
+    description: |
+      User is shown the list of his/her accounts and information about payment. User can confirm or deny the payment.
+    queryParameters: 
+      access_token?:
+        type: string
+        description: |
+          Access token issued by Authorization Server  to make payment
+      state?: 
+        type: string
+        description: |
+          Contains the payment ID to retrieve payment token sent during initiation phase
+    responses:
+      200: 
+        body: 
+          text/html:
+          
+
+/confirmPayment:
+  post:
+    displayName: Confirm payment
+    description: |
+      User is shown the list of his/her accounts and information about payment. User can confirm or deny the payment.
+      This endpoint is supposed to be set as the form action parameter in the consent page.    
+    body:
+      application/x-www-form-urlencoded:
+        type: pisp.ConfirmPayment
+        example: !include examples/confirmPayment-request.json
+      
+    responses:
+      200: 
+        body: 
+          text/html: 
+            
+
+/code: 
+  post: 
+    displayName: Send code
+    description: |
+      User is asked to enter the code received on his/her mobile phone to complete two factor authentication and confirm the payment.
+      This endpoint is supposed to be set as the form action parameter in the confirmation page.
+      After confirmation, the user is redirected to the merchant site with signed transaction information in JWT form (query parameter response).
+    body:
+      application/x-www-form-urlencoded: 
+        type: pisp.Code
+        example: !include examples/code-request.json
+              
+    responses:
+      302:
+      200:

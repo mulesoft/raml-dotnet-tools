@@ -1,0 +1,185 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides a resuable implementation of the common
+  collection - collection member patterns commonly found in RESTful APIs
+  along with commonly used query parameters that are applied
+  to collection queries to sort and page through result sets
+  
+uses:
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+  
+traits:
+  pageable:
+    description: Query parameters for pageable resources
+    queryParameters:
+      offset?: common.pagingOffset
+      limit?: common.pagingLimit
+  sortable:
+    description: Query parameters for sortable resources
+    queryParameters:
+      sortBy?: common.sortingSortKey
+
+resourceTypes:
+  readOnlyCollection:
+    description: |
+      the collection of <<resourcePathName>>
+    get:
+      description: |
+        query the collection of <<resourcePathName | !pluralize>>
+        may include optional filtering and sorting criteria
+        responses may paginated
+      responses:
+        200:
+          description: |
+            query on the collection of <<resourcePathName | !pluralize>>
+            was successful
+          body:
+            application/json:
+              type: <<collectionResponseType>>
+        400: &responseBadRequest
+          description: |
+            one or more query parameters was missing, invalid or malformed
+          body:
+            application/json:
+              type: common.ErrorResponse
+        500: &responseServerError
+          description: |
+            an internal error occurred that prevented the request from executing
+          body:
+            application/json:
+              type: common.ErrorResponse
+  collection:
+    type:
+      readOnlyCollection:
+        collectionResponseType: <<collectionResponseType>>
+    post:
+      description: |
+        create a new member of the collection of <<resourcePathName | !pluralize>>
+        from a prototype object
+      body: &requestCollectionMemberPrototype
+        application/json:
+          type: <<collectionMemberPrototypeType>>
+      responses:
+        201:
+          description: |
+            a new <<resourcePathName | !singularize>> was created
+          body:
+            application/json:
+              type: <<collectionMemberResponseType>>
+        400: *responseBadRequest
+        409: &responseConflict
+          description: |
+            a new <<resourcePathName | !singularize>> was not created due to
+            an attempt to violate a system constraint
+          body:
+            application/json:
+              type: common.ErrorResponse
+        500: *responseServerError
+  readOnlyCollectionMember:
+    description: |
+      an individual <<resourcePathName | !singularize>> within the collection
+      of <<resourcePathName | !pluralize>>
+    get:
+      description: |
+        retreive an individual <<resourcePathName | !singularize>>
+      responses:
+        200: &responseCollectionMemberOk
+          description: |
+            the <<resourcePathName | !singularize>> was found and retreived
+          body:
+            application/json:
+              type: <<collectionMemberResponseType>>
+        404: &responseNotFound
+          description: |
+            the requested <<resourcePathName | !singularize>> could not be found
+          body:
+            application/json:
+              type: common.ErrorResponse
+        410: &responseGone
+          description: |
+            the <<resourcePathName | !singularize>> existed at some time in the past but has since expired
+          body:
+            application/json:
+              type: common.ErrorResponse
+        500: *responseServerError
+  updatableCollectionMember:
+    type:
+      readOnlyCollectionMember:
+        collectionMemberResponseType: <<collectionMemberResponseType>>
+    put:
+      description: |
+        modify an existing <<resourcePathName | !singularize>>
+      body: *requestCollectionMemberPrototype
+      responses:
+        200: *responseCollectionMemberOk
+        400: *responseBadRequest
+        404: *responseNotFound
+        409: *responseConflict
+        410: *responseGone
+        500: *responseServerError
+  collectionMember:
+    type:
+      updatableCollectionMember:
+        collectionMemberPrototypeType: <<collectionMemberPrototypeType>>
+        collectionMemberResponseType: <<collectionMemberResponseType>>
+    delete:
+      description: |
+        delete a existing <<resourcePathName | !singularize>>
+      responses:
+        200: &responseDefaultOk
+          description: |
+            the <<resourcePathName | !singularize>> was deleted
+          body:
+            application/json:
+              type: common.DefaultResponse
+        404: *responseNotFound
+        500: *responseServerError
+  collectionMemberRelatedReadOnlyCollection:
+    description: |
+      the collection of <<relationship>> <<resourcePathName | !pluralize>>
+    get:
+      description: |
+        query the collection of related <<resourcePathName | !pluralize>>
+        may include optional filtering and sorting criteria
+        responses may paginated
+      responses:
+        200:
+          description: |
+            query on the collection of <<resourcePathName | !pluralize>>
+            was successful
+          body:
+            application/json:
+              type: <<collectionMemberRelatedCollectionResponseType>>
+        400: *responseBadRequest
+        500: *responseServerError
+  collectionMemberRelatedCollection:
+    type:
+      collectionMemberRelatedReadOnlyCollection:
+        relationship: <<relationship>>
+        collectionMemberRelatedCollectionResponseType: <<collectionMemberRelatedCollectionResponseType>>
+    post:
+      description: |
+        add a new <<relationship>> <<resourcePathName | !singularize>>
+      body:
+        application/json:
+          type: <<collectionMemberRelatedCollectionMemberPrototypeType>>
+      responses:
+        201:
+          description: |
+            the <<resourcePathName | !singularize>> was added
+          body:
+            application/json:
+              type: <<collectionMemberRelatedCollectionMemberResponseType>>
+        400: *responseBadRequest
+        409: *responseConflict
+        500: *responseServerError
+  collectionMemberRelatedCollectionMember:
+    description: |
+      an individual <<resourcePathName | !singularize>> within the collection
+      of <<relationship>> <<resourcePathName | !pluralize>>
+    delete:
+      responses:
+        200: *responseDefaultOk
+        404: *responseNotFound
+        500: *responseServerError

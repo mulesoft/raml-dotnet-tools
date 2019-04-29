@@ -1,0 +1,67 @@
+#%RAML 1.0
+title: Banking_Contact_System_API
+version: v2
+baseUri: https://localhost:8081/api
+mediaType: application/json
+
+uses: 
+  user: exchange_modules/org.mule.templates/banking-user/1.0.0/banking_user.raml
+  common: exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml
+  
+/contact:
+  get:
+    displayName: Retrieve customer contact
+    description: Return contact information about customer 
+    queryParameters:
+      email:
+        type: string
+        example: "jane.thompson@example.com"
+    responses:
+      200: 
+        body:
+          application/json:
+            type: user.User
+            example: !include examples/get_contact_example.raml
+      
+  post:
+    displayName: Create customer contact
+    description: Create customer contact  
+    body:
+      application/json:
+        type: user.User
+        example: !include examples/post_contact_example.raml
+    responses:
+      201:
+        body: 
+          application/json:
+            type: common.SuccessResponse
+        
+     
+  put:
+    displayName: Update customer contact
+    description: Update customer contact by email
+    queryParameters:
+      email:
+        type: string
+        example: "jane.thompson@example.com"
+    body:
+      application/json:
+        example: !include examples/put_contact_example.raml
+    responses:
+      200:
+        body: 
+          application/json:
+            type: common.SuccessResponse
+      
+  delete:
+    displayName: Delete customer contact
+    description: Delete customer contact by email
+    queryParameters:
+      email:
+        type: string
+        example: "jane.thompson@example.com"
+    responses:
+      200:
+        body: 
+          application/json:
+            type: common.SuccessResponse

@@ -1,0 +1,46 @@
+#%RAML 1.0 Library
+
+uses: 
+  common: /exchange_modules/org.mule.templates/banking-common/1.0.1/banking_common.raml
+
+types: 
+  
+  User:
+    type: object
+    properties:
+      id?: 
+        type: string
+        description: identifier
+      prefix?: 
+        type: string[]
+        description: title before the name
+      first_name?: 
+        type: string
+        description: first name
+      middle_name?: 
+        type: string
+        description: middle name
+      last_name?: 
+        type: string
+        description: last name
+      suffix?: 
+        type: string[]
+        description: title after the name
+      address?: 
+        type: common.Address
+        description: user address
+      display_name?: 
+        type: string
+        description: display name
+      phone?: 
+        type: string
+        description: phone number
+      email?: 
+        type: string
+        description: email address
+      ssn?: 
+        type: common.SSN
+        description: Social Security Number 
+      date_of_birth?: 
+        type: date-only
+        description: date of birth

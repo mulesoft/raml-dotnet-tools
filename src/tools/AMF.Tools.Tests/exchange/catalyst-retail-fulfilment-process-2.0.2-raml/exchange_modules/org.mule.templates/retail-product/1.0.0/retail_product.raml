@@ -1,0 +1,119 @@
+#%RAML 1.0 Library
+
+usage: |
+  resusable product and product item data types
+
+uses:
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+types:
+
+  Identifier:
+    type: string
+    description: |
+      the unique product identifier
+    pattern: ^[0-9A-Za-z-]+
+    minLength: 3
+    maxLength: 36
+
+  IdentifierMap:
+    type: object
+    description: |
+      map of unique identifiers
+    properties:
+      /[0-9A-Z-]+/:
+        type: Identifier
+
+  ProductCharacteristic:
+    type: object
+    description: |
+      characteristic of a product
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+
+  ProductCharacteristicValue:
+    type: object
+    description: |
+      characteristic value of a product
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+
+  ProductFeature:
+    type: object
+    description: |
+      product feature description
+    properties:
+      characteristic:
+        type: ProductCharacteristic
+      characteristicValues:
+        type: ProductCharacteristicValue[]
+
+  Product:
+    type: object
+    description: |
+      product object
+    properties:
+      identifier: common.resourceId
+      categoryId?:
+        type: string[]
+      brand:
+        type: string
+      model:
+        type: string
+      pictures:
+        type: common.url[]
+      description:
+        type: string
+      rating?:
+        type: integer
+        minimum: 1
+        maximum: 5
+      price: 
+        type: common.Price
+      #      salesUnit:
+#        type: price.SalesUnit
+
+  ProductVariantConfiguration:
+    type: object
+    description: |
+      product variant configuration
+    properties:
+      characteristic:
+        type: ProductCharacteristic
+      characteristicValue:
+        type: ProductCharacteristicValue
+
+  ProductVariant:
+    type: object
+    description: |
+      product variant
+    properties:
+      identifier: common.resourceId
+      productId: common.resourceId
+      identifiers?:
+        type: IdentifierMap
+        properties:
+          SKU?: Identifier
+          PLU?: Identifier
+          GTIN-12?: Identifier
+          GTIN-13?: Identifier
+          GTIN-8?: Identifier
+          UPC?: Identifier
+          UCC-12?: Identifier
+          EAN?: Identifier
+          JAN?: Identifier
+          EAN-13?: Identifier
+          EAN-8?: Identifier
+      price?: common.Price
+      pictures?: string[]
+#      color?: string
+#      size?: string
+      configuration?:
+        type: ProductVariantConfiguration[]

@@ -1,0 +1,18 @@
+{
+  "price": {
+    "amount": {
+      "currency": "USD",
+      "currencyValue": 34.90,
+      "name": "Amount"
+    },
+    "salesUnit": {
+      "code": "EA",
+      "name": "Each"
+    }
+  },
+  "customer": {
+    "paymentMethod": "BANK",
+    "orderId": "2834987-a31313-909999",
+    "customerId": "9238492-19238kjhskdja-918329"
+  }
+}

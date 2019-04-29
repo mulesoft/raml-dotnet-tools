@@ -1,0 +1,48 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/4200f190-b8d5-495c-844a-f3c5fb383a67 # 
+title: Retail Payment Process API
+version: v2.0
+
+uses: 
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+  payment: /exchange_modules/org.mule.templates/retail-payment/1.0.1/retail_payment.raml
+
+types: 
+  PaymentInfo:
+    type: object
+    properties: 
+      customerId: 
+        type: string
+        description: identifier of customer
+      orderId: 
+        type: string
+        description: identifier of order
+      paymentMethod: payment.PaymentIssuerType
+
+  ProcessPayment:
+    type: object
+    properties: 
+      price: common.Price
+      customer: PaymentInfo
+
+/paymentMethods:
+  get:
+    displayName: Retrieve payment methods
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/payment-methods-response.json
+
+/processPayment:
+  post:
+    displayName: Process payment
+    body:
+      application/json:
+        type: ProcessPayment
+        example: !include examples/process-payment-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/process-payment-response.json

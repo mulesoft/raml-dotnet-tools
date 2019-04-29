@@ -1,0 +1,191 @@
+#%RAML 1.0
+title: Banking Authorization Server
+version: v2.0
+baseUri: http://localhost:8081/api
+
+types:
+      
+  tokenInfo: 
+    type: object
+    properties:
+      id_token?:
+        type: string
+        description: ID token as JWT.
+      access_token: 
+        type: string
+        description: Access token to be used when making API calls
+      token_type: 
+        type: string
+        enum: [bearer]
+        description: Type of token
+      refresh_token?: 
+        type: string
+        description: Can be used to obtain new access_token after it expires.
+      expires_in?: 
+        type: integer
+        description: Time to live in seconds
+      scope?: 
+        type: string
+        description: Allowed scopes (comma separated)
+
+/authorize:
+  description: |
+    This endpoint will redirect to the provided URI after the user authentication passes. The redirect will contain authorization code that can then be used (for limited time) to obtain the access-token.
+  get:
+    displayName: Authorize
+    queryParameters:
+      response_type: 
+        required: true
+        enum: [code]
+      client_id: 
+        required: true
+        description: Client ID of the registered App.
+      redirect_uri:
+        required: true
+        description: Redirect URI defined with your registered App.
+      scope:
+        required: false
+        description: Scope of the Access Token requested. Comma separated list.
+      state:
+        required: false
+        description: | 
+          Any client state that needs to be passed on to the client request URI.
+    responses:
+      302:
+        description: Will redirect to the redirect URI appending authorization code and possible state.
+      401:
+        description: Unauthorized
+
+/token:
+  description: |
+    This endpoint will return access token given that the request contains valid client_id, client_secret and authorization_code.
+  post: 
+    displayName: Generate token
+    queryParameters:
+      redirect_uri:
+        required: true
+        description: Redirect URI defined with your registered App.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          code: 
+            required: true
+            description: The authorization code received by the authorization server
+          grant_type:
+            required: true
+            description: Must be set to authorization_code
+            enum: [authorization_code]
+          client_id:
+            required: true
+            description: The client application's id
+          client_secret:
+            required: true
+            description: The client application's client secret
+    responses:
+      200:
+        body:
+          application/json:
+            type: tokenInfo
+            example: !include ./examples/token_response.json
+
+/validate:
+  get: 
+    displayName: Validate token
+    queryParameters:
+      access_token: 
+        required: true
+        description: The access token
+    responses:
+        200:
+          body:
+            application/json:
+              type: tokenInfo
+              example: !include ./examples/validate_response.json
+
+/userinfo:
+  description: Get user info.
+  get:
+    displayName: Retrieve user info
+    headers: 
+      Authorization:
+        type: string
+        description: The access token.
+        example: Bearer AStasataslkad34asdioj
+    responses:
+      200:
+        body: 
+          application/json: 
+            example: !include ./examples/userinfo_response.json
+
+/.well-known/openid-configuration:
+  description: Contains OpenID provider metadata.
+  get:
+    displayName: Contains OpenID provider metadata
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./examples/openid-configuration_response.json
+
+/jwks.json:
+  description: Contains JWK Set with public keys to validate the issuer.
+  get:
+    displayName: Contains JWK set
+    responses:
+      200:
+        body: 
+          application/json:
+            example: !include ./examples/jwks.json_response.json
+
+/introspect:
+  description: Returns metadata about an access token, including expiration and token active state.
+  post:
+    displayName: Retrieve access token metadata
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          client_id:
+            required: true
+            description: The client application's id
+          client_secret:
+            required: true
+            description: The client application's client secret
+          token:
+            required: true
+            description: Token
+        example: !include ./examples/introspect_request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./examples/introspect_response.json
+      401:
+        body:
+          application/json:
+            example: !include ./examples/introspect_error_response.json
+
+/register:
+  description: Register client in authorization server.
+  post:
+    displayName: Register client
+    headers: 
+      Authorization:
+        type: string
+        description: The access token
+        example: Bearer AStasataslkad34asdioj
+    body:
+      application/json:
+        properties:
+          client_name:
+            required: false
+            description: The client application's client name
+          redirect_uris:
+            required: true
+            description: List of redirect URIs
+            type: string[]
+        example: !include ./examples/register_client_request.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include ./examples/register_client_response.json

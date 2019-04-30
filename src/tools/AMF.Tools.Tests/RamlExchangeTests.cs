@@ -229,7 +229,7 @@ namespace Raml.Tools.Tests
         public async Task qoppa_api_raml()
         {
             var model = await BuildModel("exchange/qoppa-api-2.0.0-raml/qoppapdf.raml");
-            Assert.AreEqual(33, model.Controllers.Count());
+            Assert.AreEqual(4, model.Controllers.Count());
         }
 
 

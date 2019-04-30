@@ -12,6 +12,11 @@ namespace Raml.Tools.Tests
     [TestFixture]
     public class ClientGeneratorTests
     {
+        public int TestCount = 0;
+        private void IncrementTestCount()
+        {
+            TestCount++;
+        }
 
         [Test]
         public async Task ShouldBuildMethodsWithTheFullPath_WhenEmptyResourceParents()
@@ -367,12 +372,12 @@ namespace Raml.Tools.Tests
             return "<root>" + comment.Replace("///", string.Empty).Replace("\\\"", "\"") + "</root>";
         }
 
-        private static async Task<ClientGeneratorModel> GetTestGeneratedModel()
+        private async Task<ClientGeneratorModel> GetTestGeneratedModel()
         {
             return await BuildModel("files/test.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetBoxGeneratedModel()
+        private async Task<ClientGeneratorModel> GetBoxGeneratedModel()
         {
             return await BuildModel("files/box.raml");
         }
@@ -413,69 +418,70 @@ namespace Raml.Tools.Tests
             return await BuildModel("files/contacts.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetMoviesGeneratedModel()
+        private async Task<ClientGeneratorModel> GetMoviesGeneratedModel()
         {
             return await BuildModel("files/movies.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetFstabGeneratedModel()
+        private async Task<ClientGeneratorModel> GetFstabGeneratedModel()
         {
             return await BuildModel("files/fstab.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetDarsGeneratedModel()
+        private async Task<ClientGeneratorModel> GetDarsGeneratedModel()
         {
             return await BuildModel("files/dars.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetDarsWithParamsGeneratedModel()
+        private async Task<ClientGeneratorModel> GetDarsWithParamsGeneratedModel()
         {
             return await BuildModel("files/darsparam.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetEpiGeneratedModel()
+        private async Task<ClientGeneratorModel> GetEpiGeneratedModel()
         {
             return await BuildModel("files/epi.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetFooGeneratedModel()
+        private async Task<ClientGeneratorModel> GetFooGeneratedModel()
         {
             return await BuildModel("files/foo.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetSchemaTestsGeneratedModel()
+        private async Task<ClientGeneratorModel> GetSchemaTestsGeneratedModel()
         {
             return await BuildModel("files/schematests.raml");
         }
 
 
-        private static async Task<ClientGeneratorModel> GetExternalRefsGeneratedModel()
+        private async Task<ClientGeneratorModel> GetExternalRefsGeneratedModel()
         {
             return await BuildModel("files/external-refs.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetSameNameGeneratedModel()
+        private async Task<ClientGeneratorModel> GetSameNameGeneratedModel()
         {
             return await BuildModel("files/same-name-dif-obj.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetIssue17GeneratedModel()
+        private async Task<ClientGeneratorModel> GetIssue17GeneratedModel()
         {
             return await BuildModel("files/issue17.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetDuplicationGeneratedModel()
+        private async Task<ClientGeneratorModel> GetDuplicationGeneratedModel()
         {
             return await BuildModel("files/duplication.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetPatchGeneratedModel()
+        private async Task<ClientGeneratorModel> GetPatchGeneratedModel()
         {
             return await BuildModel("files/patch.raml");
         }
 
-        private static async Task<ClientGeneratorModel> BuildModel(string ramlFile)
+        private async Task<ClientGeneratorModel> BuildModel(string ramlFile)
         {
+            IncrementTestCount();
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
             var model = new ClientGeneratorService(raml, "test", "TargetNamespace", "TargetNamespace.Models").BuildModel();
@@ -483,13 +489,10 @@ namespace Raml.Tools.Tests
             return model;
         }
 
-        private static async Task<ClientGeneratorModel> GetRootGeneratedModel()
+        private async Task<ClientGeneratorModel> GetRootGeneratedModel()
         {
-            var raml = await new AmfParser().Load("files/root.raml");
-            var model = new ClientGeneratorService(raml, "Root", "TargetNamespace", "TargetNamespace.Models").BuildModel();
-
-            return model;
-    }
+            return await BuildModel("files/root.raml");
+        }
 
     }
 }

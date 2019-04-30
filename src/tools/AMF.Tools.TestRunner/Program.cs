@@ -6,15 +6,19 @@ namespace AMF.Tools.TestRunner
 {
     class Program
     {
+        private static int TestCount = 0;
+
         static int Main(string[] args)
         {
             try
             {
-                RunOasTestsAsync().Wait();
-                RunServerRaml1TestsAsync().Wait();
-                RunWebApiTestsAsync().Wait();
-                RunClientRaml1TestsAsync().Wait();
-                Console.WriteLine("All tests passed");
+                TestCount = 0;
+                RunExchangeTestsAsync().Wait();
+                //RunOasTestsAsync().Wait();
+                //RunServerRaml1TestsAsync().Wait();
+                //RunWebApiTestsAsync().Wait();
+                //RunClientRaml1TestsAsync().Wait();
+                Console.WriteLine($"{TestCount} tests passed");
                 return 0;
             }
             catch (Exception ex)
@@ -24,11 +28,49 @@ namespace AMF.Tools.TestRunner
             }
         }
 
+        private static async Task RunExchangeTestsAsync()
+        {
+            var tests = new RamlExchangeTests();
+            await tests.banking_aisp_experience_api();
+            await tests.appian_api_raml();
+            await tests.catalyst_retail_partners_api_raml();
+            await tests.devrel_quick_start_product_api_raml();
+            await tests.here_geocoder_api_autocomplete_raml();
+            await tests.here_geocoder_api_batch_raml();
+            await tests.here_geocoder_api_forward_raml();
+            await tests.here_geocoder_api_reverse_raml();
+            await tests.paypal_orders_api_raml();
+            await tests.paypal_payments_api_oas();
+            await tests.paypal_payments_api_raml();
+            await tests.quick_start_nto_orders_api_raml();
+            await tests.training_american_flights_api_oas();
+            await tests.training_american_flights_api_raml();
+            await tests.account_aggregation_process_api_raml();
+            await tests.anypoint_bank_experience_api_raml();
+            await tests.authorization_server_raml();
+            await tests.catalyst_banking_as400_system_api_raml();
+            await tests.catalyst_banking_payment_api_raml();
+            await tests.catalyst_retail_customer_onboarding_raml();
+            await tests.catalyst_retail_customer_system_api_raml();
+            await tests.catalyst_retail_fulfilment_process_raml();
+            await tests.catalyst_retail_omnichannel_xp_api_raml();
+            await tests.catalyst_retail_order_system_api_raml();
+            await tests.catalyst_retail_partner_system_api_raml();
+            await tests.catalyst_retail_payment_process_raml();
+            await tests.catalyst_retail_shopping_cart_proc_raml();
+            await tests.customer_system_api_raml();
+            await tests.payment_initiation_api_raml();
+            await tests.qoppa_api_raml();
+
+            TestCount += tests.TestCount;
+        }
+
         private static async Task RunOasTestsAsync()
         {
             var tests = new OasTests();
             await tests.PetStoreClient();
             await tests.PetStoreServer();
+            TestCount += tests.TestCount;
         }
 
         private static async Task RunClientRaml1TestsAsync()
@@ -49,6 +91,7 @@ namespace AMF.Tools.TestRunner
 
             // TODO: collections defined in types
             //await tests.ShouldBuildArrayTypes();
+            TestCount += tests.TestCount;
         }
 
         private static async Task RunWebApiTestsAsync()
@@ -56,6 +99,7 @@ namespace AMF.Tools.TestRunner
             var tests = new WebApiGeneratorTests();
             await tests.ShouldWorkIncludeWithRelativeIncludes();
             // await tests.ShouldWorkIncludeWithIncludes();
+            TestCount += tests.TestCount;
         }
 
         private static async Task RunServerRaml1TestsAsync()
@@ -100,7 +144,7 @@ namespace AMF.Tools.TestRunner
 
             //TODO: check
             //await tests.ShouldHandleComplexQueryParams();
-
+            TestCount += tests.TestCount;
         }
 
         private static void InformException(Exception ex)

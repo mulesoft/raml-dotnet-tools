@@ -10,6 +10,11 @@ namespace Raml.Tools.Tests
     [TestFixture]
     public class WebApiGeneratorRaml1Tests
     {
+        public int TestCount = 0;
+        private void IncrementTestCount()
+        {
+            TestCount++;
+        }
 
         [Test]
         public async Task ShouldBuildArrays()
@@ -396,12 +401,12 @@ namespace Raml.Tools.Tests
             Assert.AreNotEqual("One", model.Objects.First(e => e.Name == "One").Properties.First().Name);
         }
 
-        private static async Task<WebApiGeneratorModel> GetAnnotationTargetsModel()
+        private async Task<WebApiGeneratorModel> GetAnnotationTargetsModel()
         {
             return await BuildModel("files/raml1/annotations-targets.raml");
         }
 
-        private static async Task<WebApiGeneratorModel> GetAnnotationsModel()
+        private async Task<WebApiGeneratorModel> GetAnnotationsModel()
         {
             return await BuildModel("files/raml1/annotations.raml");
         }
@@ -433,8 +438,9 @@ namespace Raml.Tools.Tests
         }
 
 
-        private static async Task<WebApiGeneratorModel> BuildModel(string ramlFile)
+        private async Task<WebApiGeneratorModel> BuildModel(string ramlFile)
         {
+            IncrementTestCount();
             //var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(ramlFile);
             var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();

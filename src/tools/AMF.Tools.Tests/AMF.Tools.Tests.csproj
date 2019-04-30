@@ -56,6 +56,7 @@
     <Compile Include="ClientGeneratorRaml1Tests.cs" />
     <Compile Include="ClientGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RamlExchangeTests.cs" />
     <Compile Include="WebApiGeneratorRaml1Tests.cs" />
     <Compile Include="OasTests.cs" />
     <Compile Include="WebApiGeneratorTests.cs" />
@@ -68,6 +69,520 @@
     <None Include="edge\x86\edge_nativeclr.node">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="exchange\account-aggregation-process-api-2.0.0-raml\banking_accounts_process_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-aggregation-process-api-2.0.0-raml\examples\get_accounts_aggregate_example.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-aggregation-process-api-2.0.0-raml\examples\get_transactions_aggregate_example.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-aggregation-process-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-account\1.0.0\banking_account.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-aggregation-process-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-common\1.0.1\banking_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-aggregation-process-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-transaction\1.0.0\banking_transaction.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\banking_aisp_experience_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\dataTypes.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\examples\balance-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\examples\info-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\examples\transactions-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\exchange_modules\org.mule.templates\banking-account\1.0.0\banking_account.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\exchange_modules\org.mule.templates\banking-common\1.0.1\banking_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\exchange_modules\org.mule.templates\banking-transaction\1.0.0\banking_transaction.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\account-information-api-2.0.2-raml\securityScheme.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\Banking_Portal_Experience_API.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\dataTypes.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\accounts-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\checkssn-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\onboarding\signup-error-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\onboarding\signup-request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\onboarding\signup-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\register\register-error-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\register\register-request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\revoke\revoke-error-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\revoke\revoke-request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\session\signin-error-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\session\signin-request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\session\signin-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\transactions-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\user-portal-request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\examples\user-portal-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\anypoint-bank-experience-api-2.0.1-raml\exchange_modules\org.mule.templates\banking-common\1.0.1\banking_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\appian-api-1.0.5-raml\api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\banking_authorization_server.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\introspect_error_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\introspect_request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\introspect_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\jwks.json_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\openid-configuration_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\register_client_request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\register_client_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\token_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\userinfo_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\authorization-server-2.0.0-raml\examples\validate_response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\banking_as400_system_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\examples\get_account.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\examples\get_account_id.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\examples\get_transactions.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\examples\get_user.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\examples\get_user_id.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-account\1.0.0\banking_account.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-common\1.0.1\banking_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-transaction\1.0.0\banking_transaction.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-user\1.0.0\banking_user.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\traits\accountSearch.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\traits\transactionSearch.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-as400-system-api-2.0.0-raml\traits\userSearch.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-payment-api-2.0.0-raml\banking_payment_process_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-payment-api-2.0.0-raml\examples\post_transaction.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-payment-api-2.0.0-raml\examples\post_transaction_response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-banking-payment-api-2.0.0-raml\exchange_modules\org.mule.templates\banking-common\1.0.1\banking_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-onboarding-2.0.2-raml\examples\post_customer_request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-onboarding-2.0.2-raml\examples\post_customer_response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-onboarding-2.0.2-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-onboarding-2.0.2-raml\exchange_modules\org.mule.templates\retail-customer-types\1.0.1\retail_customer_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-onboarding-2.0.2-raml\exchange_modules\org.mule.templates\retail-payment\1.0.1\retail_payment.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-onboarding-2.0.2-raml\retail-onboarding-process-api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\examples\delete_contact_response_example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\examples\get_contact_example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\examples\post_contact_example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\examples\post_contact_response_example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\examples\put_contact_example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\examples\put_contact_response_example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\exchange_modules\org.mule.templates\retail-customer-types\1.0.1\retail_customer_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\exchange_modules\org.mule.templates\retail-payment\1.0.1\retail_payment.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-customer-system-api-2.0.2-raml\retail-customers2sfdc-system-api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-fulfilment-process-2.0.2-raml\examples\orders-request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-fulfilment-process-2.0.2-raml\examples\orders-response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-fulfilment-process-2.0.2-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-fulfilment-process-2.0.2-raml\exchange_modules\org.mule.templates\retail-fulfillment\1.0.1\retail_fulfillment.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-fulfilment-process-2.0.2-raml\exchange_modules\org.mule.templates\retail-order-types\1.0.1\retail_order_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-fulfilment-process-2.0.2-raml\exchange_modules\org.mule.templates\retail-product\1.0.0\retail_product.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-fulfilment-process-2.0.2-raml\retail_order_fulfilment_process_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\channel-types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\collections.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-contact\1.0.0\retail_contact.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-customer-types\1.0.1\retail_customer_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-fulfillment\1.0.1\retail_fulfillment.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-geosearch\1.0.0\retail_geosearch.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-inventory\1.0.0\retail_inventory.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-order-types\1.0.1\retail_order_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-partner\1.0.0\retail_partner.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-payment\1.0.1\retail_payment.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-product\1.0.0\retail_product.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-shopping-cart-types\1.0.1\retail_shopping_cart_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-store\1.0.0\retail_store.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-omnichannel-xp-api-2.0.3-raml\exchange_modules\org.mule.templates\retail-taxonomy\1.0.0\retail_taxonomy.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\examples\order_collection_get_response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\examples\order_get_response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\examples\order_post_request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\examples\order_put_request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\examples\order_status_put_request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\exchange_modules\org.mule.templates\retail-fulfillment\1.0.1\retail_fulfillment.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\exchange_modules\org.mule.templates\retail-order-types\1.0.1\retail_order_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\exchange_modules\org.mule.templates\retail-product\1.0.0\retail_product.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-order-system-api-2.0.2-raml\retail-orders2sfdc-system-api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\examples\create-partner-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\examples\partner-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\examples\partner-search-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\examples\product-reserve-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\examples\product-search-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\exchange_modules\org.mule.templates\retail-inventory\1.0.0\retail_inventory.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\exchange_modules\org.mule.templates\retail-partner\1.0.0\retail_partner.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\exchange_modules\org.mule.templates\retail-store\1.0.0\retail_store.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\retail_partners_system_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partner-system-api-2.0.1-raml\traits\productSearch.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partners-api-1.0.1-raml\api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partners-api-1.0.1-raml\examples\create-partner-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partners-api-1.0.1-raml\examples\partner-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partners-api-1.0.1-raml\examples\partner-search-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partners-api-1.0.1-raml\examples\product-reserve-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partners-api-1.0.1-raml\examples\product-search-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-partners-api-1.0.1-raml\traits\productSearch.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-payment-process-2.0.2-raml\examples\payment-methods-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-payment-process-2.0.2-raml\examples\process-payment-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-payment-process-2.0.2-raml\examples\process-payment-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-payment-process-2.0.2-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-payment-process-2.0.2-raml\exchange_modules\org.mule.templates\retail-payment\1.0.1\retail_payment.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-payment-process-2.0.2-raml\retail_payment_process_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\examples\shopping-carts_post_request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\examples\shopping-cart_customer_get_response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\examples\shopping-cart_get_response.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\examples\shopping-cart_put_request.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\exchange_modules\org.mule.templates\retail-common\1.0.0\retail_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\exchange_modules\org.mule.templates\retail-product\1.0.0\retail_product.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\exchange_modules\org.mule.templates\retail-shopping-cart-types\1.0.1\retail_shopping_cart_types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\catalyst-retail-shopping-cart-proc-2.0.2-raml\retail_shopping_cart_process_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\customer-system-api-2.0.1-raml\banking_contact_system_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\customer-system-api-2.0.1-raml\examples\get_contact_example.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\customer-system-api-2.0.1-raml\examples\post_contact_example.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\customer-system-api-2.0.1-raml\examples\put_contact_example.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\customer-system-api-2.0.1-raml\exchange_modules\org.mule.templates\banking-common\1.0.1\banking_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\customer-system-api-2.0.1-raml\exchange_modules\org.mule.templates\banking-user\1.0.0\banking_user.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\devrel-quick_start-product_api-1.0.8-raml\devrel-quick_start_products_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\devrel-quick_start-product_api-1.0.8-raml\exchange_modules\org.mule.examples\devrel-quick_start_product_example\1.0.1\devrel-quick_start_product_example.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\here-geocoder-api-autocomplete-1.0.1-raml\GeocoderAutocomplete.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\here-geocoder-api-batch-1.0.1-raml\BatchGeocoder.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\here-geocoder-api-forward-1.0.1-raml\Geocoder_API.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\here-geocoder-api-reverse-1.0.1-raml\Geocoder_reverse.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\banking_pisp_experience_api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\dataTypes.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\examples\code-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\examples\confirmPayment-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\examples\initiate-request.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\examples\key-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\exchange_modules\org.mule.templates\banking-common\1.0.1\banking_common.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\payment-initiation-api-2.0.1-raml\securityScheme.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\paypal-orders-api-1.0.0-raml\orders_v2_api-spec.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\paypal-payments-api-1.0.0-oas\api.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\paypal-payments-api-1.0.0-raml\payments_v2_api-spec.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\qoppa-api-2.0.0-raml\qoppapdf.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\quick-start-nto-orders-api-1.0.0-raml\nto-orders-api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\training-american-flights-api-1.0.4-oas\api.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\training-american-flights-api-1.0.4-raml\american-flights-api.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="exchange\training-american-flights-api-1.0.4-raml\examples\AmericanFlightExample.raml" />
+    <None Include="exchange\training-american-flights-api-1.0.4-raml\examples\AmericanFlightNoIDExample.raml" />
+    <None Include="exchange\training-american-flights-api-1.0.4-raml\exchange_modules\68ef9520-24e9-4cf2-b2f5-620025690913\training-american-flight-data-type\1.0.1\AmericanFlightDataType.raml" />
+    <None Include="exchange\training-american-flights-api-1.0.4-raml\exchange_modules\68ef9520-24e9-4cf2-b2f5-620025690913\training-american-flights-example\1.0.1\AmericanFlightsExample.raml" />
     <None Include="files\75039.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

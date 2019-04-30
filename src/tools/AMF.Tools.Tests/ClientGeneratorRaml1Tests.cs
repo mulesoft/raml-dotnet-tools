@@ -11,6 +11,11 @@ namespace Raml.Tools.Tests
     [TestFixture]
     public class ClientGeneratorRaml1Tests
     {
+        public int TestCount = 0;
+        private void IncrementTestCount()
+        {
+            TestCount++;
+        }
 
         [Test]
         public async Task ShouldBuild_WhenCustomScalar()
@@ -126,12 +131,12 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("string"), model.Objects.First().Properties.First().Type);
         }
 
-        private static async Task<ClientGeneratorModel> GetAnnotationTargetsModel()
+        private async Task<ClientGeneratorModel> GetAnnotationTargetsModel()
         {
             return await BuildModel("files/raml1/annotations-targets.raml");
         }
 
-        private static async Task<ClientGeneratorModel> GetAnnotationsModel()
+        private async Task<ClientGeneratorModel> GetAnnotationsModel()
         {
             return await BuildModel("files/raml1/annotations.raml");
         }
@@ -172,8 +177,9 @@ namespace Raml.Tools.Tests
             return await BuildModel("files/raml1/arrays.raml");
         }
 
-        private static async Task<ClientGeneratorModel> BuildModel(string ramlFile)
+        private async Task<ClientGeneratorModel> BuildModel(string ramlFile)
         {
+            IncrementTestCount();
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
             var model = new ClientGeneratorService(raml, "test", "TargetNamespace", "TargetNamespace.Models").BuildModel();

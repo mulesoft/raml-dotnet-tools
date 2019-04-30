@@ -11,6 +11,12 @@ namespace Raml.Tools.Tests
     [TestFixture]
     public class WebApiGeneratorTests
     {
+        public int TestCount = 0;
+        private void IncrementTestCount()
+        {
+            TestCount++;
+        }
+
         [Test]
         public async void Should_Generate_Controller_Objects_When_Movies()
         {
@@ -307,12 +313,12 @@ namespace Raml.Tools.Tests
             return "<root>" + comment.Replace("///", string.Empty).Replace("\\\"", "\"") + "</root>";
         }
 
-		private static async Task<WebApiGeneratorModel> GetTestGeneratedModel()
+		private async Task<WebApiGeneratorModel> GetTestGeneratedModel()
 		{
             return await BuildModel("files/test.raml");
         }
 
-		private static async Task<WebApiGeneratorModel> GetBoxGeneratedModel()
+		private async Task<WebApiGeneratorModel> GetBoxGeneratedModel()
 		{
             return await BuildModel("files/box.raml");
         }
@@ -353,66 +359,68 @@ namespace Raml.Tools.Tests
             return await BuildModel("files/contacts.raml");
 		}
 
-		private static async Task<WebApiGeneratorModel> GetMoviesGeneratedModel()
+		private async Task<WebApiGeneratorModel> GetMoviesGeneratedModel()
 		{
             return await BuildModel("files/movies.raml");
         }
 
-		private static async Task<WebApiGeneratorModel> GetDarsGeneratedModel()
+		private async Task<WebApiGeneratorModel> GetDarsGeneratedModel()
 		{
 			return await BuildModel("files/dars.raml");
         }
 
-		private static async Task<WebApiGeneratorModel> GetSchemaTestsGeneratedModel()
+		private async Task<WebApiGeneratorModel> GetSchemaTestsGeneratedModel()
 		{
 			return await BuildModel("files/schematests.raml");
         }
 
 
-        private static async Task<WebApiGeneratorModel> GetOrdersXmlGeneratedModel()
+        private async Task<WebApiGeneratorModel> GetOrdersXmlGeneratedModel()
         {
             return await BuildModel("files/ordersXml.raml");
         }
 	
-        private static async Task<WebApiGeneratorModel> GetIssue17GeneratedModel()
+        private async Task<WebApiGeneratorModel> GetIssue17GeneratedModel()
         {
             return await BuildModel("files/issue17.raml");
         }
 
-        private static async Task<WebApiGeneratorModel> GetIssue13GeneratedModel()
+        private async Task<WebApiGeneratorModel> GetIssue13GeneratedModel()
         {
             return await BuildModel("files/issue13.raml");
         }
 
-        private static async Task<WebApiGeneratorModel> GetIssue25GeneratedModel()
+        private async Task<WebApiGeneratorModel> GetIssue25GeneratedModel()
         {
             return await BuildModel("files/issue25.raml");
         }
 
-        private static async Task<WebApiGeneratorModel> GetIssue23GeneratedModel()
+        private async Task<WebApiGeneratorModel> GetIssue23GeneratedModel()
         {
             return await BuildModel("files/issue23.raml");
         }
 
-        private static async Task<WebApiGeneratorModel> GetAdditionalPropertiesGeneratedModel()
+        private async Task<WebApiGeneratorModel> GetAdditionalPropertiesGeneratedModel()
         {
             return await BuildModel("files/additionalprops.raml");
         }
 
-        private static async Task<WebApiGeneratorModel> GetIssue37GeneratedModel()
+        private async Task<WebApiGeneratorModel> GetIssue37GeneratedModel()
         {
             return await BuildModel("files/issue37.raml");
         }
 
-        private static async Task<WebApiGeneratorModel> BuildModel(string ramlFile)
+        private async Task<WebApiGeneratorModel> BuildModel(string ramlFile)
         {
+            IncrementTestCount();
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
             return new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
         }
 
-        private static async Task<WebApiGeneratorModel> GetRootGeneratedModel()
+        private async Task<WebApiGeneratorModel> GetRootGeneratedModel()
         {
+            IncrementTestCount();
             var raml = await new AmfParser().Load("files/root.raml");
             var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();
 

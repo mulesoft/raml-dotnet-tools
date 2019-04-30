@@ -1,0 +1,40 @@
+#%RAML 1.0
+version: v2.0
+title: Retail Order Fulfilment Process API
+
+uses: 
+  order: /exchange_modules/org.mule.templates/retail-order-types/1.0.1/retail_order_types.raml
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+
+types:
+  OrderRequest:
+    type: object
+    properties:
+      status: order.Status
+      customerId: common.resourceId
+      orderItems: order.OrderItemSummary[]
+
+  OrderResponse: 
+    type: object
+    properties:
+      status: 
+        type: string
+        description: status of order
+      identifier: common.resourceId
+      message: 
+        type: string
+        description: information about order
+        
+/orders:
+  post:
+    displayName: Create order
+    body: 
+      application/json: 
+        type: OrderRequest
+        example: !include examples/orders-request.raml
+    responses:
+      201: 
+        body: 
+          application/json:
+            type: OrderResponse 
+            example: !include examples/orders-response.raml

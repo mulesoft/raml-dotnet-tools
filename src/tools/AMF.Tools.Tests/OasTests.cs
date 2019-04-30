@@ -11,6 +11,12 @@ namespace Raml.Tools.Tests
     [TestFixture]
     public class OasTests
     {
+        public int TestCount = 0;
+        private void IncrementTestCount()
+        {
+            TestCount++;
+        }
+
         [Test]
         public async Task PetStoreServer()
         {
@@ -26,15 +32,17 @@ namespace Raml.Tools.Tests
             Assert.IsTrue(model.Objects.Any(o => o.Name == "Pet"));
         }
 
-        private static async Task<WebApiGeneratorModel> BuildWebApiModel(string ramlFile)
+        private async Task<WebApiGeneratorModel> BuildWebApiModel(string ramlFile)
         {
+            IncrementTestCount();
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
             return new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
         }
 
-        private static async Task<ClientGeneratorModel> BuildClientModel(string ramlFile)
+        private async Task<ClientGeneratorModel> BuildClientModel(string ramlFile)
         {
+            IncrementTestCount();
             var fi = new FileInfo(ramlFile);
             var raml = await new AmfParser().Load(fi.FullName);
             return new ClientGeneratorService(raml, "root", "TestNs", "TestsNs.Models").BuildModel();

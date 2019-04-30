@@ -120,6 +120,118 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(1, model.Controllers.Count());
         }
 
+        [Test]
+        public async Task account_aggregation_process_api_raml()
+        {
+            var model = await BuildModel("exchange/account-aggregation-process-api-2.0.0-raml/banking_accounts_process_api.raml");
+            Assert.AreEqual(2, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task anypoint_bank_experience_api_raml()
+        {
+            var model = await BuildModel("exchange/anypoint-bank-experience-api-2.0.1-raml/Banking_Portal_Experience_API.raml");
+            Assert.AreEqual(4, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task authorization_server_raml()
+        {
+            var model = await BuildModel("exchange/authorization-server-2.0.0-raml/banking_authorization_server.raml");
+            Assert.AreEqual(8, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_banking_as400_system_api_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-banking-as400-system-api-2.0.0-raml/banking_as400_system_api.raml");
+            Assert.AreEqual(2, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_banking_payment_api_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-banking-payment-api-2.0.0-raml/banking_payment_process_api.raml");
+            Assert.AreEqual(1, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_customer_onboarding_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-customer-onboarding-2.0.2-raml/retail-onboarding-process-api.raml");
+            Assert.AreEqual(1, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_customer_system_api_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-customer-system-api-2.0.2-raml/retail-customers2sfdc-system-api.raml");
+            Assert.AreEqual(1, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_fulfilment_process_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-fulfilment-process-2.0.2-raml/retail_order_fulfilment_process_api.raml");
+            Assert.AreEqual(1, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_omnichannel_xp_api_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-omnichannel-xp-api-2.0.3-raml/api.raml");
+            Assert.AreEqual(8, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_order_system_api_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-order-system-api-2.0.2-raml/retail-orders2sfdc-system-api.raml");
+            Assert.AreEqual(1, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_partner_system_api_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-partner-system-api-2.0.1-raml/retail_partners_system_api.raml");
+            Assert.AreEqual(3, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_payment_process_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-payment-process-2.0.2-raml/retail_payment_process_api.raml");
+            Assert.AreEqual(2, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task catalyst_retail_shopping_cart_proc_raml()
+        {
+            var model = await BuildModel("exchange/catalyst-retail-shopping-cart-proc-2.0.2-raml/retail_shopping_cart_process_api.raml");
+            Assert.AreEqual(2, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task customer_system_api_raml()
+        {
+            var model = await BuildModel("exchange/customer-system-api-2.0.1-raml/banking_contact_system_api.raml");
+            Assert.AreEqual(1, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task payment_initiation_api_raml()
+        {
+            var model = await BuildModel("exchange/payment-initiation-api-2.0.1-raml/banking_pisp_experience_api.raml");
+            Assert.AreEqual(5, model.Controllers.Count());
+        }
+
+        [Test]
+        public async Task qoppa_api_raml()
+        {
+            var model = await BuildModel("exchange/qoppa-api-2.0.0-raml/qoppapdf.raml");
+            Assert.AreEqual(33, model.Controllers.Count());
+        }
+
 
         private async Task<WebApiGeneratorModel> BuildModel(string ramlFile)
         {

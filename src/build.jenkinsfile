@@ -1,9 +1,11 @@
 pipeline {
 
     agent {
-        label 'windows10'
+        node {
+            label 'windows10'
+            customWorkspace 'c:\\cp'
+        }
     }
-
     stages {
         stage('AMF.Api.Core')
         {

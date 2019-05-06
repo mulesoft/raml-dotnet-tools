@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Near Union Square",
+    "address": {
+      "street": [
+        "77 Geary Street",
+        "Suite 400"
+      ],
+      "city": "San Francisco",
+      "postal_code": 94108,
+      "state": "CA",
+      "country": "USA",
+      "formatted": "77 Geary Street, Suite 400, San Francisco, CA 94108, USA"
+    },
+    "location": {
+      "lat": 37.7875712,
+      "lng": -122.406909
+    },
+    "operational": true,
+    "wheelchair": true  
+  }
+]

@@ -1,0 +1,592 @@
+#%RAML 0.8
+title: SalesForce
+version: v1
+baseUri: https://{domain}/services/data
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  - tokenSchema: !include securitySchemes/tokenSchema.raml
+schemas:
+  - appSwitscher: !include schemas/appSwitscher.json
+  - compactLayouts: !include schemas/compactLayouts.json
+  - createAction: !include schemas/createAction.json
+  - describe: !include schemas/describe.json
+  - flexiPage: !include schemas/flexiPage.json
+  - globalLayouts: !include schemas/globalLayouts.json
+  - layouts: !include schemas/layouts.json
+  - limits: !include schemas/limits.json
+  - menuSalesforce1: !include schemas/menuSalesforce1.json
+  - objectDeleted-xml: !include schemas/objectDeleted-xml.xsd
+  - objectDeleted: !include schemas/objectDeleted.json
+  - objectGet: !include schemas/objectGet.json
+  - objectPatch: !include schemas/objectPatch.json
+  - objectPostBody: !include schemas/objectPostBody.json
+  - objectPostResponse: !include schemas/objectPostResponse.json
+  - objectsByFieldValue: !include schemas/objectsByFieldValue.json
+  - objectsByFieldValuePatchBody: !include schemas/objectsByFieldValuePatchBody.json
+  - objectsByFieldValuePatchResponse: !include schemas/objectsByFieldValuePatchResponse.json
+  - objectsGet: !include schemas/objectsGet.json
+  - objectUpdated-xml: !include schemas/objectUpdated-xml.xsd
+  - objectUpdated: !include schemas/objectUpdated.json
+  - passwordExpiration-xml: !include schemas/passwordExpiration-xml.xsd
+  - passwordExpiration: !include schemas/passwordExpiration.json
+  - passwordNew: !include schemas/passwordNew.json
+  - passwordReset-xml: !include schemas/passwordReset-xml.xsd
+  - passwordReset: !include schemas/passwordReset.json
+  - query: !include schemas/query.json
+  - queryResults: !include schemas/queryResults.json
+  - quickActionsPostBody: !include schemas/quickActionsPostBody.json
+  - recent: !include schemas/recent.json
+  - resourceNotFoundByExternalId: !include schemas/resourceNotFoundByExternalId.json
+  - search: !include schemas/search.json
+  - searchLayout: !include schemas/searchLayout.json
+  - searchScopeOrder: !include schemas/searchScopeOrder.json
+  - sobjects: !include schemas/sobjects.json
+  - themes: !include schemas/themes.json
+  - version-xml: !include schemas/version-xml.xsd
+  - version: !include schemas/version.json
+  - versions-xml: !include schemas/versions-xml.xsd
+  - versions: !include schemas/versions.json
+resourceTypes:
+  - generalResource: !include resourceTypes/generalResource.raml
+  - query: !include resourceTypes/query.raml
+  - generalResponseCodes: !include resourceTypes/generalResponseCodes.raml
+  - passwordManagement: !include resourceTypes/passwordManagement.raml
+  - queryResults: !include resourceTypes/queryResults.raml
+traits:
+  - hasPeriod: !include traits/hasPeriod.raml
+securedBy: [ oauth_2_0 ]
+/: 
+  type: generalResource
+  description: "Lists summary information about each Salesforce versions currently available, including the version, label, and a link to each version's root."
+  get: 
+    description: List Available REST API Versions
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: versions
+            example: !include examples/versions-example.json
+          application/xml: 
+            schema: versions-xml
+            example: !include examples/versions-xml-example.xml
+/{version}: 
+  type: generalResource
+  description: ""
+  uriParameters: 
+    version: 
+      displayName: version
+      description: |
+        Currently avaliable versions:
+          |Version|Param value|
+          |---|---|
+          |Winter '11|v20.0|
+          |Spring '11|v21.0|
+          |Summer '11|v22.0|
+          |Winter '12|v23.0|
+          |Spring '12|v24.0|
+          |Summer '12|v25.0|
+          |Winter '13|v26.0|
+          |Spring '13|v27.0|
+          |Summer '13|v28.0|
+          |Winter '14|v29.0|
+      required: true
+  get: 
+    description: Lists available resources for the specified API version, including resource name and URI.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: version
+            example: !include examples/version-example.json
+          application/xml: 
+            schema: version-xml
+            example: !include examples/version-xml-example.xml
+  /query: 
+    type: query
+    description: |
+      Executes the specified SOQL query.
+      If the query results are too large, the response contains the first batch of results and a query identifier in the 'nextRecordsUrl' field of the response. The identifier can be used in an additional request to retrieve the next batch.
+    /{queryIdentifier}: 
+      type: queryResults
+      description: ""
+  /recent: 
+    type: generalResource
+    description: |
+      Gets the most recently accessed items that were viewed or referenced by the current user. Salesforce stores information about record views in the interface and uses it to generate a list of recently viewed and referenced records, such as in the sidebar and for the auto-complete options in search.
+      This resource only accesses most recently used item information. If you want to modify the list of recently viewed items, you'll need to update recently viewed information directly by using a SOQL Query with a FOR VIEW or FOR REFERENCE clause.
+    get: 
+      queryParameters: 
+        limit: 
+          description: An optional limit that specifies the maximum number of records to be returned. If this parameter is not specified, the default maximum number of records returned is the maximum number of entries in RecentlyViewed, which is 200 records per object.
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: recent
+              example: !include examples/recent-example.json
+  /sobjects: 
+    type: generalResource
+    description: "Lists the available objects and their metadata for your organization's data. In addition, it provides the organization encoding, as well as maximum batch size permitted in queries. For more information on encoding, see Internationalization and Character Sets."
+    get: 
+      description: Get a List of Objects
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: sobjects
+              example: !include examples/sobjects-example.json
+            application/xml: 
+    /SelfServiceUser/{selfServiceUserId}/password: 
+      type: passwordManagement
+      description: Set, reset, or get information about a self-service user password. This resource is available in REST API version 24.0 and later.
+    /{SObjectName}: 
+      type: generalResource
+      description: Describes the individual metadata for the specified object. Can also be used to create a new record for a given object. For example, this can be used to retrieve the metadata for the Account object using the GET method, or create a new Account object using the POST method.
+      get: 
+        responses: 
+          200: 
+            description: ""
+            body: 
+              application/json: 
+                schema: objectGet
+                example: !include examples/objectGet-example.json
+              application/xml:
+      post: 
+        body: 
+          application/xml: 
+          application/json: 
+            schema: objectPostBody
+            example: !include examples/objectPostBody-example.json
+        responses: 
+          201: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: objectPostResponse
+                example: !include examples/objectPostResponse-example.json
+      /deleted: 
+        type: generalResource
+        is: [ hasPeriod ]
+        description: |
+          Retrieves the list of individual records that have been deleted within the given timespan for the specified object. SObject Get Deleted is available in API version 29.0 and later.
+          This resource is commonly used in data replication applications. Note the following considerations:
+          Deleted records are written to a delete log which this resource accesses. A background process that runs every two hours purges records that have been in an organization's delete log for more than two hours if the number of records is above a certain limit. Starting with the oldest records, the process purges delete log entries until the delete log is back below the limit. This is done to protect Salesforce from performance issues related to massive delete logs
+          Information on deleted records are returned only if the current session user has access to them.
+          Results are returned for no more than 15 days previous to the day the call is executed (or earlier if an administrator has purged the Recycle Bin).
+          See "Data Replication" in the SOAP API Developer's Guide for additional details on data replication and data replication limits.
+        get: 
+          responses: 
+            200: 
+              body: 
+                application/xml: 
+                  schema: objectDeleted-xml
+                  example: !include examples/objectDeleted-xml-example.xml
+                application/json: 
+                  schema: objectDeleted
+                  example: !include examples/objectDeleted-example.json
+      /{id}: 
+        type: generalResource
+        description: |
+          Accesses records based on the specified object ID. Retrieves, updates, or deletes records. This resource can also be used to retrieve field values. Use the GET method to retrieve records or fields, the DELETE method to delete records, and the PATCH method to update records.
+          To create new records, use the "SObject Basic Information" resource.
+        get: 
+          queryParameters: 
+            fields: 
+              description: List of fields used to return values for.
+          responses: 
+            200: 
+              body: 
+                application/xml: 
+                application/json: 
+                  schema: objectGet
+                  example: !include examples/objectGet-example.json
+        delete: 
+        patch: 
+          body: 
+            application/xml: 
+              example: ""
+            application/json: 
+              schema: objectPatch
+              example: !include examples/objectPatch-example.json
+        /{blobField}: 
+          type: generalResource
+          description: |
+            Retrieves the specified blob field from an individual record.
+            Because blob fields contain binary data, you can't use JSON or XML to retrieve this data.
+          get: 
+            responses: 
+              200: 
+                body: 
+                  application/xml: 
+                  application/json: 
+      /quickActions: 
+        type: generalResource
+        description: |
+          Returns a specific object's actions as well as global actions.
+          This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+        get: 
+          responses: 
+            200: 
+              body: 
+                application/xml: 
+                application/json: 
+        post: 
+          body: 
+            application/xml: 
+            application/json: 
+        head: 
+        /{actionName}: 
+          type: generalResource
+          description: |
+            Returns a specific action.
+            This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+          get: 
+            responses: 
+              200: 
+                body: 
+                  application/xml: 
+                  application/json: 
+          post: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: createAction
+                example: !include examples/createAction-example.json
+          head: 
+          /describe: 
+            type: generalResource
+            description: |
+              Returns a specific action's descriptive detail.
+              This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+            get: 
+              responses: 
+                200: 
+                  body: 
+                    application/xml: 
+                    application/json: 
+            post: 
+              body: 
+                application/xml: 
+                application/json: 
+            head: 
+          /defaultValues: 
+            type: generalResource
+            description: |
+              Return a specific action's default values, including default field values.
+              This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+            get: 
+              responses: 
+                200: 
+                  body: 
+                    application/xml: 
+                    application/json: 
+            post: 
+              body: 
+                application/xml: 
+                application/json: 
+            head: 
+            /{contextId}: 
+              type: generalResource
+              description: |
+                In API version 29.0 and greater, evaluate the default values for an action.
+                This returns the default values specific to the 'contextId' object.
+              get: 
+                responses: 
+                  200: 
+                    body: 
+                      application/xml: 
+                      application/json: 
+              post: 
+              head: 
+            /{parentId}: 
+              type: generalResource
+              description: |
+                In API version 28.0, evaluates the default values for an action.
+                This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+              get: 
+                responses: 
+                  200: 
+                    body: 
+                      application/xml: 
+                      application/json: 
+              post: 
+              head: 
+      /{fieldName}/{fieldValue}: 
+        type: generalResource
+        description: |
+          Creates new records or updates existing records (upserts records) based on the value of a specified external ID field.
+          If the specified value doesn't exist, a new record is created.
+          If a record does exist with that value, the field values specified in the request body are updated.
+          If the value is not unique, the REST API returns a 300 response with the list of matching records.
+        get: 
+          responses: 
+            200: 
+              description: ""
+              body: 
+                application/xml: 
+                application/json: 
+                  schema: objectsByFieldValue
+                  example: !include examples/objectsByFieldValue-example.json
+        delete: 
+        patch: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: objectsByFieldValuePatchBody
+              example: !include examples/objectsByFieldValuePatchBody-example.json
+          responses: 
+            200: 
+              description: ""
+              body: 
+                application/xml: 
+                application/json: 
+                  schema: objectsByFieldValuePatchResponse
+                  example: !include examples/objectsByFieldValuePatchResponse-example.json
+            201: 
+              description: New record is created.
+            300: 
+              description: "The external ID value isn't unique. Body contains a list of records that matched the query."
+              body: 
+                application/xml: 
+                application/json: 
+            404: 
+              body: 
+                application/xml: 
+                application/json: 
+                  schema: resourceNotFoundByExternalId
+                  example: !include examples/resourceNotFoundByExternalId-example.json
+        head: 
+      /updated: 
+        type: generalResource
+        is: [ hasPeriod ]
+        description: |
+          Retrieves the list of individual records that have been updated (added or changed) within the given timespan for the specified object. SObject Get Updated is available in API version 29.0 and later.
+          This resource is commonly used in data replication applications. Note the following considerations:
+          Results are returned for no more than 30 days previous to the day the call is executed.
+          Your client application can replicate any objects to which it has sufficient permissions. For example, to replicate all data for your organization, your client application must be logged in with "View All Data" access rights to the specified object. Similarly, the objects must be within your sharing rules.
+          There is a limit of 200,000 IDs returned from this resource. If more than 200,000 IDs would be returned, EXCEEDED_ID_LIMIT is returned. You can correct the error by choosing start and end dates that are closer together.
+          See "Data Replication" in the SOAP API Developer's Guide for additional details on data replication and data replication limits.
+        get: 
+          responses: 
+            200: 
+              body: 
+                application/xml: 
+                  schema: objectUpdated-xml
+                  example: !include examples/objectUpdated-xml-example.xml
+                application/json: 
+                  schema: objectUpdated
+                  example: !include examples/objectUpdated-example.json
+      /describe: 
+        type: generalResource
+        description: |
+          Completely describes the individual metadata at all levels for the specified object. For example, this can be used to retrieve the fields, URLs, and child relationships for the Account object.
+          The "If-Modified-Since" header can be used with this resource, with a date format of EEE, dd MMM yyyy HH:mm:ss z. When this header is used, if the object metadata has not changed since the provided date, a 304 Not Modified status code is returned, with no response body.
+        get: 
+          headers: 
+            If-Modified-Since: 
+              description: Used in order to determine if object metadata has changed.
+              example: "If-Modified-Since: Wed, 3 Jul 2013 19:43:31 GMT"
+          responses: 
+            200: 
+              body: 
+                application/xml: 
+                application/json: 
+                  schema: describe
+                  example: !include examples/describe-example.json
+            304: 
+              description: The request content has not changed since a specified date and time.
+        /layouts: 
+          type: generalResource
+          description: |
+            Returns description for a specific object, including for publisher actions. The list of fields and the layout name are returned.
+            This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+          get: 
+            responses: 
+              200: 
+                body: 
+                  application/xml: 
+                  application/json: 
+                    schema: layouts
+                    example: !include examples/layouts-example.json
+          head: 
+        /compactLayouts: 
+          type: generalResource
+          get: 
+            responses: 
+              200: 
+                body: 
+                  application/xml: 
+                  application/json: 
+                    schema: compactLayouts
+                    example: !include examples/compactLayouts-example.json
+          head: 
+    /User/{userId}/password: 
+      type: passwordManagement
+      description: Set, reset, or get information about a user password. This resource is available in REST API version 24.0 and later.
+    /Global/describe/layouts: 
+      type: generalResource
+      description: |
+        Returns descriptions of global publisher layouts, including for publisher actions. The list of fields and the layout name are returned.
+        This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+      get: 
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: globalLayouts
+                example: !include examples/globalLayouts-example.json
+      head: 
+        description: |
+          Returns a list of layouts and descriptions, including for publisher actions. The list of fields and the layout name are returned.
+          This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "Quick Actions".
+  /quickActions: 
+    type: generalResource
+    description: |
+      Returns a list of global publisher actions and standard actions.
+      This resource is available in REST API version 28.0 and later. When working with publisher actions, also refer to "SObject Quick Actions".
+    get: 
+      description: Retreive available quick actions.
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+    head: 
+      description: Retreive available quick actions.
+    /{quickActionName}: 
+      get: 
+        description: Retreive a particular quick action.
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+      post: 
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: quickActionsPostBody
+                example: !include examples/quickActionsPostBody-example.json
+  /limits: 
+    type: generalResource
+    description: |
+      Lists information about limits in your organization. This resource is available in REST API version 29.0 and later. The resource returns these limits:
+      Daily API calls
+      Daily Batch Apex and future method executions
+      Daily Bulk API calls
+      Daily Streaming API events
+      Streaming API concurrent clients
+    get: 
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: limits
+              example: !include examples/limits-example.json
+            application/xml: 
+  /queryAll: 
+    type: query
+    description: |
+      Executes the specified SOQL query. Unlike the Query resource, QueryAll will return records that have been deleted because of a merge or delete. QueryAll will also return information about archived Task and Event records. QueryAll is available in API version 29.0 and later.
+      If the query results are too large, the response contains the first batch of results and a query identifier in the nextRecordsUrl field of the response. The identifier can be used in an additional request to retrieve the next batch. Note that even though nextRecordsUrl has query in the URL, it will still provide remaining results from the initial QueryAll request. The remaining results will include deleted records that matched the initial query.
+    /{queryIdentifier}: 
+      type: queryResults
+      description: ""
+  /appMenu: 
+    type: generalResource
+    /AppSwitcher: 
+      type: generalResource
+      description: Returns a list of items in the Salesforce app drop-down menu.
+      get: 
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: appSwitscher
+                example: !include examples/appSwitscher-example.json
+      head: 
+    /Salesforce1: 
+      type: generalResource
+      description: Returns a list of items in the Salesforce1 navigation menu.
+      get: 
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: menuSalesforce1
+                example: !include examples/menuSalesforce1-example.json
+      head: 
+  /theme: 
+    type: generalResource
+    description: Gets the list of icons and colors used by themes in the Salesforce application. Theme information is provided for objects in your organization that use icons and colors in the Salesforce UI.
+    get: 
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: themes
+              example: !include examples/themes-example.json
+  /search: 
+    type: generalResource
+    description: Executes the specified SOSL search. The search string must be URL-encoded.
+    get: 
+      queryParameters: 
+        q: 
+          description: A SOSL statement that is properly URL-encoded.
+          required: true
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: search
+              example: !include examples/search-example.json
+    /layout: 
+      type: generalResource
+      description: Returns search result layout information for the objects in the query string. For each object, this call returns the list of fields displayed on the search results page as columns, the number of rows displayed on the first page, and the label used on the search results page. This call supports bulk fetch for up to 100 objects in a query.
+      get: 
+        queryParameters: 
+          q: 
+            description: Comma delimited object list
+            required: true
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: searchLayout
+                example: !include examples/searchLayout-example.json
+    /scopeOrder: 
+      type: generalResource
+      description: |
+        Returns an ordered list of objects in the default global search scope of a logged-in user. Global search keeps track of which objects the user interacts with and how often and arranges the search results accordingly. Objects used most frequently appear at the top of the list.
+        The returned list reflects the object order in the user's default search scope, including any pinned objects on the user's search results page. This call is useful if you want to implement a custom search results page using the optimized global search scope. The search string must be URL-encoded.
+      get: 
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: searchScopeOrder
+                example: !include examples/searchScopeOrder-example.json
+  /flexiPage/{idOfFlexiblePage}: 
+    type: generalResource
+    description: "Returns a list of Flexible Pages and their details. Information returned includes Flexible Page regions, the components within each region, and each component's properties, as well as any associated QuickActions. This resource is available in API version 29.0 and later."
+    get: 
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: flexiPage
+              example: !include examples/flexiPage-example.json
+    head: 
+documentation: 
+  - title: Headline
+    content: !include docs/headline.md

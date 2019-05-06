@@ -1,0 +1,14 @@
+{
+  "activity" : {
+    "id" : 45 ,
+    "url" : "https://company.zendesk.com/api/v2/activities/45.json" ,
+    "verb" : "tickets.comment" ,
+    "title" : "John Hopeful commented in ticket #44" ,
+    "user" : {
+    } ,
+    "actor" : {
+    } ,
+    "created_at" : "2012-03-05T11:32:44Z" ,
+    "updated_at" : "2012-03-05T11:32:44Z"
+  }
+}

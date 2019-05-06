@@ -1,0 +1,1 @@
+{"main":"slot.raml","name":"Slot","classifier":"raml-fragment","tags":["type"],"dependencies":[{"groupId":"org.mule.templates","assetId":"fhir-commons","version":"1.0.0"}],"groupId":"org.mule.templates","assetId":"slot","version":"1.0.0","metadata":{"projectId":"efec11ce-c899-4a2c-bb84-e97c0a0ef3e4","branchId":"master","commitId":"833b131b76425548e489e64c500d0dd288e54684"}}

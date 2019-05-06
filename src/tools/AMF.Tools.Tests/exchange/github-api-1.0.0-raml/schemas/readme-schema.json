@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "encoding": {
+            "type": "string"
+        },
+        "size": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "path": {
+            "type": "string"
+        },
+        "content": {
+            "type": "string"
+        },
+        "sha": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "git_url": {
+            "type": "string"
+        },
+        "html_url": {
+            "type": "string"
+        },
+        "_links": {
+            "properties": {
+                "git": {
+                    "type": "string"
+                },
+                "self": {
+                    "type": "string"
+                },
+                "html": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

@@ -1,0 +1,59 @@
+{
+    "chunk_size": 1,
+    "next_stream_position": 1348790499819,
+    "entries": [
+        {
+    "type": "event",
+    "event_id": "f82c3ba03e41f7e8a7608363cc6c0390183c3f83",
+    "created_by": {
+        "type": "user",
+        "id": "17738362",
+        "name": "sean rose",
+        "login": "sean@box.com"
+    },
+    "created_at": "2012-12-12T10:53:43-08:00",
+    "recorded_at": "2012-12-12T10:53:48-08:00",
+    "event_type": "ITEM_CREATE",
+    "session_id": "70090280850c8d2a1933c1",
+    "source": {
+        "type": "folder",
+        "id": "11446498",
+        "sequence_id": "0",
+        "etag": "0",
+        "name": "Pictures",
+        "created_at": "2012-12-12T10:53:43-08:00",
+        "modified_at": "2012-12-12T10:53:43-08:00",
+        "description": null,
+        "size": 0,
+        "created_by": {
+            "type": "user",
+            "id": "17738362",
+            "name": "sean rose",
+            "login": "sean@box.com"
+        },
+        "modified_by": {
+            "type": "user",
+            "id": "17738362",
+            "name": "sean rose",
+            "login": "sean@box.com"
+        },
+        "owned_by": {
+            "type": "user",
+            "id": "17738362",
+            "name": "sean rose",
+            "login": "sean@box.com"
+        },
+        "shared_link": null,
+        "parent": {
+            "type": "folder",
+            "id": "0",
+            "sequence_id": null,
+            "etag": null,
+            "name": "All Files"
+        },
+        "item_status": "active",
+        "synced": false
+    }
+}
+    ]
+}

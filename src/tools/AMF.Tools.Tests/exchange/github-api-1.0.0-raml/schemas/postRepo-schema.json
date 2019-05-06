@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"name": {
+    		"type": "string",
+    		"required": true
+    	},
+    	"description": {
+    		"type": "string"
+    	},
+    	"homepage": {
+    		"type": "string"
+    	},
+    	"private": {
+    		"description": "True to create a private repository, false to create a public one. Creating private repositories requires a paid GitHub account.",
+    		"type": "boolean"
+    	},
+    	"has_issues": {
+    		"description": "True to enable issues for this repository, false to disable them. Default is true.",
+    		"type": "boolean"
+    	},
+    	"has_wiki": {
+    		"description": "True to enable the wiki for this repository, false to disable it. Default is true.",
+    		"type": "boolean"
+    	},
+    	"has_downloads": {
+    		"description": "True to enable downloads for this repository, false to disable them. Default is true.",
+    		"type": "boolean"
+    	},
+    	"team_id": {
+    		"description": "The id of the team that will be granted access to this repository. This is only valid when creating a repo in an organization.",
+    		"type": "integer"
+    	},
+    	"auto_init": {
+    		"description": "True to create an initial commit with empty README. Default is false.",
+    		"type": "boolean"
+    	},
+    	"gitignore_template": {
+    		"description": "Desired language or platform .gitignore template to apply. Use the name of the template without the extension. For example, \"Haskell\" Ignored if auto_init parameter is not provided. ",
+    		"type": "string"
+    	}
+    }
+}

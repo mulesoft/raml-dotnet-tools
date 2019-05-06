@@ -1,0 +1,62 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "forum" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "description:" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "category_id" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "organization_id" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "locale_id" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "locked" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "position" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "forum_type" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "access" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "string"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

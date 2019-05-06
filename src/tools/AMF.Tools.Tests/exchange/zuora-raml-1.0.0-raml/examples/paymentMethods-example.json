@@ -1,0 +1,43 @@
+{
+  "nextPage" : "https://api.zuora.com/rest/v1/payment-methods/credit-cards/accounts/A00001115?page=2&pageSize=2" ,
+  "creditCards" : [
+    {
+      "cardHolderInfo" : {
+        "zipCode" : null ,
+        "addressLine2" : null ,
+        "addressLine1" : null ,
+        "phone" : "4082021111" ,
+        "state" : null ,
+        "country" : null ,
+        "city" : null ,
+        "cardHolderName" : "Leo" ,
+        "email" : "test@zuora.com"
+      } ,
+      "defaultPaymentMethod" : true ,
+      "id" : "2c92c8f83dabf9cf013daef12dd303b0" ,
+      "expirationMonth" : 10 ,
+      "cardNumber" : "************1111" ,
+      "expirationYear" : 2020 ,
+      "cardType" : "Visa"
+    } , {
+      "cardHolderInfo" : {
+        "zipCode" : "95135" ,
+        "addressLine2" : null ,
+        "addressLine1" : "1400 Bridge Pkwy" ,
+        "phone" : null ,
+        "state" : "California" ,
+        "country" : "United States" ,
+        "city" : "San Jose" ,
+        "cardHolderName" : "foo CC name" ,
+        "email" : null
+      } ,
+      "defaultPaymentMethod" : false ,
+      "id" : "2c92a0f9391832b10139183e279e0044" ,
+      "expirationMonth" : 10 ,
+      "cardNumber" : "*****foo CC #" ,
+      "expirationYear" : 2012 ,
+      "cardType" : "Visa"
+    }
+  ] ,
+  "success" : true
+}

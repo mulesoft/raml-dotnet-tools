@@ -1,0 +1,15 @@
+{
+  "rows" : [
+    {
+      "ticket" : {
+      } ,
+      "subject" : "en-US" ,
+    } 
+  ] ,
+  "columns" : [
+    {
+      "id" : "subject" ,
+      "title" : "Subject"
+    } 
+  ]
+}

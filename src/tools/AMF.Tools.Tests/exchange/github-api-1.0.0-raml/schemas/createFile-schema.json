@@ -1,0 +1,157 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "content": {
+      "required": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "required": false,
+          "type": "string"
+        },
+        "path": {
+          "required": false,
+          "type": "string"
+        },
+        "sha": {
+          "required": false,
+          "type": "string"
+        },
+        "size": {
+          "required": false,
+          "type": "integer"
+        },
+        "url": {
+          "required": false,
+          "type": "string"
+        },
+        "html_url": {
+          "required": false,
+          "type": "string"
+        },
+        "git_url": {
+          "required": false,
+          "type": "string"
+        },
+        "type": {
+          "required": false,
+          "type": "string"
+        },
+        "_links": {
+          "required": false,
+          "type": "object",
+          "properties": {
+            "self": {
+              "required": false,
+              "type": "string"
+            },
+            "git": {
+              "required": false,
+              "type": "string"
+            },
+            "html": {
+              "required": false,
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "commit": {
+      "required": false,
+      "type": "object",
+      "properties": {
+        "sha": {
+          "required": false,
+          "type": "string"
+        },
+        "url": {
+          "required": false,
+          "type": "string"
+        },
+        "html_url": {
+          "required": false,
+          "type": "string"
+        },
+        "author": {
+          "required": false,
+          "type": "object",
+          "properties": {
+            "date": {
+              "required": false,
+              "type": "string"
+            },
+            "name": {
+              "required": false,
+              "type": "string"
+            },
+            "email": {
+              "required": false,
+              "type": "string"
+            }
+          }
+        },
+        "committer": {
+          "required": false,
+          "type": "object",
+          "properties": {
+            "date": {
+              "required": false,
+              "type": "string"
+            },
+            "name": {
+              "required": false,
+              "type": "string"
+            },
+            "email": {
+              "required": false,
+              "type": "string"
+            }
+          }
+        },
+        "message": {
+          "required": false,
+          "type": "string"
+        },
+        "tree": {
+          "required": false,
+          "type": "object",
+          "properties": {
+            "url": {
+              "required": false,
+              "type": "string"
+            },
+            "sha": {
+              "required": false,
+              "type": "string"
+            }
+          }
+        },
+        "parents": {
+          "required": false,
+          "type": "array",
+          "items": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "html_url": {
+                "required": false,
+                "type": "string"
+              },
+              "sha": {
+                "required": false,
+                "type": "string"
+              },
+              "url": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

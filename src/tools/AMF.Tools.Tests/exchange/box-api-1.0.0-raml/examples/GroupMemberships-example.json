@@ -1,0 +1,38 @@
+{
+  "total_count" : 2 ,
+  "entries" : [
+    {
+      "type" : "group_membership" ,
+      "id" : "1560354" ,
+      "user" : {
+        "type" : "user" ,
+        "id" : "13130906" ,
+        "name" : "Alice" ,
+        "login" : "alice@gmail.com"
+      } ,
+      "group" : {
+        "type" : "group" ,
+        "id" : "119720" ,
+        "name" : "family"
+      } ,
+      "role" : "member"
+    } , {
+      "type" : "group_membership" ,
+      "id" : "1560356" ,
+      "user" : {
+        "type" : "user" ,
+        "id" : "192633962" ,
+        "name" : "rabbit" ,
+        "login" : "rabbit@gmail.com"
+      } ,
+      "group" : {
+        "type" : "group" ,
+        "id" : "119720" ,
+        "name" : "family"
+      } ,
+      "role" : "member"
+    }
+  ] ,
+  "offset" : 0 ,
+  "limit" : 100
+}

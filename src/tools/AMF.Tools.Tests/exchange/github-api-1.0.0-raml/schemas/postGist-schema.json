@@ -1,0 +1,31 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "description" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "public" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "files" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "file1.txt" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "content" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      }
+    }
+  }
+}

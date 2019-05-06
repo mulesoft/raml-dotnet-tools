@@ -1,0 +1,19 @@
+#%RAML 1.0 NamedExample
+value:
+  alert_policy:
+    name: some string
+    enabled: true
+    conditions:
+      - id: 1
+        threshold: 1
+        trigger_minutes: 1
+        enabled: true
+    links:
+      notification_channels:
+        - 1
+      applications:
+        - 1
+      key_transactions:
+        - 1
+      servers:
+        - 1

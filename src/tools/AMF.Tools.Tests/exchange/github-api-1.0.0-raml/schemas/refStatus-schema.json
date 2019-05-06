@@ -1,0 +1,75 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "array" ,
+  "items" : [
+    {
+      "type" : "object" ,
+      "properties" : {
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "sha" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "statuses" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "created_at" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "updated_at" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "state" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "target_url" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "description" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "id" : {
+                  "type" : "number" ,
+                  "required" : false
+                } ,
+                "url" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "context" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        } ,
+        "commit_url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "repository_url" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "creditCard" : {
+    "cardType" : "Visa" ,
+    "expirationMonth" : 2 ,
+    "securityCode" : "111" ,
+    "cardNumber" : "4856200223544175" ,
+    "expirationYear" : 2014
+  } ,
+  "invoiceTargetDate" : "2013-12-31" ,
+  "name" : "Soho" ,
+  "billCycleDay" : "15" ,
+  "soldToContact" : {
+    "country" : "USA" ,
+    "lastName" : "Doe" ,
+    "workEmail" : "john.doe@zoura.com" ,
+    "address1" : "address1" ,
+    "address2" : "address2" ,
+    "firstName" : "John" ,
+    "state" : "California" ,
+    "city" : "San Francisco" ,
+    "mobilePhone" : "14156789012"
+  } ,
+  "billToContact" : {
+    "country" : "USA" ,
+    "lastName" : "Doe" ,
+    "workEmail" : "jane.doe@zoura.com" ,
+    "address1" : "address1" ,
+    "address2" : "address2" ,
+    "state" : "California" ,
+    "firstName" : "Jane" ,
+    "city" : "San Francisco" ,
+    "mobilePhone" : "14156789012"
+  } ,
+  "invoiceCollect" : true ,
+  "notes" : "Soho Networks" ,
+  "subscription" : {
+    "subscribeToRatePlans" : [
+      {
+        "productRatePlanId" : "4028e48735bd88440135c007d07e3169" ,
+        "chargeOverrides" : [
+          {
+            "productRatePlanChargeId" : "4028e48835a944f50135c00862171ab3" ,
+            "quantity" : 10
+          }
+        ]
+      }
+    ] ,
+    "contractEffectiveDate" : "2013-02-1" ,
+    "initialTerm" : "12" ,
+    "autoRenew" : true ,
+    "termType" : "TERMED" ,
+    "renewalTerm" : "3" ,
+    "myCustomField__c" : "test"
+  } ,
+  "paymentTerm" : "Net 30" ,
+  "currency" : "USD" ,
+  "myCustomField__c" : "Sally"
+}

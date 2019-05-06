@@ -1,0 +1,8 @@
+{
+  "id":1,
+  "name":"Apple",
+  "quantity":0.0,
+  "unit":"UNIT",
+  "created": "2015-02-01 00:00:00",
+  "lastModified":null
+}

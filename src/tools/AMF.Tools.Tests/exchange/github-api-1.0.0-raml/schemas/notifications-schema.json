@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "properties":
+    	{
+    			"id": {
+    				"type": "integer"
+    			},
+    			"repository": {
+    				"properties": {
+    					"id": {
+    						"type": "integer"
+    					},
+    					"owner": {
+    						"properties": {
+    							"login": {
+    								"type": "string"
+    							},
+    							"id": {
+    								"type": "integer"
+    							},
+    							"avatar_url": {
+    								"type": "string"
+    							},
+    							"gravatar_id": {
+    								"type": "string"
+    							},
+    							"url": {
+    								"type": "string"
+    							}
+    						},
+    						"type": "object"
+    					},
+    					"name": {
+    						"type": "string"
+    					},
+    					"full_name": {
+    						"type": "string"
+    					},
+    					"description": {
+    						"type": "string"
+    					},
+    					"private": {
+    						"type": "boolean"
+    					},
+    					"fork": {
+    						"type": "boolean"
+    					},
+    					"url": {
+    						"type": "string"
+    					},
+    					"html_url": {
+    						"type": "string"
+    					}    					
+    				},
+    				"type": "object"
+    			},
+    			"subject": {
+    				"properties": {
+    					"title": {
+    						"type": "string"
+    					},
+    					"url": {
+    						"type": "string"
+    					},
+    					"latest_comment_url": {
+    						"type": "string"
+    					},
+    					"type": {
+    						"type": "string"
+    					}
+    				},
+    				"type": "object"
+    			},
+    			"reason": {
+    				"type": "string"
+    			},
+    			"unread": {
+    				"type": "boolean"
+    			},
+    			"updated_at": {
+    				"type": "string"
+    			},
+    			"last_read_at": {
+    				"type": "string"
+    			},
+    			"url": {
+    				"type": "string"
+    			}
+    		},
+    		"type": "object"
+}

@@ -1,0 +1,65 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="company-statistics">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="status-update-statistics">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="views-by-month">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="view-by-month" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="date">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:short" name="year"/>
+                                <xs:element type="xs:byte" name="month"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:byte" name="clicks" minOccurs="0"/>
+                          <xs:element type="xs:byte" name="likes" minOccurs="0"/>
+                          <xs:element type="xs:byte" name="comments" minOccurs="0"/>
+                          <xs:element type="xs:byte" name="shares" minOccurs="0"/>
+                          <xs:element type="xs:short" name="impressions" minOccurs="0"/>
+                          <xs:element type="xs:float" name="engagement" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:byte" name="total"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="follow-statistics">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:byte" name="count"/>
+              <xs:element type="xs:byte" name="employee-count"/>
+              <xs:element type="xs:byte" name="non-employee-count"/>
+              <xs:element name="seniorities">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="seniority" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:byte" name="entry-key"/>
+                          <xs:element type="xs:byte" name="entry-value"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:byte" name="total"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

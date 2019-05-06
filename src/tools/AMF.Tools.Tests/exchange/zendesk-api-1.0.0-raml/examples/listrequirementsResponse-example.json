@@ -1,0 +1,26 @@
+{
+  "requirements" : [
+    {
+      "account_id" : 2 ,
+      "identifier" : "a_basecamp_target" ,
+      "requirement_id" : 302 ,
+      "requirement_type" : "targets" ,
+      "created_at" : "2014-03-26T00:57:43Z" ,
+      "updated_at" : "2014-03-26T00:57:43Z"
+    } , {
+      "account_id" : 2 ,
+      "identifier" : "an_email_target" ,
+      "requirement_id" : 307 ,
+      "requirement_type" : "targets" ,
+      "created_at" : "2014-03-26T00:57:43Z" ,
+      "updated_at" : "2014-03-26T00:57:43Z"
+    } , {
+      "account_id" : 2 ,
+      "identifier" : "sample_ticket_field" ,
+      "requirement_id" : 137 ,
+      "requirement_type" : "ticket_fields" ,
+      "created_at" : "2014-03-26T00:57:43Z" ,
+      "updated_at" : "2014-03-26T00:57:43Z"
+    }
+  ]
+}

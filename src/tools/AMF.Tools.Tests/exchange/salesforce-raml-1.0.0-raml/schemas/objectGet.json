@@ -1,0 +1,15 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "AccountNumber" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "BillingPostalCode" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

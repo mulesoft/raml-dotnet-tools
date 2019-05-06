@@ -1,0 +1,47 @@
+{
+  "location_installations" : [
+    {
+      "id" : 2 ,
+      "location_name" : "nav_bar" ,
+      "installations" : [
+        82 ,
+        56
+      ] ,
+      "created_at" : "2014-03-31T03:10:52Z" ,
+      "updated_at" : "2014-07-29T06:22:02Z"
+    } , {
+      "id" : 6 ,
+      "location_name" : "ticket_sidebar" ,
+      "installations" : [
+        111 ,
+        82 ,
+        87 ,
+        56 ,
+        46 ,
+        96 ,
+        77
+      ] ,
+      "created_at" : "2014-04-29T01:42:14Z" ,
+      "updated_at" : "2014-07-29T07:19:06Z"
+    } , {
+      "id" : 7 ,
+      "location_name" : "new_ticket_sidebar" ,
+      "installations" : [
+        111 ,
+        82 ,
+        56
+      ] ,
+      "created_at" : "2014-05-21T05:11:21Z" ,
+      "updated_at" : "2014-07-29T06:26:53Z"
+    } , {
+      "id" : 12 ,
+      "location_name" : "top_bar" ,
+      "installations" : [
+        106 ,
+        91
+      ] ,
+      "created_at" : "2014-07-29T06:03:24Z" ,
+      "updated_at" : "2014-07-29T06:03:28Z"
+    }
+  ]
+}

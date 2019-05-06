@@ -1,0 +1,58 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"amount": {
+			"type":"number",
+			"id": "http://jsonschema.net/amount",
+			"required":false
+		},
+		"currency": {
+			"type":"string",
+			"id": "http://jsonschema.net/currency",
+			"required":false
+		},
+		"customer": {
+			"type":"string",
+			"id": "http://jsonschema.net/customer",
+			"required":false
+		},
+		"date": {
+			"type":"number",
+			"id": "http://jsonschema.net/date",
+			"required":false
+		},
+		"description": {
+			"type":"string",
+			"id": "http://jsonschema.net/description",
+			"required":false
+		},
+		"id": {
+			"type":"string",
+			"id": "http://jsonschema.net/id",
+			"required":false
+		},
+		"invoice": {
+			"type":"null",
+			"id": "http://jsonschema.net/invoice",
+			"required":false
+		},
+		"livemode": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/livemode",
+			"required":false
+		},
+		"object": {
+			"type":"string",
+			"id": "http://jsonschema.net/object",
+			"required":false
+		},
+		"proration": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/proration",
+			"required":false
+		}
+	}
+}

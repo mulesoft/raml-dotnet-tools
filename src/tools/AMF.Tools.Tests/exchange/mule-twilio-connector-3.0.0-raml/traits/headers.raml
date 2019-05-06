@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: legal
+resourceTypes:
+  headers:
+    Access-Control-Allow-Credentials:
+    Access-Control-Allow-Headers:
+    Access-Control-Allow-Methods:
+    Access-Control-Expose-Headers:
+    Twilio-Request-Duration:
+      type: string
+      description: |
+        This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+      example: '0.270'
+    Twilio-Request-Id:
+      type: string
+      description: |
+        The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+      example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0

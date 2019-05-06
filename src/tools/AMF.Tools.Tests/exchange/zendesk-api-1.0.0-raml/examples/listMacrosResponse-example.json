@@ -1,0 +1,22 @@
+{
+  "macros" : [
+    {
+      "id" : 25 ,
+      "title" : "Close and Save" ,
+      "active" : true,
+	  "actions" : [] ,
+      "restriction" : {
+      }
+    } , {
+      "id" : 26 ,
+      "title" : "Assign priority tag" ,
+      "active" : false,
+	  "actions" : [] ,
+      "restriction" : {
+      }
+    }
+  ] ,
+  "count" : 2 ,
+  "previous_page" : null ,
+  "next_page" : null
+}

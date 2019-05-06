@@ -1,0 +1,5 @@
+{
+  "uri" : "https://api.zuora.com/rest/v1/payment-methods/credit-cards" ,
+  "method" : "POST" ,
+  "accountKey" : "A00000001"
+}

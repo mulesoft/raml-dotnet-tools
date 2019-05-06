@@ -1,0 +1,10 @@
+{
+"automation":
+	{
+	"title":"Roger Wilco",
+	 "all": [
+	 		{ "field": "status", "operator": "is", "value": "open" },
+	  		{ "field": "priority", "operator": "less_than", "value": "high" }],
+	 "actions": [{ "field": "priority", "value": "high" }]
+	 }
+}

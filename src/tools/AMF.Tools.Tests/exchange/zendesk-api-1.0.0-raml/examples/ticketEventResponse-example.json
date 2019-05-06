@@ -1,0 +1,21 @@
+{
+  "ticket_events" : [
+    {
+      "id" : 1717 ,
+      "ticket_id" : 27 ,
+      "timestamp" : 138561439 ,
+      "updater_id" : -1 ,
+      "via" : "Email" ,
+      "child_events" : [
+        {
+          "via" : "Email" ,
+          "via_reference_id" : 2 ,
+          "status" : "solved"
+        }
+      ]
+    }
+  ] ,
+  "next_page" : "http://#{subdomain}.zendesk.com/api/v2/incremental/ticket_events.json?start_time=1389078385" ,
+  "count" : 1000 ,
+  "end_time" : 1389078385
+}

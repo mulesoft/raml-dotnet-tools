@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<job-suggestions>
+  <jobs total="50" count="10" start="0">
+    <job>
+      <id>1577323</id>
+      <company>
+        <id>1281</id>
+        <name>Unisys</name>
+      </company>
+      <job-poster>
+        <id>OHYinXGMKT</id>
+        <first-name>Joanne</first-name>
+        <last-name>Rawls</last-name>
+        <headline>Recruiting Lead at Unisys Corporation</headline>
+      </job-poster>
+      <description-snippet>Unisys is expanding our Federal Proposal Development Center and looking for talented professionals to join our team. As a Senior Technical Writer, you will be responsible for: Analyzing Request for Proposals (RFP) and work with Solution Architects to package company services into a technical proposal response; write technical proposals that spell out what the company can offer to the agency seek</description-snippet>
+      <location-description>Reston, VA  </location-description>
+    </job>
+    <job>
+      <id>1579926</id>
+      <company>
+        <id>15759</id>
+        <name>Velti</name>
+      </company>
+      <salary>Negotiable</salary>
+      <job-poster>
+        <id>UlfGF2nmYN</id>
+        <first-name>Maria</first-name>
+        <last-name>Maragoudakis-Gregoriou</last-name>
+        <headline>Experienced Business Manager with extensive international and start-up experience</headline>
+      </job-poster>
+      <description-snippet>Senior Technical Writer (Job Code: SF-SRTCR) Velti is a leading global provider of mobile marketing and advertising software solutions that enable brands, advertising agencies, mobile operators, and media companies to implement highly targeted, interactive, and measurable campaigns by communicating with and engaging consumers via their mobile devices. Job DescriptionThe Senior Technical Writer pos</description-snippet>
+      <location-description>San Francisco</location-description>
+    </job>
+    <job>
+      <id>1609091</id>
+      <company>
+      </company>
+      <salary>Annual Salary, Bonus</salary>
+      <job-poster>
+        <id>VLhDZNHMmG</id>
+        <first-name>Ties</first-name>
+        <last-name>van de Voort</last-name>
+        <headline>International Corporate Recruiter at SDL Tridion</headline>
+      </job-poster>
+      <description-snippet>The Senior Technical Support Engineer works in a team of support engineers and reports to the Manager Customer Support. The Senior Technical Support Engineer is guarding and meeting service levels as agreed with customers, partners and the internal organization. The Senior Technical Support Engineer independently provides complex technical support to customers and partners, provides onsite support</description-snippet>
+      <location-description>New York</location-description>
+    </job>
+ </jobs>
+</job-suggestions>

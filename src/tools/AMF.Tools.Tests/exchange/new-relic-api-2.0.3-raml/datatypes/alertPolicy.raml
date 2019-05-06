@@ -1,0 +1,73 @@
+#%RAML 1.0 DataType
+required: false
+type: object
+properties:
+  alert_policy:
+    required: false
+    type: object
+    properties:
+      id:
+        required: false
+        type: integer
+      type:
+        required: false
+        type: string
+      name:
+        required: false
+        type: string
+      enabled:
+        required: false
+        type: boolean
+      conditions:
+        required: false
+        type: array
+        items:
+          required: false
+          type: object
+          properties:
+            enabled:
+              required: false
+              type: boolean
+            id:
+              required: false
+              type: integer
+            severity:
+              required: false
+              type: string
+            threshold:
+              required: false
+              type: number
+            trigger_minutes:
+              required: false
+              type: integer
+            type:
+              required: false
+              type: string
+      links:
+        required: false
+        type: object
+        properties:
+          notification_channels:
+            required: false
+            type: array
+            items:
+              required: false
+              type: integer
+          applications:
+            required: false
+            type: array
+            items:
+              required: false
+              type: integer
+          key_transactions:
+            required: false
+            type: array
+            items:
+              required: false
+              type: integer
+          servers:
+            required: false
+            type: array
+            items:
+              required: false
+              type: integer

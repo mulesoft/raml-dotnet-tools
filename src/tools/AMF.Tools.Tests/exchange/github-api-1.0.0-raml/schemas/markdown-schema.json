@@ -1,0 +1,19 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "text" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "mode" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "context" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

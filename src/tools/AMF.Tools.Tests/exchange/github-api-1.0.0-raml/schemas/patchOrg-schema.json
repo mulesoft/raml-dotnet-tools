@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"billing_email": {
+    		"description": "Billing email address. This address is not publicized.",
+    		"type": "string"
+    	},
+    	"company": {
+    		"type": "string"
+    	},
+    	"email": {
+    		"description": "Publicly visible email address.",
+    		"type": "string"
+    	},
+    	"location": {
+    		"type": "string"
+    	},
+    	"name": {
+    		"type": "string"
+    	}
+    }
+}

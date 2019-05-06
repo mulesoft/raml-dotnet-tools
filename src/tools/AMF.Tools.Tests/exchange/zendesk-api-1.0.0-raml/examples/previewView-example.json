@@ -1,0 +1,16 @@
+{
+  "view" : {
+    "all" : [
+      {
+        "operator" : "is" ,
+        "value" : "open" ,
+        "field" : "status"
+      }
+    ] ,
+    "output" : {
+      "columns" : [
+        "subject"
+      ]
+    }
+  }
+}

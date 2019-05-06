@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "type": "object" ,
+  "properties": {
+    "login": {
+      "description": "The email address this user uses to login.",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of this user.",
+      "type": "string"
+    },
+    "role": {
+      "description": "This user's enterprise role.",
+      "type": "object"
+    },
+    "language": {
+      "description": "The language of this user. ISO 639-1 Language Code.",
+      "type": "string",
+      "maxLength": 2
+    },
+    "is_sync_enabled": {
+      "description": "Whether or not this user can use Box Sync.",
+      "type": "boolean"
+    },
+    "job_title": {
+      "description": "The user's job title.",
+      "type": "string"
+    },
+    "phone": {
+      "description": "The user's phone number.",
+      "type": "string"
+    },
+    "address": {
+      "description": "The user's address.",
+      "type": "string"
+    },
+    "space_amount": {
+      "description": "The user's total available space amount in bytes.",
+      "type": "number"
+    },
+    "tracking_codes": {
+      "description": "An array of key/value pairs set by the user's admin.",
+      "type": "array"
+    },
+    "can_see_managed_users": {
+      "description": "Whether this user can see other enterprise users in its contact list.",
+      "type": "boolean"
+    },
+    "status": {
+      "description": "Can be 'active' or 'inactive'",
+      "type": "string"
+    },
+    "is_exempt_from_device_limits": {
+      "description": "Whether to exempt this user from Enterprise device limits.",
+      "type": "boolean"
+    },
+    "is_exempt_from_login_verification": {
+      "description": "Whether or not this user must use two-factor authentication.",
+      "type": "boolean"
+    }
+  },
+  "required": true
+}

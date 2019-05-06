@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "characters_reserved_per_media": {
+      "type": "integer"
+    },
+    "max_media_per_upload": {
+      "type": "integer"
+    },
+    "non_username_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "photo_size_limit": {
+      "type": "integer"
+    },
+    "photo_sizes": {
+      "large": {
+        "w": {
+          "type": "integer"
+        },
+        "resize": "fit",
+        "h": {
+          "type": "integer"
+        }
+      },
+      "medium": {
+        "w": {
+          "type": "integer"
+        },
+        "resize": "fit",
+        "h": {
+          "type": "integer"
+        }
+      },
+      "small": {
+        "w": {
+          "type": "integer"
+        },
+        "resize": "fit",
+        "h": {
+          "type": "integer"
+        }
+      },
+      "thumb": {
+        "w": {
+          "type": "integer"
+        },
+        "resize": "crop",
+        "h": {
+          "type": "integer"
+        }
+      }
+    },
+    "short_url_length_https": {
+      "type": "integer"
+    },
+    "short_url_length": {
+      "type": "integer"
+    }
+  }
+}

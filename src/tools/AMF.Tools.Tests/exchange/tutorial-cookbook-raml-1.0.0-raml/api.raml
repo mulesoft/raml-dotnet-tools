@@ -1,0 +1,139 @@
+#%RAML 0.8
+title: Mule Store
+version: 1.0.0
+baseUri: http://devkit-cookbook.cloudhub.io/rest
+schemas:
+- ingredient: !include mule-ingredient.schema
+- recipe: !include mule-recipe.schema
+traits:
+- searchable:
+    queryParameters:
+      query:
+        required: false
+        description: The Query to be processed
+      pageSize:
+        required: false
+        default:  5
+        description: Page to retrieve
+      page:
+        required: false
+        description: Current Page
+- secured:
+    headers:
+      token:
+        description: Send this header with the secret token
+        example: 71543fa6a11044b0a9f3a8354ddcb00e
+resourceTypes:
+- entity:
+    description: Collection of available <<resourcePathName>> in Jukebox.
+    get:
+      description: Get a list of <<resourcePathName>>.
+      is: [searchable,secured]
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                <<exampleCollection>>
+    post:
+      description: Creates a <<resourcePathName|!singularize>>.
+      is: [secured]
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                <<exampleItem>>
+- entity-item:
+    description: Entity representing a <<resourcePathName|!singularize>>
+    get:
+      description: |
+        Get the <<resourcePathName|!singularize>>
+        with <<resourcePathName|!singularize>>Id =
+        {<<resourcePathName|!singularize>>Id}
+      is: [searchable,secured]
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                <<exampleItem>>
+    put:
+      description: | 
+        Add a new <<resourcePathName|!singularize>>
+      is: [secured]
+      body:
+        application/json:
+          example: |
+            <<exampleItem>>
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                <<exampleItem>>
+    delete:
+      description: |
+        Deletes a <<resourcePathName|!singularize>>.
+      is: [secured]
+      responses:
+        200:
+           body:
+             application/json:
+              example: |
+                {"message": "<<resourcePathName|!singularize>> not found" }
+- bulk-api:
+    description: Handle multiple <<entityType>> in a single request
+    get:
+      description: Deletes a list of <<entityType>>
+      is: [secured]
+      responses:
+        200:
+          body:
+            application/json:
+    post:
+      description: Creates a list of <<entityType>>
+      responses:
+        200:
+          body:
+            application/json:
+    put:
+      description: Updates a list of <<entityType>>
+      is: [secured]
+      responses:
+        200:
+          body:
+            application/json:
+    delete:
+      description: Deletes a list of <<entityType>>
+      is: [secured]
+      responses:
+        200:
+          body:
+            application/json:
+/ingredient:
+  type:
+    entity:
+      exampleCollection: !include mule-ingredient-collection.sample
+      exampleItem: !include mule-ingredient.sample
+  /{id}:
+    type:
+      entity-item: 
+        exampleItem: !include mule-ingredient.sample
+  /bulk:
+    type:
+      bulk-api: 
+        entityType: ingredient
+/recipe:
+  type:
+    entity:
+      exampleCollection: !include mule-ingredient-collection.sample
+      exampleItem: !include mule-ingredient.sample
+  /{id}:
+    type:
+      entity-item: 
+        exampleItem: !include mule-ingredient.sample
+  /bulk:
+    type:
+      bulk-api: 
+        entityType: recipe

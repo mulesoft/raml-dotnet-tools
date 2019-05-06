@@ -1,0 +1,11 @@
+{
+  "compactLayouts" : [
+  ] ,
+  "defaultCompactLayoutId" : "0AH000000000000GAA" ,
+  "recordTypeCompactLayoutMappings" : [
+    {
+      "recordTypeId" : "012000000000000AAA" ,
+      "compactLayoutId" : "Compact Layout ID"
+    }
+  ]
+}

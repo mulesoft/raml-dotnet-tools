@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema#",
+    "id": "http://com.cookbook.tutorial/recipe",
+    "type": "object",
+    "properties": {
+        "cookTime": {
+            "type": "number"
+        },
+        "directions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "string"
+            },
+            "uniqueItems": true
+        },
+        "ingredients": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "/": {
+                        "$ref": "http://com.cookbook.tutorial/ingredient"
+                    }
+                }
+            },
+            "prepTime": {
+                "type": "integer"
+            },
+            "created": {
+                "type": "integer"
+            },
+            "id": {
+                "type": "integer"
+            },
+            "lastModified": {
+                "type": "null"
+            },
+            "name": {
+                "type": "string",
+                "required": true
+            }
+        }
+    }
+}

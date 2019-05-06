@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "account_sid": {
+      "type": "string"
+    },
+    "api_version": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "error_code": {
+      "type":  ["integer","null"]
+    },
+    "error_message": {
+      "type":  ["string","null"]
+    },
+    "num_segments": {
+      "type": "string"
+    },
+    "num_media": {
+      "type": "string"
+    },
+    "date_created": {
+      "type": "string"
+    },
+    "date_sent": {
+      "type": "string"
+    },
+    "date_updated": {
+      "type": "string"
+    },
+    "direction": {
+      "type": "string"
+    },
+    "from": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "sid": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "account_sid",
+    "api_version",
+    "body",
+    "error_code",
+    "error_message",
+    "num_segments",
+    "num_media",
+    "date_created",
+    "date_sent",
+    "date_updated",
+    "direction",
+    "from",
+    "price",
+    "sid",
+    "status",
+    "to",
+    "uri"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "locale" : {
+    "id" : 8 ,
+    "url" : "https://company.zendesk.com/api/v2/locales/8.json" ,
+    "locale" : "de" ,
+    "name" : "Deutsch" ,
+    "created_at" : "2010-12-23T12:45:22Z" ,
+    "updated_at" : "2012-04-01T10:44:12Z" 
+  }
+}

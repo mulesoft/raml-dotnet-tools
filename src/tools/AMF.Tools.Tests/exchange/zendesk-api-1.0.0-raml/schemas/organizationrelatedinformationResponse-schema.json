@@ -1,0 +1,21 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "organization_related" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "users_count" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "tickets_count" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

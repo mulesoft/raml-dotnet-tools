@@ -1,0 +1,10 @@
+{
+  "id": "AssignmentActionRequest",
+  "title": "AssignmentActionRequest",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "object"
+    }
+  }
+}

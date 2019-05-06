@@ -1,0 +1,8 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  path: string
+  type?:
+    enum: ["FOLDER", "FILE"]
+    default: "FILE"
+example: !include ../examples/file.json

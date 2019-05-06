@@ -1,0 +1,7 @@
+{
+	"recipient_address": {
+		"name": "Sales", 
+		"email": "name@dmain.com", 
+		"default": true 
+	}
+}

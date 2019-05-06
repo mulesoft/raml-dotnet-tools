@@ -1,0 +1,33 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "historical_queue_activity" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "total_calls" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "most_calls_waiting" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "average_wait_time" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "longest_wait_time" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "average_talk_time" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

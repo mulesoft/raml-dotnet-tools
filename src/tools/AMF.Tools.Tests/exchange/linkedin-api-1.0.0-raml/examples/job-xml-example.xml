@@ -1,0 +1,57 @@
+<job>
+  <partner-job-id>LIJ-13239292</partner-job-id>
+  <contract-id>1234</contract-id>
+  <customer-job-code>DE247X</customer-job-code>
+  <company>
+    <id>1234</id>
+    <name>Company ABC</name>
+    <description>A great company</description>
+  </company>
+  <position>
+    <title>Chief Architect</title>
+    <description>This is a great job.</description>
+    <skills-and-experience>Programming, financial analysis, and  thought leadership.</skills-and-experience>
+    <location>
+     <country>
+       <code>us</code>
+      </country>
+      <postal-code>10012</postal-code>
+      <name>Midtown Manhattan</name>
+    </location>
+    <job-functions>
+      <job-function>
+        <code>acct</code>
+      </job-function>
+            <job-function>
+              <code>dsgn</code>
+            </job-function>
+        </job-functions>
+    <industries>
+      <industry>
+        <code>38</code>
+      </industry>
+      <industry>
+        <code>44</code>
+      </industry>
+    </industries>
+    <job-type>
+      <code>C</code>
+    </job-type>
+    <experience-level>
+      <code>4</code>
+    </experience-level>
+  </position>
+  <salary>$100,000-120,000 per year</salary>
+  <referral-bonus>$5,000 for employees</referral-bonus>
+  <poster>
+    <display>true</display>
+    <role>
+      <code>R</code>
+    </role>
+        <email-address>user@contract.com</email-address>
+  </poster>
+  <how-to-apply>
+    <application-url>http://www.linkedin.com</application-url>
+  </how-to-apply>
+  <tracking-pixel-url>http://www.linkedin.com/track.gif</tracking-pixel-url>
+</job>

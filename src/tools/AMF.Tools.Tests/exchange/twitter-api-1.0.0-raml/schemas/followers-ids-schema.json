@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "array",
+  "items": {
+    "required": false,
+    "type": "object",
+    "properties": {
+      "connections": {
+        "required": false,
+        "type": "array",
+        "items": {
+          "required": false,
+          "type": "string"
+        }
+      },
+      "id": {
+        "required": false,
+        "type": "integer"
+      },
+      "id_str": {
+        "required": false,
+        "type": "string"
+      },
+      "name": {
+        "required": false,
+        "type": "string"
+      },
+      "screen_name": {
+        "required": false,
+        "type": "string"
+      }
+    }
+  }
+}

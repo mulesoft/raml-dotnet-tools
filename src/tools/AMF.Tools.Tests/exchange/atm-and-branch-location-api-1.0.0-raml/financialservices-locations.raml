@@ -1,0 +1,51 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/d00dcd21-aa89-444d-a614-7a578e6328ff/api/{version}/locations
+title: financialservices-locations
+version: v1
+protocols: [HTTPS]
+mediaType: application/json
+
+types: !include dataTypes.raml
+traits: !include traits.raml
+  
+
+/atms:
+  description: Retrieves list of ATMs.
+  get:
+    is: [geo-search]
+    queryParameters:
+      accessible:
+        description: Whether ATM is accessible by wheelchair.
+        required: false
+        type: boolean
+      operational_only:
+        required: false
+        type: boolean
+    responses:
+        200:
+          body:
+            application/json:
+              type: Atm[]
+              example: !include examples/get-atms-response.json
+
+
+/branches:
+  description: Retrieves list of branches.
+  get: 
+    is: [geo-search]
+    queryParameters:
+      accessible:
+        description: Whether branch is accessible by wheelchair.
+        required: false
+        type: boolean
+      opens: 
+        required: false
+        type: time-only
+        example: 13:00:00
+    responses:
+      200:
+        body:
+          application/json:
+            type: Branch[]
+            example: !include examples/get-branches-response.json
+

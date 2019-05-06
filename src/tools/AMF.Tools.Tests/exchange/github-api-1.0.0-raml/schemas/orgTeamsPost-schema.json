@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "name": {
+      "type": "string",
+      "required" : true
+    },
+    "repo_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "permission": {
+      "enum": [
+        "pull",
+        "push",
+        "admin"
+      ]
+    }
+  }
+}

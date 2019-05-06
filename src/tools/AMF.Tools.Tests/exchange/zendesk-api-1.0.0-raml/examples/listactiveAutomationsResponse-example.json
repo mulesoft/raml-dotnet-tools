@@ -1,0 +1,20 @@
+{
+  "automations" : [
+    {
+      "id" : 25 ,
+      "title" : "Close and Save" ,
+      "active" : true,
+	  "conditions" : [      ] ,
+      "actions" : [      ] 
+    } , {
+      "id" : 28 ,
+      "title" : "Close and redirect to topics" ,
+      "active" : true,
+	  "conditions" : [      ] ,
+      "actions" : [      ] 
+    }
+  ] ,
+  "count" : 2 ,
+  "previous_page" : null ,
+  "next_page" : null
+}

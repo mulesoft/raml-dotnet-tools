@@ -1,0 +1,19 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "base" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "head" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "commit_message" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

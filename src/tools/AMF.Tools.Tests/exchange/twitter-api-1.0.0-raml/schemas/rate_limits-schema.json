@@ -1,0 +1,305 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "properties": {
+        "rate_limit_context": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "help": {
+                    "type": "object",
+                    "properties": {
+                        "/help/configuration": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/help/languages": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/help/privacy": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/help/tos": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "search": {
+                    "type": "object",
+                    "properties": {
+                        "/search/tweets": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "statuses": {
+                    "type": "object",
+                    "properties": {
+                        "/statuses/home_timeline": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/statuses/mentions_timeline": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/statuses/oembed": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/statuses/retweets/:id": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/statuses/show/:id": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/statuses/user_timeline": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "users": {
+                    "type": "object",
+                    "properties": {
+                        "/users/contributees": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/users/contributors": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/users/lookup": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/users/search": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/users/show": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/users/suggestions/:slug/members": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/users/suggestions/:slug": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "/users/suggestions": {
+                            "type": "object",
+                            "properties": {
+                                "limit": {
+                                    "type": "number"
+                                },
+                                "remaining": {
+                                    "type": "number"
+                                },
+                                "reset": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

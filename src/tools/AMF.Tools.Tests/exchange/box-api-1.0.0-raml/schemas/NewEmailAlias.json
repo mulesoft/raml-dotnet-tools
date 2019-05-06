@@ -1,0 +1,11 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"email": {
+			"description": "The email address to add to the account as an alias.",
+			"type": "string"
+		}
+	},
+	"required": true
+}

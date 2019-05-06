@@ -1,0 +1,28 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/DomainResource.raml
+
+uses:
+  FHIR_element_types: /exchange_modules/org.mule.templates/fhir-element-types/1.0.0/fhir_element_types.raml
+
+description: |
+  A resource with narrative, extensions, and contained resources
+  + If the resource is contained in another resource, it SHALL NOT contain nested Resources
+  + If the resource is contained in another resource, it SHALL NOT contain any narrative
+  + If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated
+  + If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource
+type: !include /exchange_modules/org.mule.templates/resource/1.0.0/resource.raml
+properties:
+  text?:
+    description: Text summary of the resource, for human interpretation
+    type: FHIR_element_types.Narrative
+  contained?:
+    description: Contained, inline Resources
+    type: array
+    items: !include /exchange_modules/org.mule.templates/resource/1.0.0/resource.raml
+  extension?:
+    description: Additional Content defined by implementations
+    type: FHIR_element_types.Extension[]
+  modifierExtension?:
+    description: Extensions that cannot be ignored
+    type: FHIR_element_types.Extension[]

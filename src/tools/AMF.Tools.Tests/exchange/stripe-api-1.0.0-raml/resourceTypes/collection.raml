@@ -1,0 +1,12 @@
+post?: 
+  description: Allows to create new <<itemPathName | !singularize>>
+  body: 
+    application/x-www-form-urlencoded: 
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: <<itemPathName | !singularize>>
+get?: 
+  is: [ pageable ]
+type: baseResource

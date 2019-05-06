@@ -1,0 +1,898 @@
+{
+  "nextPage" : "https://api.zuora.com/rest/v1/catalog/products?page=2&pageSize=10" ,
+  "success" : true ,
+  "products" : [
+    {
+      "sku" : "SKU-00000443" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2020-01-01" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-01-01" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD25/1GB"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93d2880f8013d294e7c2d019b" ,
+              "type" : "Usage" ,
+              "name" : "Usage"
+            } , {
+              "pricingSummary" : [
+                "USD450/UOM"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93d2880f8013d294cafb6018f" ,
+              "type" : "Recurring" ,
+              "name" : "Monthly"
+            } , {
+              "pricingSummary" : [
+                "USD500"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : null ,
+              "billingDay" : null ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93d2880f8013d294bd8fc0183" ,
+              "type" : "OneTime" ,
+              "name" : "once"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "2c92a0f93d2880f8013d294b0ada0181" ,
+          "name" : "RP"
+        }
+      ] ,
+      "name" : "Kate1"
+    } , {
+      "sku" : "SKU-00000442" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2050-12-31" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-01-01" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD2/1GB"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93d2880f8013d29160d24012c" ,
+              "type" : "Usage" ,
+              "name" : "RPCU1"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "2c92a0f93d2880f8013d29155a8f012a" ,
+          "name" : "RP2"
+        } , {
+          "effectiveEndDate" : "2050-12-31" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-01-01" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD100"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93d2880f8013d28994301003e" ,
+              "type" : "Recurring" ,
+              "name" : "RPC3"
+            } , {
+              "pricingSummary" : [
+                "USD250"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : null ,
+              "billingDay" : null ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93d2880f8013d28928bba001a" ,
+              "type" : "OneTime" ,
+              "name" : "RPC2"
+            } , {
+              "pricingSummary" : [
+                "USD500"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Quarter" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93d2880f8013d28923ecb000e" ,
+              "type" : "Recurring" ,
+              "name" : "RPC1"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "2c92a0f93d2880f8013d2891c3b5000c" ,
+          "name" : "RP1"
+        }
+      ] ,
+      "name" : "P1"
+    } , {
+      "sku" : "SKU-00000378" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD100"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93cae3a81013cb0b971ee720f" ,
+              "type" : "Recurring" ,
+              "name" : "recurring"
+            } , {
+              "pricingSummary" : [
+                "USD10/MMPV"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0fb3b73fa9b013b954a543d37a3" ,
+              "type" : "Usage" ,
+              "name" : "PerUnit"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "2c92a0fb3b73fa9b013b95497553329a" ,
+          "name" : "OnDemand"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD199.99"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : true ,
+              "taxMode" : "TaxInclusive" ,
+              "taxCode" : "dfhgdfg" ,
+              "id" : "2c92a0fb3a14f7d2013a226807eb63bc" ,
+              "type" : "Recurring" ,
+              "name" : "TAx"
+            } , {
+              "pricingSummary" : [
+                "0 to 10 DOWN: USD100 flat fee;  10.01 DOWN or more: USD2/DOWN"
+              ] ,
+              "model" : "Tiered" ,
+              "billingPeriod" : null ,
+              "billingDay" : null ,
+              "taxable" : true ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "dfhgdfg" ,
+              "id" : "4028e48835a944f50135c00862171ab3" ,
+              "type" : "OneTime" ,
+              "name" : "Tier"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "4028e48735bd88440135c007d07e3169" ,
+          "name" : "OneTime"
+        } , {
+          "effectiveEndDate" : "2011-10-25" ,
+          "status" : "Expired" ,
+          "effectiveStartDate" : "2011-10-24" ,
+          "productRatePlanCharges" : [
+          ] ,
+          "description" : "" ,
+          "id" : "4028e487331aaf8a013339bb2fff543b" ,
+          "name" : "New Rate Plan12345"
+        } , {
+          "effectiveEndDate" : "2012-09-28" ,
+          "status" : "Expired" ,
+          "effectiveStartDate" : "2011-09-28" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD10"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Annual" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : "" ,
+              "id" : "4028e48832ae68d00132b13113dc4367" ,
+              "type" : "Usage" ,
+              "name" : "Usage"
+            }
+          ] ,
+          "description" : "Usage" ,
+          "id" : "4028e48832ae68d00132b13047c04278" ,
+          "name" : "Monthly Overage"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD2000"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Annual" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : "" ,
+              "id" : "4028e4852f7674f3012f9d83b29c1c9b" ,
+              "type" : "Recurring" ,
+              "name" : "Test 12mos"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "4028e4852f7674f3012f9d83b2751c99" ,
+          "name" : "Test 12mos"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD2000"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Specific_Months" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : "" ,
+              "id" : "4028e4852f7674f3012f9d82b57e1a36" ,
+              "type" : "Recurring" ,
+              "name" : "Test 15mos"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "4028e4852f7674f3012f9d8208fd1989" ,
+          "name" : "Test 15mos"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD100"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Annual" ,
+              "billingDay" : "ChargeTriggerDay" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "4028e4862e37fcd9012e380e18af0628" ,
+              "type" : "Recurring" ,
+              "name" : "Recurring"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "4028e4862e37fcd9012e380db00405fc" ,
+          "name" : "Recurring"
+        } , {
+          "effectiveEndDate" : "2020-01-01" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2010-01-01" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "100%  discount"
+              ] ,
+              "model" : "DiscountPercentage" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : null ,
+              "id" : "4028e4852ddfd341012e27099fc86fe3" ,
+              "type" : "Recurring" ,
+              "name" : "Discount_percentage"
+            } , {
+              "pricingSummary" : [
+                "USD100"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "4028e4852ddfd341012e2706ca556f1f" ,
+              "type" : "Recurring" ,
+              "name" : "recurring"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "4028e4852ddfd341012e270633ba6ee0" ,
+          "name" : "Discount"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "0 to 10 ONE_DOWN: USD10/ONE_DOWN;  10.1 to 20 ONE_DOWN: USD20/ONE_DOWN;  20.1 to 30 ONE_DOWN: USD30/ONE_DOWN;  30.1 to 40 ONE_DOWN: USD40/ONE_DOWN;  40.1 ONE_DOWN or more: USD50/ONE_DOWN"
+              ] ,
+              "model" : "Tiered" ,
+              "billingPeriod" : "Quarter" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811ca15d19011cddad8c953b53" ,
+              "type" : "Recurring" ,
+              "name" : "TieredPrice"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811ca15d19011cdda9b0ad3b51" ,
+          "name" : "QSF_Tier"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "Up to 10 UOM: USD10/UOM;  Up to 20 UOM: USD15/UOM;  Up to 30 UOM: USD20/UOM;  USD25/UOM for 30.01 UOM or more"
+              ] ,
+              "model" : "Volume" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811ca15d19011cd4a7298d1fb6" ,
+              "type" : "Recurring" ,
+              "name" : "Volume"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811ca15d19011cd4a3ec0f1fa8" ,
+          "name" : "Month_Volume"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD20/MMPV"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : "" ,
+              "id" : "ff8080811bed3caf011bfb1847420846" ,
+              "type" : "Recurring" ,
+              "name" : "Flat"
+            } , {
+              "pricingSummary" : [
+                "USD10/DOWN"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : "" ,
+              "id" : "4028e4852a881072012aa169fa281215" ,
+              "type" : "Recurring" ,
+              "name" : "New Component"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811bed3caf011bfb17e2ce0844" ,
+          "name" : "Month_Flat"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD50/UOM"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811bed3caf011bfac61917061f" ,
+              "type" : "Recurring" ,
+              "name" : "Per Unit"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811bed3caf011bfac540ed061c" ,
+          "name" : "Month_PerUnit"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD30/UOM"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Quarter" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811bc92097011bdd7c45a90d06" ,
+              "type" : "Recurring" ,
+              "name" : "PerUnit"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811bc92097011bdd7b883f0d04" ,
+          "name" : "QSF_PerUnit"
+        }
+      ] ,
+      "name" : "Recurring Charge"
+    } , {
+      "sku" : "SKU-00000441" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2050-12-31" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-01-01" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD3000"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Quarter" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0f93aaaea92013adc722f481cb8" ,
+              "type" : "Recurring" ,
+              "name" : "rpc11"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "2c92a0fb3aaaead3013adc719856117d" ,
+          "name" : "rp11"
+        }
+      ] ,
+      "name" : "np1"
+    } , {
+      "sku" : "SKU-00000438" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2020-12-31" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-01-01" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD1000"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Quarter" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0fb3a6d39a7013a754f09a173bb" ,
+              "type" : "Recurring" ,
+              "name" : "testl1_rpc1"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "2c92a0fb3a6d39a7013a754e79587202" ,
+          "name" : "testl1_rp1"
+        }
+      ] ,
+      "name" : "test_l1"
+    } , {
+      "sku" : "SKU-00000437" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2020-12-31" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-01-01" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD500"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Quarter" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : "TaxExclusive" ,
+              "taxCode" : "" ,
+              "id" : "2c92a0fb3a4c1891013a4c21038045b1" ,
+              "type" : "Recurring" ,
+              "name" : "test_1571_rpc1"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "2c92a0f93a4c138d013a4c208a4744ba" ,
+          "name" : "test_1571_rp1"
+        }
+      ] ,
+      "name" : "test1571"
+    } , {
+      "sku" : "SKU-00000380" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD10/MMPV"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Specific_Months" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : "" ,
+              "id" : "4028e4873874747701387d4b6ed16788" ,
+              "type" : "Usage" ,
+              "name" : "SpecificMonth"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "4028e4883874747901387d4ad2a862ad" ,
+          "name" : "SpecificMonth"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "Free for first 10 ZERO_UP, thereafter USD300/ZERO_UP"
+              ] ,
+              "model" : "Overage" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c7b80504f0d4c" ,
+              "type" : "Usage" ,
+              "name" : "Overage Pricing_ZERO_UP"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c7b80504a0d4a" ,
+          "name" : "Overage Pricing_ZERO_UP"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "Free for first 10 ZERO_DOWN, thereafter USD300/ZERO_DOWN"
+              ] ,
+              "model" : "Overage" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72bff0e109a1" ,
+              "type" : "Usage" ,
+              "name" : "Overage Pricing_ZERO_DOWN"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72bff0dd099f" ,
+          "name" : "Overage Pricing_ZERO_DOWN"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD30/ZERO_UP"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c7b7ddc810d3e" ,
+              "type" : "Usage" ,
+              "name" : "Per Unit Pricing_ZERO_UP"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c7b7ddc7e0d3c" ,
+          "name" : "Per Unit Pricing_ZERO_UP"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD30/ZERO_DOWN"
+              ] ,
+              "model" : "PerUnit" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72bff0c10993" ,
+              "type" : "Usage" ,
+              "name" : "Per Unit Pricing_ZERO_DOWN"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72bff0bd0991" ,
+          "name" : "Per Unit Pricing_ZERO_DOWN"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "Up to 5 ZERO_UP: USD1000 flat fee;  Up to 7 ZERO_UP: USD1400 flat fee;  Up to 9 ZERO_UP: USD1900 flat fee;  USD400/ZERO_UP for 10 ZERO_UP or more"
+              ] ,
+              "model" : "Volume" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72ccadef0a4f" ,
+              "type" : "Usage" ,
+              "name" : "Volume Pricing_ZERO_UP"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72ccadec0a4d" ,
+          "name" : "Volume Pricing_ZERO_UP"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "Up to 5 ZERO_DOWN: USD100 flat fee;  Up to 7 ZERO_DOWN: USD250/ZERO_DOWN;  Up to 9 ZERO_DOWN: USD300/ZERO_DOWN;  USD400/ZERO_DOWN for 10 ZERO_DOWN or more"
+              ] ,
+              "model" : "Volume" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72bff0a30985" ,
+              "type" : "Usage" ,
+              "name" : "Volume Pricing_ZERO_DOWN"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72bff09f0983" ,
+          "name" : "Volume Pricing_ZERO_DOWN"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "0 to 5 ZERO_DOWN: USD0 flat fee;  6 to 7 ZERO_DOWN: USD200/ZERO_DOWN;  8 to 9 ZERO_DOWN: USD200/ZERO_DOWN;  10 to 11 ZERO_DOWN: USD250/ZERO_DOWN"
+              ] ,
+              "model" : "Tiered" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72c705ba09ff" ,
+              "type" : "Usage" ,
+              "name" : "Tiered Pricing_ZERO_DOWN"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72c705b809fd" ,
+          "name" : "Tiered Pricing_ZERO_DOWN"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "0 to 5 ZERO_UP: USD0 flat fee;  6 to 7 ZERO_UP: USD400 flat fee;  8 to 9 ZERO_UP: USD400 flat fee;  10 to 11 ZERO_UP: USD500 flat fee"
+              ] ,
+              "model" : "Tiered" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72bff0860977" ,
+              "type" : "Usage" ,
+              "name" : "Tiered Pricing_ZERO_UP"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72bff0820975" ,
+          "name" : "Tiered Pricing_ZERO_UP"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "0 to 5 ZERO_UP: USD0 flat fee;  6 to 7 ZERO_UP: USD200/ZERO_UP;  8 to 9 ZERO_UP: USD200/ZERO_UP, thereafter USD300 per exceeding unit"
+              ] ,
+              "model" : "TieredWithOverage" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72c10f2909ba" ,
+              "type" : "Usage" ,
+              "name" : "Tiered with Overage Pricing_ZERO_UP"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72c10f2609b8" ,
+          "name" : "Tiered with Overage Pricing_ZERO_UP"
+        } , {
+          "effectiveEndDate" : "2020-05-15" ,
+          "status" : "Active" ,
+          "effectiveStartDate" : "2000-05-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "0 to 5 ZERO_DOWN: USD0 flat fee;  6 to 7 ZERO_DOWN: USD400 flat fee;  8 to 9 ZERO_DOWN: USD400 flat fee, thereafter USD300 per exceeding unit"
+              ] ,
+              "model" : "TieredWithOverage" ,
+              "billingPeriod" : "Month" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : null ,
+              "id" : "ff8080811c594b30011c72bff05f095e" ,
+              "type" : "Usage" ,
+              "name" : "Tiered with Overage Pricing_ZERO_DOWN"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "ff8080811c594b30011c72bff05c095c" ,
+          "name" : "Tiered with Overage Pricing_ZERO_DOWN"
+        }
+      ] ,
+      "name" : "Month Usage Charge_ZERO"
+    } , {
+      "sku" : "SKU-00000406" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2013-04-01" ,
+          "status" : "Expired" ,
+          "effectiveStartDate" : "2012-04-02" ,
+          "productRatePlanCharges" : [
+          ] ,
+          "description" : "" ,
+          "id" : "4028e4883661fee301366fd2a4ef7c7c" ,
+          "name" : "New Rate Plan"
+        }
+      ] ,
+      "name" : "teeee"
+    } , {
+      "sku" : "SKU-00000405" ,
+      "description" : "" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2012-03-23" ,
+          "status" : "Expired" ,
+          "effectiveStartDate" : "2012-03-15" ,
+          "productRatePlanCharges" : [
+          ] ,
+          "description" : "" ,
+          "id" : "4028e4873616457101361810b64a5bc4" ,
+          "name" : "New Rate Plan"
+        }
+      ] ,
+      "name" : "ttt"
+    } , {
+      "sku" : "SKU-00000404" ,
+      "description" : "est" ,
+      "productRatePlans" : [
+        {
+          "effectiveEndDate" : "2011-12-20" ,
+          "status" : "Expired" ,
+          "effectiveStartDate" : "2011-12-15" ,
+          "productRatePlanCharges" : [
+            {
+              "pricingSummary" : [
+                "USD50"
+              ] ,
+              "model" : "FlatFee" ,
+              "billingPeriod" : "Semi_Annual" ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "taxable" : false ,
+              "taxMode" : null ,
+              "taxCode" : "" ,
+              "id" : "4028e48734457f1001345f6f20781305" ,
+              "type" : "Usage" ,
+              "name" : "New Component"
+            }
+          ] ,
+          "description" : "" ,
+          "id" : "4028e48734457f1001345f6e84cf12be" ,
+          "name" : "New Rate Plan"
+        }
+      ] ,
+      "name" : "testt"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "access_policy" : {
+    "viewable_by" : "staff" ,
+    "manageable_by" : "staff" ,
+    "restricted_to_group_ids" : [
+      12
+    ] ,
+    "restricted_to_organization_ids" : [
+      42
+    ] ,
+    "required_tags" : [
+      "vip"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "renewalTerm" : "4" ,
+  "termType" : "TERMED" ,
+  "autoRenew" : false ,
+  "currentTerm" : "10" ,
+  "update" : [
+    {
+      "ratePlanId" : "2c92c8f83dcbd8b1013dcce0ea7e006f" ,
+      "contractEffectiveDate" : "2013-04-28" ,
+      "chargeUpdateDetails" : [
+        {
+          "ratePlanChargeId" : "2c92c8f83dcbd8b1013dcce0eb510075" ,
+          "quantity" : 12
+        }
+      ]
+    }
+  ] ,
+  "notes" : "Test UPDATE subscription from z-ruby-sdk" ,
+  "myCustomField__c" : "test"
+}

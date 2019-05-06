@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": true,
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "done": {
+      "type": "boolean",
+      "required": false
+    },
+    "totalSize": {
+      "type": "number",
+      "required": false
+    },
+    "records": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "array"
+      }
+    }
+  }
+}

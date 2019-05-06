@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "list": [
+        {
+            "properties": {
+                "days": [
+                    {
+                        "type": "integer"
+                    }
+                ],
+                "type": "array",
+                "total": {
+                    "type": "integer"
+                },
+                "week": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        }
+    ]
+}

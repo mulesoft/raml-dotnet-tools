@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<urls> 
+  <sobjects>/services/data/v26.0/sobjects</sobjects> 
+  <licensing>/services/data/v26.0/licensing</licensing> 
+  <connect>/services/data/v26.0/connect</connect> 
+  <search>/services/data/v26.0/search</search> 
+  <query>/services/data/v26.0/query</query> 
+  <tooling>/services/data/v26.0/tooling</tooling> 
+  <chatter>/services/data/v26.0/chatter</chatter> 
+  <recent>/services/data/v26.0/recent</recent> 
+</urls>

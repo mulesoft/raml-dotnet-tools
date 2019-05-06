@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "_links": {
+      "properties": {
+        "html": {
+          "type": "string"
+        },
+        "self": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "commit": {
+      "type": "object",
+      "properties": {
+        "sha": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "object",
+          "properties": {
+            "author": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "date": {
+                  "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            },
+            "url": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "tree": {
+              "properties": {
+                "sha": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "committer": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "date": {
+                  "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "author": {
+          "properties": {
+            "gravatar_id": {
+              "type": "string"
+            },
+            "avatar_url": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "login": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "parents": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "sha": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "committer": {
+          "properties": {
+            "gravatar_id": {
+              "type": "string"
+            },
+            "avatar_url": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "login": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      }
+    }
+  }
+}

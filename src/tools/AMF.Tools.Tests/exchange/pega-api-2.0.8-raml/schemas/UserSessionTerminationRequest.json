@@ -1,0 +1,16 @@
+{
+  "id": "UserSessionTerminationRequest",
+  "title": "UserSessionTerminationRequest",
+  "type": "object",
+  "properties": {
+    "Message": {
+      "type": "string"
+    },
+    "User": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

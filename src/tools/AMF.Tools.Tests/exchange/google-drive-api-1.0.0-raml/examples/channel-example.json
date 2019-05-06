@@ -1,0 +1,8 @@
+{
+  "kind" : "api#channel" ,
+  "id" : "string" ,
+  "resourceId" : "string" ,
+  "resourceUri" : "string" ,
+  "token" : "string" ,
+  "expiration" : "long"
+}

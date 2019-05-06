@@ -1,0 +1,126 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "array" ,
+  "items" : [
+    {
+      "type" : "object" ,
+      "properties" : {
+        "url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "label" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "content_type" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "size" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "download_count" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "uploader" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "login" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "avatar_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "gravatar_id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "html_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "followers_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "following_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "gists_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "starred_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "subscriptions_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "organizations_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "repos_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "events_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "received_events_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "type" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "site_admin" : {
+              "type" : "boolean" ,
+              "required" : false
+            }
+          }
+        }
+      }
+    }
+  ]
+}

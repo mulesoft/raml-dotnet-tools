@@ -1,0 +1,358 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required": false,
+    "properties": {
+        "object": {
+            "type": "string",
+            "required": false
+        },
+        "url": {
+            "type": "string",
+            "required": false
+        },
+        "count": {
+            "type": "number",
+            "id": "http://jsonschema.net/count",
+            "required": false
+        },
+        "data": {
+            "type": "array",
+            "id": "http://jsonschema.net/data",
+            "required": false,
+            "items": {
+                "type": "object",
+                "id": "http://jsonschema.net",
+                "required": false,
+                "properties": {
+                    "account": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/account",
+                        "required": false
+                    },
+                    "amount": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/amount",
+                        "required": false
+                    },
+                    "balance_transaction": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/balance_transaction",
+                        "required": false
+                    },
+                    "currency": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/currency",
+                        "required": false
+                    },
+                    "date": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/date",
+                        "required": false
+                    },
+                    "description": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/description",
+                        "required": false
+                    },
+                    "id": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/id",
+                        "required": false
+                    },
+                    "livemode": {
+                        "type": "boolean",
+                        "id": "http://jsonschema.net/livemode",
+                        "required": false
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "id": "http://jsonschema.net/metadata",
+                        "required": false
+                    },
+                    "object": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/object",
+                        "required": false
+                    },
+                    "other_transfers": {
+                        "type": "array",
+                        "id": "http://jsonschema.net/other_transfers",
+                        "required": false,
+                        "items": {
+                            "type": "string",
+                            "id": "http://jsonschema.net/other_transfers/0",
+                            "required": false
+                        }
+                    },
+                    "recipient": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/recipient",
+                        "required": false
+                    },
+                    "statement_descriptor": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/statement_descriptor",
+                        "required": false
+                    },
+                    "status": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/status",
+                        "required": false
+                    },
+                    "summary": {
+                        "type": "object",
+                        "id": "http://jsonschema.net/summary",
+                        "required": false,
+                        "properties": {
+                            "adjustment_count": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/adjustment_count",
+                                "required": false
+                            },
+                            "adjustment_fee_details": {
+                                "type": "array",
+                                "id": "http://jsonschema.net/summary/adjustment_fee_details",
+                                "required": false
+                            },
+                            "adjustment_fees": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/adjustment_fees",
+                                "required": false
+                            },
+                            "adjustment_gross": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/adjustment_gross",
+                                "required": false
+                            },
+                            "charge_count": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/charge_count",
+                                "required": false
+                            },
+                            "charge_fee_details": {
+                                "type": "array",
+                                "id": "http://jsonschema.net/summary/charge_fee_details",
+                                "required": false,
+                                "items": {
+                                    "type": "object",
+                                    "id": "http://jsonschema.net/summary/charge_fee_details/0",
+                                    "required": false,
+                                    "properties": {
+                                        "amount": {
+                                            "type": "number",
+                                            "id": "http://jsonschema.net/summary/charge_fee_details/0/amount",
+                                            "required": false
+                                        },
+                                        "application": {
+                                            "type": "null",
+                                            "id": "http://jsonschema.net/summary/charge_fee_details/0/application",
+                                            "required": false
+                                        },
+                                        "currency": {
+                                            "type": "string",
+                                            "id": "http://jsonschema.net/summary/charge_fee_details/0/currency",
+                                            "required": false
+                                        },
+                                        "description": {
+                                            "type": "null",
+                                            "id": "http://jsonschema.net/summary/charge_fee_details/0/description",
+                                            "required": false
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "id": "http://jsonschema.net/summary/charge_fee_details/0/type",
+                                            "required": false
+                                        }
+                                    }
+                                }
+                            },
+                            "charge_fees": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/charge_fees",
+                                "required": false
+                            },
+                            "charge_gross": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/charge_gross",
+                                "required": false
+                            },
+                            "collected_fee_count": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/collected_fee_count",
+                                "required": false
+                            },
+                            "collected_fee_gross": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/collected_fee_gross",
+                                "required": false
+                            },
+                            "collected_fee_refund_count": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/collected_fee_refund_count",
+                                "required": false
+                            },
+                            "collected_fee_refund_gross": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/collected_fee_refund_gross",
+                                "required": false
+                            },
+                            "currency": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/summary/currency",
+                                "required": false
+                            },
+                            "net": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/net",
+                                "required": false
+                            },
+                            "refund_count": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/refund_count",
+                                "required": false
+                            },
+                            "refund_fee_details": {
+                                "type": "array",
+                                "id": "http://jsonschema.net/summary/refund_fee_details",
+                                "required": false
+                            },
+                            "refund_fees": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/refund_fees",
+                                "required": false
+                            },
+                            "refund_gross": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/refund_gross",
+                                "required": false
+                            },
+                            "validation_count": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/validation_count",
+                                "required": false
+                            },
+                            "validation_fees": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/summary/validation_fees",
+                                "required": false
+                            }
+                        }
+                    },
+                    "transactions": {
+                        "type": "object",
+                        "id": "http://jsonschema.net/transactions",
+                        "required": false,
+                        "properties": {
+                            "count": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/transactions/count",
+                                "required": false
+                            },
+                            "data": {
+                                "type": "array",
+                                "id": "http://jsonschema.net/transactions/data",
+                                "required": false,
+                                "items": {
+                                    "type": "object",
+                                    "id": "http://jsonschema.net/transactions/data/0",
+                                    "required": false,
+                                    "properties": {
+                                        "amount": {
+                                            "type": "number",
+                                            "id": "http://jsonschema.net/transactions/data/0/amount",
+                                            "required": false
+                                        },
+                                        "created": {
+                                            "type": "number",
+                                            "id": "http://jsonschema.net/transactions/data/0/created",
+                                            "required": false
+                                        },
+                                        "currency": {
+                                            "type": "string",
+                                            "id": "http://jsonschema.net/transactions/data/0/currency",
+                                            "required": false
+                                        },
+                                        "description": {
+                                            "type": "null",
+                                            "id": "http://jsonschema.net/transactions/data/0/description",
+                                            "required": false
+                                        },
+                                        "fee_details": {
+                                            "type": "array",
+                                            "id": "http://jsonschema.net/transactions/data/0/fee_details",
+                                            "required": false,
+                                            "items": {
+                                                "type": "object",
+                                                "id": "http://jsonschema.net/transactions/data/0/fee_details/0",
+                                                "required": false,
+                                                "properties": {
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "id": "http://jsonschema.net/transactions/data/0/fee_details/0/amount",
+                                                        "required": false
+                                                    },
+                                                    "application": {
+                                                        "type": "null",
+                                                        "id": "http://jsonschema.net/transactions/data/0/fee_details/0/application",
+                                                        "required": false
+                                                    },
+                                                    "currency": {
+                                                        "type": "string",
+                                                        "id": "http://jsonschema.net/transactions/data/0/fee_details/0/currency",
+                                                        "required": false
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "id": "http://jsonschema.net/transactions/data/0/fee_details/0/description",
+                                                        "required": false
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "id": "http://jsonschema.net/transactions/data/0/fee_details/0/type",
+                                                        "required": false
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "fee": {
+                                            "type": "number",
+                                            "id": "http://jsonschema.net/transactions/data/0/fee",
+                                            "required": false
+                                        },
+                                        "id": {
+                                            "type": "string",
+                                            "id": "http://jsonschema.net/transactions/data/0/id",
+                                            "required": false
+                                        },
+                                        "net": {
+                                            "type": "number",
+                                            "id": "http://jsonschema.net/transactions/data/0/net",
+                                            "required": false
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "id": "http://jsonschema.net/transactions/data/0/type",
+                                            "required": false
+                                        }
+                                    }
+                                }
+                            },
+                            "object": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/transactions/object",
+                                "required": false
+                            },
+                            "url": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/transactions/url",
+                                "required": false
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "interval": "month",
+  "name": "Java Bindings Plan",
+  "amount": 100,
+  "currency": "usd",
+  "id": "JAVA-PLAN-dbfd01a0-c28c-421d-8ae9-5a999575fa1b",
+  "object": "plan",
+  "livemode": false,
+  "interval_count": 1,
+  "trial_period_days": null
+}

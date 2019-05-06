@@ -1,0 +1,222 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "total_count": {
+      "type": "integer"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "sha": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "git_url": {
+            "type": "string"
+          },
+          "html_url": {
+            "type": "string"
+          },
+          "repository": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "full_name": {
+                "type": "string"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "login": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "avatar_url": {
+                    "type": "string"
+                  },
+                  "gravatar_id": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "html_url": {
+                    "type": "string"
+                  },
+                  "followers_url": {
+                    "type": "string"
+                  },
+                  "following_url": {
+                    "type": "string"
+                  },
+                  "gists_url": {
+                    "type": "string"
+                  },
+                  "starred_url": {
+                    "type": "string"
+                  },
+                  "subscriptions_url": {
+                    "type": "string"
+                  },
+                  "organizations_url": {
+                    "type": "string"
+                  },
+                  "repos_url": {
+                    "type": "string"
+                  },
+                  "events_url": {
+                    "type": "string"
+                  },
+                  "received_events_url": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              "private": {
+                "type": "boolean"
+              },
+              "html_url": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "fork": {
+                "type": "boolean"
+              },
+              "url": {
+                "type": "string"
+              },
+              "forks_url": {
+                "type": "string"
+              },
+              "keys_url": {
+                "type": "string"
+              },
+              "collaborators_url": {
+                "type": "string"
+              },
+              "teams_url": {
+                "type": "string"
+              },
+              "hooks_url": {
+                "type": "string"
+              },
+              "issue_events_url": {
+                "type": "string"
+              },
+              "events_url": {
+                "type": "string"
+              },
+              "assignees_url": {
+                "type": "string"
+              },
+              "branches_url": {
+                "type": "string"
+              },
+              "tags_url": {
+                "type": "string"
+              },
+              "blobs_url": {
+                "type": "string"
+              },
+              "git_tags_url": {
+                "type": "string"
+              },
+              "git_refs_url": {
+                "type": "string"
+              },
+              "trees_url": {
+                "type": "string"
+              },
+              "statuses_url": {
+                "type": "string"
+              },
+              "languages_url": {
+                "type": "string"
+              },
+              "stargazers_url": {
+                "type": "string"
+              },
+              "contributors_url": {
+                "type": "string"
+              },
+              "subscribers_url": {
+                "type": "string"
+              },
+              "subscription_url": {
+                "type": "string"
+              },
+              "commits_url": {
+                "type": "string"
+              },
+              "git_commits_url": {
+                "type": "string"
+              },
+              "comments_url": {
+                "type": "string"
+              },
+              "issue_comment_url": {
+                "type": "string"
+              },
+              "contents_url": {
+                "type": "string"
+              },
+              "compare_url": {
+                "type": "string"
+              },
+              "merges_url": {
+                "type": "string"
+              },
+              "archive_url": {
+                "type": "string"
+              },
+              "downloads_url": {
+                "type": "string"
+              },
+              "issues_url": {
+                "type": "string"
+              },
+              "pulls_url": {
+                "type": "string"
+              },
+              "milestones_url": {
+                "type": "string"
+              },
+              "notifications_url": {
+                "type": "string"
+              },
+              "labels_url": {
+                "type": "string"
+              }
+            }
+          },
+          "score": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

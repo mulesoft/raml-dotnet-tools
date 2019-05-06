@@ -1,0 +1,120 @@
+{
+    "": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "contributors_enabled": {
+        	"type": "boolean"
+        },
+        "created_at": {
+        	"type": "string"
+        },
+        "default_profile": {
+        	"type": "boolean"
+        },
+        "default_profile_image": {
+        	"type": "boolean"
+        },
+        "description": {
+        	"type": "string"
+        },
+        "favourites_count": {
+        	"type": "integer"
+        },
+        "follow_request_sent": {
+        	"type": "boolean"
+        },
+        "followers_count": {
+        	"type": "integer"
+        },
+        "following": {
+        	"type": "boolean"
+        },
+        "friends_count": {
+        	"type": "integer"
+        },
+        "geo_enabled": {
+        	"type": "boolean"
+        },
+        "id": {
+        	"type": "integer"
+        },
+        "id_str": {
+        	"type": "string"
+        },
+        "is_translator": {
+        	"type": "boolean"
+        },
+        "lang": {
+        	"type": "string"
+        },
+        "listed_count": {
+        	"type": "integer"
+        },
+        "location": {
+        	"type": "string"
+        },
+        "name": {
+        	"type": "string"
+        },
+        "notifications": {
+        	"type": "boolean"
+        },
+        "profile_background_color": {
+        	"type": "string"
+        },
+        "profile_background_image_url": {
+        	"type": "string"
+        },
+        "profile_background_image_url_https": {
+        	"type": "string"
+        },
+        "profile_background_tile": {
+        	"type": "boolean"
+        },
+        "profile_image_url": {
+        	"type": "string"
+        },
+        "profile_image_url_https": {
+        	"type": "string"
+        },
+        "profile_link_color": {
+        	"type": "string"
+        },
+        "profile_sidebar_border_color": {
+        	"type": "string"
+        },
+        "profile_sidebar_fill_color": {
+        	"type": "string"
+        },
+        "profile_text_color": {
+        	"type": "string"
+        },
+        "profile_use_background_image": {
+        	"type": "boolean"
+        },
+        "protected": {
+        	"type": "boolean"
+        },
+        "screen_name": {
+        	"type": "string"
+        },
+        "show_all_inline_media": {
+        	"type": "boolean"
+        },
+        "statuses_count": {
+        	"type": "integer"
+        },
+        "time_zone": {
+        	"type": "string"
+        },
+        "url": {
+        	"type": "string"
+        },
+        "utc_offset": {
+        	"type": "integer"
+        },
+        "verified": {
+        	"type": "boolean"
+       }
+    }
+}

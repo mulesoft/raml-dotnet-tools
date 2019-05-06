@@ -1,0 +1,64 @@
+{
+  "type":"object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "required":false,
+  "properties":{
+    "available": {
+      "type":"array",
+      "id": "http://jsonschema.net/available",
+      "required":false,
+      "items":
+        {
+          "type":"object",
+          "id": "http://jsonschema.net/available/0",
+          "required":false,
+          "properties":{
+            "amount": {
+              "type":"number",
+              "id": "http://jsonschema.net/available/0/amount",
+              "required":false
+            },
+            "currency": {
+              "type":"string",
+              "id": "http://jsonschema.net/available/0/currency",
+              "required":false
+            }
+          }
+        }
+    },
+    "livemode": {
+      "type":"boolean",
+      "id": "http://jsonschema.net/livemode",
+      "required":false
+    },
+    "object": {
+      "type":"string",
+      "id": "http://jsonschema.net/object",
+      "required":false
+    },
+    "pending": {
+      "type":"array",
+      "id": "http://jsonschema.net/pending",
+      "required":false,
+      "items":
+        {
+          "type":"object",
+          "id": "http://jsonschema.net/pending/0",
+          "required":false,
+          "properties":{
+            "amount": {
+              "type":"number",
+              "id": "http://jsonschema.net/pending/0/amount",
+              "required":false
+            },
+            "currency": {
+              "type":"string",
+              "id": "http://jsonschema.net/pending/0/currency",
+              "required":false
+            }
+          }
+        }
+    }
+  }
+}

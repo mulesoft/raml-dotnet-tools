@@ -1,0 +1,123 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "total_count": {
+      "type": "integer"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "For users is 'user'.",
+            "type": "string"
+          },
+          "id": {
+            "description": "A unique string identifying this user.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of this user.",
+            "type": "string"
+          },
+          "login": {
+            "description": "The email address this user uses to login.",
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The time this user was created."
+          },
+          "modified_at": {
+            "type": "string",
+            "description": "The time this user was last modified."
+          },
+          "role": {
+            "description": "This user's enterprise role.",
+            "enum": [
+              "admin",
+              "coadmin",
+              "user"
+            ]
+          },
+          "language": {
+            "description": "The language of this user. ISO 639-1 Language Code.",
+            "type": "string"
+          },
+          "space_amount": {
+            "description": "The user's total available space amount in bytes.",
+            "type": "integer"
+          },
+          "space_used": {
+            "description": "The amount of space in use by the user.",
+            "type": "integer"
+          },
+          "max_upload_size": {
+            "description": "The maximum individual file size in bytes this user can have.",
+            "type": "integer"
+          },
+          "tracking_codes": {
+            "type": "array",
+            "description": "An array of key/value pairs set by the user's admin."
+          },
+          "can_see_managed_users": {
+            "description": "Whether this user can see other enterprise users in its contact list.",
+            "type": "boolean"
+          },
+          "is_sync_enabled": {
+            "description": "Whether or not this user can use Box Sync",
+            "type": "boolean"
+          },
+          "status": {
+            "description": "Can be active or inactive.",
+            "enum": [
+              "active",
+              "inactive"
+            ]
+          },
+          "job_title": {
+            "description": "The user's job title.",
+            "type": "string"
+          },
+          "phone": {
+            "description": "The user's phone number.",
+            "type": "string"
+          },
+          "address": {
+            "description": "The user's address.",
+            "type": "string"
+          },
+          "avatar_url": {
+            "description": "URL of this user's avatar image.",
+            "type": "string"
+          },
+          "is_exempt_from_device_limits": {
+            "description": "Whether to exempt this user from Enterprise device limits.",
+            "type": "boolean"
+          },
+          "is_exempt_from_login_verification": {
+            "description": "Whether or not this user must use two-factor authentication.",
+            "type": "boolean"
+          },
+          "enterprise": {
+            "type": "object",
+            "description": "Mini representation of this user's enterprise, including the ID of its enterprise",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

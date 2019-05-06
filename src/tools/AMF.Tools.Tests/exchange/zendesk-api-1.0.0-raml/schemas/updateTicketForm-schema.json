@@ -1,0 +1,21 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "ticket_form" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "display_name" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"amount_due": {
+			"type":"number",
+			"id": "http://jsonschema.net/amount_due",
+			"required":false
+		},
+		"application_fee": {
+			"type":"null",
+			"id": "http://jsonschema.net/application_fee",
+			"required":false
+		},
+		"attempt_count": {
+			"type":"number",
+			"id": "http://jsonschema.net/attempt_count",
+			"required":false
+		},
+		"attempted": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/attempted",
+			"required":false
+		},
+		"charge": {
+			"type":"string",
+			"id": "http://jsonschema.net/charge",
+			"required":false
+		},
+		"closed": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/closed",
+			"required":false
+		},
+		"currency": {
+			"type":"string",
+			"id": "http://jsonschema.net/currency",
+			"required":false
+		},
+		"customer": {
+			"type":"string",
+			"id": "http://jsonschema.net/customer",
+			"required":false
+		},
+		"date": {
+			"type":"number",
+			"id": "http://jsonschema.net/date",
+			"required":false
+		},
+		"discount": {
+			"type":"null",
+			"id": "http://jsonschema.net/discount",
+			"required":false
+		},
+		"ending_balance": {
+			"type":"integer",
+			"id": "http://jsonschema.net/ending_balance",
+			"required":false
+		},
+		"id": {
+			"type":"string",
+			"id": "http://jsonschema.net/id",
+			"required":false
+		},
+		"lines": {
+			"type":"object",
+			"id": "http://jsonschema.net/lines",
+			"required":false,
+			"properties":{
+				"count": {
+					"type":"number",
+					"id": "http://jsonschema.net/lines/count",
+					"required":false
+				},
+				"data": {
+					"type":"array",
+					"id": "http://jsonschema.net/lines/data",
+					"required":false,
+					"items":
+						{
+							"type":"object",
+							"id": "http://jsonschema.net/lines/data/0",
+							"required":false,
+							"properties":{
+								"amount": {
+									"type":"number",
+									"id": "http://jsonschema.net/lines/data/0/amount",
+									"required":false
+								},
+								"currency": {
+									"type":"string",
+									"id": "http://jsonschema.net/lines/data/0/currency",
+									"required":false
+								},
+								"description": {
+									"type":"null",
+									"id": "http://jsonschema.net/lines/data/0/description",
+									"required":false
+								},
+								"id": {
+									"type":"string",
+									"id": "http://jsonschema.net/lines/data/0/id",
+									"required":false
+								},
+								"livemode": {
+									"type":"boolean",
+									"id": "http://jsonschema.net/lines/data/0/livemode",
+									"required":false
+								},
+								"object": {
+									"type":"string",
+									"id": "http://jsonschema.net/lines/data/0/object",
+									"required":false
+								},
+								"period": {
+									"type":"object",
+									"id": "http://jsonschema.net/lines/data/0/period",
+									"required":false,
+									"properties":{
+										"end": {
+											"type":"number",
+											"id": "http://jsonschema.net/lines/data/0/period/end",
+											"required":false
+										},
+										"start": {
+											"type":"number",
+											"id": "http://jsonschema.net/lines/data/0/period/start",
+											"required":false
+										}
+									}
+								},
+								"plan": {
+									"type":"object",
+									"id": "http://jsonschema.net/lines/data/0/plan",
+									"required":false,
+									"properties":{
+										"amount": {
+											"type":"number",
+											"id": "http://jsonschema.net/lines/data/0/plan/amount",
+											"required":false
+										},
+										"currency": {
+											"type":"string",
+											"id": "http://jsonschema.net/lines/data/0/plan/currency",
+											"required":false
+										},
+										"id": {
+											"type":"string",
+											"id": "http://jsonschema.net/lines/data/0/plan/id",
+											"required":false
+										},
+										"interval_count": {
+											"type":"number",
+											"id": "http://jsonschema.net/lines/data/0/plan/interval_count",
+											"required":false
+										},
+										"interval": {
+											"type":"string",
+											"id": "http://jsonschema.net/lines/data/0/plan/interval",
+											"required":false
+										},
+										"livemode": {
+											"type":"boolean",
+											"id": "http://jsonschema.net/lines/data/0/plan/livemode",
+											"required":false
+										},
+										"name": {
+											"type":"string",
+											"id": "http://jsonschema.net/lines/data/0/plan/name",
+											"required":false
+										},
+										"object": {
+											"type":"string",
+											"id": "http://jsonschema.net/lines/data/0/plan/object",
+											"required":false
+										},
+										"trial_period_days": {
+											"type":"null",
+											"id": "http://jsonschema.net/lines/data/0/plan/trial_period_days",
+											"required":false
+										}
+									}
+								},
+								"proration": {
+									"type":"boolean",
+									"id": "http://jsonschema.net/lines/data/0/proration",
+									"required":false
+								},
+								"quantity": {
+									"type":"number",
+									"id": "http://jsonschema.net/lines/data/0/quantity",
+									"required":false
+								},
+								"type": {
+									"type":"string",
+									"id": "http://jsonschema.net/lines/data/0/type",
+									"required":false
+								}
+							}
+						}
+					
+
+				},
+				"object": {
+					"type":"string",
+					"id": "http://jsonschema.net/lines/object",
+					"required":false
+				},
+				"url": {
+					"type":"string",
+					"id": "http://jsonschema.net/lines/url",
+					"required":false
+				}
+			}
+		},
+		"livemode": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/livemode",
+			"required":false
+		},
+		"next_payment_attempt": {
+			"type":"null",
+			"id": "http://jsonschema.net/next_payment_attempt",
+			"required":false
+		},
+		"object": {
+			"type":"string",
+			"id": "http://jsonschema.net/object",
+			"required":false
+		},
+		"paid": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/paid",
+			"required":false
+		},
+		"period_end": {
+			"type":"number",
+			"id": "http://jsonschema.net/period_end",
+			"required":false
+		},
+		"period_start": {
+			"type":"number",
+			"id": "http://jsonschema.net/period_start",
+			"required":false
+		},
+		"starting_balance": {
+			"type":"number",
+			"id": "http://jsonschema.net/starting_balance",
+			"required":false
+		},
+		"subtotal": {
+			"type":"number",
+			"id": "http://jsonschema.net/subtotal",
+			"required":false
+		},
+		"total": {
+			"type":"number",
+			"id": "http://jsonschema.net/total",
+			"required":false
+		}
+	}
+}

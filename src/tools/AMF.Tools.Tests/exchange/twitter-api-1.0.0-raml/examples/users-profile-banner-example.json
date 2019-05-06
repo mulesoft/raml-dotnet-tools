@@ -1,0 +1,34 @@
+{
+  "sizes": {
+    "ipad": {
+      "w": 626,
+      "url": "https://si0.twimg.com/profile_banners/6253282/1347394302/ipad",
+      "h": 313
+    },
+    "mobile_retina": {
+      "w": 640,
+      "url": "https://si0.twimg.com/profile_banners/6253282/1347394302/mobile_retina",
+      "h": 320
+    },
+    "mobile": {
+      "w": 320,
+      "url": "https://si0.twimg.com/profile_banners/6253282/1347394302/mobile",
+      "h": 160
+    },
+    "web_retina": {
+      "w": 1040,
+      "url": "https://si0.twimg.com/profile_banners/6253282/1347394302/web_retina",
+      "h": 520
+    },
+    "ipad_retina": {
+      "w": 1252,
+      "url": "https://si0.twimg.com/profile_banners/6253282/1347394302/ipad_retina",
+      "h": 626
+    },
+    "web": {
+      "w": 520,
+      "url": "https://si0.twimg.com/profile_banners/6253282/1347394302/web",
+      "h": 260
+    }
+  }
+}

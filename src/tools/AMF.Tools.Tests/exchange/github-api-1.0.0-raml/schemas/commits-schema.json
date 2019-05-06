@@ -1,0 +1,123 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "list": [
+        {
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "sha": {
+                    "type": "string"
+                },
+                "commit": {
+                    "properties": {
+                        "url": {
+                            "type": "string"
+                        },
+                        "author": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "date": {
+                                    "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "object"
+                    },
+                    "committer": {
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "date": {
+                                "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "tree": {
+                        "properties": {
+                            "url": {
+                                "type": "string"
+                            },
+                            "sha": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "author": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "committer": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "parents": [
+                    {
+                        "properties": {
+                            "url": {
+                                "type": "string"
+                            },
+                            "sha": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ],
+                "type": "array"
+            },
+            "type": "object"
+        }
+    ]
+}

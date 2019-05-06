@@ -1,0 +1,21 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "satisfaction_rating" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "score" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "comment" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "activity" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "verb" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "title" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "user" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "actor" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

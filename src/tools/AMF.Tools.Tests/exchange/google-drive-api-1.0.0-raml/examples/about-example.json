@@ -1,0 +1,78 @@
+{
+  "kind" : "drive#about" ,
+  "etag" : "etag" ,
+  "selfLink" : "string" ,
+  "name" : "string" ,
+  "user" : {
+    "kind" : "drive#user" ,
+    "displayName" : "string" ,
+    "picture" : {
+      "url" : "string"
+    } ,
+    "isAuthenticatedUser" : "boolean" ,
+    "permissionId" : "string" ,
+    "emailAddress" : "string"
+  } ,
+  "quotaBytesTotal" : "long" ,
+  "quotaBytesUsed" : "long" ,
+  "quotaBytesUsedAggregate" : "long" ,
+  "quotaBytesUsedInTrash" : "long" ,
+  "quotaType" : "string" ,
+  "quotaBytesByService" : [
+    {
+      "serviceName" : "string" ,
+      "bytesUsed" : "long"
+    }
+  ] ,
+  "largestChangeId" : "long" ,
+  "remainingChangeIds" : "long" ,
+  "rootFolderId" : "string" ,
+  "domainSharingPolicy" : "string" ,
+  "permissionId" : "string" ,
+  "importFormats" : [
+    {
+      "source" : "string" ,
+      "targets" : [
+        "string"
+      ]
+    }
+  ] ,
+  "exportFormats" : [
+    {
+      "source" : "string" ,
+      "targets" : [
+        "string"
+      ]
+    }
+  ] ,
+  "additionalRoleInfo" : [
+    {
+      "type" : "string" ,
+      "roleSets" : [
+        {
+          "primaryRole" : "string" ,
+          "additionalRoles" : [
+            "string"
+          ]
+        }
+      ]
+    }
+  ] ,
+  "features" : [
+    {
+      "featureName" : "string" ,
+      "featureRate" : "double"
+    }
+  ] ,
+  "maxUploadSizes" : [
+    {
+      "type" : "string" ,
+      "size" : "long"
+    }
+  ] ,
+  "isCurrentAppInstalled" : "boolean" ,
+  "languageCode" : "string" ,
+  "folderColorPalette" : [
+    "string"
+  ]
+}

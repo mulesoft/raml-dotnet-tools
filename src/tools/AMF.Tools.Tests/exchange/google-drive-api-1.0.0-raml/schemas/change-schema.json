@@ -1,0 +1,625 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "kind" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "id" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "fileId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "selfLink" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "deleted" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "modificationDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "file" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "kind" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "etag" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "selfLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "webContentLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "webViewLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "alternateLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "embedLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "openWithLinks" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "defaultOpenWithLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "iconLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "thumbnailLink" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "thumbnail" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "image" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "mimeType" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "title" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "mimeType" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "description" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "labels" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "starred" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "hidden" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "trashed" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "restricted" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "viewed" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "createdDate" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "modifiedDate" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "modifiedByMeDate" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastViewedByMeDate" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "markedViewedByMeDate" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "sharedWithMeDate" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "version" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "sharingUser" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "kind" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "displayName" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "picture" : {
+              "type" : "object" ,
+              "required" : false ,
+              "properties" : {
+                "url" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            } ,
+            "isAuthenticatedUser" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "permissionId" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "emailAddress" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "parents" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "kind" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "id" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "selfLink" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "parentLink" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "isRoot" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        } ,
+        "downloadUrl" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "exportLinks" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "indexableText" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "text" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "userPermission" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "permissions" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "kind" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "etag" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "id" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "selfLink" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "name" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "emailAddress" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "domain" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "role" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "additionalRoles" : {
+                  "type" : "array" ,
+                  "required" : false ,
+                  "items" : [
+                    {
+                      "type" : "string"
+                    }
+                  ]
+                } ,
+                "type" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "value" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "authKey" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "withLink" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "photoLink" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        } ,
+        "originalFilename" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "fileExtension" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "md5Checksum" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "fileSize" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "quotaBytesUsed" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "ownerNames" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "string"
+            }
+          ]
+        } ,
+        "owners" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "kind" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "displayName" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "picture" : {
+                  "type" : "object" ,
+                  "required" : false ,
+                  "properties" : {
+                    "url" : {
+                      "type" : "string" ,
+                      "required" : false
+                    }
+                  }
+                } ,
+                "isAuthenticatedUser" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "permissionId" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "emailAddress" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        } ,
+        "lastModifyingUserName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastModifyingUser" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "kind" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "displayName" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "picture" : {
+              "type" : "object" ,
+              "required" : false ,
+              "properties" : {
+                "url" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            } ,
+            "isAuthenticatedUser" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "permissionId" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "emailAddress" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "editable" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "copyable" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "writersCanShare" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "shared" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "explicitlyTrashed" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "appDataContents" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "headRevisionId" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "properties" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "kind" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "etag" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "selfLink" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "key" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "visibility" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "value" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        } ,
+        "folderColorRgb" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "imageMediaMetadata" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "width" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "height" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "rotation" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "location" : {
+              "type" : "object" ,
+              "required" : false ,
+              "properties" : {
+                "latitude" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "longitude" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "altitude" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            } ,
+            "date" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "cameraMake" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "cameraModel" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "exposureTime" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "aperture" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "flashUsed" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "focalLength" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "isoSpeed" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "meteringMode" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "sensor" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "exposureMode" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "colorSpace" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "whiteBalance" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "exposureBias" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "maxApertureValue" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "subjectDistance" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "lens" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "videoMediaMetadata" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "width" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "height" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "durationMillis" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      }
+    }
+  }
+}

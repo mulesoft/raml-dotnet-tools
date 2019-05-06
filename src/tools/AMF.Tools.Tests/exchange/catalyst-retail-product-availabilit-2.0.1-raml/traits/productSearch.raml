@@ -1,0 +1,22 @@
+#%RAML 1.0 Trait
+
+queryParameters: 
+  
+  productId:
+    required: true
+    description: |
+      Identifier of base product (irrespective of color or size)
+    type: string
+    
+  variantId:
+    description: |
+      Identifier of concrete variant of a product (specific color and size)
+    required: true
+    type: string
+    
+  quantity:
+    required: true
+    default: 0
+    description: | 
+      Quantity requested. If quantity in particular store is less than requested, the store will not show up in the results.
+    type: integer

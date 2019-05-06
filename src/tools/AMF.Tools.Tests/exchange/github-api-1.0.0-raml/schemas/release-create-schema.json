@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "tag_name": {
+      "required": false,
+      "type": "string"
+    },
+    "target_commitish": {
+      "required": false,
+      "type": "string"
+    },
+    "name": {
+      "required": false,
+      "type": "string"
+    },
+    "body": {
+      "required": false,
+      "type": "string"
+    },
+    "draft": {
+      "required": false,
+      "type": "boolean"
+    },
+    "prerelease": {
+      "required": false,
+      "type": "boolean"
+    }
+  }
+}

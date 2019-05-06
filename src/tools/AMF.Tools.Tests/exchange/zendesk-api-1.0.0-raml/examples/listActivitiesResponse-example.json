@@ -1,0 +1,27 @@
+{
+  "activities" : [
+    {
+      "id" : 35 ,
+      "url" : "https://company.zendesk.com/api/v2/activities/35.json" ,
+      "verb" : "tickets.assignment" ,
+      "title" : "John Hopeful assigned ticket #123 to you" ,
+      "user" : {
+      } ,
+      "actor" : {
+      } ,
+      "created_at" : "2012-03-05T10:38:52Z" ,
+      "updated_at" : "2012-03-05T10:38:52Z"
+    } , {
+      "id" : 45 ,
+      "url" : "https://company.zendesk.com/api/v2/activities/45.json" ,
+      "verb" : "tickets.comment" ,
+      "title" : "John Hopeful commented in ticket #44" ,
+      "user" : {
+      } ,
+      "actor" : {
+      } ,
+      "created_at" : "2012-03-05T11:32:44Z" ,
+      "updated_at" : "2012-03-05T11:32:44Z"
+    }
+  ]
+}

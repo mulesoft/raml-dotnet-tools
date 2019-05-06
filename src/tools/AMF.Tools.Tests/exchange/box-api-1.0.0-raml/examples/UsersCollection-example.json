@@ -1,0 +1,26 @@
+{
+    "total_count": 1,
+    "entries": [
+        {
+            "type": "user",
+            "id": "181216415",
+            "name": "sean rose",
+            "login": "sean+awesome@box.com",
+            "created_at": "2012-05-03T21:39:11-07:00",
+            "modified_at": "2012-08-23T14:57:48-07:00",
+            "role": "user",
+            "language": "en",
+            "space_amount": 5368709120,
+            "space_used": 52947,
+            "max_upload_size": 104857600,
+            "tracking_codes": [],
+            "see_managed_users": false,
+            "sync_enabled": true,
+            "status": "active",
+            "job_title": "",
+            "phone": "5555551374",
+            "address": "10 Cloud Way Los Altos CA",
+            "avatar_url": "https://api.box.com/api/avatar/large/181216415"
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+#%RAML 1.0 DataType
+required: false
+type: object
+properties:
+  notification_channel:
+    required: false
+    type: object
+    properties:
+      id:
+        required: false
+        type: integer
+      type:
+        required: false
+        type: string
+      downtime_only:
+        required: false
+        type: boolean
+      url:
+        required: false
+        type: string
+      name:
+        required: false
+        type: string
+      description:
+        required: false
+        type: string
+      email:
+        required: false
+        type: string
+      subdomain:
+        required: false
+        type: string
+      service:
+        required: false
+        type: string
+      mobile_alerts:
+        required: false
+        type: boolean
+      email_alerts:
+        required: false
+        type: boolean
+      room:
+        required: false
+        type: string
+      links:
+        required: false
+        type: object
+        properties:
+          notification_channels:
+            required: false
+            type: array
+            items:
+              required: false
+              type: integer
+          user:
+            required: false
+            type: integer

@@ -1,0 +1,25 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "suspended_ticket" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "subject" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "cause" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "view" : {
+    "id" : 25 ,
+    "title" : "Tickets updated <12 Hours" ,
+    "active" : true,
+	"execution" : {    } ,
+    "conditions" : {    } ,
+    "restriction" : {    }
+  }
+}

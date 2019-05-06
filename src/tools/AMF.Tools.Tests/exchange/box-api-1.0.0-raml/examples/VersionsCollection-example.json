@@ -1,0 +1,20 @@
+{
+    "total_count": 1,
+    "entries": [
+        {
+            "type": "file_version",
+            "id": "672259576",
+            "sha1": "359c6c1ed98081b9a69eb3513b9deced59c957f9",
+            "name": "Dragons.js",
+            "size": 92556,
+            "created_at": "2012-08-20T10:20:30-07:00",
+            "modified_at": "2012-11-28T13:14:58-08:00",
+            "modified_by": {
+                "type": "user",
+                "id": "183732129",
+                "name": "sean rose",
+                "login": "sean+apitest@box.com"
+            }
+        }
+    ]
+}

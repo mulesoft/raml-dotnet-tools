@@ -1,0 +1,46 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "ticket" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "subject" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "comment" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "body" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "custom_fields" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "id" : {
+                  "type" : "number" ,
+                  "required" : false
+                } ,
+                "value" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+      xmlns:gContact='http://schemas.google.com/contact/2008'
+      xmlns:gd='http://schemas.google.com/g/2005'
+      xmlns:batch='http://schemas.google.com/gdata/batch'
+      xmlns:atom='http://www.w3.org/2005/Atom'>
+  <entry>
+    <batch:id>retrieve</batch:id>
+    <batch:operation type='query'/>
+    <id>https://www.google.com/m8/feeds/groups/default/full/retrieveContactGroupId</id>
+  </entry>
+  <entry>
+    <batch:id>create</batch:id>
+    <batch:operation type='insert'/>
+    <atom:category scheme="http://schemas.google.com/g/2005#kind"
+      term="http://schemas.google.com/contact/2008#group"/>
+    <atom:title type="text">Salsa group</atom:title>
+    <gd:extendedProperty name="more info about the group">
+      <info>Nice people.</info>
+    </gd:extendedProperty>
+  </entry>
+  <entry gd:etag='updateContactGroupEtag'>
+    <batch:id>update</batch:id>
+    <batch:operation type='update'/>
+    <category scheme="http://schemas.google.com/g/2005#kind"
+      term="http://schemas.google.com/g/2005#group"/>
+    <id>http://www.google.com/feeds/groups/userEmail/base/updateContactGroupId</id>
+    <published>2005-01-18T21:00:00Z</published>
+    <updated>2006-01-01T00:00:00Z</updated>
+    <title type="text">New Group Title</title>
+    <content type="text">New Group Content</content>
+    <link rel='self' type='application/atom+xml'
+      href='https://www.google.com/m8/feeds/groups/userEmail/full/updateContactGroupId'/>
+    <link rel='edit' type='application/atom+xml'
+      href='https://www.google.com/m8/feeds/groups/userEmail/full/updateContactGroupId'/>
+  </entry>
+  <entry gd:etag='deleteContactGroupEtag'>
+    <batch:id>delete</batch:id>
+    <batch:operation type='delete'/>
+    <id>https://www.google.com/m8/feeds/groups/default/full/deleteContactGroupId</id>
+  </entry>
+</feed>

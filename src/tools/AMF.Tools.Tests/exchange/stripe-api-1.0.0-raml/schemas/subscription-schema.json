@@ -1,0 +1,130 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"application_fee_percent": {
+			"type":"null",
+			"id": "http://jsonschema.net/application_fee_percent",
+			"required":false
+		},
+		"cancel_at_period_end": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/cancel_at_period_end",
+			"required":false
+		},
+		"canceled_at": {
+			"type":"null",
+			"id": "http://jsonschema.net/canceled_at",
+			"required":false
+		},
+		"current_period_end": {
+			"type":"number",
+			"id": "http://jsonschema.net/current_period_end",
+			"required":false
+		},
+		"current_period_start": {
+			"type":"number",
+			"id": "http://jsonschema.net/current_period_start",
+			"required":false
+		},
+		"customer": {
+			"type":"string",
+			"id": "http://jsonschema.net/customer",
+			"required":false
+		},
+		"ended_at": {
+			"type":"null",
+			"id": "http://jsonschema.net/ended_at",
+			"required":false
+		},
+		"id": {
+			"type":"string",
+			"id": "http://jsonschema.net/id",
+			"required":false
+		},
+		"object": {
+			"type":"string",
+			"id": "http://jsonschema.net/object",
+			"required":false
+		},
+		"plan": {
+			"type":"object",
+			"id": "http://jsonschema.net/plan",
+			"required":false,
+			"properties":{
+				"amount": {
+					"type":"number",
+					"id": "http://jsonschema.net/plan/amount",
+					"required":false
+				},
+				"currency": {
+					"type":"string",
+					"id": "http://jsonschema.net/plan/currency",
+					"required":false
+				},
+				"id": {
+					"type":"string",
+					"id": "http://jsonschema.net/plan/id",
+					"required":false
+				},
+				"interval_count": {
+					"type":"number",
+					"id": "http://jsonschema.net/plan/interval_count",
+					"required":false
+				},
+				"interval": {
+					"type":"string",
+					"id": "http://jsonschema.net/plan/interval",
+					"required":false
+				},
+				"livemode": {
+					"type":"boolean",
+					"id": "http://jsonschema.net/plan/livemode",
+					"required":false
+				},
+				"name": {
+					"type":"string",
+					"id": "http://jsonschema.net/plan/name",
+					"required":false
+				},
+				"object": {
+					"type":"string",
+					"id": "http://jsonschema.net/plan/object",
+					"required":false
+				},
+				"trial_period_days": {
+					"type":"null",
+					"id": "http://jsonschema.net/plan/trial_period_days",
+					"required":false
+				}
+			}
+		},
+		"quantity": {
+			"type":"number",
+			"id": "http://jsonschema.net/quantity",
+			"required":false
+		},
+		"start": {
+			"type":"number",
+			"id": "http://jsonschema.net/start",
+			"required":false
+		},
+		"status": {
+			"type":"string",
+			"id": "http://jsonschema.net/status",
+			"required":false
+		},
+		"trial_end": {
+			"type":"null",
+			"id": "http://jsonschema.net/trial_end",
+			"required":false
+		},
+		"trial_start": {
+			"type":"null",
+			"id": "http://jsonschema.net/trial_start",
+			"required":false
+		}
+	}
+}

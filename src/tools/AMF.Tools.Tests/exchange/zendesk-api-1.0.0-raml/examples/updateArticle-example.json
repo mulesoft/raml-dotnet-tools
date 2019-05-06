@@ -1,0 +1,11 @@
+{
+  "article" : {
+    "promoted" : false ,
+    "position" : 42 ,
+    "comments_disabled" : true ,
+    "label_names" : [
+      "photo" ,
+      "tripod"
+    ]
+  }
+}

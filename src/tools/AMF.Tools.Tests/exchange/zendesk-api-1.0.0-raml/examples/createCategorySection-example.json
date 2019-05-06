@@ -1,0 +1,8 @@
+{
+  "section" : {
+    "position" : 2 ,
+    "locale" : "en-us" ,
+    "name" : "Avionics" ,
+    "description" : "This section contains articles on flight instruments"
+  }
+}

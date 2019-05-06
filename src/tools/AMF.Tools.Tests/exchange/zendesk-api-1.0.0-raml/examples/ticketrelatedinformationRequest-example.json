@@ -1,0 +1,14 @@
+{
+  "ticket" : {
+    "subject" : "Hello" ,
+    "comment" : {
+      "body" : "Some question"
+    } ,
+    "custom_fields" : [
+      {
+        "id" : 34 ,
+        "value" : "I need help!"
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<group-membership>
+  <group>
+    <id>32423423</id>
+  </group>
+  <show-group-logo-in-profile>true</show-group-logo-in-profile>
+  <email-digest-frequency>
+    <code>daily</code>
+  </email-digest-frequency>
+  <email-announcements-from-managers>true</email-announcements-from-managers>
+  <allow-messages-from-members>true</allow-messages-from-members>
+  <email-for-every-new-post>false</email-for-every-new-post>
+  <membership-state>
+    <code>member</code>
+  </membership-state>
+</group-membership>

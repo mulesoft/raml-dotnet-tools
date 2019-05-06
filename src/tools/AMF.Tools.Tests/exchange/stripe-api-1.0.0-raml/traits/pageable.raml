@@ -1,0 +1,10 @@
+description: Stripe utilizes cursor-based pagination, using the parameter starting_after. Pass starting_after to dictate where in the list you would like to begin (see below).
+queryParameters: 
+  limit: 
+    description: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+    type: integer
+    default: 10
+  starting_after: 
+    description: A cursor for use in pagination. starting_after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include starting_after=obj_foo in order to fetch the next page of the list.
+  ending_before: 
+    description: A cursor for use in pagination. ending_before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_bar, your subsequent call can include ending_before=obj_bar in order to fetch the previous page of the list.

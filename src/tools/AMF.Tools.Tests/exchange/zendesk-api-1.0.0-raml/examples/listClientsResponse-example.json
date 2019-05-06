@@ -1,0 +1,11 @@
+{
+  "clients" : [
+    {
+      "id" : 223443 ,
+      "name" : "Stats Widget" 
+    } , {
+      "id" : 8678530 ,
+      "name" : "Zendesk Mobile" 
+    }
+  ]
+}

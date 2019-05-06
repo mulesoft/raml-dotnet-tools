@@ -1,0 +1,65 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="products">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="product" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:short" name="id"/>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element name="type">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="code"/>
+                    <xs:element type="xs:string" name="name"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:byte" name="num-recommendations"/>
+              <xs:element name="recommendations" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="recommendation" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="recommender">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="id"/>
+                                <xs:element type="xs:string" name="first-name"/>
+                                <xs:element type="xs:string" name="last-name"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:int" name="id"/>
+                          <xs:element type="xs:short" name="product-id"/>
+                          <xs:element type="xs:long" name="timestamp"/>
+                          <xs:element type="xs:string" name="text" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:byte" name="count" use="optional"/>
+                  <xs:attribute type="xs:byte" name="start" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="product-category">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="code"/>
+                    <xs:element type="xs:string" name="name"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:anyURI" name="website-url"/>
+              <xs:element type="xs:string" name="disclaimer" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:byte" name="total"/>
+      <xs:attribute type="xs:byte" name="count"/>
+      <xs:attribute type="xs:byte" name="start"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

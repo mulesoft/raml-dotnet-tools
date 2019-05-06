@@ -1,0 +1,63 @@
+#%RAML 0.8
+title: portal-fitbit2fhir-system-api
+baseUri: https://portal-fitbit2fhir-system-api.cloudhub.io/api
+mediaType: application/json
+version: v1
+
+/patients/{patientIDType}/{patientID}:
+  uriParameters:
+    patientID:
+      type: string
+      description: Patient ID
+    patientIDType:
+      type: string
+      description: ID Type like MRN
+  /authorize:
+    displayName: Authorize Fitbit user
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include authorize-response.json
+  /unauthorize:
+    displayName: Unauthorize Fitbit user
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include unauthorize-response.json
+  /observations:
+    displayName: Fitbit observations in FHIR structure
+    get:
+      description: Get fitbit activity and sleep observations for given patient in FHIR structure
+      queryParameters:
+        date:
+          description: Effective date of Observations (if starting with "eq" match exact date, if starting with "ge" match range sice specified date until today)
+          type: string
+          example: eq2016-07-18
+          pattern: ^(eq|ge)(((19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]))$
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include observations-fhir-response.json
+  /devices:
+    displayName: Fitbit devices in FHIR structure
+    get:
+      description: Get fitbit devices for given patient in FHIR structure
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include devices-fhir-response.json
+/patients:
+  displayName: Patients authorized to Fitbit
+  get:
+    description: Get list of patient IDs 
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include patients-response.json

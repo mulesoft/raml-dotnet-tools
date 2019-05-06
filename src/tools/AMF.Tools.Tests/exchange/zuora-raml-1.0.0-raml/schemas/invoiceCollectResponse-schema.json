@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "invoices": {
+      "required": false,
+      "type": "array",
+      "items": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "invoiceAmount": {
+            "required": false,
+            "type": "number"
+          },
+          "invoiceId": {
+            "required": false,
+            "type": "string"
+          },
+          "invoiceNumber": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    },
+    "paymentId": {
+      "required": false,
+      "type": "string"
+    },
+    "amountCollected": {
+      "required": false,
+      "type": "number"
+    },
+    "success": {
+      "required": false,
+      "type": "boolean"
+    }
+  }
+}

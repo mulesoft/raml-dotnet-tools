@@ -1,0 +1,9 @@
+{
+  "ticket" : {
+    "comment" : {
+      "body" : "Thanks for choosing Acme Jet Motors." ,
+      "public" : "true"
+    } ,
+    "status" : "solved"
+  }
+}

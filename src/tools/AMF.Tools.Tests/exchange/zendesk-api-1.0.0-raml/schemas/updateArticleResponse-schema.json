@@ -1,0 +1,33 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "article" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "author_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "promoted" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "position" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "comments_disabled" : {
+          "type" : "boolean" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

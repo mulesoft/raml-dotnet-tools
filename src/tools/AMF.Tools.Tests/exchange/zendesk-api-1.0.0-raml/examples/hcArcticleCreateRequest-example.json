@@ -1,0 +1,22 @@
+{
+  "article" : {
+    "promoted" : false ,
+    "position" : 2 ,
+    "comments_disabled" : true ,
+    "label_names" : [
+      "photo" ,
+      "tripod"
+    ] ,
+    "translations" : [
+      {
+        "locale" : "en-us" ,
+        "title" : "How to take pictures in low light" ,
+        "body" : "Use a tripod"
+      } , {
+        "locale" : "fr" ,
+        "title" : "Comment prendre des photos en basse lumiere" ,
+        "body" : "Utilisez un trepied"
+      }
+    ]
+  }
+}

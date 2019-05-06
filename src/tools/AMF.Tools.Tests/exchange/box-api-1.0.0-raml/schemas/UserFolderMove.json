@@ -1,0 +1,15 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"owned_by": {
+			"description": "The user who the folder will be transferred to.",
+			"type": "string"
+		},
+		"id": {
+			"description": "The ID of the user who the folder will be transferred to.",
+			"type": "string"
+		}
+	},
+	"required": true
+}

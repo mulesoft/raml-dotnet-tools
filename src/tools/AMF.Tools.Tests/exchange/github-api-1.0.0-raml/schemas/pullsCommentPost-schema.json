@@ -1,0 +1,23 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "body" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "commit_id" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "path" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "position" : {
+      "type" : "number" ,
+      "required" : false
+    }
+  }
+}

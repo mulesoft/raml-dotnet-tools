@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Versions> 
+  <Version> 
+    <label>Winter &apos;11</label> 
+    <url>/services/data/v20.0</url> 
+    <version>20.0</version> 
+  </Version> 
+  <Version> 
+    <label>Spring &apos;11</label> 
+    <url>/services/data/v21.0</url> 
+    <version>21.0</version> 
+  </Version> 
+  <Version> 
+    <label>Winter &apos;13</label> 
+    <url>/services/data/v26.0</url> 
+    <version>26.0</version> 
+  </Version> 
+</Versions>

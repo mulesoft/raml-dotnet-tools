@@ -1,0 +1,25 @@
+{
+  "view" : {
+    "id" : 25 ,
+    "url" : ""
+  }, 
+  "rows" : [
+    {
+      "ticket" : {
+      } ,
+      "locale" : "en-US" ,
+      "group" : 1 ,
+    } 
+  ] ,
+  "columns" : [
+    {
+      "id" : "locale" ,
+      "title" : "Locale"
+    } , {
+      "id" : 5 ,
+      "title" : "Account" ,
+      "url" : ""
+    } 
+  ] ,
+  "groups" : [  ]
+}

@@ -1,0 +1,46 @@
+{
+  "resourceType": "Practitioner",
+  "id": "f001",
+  "name": {
+    "use": "official",
+    "family": [
+      "Broek"
+    ],
+    "given": [
+      "Eric"
+    ],
+    "suffix": [
+      "MD"
+    ]
+  },
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "0205568263",
+      "use": "work"
+    },
+    {
+      "system": "email",
+      "value": "E.M.vandenbroek@bmc.nl",
+      "use": "work"
+    },
+    {
+      "system": "fax",
+      "value": "0205664440",
+      "use": "work"
+    }
+  ],
+  "address": [
+    {
+      "use": "work",
+      "line": [
+        "Galapagosweg 91"
+      ],
+      "city": "Den Burg",
+      "postalCode": "9105 PZ",
+      "country": "NLD"
+    }
+  ],
+  "gender": "male",
+  "birthDate": "1975-12-07"  
+}

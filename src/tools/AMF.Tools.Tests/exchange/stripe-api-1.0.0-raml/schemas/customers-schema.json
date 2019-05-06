@@ -1,0 +1,344 @@
+{
+    "type":"object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required":false,
+    "properties":{
+        "count": {
+            "type":"number",
+            "id": "http://jsonschema.net/count",
+            "required":false
+        },
+        "data": {
+            "type":"array",
+            "id": "http://jsonschema.net/data",
+            "required":false,
+            "items":
+                {
+                    "type":"object",
+                    "id": "http://jsonschema.net/data/0",
+                    "required":false,
+                    "properties":{
+                        "account_balance": {
+                            "type":"number",
+                            "id": "http://jsonschema.net/data/0/account_balance",
+                            "required":false
+                        },
+                        "cards": {
+                            "type":"object",
+                            "id": "http://jsonschema.net/data/0/cards",
+                            "required":false,
+                            "properties":{
+                                "count": {
+                                    "type":"number",
+                                    "id": "http://jsonschema.net/data/0/cards/count",
+                                    "required":false
+                                },
+                                "data": {
+                                    "type":"array",
+                                    "id": "http://jsonschema.net/data/0/cards/data",
+                                    "required":false,
+                                    "items":
+                                        {
+                                            "type":"object",
+                                            "id": "http://jsonschema.net/data/0/cards/data/0",
+                                            "required":false,
+                                            "properties":{
+                                                "address_city": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_city",
+                                                    "required":false
+                                                },
+                                                "address_country": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_country",
+                                                    "required":false
+                                                },
+                                                "address_line1_check": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_line1_check",
+                                                    "required":false
+                                                },
+                                                "address_line1": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_line1",
+                                                    "required":false
+                                                },
+                                                "address_line2": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_line2",
+                                                    "required":false
+                                                },
+                                                "address_state": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_state",
+                                                    "required":false
+                                                },
+                                                "address_zip_check": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_zip_check",
+                                                    "required":false
+                                                },
+                                                "address_zip": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/address_zip",
+                                                    "required":false
+                                                },
+                                                "country": {
+                                                    "type":"string",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/country",
+                                                    "required":false
+                                                },
+                                                "customer": {
+                                                    "type":"string",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/customer",
+                                                    "required":false
+                                                },
+                                                "cvc_check": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/cvc_check",
+                                                    "required":false
+                                                },
+                                                "exp_month": {
+                                                    "type":"number",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/exp_month",
+                                                    "required":false
+                                                },
+                                                "exp_year": {
+                                                    "type":"number",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/exp_year",
+                                                    "required":false
+                                                },
+                                                "fingerprint": {
+                                                    "type":"string",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/fingerprint",
+                                                    "required":false
+                                                },
+                                                "id": {
+                                                    "type":"string",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/id",
+                                                    "required":false
+                                                },
+                                                "last4": {
+                                                    "type":"string",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/last4",
+                                                    "required":false
+                                                },
+                                                "name": {
+                                                    "type":"null",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/name",
+                                                    "required":false
+                                                },
+                                                "object": {
+                                                    "type":"string",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/object",
+                                                    "required":false
+                                                },
+                                                "type": {
+                                                    "type":"string",
+                                                    "id": "http://jsonschema.net/data/0/cards/data/0/type",
+                                                    "required":false
+                                                }
+                                            }
+                                        }
+                                    
+
+                                },
+                                "object": {
+                                    "type":"string",
+                                    "id": "http://jsonschema.net/data/0/cards/object",
+                                    "required":false
+                                },
+                                "url": {
+                                    "type":"string",
+                                    "id": "http://jsonschema.net/data/0/cards/url",
+                                    "required":false
+                                }
+                            }
+                        },
+                        "created": {
+                            "type":"number",
+                            "id": "http://jsonschema.net/data/0/created",
+                            "required":false
+                        },
+                        "default_card": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/data/0/default_card",
+                            "required":false
+                        },
+                        "delinquent": {
+                            "type":"boolean",
+                            "id": "http://jsonschema.net/data/0/delinquent",
+                            "required":false
+                        },
+                        "description": {
+                            "type":"null",
+                            "id": "http://jsonschema.net/data/0/description",
+                            "required":false
+                        },
+                        "discount": {
+                            "type":"object",
+                            "id": "http://jsonschema.net/data/0/discount",
+                            "required":false
+                        },
+                        "email": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/data/0/email",
+                            "required":false
+                        },
+                        "id": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/data/0/id",
+                            "required":false
+                        },
+                        "livemode": {
+                            "type":"boolean",
+                            "id": "http://jsonschema.net/data/0/livemode",
+                            "required":false
+                        },
+                        "object": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/data/0/object",
+                            "required":false
+                        },
+                        "subscription": {
+                            "type":"object",
+                            "id": "http://jsonschema.net/data/0/subscription",
+                            "required":false,
+                            "properties":{
+                                "cancel_at_period_end": {
+                                    "type":"boolean",
+                                    "id": "http://jsonschema.net/data/0/subscription/cancel_at_period_end",
+                                    "required":false
+                                },
+                                "canceled_at": {
+                                    "type":"null",
+                                    "id": "http://jsonschema.net/data/0/subscription/canceled_at",
+                                    "required":false
+                                },
+                                "current_period_end": {
+                                    "type":"number",
+                                    "id": "http://jsonschema.net/data/0/subscription/current_period_end",
+                                    "required":false
+                                },
+                                "current_period_start": {
+                                    "type":"number",
+                                    "id": "http://jsonschema.net/data/0/subscription/current_period_start",
+                                    "required":false
+                                },
+                                "customer": {
+                                    "type":"string",
+                                    "id": "http://jsonschema.net/data/0/subscription/customer",
+                                    "required":false
+                                },
+                                "ended_at": {
+                                    "type":"null",
+                                    "id": "http://jsonschema.net/data/0/subscription/ended_at",
+                                    "required":false
+                                },
+                                "id": {
+                                    "type":"string",
+                                    "id": "http://jsonschema.net/data/0/subscription/id",
+                                    "required":false
+                                },
+                                "object": {
+                                    "type":"string",
+                                    "id": "http://jsonschema.net/data/0/subscription/object",
+                                    "required":false
+                                },
+                                "plan": {
+                                    "type":"object",
+                                    "id": "http://jsonschema.net/data/0/subscription/plan",
+                                    "required":false,
+                                    "properties":{
+                                        "amount": {
+                                            "type":"number",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/amount",
+                                            "required":false
+                                        },
+                                        "currency": {
+                                            "type":"string",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/currency",
+                                            "required":false
+                                        },
+                                        "id": {
+                                            "type":"string",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/id",
+                                            "required":false
+                                        },
+                                        "interval_count": {
+                                            "type":"number",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/interval_count",
+                                            "required":false
+                                        },
+                                        "interval": {
+                                            "type":"string",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/interval",
+                                            "required":false
+                                        },
+                                        "livemode": {
+                                            "type":"boolean",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/livemode",
+                                            "required":false
+                                        },
+                                        "name": {
+                                            "type":"string",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/name",
+                                            "required":false
+                                        },
+                                        "object": {
+                                            "type":"string",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/object",
+                                            "required":false
+                                        },
+                                        "trial_period_days": {
+                                            "type":"null",
+                                            "id": "http://jsonschema.net/data/0/subscription/plan/trial_period_days",
+                                            "required":false
+                                        }
+                                    }
+                                },
+                                "quantity": {
+                                    "type":"number",
+                                    "id": "http://jsonschema.net/data/0/subscription/quantity",
+                                    "required":false
+                                },
+                                "start": {
+                                    "type":"number",
+                                    "id": "http://jsonschema.net/data/0/subscription/start",
+                                    "required":false
+                                },
+                                "status": {
+                                    "type":"string",
+                                    "id": "http://jsonschema.net/data/0/subscription/status",
+                                    "required":false
+                                },
+                                "trial_end": {
+                                    "type":"null",
+                                    "id": "http://jsonschema.net/data/0/subscription/trial_end",
+                                    "required":false
+                                },
+                                "trial_start": {
+                                    "type":"null",
+                                    "id": "http://jsonschema.net/data/0/subscription/trial_start",
+                                    "required":false
+                                }
+                            }
+                        }
+                    }
+                }
+            
+
+        },
+        "object": {
+            "type":"string",
+            "id": "http://jsonschema.net/object",
+            "required":false
+        },
+        "url": {
+            "type":"string",
+            "id": "http://jsonschema.net/url",
+            "required":false
+        }
+    }
+}

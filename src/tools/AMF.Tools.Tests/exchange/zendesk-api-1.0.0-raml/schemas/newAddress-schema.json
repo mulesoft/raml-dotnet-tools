@@ -1,0 +1,25 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "recipient_address" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "email" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "default" : {
+          "type" : "boolean" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

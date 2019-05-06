@@ -1,0 +1,8 @@
+{
+  "error": {
+    "type": "invalid_request_error",
+    "message": "No such charge: ch_2Vcu103KQjX3Ey",
+    "code": "missing",
+    "param": "id"
+  }
+}

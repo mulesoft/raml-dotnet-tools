@@ -1,0 +1,29 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "app_id" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "settings" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "api_token" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "use_ssl" : {
+          "type" : "boolean" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "topic_comment" : {
+    "id" : 35436 ,
+    "topic_id" : 118 ,
+    "user_id" : 9442 ,
+    "body" : "A woman walks into a bar" ,
+    "informative" : false ,
+    "attachments" : [    ],
+    "created_at" : "2012-03-05T10:38:52Z" ,
+    "updated_at" : "2012-03-05T12:38:52Z"
+  }
+}

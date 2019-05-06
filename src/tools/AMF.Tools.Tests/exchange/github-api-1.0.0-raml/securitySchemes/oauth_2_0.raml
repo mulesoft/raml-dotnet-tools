@@ -1,0 +1,25 @@
+description: |
+  OAuth2 is a protocol that lets external apps request authorization to private
+  details in a user's GitHub account without getting their password. This is
+  preferred over Basic Authentication because tokens can be limited to specific
+  types of data, and can be revoked by users at any time.
+type: OAuth 2.0
+describedBy: 
+  headers: 
+    Authorization: 
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use together with
+        the "access_token" query string parameter.
+  queryParameters: 
+    access_token: 
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use together with
+        the "Authorization" header
+  responses: 
+    404: 
+      description: Unauthorized
+settings: 
+  authorizationUri: https://github.com/login/oauth/authorize
+  accessTokenUri: https://github.com/login/oauth/access_token
+  authorizationGrants: [ code ]
+  scopes: ["user", "user:email", "user:follow", "public_repo", "repo", "repo_deployment", "repo:status", "delete_repo", "notifications", "gist", "read:repo_hook", "write:repo_hook", "admin:repo_hook", "admin:org_hook", "read:org", "write:org", "admin:org", "read:public_key", "write:public_key", "admin:public_key"]

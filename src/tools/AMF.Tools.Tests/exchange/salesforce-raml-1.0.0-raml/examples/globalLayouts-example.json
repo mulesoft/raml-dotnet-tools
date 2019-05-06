@@ -1,0 +1,105 @@
+[
+  {
+    "name" : "contactlayout" ,
+    "searchColumns" : [
+      {
+        "field" : "Account.Name" ,
+        "format" : null ,
+        "label" : "AccountName" ,
+        "name" : "Name"
+      } , {
+        "field" : "Account.Site" ,
+        "format" : null ,
+        "label" : "AccountSite" ,
+        "name" : "Site"
+      } , {
+        "field" : "Account.Phone" ,
+        "format" : null ,
+        "label" : "Phone" ,
+        "name" : "Phone"
+      } , {
+        "field" : "User.Alias" ,
+        "format" : null ,
+        "label" : "AccountOwnerAlias" ,
+        "name" : "Owner.Alias"
+      }
+    ]
+  } , {
+    "label" : "SearchResults" ,
+    "limitRows" : 25 ,
+    "searchColumns" : [
+      {
+        "field" : "Contact.Name" ,
+        "format" : null ,
+        "label" : "Name" ,
+        "name" : "Name"
+      } , {
+        "field" : "Account.Name" ,
+        "format" : null ,
+        "label" : "AccountName" ,
+        "name" : "Account.Name"
+      } , {
+        "field" : "Account.Site" ,
+        "format" : null ,
+        "label" : "AccountSite" ,
+        "name" : "Account.Site"
+      } , {
+        "field" : "Contact.Phone" ,
+        "format" : null ,
+        "label" : "Phone" ,
+        "name" : "Phone"
+      } , {
+        "field" : "Contact.Email" ,
+        "format" : null ,
+        "label" : "Email" ,
+        "name" : "Email"
+      } , {
+        "field" : "User.Alias" ,
+        "format" : null ,
+        "label" : "ContactOwnerAlias" ,
+        "name" : "Owner.Alias"
+      }
+    ]
+  } , {
+    "label" : "SearchResults" ,
+    "limitRows" : 25 ,
+    "searchColumns" : [
+      {
+        "field" : "Lead.Name" ,
+        "format" : null ,
+        "label" : "Name" ,
+        "name" : "Name"
+      } , {
+        "field" : "Lead.Title" ,
+        "format" : null ,
+        "label" : "Title" ,
+        "name" : "Title"
+      } , {
+        "field" : "Lead.Phone" ,
+        "format" : null ,
+        "label" : "Phone" ,
+        "name" : "Phone"
+      } , {
+        "field" : "Lead.Company" ,
+        "format" : null ,
+        "label" : "Company" ,
+        "name" : "Company"
+      } , {
+        "field" : "Lead.Email" ,
+        "format" : null ,
+        "label" : "Email" ,
+        "name" : "Email"
+      } , {
+        "field" : "Lead.Status" ,
+        "format" : null ,
+        "label" : "LeadStatus" ,
+        "name" : "toLabel(Status)"
+      } , {
+        "field" : "Name.Alias" ,
+        "format" : null ,
+        "label" : "OwnerAlias" ,
+        "name" : "Owner.Alias"
+      }
+    ]
+  } 
+]

@@ -1,0 +1,1 @@
+{"main":"device.raml","name":"Device","classifier":"raml-fragment","tags":["type"],"dependencies":[{"groupId":"org.mule.templates","assetId":"fhir-commons","version":"1.0.0"}],"groupId":"org.mule.templates","assetId":"device","version":"1.0.0","metadata":{"projectId":"f3556efe-482c-420e-8b24-41045ac23729","branchId":"master","commitId":"6a2fa422791199edb3322c8f87455bfa3e01b65b"}}

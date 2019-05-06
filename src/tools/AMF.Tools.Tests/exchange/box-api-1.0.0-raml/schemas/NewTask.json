@@ -1,0 +1,31 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"item": {
+			"description": "The item this task is for.",
+			"type": "object"
+		},
+		"type": {
+			"description": "The type of the item this task is for (currently only 'file' is supported).",
+			"type": "string"
+		},
+		"id": {
+			"description": "The ID of the item this task is for.",
+			"type": "string"
+		},
+		"action": {
+			"description": "The action the task assignee will be prompted to do. Must be 'review'.",
+			"type": [ "review" ]
+		},
+		"message": {
+			"description": "An optional message to include with the task.",
+			"type": "string"
+		},
+		"due_at": {
+			"description": "The day at which this task is due.",
+			"type": "timestamp"
+		}
+	},
+	"required": [ "item", "type", "id", "action" ]
+}

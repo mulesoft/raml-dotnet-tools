@@ -1,0 +1,157 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Encounter.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: |
+  An interaction during which services are provided to the patient
+type: FHIR_commons.DomainResource
+properties:
+  identifier?:
+    description: Identifier(s) by which this encounter is known
+    type: FHIR_commons.Identifier[]
+  status:
+    description: Encounter status
+    type: FHIR_commons.code
+  statusHistory?:
+    description: List of past encounter statuses
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        status:
+          description: Past encounter status
+          type: FHIR_commons.code
+        period:
+          description: The time that the episode was in the specified status
+          type: FHIR_commons.Period
+  class?:
+    description: Encounter class
+    type: FHIR_commons.Coding
+  classHistory?:
+    description: List of past encounter classes
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        class:
+          description: Past encounter class
+          type: FHIR_commons.Coding
+        period:
+          description: The time that the episode was in the specified class
+          type: FHIR_commons.Period
+  type?:
+    description: Specific type of encounter
+    type: FHIR_commons.CodeableConcept[]
+  priority?:
+    description: Indicates the urgency of the encounter
+    type: FHIR_commons.CodeableConcept
+  subject?:
+    description: The patient or group present at the encounter
+    type: FHIR_commons.Reference
+  episodeOfCare?:
+    description: Episode(s) of care that this encounter should be recorded against
+    type: FHIR_commons.Reference[]
+  incomingReferral?:
+    description: The ReferralRequest that initiated this encounter
+    type: FHIR_commons.Reference[]
+  participant?:
+    description: List of participants involved in the encounter
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        type?:
+          description: Role of participant in encounter
+          type: FHIR_commons.CodeableConcept[]
+        period?:
+          description: Period of time during the encounter that the participant participated
+          type: FHIR_commons.Period
+        individual?:
+          description: Persons involved in the encounter other than the patient
+          type: FHIR_commons.Reference
+  appointment?:
+    description: The appointment that scheduled this encounter
+    type: FHIR_commons.Reference
+  period?:
+    description: The start and end time of the encounter
+    type: FHIR_commons.Period
+  length?:
+    description: Quantity of time the encounter lasted (less time absent)
+    type: FHIR_commons.Duration
+  reason?:
+    description: Reason the encounter takes place (code)
+    type: FHIR_commons.CodeableConcept[]
+  diagnosis?:
+    description: The list of diagnosis relevant to this encounter
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        condition:
+          description: Reason the encounter takes place (resource)
+          type: FHIR_commons.Reference
+        role?:
+          description: Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …)
+          type: FHIR_commons.CodeableConcept
+        rank?:
+          description: Ranking of the diagnosis (for each role type)
+          type: FHIR_commons.positiveInt
+  account?:
+    description: The set of accounts that may be used for billing for this Encounter
+    type: FHIR_commons.Reference[]
+  hospitalization?:
+    description: Details about the admission to a healthcare service
+    type: FHIR_commons.BackboneElement
+    properties:
+      preAdmissionIdentifier?:
+        description: Pre-admission identifier
+        type: FHIR_commons.Identifier
+      origin?:
+        description: The location from which the patient came before admission
+        type: FHIR_commons.Reference
+      admitSource?:
+        description: From where patient was admitted (physician referral, transfer)
+        type: FHIR_commons.CodeableConcept
+      reAdmission?:
+        description: The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission
+        type: FHIR_commons.CodeableConcept
+      dietPreference?:
+        description: Diet preferences reported by the patient
+        type: FHIR_commons.CodeableConcept[]
+      specialCourtesy?:
+        description: Special courtesies (VIP, board member)
+        type: FHIR_commons.CodeableConcept[]
+      specialArrangement?:
+        description: Wheelchair, translator, stretcher, etc.
+        type: FHIR_commons.CodeableConcept[]
+      destination?:
+        description: Location to which the patient is discharged
+        type: FHIR_commons.Reference
+      dischargeDisposition?:
+        description: Category or kind of location after discharge
+        type: FHIR_commons.CodeableConcept
+  location?:
+    description: List of locations where the patient has been
+    type: array
+    items:
+      type:   FHIR_commons.BackboneElement
+      properties:
+        location:
+          description: Location the encounter takes place
+          type: FHIR_commons.Reference
+        status?:
+          description: Encounter location status
+          type: FHIR_commons.code
+          enum: [planned, active, reserved, completed]
+        period?:
+          description: Time period during which the patient was present at the location
+          type: FHIR_commons.Period
+  serviceProvider?:
+    description: The custodian organization of this Encounter record
+    type: FHIR_commons.Reference
+  partOf?:
+    description: Another Encounter this encounter is part of
+    type: FHIR_commons.Reference

@@ -1,0 +1,31 @@
+{
+    "": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "message": {
+            "type": "string"
+        },
+        "author": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "parents": 
+            {
+                "type": "string"
+            }
+        ,
+        "tree": {
+            "type": "string"
+        }
+    }
+}

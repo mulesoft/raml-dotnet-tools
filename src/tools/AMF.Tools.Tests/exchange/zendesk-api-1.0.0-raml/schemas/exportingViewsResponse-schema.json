@@ -1,0 +1,21 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "export" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "view_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "status" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

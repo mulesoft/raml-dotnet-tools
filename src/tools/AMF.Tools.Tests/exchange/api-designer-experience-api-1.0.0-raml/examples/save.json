@@ -1,0 +1,10 @@
+[
+  {
+    "path": "/folder/text.txt",
+    "content": "Content of the file"
+  },
+  {
+    "path": "/folder/text2.txt",
+    "content": "Content of the file2"
+  }
+]

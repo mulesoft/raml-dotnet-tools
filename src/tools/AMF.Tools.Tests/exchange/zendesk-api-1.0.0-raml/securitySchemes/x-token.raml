@@ -1,0 +1,8 @@
+description: |
+  Authorize against the API with username and API token. In fact, this schema works the same way as Basic with '{email_address}/token' as username and '{api_token}' as password.   
+type: x-token
+describedBy: 
+  headers: 
+    Authorization: 
+      description: "Expected Base64 encoded string with following content: '{email_address}/token:{api_token}'"
+      example: Basic bWFyay0xOTY3QGxpc3QucnUvdG9rZW46bzhXTnBZRW4yMXpIUU9XMHZBbmtJSmRqdERDb1p4VER2R1dWbjdReg==

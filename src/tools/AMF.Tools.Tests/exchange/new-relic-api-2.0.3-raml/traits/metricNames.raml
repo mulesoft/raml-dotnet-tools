@@ -1,0 +1,15 @@
+#%RAML 1.0 Trait
+description: Return a list of known metrics and their value names for the given resource.
+queryParameters: 
+  name: 
+    description: Filter metrics by name
+    required: false
+  page: 
+    description: Pagination index
+    type: integer
+    required: false
+responses: 
+  200: 
+    body: 
+      application/json:
+        example: !include ../examples/metricNames.raml

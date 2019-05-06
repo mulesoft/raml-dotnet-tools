@@ -1,0 +1,16 @@
+{
+  "agents_activity" : [
+    {
+      "agent_id" : 1 ,
+      "status" : "Available",
+	  "available_time" : 3600 ,
+      "calls_accepted" : 5 ,
+      "calls_denied" : 1 ,
+      "calls_missed" : 1 ,
+      "average_talk_time" : 120
+    } , {
+      "agent_id" : 2 ,
+      "status" : "Unavailable" 
+    }
+  ]
+}

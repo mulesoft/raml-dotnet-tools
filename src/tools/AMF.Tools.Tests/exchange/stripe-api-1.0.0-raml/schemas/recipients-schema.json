@@ -1,0 +1,125 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required": false,
+    "properties": {
+        "object": {
+            "type": "string",
+            "required": false
+        },
+        "url": {
+            "type": "string",
+            "required": false
+        },
+        "count": {
+            "type": "number",
+            "id": "http://jsonschema.net/count",
+            "required": false
+        },
+        "data": {
+            "type": "array",
+            "id": "http://jsonschema.net/data",
+            "required": false,
+            "items": {
+                "type": "object",
+                "id": "http://jsonschema.net",
+                "required": false,
+                "properties": {
+                    "active_account": {
+                        "type": "object",
+                        "id": "http://jsonschema.net/active_account",
+                        "required": false,
+                        "properties": {
+                            "bank_name": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/active_account/bank_name",
+                                "required": false
+                            },
+                            "country": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/active_account/country",
+                                "required": false
+                            },
+                            "currency": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/active_account/currency",
+                                "required": false
+                            },
+                            "fingerprint": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/active_account/fingerprint",
+                                "required": false
+                            },
+                            "last4": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/active_account/last4",
+                                "required": false
+                            },
+                            "object": {
+                                "type": "string",
+                                "id": "http://jsonschema.net/active_account/object",
+                                "required": false
+                            },
+                            "validated": {
+                                "type": "boolean",
+                                "id": "http://jsonschema.net/active_account/validated",
+                                "required": false
+                            }
+                        }
+                    },
+                    "created": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/created",
+                        "required": false
+                    },
+                    "description": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/description",
+                        "required": false
+                    },
+                    "email": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/email",
+                        "required": false
+                    },
+                    "id": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/id",
+                        "required": false
+                    },
+                    "livemode": {
+                        "type": "boolean",
+                        "id": "http://jsonschema.net/livemode",
+                        "required": false
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "id": "http://jsonschema.net/metadata",
+                        "required": false
+                    },
+                    "name": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/name",
+                        "required": false
+                    },
+                    "object": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/object",
+                        "required": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/type",
+                        "required": false
+                    },
+                    "verified": {
+                        "type": "boolean",
+                        "id": "http://jsonschema.net/verified",
+                        "required": false
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="posts">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="post" minOccurs="0" maxOccurs="1">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="id" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+              <xsd:element name="type" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="code" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="creator" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="id" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                    <xsd:element name="first-name" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+                    <xsd:element name="last-name" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+                    <xsd:element name="headline" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="title" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="total" type="xsd:int" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

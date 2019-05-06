@@ -1,0 +1,184 @@
+{
+  "resourceType": "Bundle",
+  "type": "searchset",
+  "link": [
+    {
+      "relation": "self",
+      "url": "http://localhost:8081/api/AllergyIntolerance?patient=Patient%2F9"
+    }
+  ],
+  "meta": {
+    "lastUpdated": "2016-09-20T12:25:15.712Z"
+  },
+  "total": 6,
+  "entry": [
+    {
+      "fullUrl": "http://localhost:8081/api/AllergyIntolerance/1",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": 1,
+        "patient": {
+          "reference": "Patient/9"
+        },
+        "verificationStatus": "confirmed",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "text": "symptoms"
+              }
+            ],
+            "substance": {
+              "coding": [
+                {
+                  "display": "Peanuts"
+                }
+              ]
+            }
+          }
+        ],
+        "assertedDate": "2016-05-11"
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8081/api/AllergyIntolerance/2",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "2",
+        "patient": {
+          "reference": "Patient/9"
+        },
+        "verificationStatus": "confirmed",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "text": "symptoms"
+              }
+            ],
+            "substance": {
+              "coding": [
+                {
+                  "display": "Aspirin"
+                }
+              ]
+            }
+          }
+        ],
+        "assertedDate": "2016-05-11"
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8081/api/AllergyIntolerance/3",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "3",
+        "patient": {
+          "reference": "Patient/9"
+        },
+        "verificationStatus": "confirmed",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "text": "symptoms"
+              }
+            ],
+            "substance": {
+              "coding": [
+                {
+                  "display": "Penicillin"
+                }
+              ]
+            }
+          }
+        ],
+        "assertedDate": "2016-05-11"
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8081/api/AllergyIntolerance/4",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "4",
+        "patient": {
+          "reference": "Patient/9"
+        },
+        "verificationStatus": "confirmed",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "text": "symptoms"
+              }
+            ],
+            "substance": {
+              "coding": [
+                {
+                  "display": "Gluten"
+                }
+              ]
+            }
+          }
+        ],
+        "assertedDate": "2016-05-11"
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8081/api/AllergyIntolerance/5",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "5",
+        "patient": {
+          "reference": "Patient/9"
+        },
+        "verificationStatus": "confirmed",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "text": "symptoms"
+              }
+            ],
+            "substance": {
+              "coding": [
+                {
+                  "display": "Dairy products"
+                }
+              ]
+            }
+          }
+        ],
+        "assertedDate": "2016-05-11"
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8081/api/AllergyIntolerance/6",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "6",
+        "patient": {
+          "reference": "Patient/9"
+        },
+        "verificationStatus": "confirmed",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "text": "symptoms"
+              }
+            ],
+            "substance": {
+              "coding": [
+                {
+                  "display": "Morphine"
+                }
+              ]
+            }
+          }
+        ],
+        "assertedDate": "2016-05-11"
+      }
+    }
+  ]
+}

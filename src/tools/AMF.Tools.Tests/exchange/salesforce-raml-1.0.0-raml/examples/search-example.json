@@ -1,0 +1,15 @@
+[
+  {
+    "attributes" : {
+      "type" : "Account" ,
+      "url" : "/services/data/v20.0/sobjects/Account/001D000000IqhSLIAZ"
+    } ,
+    "Id" : "001D000000IqhSLIAZ"
+  } , {
+    "attributes" : {
+      "type" : "Account" ,
+      "url" : "/services/data/v20.0/sobjects/Account/001D000000IomazIAB"
+    } ,
+    "Id" : "001D000000IomazIAB"
+  }
+]

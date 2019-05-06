@@ -1,0 +1,29 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "group" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

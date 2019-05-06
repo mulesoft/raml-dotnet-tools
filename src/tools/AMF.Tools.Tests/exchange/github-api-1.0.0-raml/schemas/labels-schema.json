@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "list": [
+    	{
+    		"properties": {
+    			"url": {
+    				"type": "string"
+    			},
+			    "name": {
+			    	"type": "string"
+			    },
+			    "color": {
+			    	"type": "string",
+			    	"maxLength": 6,
+			    	"minLength": 6
+			    }
+    		},
+    		"type": "object"
+    	}
+    ]
+}

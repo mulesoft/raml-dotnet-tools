@@ -1,0 +1,20 @@
+{
+  "locations" : [
+    {
+      "id" : 1 ,
+      "name" : "top_bar"
+    } , {
+      "id" : 2 ,
+      "name" : "nav_bar"
+    } , {
+      "id" : 3 ,
+      "name" : "ticket_sidebar"
+    } , {
+      "id" : 4 ,
+      "name" : "new_ticket_sidebar"
+    } , {
+      "id" : 5 ,
+      "name" : "user_sidebar"
+    }
+  ]
+}

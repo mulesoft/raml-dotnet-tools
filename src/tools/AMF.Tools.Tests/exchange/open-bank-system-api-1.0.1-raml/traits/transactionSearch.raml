@@ -1,0 +1,29 @@
+queryParameters:
+  from_date: 
+    description: Date of the oldest transaction registered. Time un UTC. 
+    type: datetime
+    required: false
+    example: 2014-07-01T00:00:00.000Z
+  to_date: 
+    description: Date of the newest transaction registered. Time un UTC. 
+    type: datetime
+    required: false
+    example: 2016-10-20T00:00:00.000Z
+  sort_by: 
+    type: string
+    required: false
+    example: ssn
+  sort_direction:
+    type: string
+    enum: [asc, desc]
+    default: desc
+    required: false
+  limit:
+    type: integer
+    required: false 
+    default: 50
+  offset:
+    type: integer
+    required: false
+    default: 0
+    

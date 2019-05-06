@@ -1,0 +1,78 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "total_count": {
+      "type": "integer"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "created_by": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "login": {
+                "type": "string"
+              }
+            }
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "modified_at": {
+            "type": "string"
+          },
+          "expires_at": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "accessible_by": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "login": {
+                "type": "string"
+              }
+            }
+          },
+          "role": {
+            "type": "string"
+          },
+          "acknowledged_at": {
+            "type": "string"
+          },
+          "item": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

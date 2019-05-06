@@ -1,0 +1,74 @@
+<person>
+  <id>123456</id>
+  <first-name>first name</first-name>
+  <last-name>last name</last-name>
+  <headline>headline</headline>
+  <location>
+    <name>name</name>
+    <country>
+      <code>804</code>
+    </country>
+  </location>
+  <industry>industry</industry>
+  <distance>50</distance>
+  <num-recommenders>10</num-recommenders>
+  <current-status>online</current-status>
+  <current-status-timestamp>12367123678</current-status-timestamp>
+  <connections total="10" />
+  <summary>summary</summary>
+  <positions total="2">
+    <position>
+      <id>id1</id>
+      <title>title1</title>
+      <summary>summary1</summary>
+      <start-date>
+        <year>2013</year>
+        <month>Jan</month>
+      </start-date>
+      <is-current>false</is-current>
+      <company>
+        <name>Company1</name>
+      </company>
+    </position>
+    <position>
+      <id>id2</id>
+      <title>title2</title>
+      <summary>summary2</summary>
+      <start-date>
+        <year>2013</year>
+        <month>Jun</month>
+      </start-date>
+      <is-current>true</is-current>
+      <company>
+        <name>Company2</name>
+      </company>
+    </position>
+  </positions>
+  <member-url-resources>
+    <member-url>
+      <url>http://url1</url>
+      <name>name of url1</name>
+    </member-url>
+    <member-url>
+      <url>http://url2</url>
+      <name>name of url2</name>
+    </member-url>
+  </member-url-resources>
+  <api-standard-profile-request>
+    <url>http://url.com</url>
+    <headers>
+      <http-header>
+        <name>Date</name>
+        <value>237423472sdf</value>
+      </http-header>
+      <http-header>
+        <name>Acept-type</name>
+        <value>*/*</value>
+      </http-header>
+    </headers>
+  </api-standard-profile-request>
+  <site-standard-profile-request>
+    <url>http://url.com</url>
+  </site-standard-profile-request>
+  <picture-url>http://picture.url</picture-url>
+</person>

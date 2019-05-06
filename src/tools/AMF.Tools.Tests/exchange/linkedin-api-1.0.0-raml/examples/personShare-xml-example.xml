@@ -1,0 +1,12 @@
+<share>
+  <comment>Check out the LinkedIn Share API!</comment>
+  <content>
+    <title>LinkedIn Developers Documentation On Using the Share API</title>
+    <description>Leverage the Share API to maximize engagement on user-generated content on LinkedIn</description>
+    <submitted-url>https://developer.linkedin.com/documents/share-api</submitted-url>
+    <submitted-image-url>http://m3.licdn.com/media/p/3/000/124/1a6/089a29a.png</submitted-image-url> 
+  </content>
+  <visibility> 
+    <code>anyone</code> 
+  </visibility>
+</share>

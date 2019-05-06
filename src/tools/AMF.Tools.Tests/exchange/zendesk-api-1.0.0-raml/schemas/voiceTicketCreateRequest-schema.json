@@ -1,0 +1,59 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "ticket" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "via_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "description" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "voice_comment" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "from" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "to" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "recording_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "started_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "call_duration" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "answered_by_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "transcription_text" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "location" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      }
+    }
+  }
+}

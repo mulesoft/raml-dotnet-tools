@@ -1,0 +1,16 @@
+{
+  "end_time" : 1332034771 ,
+  "next_page" : "https://domain.zendesk.com/api/v2/exports/tickets.json?start_time=1332034771" ,
+  "field_headers" : {
+    "group_name" : "Group" ,
+    "id" : "Id" ,
+    "created_at" : "Created at"
+  } ,
+  "results" : [
+    {
+      "group_name" : "Support" ,
+      "id" : 2 ,
+      "created_at" : "2012-02-02T04:31:29Z"
+    }
+  ]
+}

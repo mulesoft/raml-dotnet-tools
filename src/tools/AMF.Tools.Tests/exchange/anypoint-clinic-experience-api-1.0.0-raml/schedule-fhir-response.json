@@ -1,0 +1,15 @@
+[
+  {
+    "resourceType": "Schedule",
+    "id": "25796",
+    "actor": {
+      "reference": "healthcareservices/100102150",
+      "display": "ML CT CT4"
+    },
+    "planningHorizon": {
+      "start": "2016-02-23T13:00:00-05:00",
+      "end": "2016-02-23T18:00:00-05:00"
+    },
+    "comment": "Assessments should be performed before requesting appointments in this slot."
+  }
+]

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<post>
+  <id>g-5161023-S-270459579</id>
+  <parent-group>
+    <id>5161023</id>
+    <name>pragmasoft group</name>
+  </parent-group>
+  <type>
+    <code>standard</code>
+  </type>
+  <creator>
+    <id>AGBKeo0Eup</id>
+    <first-name>first name</first-name>
+    <last-name>last name</last-name>
+    <headline>developer</headline>
+  </creator>
+  <title>first message</title>
+</post>

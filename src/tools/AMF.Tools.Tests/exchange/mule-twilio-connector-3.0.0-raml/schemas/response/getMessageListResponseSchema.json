@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "first_page_uri": {
+      "type": "string"
+    },
+    "end": {
+      "type": "integer"
+    },
+    "previous_page_uri": {
+      "type": [ "string", "null" ]
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sid": {
+            "type": "string"
+          },
+          "date_created": {
+            "type": "string"
+          },
+          "date_updated": {
+            "type": "string"
+          },
+          "date_sent": {
+            "type": [ "string", "null" ]
+          },
+          "account_sid": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "messaging_service_sid": {
+            "type": [ "string", "null" ]
+          },
+          "body": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "num_segments": {
+            "type": "string"
+          },
+          "num_media": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "api_version": {
+            "type": "string"
+          },
+          "price": {
+            "type": [ "string", "null" ]
+          },
+          "price_unit": {
+            "type": "string"
+          },
+          "error_code": {
+            "type": [ "integer", "null" ]
+          },
+          "error_message": {
+            "type": [ "string", "null" ]
+          },
+          "uri": {
+            "type": "string"
+          },
+          "subresource_uris": {
+            "type": "object",
+            "properties": {
+              "media": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "media"
+            ]
+          }
+        },
+        "required": [
+          "sid",
+          "date_created",
+          "date_updated",
+          "date_sent",
+          "account_sid",
+          "to",
+          "from",
+          "messaging_service_sid",
+          "body",
+          "status",
+          "num_segments",
+          "num_media",
+          "direction",
+          "api_version",
+          "price",
+          "price_unit",
+          "error_code",
+          "error_message",
+          "uri",
+          "subresource_uris"
+        ]
+      }
+    },
+    "uri": {
+      "type": "string"
+    },
+    "page_size": {
+      "type": "integer"
+    },
+    "start": {
+      "type": "integer"
+    },
+    "next_page_uri": {
+      "type": [ "string", "null" ]
+    },
+    "page": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "first_page_uri",
+    "end",
+    "previous_page_uri",
+    "messages",
+    "uri",
+    "page_size",
+    "start",
+    "next_page_uri",
+    "page"
+  ]
+}

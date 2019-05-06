@@ -1,0 +1,4 @@
+{
+  "kind": "drive#permissionId",
+  "id": string
+}

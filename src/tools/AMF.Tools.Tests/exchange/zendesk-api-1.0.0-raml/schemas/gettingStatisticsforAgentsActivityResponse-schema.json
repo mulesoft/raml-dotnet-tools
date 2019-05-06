@@ -1,0 +1,58 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "agents_activity" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "agent_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "status" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "available_time" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "calls_accepted" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "calls_denied" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "calls_missed" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "average_talk_time" : {
+              "type" : "number" ,
+              "required" : false
+            }
+          }
+        } , {
+          "type" : "object" ,
+          "properties" : {
+            "agent_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "status" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

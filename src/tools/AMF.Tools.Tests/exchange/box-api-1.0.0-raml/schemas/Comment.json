@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "properties": {
+    "type": {
+      "description": "For comments is 'comment'.",
+      "type": "string"
+    },
+    "id": {
+      "description": "A unique string identifying this comment.",
+      "type": "string"
+    },
+    "is_reply_comment": {
+      "description": "Whether or not this comment is a reply to another comment.",
+      "type": "boolean"
+    },
+    "message": {
+      "description": "The comment text that the user typed.",
+      "type": "string"
+    },
+    "tagged_message": {
+      "description": "The string representing the comment text with @mentions included.",
+      "required": false,
+      "type": "string"
+    },
+    "created_by": {
+      "type": "object",
+      "description": "A mini user object representing the author of the comment.",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "login": {
+          "type": "string"
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "description": "The time this comment was created."
+    },
+    "item": {
+      "type": "object",
+      "description": "The object this comment was placed on.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "modified_at": {
+      "type": "string",
+      "description": "The time this comment was last modified."
+    }
+  }
+}

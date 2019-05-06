@@ -1,0 +1,10 @@
+{
+  "item" : {
+    "id" : "FOLDER_ID" ,
+    "type" : "folder"
+  } ,
+  "accessible_by" : {
+    "id" : "USER_ID"
+  } ,
+  "role" : "editor"
+}

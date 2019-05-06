@@ -1,0 +1,58 @@
+{
+  "id": "CasesResponse",
+  "title": "CasesResponse",
+  "type": "object",
+  "properties": {
+    "pxObjClass": {
+      "type": "string"
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "id": "Case",
+        "title": "Case",
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "string"
+          },
+          "parentCaseID": {
+            "type": "string"
+          },
+          "caseTypeID": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pxObjClass": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "urgency": {
+            "type": "string"
+          },
+          "createTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "lastUpdateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedBy": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

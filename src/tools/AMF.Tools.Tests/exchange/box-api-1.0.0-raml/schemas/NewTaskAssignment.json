@@ -1,0 +1,35 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "task" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "type" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "assign_to" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "login" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

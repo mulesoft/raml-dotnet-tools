@@ -1,0 +1,66 @@
+{
+    "object": "customer", 
+    "created": 1378379137, 
+    "id": "cus_2W2fj6IHUNOc2d", 
+    "livemode": false, 
+    "description": null, 
+    "email": "victor@huge-success.net", 
+    "delinquent": false, 
+    "subscription": {
+        "id": "su_2W2fay9kQDcftp", 
+        "plan": {
+            "interval": "month", 
+            "name": "Basic", 
+            "amount": 1000, 
+            "currency": "usd", 
+            "id": "basic", 
+            "object": "plan", 
+            "livemode": false, 
+            "interval_count": 1, 
+            "trial_period_days": null
+        }, 
+        "object": "subscription", 
+        "start": 1378379138, 
+        "status": "active", 
+        "customer": "cus_2W2fj6IHUNOc2d", 
+        "cancel_at_period_end": false, 
+        "current_period_start": 1378379138, 
+        "current_period_end": 1380971138, 
+        "ended_at": null, 
+        "trial_start": null, 
+        "trial_end": null, 
+        "canceled_at": null, 
+        "quantity": 1
+    }, 
+    "discount": null, 
+    "account_balance": 0, 
+    "cards": {
+        "object": "list", 
+        "count": 1, 
+        "url": "/v1/customers/cus_2W2fj6IHUNOc2d/cards", 
+        "data": [
+            {
+                "id": "card_2W2fhiuUB8W9Bq", 
+                "object": "card", 
+                "last4": "4242", 
+                "type": "Visa", 
+                "exp_month": 10, 
+                "exp_year": 2020, 
+                "fingerprint": "qhjxpr7DiCdFYTlH", 
+                "customer": "cus_2W2fj6IHUNOc2d", 
+                "country": "US", 
+                "name": null, 
+                "address_line1": null, 
+                "address_line2": null, 
+                "address_city": null, 
+                "address_state": null, 
+                "address_zip": null, 
+                "address_country": null, 
+                "cvc_check": null, 
+                "address_line1_check": null, 
+                "address_zip_check": null
+            }
+        ]
+    }, 
+    "default_card": "card_2W2fhiuUB8W9Bq"
+}

@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "tag": {
+            "type": "string"
+        },
+        "sha": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "message": {
+            "type": "string"
+        },
+        "tagger": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "date": {
+                    "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "object": {
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "sha": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

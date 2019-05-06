@@ -1,0 +1,78 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "properties":
+        {
+                "type": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                },
+                "payload": {
+                    "properties": {},
+                    "type": "object"
+                },
+                "repo": {
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "actor": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "org": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "created_at": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "integer"
+                }
+        } ,
+        "type": "object"
+}

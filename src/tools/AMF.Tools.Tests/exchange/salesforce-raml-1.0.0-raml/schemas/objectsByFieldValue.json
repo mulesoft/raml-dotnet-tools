@@ -1,0 +1,67 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "attributes" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "Id" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "OwnerId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "IsDeleted" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "Name" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "CreatedDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "CreatedById" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "LastModifiedDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "LastModifiedById" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "SystemModstamp" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "Description__c" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "Price__c" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "Total_Inventory__c" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "Distributor__c" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "MerchandiseExtID__c" : {
+      "type" : "number" ,
+      "required" : false
+    }
+  }
+}

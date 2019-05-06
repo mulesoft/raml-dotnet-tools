@@ -1,0 +1,543 @@
+#%RAML 1.0
+title: Healthcare sfhc2fhir System API
+version: v2
+mediaType: [application/xml+fhir, application/json+fhir]
+
+uses: 
+  FHIR_bundle_types: ./fhir_bundle_types.raml
+
+types: 
+  AllergyIntolerance: !include /exchange_modules/org.mule.templates/allergy-intolerance/1.0.0/allergyintolerance.raml
+  Appointment: !include /exchange_modules/org.mule.templates/appointment/1.0.0/appointment.raml
+  Condition: !include /exchange_modules/org.mule.templates/condition/1.0.0/condition.raml
+  Device: !include /exchange_modules/org.mule.templates/device/1.0.0/device.raml
+  MedicationRequest: !include /exchange_modules/org.mule.templates/medication-request/1.0.0/medicationrequest.raml
+  Observation: !include /exchange_modules/org.mule.templates/observation/1.0.0/observation.raml
+  Patient: !include /exchange_modules/org.mule.templates/patient/1.0.0/patient.raml
+  Practitioner: !include /exchange_modules/org.mule.templates/practitioner/1.0.0/practitioner.raml
+
+resourceTypes:
+  fhirResourceType:
+    post:
+      description: |
+        The create interaction creates a new resource in a server-assigned location. 
+        If the client wishes to have control over the id of a newly submitted resource, it should use the update interaction instead.
+      is: [create]
+      headers:
+        If-None-Exist:
+          required: false
+          description: name=value selective criteria
+      body:
+        application/json:
+          example: <<postExample>>
+      responses:
+        200:
+          description: No match, resource created.
+        412:
+          description: Precondition Failed error indicating the client's criteria were not selective enough.
+    get:
+      description: This interaction searches a set of resources based on some filter criteria.
+      is: [search]
+      responses:
+        200:
+          body:
+            application/json:
+              example: <<getExample>>
+    put:
+      description: The conditional update interaction allows a client to update an existing resource based on some identification criteria, rather than by logical id.
+      is: [update, conditionalOperation]
+      queryParameters:
+      responses:
+        412:
+          description: |
+            Precondition Failed error indicating the client's criteria were not selective enough
+    delete:
+      description: The conditional delete interaction allows a client to delete an existing resource based on some selection criteria, rather than by a specific logical id.
+      is: [delete, conditionalOperation]
+      queryParameters:
+      responses:
+        404:
+          description: Not found
+        412:
+          description: Precondition Failed error indicating the client's criteria were not selective enough.
+  
+  fhirResource:
+    get:
+      description: The read interaction accesses the current contents of a resource.
+      is: [read]
+      responses:
+        200:
+          body:
+            application/json:
+              example: <<getSingleExample>>
+    put:
+      description: The update interaction creates a new current version for an existing resource or creates an initial version if no resource already exists for the given id.
+      is: [update]
+      body:
+        application/json:
+          example: <<putExample>>
+    delete:
+      description: The delete interaction removes an existing resource.
+      is: [delete]
+
+  fhirCompartment:
+    get:
+      is: [search]
+      responses:
+        200:
+          body:
+            application/json:
+              example: <<example>>
+
+  fhirSearch:
+    post:
+      description: This interaction searches a set of resources based on some filter criteria.
+      body:
+        application/x-www-form-urlencoded:
+          properties: !include ./queryParams/searchParams.yaml
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<bundleName>>
+    get:
+      description: This interaction searches a set of resources based on some filter criteria.
+    #  is: [{search: { bundleName: <<bundleName>>}}]
+    #  is: [search]
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<bundleName>>
+
+  fhirVersionedResource:
+    get:
+      description: The vread interaction preforms a version specific read of the resource.
+      is: [vread: { resourceName: <<resourceName>> }]
+
+  fhirHistory:
+    get:
+      description: The history interaction retrieves the history of either a particular resource or all resources of a given type.
+      is: [{history: { bundleName: <<bundleName>>}}]
+    
+
+traits:
+  vread:
+    queryParameters:
+      _format:
+        required: false
+        enum: [application/json, application/xml]
+    responses:
+      200:
+        headers:
+          ETag: string
+          Last-Modified: string
+        body:
+          application/json:
+            type: <<resourceName>>
+
+  read:
+    queryParameters:
+      _format:
+        required: false
+        enum: [application/json, application/xml]
+      _summary:
+        required: false
+        enum: ['true', 'false', text, data]
+    headers:
+      If-Modified-Since:
+        type: string
+        required: false
+      If-None-Match:
+        required: false
+    responses:
+      304:
+        description: Not Modified
+        
+  update:
+    responses:
+      200:
+        description: Updated
+      201:
+        description: Created
+        headers:
+          Location:
+            example: http://xxx/condidition/123/_history/1
+          Last-Modified: datetime
+          ETag:
+            example: '1.0'
+      422:
+        description: |
+          Unprocessable Entity - the proposed resource violated applicable FHIR profiles or server business rules
+
+  delete:
+    responses:
+      204:
+        description: Deleted
+        
+  create:
+    responses:
+      201:
+        description: Created
+        headers:
+          Location:
+            example: http://xxx/Condidition/123/_history/1
+          Last-Modified: datetime
+          ETag:
+            example: '1.0'
+
+  search:
+    queryParameters: !include /queryParams/searchParams.yaml
+    
+  history:
+    queryParameters:
+      _count: 
+        required: false
+      _since: 
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<bundleName>>
+            
+  conditionalOperation:
+    queryParameters: !include /queryParams/resourceParams.yaml
+
+  # resource specific
+  allergyIntoleranceSearch:
+    queryParameters: !include /queryParams/resources/allergyIntoleranceParams.yaml
+  appointmentSearch:
+    queryParameters: !include /queryParams/resources/appointmentParams.yaml
+  conditionSearch:
+    queryParameters: !include /queryParams/resources/conditionParams.yaml
+  deviceSearch:
+    queryParameters: !include /queryParams/resources/deviceParams.yaml
+  medicationRequestSearch:
+    queryParameters: !include /queryParams/resources/medicationRequestParams.yaml
+  observationSearch:
+    queryParameters: !include /queryParams/resources/observationParams.yaml
+  patientSearch:
+    queryParameters: !include /queryParams/resources/patientParams.yaml
+  practitionerSearch:
+    queryParameters: !include /queryParams/resources/practitionerParams.yaml
+  scheduleSearch:
+    queryParameters: !include /queryParams/resources/scheduleParams.yaml
+
+  #POST search - resource specific
+  allergyIntolerancePOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/allergyIntoleranceParams.yaml
+  appointmentPOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/appointmentParams.yaml
+  conditionPOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/conditionParams.yaml
+  devicePOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/deviceParams.yaml
+  medicationRequestPOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/medicationRequestParams.yaml
+  patientPOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/patientParams.yaml
+  observationPOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/observationParams.yaml
+  practitionerPOSTSearch:
+    body:
+      application/x-www-form-urlencoded:
+        properties: !include /queryParams/resources/practitionerParams.yaml
+
+### API definition ###
+
+/AllergyIntolerance:
+  type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_allergyIntolerance.json,
+      getExample  : !include /examples/responses/get_allergyIntolerance.json,
+    }
+  }
+  get:
+    is: [ allergyIntoleranceSearch ]
+  put:
+    is: [ allergyIntoleranceSearch ]
+  delete:
+    is: [ allergyIntoleranceSearch ]
+  /_history:
+    type: { fhirHistory: { bundleName: FHIR_bundle_types.AllergyIntoleranceBundle } }
+    is: [ allergyIntoleranceSearch ]
+  /{id}:
+    type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_allergyIntolerance_id.json,
+        putExample: !include /examples/requests/put_allergyIntolerance_id.json
+      }
+    }
+    /_history:
+      type: { fhirHistory: { bundleName: FHIR_bundle_types.AllergyIntoleranceBundle } }
+      /{vid}:
+        type: { fhirVersionedResource: { resourceName: AllergyIntolerance } }
+  /_search:
+    type: { fhirSearch: { bundleName: FHIR_bundle_types.AllergyIntoleranceBundle } }
+    get:
+      is: [ allergyIntoleranceSearch ]
+    post:
+      is: [ allergyIntolerancePOSTSearch ]
+
+/Appointment:
+  type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_appointment.json,
+      getExample  : !include /examples/responses/get_appointment.json,
+    }
+  }
+  get:
+    is: [ appointmentSearch ]
+  put:
+    is: [ appointmentSearch ]
+  delete:
+    is: [ appointmentSearch ]
+  /_history:
+    type: { fhirHistory: { bundleName: FHIR_bundle_types.AppointmentBundle } }
+    is: [ appointmentSearch ]
+  /{id}:
+    type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_appointment_id.json,
+        putExample: !include /examples/requests/put_appointment_id.json
+      }
+    }
+    /_history:
+      type: { fhirHistory: { bundleName: FHIR_bundle_types.AppointmentBundle } }
+      /{vid}:
+        type: { fhirVersionedResource: { resourceName: Appointment } }
+  /_search:
+    type: { fhirSearch: { bundleName: FHIR_bundle_types.AppointmentBundle } }
+    get:
+      is: [ appointmentSearch ]
+    post:
+      is: [ appointmentPOSTSearch ]
+
+/Condition:
+  type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_condition.json,
+      getExample  : !include /examples/responses/get_condition.json,
+    }
+  }
+  get:
+    is: [ conditionSearch ]
+  put:
+    is: [ conditionSearch ]
+  delete:
+    is: [ conditionSearch ]
+  /_history:
+    type: { fhirHistory: { bundleName: FHIR_bundle_types.ConditionBundle } }
+    is: [ conditionSearch ]
+  /{id}:
+    type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_condition_id.json,
+        putExample: !include /examples/requests/put_condition_id.json
+      }
+    }
+
+    /_history:
+      type: { fhirHistory: { bundleName: FHIR_bundle_types.ConditionBundle } }
+      /{vid}:
+        type: { fhirVersionedResource: { resourceName: Condition } }
+  /_search:
+    type: { fhirSearch: { bundleName: FHIR_bundle_types.ConditionBundle } }
+    get:
+      is: [ conditionSearch ]
+    post:
+      is: [ conditionPOSTSearch ]
+
+/Device:
+ type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_device.json,
+      getExample  : !include /examples/responses/get_device.json,
+    }
+  }
+ get:
+   is: [ deviceSearch ]
+ put:
+   is: [ deviceSearch, conditionalOperation ]
+ delete:
+   is: [ deviceSearch, conditionalOperation ]
+ /_history:
+   type: { fhirHistory: { bundleName: FHIR_bundle_types.DeviceBundle } }
+   is: [ deviceSearch ]
+ /{id}:
+   type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_device_id.json,
+        putExample: !include /examples/requests/put_device_id.json
+      }
+    }
+   /_history:
+     type: { fhirHistory: { bundleName: FHIR_bundle_types.DeviceBundle } }
+     /{vid}:
+       type: { fhirVersionedResource: { resourceName: Device } }
+ /_search:
+   type: { fhirSearch: { bundleName: FHIR_bundle_types.DeviceBundle } }
+   get:
+     is: [ deviceSearch ]
+   post:
+     is: [ devicePOSTSearch ]
+
+/MedicationRequest:
+ type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_medicationRequest.json,
+      getExample  : !include /examples/responses/get_medicationRequest.json,
+    }
+  }
+ get:
+   is: [ medicationRequestSearch ]
+ put:
+   is: [ medicationRequestSearch, conditionalOperation ]
+ delete:
+   is: [ medicationRequestSearch, conditionalOperation ]
+ /_history:
+   type: { fhirHistory: { bundleName: FHIR_bundle_types.MedicationRequestBundle } }
+   is: [ medicationRequestSearch ]
+ /{id}:
+   type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_medicationRequest_id.json,
+        putExample: !include /examples/requests/put_medicationRequest_id.json
+      }
+    }
+   /_history:
+     type: { fhirHistory: { bundleName: FHIR_bundle_types.MedicationRequestBundle } }
+     /{vid}:
+       type: { fhirVersionedResource: { resourceName: MedicationRequest } }
+ /_search:
+   type: { fhirSearch: { bundleName: FHIR_bundle_types.MedicationRequestBundle } }
+   get:
+     is: [ medicationRequestSearch ]
+   post:
+     is: [ medicationRequestPOSTSearch ]
+
+/Observation:
+ type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_observation.json,
+      getExample  : !include /examples/responses/get_observation.json,
+    }
+  }
+ get:
+   is: [ observationSearch ]
+ put:
+   is: [ observationSearch, conditionalOperation ]
+ delete:
+   is: [ observationSearch, conditionalOperation ]
+ /_history:
+   type: { fhirHistory: { bundleName: FHIR_bundle_types.ObservationBundle } }
+   is: [ observationSearch ]
+ /{id}:
+   type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_observation_id.json,
+        putExample: !include /examples/requests/put_observation_id.json
+      }
+    }
+   /_history:
+     type: { fhirHistory: { bundleName: FHIR_bundle_types.ObservationBundle } }
+     /{vid}:
+       type: { fhirVersionedResource: { resourceName: Observation } }
+ /_search:
+   type: { fhirSearch: { bundleName: FHIR_bundle_types.ObservationBundle } }
+   get:
+     is: [ observationSearch ]
+   post:
+     is: [ observationPOSTSearch ]
+
+
+
+
+/Patient:
+  type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_patient.json,
+      getExample  : !include /examples/responses/get_patient.json,
+    }
+  }
+  get:
+    is: [ patientSearch ]
+  put:
+    is: [ patientSearch ]
+  delete:
+    is: [ patientSearch ]
+  /_history:
+    type: { fhirHistory: { bundleName: FHIR_bundle_types.PatientBundle } }
+    is: [ patientSearch ]
+  /{id}:
+    type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_patient_id.json,
+        putExample: !include /examples/requests/put_patient_id.json
+      }
+    }
+    /_history:
+      type: { fhirHistory: { bundleName: FHIR_bundle_types.PatientBundle } }
+      /{vid}:
+        type: { fhirVersionedResource: { resourceName: Patient } }
+    /Condition:
+      type:  { fhirCompartment: { example: !include /examples/responses/get_condition.json} }
+      is: [ conditionSearch ]
+    /Observation:
+      type: { fhirCompartment: { example: !include /examples/responses/get_observation.json} }
+      is: [ observationSearch ]
+    /MedicationRequest:
+      type: { fhirCompartment: { example: !include /examples/responses/get_medicationRequest.json} }
+      is: [ medicationRequestSearch ]
+    /Appointment:
+      type: { fhirCompartment: { example: !include /examples/responses/get_appointment.json} }
+      is: [ appointmentSearch ]
+    /AllergyIntolerance:
+      type: { fhirCompartment: { example: !include /examples/responses/get_allergyIntolerance.json} }
+      is: [ allergyIntoleranceSearch ]
+  /_search:
+    type: { fhirSearch: { bundleName: FHIR_bundle_types.PatientBundle } }
+    get:
+      is: [ patientSearch ]
+    post:
+      is: [ patientPOSTSearch ]
+
+
+/Practitioner:
+  type: {fhirResourceType: {
+      postExample : !include /examples/requests/post_practitioner.json,
+      getExample  : !include /examples/responses/get_practitioner.json,
+    }
+  }
+  get:
+    is: [ practitionerSearch ]
+  put:
+    is: [ practitionerSearch ]
+  delete:
+    is: [ practitionerSearch ]
+  /_history:
+    type: { fhirHistory: { bundleName: FHIR_bundle_types.PractitionerBundle } }
+    is: [ practitionerSearch ]
+  /{id}:
+    type: {fhirResource: {
+        getSingleExample: !include /examples/responses/get_practitioner_id.json,
+        putExample: !include /examples/requests/put_practitioner_id.json
+      }
+    }
+    /_history:
+      type: { fhirHistory: { bundleName: FHIR_bundle_types.PractitionerBundle } }
+      /{vid}:
+        type: { fhirVersionedResource: { resourceName: Practitioner } }
+    /Schedule:
+      type: { fhirCompartment: { example: !include /examples/responses/get_schedule.json} }
+      is: [ scheduleSearch ]
+    /Appointment:
+      type: { fhirCompartment: { example: !include /examples/responses/get_appointment.json} }
+      is: [ appointmentSearch ]
+  /_search:
+    type: { fhirSearch: { bundleName: FHIR_bundle_types.PractitionerBundle } }
+    get:
+      is: [ practitionerSearch ]
+    post:
+      is: [ practitionerPOSTSearch ]

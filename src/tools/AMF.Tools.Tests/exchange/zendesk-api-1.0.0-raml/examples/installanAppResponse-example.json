@@ -1,0 +1,12 @@
+{
+  "installation" : {
+    "id" : 53931 ,
+    "app_id" : 225 ,
+    "enabled" : true ,
+    "settings" : {
+      "title" : "Helpful App" ,
+      "api_token" : "53xjt93n6tn4321p" ,
+      "use_ssl" : true
+    } 
+  }
+}

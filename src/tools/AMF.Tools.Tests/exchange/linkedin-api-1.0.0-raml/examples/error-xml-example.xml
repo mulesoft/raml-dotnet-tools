@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<error>
+  <status>401</status>
+  <timestamp>1378122242574</timestamp>
+  <request-id>8PQJRYO7JK</request-id>
+  <error-code>0</error-code>
+  <message>Invalid access token.</message>
+</error>

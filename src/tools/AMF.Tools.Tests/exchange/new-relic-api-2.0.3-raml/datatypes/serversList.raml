@@ -1,0 +1,67 @@
+#%RAML 1.0 DataType
+required: false
+type: object
+properties:
+  servers:
+    required: false
+    type: array
+    items:
+      required: false
+      type: object
+      properties:
+            id:
+              required: false
+              type: integer
+            account_id:
+              required: false
+              type: integer
+            name:
+              required: false
+              type: string
+            host:
+              required: false
+              type: string
+            health_status:
+              required: false
+              type: string
+            reporting:
+              required: false
+              type: boolean
+            last_reported_at:
+              required: false
+              type: datetime
+            links:
+              required: false
+              type: object
+              properties:
+                alert_policy:
+                  required: false
+                  type: integer
+            summary:
+              required: false
+              type: object
+              properties:
+                cpu:
+                  required: false
+                  type: number
+                cpu_stolen:
+                  required: false
+                  type: number
+                disk_io:
+                  required: false
+                  type: number
+                memory:
+                  required: false
+                  type: number
+                memory_used:
+                  required: false
+                  type: integer
+                memory_total:
+                  required: false
+                  type: integer
+                fullest_disk:
+                  required: false
+                  type: number
+                fullest_disk_free:
+                  required: false
+                  type: integer

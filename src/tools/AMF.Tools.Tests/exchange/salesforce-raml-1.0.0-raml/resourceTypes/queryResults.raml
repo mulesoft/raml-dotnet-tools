@@ -1,0 +1,10 @@
+type: generalResource
+description: Rretrieving additional query results if the initial results are too large.
+get: 
+  responses: 
+    200: 
+      body: 
+        application/xml: 
+        application/json: 
+          schema: queryResults
+          example: !include ../examples/queryResults-example.json

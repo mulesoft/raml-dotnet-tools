@@ -1,0 +1,6 @@
+{
+  "greeting_category" : {
+      "id" : 1 ,
+      "name" : "voicemail"
+  }
+}

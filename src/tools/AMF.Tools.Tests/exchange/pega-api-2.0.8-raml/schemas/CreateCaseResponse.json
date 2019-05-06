@@ -1,0 +1,13 @@
+{
+  "id": "CreateCaseResponse",
+  "title": "CreateCaseResponse",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string"
+    },
+    "pxObjClass": {
+      "type": "string"
+    }
+  }
+}

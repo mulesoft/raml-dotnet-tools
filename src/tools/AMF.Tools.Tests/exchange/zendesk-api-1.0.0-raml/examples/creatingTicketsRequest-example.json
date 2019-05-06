@@ -1,0 +1,9 @@
+{
+  "ticket" : {
+    "subject" : "My printer is on fire!" ,
+    "comment" : {
+      "body" : "The smoke is very colorful."
+    } ,
+    "priority" : "urgent"
+  }
+}

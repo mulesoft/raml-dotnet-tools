@@ -1,0 +1,55 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "name" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "description" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "parent" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "string" ,
+          "required" : true
+        }
+      }
+    } ,
+    "shared_link" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "access" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "unshared_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "permissions" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "permissions.download" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "permissions.preview" : {
+          "type" : "boolean" ,
+          "required" : false
+        }
+      }
+    } ,
+    "tags" : {
+      "type" : "array" ,
+      "required" : false
+    }
+  }
+}

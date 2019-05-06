@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://com.cookbook.tutorial/ingredient",
+    "type": "object",
+    "properties": {
+        "quantity": {
+            "type": "integer"
+        },
+        "unit": {
+            "type": "string",
+            "enum": [
+                null,
+                "CUPS",
+                "GRAMS",
+                "KILOGRAMS",
+                "LITERS",
+                "MILLILITERS",
+                "POUNDS",
+                "SPOONS",
+                "UNIT"
+            ]
+        },
+        "created": {
+            "type": "string"
+        },
+        "id": {
+            "type": "integer"
+        },
+        "lastModified": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string",
+            "required": true
+        }
+    }
+}

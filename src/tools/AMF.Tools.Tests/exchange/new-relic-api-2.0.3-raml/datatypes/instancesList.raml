@@ -1,0 +1,75 @@
+#%RAML 1.0 DataType
+required: false
+type: object
+properties:
+  application_instances:
+    required: false
+    type: array
+    items:
+      required: false
+      type: object
+      properties:
+        id:
+          required: false
+          type: integer
+        application_name:
+          required: false
+          type: string
+        host:
+          required: false
+          type: string
+        port:
+          required: false
+          type: integer
+        language:
+          required: false
+          type: string
+        health_status:
+          required: false
+          type: string
+        application_summary:
+          required: false
+          type: object
+          properties:
+            response_time:
+              required: false
+              type: number
+            throughput:
+              required: false
+              type: number
+            error_rate:
+              required: false
+              type: number
+            apdex_score:
+              required: false
+              type: number
+            instance_count:
+              type: integer
+              required: false
+        end_user_summary:
+          required: false
+          type: object
+          properties:
+            response_time:
+              required: false
+              type: number
+            throughput:
+              required: false
+              type: number
+            apdex_score:
+              required: false
+              type: number
+        links:
+          required: false
+          type: object
+          properties:
+            application:
+              required: false
+              type: integer
+            application_host:
+              required: false
+              type: integer
+            server:
+              required: false
+              type: integer
+

@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "subscribed": {
+            "type": "boolean"
+        },
+        "ignored": {
+            "type": "boolean"
+        },
+        "reason": {
+            "type": "string"
+        },
+        "created_at": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "repository_url": {
+            "type": "string"
+        }
+    }
+}

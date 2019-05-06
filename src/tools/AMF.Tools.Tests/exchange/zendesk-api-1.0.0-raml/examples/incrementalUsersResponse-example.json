@@ -1,0 +1,16 @@
+{
+  "end_time" : 1383685952 ,
+  "next_page" : "http://{subdomain}.zendesk.com/api/v2/incremental/users.json?start_time=1383685952" ,
+  "count" : 1 ,
+  "users" : [
+    {
+      "id" : 11 ,
+      "url" : "http://{subdomain}.zendesk.com/api/v2/users/11.json" ,
+      "name" : "Agent Extraordinaire" ,
+      "user_fields" : {
+        "field1" : 0 ,
+        "field2" : "value2"
+      }
+    }
+  ]
+}

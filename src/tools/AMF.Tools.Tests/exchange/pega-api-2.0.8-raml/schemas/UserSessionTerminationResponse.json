@@ -1,0 +1,13 @@
+{
+  "id": "UserSessionTerminationResponse",
+  "title": "UserSessionTerminationResponse",
+  "type": "object",
+  "properties": {
+    "pyStatusMessage": {
+      "type": "string"
+    },
+    "pyStatusValue": {
+      "type": "string"
+    }
+  }
+}

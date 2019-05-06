@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="comments">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="comment" minOccurs="0" maxOccurs="1">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="id" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+              <xsd:element name="text" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+              <xsd:element name="creator" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="id" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                    <xsd:element name="first-name" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                    <xsd:element name="last-name" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                    <xsd:element name="headline" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="creation-timestamp" minOccurs="0" maxOccurs="1" type="xsd:int"/>
+              <xsd:element name="relation-to-viewer" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="available-actions" minOccurs="0" maxOccurs="1">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="action" minOccurs="0" maxOccurs="1">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="code" minOccurs="0" maxOccurs="1" type="xsd:normalizedString"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="total" type="xsd:int" use="required"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="total" type="xsd:int" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

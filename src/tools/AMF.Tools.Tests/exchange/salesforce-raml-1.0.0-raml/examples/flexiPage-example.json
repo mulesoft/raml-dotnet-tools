@@ -1,0 +1,6 @@
+{
+  "urls" : {
+    "flexiPage" : "/services/data/v29.0/flexiPage" ,
+    "rowTemplate" : "/services/data/v29.0/flexiPage/{ID}"
+  }
+}

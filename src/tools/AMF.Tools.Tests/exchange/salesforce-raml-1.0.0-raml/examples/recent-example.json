@@ -1,0 +1,15 @@
+{
+  "attributes" : {
+    "type" : "Account" ,
+    "url" : "/services/data/v28.0/sobjects/Account/a06U000000CelH0IAJ"
+  } ,
+  "Id" : "a06U000000CelH0IAJ" ,
+  "Name" : "Acme"
+} , {
+  "attributes" : {
+    "type" : "Opportunity" ,
+    "url" : "/services/data/v28.0/sobjects/Opportunity/a06U000000CelGvIAJ"
+  } ,
+  "Id" : "a06U000000CelGvIAJ" ,
+  "Name" : "Acme - 600 Widgets"
+}

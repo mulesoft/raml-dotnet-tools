@@ -1,0 +1,140 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "kind" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "etag" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "selfLink" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "items" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "kind" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "etag" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "selfLink" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "mimeType" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "modifiedDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "pinned" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "published" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "publishedLink" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "publishAuto" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "publishedOutsideDomain" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "downloadUrl" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "exportLinks" : {
+              "type" : "object" ,
+              "required" : false ,
+              "properties" : {
+                "link" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            } ,
+            "lastModifyingUserName" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "lastModifyingUser" : {
+              "type" : "object" ,
+              "required" : false ,
+              "properties" : {
+                "kind" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "displayName" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "picture" : {
+                  "type" : "object" ,
+                  "required" : false ,
+                  "properties" : {
+                    "url" : {
+                      "type" : "string" ,
+                      "required" : false
+                    }
+                  }
+                } ,
+                "isAuthenticatedUser" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "permissionId" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "emailAddress" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            } ,
+            "originalFilename" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "md5Checksum" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "fileSize" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

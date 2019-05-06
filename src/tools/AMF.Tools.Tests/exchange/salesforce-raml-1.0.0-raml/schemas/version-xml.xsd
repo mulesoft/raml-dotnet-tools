@@ -1,0 +1,16 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="urls">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="sobjects"/>
+        <xs:element type="xs:string" name="licensing"/>
+        <xs:element type="xs:string" name="connect"/>
+        <xs:element type="xs:string" name="search"/>
+        <xs:element type="xs:string" name="query"/>
+        <xs:element type="xs:string" name="tooling"/>
+        <xs:element type="xs:string" name="chatter"/>
+        <xs:element type="xs:string" name="recent"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

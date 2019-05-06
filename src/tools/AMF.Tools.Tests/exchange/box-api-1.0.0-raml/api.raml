@@ -1,0 +1,1009 @@
+#%RAML 0.8
+title: Box
+version: 2.0
+baseUri: https://api.box.com/{version}/
+mediaType: application/json
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+schemas:
+  - User: !include schemas/User.json
+  - UpdateMembership: !include schemas/UpdateMembership.json
+  - CommentsCollection: !include schemas/CommentsCollection.json
+  - NewComment: !include schemas/NewComment.json
+  - TaskAssignment: !include schemas/Assignment.json
+  - AssignmentSummariesCollecton: !include schemas/AssignmentSummariesCollecton.json
+  - EmailAlias: !include schemas/EmailAlias.json
+  - EventsCollection: !include schemas/EventsCollection.json
+  - FileInformationUpdate: !include schemas/fileInformationUpdate.json
+  - FileVersion: !include schemas/FileVersion.json
+  - NewCollaboration: !include schemas/NewCollaboration.json
+  - EmailAliasesCollection: !include schemas/EmailAliasesCollection.json
+  - Group: !include schemas/Group.json
+  - TaskUpdate: !include schemas/TaskUpdate.json
+  - MiniGroups: !include schemas/MiniGroups.json
+  - UserUpdate: !include schemas/UserUpdate.json
+  - ItemsCollection: !include schemas/ItemsCollection.json
+  - CollaborationsCollection: !include schemas/CollaborationsCollection.json
+  - NewUser: !include schemas/NewUser.json
+  - GroupMembershipEntry: !include schemas/GroupMembershipEntry.json
+  - Task_assignmentUpdate: !include schemas/AssignmentUpdate.json
+  - NewItem: !include schemas/NewItem.json
+  - FileVersionPromote: !include schemas/FileVersionPromote.json
+  - NewEmailAlias: !include schemas/NewEmailAlias.json
+  - NewFolder: !include schemas/NewItem.json
+  - EventsPollInformation: !include schemas/EventsPollInformation.json
+  - UserFolderMove: !include schemas/UserFolderMove.json
+  - Folder: !include schemas/Folder.json
+  - NewGroupMembership: !include schemas/NewGroupMembership.json
+  - File: !include schemas/File.json
+  - GroupMemberships: !include schemas/GroupMemberships.json
+  - Comment: !include schemas/Comment.json
+  - VersionsCollection: !include schemas/VersionsCollection.json
+  - NewTask: !include schemas/NewTask.json
+  - UsersCollection: !include schemas/UsersCollection.json
+  - CommentUpdate: !include schemas/CommentUpdate.json
+  - FolderUpdate: !include schemas/NewFolderMetadata.json
+  - NewTaskAssignment: !include schemas/NewTaskAssignment.json
+  - TaskSummariesCollection: !include schemas/TaskSummariesCollection.json
+  - Collaboration: !include schemas/Collaboration.json
+  - Task: !include schemas/Task.json
+  - SearchResults: !include schemas/SearchResults.json
+  - NewGroup: !include schemas/NewGroup.json
+resourceTypes:
+  - standardResponse: !include resourceTypes/standardResponse.raml
+  - collection: !include resourceTypes/collection.raml
+  - collectionItem: !include resourceTypes/collectionItem.raml
+traits:
+  - fieldAware: !include traits/fieldAware.raml
+  - pageable: !include traits/pageable.raml
+  - notifiable: !include traits/notifiable.raml
+securedBy: [ oauth_2_0 ]
+/folders: 
+  type: { collection: { objectName: Folder } }
+  post:
+    body:
+      application/json:
+        example: !include examples/NewFolder-example.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/Folder-example.json
+  /{folderId}: 
+    type: { collectionItem: { item: Folder } }
+    uriParameters: 
+      folderId: 
+        description: |
+          The ID of the parent folder
+    get: 
+      description: |
+        Retrieves the full metadata about a folder, including information about
+        when it was last updated as well as the files and folders contained in it.
+        The root folder of a Box account is always represented by the id **0**.
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/Folder-example.json
+    put: 
+      description: |
+        Used to update information about the folder. To move a folder, update the ID
+        of its parent. To enable an email address that can be used to upload files
+        to this folder, update the `folder_upload_email` attribute. An optional
+        If-Match header can be included to ensure that client only updates the folder
+        if it knows about the latest version.
+      body: 
+        application/json: 
+          schema: FolderUpdate
+          example: !include examples/NewFolder-example.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/Folder-example.json
+    delete: 
+      description: |
+        Used to delete a folder. A recursive parameter must be included in order to
+        delete folders that have items inside of them. An optional `If-Match` header
+        can be included to ensure that client only deletes the folder if it knows
+        about the latest version.
+      queryParameters: 
+        recursive: 
+          description: Whether to delete this folder if it has items inside of it.
+          type: boolean
+    post: 
+      description: |
+        Restores an item that has been moved to the trash. Default behavior is to
+        restore the item to the folder it was in before it was moved to the trash.
+        If that parent folder no longer exists or if there is now an item with the
+        same name in that parent folder, the new parent folder and/or new name
+        will need to be included in the request.
+      body: 
+        application/json: 
+          schema: NewFolder
+          example: !include examples/NewItem-example.json
+      responses: 
+        201: 
+          description: Item was succesfully created.
+          body: 
+            application/json: 
+              schema: Folder
+              example: !include examples/Folder-example.json
+        405: 
+          description: The item is not in the trash
+        403: 
+          description: "The user doesn't have permission to restore items from the trash"
+        409: 
+          description: There is an item with the same name in the folder the item is being restored to
+    /items: 
+      type: standardResponse
+      get: 
+        is: [ fieldAware , pageable: { default: 100 } ]
+        description: |
+          Retrieves the files and/or folders contained within this folder
+          without any other metadata about the folder.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: ItemsCollection
+                example: !include examples/ItemsCollection-example.json
+    /copy: 
+      type: standardResponse
+      post: 
+        description: |
+          Used to create a copy of a folder in another folder. The original version
+          of the folder will not be altered.
+        body: 
+          application/json: 
+            schema: NewItem
+            example: !include examples/NewItem-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: Folder
+                example: !include examples/Folder-example.json
+    /collaborations: 
+      type: standardResponse
+      get: 
+        description: |
+          Use this to get a list of all the collaborations on a folder i.e. all of
+          the users that have access to that folder.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: CollaborationsCollection
+                example: !include examples/CollaborationsCollection-example.json
+    /trash: 
+      type: standardResponse
+      get: 
+        description: |
+          Retrieves an item that has been moved to the trash. The full item will be
+          returned, including information about when the it was moved to the trash.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: Folder
+                example: !include examples/TrashedFolder-example.json
+      delete: 
+        description: |
+          Permanently deletes an item that is in the trash. The item will no longer
+          exist in Box. This action cannot be undone.
+  /trash/items: 
+    type: standardResponse
+    is: [ fieldAware , pageable: { default: 100 } ]
+    get: 
+      description: |
+        Retrieves the files and/or folders that have been moved to the trash. Any
+        attribute in the full files or folders objects can be passed in with the
+        fields parameter to get specific attributes, and only those specific
+        attributes back; otherwise, the mini format is returned for each item by
+        default.
+        Multiple attributes can be passed in separated by commas e.g.
+        `fields=name,created_at`. Paginated results can be retrieved using the limit
+        and offset parameters.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: ItemsCollection
+              example: !include examples/ItemsCollection-example.json
+/files/{fileId}: 
+  type: { collectionItem: { item: File } }
+  uriParameters: 
+    fileId: 
+      description: "Box's unique string identifying this file."
+  get: 
+    description: Used to retrieve the metadata about a file.
+    responses: 
+      200: 
+        body: 
+          application/json:
+            example: !include examples/File-example.json
+  put: 
+    description: |
+      Used to update individual or multiple fields in the file object, including
+      renaming the file, changing its description, and creating a shared link
+      for the file. To move a file, change the ID of its parent folder. An optional
+      `If-Match` header can be included to ensure that client only updates the file
+      if it knows about the latest version.
+    body: 
+      application/json: 
+        schema: FileInformationUpdate
+        example: !include examples/FileInformationUpdate-example.json
+    responses: 
+      200: 
+        body: 
+          application/json:
+            example: !include examples/File-example.json
+  delete: 
+    description: |
+      Discards a file to the trash. The 'etag' of the file can be included as an
+      `If-Match` header to prevent race conditions.
+      Trash: Depending on the enterprise settings for this user, the item will
+      either be actually deleted from Box or moved to the trash.
+    responses: 
+      412: 
+        description: If the `If-Match` header is sent and fails.
+  post: 
+    description: |
+      Restores an item that has been moved to the trash. Default behavior is to
+      restore the item to the folder it was in before it was moved to the trash.
+      If that parent folder no longer exists or if there is now an item with the
+      same name in that parent folder, the new parent folder and/or new name will
+      need to be included in the request.
+    body: 
+      application/json: 
+        schema: NewItem
+        example: !include examples/NewItem-example.json
+    responses: 
+      201: 
+        body: 
+          application/json: 
+            schema: File
+            example: !include examples/TrashedFile-example.json
+  /versions: 
+    type: standardResponse
+    get: 
+      description: |
+        If there are previous versions of this file, this method can be used to
+        retrieve metadata about the older versions.
+        **ALERT: Versions are only tracked for Box users with premium accounts.**
+      responses: 
+        200: 
+          description: |
+            An array of version objects are returned. If there are no previous
+            versions of this file, then an empty array will be returned.
+          body: 
+            application/json: 
+              schema: VersionsCollection
+              example: !include examples/VersionsCollection-example.json
+    /current: 
+      type: standardResponse
+      post: 
+        description: |
+          Promote an Old Version of a File
+          If there are previous versions of this file, this method can be used to promote one of the older versions to the top of the stack. This actually mints a copy of the old version and puts it on the top of the versions stack. The file will have the exact same contents, the same SHA1/etag, and the same name as the original. Other properties such as comments do not get updated to their former values.
+        body: 
+          application/json: 
+            schema: FileVersionPromote
+            example: !include examples/FileVersionPromote-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: FileVersion
+                example: !include examples/FileVersion-example.json
+    /{version_id}: 
+      type: standardResponse
+      description: Discards a specific file version to the trash.
+      delete: 
+        description: |
+          Discards a specific file version to the trash.
+          
+          Trash: Depending on the enterprise settings for this user, the item will either be actually deleted from Box or moved to the trash.
+  /copy: 
+    type: standardResponse
+    post: 
+      description: |
+        Used to create a copy of a file in another folder. The original version of
+        the file will not be altered.
+      body: 
+        application/json: 
+          schema: NewItem
+          example: !include examples/NewItem-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: File
+              example: !include examples/File-example.json
+        409: 
+          description: |
+            Will be returned if the intended destination folder is the same, as this
+            will cause a name collision.
+  /trash: 
+    type: standardResponse
+    get: 
+      description: |
+        Retrieves an item that has been moved to the trash. The full item will be
+        returned, including information about when the it was moved to the trash.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: File
+              example: !include examples/TrashedFile-example.json
+    delete: 
+      description: |
+        Permanently deletes an item that is in the trash. The item will no longer
+        exist in Box. This action cannot be undone.
+  /tasks: 
+    type: standardResponse
+    get: 
+      description: |
+        Retrieves all of the tasks for given file. A collection of mini task objects
+        is returned. If there are no tasks, an empty collection will be returned.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: TaskSummariesCollection
+              example: !include examples/TaskSummariesCollection-example.json
+  /thumbnail{extension}: 
+    type: standardResponse
+    uriParameters: 
+      extension: 
+        description: |
+          Generated file's extension. Currently thumbnails are only available in .png format
+          and will only be generated for image file formats.
+        enum: [ .png ]
+    get: 
+      description: |
+        Retrieves a thumbnail, or smaller image representation, of this file. Sizes
+        of 32x32, 64x64, 128x128, and 256x256 can be returned.
+        Currently thumbnails are only available in .png format and will only be
+        generated for image file formats.
+        There are three success cases that your application needs to account for:
+          - If the thumbnail isn't available yet, a 202 Accepted HTTP status will
+              be returned, including a 'Location' header pointing to a placeholder
+              graphic that can be used until the thumbnail is returned. A `Retry-After`
+              header will also be returned, indicating the time in seconds after which
+              the thumbnail will be available. Your application should only attempt to
+              get the thumbnail again after Retry-After time.
+          - If Box can't generate a thumbnail for this file type, a 302 Found
+              response will be returned, redirecting to a placeholder graphic in the
+              requested size for this particular file type.
+          - If Box is unable to generate a thumbnail for this particular file, a
+              404 'Not Found' response will be returned with a code of
+              preview_cannot_be_generated. If there are any bad parameters sent in, a
+              standard 400 'Bad Request' will be returned.
+      queryParameters: 
+        min_height: 
+          description: The minimum height of the thumbnail.
+          type: integer
+          example: 32
+        min_width: 
+          description: The minimum width of the thumbnail.
+          type: integer
+          example: 32
+        max_height: 
+          description: The maximum height of the thumbnail
+          type: integer
+          example: 332
+        max_width: 
+          description: The maximum width of the thumbnail
+          type: integer
+          example: 322
+      responses: 
+        200: 
+          description: |
+            The thumbnail image is returned
+        202: 
+          description: |
+            The thumbnail isn't available yet. HTTP status is returned, including
+            a Location header pointing to a placeholder graphic that can be used
+            until the thumbnail is returned.
+          headers: 
+            Retry-After: 
+              description: |
+                Number of seconds to wait before retrying generating the thumbnail
+                generation
+              type: integer
+              required: true
+              example: 10
+        302: 
+          description: |
+            Box can't generate a thumbnail for this file type. The response
+            redirects to a placeholder graphic in the requested size for this
+            particular file type
+  /comments: 
+    type: standardResponse
+    get: 
+      description: |
+        Retrieves the comments on a particular file, if any exist. A collection of
+        comment objects are returned. If there are no comments on the file, an empty
+        comments array is returned.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: CommentsCollection
+              example: !include examples/CommentsCollection-example.json
+  /content: 
+    type: standardResponse
+    get: 
+      description: |
+        Retrieves the actual data of the file. An optional version parameter can be
+        set to download a previous version of the file.
+      queryParameters: 
+        version: 
+          description: The ID specific version of this file to download.
+      responses: 
+        302: 
+          description: Found
+        202: 
+          description: |
+            If the file is not ready to be downloaded (i.e. in the case where the
+            file was uploaded immediately before the download request), a response
+            with an HTTP status of **202** Accepted will be returned with a `Retry-After`
+            header indicating the time in seconds after which the file will be
+            available for the client to download.
+/shared_items: 
+  type: standardResponse
+  get: 
+    description: |
+      Used to retrieve the metadata about a shared item when only given a shared
+      link. Because of varying permission levels for shared links, a password may
+      be required to retrieve the shared item. Once the item has been retrieved,
+      you can make API requests against the actual resource `/files/{id}` or
+      `/folders/{id}` as long as the shared link and optional password are in the
+      header.
+      A full file or folder object is returned if the shared link is valid and the
+      user has access to it. An error may be returned if the link is invalid, if a
+      password is required, or if the user does not have access to the file.
+    headers: 
+      BoxApi: 
+        description: |
+          A string containing the shared link and the password, it should be URL
+          encoded, the format is:
+          ```
+            shared_link=[shared resource's link] shared_link_password=[password for the link]
+          ```
+          shared_link is mandatory.
+        required: true
+        example: "BoxApi: shared_link=SHARED_LINK"
+    responses: 
+      200: 
+        description: A full file or folder object is returned if the shared link is valid and the user has access to it. An error may be returned if the link is invalid, if a password is required, or if the user does not have access to the file.
+        body: 
+          application/json: 
+            schema: File
+            example: !include examples/File-example.json
+/comments: 
+  type: { collection: { objectName: Comment } }
+  is: [ fieldAware ]
+  post: 
+    description: |
+      Used to add a comment by the user to a specific file or comment (i.e. as a
+      reply comment).
+    body:
+      application/json:
+        example: !include examples/NewComment-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: CommentsCollection
+            example: !include examples/CommentsCollection-example.json
+  /{commentId}: 
+    type: { collectionItem: { item: Comment } }
+    uriParameters: 
+      commentId: 
+        description: "Box's unique string identifying this comment."
+    get: 
+      description: |
+        Used to retrieve the message and metadata about a specific comment.
+        Information about the user who created the comment is also included.
+      responses: 
+        200: 
+          body: 
+            application/json:
+              example: !include examples/Comment-example.json
+    put: 
+      description: |
+        Used to update the message of the comment. The full updated comment object
+        is returned if the ID is valid and if the user has access to the comment.
+      body: 
+        application/json: 
+          schema: CommentUpdate
+          example: !include examples/CommentUpdate-example.json
+      responses: 
+        200: 
+          body: 
+            application/json:
+              example: !include examples/Comment-example.json
+    delete: 
+      description: |
+        Permanently deletes a comment. An empty 204 response is returned to confirm
+        deletion of the comment. Errors can be thrown if the ID is invalid or if the
+        user is not authorized to delete this particular comment.
+/collaborations: 
+  type: { collection: { objectName: Collaboration } }
+  get: 
+    description: Used to retrieve all pending collaboration invites for this user.
+    queryParameters: 
+      status: 
+        description: The status of this collab. Can be accepted, pending, or rejected
+        required: true
+        enum: 
+          - accepted
+          - rejected
+          - pending
+    responses: 
+      200: 
+        description: A collection of pending collaboration objects are returned. If the user has no pending collaborations, the collection will be empty.
+        body: 
+          application/json: 
+            schema: CollaborationsCollection
+            example: !include examples/CollaborationsCollection-example.json
+  post: 
+    description: |
+      Used to add a collaboration for a single user to a folder. Either an email
+      address or a user ID can be used to create the collaboration.
+    body:
+      application/json:
+        example: !include examples/NewCollaboration-example.json
+    responses: 
+      201:        
+        body: 
+          application/json:
+            example: !include examples/Collaboration-example.json
+  /{id}: 
+    type: { collectionItem: { item: Collaboration } }
+    put: 
+      description: Used to edit an existing collaboration. Descriptions of the various roles can be found here.
+      body:
+        application/json:
+          example: !include examples/Collaboration-example.json
+      responses: 
+        200:        
+          body: 
+            application/json:
+              example: !include examples/Collaboration-example.json
+    delete: 
+      description: Used to delete a single collaboration.
+/search: 
+  type: standardResponse
+  get: 
+    is: [ pageable: { default: 30 } ]
+    description: |
+      Searching a User's Account. The search endpoint provides a simple way of
+      finding items that are accessible in a given user's Box account.
+      A collection of search results is returned. If there are no matching search
+      results, the entries array will be empty.
+      ALERT: We'll be adding more types of items returned as search results and more
+      filters on search queries, so as you're parsing the results, be prepared to skip
+      over any types of items your app does not recognize.
+    queryParameters: 
+      query: 
+        description: |
+          The string to search for; can be matched against item names, descriptions,
+          text content of a file, and other fields of the different item types.
+        required: true
+        example: someName
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: SearchResults
+            example: !include examples/SearchResults-example.json
+/events: 
+  type: standardResponse
+  get: 
+    description: |
+      Use this to get events for a given user. A chunk of event objects is
+      returned for the user based on the parameters passed in. Parameters
+      indicating how many chunks are left as well as the next stream_position
+      are also returned.
+    queryParameters: 
+      stream_position: 
+        description: |
+          The location in the event stream at which you want to start receiving
+          events. Can specify special case _now_ to get 0 events and the lates
+          stream position for initialization. A collection of events is returned.
+        default: 0
+        example: 0
+      stream_type: 
+        description: Limits the type of events returned
+        enum: 
+          - all
+          - changes
+          - sync
+          - admin_logs
+        default: all
+        example: all
+      limit: 
+        description: Limits the number of events returned
+        type: integer
+        default: 100
+        example: 200
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: EventsCollection
+            example: !include examples/EventsCollection-example.json
+  options: 
+    description: |
+      Long polling. To get real-time notification of activity in a Box account,
+      use the long poll feature of the /events API.
+      To do so, first call the `/events` API with an OPTIONS call to retrieve the
+      long poll URL to use.
+      Next, make a GET request to the provided URL to begin listening for events.
+      If an event occurs within an account you are monitoring, you will receive a
+      response with the value new_change.
+      It's important to note that this response will not come with any other
+      details, but should serve as a prompt to take further action such as calling
+      the `/events` endpoint with your last known `stream_position`. After sending
+      this response, the server will close the connection and you will need to
+      repeat the long poll process to begin listening for events again.
+      If no events occur for a period of time after you make the GET request to
+      the long poll URL, you will receive a response with the value reconnect. When
+      you receive this response, you'll make another OPTIONS call to the /events
+      endpoint and repeat the long poll process.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: EventsPollInformation
+            example: !include examples/EventsPollInformation-example.json
+/users: 
+  type: { collection: { objectName: User } }
+  get: 
+    is: [ pageable: { default: 100 } ]
+    description: |
+      Get All Users in an Enterprise. Returns a list of all users for the
+      Enterprise along with their user_id, public_name, and login.
+    queryParameters: 
+      filter_term: 
+        description: |
+          A string used to filter the results to only users starting with the
+          `filter_term` in either the name or the login
+    responses: 
+      200: 
+        description: ""
+        body: 
+          application/json: 
+            schema: UsersCollection
+            example: !include examples/UsersCollection-example.json
+  post: 
+    description: |
+      Used to provision a new user in an enterprise. This method only works
+      for enterprise admins.
+    body:
+      application/json:
+        example: !include examples/NewUser-example.json
+    responses: 
+      201: 
+        body: 
+          application/json:
+            example: !include examples/User-example.json
+  /me: 
+    type: standardResponse
+    get: 
+      description: |
+        Get the Current User's Information. Retrieves information about the user who
+        is currently logged in i.e. the user for whom this auth token was generated.
+        Returns a single complete user object.
+        An error is returned if a valid auth token is not included in the API request.
+      responses: 
+        200: 
+          description: Returns a single complete user object. An error is returned if a valid auth token is not included in the API request.
+          body: 
+            application/json: 
+              schema: User
+              example: !include examples/User-example.json
+  /{userId}: 
+    type: { collectionItem: { item: User } }
+    uriParameters: 
+      userId: 
+        description: "Box's unique string identifying this user."
+    put: 
+      is: [ notifiable ]
+      description: |
+        Update a User's Information. Used to edit the settings and information abou
+        a user. This method only works for enterprise admins. To roll a user out of
+        the enterprise (and convert them to a standalone free user), update the
+        special `enterprise` attribute to be `null`.
+        Returns the a full user object for the updated user. Errors may be thrown when
+        the fields are invalid or this API call is made from a non-admin account.
+      body: 
+        application/json: 
+          schema: UserUpdate
+          example: !include examples/UserUpdate-example.json
+      responses: 
+        200: 
+          body: 
+            application/json:
+              example: !include examples/User-example.json
+    delete: 
+      is: [ notifiable ]
+      description: |
+        Deletes a user in an enterprise account. An empty 200 response is sent to
+        confirm deletion of the user. If the user still has files in their accoun
+        and the `force` parameter is not sent, an error is returned.
+      queryParameters: 
+        force: 
+          description: |
+            Whether or not the user should be deleted even if this user still own files.
+          type: boolean
+    /email_aliases: 
+      type: standardResponse
+      get: 
+        description: |
+          Get All Email Aliases for a User.
+          Retrieves all email aliases for this user. The collection of email aliases
+          does not include the primary login for the user; use GET /users/USER_ID to
+          retrieve the login email address.
+          If the user_id is valid a collection of email aliases will be returned.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: EmailAliasesCollection
+                example: !include examples/EmailAliasesCollection-example.json
+      post: 
+        description: |
+          Add an Email Alias for a User.
+          Adds a new email alias to the given user's account.
+          Returns the newly created email_alias object. Errors will be thrown if the
+          user_id is not valid or the particular user's email alias cannot be modified.
+        body: 
+          application/json: 
+            schema: NewEmailAlias
+            example: !include examples/NewEmailAlias-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: EmailAlias
+                example: !include examples/EmailAlias-example.json
+      /{email_aliases_id}: 
+        type: standardResponse
+        delete: 
+          description: |
+            Removes an email alias from a user. If the user has permission to remove
+            this email alias, an empty 204 No Content response will be returned to
+             confirm deletion.
+    /folders/{folderId}: 
+      type: standardResponse
+      uriParameters: 
+        folderId: 
+          description: "Folder's identifier"
+      put: 
+        is: [ notifiable ]
+        description: |
+          Move Folder into Another User's Folder.
+          Moves all of the content from within one user's folder into a new folder in
+          another user's account. You can move folders across users as long as the you
+          have administrative permissions. To move everything from the root folder,
+          use "0" which always represents the root folder of a Box account.
+        body: 
+          application/json: 
+            schema: UserFolderMove
+            example: !include examples/UserFolderMove-example.json
+        responses: 
+          200: 
+            description: Returns the information for the newly created destination folder.. An error is thrown if you do not have the necessary permissions to move the folder
+            body: 
+              application/json: 
+                schema: Folder
+                example: !include examples/Folder-example.json
+    /memberships: 
+      type: standardResponse
+      get: 
+        description: Retrieves all of the group memberships for a given enterprise. Note this is only available to group admins. To get a users groups use the users/me/memberships endpoint.
+        responses: 
+          200: 
+            description: A collection of group membership objects will be returned upon success.
+            body: 
+              application/json: 
+                schema: GroupMemberships
+                example: !include examples/GroupMemberships-example.json
+/tasks: 
+  type: { collection: { objectName: Collaboration } }
+  post: 
+    description: |
+      Create a Task. Used to create a single task for single user on a single file.
+      A new task object will be returned upon success.
+    body: 
+      application/json:
+        example: !include examples/NewCollaboration-example.json
+    responses:
+      201:
+        body: 
+          application/json:
+            example: !include examples/Collaboration-example.json
+  /{taskId}: 
+    type: { collectionItem: { item: Task } }
+    get: 
+      description: Fetches a specific task.
+      responses:
+        200:
+          body: 
+            application/json:
+              example: !include examples/Task-example.json
+    put: 
+      description: Updates a specific task.
+      body: 
+        application/json: 
+          schema: TaskUpdate
+          example: !include examples/TaskUpdate-example.json
+      responses:
+        200:
+          body: 
+            application/json:
+              example: !include examples/Task-example.json
+    delete: 
+      description: |
+        Permanently deletes a specific task. An empty 204 response will be
+        returned upon success.
+    /assignments: 
+      type: standardResponse
+      get: 
+        description: |
+          Retrieves all of the assignments for a given task.
+          A collection of task assignment mini objects will be returned upon success.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: AssignmentSummariesCollecton
+                example: !include examples/AssignmentSummariesCollecton-example.json
+/task_assignments: 
+  type: { collection: { objectName: TaskAssignment } }
+  post: 
+    description: |
+      Used to assign a task to a single user. There can be multiple assignments
+      on a given task.
+      A new task assignment object will be returned upon success.
+    body:
+      application/json:
+        example: !include examples/NewTaskAssignment-example.json
+    responses: 
+      201: 
+        body: 
+          application/json: 
+            schema: TaskAssignment
+            example: !include examples/TaskAssignment-example.json
+  /{task_assignments_id}: 
+    type: { collectionItem: { item: TaskAssignment } }
+    get: 
+      description: |
+        Fetches a specific task assignment.
+        The specified task assignment object will be returned upon success.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              example: !include examples/TaskAssignment-example.json
+    put: 
+      description: |
+        Used to update a task assignment.
+        A new task assignment object will be returned upon success.
+      body: 
+        application/json: 
+          schema: Task_assignmentUpdate
+          example: !include examples/Task_assignmentUpdate-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              example: !include examples/TaskAssignment-example.json
+    delete: 
+      description: |
+        Deletes a specific task assignment.
+        An empty `204 No Content` response will be returned upon success.
+/groups: 
+  type: { collection: { objectName: Group } }
+  get: 
+    description: Retrieves all of the groups for given user.
+    responses: 
+      200: 
+        description: A collection of mini group objects is returned. If there are no groups, an empty collection will be returned.
+        body: 
+          application/json: 
+            schema: MiniGroups
+            example: !include examples/MiniGroups-example.json
+  post:
+    body:
+      application/json:
+        example: !include examples/NewGroup-example.json
+    responses: 
+      201: 
+        body: 
+          application/json:
+            example: !include examples/Group-example.json
+  /{id}: 
+    type: { collectionItem: { item: Group } }
+    put: 
+      body: 
+        application/json: 
+          schema: Group
+          example: !include examples/Group-example.json
+      responses: 
+        200: 
+          body: 
+            application/json:
+              example: !include examples/Group-example.json
+    delete: 
+      description: Permanently deletes a specific group
+    /memberships: 
+      type: standardResponse
+      description: ""
+      get: 
+        description: Retrieves all of the members for a given group.
+        responses: 
+          200: 
+            description: Retrieves all of the members for a given group.
+            body: 
+              application/json: 
+                schema: GroupMemberships
+                example: !include examples/GroupMemberships-example.json
+    /collaborations: 
+      type: standardResponse
+      get: 
+        description: Retrieves all of the group collaborations for a given group. Note this is only available to group admins.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: CollaborationsCollection
+                example: !include examples/CollaborationsCollection-example.json
+/group_memberships: 
+  type: standardResponse
+  post: 
+    description: Used to add a member to a Group.
+    body: 
+      application/json: 
+        schema: NewGroupMembership
+        example: !include examples/NewGroupMembership-example.json
+    responses: 
+      201: 
+        body: 
+          application/json: 
+            schema: GroupMembershipEntry
+            example: !include examples/GroupMembershipEntry-example.json
+  /{id}: 
+    type: standardResponse
+    get: 
+      description: Fetches a specific group membership entry.
+      responses: 
+        200: 
+          description: A new group membership object will be returned upon success.
+          body: 
+            application/json: 
+              schema: GroupMembershipEntry
+              example: !include examples/GroupMembershipEntry-example.json
+    put: 
+      description: Used to update a group membership.
+      body: 
+        application/json: 
+          schema: UpdateMembership
+          example: !include examples/UpdateMembership-example.json
+      responses: 
+        200: 
+          description: A new group membership object will be returned upon success.
+          body: 
+            application/json: 
+              schema: GroupMembershipEntry
+              example: !include examples/GroupMembershipEntry-example.json
+    delete: 
+      description: Deletes a specific group membership.
+documentation: 
+  - title: Headline
+    content: !include docs/boxAPI/headline.md

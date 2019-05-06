@@ -1,0 +1,108 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required": false,
+    "properties": {
+        "object": {
+            "type": "string",
+            "required": false
+        },
+        "url": {
+            "type": "string",
+            "required": false
+        },
+        "count": {
+            "type": "number",
+            "required": false
+        },
+        "data": {
+            "type": "array",
+            "required": false,
+            "items": {
+                "type": "object",
+                "required": false,
+                "properties": {
+                    "amount": {
+                        "type": "number",
+                        "required": false
+                    },
+                    "available_on": {
+                        "type": "number",
+                        "required": false
+                    },
+                    "created": {
+                        "type": "number",
+                        "required": false
+                    },
+                    "currency": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "description": {
+                        "type": "null",
+                        "required": false
+                    },
+                    "fee_details": {
+                        "type": "array",
+                        "required": false,
+                        "items": {
+                            "type": "object",
+                            "required": false,
+                            "properties": {
+                                "amount": {
+                                    "type": "number",
+                                    "required": false
+                                },
+                                "application": {
+                                    "type": "null",
+                                    "required": false
+                                },
+                                "currency": {
+                                    "type": "string",
+                                    "required": false
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "required": false
+                                },
+                                "type": {
+                                    "type": "string",
+                                    "required": false
+                                }
+                            }
+                        }
+                    },
+                    "fee": {
+                        "type": "number",
+                        "required": false
+                    },
+                    "id": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "net": {
+                        "type": "number",
+                        "required": false
+                    },
+                    "object": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "source": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "status": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "required": false
+                    }
+                }
+            }
+        }
+    }
+}

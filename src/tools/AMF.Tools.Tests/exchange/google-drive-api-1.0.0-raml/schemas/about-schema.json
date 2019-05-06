@@ -1,0 +1,260 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "kind" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "etag" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "selfLink" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "name" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "user" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "kind" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "displayName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "picture" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "url" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "isAuthenticatedUser" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "permissionId" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "emailAddress" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "quotaBytesTotal" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "quotaBytesUsed" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "quotaBytesUsedAggregate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "quotaBytesUsedInTrash" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "quotaType" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "quotaBytesByService" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "serviceName" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "bytesUsed" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    } ,
+    "largestChangeId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "remainingChangeIds" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "rootFolderId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "domainSharingPolicy" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "permissionId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "importFormats" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "source" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "targets" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+                {
+                  "type" : "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    } ,
+    "exportFormats" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "source" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "targets" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+                {
+                  "type" : "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    } ,
+    "additionalRoleInfo" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "type" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "roleSets" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+                {
+                  "type" : "object" ,
+                  "properties" : {
+                    "primaryRole" : {
+                      "type" : "string" ,
+                      "required" : false
+                    } ,
+                    "additionalRoles" : {
+                      "type" : "array" ,
+                      "required" : false ,
+                      "items" : [
+                        {
+                          "type" : "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    } ,
+    "features" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "featureName" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "featureRate" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    } ,
+    "maxUploadSizes" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "type" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "size" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    } ,
+    "isCurrentAppInstalled" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "languageCode" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "folderColorPalette" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    }
+  }
+}

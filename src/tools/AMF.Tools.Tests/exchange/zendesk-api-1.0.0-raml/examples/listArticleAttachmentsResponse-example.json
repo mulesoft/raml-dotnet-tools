@@ -1,0 +1,21 @@
+{
+  "article_attachments" : [
+    {
+      "id" : 1428 ,
+      "article_id" : 23 ,
+      "file_name" : "logo.jpg" ,
+      "content_url" : "https://company.zendesk.com/hc/article_attachments/200109629/logo.jpg" ,
+      "content_type" : "application/jpeg" ,
+      "size" : 1428 ,
+      "inline" : true
+    } , {
+      "id" : 2857 ,
+      "article_id" : 23 ,
+      "file_name" : "party_invitation.pdf" ,
+      "content_url" : "https://company.zendesk.com/hc/article_attachments/200109629/party_invitation.pdf" ,
+      "content_type" : "application/pdf" ,
+      "size" : 58298 ,
+      "inline" : false
+    } 
+  ]
+}

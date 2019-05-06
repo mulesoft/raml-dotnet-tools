@@ -1,0 +1,169 @@
+#%RAML 1.0
+title: Healthcare_portal_Experience_API
+version: v2
+baseUri: http://localhost:8081/api/
+
+uses:
+  DataTypes: ./dataTypes.raml
+
+/signin:
+  post:
+    displayName: User Signin
+    description: Signs in user
+    body: 
+      application/json:
+        type: DataTypes.SigninRequest
+        example: !include ./examples/signin-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            type: DataTypes.SigninResponse
+            example: !include ./examples/signin-response.json
+      401:
+        body:
+          application/json:
+            type: DataTypes.MessageResponse
+            example: !include ./examples/signin-error-response.json
+/signout:
+  post:
+    displayName: User Signout
+    description: Signs out user
+    body: 
+      application/json:
+        type: DataTypes.SignoutRequest
+        example: !include ./examples/signout-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            type: DataTypes.MessageResponse
+            example: !include ./examples/signout-response.json
+/signup:
+  post:
+    displayName: User Signup
+    description: Signs up user
+    body: 
+      application/json:
+        type: DataTypes.SignupRequest
+        example: !include ./examples/signup-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            type: DataTypes.SignupResponse
+            example: !include ./examples/signup-response.json
+      409:
+        body:
+          application/json:
+            type: DataTypes.MessageResponse
+            example: !include ./examples/signup-error-response.json
+
+/patient/{id}:
+  uriParameters:
+    id:
+      type: integer | string
+      description: Patient ID
+  /info:
+    get:
+      displayName: Get patient info
+      description: GET patient info from EHR system
+      responses:
+        200:
+          body:
+            application/json:
+              type: DataTypes.Patient
+              example: !include ./examples/patient-portal-response.json
+    put:
+      displayName: Update patient info
+      description: PUT patient info from Portal to SFDC Health Cloud
+      body:
+        application/json:
+          type: DataTypes.Patient
+          example: !include ./examples/patient-portal-request.json
+      responses:
+        200:
+          body:
+            application/json:  
+  /health:
+    get:
+      displayName: Get patient health info
+      description: GET patient health info from EHR
+      responses:
+        200:
+          body:
+            application/json:
+              type: DataTypes.Health
+              example: !include ./examples/health-portal-response.json
+    put:
+      displayName: Update patient health info
+      description: PUT patient health info from Portal to SFDC Health Cloud and EHR
+      body:
+        application/json:
+          type: DataTypes.Health
+          example: !include ./examples/health-portal-request.json
+      responses:
+        200:
+          body:
+            application/json:
+  /appointments:
+    post:
+      displayName: Create appointment
+      description: POST new appointment for patient
+      body:
+        application/json:
+          type: DataTypes.Appointment
+          example: !include ./examples/appointment-portal-request.json
+      responses:
+        201: 
+    /upcoming:
+      get:
+        displayName: Upcoming Appointments for Patient
+        description: GET upcoming appointments for specific patient
+        responses:
+          200:
+            body:
+              application/json:
+                type: DataTypes.Appointment[]
+                example: !include ./examples/upcoming-appointments-response.json
+    /history:
+      get:
+        displayName: Past Appointments for Patient
+        description: GET past appointments for specific patient
+        responses:
+          200:
+            body:
+              application/json:
+                type: DataTypes.Appointment[]
+                example: !include ./examples/appointments-history-response.json
+            
+/practitioners:
+  get:
+    displayName: Get practitioners
+    description: Get all information about practitioners
+    responses:
+      200:
+        body:
+          application/json:
+            type: DataTypes.Person[]
+            example: !include ./examples/practitioners-portal-response.json
+  /{id}:
+    get:
+      displayName: Get practitioner by id
+      description: Get all information about practitioner with specific ID
+      responses:
+        200:
+          body:
+            application/json:
+              type: DataTypes.Person
+              example: !include ./examples/practitioner-portal-response.json
+    /schedule:
+      get:
+        displayName: Get available slots
+        description: Get practitioner's available slots for scheduling        
+        responses:
+          200:
+            body:
+              application/json:
+                type: DataTypes.Schedule
+                example: !include ./examples/practitioner-schedule-response.json              

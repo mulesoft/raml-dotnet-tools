@@ -1,0 +1,169 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "apps" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "large_icon" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "author_name" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "visibility" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "promoted" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "author_email" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "installable" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "installation_instructions" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "long_description" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "featured" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "raw_long_description" : {
+              "type" : "object" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "single_install" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "small_icon" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "version" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "name" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "categories" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+              ]
+            } ,
+            "raw_installation_instructions" : {
+              "type" : "object" ,
+              "required" : false
+            } ,
+            "parameters" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+                {
+                  "type" : "object" ,
+                  "properties" : {
+                    "secure" : {
+                      "type" : "boolean" ,
+                      "required" : false
+                    } ,
+                    "position" : {
+                      "type" : "number" ,
+                      "required" : false
+                    } ,
+                    "name" : {
+                      "type" : "string" ,
+                      "required" : false
+                    } ,
+                    "app_id" : {
+                      "type" : "number" ,
+                      "required" : false
+                    } ,
+                    "created_at" : {
+                      "type" : "string" ,
+                      "required" : false
+                    } ,
+                    "kind" : {
+                      "type" : "string" ,
+                      "required" : false
+                    } ,
+                    "required" : {
+                      "type" : "boolean" ,
+                      "required" : false
+                    } ,
+                    "updated_at" : {
+                      "type" : "string" ,
+                      "required" : false
+                    } ,
+                    "default_value" : {
+                      "type" : "object" ,
+                      "required" : false
+                    } ,
+                    "id" : {
+                      "type" : "number" ,
+                      "required" : false
+                    }
+                  }
+                }
+              ]
+            } ,
+            "default_locale" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "short_description" : {
+              "type" : "object" ,
+              "required" : false
+            } ,
+            "updated_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "owner_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "screenshots" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+              ]
+            } ,
+            "framework_version" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

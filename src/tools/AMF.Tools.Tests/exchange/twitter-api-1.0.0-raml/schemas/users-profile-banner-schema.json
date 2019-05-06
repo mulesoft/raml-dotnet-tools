@@ -1,0 +1,92 @@
+{
+    "": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "sizes": {
+            "ipad": {
+                "properties": {
+                    "w": {
+                        "type": "integer"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "h": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "mobile_retina": {
+                "properties": {
+                    "w": {
+                        "type": "integer"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "h": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "mobile": {
+                "properties": {
+                    "w": {
+                        "type": "integer"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "h": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "web_retina": {
+                "properties": {
+                    "w": {
+                        "type": "integer"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "h": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ipad_retina": {
+                "properties": {
+                    "w": {
+                        "type": "integer"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "h": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "web": {
+                "properties": {
+                    "w": {
+                        "type": "integer"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "h": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

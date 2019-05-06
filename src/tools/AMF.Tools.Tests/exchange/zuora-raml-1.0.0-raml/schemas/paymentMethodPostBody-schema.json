@@ -1,0 +1,77 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "defaultPaymentMethod" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "cardHolderInfo" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "addressLine1" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "addressLine2" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "zipCode" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "phone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "country" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "cardHolderName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "city" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "email" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "expirationMonth" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "accountKey" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "creditCardType" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "expirationYear" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "creditCardNumber" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "securityCode" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

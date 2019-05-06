@@ -1,0 +1,7 @@
+{
+	"organization_field":{
+		"type":"text", "title":"Support description", 
+   		"description": "This field describes the support plan this organization has", 
+    	"position":0, "active":true, "key":"support_description"
+   	}
+}

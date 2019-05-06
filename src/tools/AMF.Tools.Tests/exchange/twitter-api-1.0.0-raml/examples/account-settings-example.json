@@ -1,0 +1,34 @@
+{
+    "always_use_https": true,
+    "discoverable_by_email": true,
+    "geo_enabled": true,
+    "language": "en",
+    "protected": false,
+    "screen_name": "theSeanCook",
+    "show_all_inline_media": false,
+    "sleep_time": {
+        "enabled": false,
+        "end_time": null,
+        "start_time": null
+    },
+    "time_zone": {
+        "name": "Pacific Time (US & Canada)",
+        "tzinfo_name": "America/Los_Angeles",
+        "utc_offset": -28800
+    },
+    "trend_location": [
+        {
+            "country": "United States",
+            "countryCode": "US",
+            "name": "Atlanta",
+            "parentid": 23424977,
+            "placeType": {
+                "code": 7,
+                "name": "Town"
+            },
+            "url": "http://where.yahooapis.com/v1/place/2357024",
+            "woeid": 2357024
+        }
+    ],
+    "use_cookie_personalization": true
+}

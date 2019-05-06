@@ -1,0 +1,217 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "array",
+  "items": {
+    "required": false,
+    "type": "object",
+    "properties": {
+      "created_at": {
+        "required": false,
+        "type": "string"
+      },
+      "description": {
+        "required": false,
+        "type": "string"
+      },
+      "following": {
+        "required": false,
+        "type": "boolean"
+      },
+      "full_name": {
+        "required": false,
+        "type": "string"
+      },
+      "id": {
+        "required": false,
+        "type": "integer"
+      },
+      "id_str": {
+        "required": false,
+        "type": "string"
+      },
+      "member_count": {
+        "required": false,
+        "type": "integer"
+      },
+      "mode": {
+        "required": false,
+        "type": "string"
+      },
+      "name": {
+        "required": false,
+        "type": "string"
+      },
+      "slug": {
+        "required": false,
+        "type": "string"
+      },
+      "subscriber_count": {
+        "required": false,
+        "type": "integer"
+      },
+      "uri": {
+        "required": false,
+        "type": "string"
+      },
+      "user": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "profile_background_tile": {
+            "required": false,
+            "type": "boolean"
+          },
+          "profile_sidebar_border_color": {
+            "required": false,
+            "type": "string"
+          },
+          "name": {
+            "required": false,
+            "type": "string"
+          },
+          "profile_sidebar_fill_color": {
+            "required": false,
+            "type": "string"
+          },
+          "location": {
+            "required": false,
+            "type": "string"
+          },
+          "created_at": {
+            "required": false,
+            "type": "string"
+          },
+          "profile_image_url": {
+            "required": false,
+            "type": "string"
+          },
+          "is_translator": {
+            "required": false,
+            "type": "boolean"
+          },
+          "id_str": {
+            "required": false,
+            "type": "string"
+          },
+          "profile_link_color": {
+            "required": false,
+            "type": "string"
+          },
+          "follow_request_sent": {
+            "required": false,
+            "type": "boolean"
+          },
+          "favourites_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "contributors_enabled": {
+            "required": false,
+            "type": "boolean"
+          },
+          "url": {
+            "required": false,
+            "type": "string"
+          },
+          "default_profile": {
+            "required": false,
+            "type": "boolean"
+          },
+          "profile_image_url_https": {
+            "required": false,
+            "type": "string"
+          },
+          "utc_offset": {
+            "required": false,
+            "type": "integer"
+          },
+          "profile_banner_url": {
+            "required": false,
+            "type": "string"
+          },
+          "id": {
+            "required": false,
+            "type": "integer"
+          },
+          "profile_use_background_image": {
+            "required": false,
+            "type": "boolean"
+          },
+          "listed_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "profile_text_color": {
+            "required": false,
+            "type": "string"
+          },
+          "protected": {
+            "required": false,
+            "type": "boolean"
+          },
+          "lang": {
+            "required": false,
+            "type": "string"
+          },
+          "followers_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "description": {
+            "required": false,
+            "type": "string"
+          },
+          "notifications": {
+            "required": false,
+            "type": "boolean"
+          },
+          "geo_enabled": {
+            "required": false,
+            "type": "boolean"
+          },
+          "verified": {
+            "required": false,
+            "type": "boolean"
+          },
+          "time_zone": {
+            "required": false,
+            "type": "string"
+          },
+          "profile_background_color": {
+            "required": false,
+            "type": "string"
+          },
+          "profile_background_image_url_https": {
+            "required": false,
+            "type": "string"
+          },
+          "statuses_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "friends_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "default_profile_image": {
+            "required": false,
+            "type": "boolean"
+          },
+          "profile_background_image_url": {
+            "required": false,
+            "type": "string"
+          },
+          "following": {
+            "required": false,
+            "type": "boolean"
+          },
+          "screen_name": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

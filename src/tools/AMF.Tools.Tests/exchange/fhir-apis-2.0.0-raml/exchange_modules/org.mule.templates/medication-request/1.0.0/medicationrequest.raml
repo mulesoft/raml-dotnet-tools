@@ -1,0 +1,120 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/MedicationRequest.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: Ordering of medication for patient or group
+type: FHIR_commons.DomainResource
+properties:
+  identifier?:
+    description: External ids for this request
+    type: FHIR_commons.Identifier[]
+  definition?:
+    description: Protocol or definition
+    type: FHIR_commons.Reference[]
+  basedOn?:
+    description: What request fulfills
+    type: FHIR_commons.Reference[]
+  groupIdentifier?:
+    description: Composite request this is part of
+    type: FHIR_commons.Identifier
+  status?:
+    description: Medical request status
+    type: FHIR_commons.code
+    enum: [active, on-hold, cancelled, completed, entered-in-error, stopped, draft, unknown]
+  intent:
+    description: Medical request intent
+    type: FHIR_commons.code
+    enum: [proposal, plan, order, instance-order]
+  category?:
+    description: Type of medication usage
+    type: FHIR_commons.CodeableConcept
+  priority?:
+    description: Request priority
+    type: FHIR_commons.code
+    enum: [routine, urgent, stat, asap]
+  medicationCodeableConcept?:
+    description: Medication to be taken
+    type: FHIR_commons.CodeableConcept
+  medicationReference?:
+    description: Medication to be taken
+    type: FHIR_commons.Reference
+  subject:
+    description: Who or group medication request is for
+    type: FHIR_commons.Reference
+  context?:
+    description: Created during encounter/admission/stay
+    type: FHIR_commons.Reference
+  supportingInformation?:
+    description: Information to support ordering of the medication
+    type: FHIR_commons.Reference[]
+  authoredOn?:
+    description: When request was initially authored
+    type: FHIR_commons.dateTime
+  requester?:
+    description: |
+      Who/What requested the Request
+      + onBehalfOf can only be specified if agent is practitioner or device
+    type: FHIR_commons.BackboneElement
+    properties:
+      agent:
+        description: Who ordered the initial medication(s)
+        type: FHIR_commons.Reference
+      onBehalfOf?:
+        description: Organization agent is acting for
+        type: FHIR_commons.Reference
+  recorder?:
+    description: Person who entered the request
+    type: FHIR_commons.Reference
+  reasonCode?:
+    description: Reason or indication for writing the prescription
+    type: FHIR_commons.CodeableConcept[]
+  reasonReference?:
+    description: Condition or Observation that supports why the prescription is being written
+    type: FHIR_commons.Reference[]
+  note?:
+    description: Information about the prescription
+    type: FHIR_commons.Annotation[]
+  dosageInstruction?:
+    description: How the medication should be taken
+    type: FHIR_commons.Dosage[]
+  dispenseRequest?:
+    description: Medication supply authorization
+    type: FHIR_commons.BackboneElement
+    properties:
+      validityPeriod?:
+        description: Time period supply is authorized for
+        type: FHIR_commons.Period
+      numberOfRepeatsAllowed?:
+        description: Number of refills authorized
+        type: FHIR_commons.positiveInt
+      quantity?:
+        description: Amount of medication to supply per dispense
+        type: FHIR_commons.SimpleQuantity
+      expectedSupplyDuration?:
+        description: Number of days supply per dispense
+        type: FHIR_commons.Duration
+      performer?:
+        description: Intended dispenser
+        type: FHIR_commons.Reference
+  substitution?:
+    description: Any restrictions on medication substitution
+    type: FHIR_commons.BackboneElement
+    properties:
+      allowed:
+        description: Whether substitution is allowed or not
+        type: boolean
+      reason?:
+        description: Why should (not) substitution be made
+        type: FHIR_commons.CodeableConcept
+  priorPrescription?:
+    description: An order/prescription that is being replaced
+    type: FHIR_commons.Reference
+  detectedIssue?:
+    description: Clinical Issue with action
+    type: FHIR_commons.Reference[]
+  eventHistory?:
+    description: A list of events of interest in the lifecycle
+    type: FHIR_commons.Reference[]

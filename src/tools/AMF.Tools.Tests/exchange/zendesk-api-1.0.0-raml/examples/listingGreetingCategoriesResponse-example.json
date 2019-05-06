@@ -1,0 +1,11 @@
+{
+  "greeting_categories" : [
+    {
+      "id" : 1 ,
+      "name" : "voicemail"
+    } , {
+      "id" : 2 ,
+      "name" : "available"
+    }
+  ]
+}

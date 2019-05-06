@@ -1,0 +1,10 @@
+{
+  "id": "a1048809-64eb-4830-9974-9dc673b92013",
+  "organizationId": "f397ce0e-ba9b-40fb-a96c-8bbc1d494b40",
+  "name": "Spec Name",
+  "type": "raml",
+  "createdBy": "54bf6b94-d209-44fa-b13a-cb6991ec6fb8",
+  "description": "Project description",
+  "vcsType": "GIT",
+  "createdDate": "1985-04-12T23:20:50.52Z"
+}

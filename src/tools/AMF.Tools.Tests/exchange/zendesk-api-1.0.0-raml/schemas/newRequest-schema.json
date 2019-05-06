@@ -1,0 +1,27 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "request" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "subject" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "comment" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "body" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+#%RAML 1.0 Library
+usage: |
+  Use to define some basic message-related constructs.
+types:
+  MessageInput:
+    type: object
+    properties:
+      To:
+        type: string
+        description: |
+          The destination phone number. Format with a '+' and country code e.g., +16175551212 (E.164 format).
+        required: true
+        example: '+15005550006'
+      From:
+        type: string
+        description: |
+          A Twilio phone number (in E.164 format) or alphanumeric sender ID enabled for the type of message you wish to send. Phone numbers or short codes purchased from Twilio work here. You cannot (for example) spoof messages from your own cell phone number.
+        required: false
+        example: '+15005550001'
+      MessagingServiceSid:
+        type: string
+        description: |
+          The 34 character unique id of the Messaging Service you want to associate with this Message. Set this parameter to use the Messaging Service Settings and Copilot Features you have configured. When only this parameter is set, Twilio will use your enabled Copilot Features to select the From phone number for delivery.
+        required: false
+      Body:
+        type: string
+        description: |
+          The text of the message you want to send, limited to 1600 characters.
+        required: false
+        example: 'Hello from MuleSoft!'
+      MediaUrl:
+        type: string
+        description: |
+          The URL of the media you wish to send out with the message. gif , png and jpeg content is currently supported and will be formatted correctly on the recipient's device. Other types are also accepted by the API. The media size limit is 5MB. If you wish to send more than one image in the message body, please provide multiple MediaUrls values in the POST request. You may include up to 10 MediaUrls per message.
+        required: false
+      StatusCallback:
+        type: string
+        description: |
+          A URL that Twilio will POST to each time your message status changes to one of the following: queued, failed, sent, delivered, or undelivered. Twilio will POST the MessageSid along with the other standard request parameters as well as MessageStatus and ErrorCode. If this parameter passed in addition to a MessagingServiceSid, Twilio will override the Status Callback URL of the Messaging Service. Non-relative URLs must contain a valid hostname (underscores are not allowed).
+        required: false
+      ApplicationSid:
+        type: string
+        description: |
+          Twilio will POST MessageSid as well as MessageStatus=sent or MessageStatus=failed to the URL in the MessageStatusCallback property of this Application. If the StatusCallback parameter above is also passed, the Application's MessageStatusCallback parameter will take precedence.
+        required: false
+      MaxPrice:
+        type: string
+        description: |
+          The total maximum price up to the fourth decimal (0.0001) in US dollars acceptable for the message to be delivered. All messages regardless of the price point will be queued for delivery. A POST request will later be made to your Status Callback URL with a status change of 'Sent' or 'Failed'. When the price of the message is above this value the message will fail and not be sent. When MaxPrice is not set, all prices for the message is accepted."
+        required: false
+      ProvideFeedback:
+        type: boolean
+        description: |
+          Set this value to true if you are sending messages that have a trackable user action and you intend to confirm delivery of the message using the Message Feedback API. This parameter is set to false by default.
+        required: false
+    minProperties: 3
+    additionalProperties: false
+  RedactInput:
+    type: object
+    properties:
+      Body:
+        type: string
+        description: |
+          The text of the message you want to modify. It must be left empty.
+        required: true

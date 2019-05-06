@@ -1,0 +1,9 @@
+{
+  "monitored_twitter_handle" : {
+      "id" : 431,
+	  "screen_name" : "@zendeskops" ,
+      "twitter_user_id" : 67923318930 ,
+      "created_at" : "2010-05-13T22:07:08Z" ,
+      "updated_at" : "2011-07-22T00:15:19Z"
+  }
+}

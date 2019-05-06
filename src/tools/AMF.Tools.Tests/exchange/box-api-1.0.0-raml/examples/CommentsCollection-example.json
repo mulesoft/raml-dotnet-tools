@@ -1,0 +1,18 @@
+{
+  "total_count": 1,
+  "offset": 0,
+  "limit": 100,
+  "entries": [{
+    "type": "comment",
+    "id": "53413331",
+    "is_reply_comment": false,
+    "message": "test",
+    "created_by": {
+      "type": "user",
+      "id": "214268589",
+      "name": "RAML QA",
+      "login": "ramlqa@mulesoft.com"
+    },
+    "created_at": "2015-03-16T07:39:47-07:00"
+  }]
+}

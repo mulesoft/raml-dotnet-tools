@@ -1,0 +1,23 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "event" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "app_id" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "agent_id" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "body" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

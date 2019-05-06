@@ -1,0 +1,47 @@
+{
+  "appMenuItems" : [
+    {
+      "type" : "Tabset" ,
+      "content" : null ,
+      "icons" : null ,
+      "colors" : null ,
+      "label" : "Sales" ,
+      "url" : "/home/home.jsp?tsid=02uxx00000056Sq"
+    } , {
+      "type" : "Tabset" ,
+      "content" : null ,
+      "icons" : null ,
+      "colors" : null ,
+      "label" : "Call Center" ,
+      "url" : "/home/home.jsp?tsid=02uxx00000056Sr"
+    } , {
+      "type" : "Tabset" ,
+      "content" : null ,
+      "icons" : null ,
+      "colors" : null ,
+      "label" : "Marketing" ,
+      "url" : "/home/home.jsp?tsid=02uxx00000056St"
+    } , {
+      "type" : "Tabset" ,
+      "content" : null ,
+      "icons" : null ,
+      "colors" : null ,
+      "label" : "Salesforce Chatter" ,
+      "url" : "/home/home.jsp?tsid=02uxx00000056Su"
+    } , {
+      "type" : "Tabset" ,
+      "content" : null ,
+      "icons" : null ,
+      "colors" : null ,
+      "label" : "Community" ,
+      "url" : "/home/home.jsp?tsid=02uxx00000056Sw"
+    } , {
+      "type" : "Tabset" ,
+      "content" : null ,
+      "icons" : null ,
+      "colors" : null ,
+      "label" : "App Launcher" ,
+      "url" : "/app/mgmt/applauncher/appLauncher.apexp?tsid=02uxx00000056Sx"
+    }
+  ]
+}

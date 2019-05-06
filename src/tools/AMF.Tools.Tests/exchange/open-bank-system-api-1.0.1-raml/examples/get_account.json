@@ -1,0 +1,48 @@
+[
+  {
+    "id":"d55b463d-3e12-446c-bfcc-9759c69d1a0c",
+    "label": "Checking account",
+    "number":"3566658136",
+    "overdraft": false,
+    "owners":[{
+      "user_id":"12345",
+      "ssn": "123-45-6789",
+      "display_name": "test.user"
+    }],
+    "type": "checking",
+    "balance":{
+      "currency": "EUR",
+      "amount": "6000.00"
+    },
+    "available_balance":{
+      "currency": "EUR",
+      "amount": "6000.00"
+    },
+    "IBAN": "GB29NWBK60161331926819",
+    "swift_bic": "NWBKGB2L",
+    "bank_id":"deutche-test"
+  },
+  {
+    "id":"0efd32c8-a87d-422c-bf10-b3f7d265ff2d",
+    "label": "Savings account",
+    "number":"3968765442",
+    "overdraft": false,
+    "owners":[{
+      "user_id":"12345",
+      "ssn": "123-45-6789",
+      "display_name": "test.user"
+    }],
+    "type": "savings",
+    "balance":{
+      "currency": "EUR",
+      "amount": "2000.00"
+    },
+    "available_balance":{
+      "currency": "EUR",
+      "amount": "2000.00"
+    },
+    "IBAN": "GB29NWBK60161331926819",
+    "swift_bic": "NWBKGB2L",
+    "bank_id":"deutche-test"
+  }
+]

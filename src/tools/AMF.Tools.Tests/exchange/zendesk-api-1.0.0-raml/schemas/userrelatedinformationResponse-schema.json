@@ -1,0 +1,37 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "user_related" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "requested_tickets" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "ccd_tickets" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "topics" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "topic_comments" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "votes" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "subscriptions" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

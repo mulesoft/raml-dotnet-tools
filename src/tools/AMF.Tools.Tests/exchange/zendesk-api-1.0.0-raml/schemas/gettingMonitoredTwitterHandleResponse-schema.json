@@ -1,0 +1,33 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "monitored_twitter_handle" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "screen_name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "twitter_user_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

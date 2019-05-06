@@ -1,0 +1,147 @@
+{
+  "type": "object",
+  "required": true,
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "contractedMrr": {
+      "type": "number",
+      "required": false
+    },
+    "termStartDate": {
+      "type": "string",
+      "required": false
+    },
+    "subscriptionNumber": {
+      "type": "string",
+      "required": false
+    },
+    "accountNumber": {
+      "type": "string",
+      "required": false
+    },
+    "success": {
+      "type": "boolean",
+      "required": false
+    },
+    "totalContractedValue": {
+      "type": "number",
+      "required": false
+    },
+    "accountName": {
+      "type": "string",
+      "required": false
+    },
+    "ratePlans": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "ratePlanName": {
+              "type": "string",
+              "required": false
+            },
+            "productName": {
+              "type": "string",
+              "required": false
+            },
+            "ratePlanCharges": {
+              "type": "array",
+              "required": false,
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "required": false
+                    },
+                    "billingPeriod": {
+                      "type": "object",
+                      "required": false
+                    },
+                    "model": {
+                      "type": "string",
+                      "required": false
+                    },
+                    "type": {
+                      "type": "string",
+                      "required": false
+                    },
+                    "pricingSummary": {
+                      "type": "string",
+                      "required": false
+                    },
+                    "quantity": {
+                      "type": "object",
+                      "required": false
+                    },
+                    "billingDay": {
+                      "type": "string",
+                      "required": false
+                    },
+                    "id": {
+                      "type": "string",
+                      "required": false
+                    }
+                  }
+                }
+              }
+            },
+            "id": {
+              "type": "string",
+              "required": false
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "required": false
+    },
+    "renewalTerm": {
+      "type": "number",
+      "required": false
+    },
+    "accountId": {
+      "type": "string",
+      "required": false
+    },
+    "autoRenew": {
+      "type": "boolean",
+      "required": false
+    },
+    "termType": {
+      "type": "string",
+      "required": false
+    },
+    "termEndDate": {
+      "type": "string",
+      "required": false
+    },
+    "contractEffectiveDate": {
+      "type": "string",
+      "required": false
+    },
+    "notes": {
+      "type": "string",
+      "required": false
+    },
+    "initialTerm": {
+      "type": "number",
+      "required": false
+    },
+    "subscriptionStartDate": {
+      "type": "string",
+      "required": false
+    },
+    "id": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

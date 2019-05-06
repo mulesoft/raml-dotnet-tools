@@ -1,0 +1,12 @@
+{
+  "identity" : {
+      "id" : 35436 ,
+      "user_id" : 135 ,
+      "type" : "email" ,
+      "value" : "someone@example.com" ,
+      "verified" : true ,
+      "primary" : true ,
+      "updated_at" : "2011-07-20T22:55:29Z" ,
+      "created_at" : "2011-07-20T22:55:29Z"
+  }
+}

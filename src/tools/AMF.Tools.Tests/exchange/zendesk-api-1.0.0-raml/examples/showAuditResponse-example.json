@@ -1,0 +1,49 @@
+{
+  "audit" : {
+    "created_at" : "2011/09/25 22:35:44 -0700" ,
+    "via" : {
+      "channel" : "web"
+    } ,
+    "metadata" : {
+      "system" : {
+        "location" : "San Francisco, CA, United States" ,
+        "client" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1" ,
+        "ip_address" : "76.218.201.212"
+      } ,
+      "custom" : {
+      }
+    } ,
+    "id" : 2127301143 ,
+    "ticket_id" : 666 ,
+    "events" : [
+      {
+        "html_body" : "<p>This is a new private comment</p>" ,
+        "public" : false ,
+        "body" : "This is a new private comment" ,
+        "id" : 2127301148 ,
+        "type" : "Comment" ,
+        "attachments" : [
+        ]
+      } , {
+        "via" : {
+          "channel" : "rule" ,
+          "source" : {
+            "to" : {
+            } ,
+            "from" : {
+              "id" : 22472716 ,
+              "title" : "Assign to first responder"
+            } ,
+            "rel" : "trigger"
+          }
+        } ,
+        "id" : 2127301163 ,
+        "value" : "open" ,
+        "type" : "Change" ,
+        "previous_value" : "new" ,
+        "field_name" : "status"
+      }
+    ] ,
+    "author_id" : 5246746
+  }
+}

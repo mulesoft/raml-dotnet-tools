@@ -1,0 +1,8 @@
+{
+  "message" : "my commit message" ,
+  "committer" : {
+    "name" : "Nataly Mukhortova" ,
+    "email" : "tyunya@mail.ru"
+  } ,
+  "sha" : "0d5a690c8fad5e605a6e8766295d9d459d65de42"
+}

@@ -1,0 +1,14 @@
+type: generalResource
+get: 
+  queryParameters: 
+    q: 
+      description: "A SOQL query. Note that you will need to replace spaces with '+' characters in your query string to create a valid URI."
+      required: true
+      example: SELECT+Name+FROM+MyObject
+  responses: 
+    200: 
+      body: 
+        application/xml: 
+        application/json: 
+          schema: query
+          example: !include ../examples/query-example.json

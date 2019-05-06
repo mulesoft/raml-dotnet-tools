@@ -1,0 +1,569 @@
+#%RAML 1.0
+title: Nexmo Messages API
+version: 0.3.0
+baseUri: https://api.nexmo.com/beta
+securitySchemes:
+  basic:
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+securedBy: [basic]
+baseUriParameters: {}
+documentation:
+- title: Messages API
+  content: The Messaging API is a new Nexmo API that consolidates all messaging channels. It encapsulates a user (developer) from having to use multiple APIs to interact with our various channels such as SMS, MMS, Viber, Facebook Messenger, etc. The API normalises information across all channels to abstracted to, from and content. This API is currently in Developer Preview and you will need to [request access](https://www.nexmo.com/products/messages) to use it.
+types:
+  NewMessage:
+    displayName: NewMessage
+    type: object
+    properties:
+      to:
+        required: true
+        displayName: to
+        type: ToProperty
+      from:
+        required: true
+        displayName: from
+        type: FromProperty
+      message:
+        required: true
+        displayName: message
+        type: MessageProperty
+  ToProperty:
+    displayName: ToProperty
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        description: The type of message that you want to send.
+        type: string
+        enum:
+        - sms
+        - viber_service_msg
+        - messenger
+        - whatsapp
+      id:
+        required: false
+        displayName: id
+        description: |
+          The ID of the message recipient.
+
+
+          **Messenger**: This value should be the `from.id` value you received in the inbound messenger event.
+
+
+          **SMS**: or **Viber**: or **WhatsApp** This value is not required.
+        type: string
+        minLength: 1
+        maxLength: 50
+      number:
+        required: false
+        displayName: number
+        description: |
+          **SMS**: or **Viber**: or **WhatsApp** The phone number of the message recipient in the [E.164](https://en.wikipedia.org/wiki/E.164) format. Don't use a leading + or 00 when entering a phone number, start with the country code, for example, 447700900000.
+
+
+          **Messenger**: This value is not required.
+        type: string
+        minLength: 1
+        maxLength: 50
+  FromProperty:
+    displayName: FromProperty
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        description: The type of message that you want to send.
+        type: string
+        enum:
+        - sms
+        - viber_service_msg
+        - messenger
+        - whatsapp
+      id:
+        required: false
+        displayName: id
+        description: |
+          Your ID for the platform that you are sending from.
+
+
+          **Messenger**: This value should be the `to.id` value you received in the inbound messenger event.
+
+
+          **Viber**: This is your Service Message ID given to you by Nexmo Account Manager. To find out more please visit [nexmo.com/products/messages](https://www.nexmo.com/products/messages).
+
+
+          **SMS**:  or **WhatsApp** This value is not required.
+        type: string
+        minLength: 1
+        maxLength: 50
+      number:
+        required: false
+        displayName: number
+        description: |
+          **SMS**: The phone number of the message recipient in the [E.164](https://en.wikipedia.org/wiki/E.164) format. Don't use a leading + or 00 when entering a phone number, start with the country code, for example, 447700900000.
+
+
+          **WhatsApp**: This is your WhatsApp Business Number  given to you by Nexmo Account Manager. To find out more please visit [nexmo.com/products/messages](https://www.nexmo.com/products/messages).
+
+
+          **Messenger**: or **Viber**: This value is not required.
+        type: string
+        minLength: 1
+        maxLength: 50
+  MessageProperty:
+    displayName: MessageProperty
+    type: object
+    properties:
+      content:
+        required: true
+        displayName: content
+        type: Content
+      viber_service_msg:
+        required: false
+        displayName: viber_service_msg
+        type: ViberServiceMsg
+      messenger:
+        required: false
+        displayName: messenger
+        type: Messenger
+  Content:
+    displayName: Content
+    type: object
+    properties:
+      type:
+        required: false
+        displayName: type
+        description: |
+          The type of message that you are sending.
+
+
+          **Messenger**: supports all types.
+
+
+          **Viber Service Messages**: supports `image` and `text`.
+
+
+          **WhatsApp**: supports `template` and `text`.
+
+
+          **SMS**: supports `text`.
+        type: string
+        enum:
+        - text
+        - image
+        - audio
+        - video
+        - file
+        - template
+        - custom
+      text:
+        required: false
+        displayName: text
+        description: |
+          The text of the message.
+
+
+          **Messenger**: Is limited to 640 characters
+
+
+          **SMS** or **Viber**: Is 1000 characters
+
+
+          **WhatsApp**: is 4096 characters
+        type: string
+        minLength: 1
+        maxLength: 4096
+      image:
+        required: false
+        displayName: image
+        type: ImageProperty
+      audio:
+        required: false
+        displayName: audio
+        type: AudioProperty
+      video:
+        required: false
+        displayName: video
+        type: VideoProperty
+      file:
+        required: false
+        displayName: file
+        type: FileProperty
+      template:
+        required: false
+        displayName: template
+        type: TemplateProperty
+  ImageProperty:
+    displayName: ImageProperty
+    type: object
+    properties:
+      url:
+        required: false
+        displayName: url
+        description: The URL of the image attachment. `messenger` supports .jpg, .png and .gif. `viber_service_msg` supports .jpg and .png.
+        type: string
+        minLength: 1
+        maxLength: 2000
+  AudioProperty:
+    displayName: AudioProperty
+    type: object
+    properties:
+      url:
+        required: false
+        displayName: url
+        description: The URL of the audio attachment. `messenger` supports .mp3.
+        type: string
+        minLength: 1
+        maxLength: 2000
+  VideoProperty:
+    displayName: VideoProperty
+    type: object
+    properties:
+      url:
+        required: false
+        displayName: url
+        description: The URL of the video attachment. `messenger` supports .mp4
+        type: string
+        minLength: 1
+        maxLength: 2000
+  FileProperty:
+    displayName: FileProperty
+    type: object
+    properties:
+      url:
+        required: false
+        displayName: url
+        description: The URL of the file attachment. `messenger` supports a wide range of attachments including .zip, .csv and .pdf
+        type: string
+        minLength: 1
+        maxLength: 2000
+  TemplateProperty:
+    displayName: TemplateProperty
+    type: object
+    properties:
+      name:
+        required: false
+        displayName: name
+        description: The name of the template.
+        type: string
+      parameters:
+        required: false
+        displayName: parameters
+        type: array
+        items:
+          type: Parameter
+  Parameter:
+    displayName: Parameter
+    type: object
+    properties:
+      default:
+        required: false
+        displayName: default
+        description: The parameters are an array. The first value being {{1}} in the template.
+        type: string
+  ViberServiceMsg:
+    displayName: ViberServiceMsg
+    type: object
+    properties:
+      category:
+        required: false
+        displayName: category
+        description: The use of different category tags enables the business to send messages for different use cases. For Viber Service Messages the first message sent from a business to a user must be personal, informative & a targeted message - not promotional. By default Nexmo sends the `transaction` category to Viber Service Messages.
+        type: string
+        enum:
+        - transaction
+        - promotion
+      ttl:
+        required: false
+        displayName: ttl
+        description: Only valid for Viber Service Messages. Set the time-to-live of message to be delivered in seconds. i.e. if the message is not delivered in 600 seconds then delete the message.
+        type: integer
+        minimum: 30
+        maximum: 86400
+        format: int32
+  Messenger:
+    displayName: Messenger
+    type: object
+    properties:
+      category:
+        required: false
+        displayName: category
+        description: The use of different category tags enables the business to send messages for different use cases. For Facebook Messenger they need to comply with their [Messaging Types policy]( https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). Nexmo maps our `category` to their `messaging_type`. If `message_tag` is used, then an additional `tag` for that type is mandatory. By default Nexmo sends the `response` category to Facebook Messenger.
+        type: string
+        enum:
+        - response
+        - update
+        - message_tag
+      tag:
+        required: false
+        displayName: tag
+        description: ‘A full list of the possible tags is available on [developers.facebook.com](https://developers.facebook.com/docs/messenger-platform/send-messages/message-tags)'
+        type: string
+  Response:
+    displayName: Response
+    type: object
+    properties:
+      message_uuid:
+        required: true
+        displayName: message_uuid
+        description: The UUID of the message.
+        type: string
+  Error:
+    displayName: Error
+    description: The error format is standardized to the 4xx/5xx range with a code and a human readable explanation.
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        type: string
+      detail:
+        required: true
+        displayName: detail
+        type: string
+      instance:
+        required: true
+        displayName: instance
+        type: string
+  Error39:
+    displayName: Error39
+    description: The error format is standardized to the 4xx/5xx range with a code and a human readable explanation.
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        type: string
+      detail:
+        required: true
+        displayName: detail
+        type: string
+      instance:
+        required: true
+        displayName: instance
+        type: string
+  MessageStatus:
+    displayName: MessageStatus
+    type: object
+    properties:
+      message_uuid:
+        required: true
+        displayName: message_uuid
+        description: The UUID of the message.
+        type: string
+      to:
+        required: true
+        displayName: to
+        type: ToProperty
+      from:
+        required: true
+        displayName: from
+        type: FromProperty
+      timestamp:
+        required: true
+        displayName: timestamp
+        description: The datetime of when the event occurred.
+        type: string
+      status:
+        required: true
+        displayName: status
+        description: The status of the message. The `read` message status is only available for `viber_service_msg` and `messenger`.
+        type: string
+        enum:
+        - submitted
+        - delivered
+        - read
+        - rejected
+        - undeliverable
+      error:
+        required: false
+        displayName: error
+        type: Error46
+      usage:
+        required: false
+        displayName: usage
+        type: Usage
+  Error46:
+    displayName: Error46
+    type: object
+    properties:
+      code:
+        required: false
+        displayName: code
+        description: The error code. See [Errors](#errors) for a table of descriptions.
+        type: integer
+        format: int32
+      reason:
+        required: false
+        displayName: reason
+        description: Text describing the error. See [Errors](#errors) for a more details.
+        type: string
+  Usage:
+    displayName: Usage
+    type: object
+    properties:
+      currency:
+        required: false
+        default: EUR
+        displayName: currency
+        description: The charge currency in ISO 4217 format.
+        type: string
+      price:
+        required: false
+        displayName: price
+        description: The charge amount as a stringified number.
+        type: string
+  InboundMessage:
+    displayName: InboundMessage
+    type: object
+    properties:
+      message_uuid:
+        required: true
+        displayName: message_uuid
+        description: The UUID of the message.
+        type: string
+      to:
+        required: true
+        displayName: to
+        type: To
+      from:
+        required: true
+        displayName: from
+        type: From
+      timestamp:
+        required: true
+        displayName: timestamp
+        description: The datetime of when the event occurred.
+        type: string
+      message:
+        required: false
+        displayName: message
+        type: Message
+  To:
+    displayName: To
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        description: The type of message being received.
+        type: string
+        enum:
+        - messenger
+        - whatsapp
+      id:
+        required: false
+        displayName: id
+        description: The ID of the recipient.
+        type: string
+  From:
+    displayName: From
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        description: The type of message being sent.
+        type: string
+        enum:
+        - messenger
+        - whatsapp
+      id:
+        required: false
+        displayName: id
+        description: The ID of the sender.
+        type: string
+  Message:
+    displayName: Message
+    type: object
+    properties:
+      content:
+        required: false
+        displayName: content
+        type: Content54
+  Content54:
+    displayName: Content54
+    type: object
+    properties:
+      type:
+        required: false
+        displayName: type
+        description: The type of message being received.
+        type: string
+        enum:
+        - text
+        - image
+        - audio
+        - video
+        - file
+        - location
+      text:
+        required: false
+        displayName: text
+        description: The body of the message.
+        type: string
+      image:
+        required: false
+        displayName: image
+        type: ImageProperty
+      audio:
+        required: false
+        displayName: audio
+        type: AudioProperty
+      video:
+        required: false
+        displayName: video
+        type: VideoProperty
+      file:
+        required: false
+        displayName: file
+        type: FileProperty
+      location:
+        required: false
+        displayName: location
+        type: LocationProperty
+  LocationProperty:
+    displayName: LocationProperty
+    type: object
+    properties:
+      lat:
+        required: false
+        displayName: lat
+        description: The latitude of the location attachment.
+        type: string
+      long:
+        required: false
+        displayName: long
+        description: The longitude of the location attachment.
+        type: string
+      url:
+        required: false
+        displayName: url
+        description: The location on a map.
+        type: string
+/messages:
+  post:
+    displayName: Send a Message
+    description: Send a Message across channels
+    body:
+      application/json:
+        displayName: body
+        description: Send a Message.
+        type: NewMessage
+    responses:
+      202:
+        description: Accepted.
+        body:
+          application/json:
+            displayName: response
+            description: Accepted.
+            type: Response
+      400:
+        description: Bad Request.
+        body:
+          application/json:
+            description: Bad Request.
+            type: Error

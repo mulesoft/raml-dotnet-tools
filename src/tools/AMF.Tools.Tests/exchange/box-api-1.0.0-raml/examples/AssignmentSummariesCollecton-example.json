@@ -1,0 +1,23 @@
+{
+    "total_count": 1,
+    "entries": [
+        {
+            "type": "task_assignment",
+            "id": "2485961",
+            "item": {
+                "type": "file",
+                "id": "7287087200",
+                "sequence_id": "0",
+                "etag": "0",
+                "sha1": "0bbd79a105c504f99573e3799756debba4c760cd",
+                "name": "box-logo.png"
+            },
+            "assigned_to": {
+                "type": "user",
+                "id": "193425559",
+                "name": "Rhaegar Targaryen",
+                "login": "rhaegar@box.com"
+            }
+        }
+    ]
+}

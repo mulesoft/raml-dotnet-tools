@@ -1,0 +1,160 @@
+#%RAML 1.0
+version: v1
+title: Customer API for Visual Editing
+types:
+  address:
+    required: false
+    description: Address datatype
+    type: object
+    properties:
+      street:
+        required: false
+        example: 44 Shirley Ave.
+        description: Property description
+        type: string
+      city:
+        required: false
+        example: West Chicago
+        description: Property description
+        type: string
+      postalCode:
+        required: false
+        example: '60185'
+        description: Property description
+        type: string
+      state:
+        required: false
+        example: IL
+        description: Property description
+        type: string
+      country:
+        required: false
+        example: USA
+        description: Property description
+        type: string
+  contact:
+    required: false
+    description: Contact datatype
+    type: object
+    properties:
+      id:
+        required: false
+        type: string
+      customerId:
+        required: false
+        type: string
+      firstName:
+        required: false
+        type: string
+      lastName:
+        required: true
+        example: Last name example
+        type: string
+      phone:
+        required: false
+        type: string
+      email:
+        required: false
+        example: email@example.com
+        type: string
+      deliveryAddress:
+        required: false
+        type: address
+      postalAddress:
+        required: false
+        type: address
+/customers:
+  displayName: /customers
+  post:
+    description: Create customers contact
+    displayName: post
+    responses:
+      '200':
+        body:
+          application/json:
+            example:
+              id: sfdc|1234567890
+              customerId: provider|0123456789
+            type: object
+    body:
+      application/json:
+        example:
+          customerId: provider|0123456789
+          firstName: John
+          lastName: Doe
+          postalAddress:
+            street: 44 Shirley Ave.
+            city: West Chicago
+            postalCode: '60185'
+            state: IL
+            country: USA
+          phone: +1-202-555-0180
+          email: john.doe@example.com
+          deliveryAddress:
+            street: 44 Shirley Ave.
+            city: West Chicago
+            postalCode: '60185'
+            state: IL
+            country: USA
+        type: contact
+  '/{customerid}':
+    displayName: '/customers/{customerid}'
+    get:
+      description: 'Return customer information by customerId '
+      displayName: get
+      responses:
+        '200':
+          body:
+            application/json:
+              example:
+                id: sfdc|1234567890
+                customerId: provider|0123456789
+                firstName: John
+                lastName: Doe
+                postalAddress:
+                  street: 44 Shirley Ave.
+                  city: West Chicago
+                  postalCode: '60185'
+                  state: IL
+                  country: USA
+                phone: +1-202-555-0180
+                email: john.doe@example.com
+                deliveryAddress:
+                  street: 44 Shirley Ave.
+                  city: West Chicago
+                  postalCode: '60185'
+                  state: IL
+                  country: USA
+              type: contact
+    put:
+      description: Update customer contact by customerId
+      displayName: put
+      responses:
+        '200': {}
+      body:
+        application/json:
+          example:
+            id: sfdc|1234567890
+            customerId: provider|0123456789
+            firstName: John
+            lastName: Doe
+            postalAddress:
+              street: 44 Shirley Ave.
+              city: West Chicago
+              postalCode: '60185'
+              state: IL
+              country: USA
+            phone: +1-202-555-0180
+            email: john.doe@example.com
+            deliveryAddress:
+              street: 44 Shirley Ave.
+              city: West Chicago
+              postalCode: '60185'
+              state: IL
+              country: USA
+          type: contact
+    uriParameters:
+      customerid:
+        example: Example
+        description: Property description
+        type: string

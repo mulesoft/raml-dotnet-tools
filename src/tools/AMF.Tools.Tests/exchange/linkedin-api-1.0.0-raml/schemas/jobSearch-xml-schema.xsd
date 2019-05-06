@@ -1,0 +1,67 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="job-search">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="jobs">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="job" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="id"/>
+                    <xs:element name="position">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="location">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="name"/>
+                                <xs:element name="country">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="code"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="job-poster">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="first-name"/>
+                          <xs:element type="xs:string" name="last-name"/>
+                          <xs:element name="relation-to-viewer">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:byte" name="distance"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="posting-date">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:short" name="year"/>
+                          <xs:element type="xs:byte" name="month"/>
+                          <xs:element type="xs:byte" name="day"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="count"/>
+            <xs:attribute type="xs:byte" name="start"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

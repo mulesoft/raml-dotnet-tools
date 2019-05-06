@@ -1,0 +1,11 @@
+{
+  "trigger" : {
+    "id" : 25 ,
+    "title" : "Tickets updated <12 Hours" ,
+    "active" : true,
+	"conditions" : [    ] ,
+    "actions" : [    ] ,
+    "updated_at" : "2012-09-25T22:50:26Z" ,
+    "created_at" : "2012-09-25T22:50:26Z"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "active" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "add_events" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Merchandise__c> 
+    <deletedRecords> 
+        <deletedDate>2013-05-07T22:07:19.000Z</deletedDate> 
+        <id>a00D0000008pQRAIA2</id> 
+    </deletedRecords>
+    <earliestDateAvailable>2013-05-03T15:57:00.000Z</earliestDateAvailable>
+    <latestDateCovered>2013-05-08T21:20:00.000Z</latestDateCovered>
+</Merchandise__c>

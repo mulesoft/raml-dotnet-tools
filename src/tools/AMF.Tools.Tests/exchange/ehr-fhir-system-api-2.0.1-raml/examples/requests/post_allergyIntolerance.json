@@ -1,0 +1,24 @@
+{
+	"resourceType": "AllergyIntolerance",
+	"patient": {
+		"reference": "Patient/9"
+	},
+  "verificationStatus": "confirmed",
+	"reaction": [
+		{
+			"manifestation": [
+        {
+          "text": "symptoms"
+        }
+      ],
+			"substance": {
+				"coding": [
+					{
+						"display": "Peanuts"
+					}
+				]
+			}
+		}
+	],
+	"assertedDate": "2016-05-11"
+}

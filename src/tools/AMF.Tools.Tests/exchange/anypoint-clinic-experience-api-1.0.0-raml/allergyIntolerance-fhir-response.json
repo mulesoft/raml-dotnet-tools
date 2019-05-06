@@ -1,0 +1,190 @@
+[
+  {
+    "resourceType": "AllergyIntolerance",
+    "recordedDate": "2015-08-28",
+    "patient": {
+      "reference": "patients/mrn/12345"
+    },
+    "reporter": {
+      "reference": "practitioners/27166",
+      "display": "CHAO, LING"
+    },
+    "substance": {
+      "coding": [
+        {
+          "code": "29217",
+          "system": "Internal"
+        }
+      ],
+      "text": "FENNEL (FOENICULUM VULGARE)"
+    },
+    "criticality": "CRITH",
+    "type": "allergy",
+    "status": "confirmed"
+  },
+  {
+    "resourceType": "AllergyIntolerance",
+    "recordedDate": "2015-05-11",
+    "patient": {
+      "reference": "patients/mrn/12345"
+    },
+    "reporter": {
+      "reference": "practitioners/22614",
+      "display": "GOPALAKRISHNAN, VEERARAGAVAN"
+    },
+    "substance": {
+      "coding": [
+        {
+          "code": "36824",
+          "system": "Internal"
+        }
+      ],
+      "text": "PEANUT"
+    },
+    "criticality": "CRITH",
+    "type": "allergy",
+    "status": "confirmed"
+  },
+  {
+    "resourceType": "AllergyIntolerance",
+    "recordedDate": "2015-05-11",
+    "patient": {
+      "reference": "patients/mrn/12345"
+    },
+    "reporter": {
+      "reference": "practitioners/22614",
+      "display": "GOPALAKRISHNAN, VEERARAGAVAN"
+    },
+    "substance": {
+      "coding": [
+        {
+          "code": "25",
+          "system": "Internal"
+        }
+      ],
+      "text": "PENICILLINS"
+    },
+    "criticality": "CRITH",
+    "type": "allergy",
+    "status": "confirmed",
+    "reaction": [
+      {
+        "manifestation": {
+          "text": "Itching"
+        },
+        "description": "Itching"
+      },
+      {
+        "manifestation": {
+          "text": "Rash"
+        },
+        "description": "Rash"
+      }
+    ]
+  },
+  {
+    "resourceType": "AllergyIntolerance",
+    "recordedDate": "2015-06-17",
+    "patient": {
+      "reference": "patients/mrn/12345"
+    },
+    "reporter": {
+      "reference": "practitioners/22614",
+      "display": "GOPALAKRISHNAN, VEERARAGAVAN"
+    },
+    "substance": {
+      "coding": [
+        {
+          "code": "33302",
+          "system": "Internal"
+        }
+      ],
+      "text": "ACETAMINOPHEN"
+    },
+    "criticality": "CRITU",
+    "type": "intolerance",
+    "status": "confirmed",
+    "reaction": [
+      {
+        "manifestation": {
+          "text": "Lightheadedness"
+        },
+        "description": "Lightheadedness"
+      }
+    ]
+  },
+  {
+    "resourceType": "AllergyIntolerance",
+    "recordedDate": "2015-06-17",
+    "patient": {
+      "reference": "patients/mrn/12345"
+    },
+    "reporter": {
+      "reference": "practitioners/22614",
+      "display": "GOPALAKRISHNAN, VEERARAGAVAN"
+    },
+    "substance": {
+      "coding": [
+        {
+          "code": "56535",
+          "system": "Internal"
+        }
+      ],
+      "text": "ANACIN-3 WITH CODEINE"
+    },
+    "criticality": "CRITU",
+    "type": "allergy",
+    "status": "confirmed",
+    "reaction": [
+      {
+        "manifestation": {
+          "text": "Diarrhea"
+        },
+        "description": "Diarrhea"
+      },
+      {
+        "manifestation": {
+          "text": "Delirium"
+        },
+        "description": "Delirium"
+      }
+    ]
+  },
+  {
+    "resourceType": "AllergyIntolerance",
+    "recordedDate": "2015-05-11",
+    "patient": {
+      "reference": "patients/mrn/12345"
+    },
+    "reporter": {
+      "reference": "practitioners/22614",
+      "display": "GOPALAKRISHNAN, VEERARAGAVAN"
+    },
+    "substance": {
+      "coding": [
+        {
+          "code": "8891",
+          "system": "Internal"
+        }
+      ],
+      "text": "SHELLFISH DERIVED"
+    },
+    "criticality": "CRITU",
+    "type": "intolerance",
+    "status": "confirmed",
+    "reaction": [
+      {
+        "manifestation": {
+          "text": "Nausea And Vomiting"
+        },
+        "description": "Nausea And Vomiting"
+      },
+      {
+        "manifestation": {
+          "text": "Rash"
+        },
+        "description": "Rash"
+      }
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+<job>
+  <position> 
+    <description>This is a great job.</description>
+  </position>
+  <compensation>
+    <salary>
+      <description>$100k per year + benefits</description>
+    </salary>
+  </compensation>
+</job>

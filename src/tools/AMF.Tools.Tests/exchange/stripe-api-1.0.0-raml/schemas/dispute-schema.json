@@ -1,0 +1,63 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"amount": {
+			"type":"number",
+			"id": "http://jsonschema.net/amount",
+			"required":false
+		},
+		"balance_transaction": {
+			"type":"string",
+			"id": "http://jsonschema.net/balance_transaction",
+			"required":false
+		},
+		"charge": {
+			"type":"string",
+			"id": "http://jsonschema.net/charge",
+			"required":false
+		},
+		"created": {
+			"type":"number",
+			"id": "http://jsonschema.net/created",
+			"required":false
+		},
+		"currency": {
+			"type":"string",
+			"id": "http://jsonschema.net/currency",
+			"required":false
+		},
+		"evidence_due_by": {
+			"type":"number",
+			"id": "http://jsonschema.net/evidence_due_by",
+			"required":false
+		},
+		"evidence": {
+			"type":"null",
+			"id": "http://jsonschema.net/evidence",
+			"required":false
+		},
+		"livemode": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/livemode",
+			"required":false
+		},
+		"object": {
+			"type":"string",
+			"id": "http://jsonschema.net/object",
+			"required":false
+		},
+		"reason": {
+			"type":"string",
+			"id": "http://jsonschema.net/reason",
+			"required":false
+		},
+		"status": {
+			"type":"string",
+			"id": "http://jsonschema.net/status",
+			"required":false
+		}
+	}
+}

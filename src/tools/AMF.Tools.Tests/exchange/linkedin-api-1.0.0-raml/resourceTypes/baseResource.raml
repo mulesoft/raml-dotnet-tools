@@ -1,0 +1,325 @@
+delete?: 
+  headers: 
+    x-li-format: 
+      description: |
+        Type of data
+      enum: 
+        - xml
+        - json
+        - jsonp
+  responses: 
+    204: 
+      description: |
+        Your request to DELETE a record was successful
+    400: 
+      description: |
+        Your request was not formatted correctly
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    401: 
+      description: |
+        The OAuth signature was bad
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    403: 
+      description: |
+        Access to the resource was denied. Usually this means you have reached a throttle limit. Can also mean you do not have permission to access this resource.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    404: 
+      description: |
+        The resource was not found (i.e. you asked for a non-existent user or URL)
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    405: 
+      description: |
+        Usually this means you used the wrong HTTP method (GET when you should POST, etc) 
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    500: 
+      description: |
+        There was an application error on the LinkedIn server.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+post?: 
+  headers: 
+    x-li-format: 
+      description: |
+        Type of data
+      enum: 
+        - xml
+        - json
+        - jsonp
+  responses: 
+    200: 
+      description: |
+        Request succeeded
+      body: 
+        text/xml: 
+        application/json: 
+    201: 
+      description: |
+        Your request to POST or PUT a record was successful. A Location HTTP header is often returned when we respond with a 201.
+      body: 
+        text/xml: 
+        application/json: 
+    400: 
+      description: |
+        Your request was not formatted correctly
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    401: 
+      description: |
+        The OAuth signature was bad
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    403: 
+      description: |
+        Access to the resource was denied. Usually this means you have reached a throttle limit. Can also mean you do not have permission to access this resource.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    404: 
+      description: |
+        The resource was not found (i.e. you asked for a non-existent user or URL)
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    405: 
+      description: |
+        Usually this means you used the wrong HTTP method (GET when you should POST, etc) 
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    500: 
+      description: |
+        There was an application error on the LinkedIn server.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+put?: 
+  headers: 
+    x-li-format: 
+      description: |
+        Type of data
+      enum: 
+        - xml
+        - json
+        - jsonp
+  responses: 
+    200: 
+      description: |
+        Request succeeded
+      body: 
+        text/xml: 
+        application/json: 
+    201: 
+      description: |
+        Your request to POST or PUT a record was successful. A Location HTTP header is often returned when we respond with a 201.   
+      body: 
+        text/xml: 
+        application/json: 
+    400: 
+      description: |
+        Your request was not formatted correctly
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    401: 
+      description: |
+        The OAuth signature was bad
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    403: 
+      description: |
+        Access to the resource was denied. Usually this means you have reached a throttle limit. Can also mean you do not have permission to access this resource.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    404: 
+      description: |
+        The resource was not found (i.e. you asked for a non-existent user or URL)
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    405: 
+      description: |
+        Usually this means you used the wrong HTTP method (GET when you should POST, etc) 
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    500: 
+      description: |
+        There was an application error on the LinkedIn server.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+get?: 
+  headers: 
+    x-li-format: 
+      description: |
+        Type of data
+      enum: 
+        - xml
+        - json
+        - jsonp
+  queryParameters: 
+    format: 
+      description: |
+        Type of data
+      enum: 
+        - xml
+        - json
+        - jsonp
+  responses: 
+    200: 
+      description: |
+        Request succeeded  
+      body: 
+        text/xml: 
+        application/json: 
+    400: 
+      description: |
+        Your request was not formatted correctly
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    401: 
+      description: |
+        The OAuth signature was bad
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    403: 
+      description: |
+        Access to the resource was denied. Usually this means you have reached a throttle limit. Can also mean you do not have permission to access this resource.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    404: 
+      description: |
+        The resource was not found (i.e. you asked for a non-existent user or URL)
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    405: 
+      description: |
+        Usually this means you used the wrong HTTP method (GET when you should POST, etc) 
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+    500: 
+      description: |
+        There was an application error on the LinkedIn server.
+      body: 
+        text/xml: 
+          schema: error-xml
+          example: !include ../examples/error-xml-example.xml
+        application/json: 
+          schema: error-schema
+          example: !include ../examples/error-example.json
+usage: |
+  All LinkedIn resources should use i
+description: |
+  This is base resource type described common request and response headers and error response codes

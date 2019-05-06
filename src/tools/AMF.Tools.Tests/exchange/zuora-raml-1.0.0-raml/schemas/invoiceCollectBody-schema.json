@@ -1,0 +1,19 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "accountKey" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "invoiceDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "invoiceTargetDate" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

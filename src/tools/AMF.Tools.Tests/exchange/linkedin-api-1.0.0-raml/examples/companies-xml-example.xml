@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<companies count="10" start="0">
+  <company>
+    <id>49648</id>
+    <name>Merix Financial</name>
+  </company>
+  <company>
+    <id>118370</id>
+    <name>Movaya Wireless</name>
+  </company>
+  <company>
+    <id>119265</id>
+    <name>Maison Martin Margiela</name>
+  </company>
+  <company>
+    <id>112571</id>
+    <name>CoActive</name>
+  </company>
+  <company>
+    <id>97548</id>
+    <name>Actronic</name>
+  </company>
+  <company>
+    <id>1115987</id>
+    <name>EELA</name>
+  </company>
+  <company>
+    <id>2204291</id>
+    <name>OfftheHookHats.org</name>
+  </company>
+  <company>
+    <id>1973202</id>
+    <name>Ministry of Communication and Information Technology</name>
+  </company>
+  <company>
+    <id>2102550</id>
+    <name>Lundsbergs skola</name>
+  </company>
+  <company>
+    <id>1086137</id>
+    <name>Netsolve Limited</name>
+  </company>
+</companies>

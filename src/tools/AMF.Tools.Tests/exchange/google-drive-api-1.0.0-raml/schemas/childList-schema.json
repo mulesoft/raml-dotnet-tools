@@ -1,0 +1,54 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "kind" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "etag" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "selfLink" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "nextPageToken" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "nextLink" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "items" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "kind" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "selfLink" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "childLink" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

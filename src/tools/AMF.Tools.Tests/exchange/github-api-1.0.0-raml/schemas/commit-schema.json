@@ -1,0 +1,178 @@
+{
+	"type": "object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"properties": {
+		"stats": {
+			"required": false,
+			"type": "object",
+			"properties": {
+				"additions": {
+					"required": false,
+					"type": "integer"
+				},
+				"deletions": {
+					"required": false,
+					"type": "integer"
+				},
+				"total": {
+					"required": false,
+					"type": "integer"
+				}
+			}
+		},
+		"files": {
+			"required": false,
+			"type": "array",
+			"items": {
+				"required": false,
+				"type": "object",
+				"properties": {
+					"additions": {
+						"required": false,
+						"type": "integer"
+					},
+					"blob_url": {
+						"required": false,
+						"type": "string"
+					},
+					"changes": {
+						"required": false,
+						"type": "integer"
+					},
+					"deletions": {
+						"required": false,
+						"type": "integer"
+					},
+					"filename": {
+						"required": false,
+						"type": "string"
+					},
+					"patch": {
+						"required": false,
+						"type": "string"
+					},
+					"raw_url": {
+						"required": false,
+						"type": "string"
+					},
+					"status": {
+						"required": false,
+						"type": "string"
+					}
+				}
+			}
+		},
+		"url": {
+			"type": "string"
+		},
+		"sha": {
+			"type": "string"
+		},
+		"commit": {
+			"type": "object",
+			"properties": {
+				"url": {
+					"type": "string"
+				},
+				"author": {
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"email": {
+							"type": "string"
+						},
+						"date": {
+							"description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"committer": {
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"email": {
+							"type": "string"
+						},
+						"date": {
+							"description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"message": {
+					"type": "string"
+				},
+				"tree": {
+					"properties": {
+						"url": {
+							"type": "string"
+						},
+						"sha": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			}
+		},
+		"author": {
+			"type": "object",
+			"properties": {
+				"login": {
+					"type": "string"
+				},
+				"id": {
+					"type": "integer"
+				},
+				"avatar_url": {
+					"type": "string"
+				},
+				"gravatar_id": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			}
+		},
+		"committer": {
+			"type": "object",
+			"properties": {
+				"login": {
+					"type": "string"
+				},
+				"id": {
+					"type": "integer"
+				},
+				"avatar_url": {
+					"type": "string"
+				},
+				"gravatar_id": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			}
+		},
+		"parents": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"url": {
+						"type": "string"
+					},
+					"sha": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}

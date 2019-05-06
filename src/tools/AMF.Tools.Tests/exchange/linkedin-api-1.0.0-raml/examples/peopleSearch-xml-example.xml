@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<people-search>
+  <people total="100" count="10" start="0">
+    <person>
+      <id>tePXJ3SX1o</id>
+      <first-name>Clair</first-name>
+      <last-name>Standish</last-name>
+    </person>
+    <person>
+      <id>pcfBxmL_Vv</id>
+      <first-name>John</first-name>
+      <last-name>Bender</last-name>
+    </person>
+  </people>
+  <num-results>108</num-results>
+</people-search>

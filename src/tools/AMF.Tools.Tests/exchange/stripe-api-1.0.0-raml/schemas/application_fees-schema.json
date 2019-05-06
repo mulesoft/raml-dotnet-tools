@@ -1,0 +1,84 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "object" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "url" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "count" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "data" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "object" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "created" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "livemode" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "amount" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "currency" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "refunded" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "amount_refunded" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "refunds" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+              ]
+            } ,
+            "balance_transaction" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "account" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "application" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "charge" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

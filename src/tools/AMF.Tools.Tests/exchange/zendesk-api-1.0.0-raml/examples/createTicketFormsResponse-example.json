@@ -1,0 +1,23 @@
+{
+  "ticket_form" : {
+    "id" : 47 ,
+    "url" : "https://company.zendesk.com/api/v2/ticket_forms/47.json" ,
+    "name" : "Snowboard Problem" ,
+    "raw_name" : "Snowboard Problem" ,
+    "display_name" : "Snowboard Damage" ,
+    "raw_display_name" : "Snowboard Damage" ,
+    "end_user_visible" : true ,
+    "position" : 9999 ,
+    "active" : true ,
+    "default" : true ,
+    "ticket_field_ids" : [
+      2 ,
+      4 ,
+      5 ,
+      32 ,
+      44
+    ],
+    "created_at" : "2012-04-02T22:55:29Z" ,
+    "updated_at" : "2012-04-02T22:55:29Z"
+  }
+}

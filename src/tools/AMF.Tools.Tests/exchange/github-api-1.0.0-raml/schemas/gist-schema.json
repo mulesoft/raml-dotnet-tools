@@ -1,0 +1,163 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "public": {
+      "type": "boolean"
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "avatar_url": {
+          "type": "string"
+        },
+        "gravatar_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "properties": {
+        "ring.erl": {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer"
+            },
+            "filename": {
+              "type": "string"
+            },
+            "raw_url": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "comments": {
+      "type": "integer"
+    },
+    "comments_url": {
+      "type": "string"
+    },
+    "html_url": {
+      "type": "string"
+    },
+    "git_pull_url": {
+      "type": "string"
+    },
+    "git_push_url": {
+      "type": "string"
+    },
+    "created_at": {
+      "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.",
+      "type": "string"
+    },
+    "forks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "avatar_url": {
+                "type": "string"
+              },
+              "gravatar_id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          },
+          "url": {
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+      	"type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "user": {
+            "properties": {
+              "login": {
+                "type": "string"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "avatar_url": {
+                "type": "string"
+              },
+              "gravatar_id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "change_status": {
+            "properties": {
+              "deletions": {
+                "type": "integer"
+              },
+              "additions": {
+                "type": "integer"
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "committed_at": {
+            "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.",
+            "type": "string"
+          }          
+        }
+      }
+    }
+  }
+}

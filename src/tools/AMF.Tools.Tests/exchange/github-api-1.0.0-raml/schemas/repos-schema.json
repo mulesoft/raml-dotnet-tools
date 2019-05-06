@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "type": "array",
+  "items": {
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "owner": {
+        "properties": {
+          "login": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "avatar_url": {
+            "type": "string"
+          },
+          "gravatar_id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": {
+        "type": "string"
+      },
+      "full_name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "private": {
+        "type": "boolean"
+      },
+      "fork": {
+        "type": "boolean"
+      },
+      "url": {
+        "type": "string"
+      },
+      "html_url": {
+        "type": "string"
+      },
+      "clone_url": {
+        "type": "string"
+      },
+      "git_url": {
+        "type": "string"
+      },
+      "ssh_url": {
+        "type": "string"
+      },
+      "svn_url": {
+        "type": "string"
+      },
+      "mirror_url": {
+        "type": "string"
+      },
+      "homepage": {
+        "type": "string"
+      },
+      "language": {
+        "type": "string"
+      },
+      "forks": {
+        "type": "integer"
+      },
+      "forks_count": {
+        "type": "integer"
+      },
+      "watchers": {
+        "type": "integer"
+      },
+      "watchers_count": {
+        "type": "integer"
+      },
+      "size": {
+        "type": "integer"
+      },
+      "master_branch": {
+        "type": "string"
+      },
+      "open_issues": {
+        "type": "integer"
+      },
+      "open_issues_count": {
+        "type": "integer"
+      },
+      "pushed_at": {
+        "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+        "type": "string"
+      },
+      "created_at": {
+        "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+        "type": "string"
+      },
+      "updated_at": {
+        "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+        "type": "string"
+      }
+    }
+  }
+}

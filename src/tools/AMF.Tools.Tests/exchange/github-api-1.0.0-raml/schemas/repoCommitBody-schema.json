@@ -1,0 +1,42 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "message" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "author" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "email" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "date" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "parents" : {
+      "type" : "array" ,
+      "required" : true ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    } ,
+    "tree" : {
+      "type" : "string" ,
+      "required" : true
+    }
+  }
+}

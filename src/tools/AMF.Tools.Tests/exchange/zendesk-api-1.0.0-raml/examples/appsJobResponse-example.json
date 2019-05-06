@@ -1,0 +1,11 @@
+{
+  "id" : "fa8cac3098330130f49c14109fd02dfb" ,
+  "url" : "https://{subdomain}.zendesk.com/api/v2/apps/job_statuses/fa8cac3098330130f49c14109fd02dfb.json" ,
+  "total" : 126 ,
+  "progress" : 126 ,
+  "status" : "completed" ,
+  "message" : "Completed at 2013-05-06 15:02:40 +1000" ,
+  "retry_in" : 3 ,
+  "app_url" : "https://{subdomain}.zendesk.com/api/v2/apps/123.json" ,
+  "app_id" : 123
+}

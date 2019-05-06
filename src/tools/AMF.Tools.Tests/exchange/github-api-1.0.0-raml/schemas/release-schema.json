@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "url": {
+      "required": false,
+      "type": "string"
+    },
+    "html_url": {
+      "required": false,
+      "type": "string"
+    },
+    "assets_url": {
+      "required": false,
+      "type": "string"
+    },
+    "upload_url": {
+      "required": false,
+      "type": "string"
+    },
+    "tarball_url": {
+      "required": false,
+      "type": "string"
+    },
+    "zipball_url": {
+      "required": false,
+      "type": "string"
+    },
+    "id": {
+      "required": false,
+      "type": "integer"
+    },
+    "tag_name": {
+      "required": false,
+      "type": "string"
+    },
+    "target_commitish": {
+      "required": false,
+      "type": "string"
+    },
+    "name": {
+      "required": false,
+      "type": "string"
+    },
+    "body": {
+      "required": false,
+      "type": "string"
+    },
+    "draft": {
+      "required": false,
+      "type": "boolean"
+    },
+    "prerelease": {
+      "required": false,
+      "type": "boolean"
+    },
+    "created_at": {
+      "required": false,
+      "type": "string"
+    },
+    "published_at": {
+      "required": false,
+      "type": "string"
+    },
+    "author": {
+      "required": false,
+      "type": "object",
+      "properties": {
+        "login": {
+          "required": false,
+          "type": "string"
+        },
+        "id": {
+          "required": false,
+          "type": "integer"
+        },
+        "avatar_url": {
+          "required": false,
+          "type": "string"
+        },
+        "gravatar_id": {
+          "required": false,
+          "type": "string"
+        },
+        "url": {
+          "required": false,
+          "type": "string"
+        },
+        "html_url": {
+          "required": false,
+          "type": "string"
+        },
+        "followers_url": {
+          "required": false,
+          "type": "string"
+        },
+        "following_url": {
+          "required": false,
+          "type": "string"
+        },
+        "gists_url": {
+          "required": false,
+          "type": "string"
+        },
+        "starred_url": {
+          "required": false,
+          "type": "string"
+        },
+        "subscriptions_url": {
+          "required": false,
+          "type": "string"
+        },
+        "organizations_url": {
+          "required": false,
+          "type": "string"
+        },
+        "repos_url": {
+          "required": false,
+          "type": "string"
+        },
+        "events_url": {
+          "required": false,
+          "type": "string"
+        },
+        "received_events_url": {
+          "required": false,
+          "type": "string"
+        },
+        "type": {
+          "required": false,
+          "type": "string"
+        },
+        "site_admin": {
+          "required": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "assets": {
+      "required": false,
+      "type": "array",
+      "items": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "content_type": {
+            "required": false,
+            "type": "string"
+          },
+          "created_at": {
+            "required": false,
+            "type": "string"
+          },
+          "download_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "id": {
+            "required": false,
+            "type": "integer"
+          },
+          "label": {
+            "required": false,
+            "type": "string"
+          },
+          "name": {
+            "required": false,
+            "type": "string"
+          },
+          "size": {
+            "required": false,
+            "type": "integer"
+          },
+          "state": {
+            "required": false,
+            "type": "string"
+          },
+          "updated_at": {
+            "required": false,
+            "type": "string"
+          },
+          "uploader": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "login": {
+                "required": false,
+                "type": "string"
+              },
+              "id": {
+                "required": false,
+                "type": "integer"
+              },
+              "avatar_url": {
+                "required": false,
+                "type": "string"
+              },
+              "gravatar_id": {
+                "required": false,
+                "type": "string"
+              },
+              "url": {
+                "required": false,
+                "type": "string"
+              },
+              "html_url": {
+                "required": false,
+                "type": "string"
+              },
+              "followers_url": {
+                "required": false,
+                "type": "string"
+              },
+              "following_url": {
+                "required": false,
+                "type": "string"
+              },
+              "gists_url": {
+                "required": false,
+                "type": "string"
+              },
+              "starred_url": {
+                "required": false,
+                "type": "string"
+              },
+              "subscriptions_url": {
+                "required": false,
+                "type": "string"
+              },
+              "organizations_url": {
+                "required": false,
+                "type": "string"
+              },
+              "repos_url": {
+                "required": false,
+                "type": "string"
+              },
+              "events_url": {
+                "required": false,
+                "type": "string"
+              },
+              "received_events_url": {
+                "required": false,
+                "type": "string"
+              },
+              "type": {
+                "required": false,
+                "type": "string"
+              },
+              "site_admin": {
+                "required": false,
+                "type": "boolean"
+              }
+            }
+          },
+          "url": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

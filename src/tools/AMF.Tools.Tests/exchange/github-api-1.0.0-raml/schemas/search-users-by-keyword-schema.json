@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "users": {
+      "required": false,
+      "type": "array",
+      "items": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "created": {
+            "required": false,
+            "type": "string"
+          },
+          "created_at": {
+            "required": false,
+            "type": "string"
+          },
+          "followers": {
+            "required": false,
+            "type": "integer"
+          },
+          "followers_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "fullname": {
+            "required": false,
+            "type": "string"
+          },
+          "gravatar_id": {
+            "required": false,
+            "type": "string"
+          },
+          "id": {
+            "required": false,
+            "type": "string"
+          },
+          "language": {
+            "required": false,
+            "type": "string"
+          },
+          "location": {
+            "required": false,
+            "type": "string"
+          },
+          "login": {
+            "required": false,
+            "type": "string"
+          },
+          "name": {
+            "required": false,
+            "type": "string"
+          },
+          "public_repo_count": {
+            "required": false,
+            "type": "integer"
+          },
+          "repos": {
+            "required": false,
+            "type": "integer"
+          },
+          "score": {
+            "required": false,
+            "type": "number"
+          },
+          "type": {
+            "required": false,
+            "type": "string"
+          },
+          "username": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

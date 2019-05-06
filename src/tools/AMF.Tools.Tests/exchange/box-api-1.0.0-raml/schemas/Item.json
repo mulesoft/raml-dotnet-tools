@@ -1,0 +1,286 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "type": {
+      "description": "For folders is 'folder'. For files it is 'file'",
+      "type": "string"
+    },
+    "id": {
+      "description": "The item's ID.",
+      "type": "string"
+    },
+    "sequence_id": {
+      "description": "A unique ID for use with the /events endpoint.",
+      "type": "string"
+    },
+    "etag": {
+      "description": "A unique string identifying the version of this item.",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the item.",
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "The time the item was created."
+    },
+    "modified_at": {
+      "type": "string",
+      "description": "The time the item or its contents were last modified."
+    },
+    "description": {
+      "description": "The description of the item.",
+      "type": "string"
+    },
+    "size": {
+      "description": "The size in bytes of the item.",
+      "type": "integer"
+    },
+    "path_collection": {
+      "type": "array",
+      "paths": {
+        "properties": {
+          "total_count": {
+            "type": "integer"
+          },
+          "entries": {
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "sequence_id": {
+                "type": "string"
+              },
+              "etag": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "description": "Array of entries.",
+          "type": "array"
+        },
+        "type": "object"
+      },
+      "description": "The path of the folders to this item, starting at the root."
+    },
+    "trashed_at": {
+      "type": "string",
+      "description": "When this file was last moved to the trash."
+    },
+    "purged_at": {
+      "type": "string",
+      "description": "When this file will be permanently deleted."
+    },
+    "content_created_at": {
+      "type": "string",
+      "description": "When the content of this file was created."
+    },
+    "content_modified_at": {
+      "type": "string",
+      "description": "When the content of this file was last modified."
+    },
+    "sha1": {
+      "description": "The sha1 hash of this file.",
+      "type": "string"
+    },
+    "comment_count": {
+      "description": "The number of comments on a file",
+      "required": false,
+      "type": "integer"
+    },
+    "version_number": {
+      "description": "Whether this folder will be synced by the Box sync clients or not.",
+      "required": false,
+      "type": "string"
+    },
+    "created_by": {
+      "type": "object",
+      "description": "The user who created this item.",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "login": {
+          "type": "string"
+        }
+      }
+    },
+    "modified_by": {
+      "type": "object",
+      "description": "The user who last modified this item.",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "login": {
+          "type": "string"
+        }
+      }
+    },
+    "owned_by": {
+      "type": "object",
+      "description": "The user who owns this item.",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "login": {
+          "type": "string"
+        }
+      }
+    },
+    "shared_link": {
+      "type": "object",
+      "description": "The shared link for this item.",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "download_url": {
+          "type": "string"
+        },
+        "vanity_url": {
+          "type": "string"
+        },
+        "is_password_enabled": {
+          "type": "boolean"
+        },
+        "unshared_at": {
+          "type": "string"
+        },
+        "download_count": {
+          "type": "integer"
+        },
+        "preview_count": {
+          "type": "integer"
+        },
+        "access": {
+          "type": "string"
+        },
+        "permissions": {
+          "properties": {
+            "can_download": {
+              "type": "boolean"
+            },
+            "can_preview": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "parent": {
+      "type": "object",
+      "description": "The folder that contains this item.",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "sequence_id": {
+          "type": "string"
+        },
+        "etag": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "item_status": {
+      "description": "Whether this item is deleted or not.",
+      "type": "string"
+    },
+    "folder_upload_email": {
+      "type": "object",
+      "description": "The upload email address for this folder. Only when type is 'folder'",
+      "properties": {
+        "access": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "item_collection": {
+      "type": "array",
+      "description": "A collection of mini file and folder objects contained in this folder. Only when type is folder.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "total_count": {
+            "type": "integer"
+          },
+          "entries": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "sequence_id": {
+                "type": "string"
+              },
+              "etag": {
+                "type": "string"
+              },
+              "sha1": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "sync_state": {
+      "description": "Whether this folder will be synced by the Box sync clients or not.",
+      "required": false,
+      "enum": [
+        "synced",
+        "not_synced",
+        "partially_synced"
+      ]
+    },
+    "has_collaborations": {
+      "description": "Whether this folder has any collaborators.",
+      "required": false,
+      "type": "boolean"
+    }
+  }
+}

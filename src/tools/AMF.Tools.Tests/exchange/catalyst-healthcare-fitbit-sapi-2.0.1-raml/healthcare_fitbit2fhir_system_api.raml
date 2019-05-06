@@ -1,0 +1,103 @@
+#%RAML 1.0
+baseUri: http://localhost:8081
+title: Healthcare fitbit2fhir System API
+version: v2
+mediaType: [application/xml+fhir, application/json+fhir]
+
+uses: 
+  FHIR_bundle_types: ./fhir_bundle_types.raml
+
+types: 
+  Device: !include /exchange_modules/org.mule.templates/device/1.0.0/device.raml
+  Observation: !include /exchange_modules/org.mule.templates/observation/1.0.0/observation.raml
+
+#Fitbit
+  FitbitMessage: 
+    type: object
+    properties:
+      message: string
+
+  FitbitAuthorizedPatients:     
+    type: object
+    properties:
+      patients: string[]
+      
+  FitbitPatientAuthorizationInfo: 
+    type: object
+    properties:
+      isAuthorized: boolean
+
+### API definition ###
+/Patient:
+  get:
+    displayName: Patients authorized to Fitbit
+    responses: 
+      200:  
+        body: 
+          application/json:
+            type: FitbitAuthorizedPatients
+  /{id}:
+    uriParameters:
+      id:
+        type: string|integer
+        description: Patient ID
+    get:
+      displayName: Get Authorization info about Patient
+      responses: 
+        200:  
+          body: 
+            application/json:
+              type: FitbitPatientAuthorizationInfo
+    /register:
+      get:
+        displayName: Register Fitbit account
+        description: Register patient's Fitbit account
+        queryParameters:
+          code:
+            description: Authorization code from Fitbit
+            type: string
+            example: fs4ag1f35g43543b13f1v3a54gn4fsfs545s3143g
+        responses: 
+          200:  
+            body: 
+              application/json:
+                type: FitbitMessage
+    /unauthorize:
+      get:
+        displayName: Unauthorize Fitbit user
+        responses: 
+          200:  
+            body: 
+              application/json:
+                type: FitbitMessage
+    /Observation:
+      get:
+        displayName: Fitbit observations in FHIR structure
+        description: Get fitbit activity and sleep observations for given patient in FHIR structure
+        queryParameters:
+          date:
+            description: Effective date of Observations (if starting with "eq" match exact date, if starting with "ge" match range sice specified date until today)
+            type: string
+            example: eq2016-07-18
+            pattern: ^(eq|ge)(((19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]))$
+        responses:
+          200:  
+            body: 
+              application/json:
+                type: FHIR_bundle_types.ObservationBundle
+          401:  
+            body: 
+              application/json:
+                type: FitbitMessage
+    /Device:
+      get:
+        displayName: Fitbit devices in FHIR structure
+        responses: 
+          200:  
+            body: 
+              application/json:
+                type: FHIR_bundle_types.DeviceBundle
+          401:  
+            body: 
+              application/json:
+                type: FitbitMessage

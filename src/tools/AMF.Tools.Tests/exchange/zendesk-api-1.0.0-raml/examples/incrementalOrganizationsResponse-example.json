@@ -1,0 +1,18 @@
+{
+  "end_time" : 1383685952 ,
+  "next_page" : "https://{subdomain}.zendesk.com/api/v2/incremental/organizations.json?start_time=1383685952" ,
+  "count" : 1 ,
+  "organizations" : [
+    {
+      "url" : "https://{subdomain}.zendesk.com/api/v2/organizations/11.json" ,
+      "id" : 11 ,
+      "name" : "Dev" ,
+      "tags" : [
+        "awesome_customer"
+      ] ,
+      "organization_fields" : {
+        "numeric_field" : 12345
+      }
+    }
+  ]
+}

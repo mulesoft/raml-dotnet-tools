@@ -1,0 +1,279 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required": false,
+    "properties": {
+        "object": {
+            "type": "string",
+            "required": false
+        },
+        "url": {
+            "type": "string",
+            "required": false
+        },
+        "count": {
+            "type": "number",
+            "id": "http://jsonschema.net/count",
+            "required": false
+        },
+        "data": {
+            "type": "array",
+            "id": "http://jsonschema.net/data",
+            "required": false,
+            "items": {
+                "type": "object",
+                "id": "http://jsonschema.net",
+                "required": false,
+                "properties": {
+                    "created": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/created",
+                        "required": false
+                    },
+                    "data": {
+                        "type": "object",
+                        "id": "http://jsonschema.net/data",
+                        "required": false,
+                        "properties": {
+                            "object": {
+                                "type": "object",
+                                "id": "http://jsonschema.net/data/object",
+                                "required": false,
+                                "properties": {
+                                    "amount_refunded": {
+                                        "type": "number",
+                                        "id": "http://jsonschema.net/data/object/amount_refunded",
+                                        "required": false
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "id": "http://jsonschema.net/data/object/amount",
+                                        "required": false
+                                    },
+                                    "balance_transaction": {
+                                        "type": "string",
+                                        "id": "http://jsonschema.net/data/object/balance_transaction",
+                                        "required": false
+                                    },
+                                    "captured": {
+                                        "type": "boolean",
+                                        "id": "http://jsonschema.net/data/object/captured",
+                                        "required": false
+                                    },
+                                    "card": {
+                                        "type": "object",
+                                        "id": "http://jsonschema.net/data/object/card",
+                                        "required": false,
+                                        "properties": {
+                                            "address_city": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_city",
+                                                "required": false
+                                            },
+                                            "address_country": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_country",
+                                                "required": false
+                                            },
+                                            "address_line1_check": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_line1_check",
+                                                "required": false
+                                            },
+                                            "address_line1": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_line1",
+                                                "required": false
+                                            },
+                                            "address_line2": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_line2",
+                                                "required": false
+                                            },
+                                            "address_state": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_state",
+                                                "required": false
+                                            },
+                                            "address_zip_check": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_zip_check",
+                                                "required": false
+                                            },
+                                            "address_zip": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/address_zip",
+                                                "required": false
+                                            },
+                                            "country": {
+                                                "type": "string",
+                                                "id": "http://jsonschema.net/data/object/card/country",
+                                                "required": false
+                                            },
+                                            "customer": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/customer",
+                                                "required": false
+                                            },
+                                            "cvc_check": {
+                                                "type": "string",
+                                                "id": "http://jsonschema.net/data/object/card/cvc_check",
+                                                "required": false
+                                            },
+                                            "exp_month": {
+                                                "type": "number",
+                                                "id": "http://jsonschema.net/data/object/card/exp_month",
+                                                "required": false
+                                            },
+                                            "exp_year": {
+                                                "type": "number",
+                                                "id": "http://jsonschema.net/data/object/card/exp_year",
+                                                "required": false
+                                            },
+                                            "fingerprint": {
+                                                "type": "string",
+                                                "id": "http://jsonschema.net/data/object/card/fingerprint",
+                                                "required": false
+                                            },
+                                            "id": {
+                                                "type": "string",
+                                                "id": "http://jsonschema.net/data/object/card/id",
+                                                "required": false
+                                            },
+                                            "last4": {
+                                                "type": "string",
+                                                "id": "http://jsonschema.net/data/object/card/last4",
+                                                "required": false
+                                            },
+                                            "name": {
+                                                "type": "null",
+                                                "id": "http://jsonschema.net/data/object/card/name",
+                                                "required": false
+                                            },
+                                            "object": {
+                                                "type": "string",
+                                                "id": "http://jsonschema.net/data/object/card/object",
+                                                "required": false
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "id": "http://jsonschema.net/data/object/card/type",
+                                                "required": false
+                                            }
+                                        }
+                                    },
+                                    "created": {
+                                        "type": "number",
+                                        "id": "http://jsonschema.net/data/object/created",
+                                        "required": false
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "id": "http://jsonschema.net/data/object/currency",
+                                        "required": false
+                                    },
+                                    "customer": {
+                                        "type": "null",
+                                        "id": "http://jsonschema.net/data/object/customer",
+                                        "required": false
+                                    },
+                                    "description": {
+                                        "type": "null",
+                                        "id": "http://jsonschema.net/data/object/description",
+                                        "required": false
+                                    },
+                                    "dispute": {
+                                        "type": "null",
+                                        "id": "http://jsonschema.net/data/object/dispute",
+                                        "required": false
+                                    },
+                                    "failure_code": {
+                                        "type": "null",
+                                        "id": "http://jsonschema.net/data/object/failure_code",
+                                        "required": false
+                                    },
+                                    "failure_message": {
+                                        "type": "null",
+                                        "id": "http://jsonschema.net/data/object/failure_message",
+                                        "required": false
+                                    },
+                                    "id": {
+                                        "type": "string",
+                                        "id": "http://jsonschema.net/data/object/id",
+                                        "required": false
+                                    },
+                                    "invoice": {
+                                        "type": "null",
+                                        "id": "http://jsonschema.net/data/object/invoice",
+                                        "required": false
+                                    },
+                                    "livemode": {
+                                        "type": "boolean",
+                                        "id": "http://jsonschema.net/data/object/livemode",
+                                        "required": false
+                                    },
+                                    "metadata": {
+                                        "type": "object",
+                                        "id": "http://jsonschema.net/data/object/metadata",
+                                        "required": false
+                                    },
+                                    "object": {
+                                        "type": "string",
+                                        "id": "http://jsonschema.net/data/object/object",
+                                        "required": false
+                                    },
+                                    "paid": {
+                                        "type": "boolean",
+                                        "id": "http://jsonschema.net/data/object/paid",
+                                        "required": false
+                                    },
+                                    "refunded": {
+                                        "type": "boolean",
+                                        "id": "http://jsonschema.net/data/object/refunded",
+                                        "required": false
+                                    },
+                                    "refunds": {
+                                        "type": "array",
+                                        "id": "http://jsonschema.net/data/object/refunds",
+                                        "required": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/id",
+                        "required": false
+                    },
+                    "livemode": {
+                        "type": "boolean",
+                        "id": "http://jsonschema.net/livemode",
+                        "required": false
+                    },
+                    "object": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/object",
+                        "required": false
+                    },
+                    "pending_webhooks": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/pending_webhooks",
+                        "required": false
+                    },
+                    "request": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/request",
+                        "required": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/type",
+                        "required": false
+                    }
+                }
+            }
+        }
+    }
+}

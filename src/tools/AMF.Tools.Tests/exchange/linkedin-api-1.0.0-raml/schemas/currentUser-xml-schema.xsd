@@ -1,0 +1,153 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="person">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:int" name="id"/>
+        <xs:element type="xs:string" name="first-name"/>
+        <xs:element type="xs:string" name="last-name"/>
+        <xs:element type="xs:string" name="headline"/>
+        <xs:element name="location">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element name="country">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:short" name="code"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="industry"/>
+        <xs:element type="xs:byte" name="distance"/>
+        <xs:element name="relation-to-viewer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:byte" name="distance"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:byte" name="num-recommenders"/>
+        <xs:element type="xs:string" name="current-status"/>
+        <xs:element type="xs:long" name="current-status-timestamp"/>
+        <xs:element name="connections">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute type="xs:byte" name="total"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="summary"/>
+        <xs:element name="positions">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="position" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="id"/>
+                    <xs:element type="xs:string" name="title"/>
+                    <xs:element type="xs:string" name="summary"/>
+                    <xs:element name="start-date">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:short" name="year"/>
+                          <xs:element type="xs:string" name="month"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="is-current"/>
+                    <xs:element name="company">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="name"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="educations">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="education" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="id"/>
+                    <xs:element type="xs:string" name="school-name"/>
+                    <xs:element type="xs:string" name="degree"/>
+                    <xs:element name="start-date">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:short" name="year"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="end-date">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:short" name="year"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="member-url-resources">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="member-url" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:anyURI" name="url"/>
+                    <xs:element type="xs:string" name="name"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="api-standard-profile-request">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:anyURI" name="url"/>
+              <xs:element name="headers">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="http-header" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="name"/>
+                          <xs:element type="xs:string" name="value"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="site-standard-profile-request">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:anyURI" name="url"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:anyURI" name="picture-url"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "list": [
+        {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "owner": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "private": {
+                    "type": "boolean"
+                },
+                "fork": {
+                    "type": "boolean"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "html_url": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    ]
+}

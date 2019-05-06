@@ -1,0 +1,23 @@
+#%RAML 1.0 Trait
+# Message List Filters. Note: parameters are case-sensitive.
+queryParameters:
+  To:
+    displayName: To
+    description: |
+      Only show messages to this phone number.
+    type: string
+    required: false
+  From:
+    displayName: From
+    description: |
+      Only show messages from this phone number or alphanumeric sender ID.
+    type: string
+    required: false
+  DateSent:
+    displayName: Date Sent
+    description: |
+      Only show messages sent on this date (in GMT format), given as YYYY-MM-DD.
+      Example: DateSent=2009-07-06.
+      You can also specify inequality, such as DateSent<=YYYY-MM-DD for messages that were sent on or before midnight on a date, and DateSent>=YYYY-MM-DD for messages sent on or after midnight on a date.
+    type: string
+    required: false

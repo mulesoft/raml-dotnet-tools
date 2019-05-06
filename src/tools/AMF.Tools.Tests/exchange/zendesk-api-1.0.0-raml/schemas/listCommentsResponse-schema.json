@@ -1,0 +1,30 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "comments" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "author_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "body" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

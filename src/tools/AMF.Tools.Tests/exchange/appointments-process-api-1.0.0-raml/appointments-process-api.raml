@@ -1,0 +1,101 @@
+#%RAML 1.0
+title: ehr-appointments-process-api
+version: v1
+baseUri: http://dev-ehr-appointments-process-api.cloudhub.io/api
+
+
+types:
+  
+  Appointment:
+    type: object
+    properties: 
+      appointmentId?: string
+      startDateTime: 
+        type: string
+        example: 2016-02-28T16:41:41.090+00:00
+      endDateTime: 
+        type: string
+        example: 2016-02-28T16:41:41.090+00:00
+      patient: 
+        type: object
+        properties:
+          name: string
+          id: integer
+      practitioner: 
+        type: object
+        properties:
+          name: string
+          id: integer
+      status: 
+        enum: [proposed, pending, booked, arrived, fulfilled, cancelled, noshow]
+
+  AppointmentBooking:
+    type: object
+    properties:
+      patientId: integer
+      practitionerId: integer
+      slotId: integer
+      
+  Slot:
+    type: object
+    properties:
+      slotId : integer
+      startDateTime: 
+        type: string
+        example: 2016-02-28T16:41:41.090+00:00
+      endDateTime: 
+        type: string
+        example: 2016-02-28T16:41:41.090+00:00
+      freeBusyType: 
+         enum: [free, busy]
+      scheduleId: integer
+      
+  
+  
+/slots:
+  get:
+    queryParameters:
+      practitionerId:
+        type: integer
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            type: Slot[]
+            
+        
+/appointments:
+  get:
+    queryParameters:
+      practitionerId:
+        type: integer
+        required: false
+      patientId:
+        type: integer
+        required: false
+      startBefore:
+        type: string
+        required: false
+      startAfter:
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: Appointment[]
+            
+  post:
+    body:
+      application/json:
+        type: AppointmentBooking
+        example: 
+          patientId: 3
+          practitionerId: 1
+          slotId: 2
+          
+    responses:
+      201:
+
+  

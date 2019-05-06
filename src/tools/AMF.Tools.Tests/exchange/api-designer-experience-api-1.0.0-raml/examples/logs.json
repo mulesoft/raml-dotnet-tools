@@ -1,0 +1,29 @@
+[
+    {
+        "creationDate": "2016-10-28T16:41:41.090Z",
+        "commitId":"d03f1a5f6027104076eaad1ae502d2c2cab81c6c",
+        "message": "Fix some types",
+        "author": {
+            "user": "Nicolas Mas",
+            "email": "nicolas.mas@mulesoft.com"
+        }
+    },
+    {
+        "creationDate": "2016-02-29T16:41:41.090Z",
+        "commitId":"AABBCCCf6027104076eaad1ae502d2c2cab81c6c",
+        "message": "Adding new Services",
+        "author": {
+            "user": "lecko",
+            "email": "lecko@tekgenesis.com"
+        }
+    },
+    {
+        "creationDate": "2016-01-28T16:41:41.090Z",
+        "commitId":"XXSSDDSS027104076eaad1ae502d2c2cab81c6c",
+        "message": "Initial Commit",
+        "author": {
+            "user": "Nicolas Mas",
+            "email": "nicolas.mas@mulesoft.com"
+        }
+    }
+]

@@ -1,0 +1,90 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"coupon": {
+			"type":"object",
+			"id": "http://jsonschema.net/coupon",
+			"required":false,
+			"properties":{
+				"amount_off": {
+					"type":"null",
+					"id": "http://jsonschema.net/coupon/amount_off",
+					"required":false
+				},
+				"currency": {
+					"type":"string",
+					"id": "http://jsonschema.net/coupon/currency",
+					"required":false
+				},
+				"duration_in_months": {
+					"type":"number",
+					"id": "http://jsonschema.net/coupon/duration_in_months",
+					"required":false
+				},
+				"duration": {
+					"type":"string",
+					"id": "http://jsonschema.net/coupon/duration",
+					"required":false
+				},
+				"id": {
+					"type":"string",
+					"id": "http://jsonschema.net/coupon/id",
+					"required":false
+				},
+				"livemode": {
+					"type":"boolean",
+					"id": "http://jsonschema.net/coupon/livemode",
+					"required":false
+				},
+				"max_redemptions": {
+					"type":"null",
+					"id": "http://jsonschema.net/coupon/max_redemptions",
+					"required":false
+				},
+				"object": {
+					"type":"string",
+					"id": "http://jsonschema.net/coupon/object",
+					"required":false
+				},
+				"percent_off": {
+					"type":"number",
+					"id": "http://jsonschema.net/coupon/percent_off",
+					"required":false
+				},
+				"redeem_by": {
+					"type":"null",
+					"id": "http://jsonschema.net/coupon/redeem_by",
+					"required":false
+				},
+				"times_redeemed": {
+					"type":"number",
+					"id": "http://jsonschema.net/coupon/times_redeemed",
+					"required":false
+				}
+			}
+		},
+		"customer": {
+			"type":"string",
+			"id": "http://jsonschema.net/customer",
+			"required":false
+		},
+		"end": {
+			"type":"number",
+			"id": "http://jsonschema.net/end",
+			"required":false
+		},
+		"object": {
+			"type":"string",
+			"id": "http://jsonschema.net/object",
+			"required":false
+		},
+		"start": {
+			"type":"number",
+			"id": "http://jsonschema.net/start",
+			"required":false
+		}
+	}
+}

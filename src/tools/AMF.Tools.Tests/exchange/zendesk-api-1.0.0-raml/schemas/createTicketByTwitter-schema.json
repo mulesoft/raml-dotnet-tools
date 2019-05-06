@@ -1,0 +1,21 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "ticket" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "twitter_status_message_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "monitored_twitter_handle_id" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

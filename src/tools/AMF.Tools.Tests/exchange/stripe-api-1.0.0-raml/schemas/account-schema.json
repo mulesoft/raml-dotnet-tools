@@ -1,0 +1,66 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"charge_enabled": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/charge_enabled",
+			"required":false
+		},
+		"country": {
+			"type":"string",
+			"id": "http://jsonschema.net/country",
+			"required":false
+		},
+		"currencies_supported": {
+			"type":"array",
+			"id": "http://jsonschema.net/currencies_supported",
+			"required":false,
+			"items":
+				{
+					"type":"string",
+					"id": "http://jsonschema.net/currencies_supported/0",
+					"required":false
+				}
+			
+
+		},
+		"default_currency": {
+			"type":"string",
+			"id": "http://jsonschema.net/default_currency",
+			"required":false
+		},
+		"details_submitted": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/details_submitted",
+			"required":false
+		},
+		"email": {
+			"type":"string",
+			"id": "http://jsonschema.net/email",
+			"required":false
+		},
+		"id": {
+			"type":"string",
+			"id": "http://jsonschema.net/id",
+			"required":false
+		},
+		"object": {
+			"type":"string",
+			"id": "http://jsonschema.net/object",
+			"required":false
+		},
+		"statement_descriptor": {
+			"type":"null",
+			"id": "http://jsonschema.net/statement_descriptor",
+			"required":false
+		},
+		"transfer_enabled": {
+			"type":"boolean",
+			"id": "http://jsonschema.net/transfer_enabled",
+			"required":false
+		}
+	}
+}

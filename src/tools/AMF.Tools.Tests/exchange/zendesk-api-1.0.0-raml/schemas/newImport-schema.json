@@ -1,0 +1,77 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "ticket" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "requester_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "assignee_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "subject" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "description" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "tags" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "string"
+            }
+          ]
+        } ,
+        "comments" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "author_id" : {
+                  "type" : "number" ,
+                  "required" : false
+                } ,
+                "value" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "created_at" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            } , {
+              "type" : "object" ,
+              "properties" : {
+                "author_id" : {
+                  "type" : "number" ,
+                  "required" : false
+                } ,
+                "value" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "public" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

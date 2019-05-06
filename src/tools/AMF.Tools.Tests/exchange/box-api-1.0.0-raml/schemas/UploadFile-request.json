@@ -1,0 +1,329 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "required": false,
+  "properties": {
+    "entries": {
+      "type": "array",
+      "id": "http://jsonschema.net/entries",
+      "required": false,
+      "items": {
+        "type": "object",
+        "id": "http://jsonschema.net/entries/0",
+        "required": false,
+        "properties": {
+          "content_created_at": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/content_created_at",
+            "required": false
+          },
+          "content_modified_at": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/content_modified_at",
+            "required": false
+          },
+          "created_at": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/created_at",
+            "required": false
+          },
+          "created_by": {
+            "type": "object",
+            "id": "http://jsonschema.net/entries/0/created_by",
+            "required": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/created_by/id",
+                "required": false
+              },
+              "login": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/created_by/login",
+                "required": false
+              },
+              "name": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/created_by/name",
+                "required": false
+              },
+              "type": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/created_by/type",
+                "required": false
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/description",
+            "required": false
+          },
+          "etag": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/etag",
+            "required": false
+          },
+          "id": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/id",
+            "required": false
+          },
+          "item_status": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/item_status",
+            "required": false
+          },
+          "modified_at": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/modified_at",
+            "required": false
+          },
+          "modified_by": {
+            "type": "object",
+            "id": "http://jsonschema.net/entries/0/modified_by",
+            "required": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/modified_by/id",
+                "required": false
+              },
+              "login": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/modified_by/login",
+                "required": false
+              },
+              "name": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/modified_by/name",
+                "required": false
+              },
+              "type": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/modified_by/type",
+                "required": false
+              }
+            }
+          },
+          "name": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/name",
+            "required": false
+          },
+          "owned_by": {
+            "type": "object",
+            "id": "http://jsonschema.net/entries/0/owned_by",
+            "required": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/owned_by/id",
+                "required": false
+              },
+              "login": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/owned_by/login",
+                "required": false
+              },
+              "name": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/owned_by/name",
+                "required": false
+              },
+              "type": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/owned_by/type",
+                "required": false
+              }
+            }
+          },
+          "parent": {
+            "type": "object",
+            "id": "http://jsonschema.net/entries/0/parent",
+            "required": false,
+            "properties": {
+              "etag": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/parent/etag",
+                "required": false
+              },
+              "id": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/parent/id",
+                "required": false
+              },
+              "name": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/parent/name",
+                "required": false
+              },
+              "sequence_id": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/parent/sequence_id",
+                "required": false
+              },
+              "type": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/parent/type",
+                "required": false
+              }
+            }
+          },
+          "path_collection": {
+            "type": "object",
+            "id": "http://jsonschema.net/entries/0/path_collection",
+            "required": false,
+            "properties": {
+              "entries": {
+                "type": "array",
+                "id": "http://jsonschema.net/entries/0/path_collection/entries",
+                "required": false,
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "id": "http://jsonschema.net/entries/0/path_collection/entries/0",
+                    "required": false,
+                    "properties": {
+                      "etag": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/entries/0/path_collection/entries/0/etag",
+                        "required": false
+                      },
+                      "id": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/entries/0/path_collection/entries/0/id",
+                        "required": false
+                      },
+                      "name": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/entries/0/path_collection/entries/0/name",
+                        "required": false
+                      },
+                      "sequence_id": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/entries/0/path_collection/entries/0/sequence_id",
+                        "required": false
+                      },
+                      "type": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/entries/0/path_collection/entries/0/type",
+                        "required": false
+                      }
+                    }
+                  }
+                }
+              },
+              "total_count": {
+                "type": "number",
+                "id": "http://jsonschema.net/entries/0/path_collection/total_count",
+                "required": false
+              }
+            }
+          },
+          "purged_at": {
+            "type": "null",
+            "id": "http://jsonschema.net/entries/0/purged_at",
+            "required": false
+          },
+          "sequence_id": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/sequence_id",
+            "required": false
+          },
+          "sha1": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/sha1",
+            "required": false
+          },
+          "shared_link": {
+            "type": "object",
+            "id": "http://jsonschema.net/entries/0/shared_link",
+            "required": false,
+            "properties": {
+              "access": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/shared_link/access",
+                "required": false
+              },
+              "download_count": {
+                "type": "number",
+                "id": "http://jsonschema.net/entries/0/shared_link/download_count",
+                "required": false
+              },
+              "download_url": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/shared_link/download_url",
+                "required": false
+              },
+              "is_password_enabled": {
+                "type": "boolean",
+                "id": "http://jsonschema.net/entries/0/shared_link/is_password_enabled",
+                "required": false
+              },
+              "permissions": {
+                "type": "object",
+                "id": "http://jsonschema.net/entries/0/shared_link/permissions",
+                "required": false,
+                "properties": {
+                  "can_download": {
+                    "type": "boolean",
+                    "id": "http://jsonschema.net/entries/0/shared_link/permissions/can_download",
+                    "required": false
+                  },
+                  "can_preview": {
+                    "type": "boolean",
+                    "id": "http://jsonschema.net/entries/0/shared_link/permissions/can_preview",
+                    "required": false
+                  }
+                }
+              },
+              "preview_count": {
+                "type": "number",
+                "id": "http://jsonschema.net/entries/0/shared_link/preview_count",
+                "required": false
+              },
+              "unshared_at": {
+                "type": "null",
+                "id": "http://jsonschema.net/entries/0/shared_link/unshared_at",
+                "required": false
+              },
+              "url": {
+                "type": "string",
+                "id": "http://jsonschema.net/entries/0/shared_link/url",
+                "required": false
+              },
+              "vanity_url": {
+                "type": "null",
+                "id": "http://jsonschema.net/entries/0/shared_link/vanity_url",
+                "required": false
+              }
+            }
+          },
+          "size": {
+            "type": "number",
+            "id": "http://jsonschema.net/entries/0/size",
+            "required": false
+          },
+          "trashed_at": {
+            "type": "null",
+            "id": "http://jsonschema.net/entries/0/trashed_at",
+            "required": false
+          },
+          "type": {
+            "type": "string",
+            "id": "http://jsonschema.net/entries/0/type",
+            "required": false
+          }
+        }
+      }
+    },
+    "total_count": {
+      "type": "number",
+      "id": "http://jsonschema.net/total_count",
+      "required": false
+    }
+  }
+}

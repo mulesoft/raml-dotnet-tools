@@ -1,0 +1,20 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="post">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="title"/>
+        <xs:element type="xs:string" name="summary"/>
+        <xs:element name="content">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:anyURI" name="submitted-url"/>
+              <xs:element type="xs:string" name="submitted-image-url"/>
+              <xs:element type="xs:string" name="title"/>
+              <xs:element type="xs:string" name="description"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

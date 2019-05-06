@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "list": [
+        {
+            "properties": {
+                "created_at": {
+                    "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "target_url": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "creator": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    ]
+}

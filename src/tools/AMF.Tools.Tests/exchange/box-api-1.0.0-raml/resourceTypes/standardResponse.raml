@@ -1,0 +1,102 @@
+delete?: 
+  headers: 
+    If-Match?: 
+      description: |
+        If-Match header let you ensure that your app only alters files/folders
+        on Box if you have the current version.
+  responses: 
+    204: 
+      description: |
+        "No Content. Item successfully removed."
+    404: 
+      description: The file is not in the trash.
+    412: 
+      description: |
+        Precondition Failed. The precondition given in one or more of the
+        request-header fields evaluated to false when it was tested on the
+        server.
+    429: 
+      description: Your application is sending too many simultaneous requests.
+post?: 
+  headers: 
+    If-Match?: 
+      description: |
+        If-Match header let you ensure that your app only alters files/folders
+        on Box if you have the current version.
+    Content-MD5: 
+      description: The SHA1 hash of the file.
+  responses: 
+    201?: 
+      description: |
+        The request has been fulfilled and resulted in a new resource being
+        created.
+    403: 
+      description: |
+        Forbidden. The server understood the request, but is refusing to
+        fulfill it.
+    405: 
+      description: |
+        Method Not Allowed. The method specified in the Request-Line is not
+        allowed for the resource identified by the Request-URI.
+    409: 
+      description: |
+        Conflict. The request could not be completed due to a conflict with
+        the current state of the resource. Often happened because of file
+        names duplication.
+    429: 
+      description: Your application is sending too many simultaneous requests.
+put?: 
+  headers: 
+    If-Match?: 
+      description: |
+        If-Match header let you ensure that your app only alters files/folders
+        on Box if you have the current version.
+  responses: 
+    200?: 
+      description: |
+        The request has succeeded. The information returned with the response
+        is dependent on the method used in the request.
+    429: 
+      description: Your application is sending too many simultaneous requests.
+get?: 
+  headers: 
+    If-None-Match?: 
+      description: |
+        If-None-Match headers ensure that you don't retrieve unnecessary data
+        if you already have the most current version on-hand.
+    On-Behalf-Of?: 
+      description: |
+        Used for enterprise administrators to make API calls on behalf of their
+        managed users. To enable this functionality, please contact us with your
+        API key.
+  responses: 
+    200?: 
+      description: |
+        The request has succeeded. The information returned with the response
+        is dependent on the method used in the request.
+    202?: 
+      description: |
+        The request has been accepted for processing, but the processing has
+        not been completed.
+    302?: 
+      description: Found. The requested resource resides temporarily under a different URI.
+    304?: 
+      description: |
+        Not Modified. If the client has performed a conditional GET request
+        and access is allowed, but the document has not been modified
+    400: 
+      description: |
+        Bad Request. The request could not be understood by the server due
+        to malformed syntax.
+    401: 
+      description: Unauthorized. The request requires user authentication.
+    404: 
+      description: Not Found. The server has not found anything matching the Request-URI.
+    429: 
+      description: Your application is sending too many simultaneous requests.
+    500: 
+      description: "We couldn't return the representation due to an internal server error."
+    507: 
+      description: |
+        Insufficient Storage. The server is unable to store the representation
+        needed to complete the request

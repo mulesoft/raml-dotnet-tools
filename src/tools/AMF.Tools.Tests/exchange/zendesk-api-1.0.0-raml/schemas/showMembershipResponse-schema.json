@@ -1,0 +1,37 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "group_membership" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "user_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "group_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "default" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

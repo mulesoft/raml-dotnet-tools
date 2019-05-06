@@ -1,0 +1,28 @@
+{
+  "termType" : "TERMED" ,
+  "invoiceTargetDate" : "2013-12-31" ,
+  "contractEffectiveDate" : "2013-1-15" ,
+  "previewAccountInfo" : {
+    "currency" : "USD" ,
+    "billToContact" : {
+      "zipCode" : "94549" ,
+      "country" : "United States" ,
+      "city" : "Walnut Creek" ,
+      "county" : "Contra Consta" ,
+      "state" : "California"
+    } ,
+    "billCycleDay" : 31
+  } ,
+  "subscribeToRatePlans" : [
+    {
+      "chargeOverrides" : [
+        {
+          "productRatePlanChargeId" : "ff8080811ca15d19011cddad8c953b53" ,
+          "quantity" : 100
+        }
+      ] ,
+      "productRatePlanId" : "ff8080811ca15d19011cdda9b0ad3b51"
+    }
+  ] ,
+  "initialTerm" : 12
+}

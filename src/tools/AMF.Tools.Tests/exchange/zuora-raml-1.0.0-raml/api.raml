@@ -1,0 +1,406 @@
+#%RAML 0.8
+title: Zuora
+version: v1
+baseUri: https://{partitionName}.zuora.com/rest/{version}
+baseUriParameters: 
+  partitionName: 
+    enum: [ api , apisandbox-api ]
+mediaType: application/json
+securitySchemes:
+  - basic: !include securitySchemes/basic.raml
+schemas:
+  - accounts: !include schemas/accounts-schema.json
+  - accountCreated: !include schemas/accountCreated-schema.json
+  - account: !include schemas/account-schema.json
+  - accountSummary: !include schemas/accountSummary-schema.json
+  - accountPutBody: !include schemas/accountPutBody-schema.json
+  - catalog: !include schemas/catalog-schema.json
+  - paymentMethodCreateBody: !include schemas/paymentMethodPostBody-schema.json
+  - hmacSignaturePostBody: !include schemas/hmacSignaturePostBody-schema.json
+  - settings: !include schemas/settings-schema.json
+  - hamcSignaturePostResponse: !include schemas/hamcSignaturePostResponse-schema.json
+  - paymentMethodPostBody: !include schemas/paymentMethodPostBody-schema.json
+  - responsePaymentMethodSuccess: !include schemas/responsePaymentMethodSuccess-schema.json
+  - responseSuccess: !include schemas/responseSuccess-schema.json
+  - paymentMethods: !include schemas/paymentMethods-schema.json
+  - paymentMethodPutBody: !include schemas/paymentMethodPutBody-schema.json
+  - subscriptionsPreviewBody: !include schemas/subscriptionsPreviewBody-schema.json
+  - subscriptionsPreviewResponse: !include schemas/subscriptionsPreviewResponse-schema.json
+  - subscriptionPostBody: !include schemas/subscriptionPostBody-schema.json
+  - subscriptionPostResponse: !include schemas/subscriptionPostResponse-schema.json
+  - subscriptions: !include schemas/subscriptions-schema.json
+  - subscriptionGet: !include schemas/subscriptionGet-schema.json
+  - subscriptionPutBody: !include schemas/subscriptionPutBody-schema.json
+  - subscriptionRenewBody: !include schemas/subscriptionRenewBody-schema.json
+  - subscriptionRenewResponse: !include schemas/subscriptionRenewResponse-schema.json
+  - subscriptionCancelBody: !include schemas/subscriptionCancelBody-schema.json
+  - subscriptionCancelResponse: !include schemas/subscriptionCancelResponse-schema.json
+  - usageDetailsAccout: !include schemas/usageDetailsAccout-schema.json
+  - usagePostRequest: !include schemas/usagePostRequest-schema.json
+  - usagePostResponse: !include schemas/usagePostResponse-schema.json
+  - invoices: !include schemas/invoices-schema.json
+  - payments: !include schemas/payments-schema.json
+  - invoiceCollectBody: !include schemas/invoiceCollectBody-schema.json
+  - invoiceCollectResponse: !include schemas/invoiceCollectResponse-schema.json
+resourceTypes:
+  - zuoraResource: !include resourceTypes/zuoraResource.raml
+traits:
+  - allowsPagination: !include traits/allowsPagination.raml
+securedBy: [ basic ]
+/accounts: 
+  type: zuoraResource
+  description: The Accounts REST API provides direct access to customer account information.
+  post: 
+    description: |
+      Creates a customer account.
+      This call creates a customer account with a credit-card payment method, a bill-to contact, and an optional sold-to contact. In the same operation, it can optionally create a subscription, invoice for that subscription, and collect payment through the default payment method. The transaction is atomic; if any part fails for any reason, the entire transaction is rolled back.
+    body: 
+      application/json: 
+        schema: accounts
+        example: !include examples/accounts-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: accountCreated
+            example: !include examples/accountCreated-example.json
+  /{accountKey}: 
+    type: zuoraResource
+    get: 
+      description: |
+        Retrieves basic information about a specified customer account.
+        
+        This is a quick retrieval that doesn't include the account's subscriptions, invoices, payments, or usage details. For more detailed information about an account, use the "Get account summary" call.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: account
+              example: !include examples/account-example.json
+    put: 
+      description: Updates the specified customer account.
+      body: 
+        application/json: 
+          schema: accountPutBody
+          example: !include examples/accountPutBody-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: responseSuccess
+              example: !include examples/responseSuccess-example.json
+    /summary: 
+      type: zuoraResource
+      description: ""
+      get: 
+        description: |
+          Retrieves detailed information about the specified customer account.
+          
+          The response includes everything retrieved with the "Get basic account information" call, plus a summary of the account's subscriptions, invoices, payments, and usage for the last six months.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: accountSummary
+                example: !include examples/accountSummary-example.json
+/catalog/products: 
+  type: zuoraResource
+  get: 
+    is: [ allowsPagination ]
+    description: |
+      Retrieves the entire product catalog, including all products and their corresponding rate plans and charges.
+      
+      Products are returned in reverse chronological order on UpdatedDate. Information for each product includes rate plans and, within those, rate plan charges.
+      
+      The REST API does not support the creation or updating of products, product rate plans and charges; these tasks can only be performed in the web-based UI or via the SOAP API.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: catalog
+            example: !include examples/catalog-example.json
+/connections: 
+  type: zuoraResource
+  post: 
+    description: |
+      Establishes a connection to the Zuora REST API service based on a valid user credentials.
+      This call authenticates the user and returns an API session cookie that's used to authorize subsequent calls to the REST API. A call to connections is a required first step before using the Zuora REST API to access data.
+      The credentials must belong to a user account that has permission to access the API service.
+    responses: 
+      200: 
+/hmac-signatures: 
+  type: zuoraResource
+  post: 
+    description: Returns unique signature and token values, facilitating a CORS enabled API call.
+    body: 
+      application/json: 
+        schema: hmacSignaturePostBody
+        example: !include examples/hmacSignaturePostBody-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: hamcSignaturePostResponse
+            example: !include examples/hamcSignaturePostResponse-example.json
+/subscriptions: 
+  type: zuoraResource
+  description: The REST API allows you to preview, create, view, and modify subscriptions.
+  post: 
+    description: Creates a new subscription for an existing customer account.
+    body: 
+      application/json: 
+        schema: subscriptionPostBody
+        example: !include examples/subscriptionPostBody-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: subscriptionPostResponse
+            example: !include examples/subscriptionPostResponse-example.json
+  /accounts/{accountKey}: 
+    type: zuoraResource
+    get: 
+      is: [ allowsPagination ]
+      description: |
+        Retrieves all subscriptions associated with the specified account.
+        Subscription data is returned in reverse chronological order based on updatedDate.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: subscriptions
+              example: !include examples/subscriptions-example.json
+  /preview: 
+    type: zuoraResource
+    post: 
+      description: |
+        Creates a new subscription in preview mode.
+        This call does not require a valid customer account. It can be used to show potential new customers a preview of a subscription with complete details and charges before creating an account, or to let existing customers preview a subscription with all charges before committing.
+      body: 
+        application/json: 
+          schema: subscriptionsPreviewBody
+          example: !include examples/subscriptionsPreviewBody-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: subscriptionsPreviewResponse
+              example: !include examples/subscriptionsPreviewResponse-example.json
+  /{subscriptionKey}: 
+    type: zuoraResource
+    get: 
+      description: Retrieves detailed information about a specified subscription.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: subscriptionGet
+              example: !include examples/subscriptionGet-example.json
+    put: 
+      description: |
+        Updates a subscription.
+        This call can make the following kinds of changes to a subscription:
+        
+        Add a note
+        
+        Change the renewal term or auto-renewal flag
+        
+        Change the term length or change between evergreen and termed
+        
+        Add a new product rate plan
+        
+        Remove an existing subscription rate plan
+        
+        Change the quantity of an existing subscription rate plan
+      body: 
+        application/json: 
+          schema: subscriptionPutBody
+          example: !include examples/subscriptionPutBody-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: responseSuccess
+              example: !include examples/responseSuccess-example.json
+    /cancel: 
+      type: zuoraResource
+      put: 
+        description: Cancels an active subscription.
+        body: 
+          application/json: 
+            schema: subscriptionCancelBody
+            example: !include examples/subscriptionCancelBody-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: subscriptionCancelResponse
+                example: !include examples/subscriptionCancelResponse-example.json
+    /renew: 
+      type: zuoraResource
+      put: 
+        description: Renews a termed subscription using existing renewal terms.
+        body: 
+          application/json: 
+            schema: subscriptionRenewBody
+            example: !include examples/subscriptionRenewBody-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: subscriptionRenewResponse
+                example: !include examples/subscriptionRenewResponse-example.json
+/transactions: 
+  type: zuoraResource
+  description: The Transactions API retrieves invoices or payments for a specified account, as well as allowing you to invoice and collect payment from a specific account.
+  /invoices/accounts/{accountKey}: 
+    type: zuoraResource
+    get: 
+      is: [ allowsPagination ]
+      description: |
+        Retrieves invoices for a specified account.
+        Invoices are returned in reverse chronological order by "invoiceDate".
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: invoices
+              example: !include examples/invoices-example.json
+  /payments/accounts/{accountKey}: 
+    type: zuoraResource
+    get: 
+      is: [ allowsPagination ]
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: payments
+              example: !include examples/payments-example.json
+/operations/invoice-collect: 
+  type: zuoraResource
+  post: 
+    description: |
+      Generates invoices and collects payments for a specified account.
+      This method can generate invoices and collect payments on the invoices generated, or else simply collect payment on a specified existing invoice. The customer's default payment method is used, and the full amount due is collected. The operation depends on the parameters you specify:
+      
+      To generate one or more new invoices for that customer and collect payment on the generated invoice(s), leave the invoiceId field empty.
+      
+      To collect payment on an existing invoice, specify the invoice ID.
+      
+      The operation is atomic; if any part is unsuccessful, the entire operation is rolled back.
+    body: 
+      application/json: 
+        schema: invoiceCollectBody
+        example: !include examples/invoiceCollectBody-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: invoiceCollectResponse
+            example: !include examples/invoiceCollectResponse-example.json
+/usage: 
+  type: zuoraResource
+  post: 
+    description: |
+      Imports usage data for one or more accounts in CSV or XLS format.
+      There are no path or query parameters. The data is uploaded using the HTTP multipart/form-data POST method and applied to the user's tenant. See the example below for more information.
+      The content of the upload file must follow the field format used by the UI import tool, as it is documented below and in the KnowledgeCenter.  It must be a comma-separated (CSV) or Excel (XLS) file with a corresponding .csv or .xls extension.  The file size must not exceed 4MB.  Zipped files with .zip extension are acceptable, as long as they are within the size limit and contain only a single acceptable CSV or XLS file.
+      At the completion of the upload, before actually processing the file contents, the API returns a response containing the byte count of the received file and a URL for checking the status of the import process.  Of the five possible results displayed at that URL (Pending, Processing, Completed, Canceled, and Failed) only a Completed status indicates that the import was successful.  The operation is atomic; if any record fails, the file is rejected.  In that case, the entire import is rolled back and all stored data is returned to its original state.
+      To manage the information after a successful upload, use the web-based UI.
+      
+      Upload file format
+      
+      The upload file uses the following headings:
+      
+      |Heading| Description |
+      |---|---|
+      |ACCOUNT_ID|  Account ID|
+      |UOM|  Units of measure |
+      |QTY|  Quantity of units used|
+      |STARTDATE|  Start date of usage|
+      |ENDDATE|  End date of usage |
+      |SUBSCRIPTION_ID|  Subscription ID|
+      |CHARGE_ID|  Charge ID|
+      |DESCRIPTION|  Description|
+    body: 
+      application/json: 
+        schema: usagePostRequest
+        example: !include examples/usagePostRequest-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: usagePostResponse
+            example: !include examples/usagePostResponse-example.json
+  /accounts/{accountKey}: 
+    type: zuoraResource
+    get: 
+      is: [ allowsPagination ]
+      description: |
+        Retrieves usage details for an account.
+        Usage data is returned in reverse chronological order.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: usageDetailsAccout
+              example: !include examples/usageDetailsAccout-example.json
+/payment-methods: 
+  /{paymentMethodId}: 
+    type: zuoraResource
+    delete: 
+      description: |
+        Deletes a credit card payment method from the specified customer account.
+        If the specified payment method is the account's default payment method, the request will fail.  In that case, you must first designate a different payment method for that customer to be the default.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: responseSuccess
+              example: !include examples/responseSuccess-example.json
+  /credit-cards: 
+    type: zuoraResource
+    description: "The Payment Methods REST API provides access to your customers' credit card payment methods. To manage other types of payment methods, such as bank transfers and checks, use the web-based UI or the Zuora SOAP API."
+    post: 
+      description: Creates a new credit card payment method for the specified customer account.
+      body: 
+        application/json: 
+          schema: paymentMethodCreateBody
+          example: !include examples/paymentMethodPostBody-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: responsePaymentMethodSuccess
+              example: !include examples/responsePaymentMethodSuccess-example.json
+    /accounts/{accountKey}: 
+      type: zuoraResource
+      get: 
+        is: [ allowsPagination ]
+        description: |
+          Retrieves all credit card information for the specified customer account.
+          
+          The response includes details on all the credit or debit cards for the specified customer account. Card numbers are masked, e.g., "************1234". Cards are returned in reverse chronological order of last update.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: paymentMethods
+                example: !include examples/paymentMethods-example.json
+    /{paymentMethodId}: 
+      type: zuoraResource
+      put: 
+        description: Updates an existing credit card payment method for the specified customer account.
+        body: 
+          application/json: 
+            schema: paymentMethodPutBody
+            example: !include examples/paymentMethodPutBody-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: responsePaymentMethodSuccess
+                example: !include examples/responsePaymentMethodSuccess-example.json
+documentation: 
+  - title: Headline
+    content: !include docs/headline.md

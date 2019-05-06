@@ -1,0 +1,28 @@
+{
+  "kind" : "drive#commentReplyList" ,
+  "selfLink" : "string" ,
+  "nextPageToken" : "string" ,
+  "nextLink" : "string" ,
+  "items" : [
+    {
+      "kind" : "drive#commentReply" ,
+      "replyId" : "string" ,
+      "createdDate" : "datetime" ,
+      "modifiedDate" : "datetime" ,
+      "author" : {
+        "kind" : "drive#user" ,
+        "displayName" : "string" ,
+        "picture" : {
+          "url" : "string"
+        } ,
+        "isAuthenticatedUser" : "boolean" ,
+        "permissionId" : "string" ,
+        "emailAddress" : "string"
+      } ,
+      "htmlContent" : "string" ,
+      "content" : "string" ,
+      "deleted" : "boolean" ,
+      "verb" : "string"
+    }
+  ]
+}

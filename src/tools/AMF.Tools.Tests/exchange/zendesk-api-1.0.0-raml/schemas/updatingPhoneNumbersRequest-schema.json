@@ -1,0 +1,17 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "phone_number" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "nickname" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "properties": {
+        "attributes": {
+            "type": "object",
+            "properties": {
+                "162834:id": {
+                    "type": "string"
+                }
+            }
+        },
+        "bounding_box": {
+            "type": "object",
+            "properties": {
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "contained_within": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object"
+                    },
+                    "bounding_box": {
+                        "type": "object",
+                        "properties": {
+                            "coordinates": {
+                                "type": "array",
+                                "items": {
+                                    "type": "array"
+                                }
+                            },
+                            "type": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "country_code": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "full_name": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "place_type": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "country_code": {
+            "type": "string"
+        },
+        "country": {
+            "type": "string"
+        },
+        "full_name": {
+            "type": "string"
+        },
+        "geometry": {
+            "type": "object",
+            "properties": {
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "place_type": {
+            "type": "string"
+        },
+        "polylines": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "url": {
+            "type": "string"
+        }
+    }
+}

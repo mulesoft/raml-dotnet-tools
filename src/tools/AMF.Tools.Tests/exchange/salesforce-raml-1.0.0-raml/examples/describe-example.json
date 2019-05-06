@@ -1,0 +1,32 @@
+{
+  "name" : "Account" ,
+  "fields" : [
+    {
+      "length" : 18 ,
+      "name" : "Id" ,
+      "type" : "id" ,
+      "defaultValue" : {
+        "value" : null
+      } ,
+      "updateable" : false ,
+      "label" : "Account ID" 
+    } 
+  ] ,
+  "updateable" : true ,
+  "label" : "Account" ,
+  "keyPrefix" : "001" ,
+  "custom" : false ,
+  "urls" : {
+    "uiEditTemplate" : "https://na1.salesforce.com/{ID}/e" ,
+    "sobject" : "/services/data/v20.0/sobjects/Account" ,
+    "uiDetailTemplate" : "https://na1.salesforce.com/{ID}" 
+  } ,
+  "childRelationships" : [
+    {
+      "field" : "ParentId" ,
+      "deprecatedAndHidden" : false 
+    } 
+  ] ,
+  "createable" : true ,
+  "customSetting" : false 
+}

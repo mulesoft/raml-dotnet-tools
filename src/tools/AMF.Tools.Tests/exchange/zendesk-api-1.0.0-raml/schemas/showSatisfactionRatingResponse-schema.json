@@ -1,0 +1,53 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "satisfaction_rating" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "assignee_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "group_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "requester_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "ticket_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "score" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "comment" : {
+          "type" : "object" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

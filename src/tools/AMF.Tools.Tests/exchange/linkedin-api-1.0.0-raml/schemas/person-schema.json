@@ -1,0 +1,35 @@
+{
+    "type":"object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required":false,
+    "properties":{
+        "firstName": {
+            "type":"string",
+            "id": "http://jsonschema.net/firstName",
+            "required":false
+        },
+        "headline": {
+            "type":"string",
+            "id": "http://jsonschema.net/headline",
+            "required":false
+        },
+        "lastName": {
+            "type":"string",
+            "id": "http://jsonschema.net/lastName",
+            "required":false
+        },
+        "siteStandardProfileRequest": {
+            "type":"object",
+            "id": "http://jsonschema.net/siteStandardProfileRequest",
+            "required":false,
+            "properties":{
+                "url": {
+                    "type":"string",
+                    "id": "http://jsonschema.net/siteStandardProfileRequest/url",
+                    "required":false
+                }
+            }
+        }
+    }
+}

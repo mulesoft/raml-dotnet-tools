@@ -1,0 +1,91 @@
+{
+  "success" : true ,
+  "amountWithoutTax" : 16695.65 ,
+  "amount" : 16695.65 ,
+  "invoiceTargetDate" : "2013-12-31" ,
+  "taxAmount" : 0 ,
+  "invoiceItems" : [
+    {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-01-15" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : 695.65 ,
+      "serviceEndDate" : "2013-01-30" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 100
+    } , {
+      "unitOfMeasure" : "" ,
+      "serviceStartDate" : "2013-01-15" ,
+      "chargeName" : "TieredPrice Prepayment Charge" ,
+      "chargeDescription" : null ,
+      "chargeAmount" : 8000 ,
+      "serviceEndDate" : "2013-01-15" ,
+      "productName" : null ,
+      "quantity" : 1
+    } , {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-01-31" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : 4000 ,
+      "serviceEndDate" : "2013-04-29" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 100
+    } , {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-04-30" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : 4000 ,
+      "serviceEndDate" : "2013-07-30" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 100
+    } , {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-07-31" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : 4000 ,
+      "serviceEndDate" : "2013-10-30" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 100
+    } , {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-10-31" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : 4000 ,
+      "serviceEndDate" : "2014-01-30" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 100
+    } , {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-04-30" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : -3304.35 ,
+      "serviceEndDate" : "2013-07-30" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 1
+    } , {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-01-31" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : -4000 ,
+      "serviceEndDate" : "2013-04-29" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 1
+    } , {
+      "unitOfMeasure" : "ONE_DOWN" ,
+      "serviceStartDate" : "2013-01-15" ,
+      "chargeName" : "TieredPrice" ,
+      "chargeDescription" : "" ,
+      "chargeAmount" : -695.65 ,
+      "serviceEndDate" : "2013-01-30" ,
+      "productName" : "Recurring Charge" ,
+      "quantity" : 1
+    }
+  ]
+}

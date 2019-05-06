@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "array",
+  "items": {
+    "required": false,
+    "type": "object",
+    "properties": {
+      "clone_url": {
+        "required": false,
+        "type": "string"
+      },
+      "created_at": {
+        "required": false,
+        "type": "string"
+      },
+      "description": {
+        "required": false,
+        "type": "string"
+      },
+      "fork": {
+        "required": false,
+        "type": "boolean"
+      },
+      "forks": {
+        "required": false,
+        "type": "integer"
+      },
+      "forks_count": {
+        "required": false,
+        "type": "integer"
+      },
+      "full_name": {
+        "required": false,
+        "type": "string"
+      },
+      "git_url": {
+        "required": false,
+        "type": "string"
+      },
+      "homepage": {
+        "required": false,
+        "type": "string"
+      },
+      "html_url": {
+        "required": false,
+        "type": "string"
+      },
+      "id": {
+        "required": false,
+        "type": "integer"
+      },
+      "language": {
+        "required": false,
+        "type": "null"
+      },
+      "master_branch": {
+        "required": false,
+        "type": "string"
+      },
+      "mirror_url": {
+        "required": false,
+        "type": "string"
+      },
+      "name": {
+        "required": false,
+        "type": "string"
+      },
+      "open_issues": {
+        "required": false,
+        "type": "integer"
+      },
+      "open_issues_count": {
+        "required": false,
+        "type": "integer"
+      },
+      "owner": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "login": {
+            "required": false,
+            "type": "string"
+          },
+          "id": {
+            "required": false,
+            "type": "integer"
+          },
+          "avatar_url": {
+            "required": false,
+            "type": "string"
+          },
+          "gravatar_id": {
+            "required": false,
+            "type": "string"
+          },
+          "url": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      },
+      "private": {
+        "required": false,
+        "type": "boolean"
+      },
+      "pushed_at": {
+        "required": false,
+        "type": "string"
+      },
+      "size": {
+        "required": false,
+        "type": "integer"
+      },
+      "ssh_url": {
+        "required": false,
+        "type": "string"
+      },
+      "svn_url": {
+        "required": false,
+        "type": "string"
+      },
+      "updated_at": {
+        "required": false,
+        "type": "string"
+      },
+      "url": {
+        "required": false,
+        "type": "string"
+      },
+      "watchers": {
+        "required": false,
+        "type": "integer"
+      },
+      "watchers_count": {
+        "required": false,
+        "type": "integer"
+      }
+    }
+  }
+}

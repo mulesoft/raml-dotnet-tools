@@ -1,0 +1,20 @@
+{
+  "defaultPaymentMethod" : false ,
+  "cardHolderInfo" : {
+    "addressLine1" : "77 Fallon Glen" ,
+    "addressLine2" : "" ,
+    "zipCode" : "94020" ,
+    "state" : "California" ,
+    "phone" : "4155551234" ,
+    "country" : "USA" ,
+    "cardHolderName" : "Bill Thiebault" ,
+    "city" : "Fremont" ,
+    "email" : "bill@testaddress.com"
+  } ,
+  "expirationMonth" : "10" ,
+  "accountKey" : "A00001115" ,
+  "creditCardType" : "Discover" ,
+  "expirationYear" : "2015" ,
+  "creditCardNumber" : "1111222233334444" ,
+  "securityCode" : "123"
+}

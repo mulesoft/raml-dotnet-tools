@@ -1,0 +1,35 @@
+queryParameters: 
+  filter: 
+    description: |
+      Issues assigned to you / created by you / mentioning you / you're
+      subscribed to updates for / All issues the authenticated user can see
+    required: true
+    enum: 
+      - assigned
+      - created
+      - mentioned
+      - subscribed
+      - all
+    default: all
+  state: 
+    required: true
+    enum: [ open , closed ]
+    default: open
+  labels: 
+    description: String list of comma separated Label names. Example - bug,ui,@high.
+    required: true
+  sort: 
+    required: true
+    enum: 
+      - created
+      - updated
+      - comments
+    default: created
+  direction: 
+    required: true
+    enum: [ asc , desc ]
+    default: desc
+  since: 
+    description: |
+      Optional string of a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+      Only issues updated at or after this time are returned.

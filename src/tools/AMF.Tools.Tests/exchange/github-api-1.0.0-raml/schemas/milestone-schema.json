@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "url": {
+            "type": "string"
+        },
+        "number": {
+            "type": "integer"
+        },
+        "state": {
+            "enum": [
+                "open",
+                "closed"
+            ]
+        },
+        "title": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "creator": {
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "avatar_url": {
+                    "type": "string"
+                },
+                "gravatar_id": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "open_issues": {
+            "type": "integer"
+        },
+        "closed_issues": {
+            "type": "integer"
+        },
+        "created_at": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+        },
+        "due_on": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,16 @@
+#%RAML 1.0 ResourceType
+get?: 
+  responses: 
+    404: 
+      description: No <<name>> found with the given ID
+put?: 
+  responses: 
+    404: 
+      description: No <<name>> found with the given ID
+delete?: 
+  responses: 
+    404: 
+      description: No <<name>> found with the given ID
+    409: 
+      description: Cannot delete an <<name>> that is still reporting data.
+type: basic

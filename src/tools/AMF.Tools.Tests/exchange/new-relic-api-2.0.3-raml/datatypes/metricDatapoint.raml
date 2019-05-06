@@ -1,0 +1,35 @@
+#%RAML 1.0 DataType
+required: true
+type: object
+properties:
+  metric_data:
+    type: object
+    required: true
+    properties:
+      from: datetime
+      to: datetime
+      metrics_not_found: array
+      metrics_found: array
+      metrics:
+        required: false
+        type: array
+        items:
+          required: false
+          type: object
+          properties:
+            name: 
+              type: string
+              required: false
+            timeslices:
+              type: array
+              required: false
+              items:
+                required: false
+                type: object
+                properties:
+                  from: 
+                    type: datetime
+                  to: 
+                    type: datetime
+                  values: 
+                    type: object

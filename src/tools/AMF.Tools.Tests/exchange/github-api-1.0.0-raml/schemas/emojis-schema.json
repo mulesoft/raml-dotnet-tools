@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "+1": {
+      "required": false,
+      "type": "string"
+    },
+    "-1": {
+      "required": false,
+      "type": "string"
+    },
+    "100": {
+      "required": false,
+      "type": "string"
+    },
+    "1234": {
+      "required": false,
+      "type": "string"
+    },
+    "8ball": {
+      "required": false,
+      "type": "string"
+    },
+    "a": {
+      "required": false,
+      "type": "string"
+    },
+    "ab": {
+      "required": false,
+      "type": "string"
+    }
+  }
+}

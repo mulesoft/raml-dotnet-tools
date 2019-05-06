@@ -1,0 +1,69 @@
+{
+  "id": "AssignmentResponse",
+  "title": "AssignmentResponse",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string"
+    },
+    "caseID": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "pxObjClass": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "routedTo": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "string"
+    },
+    "scheduledGoalTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "executedGoalTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scheduledDeadlineTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "executedDeadlineTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "urgency": {
+      "type": "string"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "id": "AssignmentAction",
+        "title": "AssignmentAction",
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "pxObjClass": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

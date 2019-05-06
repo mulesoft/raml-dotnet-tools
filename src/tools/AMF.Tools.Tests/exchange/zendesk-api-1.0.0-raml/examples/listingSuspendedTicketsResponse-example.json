@@ -1,0 +1,13 @@
+{
+  "suspended_tickets" : [
+    {
+      "id" : 3436 ,
+      "subject" : "Help I need somebody!" ,
+      "cause" : "Detected as spam" 
+    } , {
+      "id" : 207623 ,
+      "subject" : "Not just anybody!" ,
+      "cause" : "Automated response mail" 
+    } 
+  ]
+}

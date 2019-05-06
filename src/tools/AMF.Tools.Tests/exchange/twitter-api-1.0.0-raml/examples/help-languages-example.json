@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Fransk",
+    "code": "fr",
+    "status": "production"
+  },
+  {
+    "name": "Engelsk",
+    "code": "en",
+    "status": "production"
+  },
+  {
+    "name": "Arabisk",
+    "code": "ar",
+    "status": "production"
+  },
+  {
+    "name": "Japansk",
+    "code": "ja",
+    "status": "production"
+  },
+  {
+    "name": "Spansk",
+    "code": "es",
+    "status": "production"
+  },
+  {
+    "name": "Tysk",
+    "code": "de",
+    "status": "production"
+  },
+  {
+    "name": "Italiensk",
+    "code": "it",
+    "status": "production"
+  },
+  {
+    "name": "Indonesisk",
+    "code": "id",
+    "status": "production"
+  },
+  {
+    "name": "Portugisisk",
+    "code": "pt",
+    "status": "production"
+  },
+  {
+    "name": "Koreansk",
+    "code": "ko",
+    "status": "production"
+  },
+  {
+    "name": "Tyrkisk",
+    "code": "tr",
+    "status": "production"
+  },
+  {
+    "name": "Russisk",
+    "code": "ru",
+    "status": "production"
+  },
+  {
+    "name": "Nederlandsk",
+    "code": "nl",
+    "status": "production"
+  },
+  {
+    "name": "Filippinsk",
+    "code": "fil",
+    "status": "production"
+  },
+  {
+    "name": "Malayisk",
+    "code": "msa",
+    "status": "production"
+  },
+  {
+    "name": "Tradisjonell kinesisk",
+    "code": "zh-tw",
+    "status": "production"
+  },
+  {
+    "name": "Forenklet kinesisk",
+    "code": "zh-cn",
+    "status": "production"
+  },
+  {
+    "name": "Hindi",
+    "code": "hi",
+    "status": "production"
+  },
+  {
+    "name": "Norsk",
+    "code": "no",
+    "status": "production"
+  },
+  {
+    "name": "Svensk",
+    "code": "sv",
+    "status": "production"
+  },
+  {
+    "name": "Finsk",
+    "code": "fi",
+    "status": "production"
+  },
+  {
+    "name": "Dansk",
+    "code": "da",
+    "status": "production"
+  },
+  {
+    "name": "Polsk",
+    "code": "pl",
+    "status": "production"
+  },
+  {
+    "name": "Ungarsk",
+    "code": "hu",
+    "status": "production"
+  },
+  {
+    "name": "Farsi",
+    "code": "fa",
+    "status": "production"
+  },
+  {
+    "name": "Hebraisk",
+    "code": "he",
+    "status": "production"
+  },
+  {
+    "name": "Urdu",
+    "code": "ur",
+    "status": "production"
+  },
+  {
+    "name": "Thailandsk",
+    "code": "th",
+    "status": "production"
+  }
+]

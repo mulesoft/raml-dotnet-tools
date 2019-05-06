@@ -1,0 +1,318 @@
+{
+    "": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "created_at": {
+            "type": "string"
+        },
+        "slug": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "full_name": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "mode": {
+            "type": "string"
+        },
+        "following": {
+            "type": "boolean"
+        },
+        "user": {
+            "properties": {
+                "geo_enabled": {
+                    "type": "boolean"
+                },
+                "profile_background_image_url_https": {
+                    "type": "string"
+                },
+                "profile_background_color": {
+                    "type": "string"
+                },
+                "protected": {
+                    "type": "boolean"
+                },
+                "default_profile": {
+                    "type": "boolean"
+                },
+                "listed_count": {
+                    "type": "integer"
+                },
+                "profile_background_tile": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "friends_count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "profile_sidebar_fill_color": {
+                    "type": "string"
+                },
+                "notifications": {
+                    "type": "boolean"
+                },
+                "utc_offset": {
+                    "type": "integer"
+                },
+                "profile_image_url_https": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "display_url": {
+                    "type": "string"
+                },
+                "following": {
+                    "type": "boolean"
+                },
+                "verified": {
+                    "type": "boolean"
+                },
+                "favourites_count": {
+                    "type": "integer"
+                },
+                "profile_sidebar_border_color": {
+                    "type": "string"
+                },
+                "followers_count": {
+                    "type": "integer"
+                },
+                "profile_image_url": {
+                    "type": "string"
+                },
+                "default_profile_image": {
+                    "type": "boolean"
+                },
+                "contributors_enabled": {
+                    "type": "boolean"
+                },
+                "deactivated_bit": {
+                    "type": "boolean"
+                },
+                "statuses_count": {
+                    "type": "integer"
+                },
+                "profile_use_background_image": {
+                    "type": "boolean"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "id_str": {
+                    "type": "string"
+                },
+                "show_all_inline_media": {
+                    "type": "boolean"
+                },
+                "profile_text_color": {
+                    "type": "string"
+                },
+                "screen_name": {
+                    "type": "string"
+                },
+                "follow_request_sent": {
+                    "type": "boolean"
+                },
+                "profile_background_image_url": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "expanded_url": {
+                    "type": "string"
+                },
+                "is_translator": {
+                    "type": "boolean"
+                },
+                "time_zone": {
+                    "type": "string"
+                },
+                "profile_link_color": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "entities": {
+                    "media": [
+                        {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "id_str": {
+                                    "type": "string"
+                                },
+                                "media_url": {
+                                    "type": "string"
+                                },
+                                "media_url_https": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                },
+                                "display_url": {
+                                    "type": "string"
+                                },
+                                "expanded_url": {
+                                    "type": "string"
+                                },
+                                "sizes": {
+                                    "large": {
+                                        "w": {
+                                            "type": "integer"
+                                        },
+                                        "resize": [
+                                            "crop",
+                                            "fit"
+                                        ],
+                                        "h": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "medium": {
+                                        "w": {
+                                            "type": "integer"
+                                        },
+                                        "resize": [
+                                            "crop",
+                                            "fit"
+                                        ],
+                                        "h": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "small": {
+                                        "w": {
+                                            "type": "integer"
+                                        },
+                                        "resize": [
+                                            "crop",
+                                            "fit"
+                                        ],
+                                        "h": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "thumb": {
+                                        "w": {
+                                            "type": "integer"
+                                        },
+                                        "resize": [
+                                            "crop",
+                                            "fit"
+                                        ],
+                                        "h": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "array",
+                                "indices": [
+                                    {
+                                        "type": "integer"
+                                    }
+                                ],
+                                "type": "array"
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "type": "array",
+                    "urls": [
+                        {
+                            "properties": {
+                                "url": {
+                                    "type": "string"
+                                },
+                                "display_url": {
+                                    "type": "string"
+                                },
+                                "expanded_url": {
+                                    "type": "string"
+                                },
+                                "indices": [
+                                    {
+                                        "type": "integer"
+                                    }
+                                ],
+                                "type": "array"
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "hashtags": [
+                        {
+                            "properties": {
+                                "text": {
+                                    "type": "string"
+                                },
+                                "indices": [
+                                    {
+                                        "type": "integer"
+                                    }
+                                ],
+                                "type": "array"
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "user_mentions": [
+                        {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "id_str": {
+                                    "type": "string"
+                                },
+                                "screen_name": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "indices": [
+                                    {
+                                        "type": "integer"
+                                    }
+                                ],
+                                "type": "array"
+                            },
+                            "type": "object"
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "member_count": {
+            "type": "integer"
+        },
+        "id_str": {
+            "type": "string"
+        },
+        "subscriber_count": {
+            "type": "integer"
+        },
+        "id": {
+            "type": "integer"
+        },
+        "uri": {
+            "type": "string"
+        }
+    }
+}

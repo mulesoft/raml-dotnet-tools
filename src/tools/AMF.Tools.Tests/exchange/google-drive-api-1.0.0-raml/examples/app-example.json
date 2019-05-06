@@ -1,0 +1,40 @@
+{
+  "kind" : "drive#app" ,
+  "id" : "string" ,
+  "name" : "string" ,
+  "objectType" : "string" ,
+  "shortDescription" : "string" ,
+  "longDescription" : "string" ,
+  "supportsCreate" : "boolean" ,
+  "supportsImport" : "boolean" ,
+  "supportsMultiOpen" : "boolean" ,
+  "supportsOfflineCreate" : "boolean" ,
+  "installed" : "boolean" ,
+  "authorized" : "boolean" ,
+  "hasDriveWideScope" : "boolean" ,
+  "useByDefault" : "boolean" ,
+  "productUrl" : "string" ,
+  "productId" : "string" ,
+  "openUrlTemplate" : "string" ,
+  "createUrl" : "string" ,
+  "createInFolderTemplate" : "string" ,
+  "primaryMimeTypes" : [
+    "string"
+  ] ,
+  "secondaryMimeTypes" : [
+    "string"
+  ] ,
+  "primaryFileExtensions" : [
+    "string"
+  ] ,
+  "secondaryFileExtensions" : [
+    "string"
+  ] ,
+  "icons" : [
+    {
+      "category" : "string" ,
+      "size" : "integer" ,
+      "iconUrl" : "string"
+    }
+  ]
+}

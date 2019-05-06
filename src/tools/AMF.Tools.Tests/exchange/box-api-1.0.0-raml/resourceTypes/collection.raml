@@ -1,0 +1,11 @@
+type: standardResponse
+post: 
+  description: Allows to create new <<objectName | !singularize>>
+  body: 
+    application/json: 
+      schema: New<<objectName | !singularize>>
+  responses: 
+    201: 
+      body: 
+        application/json: 
+          schema: <<objectName | !singularize>>

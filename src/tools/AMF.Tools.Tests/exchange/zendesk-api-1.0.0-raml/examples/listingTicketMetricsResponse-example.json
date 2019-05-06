@@ -1,0 +1,16 @@
+{
+  "ticket_metrics" : [
+    {
+      "id" : 33 ,
+      "ticket_id" : 4343 ,
+      "reopens" : 55 ,
+      "replies" : 322 
+    },
+    {
+      "id" : 34 ,
+      "ticket_id" : 443 ,
+      "reopens" : 123 ,
+      "replies" : 232 
+    } 
+  ]
+}

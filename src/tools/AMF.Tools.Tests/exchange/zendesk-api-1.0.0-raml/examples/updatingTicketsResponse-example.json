@@ -1,0 +1,18 @@
+{
+  "ticket" : {
+    "id" : 35436 ,
+    "subject" : "My printer is on fire!" ,
+    "status" : "solved" 
+  } ,
+  "audit" : {
+    "events" : [
+		{
+        "id":          1564245,
+        "type":        "Comment",
+        "body":        "Please press play on tape now",
+        "public":      true,
+        "attachments": []
+		}
+    ] 
+  }
+}

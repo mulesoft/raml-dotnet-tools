@@ -1,0 +1,110 @@
+#%RAML 1.0 Library
+
+
+uses:
+  FHIR_entry_types: ./fhir_entry_types.raml
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+types:
+
+  Resource: FHIR_commons.Resource
+
+  Bundle:
+    type: Resource
+    properties:
+      resourceType?: string
+      type:
+        type: FHIR_commons.code
+        enum: [document, message, transaction,  transaction-response, batch, batch-response,  history, searchset, collection]
+      total?: FHIR_commons.unsignedInt
+      link?:
+        type: array
+        items:
+          type: FHIR_commons.BackboneElement
+          properties:
+            relation: string
+            url: FHIR_commons.uri
+      signature?: FHIR_commons.Signature
+
+  GeneralBundle:
+    type: Bundle
+    properties:
+      entry?:
+        type: array
+        items:
+          type: FHIR_commons.BackboneElement
+          properties:
+            link?:
+              type: array
+              items:
+                type: FHIR_commons.BackboneElement
+                properties:
+                  relation: string
+                  url: FHIR_commons.uri
+            fullUrl?: FHIR_commons.uri
+            resource?: Resource
+            search?:
+              type: FHIR_commons.BackboneElement
+              properties:
+                mode?:
+                  type: FHIR_commons.code
+                  enum: [match, include, outcome]
+                score?: FHIR_commons.decimal
+            request?:
+              type: FHIR_commons.BackboneElement
+              properties:
+                method:
+                  type: FHIR_commons.code
+                  enum: [GET, PUT, POST, DELETE]
+                url: FHIR_commons.uri
+                ifNoneMatch?: string
+                ifModifiedSince?: FHIR_commons.instant
+                ifMatch: string
+                ifNoneExist: string
+            response?:
+              type: FHIR_commons.BackboneElement
+              properties:
+                status: string
+                location?: FHIR_commons.uri
+                etag?: string
+                lastModified?: FHIR_commons.instant
+
+  AllergyIntoleranceBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.AllergyIntoleranceEntry[]
+
+  AppointmentBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.AppointmentEntry[]
+
+  ConditionBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.ConditionEntry[]
+
+  DeviceBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.DeviceEntry[]
+
+  MedicationRequestBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.MedicationRequestEntry[]
+
+  ObservationBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.ObservationEntry[]
+
+  PatientBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.PatientEntry[]
+
+  PractitionerBundle:
+    type: Bundle
+    properties:
+      entry?: FHIR_entry_types.PractitionerEntry[]

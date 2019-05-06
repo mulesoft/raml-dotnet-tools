@@ -1,0 +1,441 @@
+{
+  "success" : true ,
+  "nextPage" : "https://api.zuora.com/rest/v1/subscriptions/accounts/A00001115?page=2&pageSize=10" ,
+  "subscriptions" : [
+    {
+      "contractedMrr" : 33.33 ,
+      "termStartDate" : "2013-02-01" ,
+      "subscriptionNumber" : "A-S00001081" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 400 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "QSF_Tier" ,
+          "productName" : "Recurring Charge" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "TieredPrice" ,
+              "billingPeriod" : "Quarter" ,
+              "model" : "Tiered" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "0 to 10 ONE_DOWN: USD10/ONE_DOWN;  10.1 to 20 ONE_DOWN: USD20/ONE_DOWN;  20.1 to 30 ONE_DOWN: USD30/ONE_DOWN;  30.1 to 40 ONE_DOWN: USD40/ONE_DOWN;  40.1 ONE_DOWN or more: USD50/ONE_DOWN" ,
+              "quantity" : 10 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83dc4f752013dc72c24d9016c"
+            } , {
+              "name" : "TieredPrice Prepayment Charge" ,
+              "billingPeriod" : null ,
+              "model" : "FlatFee" ,
+              "type" : "OneTime" ,
+              "pricingSummary" : "USD200" ,
+              "quantity" : null ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83dc4f752013dc72c252f0171"
+            }
+          ] ,
+          "id" : "2c92c8f83dc4f752013dc72c24d9016b"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : true ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2014-02-01" ,
+      "contractEffectiveDate" : "2013-02-01" ,
+      "notes" : "Test POST subscription from z-ruby-sdk" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2013-02-01" ,
+      "id" : "2c92c8f83dc4f752013dc72c24ee016d"
+    } , {
+      "contractedMrr" : 33.33 ,
+      "termStartDate" : "2013-02-01" ,
+      "subscriptionNumber" : "A-S00001080" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 400 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "QSF_Tier" ,
+          "productName" : "Recurring Charge" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "TieredPrice" ,
+              "billingPeriod" : "Quarter" ,
+              "model" : "Tiered" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "0 to 10 ONE_DOWN: USD10/ONE_DOWN;  10.1 to 20 ONE_DOWN: USD20/ONE_DOWN;  20.1 to 30 ONE_DOWN: USD30/ONE_DOWN;  30.1 to 40 ONE_DOWN: USD40/ONE_DOWN;  40.1 ONE_DOWN or more: USD50/ONE_DOWN" ,
+              "quantity" : 10 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83dc4f752013dc72bb83f0126"
+            } , {
+              "name" : "TieredPrice Prepayment Charge" ,
+              "billingPeriod" : null ,
+              "model" : "FlatFee" ,
+              "type" : "OneTime" ,
+              "pricingSummary" : "USD200" ,
+              "quantity" : null ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83dc4f752013dc72bb896012b"
+            }
+          ] ,
+          "id" : "2c92c8f83dc4f752013dc72bb83e0125"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : true ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2014-02-01" ,
+      "contractEffectiveDate" : "2013-02-01" ,
+      "notes" : "Test POST subscription from z-ruby-sdk" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2013-02-01" ,
+      "id" : "2c92c8f83dc4f752013dc72bb85c0127"
+    } , {
+      "contractedMrr" : 46.67 ,
+      "termStartDate" : "2013-12-01" ,
+      "subscriptionNumber" : "A-S00001079" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 614.67 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "QSF_Tier" ,
+          "productName" : "Recurring Charge" ,
+          "lastChangeType" : "Update" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "TieredPrice" ,
+              "billingPeriod" : "Quarter" ,
+              "model" : "Tiered" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "0 to 10 ONE_DOWN: USD10/ONE_DOWN;  10.1 to 20 ONE_DOWN: USD20/ONE_DOWN;  20.1 to 30 ONE_DOWN: USD30/ONE_DOWN;  30.1 to 40 ONE_DOWN: USD40/ONE_DOWN;  40.1 ONE_DOWN or more: USD50/ONE_DOWN" ,
+              "quantity" : 12 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83dc4f752013dc723fe0000e6"
+            } , {
+              "name" : "TieredPrice Prepayment Charge" ,
+              "billingPeriod" : null ,
+              "model" : "FlatFee" ,
+              "type" : "OneTime" ,
+              "pricingSummary" : "USD200" ,
+              "quantity" : null ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83dc4f752013dc723fe0000e7"
+            }
+          ] ,
+          "id" : "2c92c8f83dc4f752013dc723fdff00e4"
+        }
+      ] ,
+      "status" : "Cancelled" ,
+      "renewalTerm" : 4 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : false ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2014-04-01" ,
+      "contractEffectiveDate" : "2013-02-01" ,
+      "notes" : "Test UPDATE subscription from z-ruby-sdk" ,
+      "initialTerm" : 10 ,
+      "subscriptionStartDate" : "2013-02-01" ,
+      "id" : "2c92c8f83dc4f752013dc723fdab00d4"
+    } , {
+      "contractedMrr" : 1250 ,
+      "termStartDate" : "2011-02-11" ,
+      "subscriptionNumber" : "A-S00001076" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 13900 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "lastChangeType" : "Remove" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 15 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db4717a4800e6"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db4717a4800e5"
+        } , {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "lastChangeType" : "Add" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 25 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db4717ae800f1"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db4717ae800f0"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : false ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2012-02-11" ,
+      "contractEffectiveDate" : "2011-02-11" ,
+      "notes" : "restAPI this is test" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2011-02-11" ,
+      "id" : "2c92c8f83db0b4b4013db4717ad000ec"
+    } , {
+      "contractedMrr" : 1250 ,
+      "termStartDate" : "2011-02-11" ,
+      "subscriptionNumber" : "A-S00001075" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 13900 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "lastChangeType" : "Remove" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 15 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db3ab69c200b6"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db3ab69c200b5"
+        } , {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "lastChangeType" : "Add" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 25 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db3ab6a6500c1"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db3ab6a6500c0"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : false ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2012-02-11" ,
+      "contractEffectiveDate" : "2011-02-11" ,
+      "notes" : "restAPI this is test" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2011-02-11" ,
+      "id" : "2c92c8f83db0b4b4013db3ab6a4d00bc"
+    } , {
+      "contractedMrr" : 750 ,
+      "termStartDate" : "2011-02-11" ,
+      "subscriptionNumber" : "A-S00001074" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 9000 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 15 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db3aa9fa1008f"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db3aa9fa1008e"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : false ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2012-02-11" ,
+      "contractEffectiveDate" : "2011-02-11" ,
+      "notes" : "restAPI this is test" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2011-02-11" ,
+      "id" : "2c92c8f83db0b4b4013db3aa9fbd0090"
+    } , {
+      "contractedMrr" : 750 ,
+      "termStartDate" : "2011-02-11" ,
+      "subscriptionNumber" : "A-S00001073" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 9000 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 15 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db3a9f7d40085"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db3a9f7d20084"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : false ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2012-02-11" ,
+      "contractEffectiveDate" : "2011-02-11" ,
+      "notes" : "restAPI this is test" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2011-02-11" ,
+      "id" : "2c92c8f83db0b4b4013db3a9f7f60086"
+    } , {
+      "contractedMrr" : 750 ,
+      "termStartDate" : "2011-02-11" ,
+      "subscriptionNumber" : "A-S00001072" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 9000 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 15 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db3a8276e007b"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db3a8276e007a"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : false ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2012-02-11" ,
+      "contractEffectiveDate" : "2011-02-11" ,
+      "notes" : "restAPI this is test" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2011-02-11" ,
+      "id" : "2c92c8f83db0b4b4013db3a82787007c"
+    } , {
+      "contractedMrr" : 750 ,
+      "termStartDate" : "2011-02-11" ,
+      "subscriptionNumber" : "A-S00001071" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 9000 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 15 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8f83db0b4b4013db39fe946005d"
+            }
+          ] ,
+          "id" : "2c92c8f83db0b4b4013db39fe946005c"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 3 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : false ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2012-02-11" ,
+      "contractEffectiveDate" : "2011-02-11" ,
+      "notes" : "restAPI this is test" ,
+      "initialTerm" : 12 ,
+      "subscriptionStartDate" : "2011-02-11" ,
+      "id" : "2c92c8f83db0b4b4013db39fe96a005e"
+    } , {
+      "contractedMrr" : 750 ,
+      "termStartDate" : "2013-01-11" ,
+      "subscriptionNumber" : "A-S00001064" ,
+      "accountNumber" : "A00001115" ,
+      "totalContractedValue" : 21000 ,
+      "accountName" : "subscribeCallYan_1" ,
+      "ratePlans" : [
+        {
+          "ratePlanName" : "Month_PerUnit" ,
+          "productName" : "Recurring Charge" ,
+          "ratePlanCharges" : [
+            {
+              "name" : "Per Unit" ,
+              "billingPeriod" : "Month" ,
+              "model" : "PerUnit" ,
+              "type" : "Recurring" ,
+              "pricingSummary" : "USD50/UOM" ,
+              "quantity" : 15 ,
+              "billingDay" : "DefaultFromCustomer" ,
+              "id" : "2c92c8953daf3d6f013db0564d50169d"
+            }
+          ] ,
+          "id" : "2c92c8953daf3d6f013db0564d50169b"
+        }
+      ] ,
+      "status" : "Active" ,
+      "renewalTerm" : 5 ,
+      "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+      "autoRenew" : true ,
+      "termType" : "TERMED" ,
+      "termEndDate" : "2013-06-11" ,
+      "contractEffectiveDate" : "2011-02-11" ,
+      "notes" : "Rest API" ,
+      "initialTerm" : 13 ,
+      "subscriptionStartDate" : "2011-02-11" ,
+      "id" : "2c92c8953daf3d6f013db0564d451695"
+    }
+  ]
+}

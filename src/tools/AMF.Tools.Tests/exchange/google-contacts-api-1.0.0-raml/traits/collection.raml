@@ -1,0 +1,53 @@
+usage: |
+  Use this trait for filtering any collection.
+description: |
+  The Contacts Data API supports the following standard Google Data API query parameters
+queryParameters: 
+  alt: 
+    description: |
+      The type of feed to return, such as atom (the default), rss, or json.
+    enum: 
+      - atom
+      - rss
+      - json
+    default: atom
+  q: 
+    description: |
+      Fulltext query on contacts data fields. The API currently supports simple search queries such as q=term1 term2 term3 and
+      exact search queries such as q="term1 term2 term3"
+  max-results: 
+    description: |
+      The maximum number of entries to return. If you want to receive all of the contacts, rather than only the default maximum,
+      you can specify a very large number for max-results.
+    type: integer
+  start-index: 
+    description: |
+      The 1-based index of the first result to be retrieved (for paging).
+    type: integer
+  updated-min: 
+    description: |
+      The lower bound on entry update dates.
+    type: date
+    example: 2007-03-16T00:00:00
+  orderby: 
+    description: |
+      Sorting criterion.
+    enum: [ lastmodified ]
+  showdeleted: 
+    description: |
+      Include deleted contacts in the returned contacts feed. Deleted contacts are shown as entries that contain nothing
+      but an <atom:id> element and a <gd:deleted> element.
+  requirealldeleted: 
+    description: |
+      Only relevant if showdeleted and updated-min are also provided. It dictates the behavior of the server in case i
+      detects that placeholders of some entries deleted since the point in time specified as updated-min may have been lost.
+      If requirealldeleted is false, the server simply returns all the placeholders it still knows about. If true, the server
+      returns the 410 HTTP response code.
+    default: false
+  sortorder: 
+    description: |
+      Sorting order direction.
+    enum: [ ascending , descending ]
+  group: 
+    description: |
+      Constrains the results to only the contacts belonging to the group specified. Value of this parameter specifies group ID

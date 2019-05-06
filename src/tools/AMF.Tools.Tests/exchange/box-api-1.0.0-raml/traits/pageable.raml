@@ -1,0 +1,12 @@
+usage: |
+  Adds the "limits" and "offset" query string parameters that allow clients to regulate how many
+  items to return for the request.
+queryParameters: 
+  limit: 
+    description: The number of items to return
+    type: integer
+    default: <<default>>
+  offset: 
+    description: The item at which to begin the response
+    type: integer
+    default: 0

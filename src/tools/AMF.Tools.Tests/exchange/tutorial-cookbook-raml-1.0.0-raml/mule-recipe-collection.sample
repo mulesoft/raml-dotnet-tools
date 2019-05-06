@@ -1,0 +1,14 @@
+[
+  {
+	"id" : 1,
+	"firstName" : "Isaac",
+	"lastName" : "Newtown",
+	"dateOfBirth" : "4000-02-01 00:00:00"
+  },
+  {
+	"id" : 2,
+	"firstName" : "Mimo",
+	"lastName" : "Test",
+	"dateOfBirth" : "4000-02-01 00:00:00"
+  }
+]

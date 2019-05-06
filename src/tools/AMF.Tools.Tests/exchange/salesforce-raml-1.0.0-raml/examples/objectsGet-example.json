@@ -1,0 +1,22 @@
+{
+  "objectDescribe" : {
+    "name" : "Account" ,
+    "updateable" : true ,
+    "label" : "Account" ,
+    "keyPrefix" : "001" ,
+    "replicateable" : true ,
+    "retrieveable" : true ,
+    "undeletable" : true ,
+    "triggerable" : true
+  } ,
+  "recentItems" : [
+    {
+      "attributes" : {
+        "type" : "Account" ,
+        "url" : "/services/data/v20.0/sobjects/Account/001D000000INjVeIAL"
+      } ,
+      "Id" : "001D000000INjVeIAL" ,
+      "Name" : "asdasdasd"
+    } 
+  ]
+}

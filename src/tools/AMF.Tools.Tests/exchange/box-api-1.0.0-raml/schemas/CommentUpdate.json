@@ -1,0 +1,11 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"message": {
+			"description": "The desired text for the comment message.",
+			"type": "string"
+		}
+	},
+	"required": true
+}

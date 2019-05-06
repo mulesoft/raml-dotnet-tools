@@ -1,0 +1,9 @@
+{
+  "historical_queue_activity" : {
+    "total_calls" : 50 ,
+    "most_calls_waiting" : 2 ,
+    "average_wait_time" : 5 ,
+    "longest_wait_time" : 10 ,
+    "average_talk_time" : 120
+  }
+}

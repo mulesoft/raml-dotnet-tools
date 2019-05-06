@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Taylor Singletary",
+        "id_str": "819797",
+        "id": 819797,
+        "connections": [
+            "none"
+        ],
+        "screen_name": "episod"
+    },
+    {
+        "name": "Twitter API",
+        "id_str": "6253282",
+        "id": 6253282,
+        "connections": [
+            "following",
+            "followed_by"
+        ],
+        "screen_name": "twitterapi"
+    }
+]

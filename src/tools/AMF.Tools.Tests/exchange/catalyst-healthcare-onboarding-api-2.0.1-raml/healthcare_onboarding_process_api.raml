@@ -1,0 +1,88 @@
+#%RAML 1.0
+title: Healthcare Onboarding Process API
+baseUri: http://localhost:8081/api
+version: v2
+mediaType: application/json
+
+types: 
+  Patient: !include exchange_modules/org.mule.templates/patient/1.0.0/patient.raml
+  
+  User:
+    type: Patient
+    properties: 
+      phone?: string
+      login?: string
+      password?: string
+  
+  ResponseMessage: 
+    type: object
+    properties: 
+      id?: string
+      message: string
+
+/users:
+  post:
+    displayName: Register new user
+    body:
+      application/json:
+        type: User
+        example: !include examples/request/post_user.raml
+    responses: 
+      201:
+        body: 
+          application/json:
+            type: ResponseMessage
+            example: !include examples/response/post_user.raml
+      409:
+        body: 
+          application/json:
+            type: ResponseMessage
+            example: |  
+              {
+                "message": "Login you are trying to set is already in use. Please, choose another one."
+              }
+  patch:
+    displayName: Update user specified by login
+    queryParameters: 
+      login:
+        required: true
+        type: string
+        description: String representing the login of the user
+    body: 
+      application/json:
+        type: object
+        example: | 
+          {
+            "password": "newPassword"  
+          }
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: ResponseMessage
+            example: | 
+              {
+                "message": "User was updated successfully."
+              }
+      404:
+        body: 
+          application/json:
+            type: ResponseMessage
+            example: | 
+              {
+                "message": "User with specified login does not exist."
+              }
+
+      422:
+        body: 
+          application/json:
+            type: ResponseMessage
+            example: | 
+              {
+                "message": "Unprocessable Entity"
+              }
+
+                
+
+        
+  

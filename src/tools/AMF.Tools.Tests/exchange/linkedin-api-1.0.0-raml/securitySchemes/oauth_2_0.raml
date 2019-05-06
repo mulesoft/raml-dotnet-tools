@@ -1,0 +1,12 @@
+description: |
+  LinkedIn supports OAuth 2.0 for authenticating all API requests.
+type: OAuth 2.0
+describedBy: 
+  queryParameters: 
+    oauth2_access_token: 
+      description: |
+        Used to send a valid OAuth 2 access token
+settings: 
+  authorizationUri: https://www.linkedin.com/uas/oauth2/authorization
+  accessTokenUri: https://www.linkedin.com/uas/oauth2/accessToken
+  authorizationGrants: [ code ]

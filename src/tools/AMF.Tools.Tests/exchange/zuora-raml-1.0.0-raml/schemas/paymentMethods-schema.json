@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "required": true,
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "nextPage": {
+      "type": "string",
+      "required": false
+    },
+    "creditCards": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "cardHolderInfo": {
+              "type": "object",
+              "required": false,
+              "properties": {
+                "zipCode": {
+                  "type": "object",
+                  "required": false
+                },
+                "addressLine2": {
+                  "type": "object",
+                  "required": false
+                },
+                "addressLine1": {
+                  "type": "object",
+                  "required": false
+                },
+                "phone": {
+                  "type": "string",
+                  "required": false
+                },
+                "state": {
+                  "type": "object",
+                  "required": false
+                },
+                "country": {
+                  "type": "object",
+                  "required": false
+                },
+                "city": {
+                  "type": "object",
+                  "required": false
+                },
+                "cardHolderName": {
+                  "type": "string",
+                  "required": false
+                },
+                "email": {
+                  "type": "string",
+                  "required": false
+                }
+              }
+            },
+            "defaultPaymentMethod": {
+              "type": "boolean",
+              "required": false
+            },
+            "id": {
+              "type": "string",
+              "required": false
+            },
+            "expirationMonth": {
+              "type": "number",
+              "required": false
+            },
+            "cardNumber": {
+              "type": "string",
+              "required": false
+            },
+            "expirationYear": {
+              "type": "number",
+              "required": false
+            },
+            "cardType": {
+              "type": "string",
+              "required": false
+            }
+          }
+        }
+      }
+    },
+    "success": {
+      "type": "boolean",
+      "required": false
+    }
+  }
+}

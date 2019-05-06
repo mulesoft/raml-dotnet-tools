@@ -1,0 +1,23 @@
+geo-search:
+  queryParameters:
+    longitude:
+      required: false
+      type: number
+      description: |
+        If longitude is provided, latitude must also be provided.
+      format: double
+      example: 37.4224764
+    latitude: 
+      required: false
+      type: number
+      description: |
+        If latitude is provided, longitude must also be provided.
+      format: double
+      example: -122.0842499
+    radius:
+      required: false 
+      type: integer
+      description: |
+        If radius is provided, then latitude and longitude has to also be provided
+      example: 500  
+      default: 500

@@ -1,0 +1,121 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/082519ef-8dc8-42dc-a46d-7a73a9d75617 # 
+title: Retail Product System API
+version: v2.0
+
+uses:
+  product: /exchange_modules/org.mule.templates/retail-product/1.0.0/retail_product.raml
+  taxonomy: /exchange_modules/org.mule.templates/retail-taxonomy/1.0.0/retail_taxonomy.raml
+
+types:
+  ProductResponse:
+    type: product.Product
+    description: |
+      product response
+
+  ProductCollectionResponse:
+    description: |
+      product response collection
+    properties:
+      products: product.Product[]
+
+  ProductVariantCollectionResponse:
+    description: |
+      product variant response collection
+    properties:
+      variants: product.ProductVariant[]
+
+  ProductVariantResponse:
+    type: product.ProductVariant
+    description: |
+      product variant response
+
+  CategoryCollectionResponse:
+    description: |
+      category response collection
+    properties:
+      categories: taxonomy.Category[]
+
+  CategoryResponse:
+    type: taxonomy.Category
+    description: |
+      category response    
+
+/categories:
+      get:
+        displayName: Retrieve categories
+        queryParameters:
+            name?: string
+        responses:
+          200:
+            body:
+              application/json:
+                type: CategoryCollectionResponse
+                example: !include examples/category-collection-response.raml
+                  
+                  
+      /{categoryId}:
+        uriParameters: 
+          categoryId: string
+        get:
+          displayName: Retrieve category
+          responses: 
+            200:
+              body:
+                application/json:
+                  type: CategoryResponse
+                  example: !include examples/category-response.raml
+        /products:
+          get:
+            displayName: Retrieve products for category
+            responses:
+              200:
+                  body:
+                    application/json:
+                      type: ProductCollectionResponse
+                      example: !include examples/product-collection-response.raml
+/products:  
+  get:
+    displayName: Retrieve products
+    queryParameters:
+        name?: string
+        minPrice?: integer
+        maxPrice?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: ProductCollectionResponse
+            example: !include examples/product-collection-response.raml
+  /{productId}:
+    uriParameters:
+      productId: string
+    get:
+      displayName: Retrieve product    
+      responses: 
+        200:
+          body:
+            application/json:
+              type: ProductResponse
+              example: !include examples/product-response.raml
+    /variants:
+      get:
+        displayName: Retrieve variants  
+        responses:
+          200:
+            body:
+              application/json:
+                type: ProductVariantCollectionResponse
+                example: !include examples/variant-collection-response.raml
+                  
+      /{variantId}:
+        uriParameters:
+            variantId: string
+        get:
+          displayName: Retrieve variant  
+          responses:
+            200:
+              body:
+                application/json:
+                  type: ProductVariantResponse
+                  example: !include examples/variant-response.raml

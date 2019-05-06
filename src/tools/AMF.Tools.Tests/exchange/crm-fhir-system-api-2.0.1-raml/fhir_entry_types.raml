@@ -1,0 +1,82 @@
+#%RAML 1.0 Library
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+types:
+  Entry:
+    type: FHIR_commons.BackboneElement
+    properties:
+      link?:
+        type: array
+        items:
+          type: FHIR_commons.BackboneElement
+          properties:
+            relation: string
+            url: FHIR_commons.uri
+      fullUrl?: FHIR_commons.uri
+      search?:
+        type: FHIR_commons.BackboneElement
+        properties:
+          mode?:
+            type: FHIR_commons.code
+            enum: [match, include, outcome]
+          score?: FHIR_commons.decimal
+      request?:
+        type: FHIR_commons.BackboneElement
+        properties:
+          method:
+            type: FHIR_commons.code
+            enum: [GET, PUT, POST, DELETE]
+          url: FHIR_commons.uri
+          ifNoneMatch?: string
+          ifModifiedSince?: FHIR_commons.instant
+          ifMatch: string
+          ifNoneExist: string
+      response?:
+        type: object
+        properties:
+          status: string
+          location?: FHIR_commons.uri
+          etag?: string
+          lastModified?: FHIR_commons.instant
+  
+  AllergyIntoleranceEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/allergy-intolerance/1.0.0/allergyintolerance.raml
+
+  AppointmentEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/appointment/1.0.0/appointment.raml
+
+  ConditionEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/condition/1.0.0/condition.raml
+
+  DeviceEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/device/1.0.0/device.raml
+
+  MedicationRequestEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/medication-request/1.0.0/medicationrequest.raml
+
+  ObservationEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/observation/1.0.0/observation.raml
+
+  PatientEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/patient/1.0.0/patient.raml
+
+  PractitionerEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/org.mule.templates/practitioner/1.0.0/practitioner.raml

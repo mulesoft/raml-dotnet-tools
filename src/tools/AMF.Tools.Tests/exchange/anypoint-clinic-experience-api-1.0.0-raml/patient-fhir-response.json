@@ -1,0 +1,46 @@
+{
+  "resourceType": "Patient",
+  "id": "patients/mrn/12345",
+  "name": [{
+    "use": "official",
+    "family": [
+      "Radonctest"
+    ],
+    "given": [
+      "Veera"
+    ],
+    "prefix": [
+      ""
+    ],
+    "suffix": [
+      ""
+    ]
+  }],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "608-999-9654",
+      "use": "home"
+    }
+  ],
+  "gender": "male",
+  "birthDate": "1970-02-12",
+  "address": [
+    {
+      "resourceType": "Address",
+      "line": [
+        "1855 Folsom Street"
+      ],
+      "city": "San Francisco",
+      "district": "DANE",
+      "state": "Wisconsin",
+      "postalCode": "53703",
+      "country": "United States of America"
+    }
+  ],
+  "careProvider": [
+    {
+      "reference": "Practitioner/10"
+    }
+  ]
+}

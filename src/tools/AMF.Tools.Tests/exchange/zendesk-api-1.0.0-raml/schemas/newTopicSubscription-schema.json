@@ -1,0 +1,21 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "topic_subscription" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "user_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "topic_id" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

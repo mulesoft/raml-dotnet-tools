@@ -1,0 +1,91 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Appointment.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: |
+  A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s)
+  Only proposed or cancelled appointments can be missing start/end dates
+  Either start and end are specified, or neither
+type: FHIR_commons.DomainResource
+properties:
+  identifier?:
+    description: External Ids for this item
+    type: FHIR_commons.Identifier[]
+  status:
+    type: FHIR_commons.code
+    enum: [proposed, pending, booked, arrived, fulfilled, cancelled, noshow, entered-in-error]
+  serviceCategory?:
+    description: A broad categorisation of the service that is to be performed during this appointment
+    type: FHIR_commons.CodeableConcept
+  serviceType?:
+    description: The specific service that is to be performed during this appointment
+    type: FHIR_commons.CodeableConcept[]
+  specialty?:
+    description: The specialty of a practitioner that would be required to perform the service requested in this appointment
+    type: FHIR_commons.CodeableConcept[]
+  appointmentType?:
+    description: The style of appointment or patient that has been booked in the slot (not service type)
+    type: FHIR_commons.CodeableConcept
+  reason?:
+    description: Reason this appointment is scheduled
+    type: FHIR_commons.CodeableConcept[]
+  indication?:
+    description: Reason the appointment is to takes place (resource)
+    type: FHIR_commons.Reference[]
+  priority?:
+    description: Used to make informed decisions if needing to re-prioritize
+    type: FHIR_commons.unsignedInt
+  description?:
+    description: Shown on a subject line in a meeting request, or appointment list
+    type: string
+  supportingInformation?:
+    description: Additional information to support the appointment
+    type: FHIR_commons.Reference[]
+  start?:
+    description: When appointment is to take place
+    type: FHIR_commons.instant
+  end?:
+    description: When appointment is to conclude
+    type: FHIR_commons.instant
+  minutesDuration?:
+    description: Can be less than start/end (e.g. estimate)
+    type: FHIR_commons.positiveInt
+  slot?:
+    description: The slots that this appointment is filling
+    type: FHIR_commons.Reference[]
+  created?:
+    description: The date that this appointment was initially created
+    type: FHIR_commons.dateTime
+  comment?:
+    description: Additional comments
+    type: string
+  incomingReferral?:
+    description: The ReferralRequest provided as information to allocate to the Encounter
+    type: FHIR_commons.Reference
+  participant:
+    description: |
+      Participants involved in appointment
+      Either the type or actor on the participant SHALL be specified
+    type: array
+    minItems: 1
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        type?:
+          description: Role of participant in the appointment
+          type: FHIR_commons.CodeableConcept[]
+        actor?:
+          description: Person, Location/HealthcareService or Device
+          type: FHIR_commons.Reference
+        required?:
+          type: FHIR_commons.code
+          enum: [required, optional, information-only]
+        status:
+          type: FHIR_commons.code
+          enum: [accepted, declined, tentative, needs-action]
+  requestedPeriod?:
+    description: Potential date/time interval(s) requested to allocate the appointment within
+    type: FHIR_commons.Period[]

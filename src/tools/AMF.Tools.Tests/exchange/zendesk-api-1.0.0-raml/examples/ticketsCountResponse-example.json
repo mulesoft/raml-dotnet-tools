@@ -1,0 +1,9 @@
+{
+  "view_count": {
+    "view_id": 25,
+    "url":     "https://company.zendesk.com/api/v2/views/25/count.json",
+    "value":   719,
+    "pretty":  "~700",
+    "fresh":   true
+  }
+}

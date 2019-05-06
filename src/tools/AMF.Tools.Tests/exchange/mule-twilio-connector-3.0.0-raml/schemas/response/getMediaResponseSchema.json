@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "sid": {
+      "type": "string"
+    },
+    "account_sid": {
+      "type": "string"
+    },
+    "parent_sid": {
+      "type": "string"
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "date_created": {
+      "type": "string"
+    },
+    "date_updated": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "sid",
+    "account_sid",
+    "parent_sid",
+    "content_type",
+    "date_created",
+    "date_updated",
+    "uri"
+  ]
+}

@@ -1,0 +1,114 @@
+  SSN:
+    pattern: ^\d{3}-?\d{2}-?\d{4}$
+    example: 078-05-1120
+  
+  Address:
+    properties:
+      address_line_1: string
+      address_line_2?: string
+      city: string
+      zip_code: string
+      state: string
+      country: string
+  
+  User:
+    properties:
+      id: string
+      prefix?: string[]
+      first_name: string
+      middle_name?: string
+      last_name: string
+      suffix?: string[]
+      address: Address
+      display_name?: string
+      phone: string
+      email: string
+      ssn: SSN
+      date_of_birth: date-only
+      
+  Metadata:
+    properties:
+      url: string
+      created: 
+  
+  Bank:
+    properties:
+      national_identifier: string
+      name: string
+
+  Money:
+    properties:
+      currency: 
+        type: string
+        pattern: ^[A-Z]{3,3}$
+        example: EUR
+      amount: 
+        type: string
+        pattern: ^[+|-]?\d*\.\d{2}$
+        example: "154.44"
+
+  AccountOwner:
+    properties:  
+      user_id: string
+      ssn: SSN
+      display_name: string
+
+  IBAN: 
+    type: string
+    pattern: ^[A-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}$
+  
+  Account:
+    properties:
+      id?: string
+      label?: string
+      number: string
+      owners?: AccountOwner[]
+      overdraft?: boolean
+      overdraft_allowed?: Money
+      type: string
+      balance?: Money
+      available_balance?: Money
+      IBAN: IBAN
+      swift_bic?: string
+      bank_id?: string
+      interest_rate_pa?: 
+        type: number
+        format: double
+      monthly_fee?: Money
+      created_at?: datetime
+      updated_at?: datetime
+      bank?: Bank
+      
+      
+  PaymentRequest:
+    properties:
+      amount: Money
+      label: string
+      receiver_IBAN: string
+      description: string
+      
+  PaymentStatus:
+    properties:
+      transaction_id: string
+      status: 
+        enum: [accepted, rejected]
+      additional_info?: string
+     
+
+  TransactionDetails: 
+    properties:
+      type: 
+        enum: [atm, charge, check, deposit, online, pos, sepa_direct_transfer, withdrawal]
+      label: string
+      posted: datetime
+      completed: datetime
+      value: Money
+      new_balance: Money
+
+  Transaction:
+    properties:
+      uuid: string
+      id: string
+      this_account: Account
+      other_account: Account
+      details: TransactionDetails

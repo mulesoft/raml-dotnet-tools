@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "comments": [
+        {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "user": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "created_at": {
+                    "description": "ISO 8601.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    ]
+}

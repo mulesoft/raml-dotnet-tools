@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "action": {
+      "description": "The action the task assignee will be prompted to do. Can be 'review'.",
+      "type": "string"
+    },
+    "message": {
+      "description": "An optional message to include with the task.",
+      "type": "string"
+    },
+    "due_at": {
+      "type": "string",
+      "description": "The day at which this task is due."
+    }
+  }
+}

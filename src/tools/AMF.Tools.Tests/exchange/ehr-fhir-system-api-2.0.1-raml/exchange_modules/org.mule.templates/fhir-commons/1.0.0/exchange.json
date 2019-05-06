@@ -1,0 +1,1 @@
+{"main":"fhir_commons.raml","name":"FHIR Commons","classifier":"raml-fragment","tags":["library"],"groupId":"org.mule.templates","assetId":"fhir-commons","version":"1.0.0","metadata":{"projectId":"27808f4c-fba6-47f4-90ad-b7fd93ce4e32","branchId":"master","commitId":"89ca9ecf9d2e9e488d950c85984462bcf1bd2861"}}

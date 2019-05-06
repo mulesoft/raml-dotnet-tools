@@ -1,0 +1,31 @@
+uriParameters: 
+  mediaTypeExtension: 
+    enum: [ .json ]
+    default: .json
+    example: .json
+get: 
+  description: Search
+  queryParameters: 
+    query: 
+      example: Android
+    external_id: 
+      description: External id
+      example: 123
+    name: 
+      description: Tag name
+      example: customer
+    sort_by: 
+      description: Sort
+      example: created_at
+    sort_order: 
+      description: Sort order
+      example: desc
+    page: 
+      description: Page
+      example: 2
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: searchResponse
+          example: !include examples/searchResponse-example.json

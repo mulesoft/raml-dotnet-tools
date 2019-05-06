@@ -1,0 +1,103 @@
+{
+    "type":"object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required":false,
+    "properties":{
+        "address_city": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_city",
+            "required":false
+        },
+        "address_country": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_country",
+            "required":false
+        },
+        "address_line1_check": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_line1_check",
+            "required":false
+        },
+        "address_line1": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_line1",
+            "required":false
+        },
+        "address_line2": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_line2",
+            "required":false
+        },
+        "address_state": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_state",
+            "required":false
+        },
+        "address_zip_check": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_zip_check",
+            "required":false
+        },
+        "address_zip": {
+            "type":"null",
+            "id": "http://jsonschema.net/address_zip",
+            "required":false
+        },
+        "country": {
+            "type":"string",
+            "id": "http://jsonschema.net/country",
+            "required":false
+        },
+        "customer": {
+            "type":"string",
+            "id": "http://jsonschema.net/customer",
+            "required":false
+        },
+        "cvc_check": {
+            "type":"string",
+            "id": "http://jsonschema.net/cvc_check",
+            "required":false
+        },
+        "exp_month": {
+            "type":"number",
+            "id": "http://jsonschema.net/exp_month",
+            "required":false
+        },
+        "exp_year": {
+            "type":"number",
+            "id": "http://jsonschema.net/exp_year",
+            "required":false
+        },
+        "fingerprint": {
+            "type":"string",
+            "id": "http://jsonschema.net/fingerprint",
+            "required":false
+        },
+        "id": {
+            "type":"string",
+            "id": "http://jsonschema.net/id",
+            "required":false
+        },
+        "last4": {
+            "type":"string",
+            "id": "http://jsonschema.net/last4",
+            "required":false
+        },
+        "name": {
+            "type":"null",
+            "id": "http://jsonschema.net/name",
+            "required":false
+        },
+        "object": {
+            "type":"string",
+            "id": "http://jsonschema.net/object",
+            "required":false
+        },
+        "type": {
+            "type":"string",
+            "id": "http://jsonschema.net/type",
+            "required":false
+        }
+    }
+}

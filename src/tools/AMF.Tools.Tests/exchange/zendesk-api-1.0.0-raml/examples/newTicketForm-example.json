@@ -1,0 +1,10 @@
+{
+	"ticket_form": {
+		"name": "Snowboard Problem", 
+		"end_user_visible": true, 
+		"display_name": "Snowboard Damage", 
+      	"position": 2,
+        "active" : true, 
+        "default" : false 
+	}
+}

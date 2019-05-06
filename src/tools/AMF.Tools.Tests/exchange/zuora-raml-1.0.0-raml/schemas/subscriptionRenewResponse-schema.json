@@ -1,0 +1,23 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "termStartDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "success" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "termEndDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "subscriptionId" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

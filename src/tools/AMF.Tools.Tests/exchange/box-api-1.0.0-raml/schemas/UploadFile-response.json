@@ -1,0 +1,217 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "total_count": {
+      "required": false,
+      "type": "integer"
+    },
+    "entries": {
+      "required": false,
+      "type": "array",
+      "items": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "content_created_at": {
+            "required": false,
+            "type": "string"
+          },
+          "content_modified_at": {
+            "required": false,
+            "type": "string"
+          },
+          "created_at": {
+            "required": false,
+            "type": "string"
+          },
+          "created_by": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "type": {
+                "required": false,
+                "type": "string"
+              },
+              "id": {
+                "required": false,
+                "type": "string"
+              },
+              "name": {
+                "required": false,
+                "type": "string"
+              },
+              "login": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "required": false,
+            "type": "string"
+          },
+          "etag": {
+            "required": false,
+            "type": "string"
+          },
+          "id": {
+            "required": false,
+            "type": "string"
+          },
+          "item_status": {
+            "required": false,
+            "type": "string"
+          },
+          "modified_at": {
+            "required": false,
+            "type": "string"
+          },
+          "modified_by": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "type": {
+                "required": false,
+                "type": "string"
+              },
+              "id": {
+                "required": false,
+                "type": "string"
+              },
+              "name": {
+                "required": false,
+                "type": "string"
+              },
+              "login": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          },
+          "name": {
+            "required": false,
+            "type": "string"
+          },
+          "owned_by": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "type": {
+                "required": false,
+                "type": "string"
+              },
+              "id": {
+                "required": false,
+                "type": "string"
+              },
+              "name": {
+                "required": false,
+                "type": "string"
+              },
+              "login": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          },
+          "parent": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "type": {
+                "required": false,
+                "type": "string"
+              },
+              "id": {
+                "required": false,
+                "type": "string"
+              },
+              "sequence_id": {
+                "required": false,
+                "type": "string"
+              },
+              "etag": {
+                "required": false,
+                "type": "string"
+              },
+              "name": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          },
+          "path_collection": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "total_count": {
+                "required": false,
+                "type": "integer"
+              },
+              "entries": {
+                "required": false,
+                "type": "array",
+                "items": {
+                  "required": false,
+                  "type": "object",
+                  "properties": {
+                    "etag": {
+                      "required": false,
+                      "type": "null"
+                    },
+                    "id": {
+                      "required": false,
+                      "type": "string"
+                    },
+                    "name": {
+                      "required": false,
+                      "type": "string"
+                    },
+                    "sequence_id": {
+                      "required": false,
+                      "type": "null"
+                    },
+                    "type": {
+                      "required": false,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "purged_at": {
+            "required": false,
+            "type": "null"
+          },
+          "sequence_id": {
+            "required": false,
+            "type": "string"
+          },
+          "sha1": {
+            "required": false,
+            "type": "string"
+          },
+          "shared_link": {
+            "required": false,
+            "type": "null"
+          },
+          "size": {
+            "required": false,
+            "type": "integer"
+          },
+          "trashed_at": {
+            "required": false,
+            "type": "null"
+          },
+          "type": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

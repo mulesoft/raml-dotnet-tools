@@ -1,0 +1,209 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Observation.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: |
+  Measurements and simple assertions
+  + If code is the same as a component code then the value element associated with the code SHALL NOT be present
+  + dataAbsentReason SHALL only be present if Observation.value[x] is not present
+type: FHIR_commons.DomainResource
+properties:
+  identifier?:
+    description: Business Identifier for observation
+    type: FHIR_commons.Identifier[]
+  basedOn?:
+    description: Fulfills plan, proposal or order
+    type: FHIR_commons.Reference[]
+  status:
+    description: Observation status
+    type: FHIR_commons.code
+    enum: [registered, preliminary, final, ammended, corrected, cancelled, entered-in-error, unknown]
+  category?:
+    description: Classification of type of observation
+    type: FHIR_commons.CodeableConcept[]
+  code:
+    description: Type of observation (code / type)
+    type: FHIR_commons.CodeableConcept
+  subject?:
+    description: Who and/or what this is about
+    type: FHIR_commons.Reference
+  context?:
+    description: Healthcare event during which this observation is made
+    type: FHIR_commons.Reference
+  effectiveDateTime?:
+    description: Clinically relevant time for observation
+    type: FHIR_commons.dateTime
+  effectivePeriod?:
+    description: Clinically relevant time-period for observation
+    type: FHIR_commons.Period
+  issued?:
+    description: Date/Time this was made available
+    type: FHIR_commons.instant
+  performer?:
+    description: Who is responsible for the observation
+    type: FHIR_commons.Reference[]
+  valueQuantity?:
+    description: Actual result
+    type: FHIR_commons.Quantity
+  valueCodeableConcept?:
+    description: Actual result
+    type: FHIR_commons.CodeableConcept
+  valueString?:
+    description: Actual result
+    type: string
+  valueBoolean?:
+    description: Actual result
+    type: boolean
+  valueRange?:
+    description: Actual result
+    type: FHIR_commons.Range
+  valueRatio?:
+    description: Actual result
+    type: FHIR_commons.Ratio
+  valueSampledData?:
+    description: Actual result
+    type: FHIR_commons.SampledData
+  valueAttachment?:
+    description: Actual result
+    type: FHIR_commons.Attachment
+  valueTime?:
+    description: Actual result
+    type: FHIR_commons.time
+  valueDateTime?:
+    description: Actual result
+    type: FHIR_commons.dateTime
+  valuePeriod?:
+    description: Actual result
+    type: FHIR_commons.Period
+  dataAbsentReason?:
+    description: Why the result is missing
+    type: FHIR_commons.CodeableConcept
+  interpretation?:
+    description: High, low, normal, etc.
+    type: FHIR_commons.CodeableConcept
+  comment?:
+    description: Comments about result
+    type: string
+  bodySite?:
+    description: Observed body part
+    type: FHIR_commons.CodeableConcept
+  method?:
+    description: How it was done
+    type: FHIR_commons.CodeableConcept
+  specimen?:
+    description: Specimen used for this observation
+    type: FHIR_commons.Reference
+  device?:
+    description: (Measurement) Device
+    type: FHIR_commons.Reference
+  referenceRange?:
+    description: |
+      Provides guide for interpretation
+      + Must have at least a low or a high or text
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        low?:
+          description: Low Range, if relevant
+          type: FHIR_commons.SimpleQuantity
+        high?:
+          description: High Range, if relevant
+          type: FHIR_commons.SimpleQuantity
+        type?:
+          description: Reference range qualifier
+          type: FHIR_commons.CodeableConcept
+        appliesTo?:
+          description: Reference range population
+          type: FHIR_commons.CodeableConcept[]
+        age?:
+          description: Applicable age range, if relevant
+          type: FHIR_commons.Range
+        text?:
+          description: Text based reference range in an observation
+          type: string
+  related?:
+    description: Resource related to this observation
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        type?:
+          description: Observation relationship type
+          type: FHIR_commons.code
+          enum: [has-member, derived-from, sequel-to, replaces, qualified-by, interfered-by]
+        target:
+          description: Resource that is related to this one
+          type: FHIR_commons.Reference
+  component?:
+    description: Component results
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        code:
+          description: Type of component observation (code / type)
+          type: FHIR_commons.CodeableConcept
+        valueQuantity?:
+          description: Actual component result
+          type: FHIR_commons.Quantity
+        valueCodeableConcept?:
+          description: Actual component result
+          type: FHIR_commons.CodeableConcept
+        valueString?:
+          description: Actual component result
+          type: string
+        valueRange?:
+          description: Actual component result
+          type: FHIR_commons.Range
+        valueRatio?:
+          description: Actual component result
+          type: FHIR_commons.Ratio
+        valueSampledData?:
+          description: Actual component result
+          type: FHIR_commons.SampledData
+        valueAttachment?:
+          description: Actual component result
+          type: FHIR_commons.Attachment
+        valueTime?:
+          description: Actual component result
+          type: FHIR_commons.time
+        valueDateTime?:
+          description: Actual component result
+          type: FHIR_commons.dateTime
+        valuePeriod?:
+          description: Actual component result
+          type: FHIR_commons.Period
+        dataAbsentReason?:
+          description: Why the component result is missing
+          type: FHIR_commons.CodeableConcept
+        interpretation?:
+          description: High, low, normal, etc.
+          type: FHIR_commons.CodeableConcept
+        referenceRange?:
+          description: Provides guide for interpretation of component result
+          type: array
+          items:
+            type: FHIR_commons.BackboneElement
+            properties:
+              low?:
+                description: Low Range, if relevant
+                type: FHIR_commons.SimpleQuantity
+              high?:
+                description: High Range, if relevant
+                type: FHIR_commons.SimpleQuantity
+              type?:
+                description: Reference range qualifier
+                type: FHIR_commons.CodeableConcept
+              appliesTo?:
+                description: Reference range population
+                type: FHIR_commons.CodeableConcept[]
+              age?:
+                description: Applicable age range, if relevant
+                type: FHIR_commons.Range
+              text?:
+                description: Text based reference range in an observation
+                type: string

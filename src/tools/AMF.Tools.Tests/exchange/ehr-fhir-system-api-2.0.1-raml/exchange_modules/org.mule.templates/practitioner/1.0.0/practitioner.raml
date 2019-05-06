@@ -1,0 +1,58 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Practitioner.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+type: FHIR_commons.DomainResource
+description: |
+  Practitioner covers all individuals who are engaged in the healthcare process and healthcare-related services as part of their formal responsibilities and this Resource is used for attribution of activities and responsibilities to these individuals.
+properties:
+  identifier?:
+    description: A identifier for the person as this agent
+    type: FHIR_commons.Identifier[]
+  active?:
+    description: Whether this practitioner's record is in active use
+    type: boolean
+  name?:
+    description: The name(s) associated with the practitioner
+    type: FHIR_commons.HumanName[]
+  telecom?:
+    description: A contact detail for the practitioner (that apply to all roles)
+    type: FHIR_commons.ContactPoint[]
+  address?:
+    description: Address(es) of the practitioner that are not role specific (typically home address)
+    type: FHIR_commons.Address[]
+  gender?:
+    description: Practitioner gender
+    type: FHIR_commons.gender
+  birthDate?:
+    description: The date  on which the practitioner was born
+    type: FHIR_commons.date
+  photo?:
+    description: Image of the person
+    type: FHIR_commons.Attachment[]
+  qualification?:
+    description: |
+      Qualifications obtained by training and certification
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        identifier?:
+          description: An identifier for this qualification for the practitioner
+          type: FHIR_commons.Identifier[]
+        code:
+          description: Coded representation of the qualification
+          type: FHIR_commons.CodeableConcept
+        period?:
+          description: |
+            Period during which the qualification is valid
+          type: FHIR_commons.Period
+        issuer?:
+          description: Organization that regulates and issues the qualification
+          type: FHIR_commons.Reference
+  communication?:
+    description: A language the practitioner is able to use in patient communication
+    type: FHIR_commons.CodeableConcept[]

@@ -1,0 +1,21 @@
+uriParameters: 
+  mediaTypeExtension: 
+    enum: [ .json ]
+    default: .json
+    example: .json
+put: 
+  description: |
+    The current user will be merged into the existing user provided in the params. Users can only merge themselves into another user.
+    allowed for  [Verified end users]
+  body: 
+    application/json: 
+      schema: mergeRequest
+      example: !include examples/mergeRequest-example.json
+  responses: 
+    200: 
+      description: |
+        OK
+      body: 
+        application/json: 
+          schema: showUserResponse
+          example: !include examples/mergeSelfWithAnotherUserResponse-example.json

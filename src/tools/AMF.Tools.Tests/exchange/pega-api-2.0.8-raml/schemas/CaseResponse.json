@@ -1,0 +1,235 @@
+{
+  "id": "CaseResponse",
+  "title": "CaseResponse",
+  "type": "object",
+  "properties": {
+	"status": {
+	  "type": "string"
+	},
+	"caseTypeID": {
+	  "type": "string"
+	},
+	"name": {
+	  "type": "string"
+	},
+	"ID": {
+	  "type": "string"
+	},
+	"parentCaseID": {
+	  "type": "string"
+	},
+	"pxObjClass": {
+	  "type": "string"
+	},
+	"stage": {
+	  "type": "string"
+	},
+	"urgency": {
+	  "type": "string"
+	},
+	"createTime": {
+	  "type": "string",
+	  "format": "date-time"
+	},
+	"createdBy": {
+	  "type": "string"
+	},
+	"lastUpdateTime": {
+	  "type": "string",
+	  "format": "date-time"
+	},
+	"lastUpdatedBy": {
+	  "type": "string"
+	},
+	"owner": {
+	  "type": "string"
+	},
+	"content": {
+	  "type": "object"
+	},
+	"stages": {
+	  "type": "array",
+	  "items": {
+		"id": "Stage",
+		"title": "Stage",
+		"type": "object",
+		"properties": {
+		  "ID": {
+			"type": "string"
+		  },
+		  "name": {
+			"type": "string"
+		  },
+		  "pxObjClass": {
+			"type": "string"
+		  }
+		}
+	  }
+	},
+	"SLA": {
+	  "id": "SLA",
+	  "title": "SLA",
+	  "type": "object",
+	  "properties": {
+		"stageSLAGoal": {
+		  "type": "string",
+		  "format": "date-time"
+		},
+		"stageSLADeadline": {
+		  "type": "string",
+		  "format": "date-time"
+		},
+		"overallSLAGoal": {
+		  "type": "string",
+		  "format": "date-time"
+		},
+		"overallSLADeadline": {
+		  "type": "string",
+		  "format": "date-time"
+		},
+		"pxObjClass": {
+		  "type": "string"
+		}
+	  }
+	},
+	"childCases": {
+	  "type": "array",
+	  "items": {
+		"id": "ChildCase",
+		"title": "ChildCase",
+		"type": "object",
+		"properties": {
+		  "ID": {
+			"type": "string"
+		  },
+		  "pxObjClass": {
+			"type": "string"
+		  }
+		}
+	  }
+	},
+	"childCaseTypes": {
+	  "type": "array",
+	  "items": {
+		"id": "CaseType",
+		"title": "CaseType",
+		"type": "object",
+		"properties": {
+		  "ID": {
+			"type": "string"
+		  },
+		  "name": {
+			"type": "string"
+		  },
+		  "pxObjClass": {
+			"type": "string"
+		  },
+		  "startingProcesses": {
+			"type": "array",
+			"items": {
+			  "id": "StartingProcess",
+			  "title": "StartingProcess",
+			  "type": "object",
+			  "properties": {
+				"ID": {
+				  "type": "string"
+				},
+				"name": {
+				  "type": "string"
+				},
+				"pxObjClass": {
+				  "type": "string"
+				}
+			  }
+			}
+		  }
+		}
+	  }
+	},
+	"assignments": {
+	  "type": "array",
+	  "items": {
+		"id": "CaseAssignment",
+		"title": "CaseAssignment",
+		"type": "object",
+		"properties": {
+		  "ID": {
+			"type": "string"
+		  },
+		  "name": {
+			"type": "string"
+		  },
+		  "type": {
+			"type": "string"
+		  },
+		  "pxObjClass": {
+			"type": "string"
+		  },
+		  "routedTo": {
+			"type": "string"
+		  },
+		  "instructions": {
+			"type": "string"
+		  },
+		  "scheduledGoalTime": {
+			"type": "string",
+			"format": "date-time"
+		  },
+		  "executedGoalTime": {
+			"type": "string",
+			"format": "date-time"
+		  },
+		  "scheduledDeadlineTime": {
+			"type": "string",
+			"format": "date-time"
+		  },
+		  "executedDeadlineTime": {
+			"type": "string",
+			"format": "date-time"
+		  },
+		  "urgency": {
+			"type": "string"
+		  },
+		  "actions": {
+			"type": "array",
+			"items": {
+			  "id": "Action",
+			  "title": "Action",
+			  "type": "object",
+			  "properties": {
+				"ID": {
+				  "type": "string"
+				},
+				"name": {
+				  "type": "string"
+				},
+				"pxObjClass": {
+				  "type": "string"
+				}
+			  }
+			}
+		  }
+		}
+	  }
+	},
+	"actions": {
+	  "type": "array",
+	  "items": {
+		"id": "Action",
+		"title": "Action",
+		"type": "object",
+		"properties": {
+		  "ID": {
+			"type": "string"
+		  },
+		  "name": {
+			"type": "string"
+		  },
+		  "pxObjClass": {
+			"type": "string"
+		  }
+		}
+	  }
+	}
+  }
+}

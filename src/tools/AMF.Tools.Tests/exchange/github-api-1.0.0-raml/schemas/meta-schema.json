@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "hooks": {
+      "type": "array",
+      "items": {
+        "description": "An Array of IP addresses in CIDR format specifying the addresses that incoming service hooks will originate from.",
+        "type": "string"
+      }
+    },
+    "git": {
+      "type": "array",
+      "items": {
+        "description": "An Array of IP addresses in CIDR format specifying the Git servers at GitHub.",
+        "type": "string"
+      }
+    }
+  }
+}

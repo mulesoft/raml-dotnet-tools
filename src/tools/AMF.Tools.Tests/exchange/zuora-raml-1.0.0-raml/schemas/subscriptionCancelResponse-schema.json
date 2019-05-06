@@ -1,0 +1,19 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "cancelledDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "success" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "subscriptionId" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

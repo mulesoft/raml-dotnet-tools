@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "array",
+  "items": {
+    "required": false,
+    "type": "object",
+    "properties": {
+      "as_of": {
+        "required": false,
+        "type": "string"
+      },
+      "created_at": {
+        "required": false,
+        "type": "string"
+      },
+      "locations": {
+        "required": false,
+        "type": "array",
+        "items": {
+          "required": false,
+          "type": "object",
+          "properties": {
+            "name": {
+              "required": false,
+              "type": "string"
+            },
+            "woeid": {
+              "required": false,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "trends": {
+        "required": false,
+        "type": "array",
+        "items": {
+          "required": false,
+          "type": "object",
+          "properties": {
+            "events": {
+              "required": false,
+              "type": "null"
+            },
+            "name": {
+              "required": false,
+              "type": "string"
+            },
+            "promoted_content": {
+              "required": false,
+              "type": "null"
+            },
+            "query": {
+              "required": false,
+              "type": "string"
+            },
+            "url": {
+              "required": false,
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

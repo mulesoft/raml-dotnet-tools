@@ -1,0 +1,44 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="group">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:int" name="id"/>
+        <xs:element type="xs:string" name="name"/>
+        <xs:element type="xs:string" name="short-description"/>
+        <xs:element type="xs:string" name="description"/>
+        <xs:element name="relation-to-viewer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="membership-state"/>
+              <xs:element type="xs:string" name="available-actions"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="posts"/>
+        <xs:element type="xs:byte" name="counts-by-category"/>
+        <xs:element type="xs:string" name="is-open-to-non-members"/>
+        <xs:element type="xs:string" name="category"/>
+        <xs:element type="xs:anyURI" name="website-url"/>
+        <xs:element type="xs:string" name="locale"/>
+        <xs:element name="location">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element name="country">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:short" name="postal-code"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="allow-member-invites"/>
+        <xs:element type="xs:anyURI" name="site-group-url"/>
+        <xs:element type="xs:anyURI" name="small-logo-url"/>
+        <xs:element type="xs:anyURI" name="large-logo-url"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

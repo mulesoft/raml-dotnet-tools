@@ -1,0 +1,28 @@
+[
+  {
+    "resourceType": "Appointment",
+    "status": "Scheduled",
+    "description": "CI FOLLOW UP 15",
+    "start": "2016-02-23T14:30:00-05:00",
+    "end": "2016-02-23T14:45:00-05:00",
+    "minutesDuration": "15",
+    "participant": [
+      {
+        "actor": {
+          "reference": "patients/mrn/Z519",
+          "display": "RADONCTEST,VEERA"
+        },
+        "required": "required",
+        "status": "accepted"
+      },
+      {
+        "actor": {
+          "reference": "healthcareservices/100102150",
+          "display": "ML CT CT4"
+        },
+        "required": "required",
+        "status": "accepted"
+      }
+    ]
+  }
+]

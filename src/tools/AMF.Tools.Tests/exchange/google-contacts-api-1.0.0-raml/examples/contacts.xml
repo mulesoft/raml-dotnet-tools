@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+    xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/'
+    xmlns:gContact='http://schemas.google.com/contact/2008'
+    xmlns:batch='http://schemas.google.com/gdata/batch'
+    xmlns:gd='http://schemas.google.com/g/2005'
+    gd:etag='feedEtag'>
+  <id>userEmail</id>
+  <updated>2008-12-10T10:04:15.446Z</updated>
+  <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/contact/2008#contact'/>
+  <title>User's Contacts</title>
+  <link rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml'
+      href='https://www.google.com/m8/feeds/contacts/userEmail/full'/>
+  <link rel='http://schemas.google.com/g/2005#post' type='application/atom+xml'
+      href='https://www.google.com/m8/feeds/contacts/userEmail/full'/>
+  <link rel='http://schemas.google.com/g/2005#batch' type='application/atom+xml'
+      href='https://www.google.com/m8/feeds/contacts/userEmail/full/batch'/>
+  <link rel='self' type='application/atom+xml'
+      href='https://www.google.com/m8/feeds/contacts/userEmail/full?max-results=25'/>
+  <author>
+    <name>User</name>
+    <email>userEmail</email>
+  </author>
+  <generator version='1.0' uri='http://www.google.com/m8/feeds'>
+    Contacts
+  </generator>
+  <openSearch:totalResults>1</openSearch:totalResults>
+  <openSearch:startIndex>1</openSearch:startIndex>
+  <openSearch:itemsPerPage>25</openSearch:itemsPerPage>
+  <entry gd:etag='contactEtag'>
+    <id>
+      http://www.google.com/m8/feeds/contacts/userEmail/base/contactId
+    </id>
+    <updated>2008-12-10T04:45:03.331Z</updated>
+    <app:edited xmlns:app='http://www.w3.org/2007/app'>2008-12-10T04:45:03.331Z</app:edited>
+    <category scheme='http://schemas.google.com/g/2005#kind'
+        term='http://schemas.google.com/contact/2008#contact'/>
+    <title>Fitzwilliam Darcy</title>
+    <gd:name>
+      <gd:fullName>Fitzwilliam Darcy</gd:fullName>
+    </gd:name>
+    <link rel='http://schemas.google.com/contacts/2008/rel#photo' type='image/*'
+        href='https://www.google.com/m8/feeds/photos/media/userEmail/contactId'
+        gd:etag='photoEtag'/>
+    <link rel='self' type='application/atom+xml'
+        href='https://www.google.com/m8/feeds/contacts/userEmail/full/contactId'/>
+    <link rel='edit' type='application/atom+xml'
+        href='https://www.google.com/m8/feeds/contacts/userEmail/full/contactId'/>
+    <gd:phoneNumber rel='http://schemas.google.com/g/2005#home'
+        primary='true'>
+      456
+    </gd:phoneNumber>
+    <gd:extendedProperty name='pet' value='hamster'/>
+    <gContact:groupMembershipInfo deleted='false'
+        href='http://www.google.com/m8/feeds/groups/userEmail/base/groupId'/>
+  </entry>
+  <entry gd:etag='contactEtag'>
+    <id>
+      http://www.google.com/m8/feeds/contacts/userEmail/base/contactId2
+    </id>
+    <updated>2008-12-10T04:45:03.331Z</updated>
+    <app:edited xmlns:app='http://www.w3.org/2007/app'>2008-12-10T04:45:03.331Z</app:edited>
+    <category scheme='http://schemas.google.com/g/2005#kind'
+        term='http://schemas.google.com/contact/2008#contact'/>
+    <title>John Doe</title>
+    <gd:name>
+      <gd:fullName>John Doe</gd:fullName>
+    </gd:name>
+    <link rel='http://schemas.google.com/contacts/2008/rel#photo' type='image/*'
+        href='https://www.google.com/m8/feeds/photos/media/userEmail/contactId2'
+        gd:etag='photoEtag'/>
+    <link rel='self' type='application/atom+xml'
+        href='https://www.google.com/m8/feeds/contacts/userEmail/full/contactId2'/>
+    <link rel='edit' type='application/atom+xml'
+        href='https://www.google.com/m8/feeds/contacts/userEmail/full/contactId2'/>
+    <gd:phoneNumber rel='http://schemas.google.com/g/2005#home'
+        primary='true'>
+      872364827
+    </gd:phoneNumber>
+    <gd:extendedProperty name='pet' value='hamster'/>
+    <gContact:groupMembershipInfo deleted='false'
+        href='http://www.google.com/m8/feeds/groups/userEmail/base/groupId'/>
+  </entry>
+</feed>

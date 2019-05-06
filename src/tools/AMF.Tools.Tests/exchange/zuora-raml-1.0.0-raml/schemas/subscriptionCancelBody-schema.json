@@ -1,0 +1,23 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "cancellationPolicy" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "invoiceCollect" : {
+      "type" : "boolean" ,
+      "required" : true
+    } ,
+    "cancellationEffectiveDate" : {
+      "type" : "string" ,
+      "required" : false
+    },
+    "invoiceTargetDate" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

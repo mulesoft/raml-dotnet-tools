@@ -1,0 +1,14 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"message": {
+			"description": "A message from the assignee about this task.",
+			"type": "string"
+		},
+		"resolution_state": {
+			"description": "Can be 'completed', 'incomplete', 'approved', or 'rejected'.",
+			"type": "string"
+		}
+	}
+}

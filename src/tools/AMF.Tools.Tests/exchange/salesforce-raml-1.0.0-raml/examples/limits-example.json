@@ -1,0 +1,22 @@
+{
+  "DailyApiRequests" : {
+    "Remaining" : "4980" ,
+    "Max" : "5000"
+  } ,
+  "DailyAsyncApexExecutions" : {
+    "Remaining" : "250000" ,
+    "Max" : "250000"
+  } ,
+  "DailyBulkApiRequests" : {
+    "Remaining" : "3000" ,
+    "Max" : "3000"
+  } ,
+  "DailyStreamingApiEvents" : {
+    "Remaining" : "1000" ,
+    "Max" : "1000"
+  } ,
+  "StreamingApiConcurrentClients" : {
+    "Remaining" : "10" ,
+    "Max" : "10"
+  }
+}

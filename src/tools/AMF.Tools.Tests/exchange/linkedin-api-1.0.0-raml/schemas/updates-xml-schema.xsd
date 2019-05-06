@@ -1,0 +1,153 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="network">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="updates">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="update">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:long" name="timestamp"/>
+                    <xs:element type="xs:string" name="update-key"/>
+                    <xs:element type="xs:string" name="update-type"/>
+                    <xs:element name="update-content">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="person">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="id"/>
+                                <xs:element type="xs:string" name="first-name"/>
+                                <xs:element type="xs:string" name="last-name"/>
+                                <xs:element type="xs:string" name="headline"/>
+                                <xs:element type="xs:string" name="current-status"/>
+                                <xs:element name="api-standard-profile-request">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:anyURI" name="url"/>
+                                      <xs:element name="headers">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="http-header">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element type="xs:string" name="name"/>
+                                                  <xs:element type="xs:string" name="value"/>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute type="xs:byte" name="total"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="site-standard-profile-request">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:anyURI" name="url"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="is-commentable"/>
+                    <xs:element name="update-comments">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="update-comment">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:int" name="id"/>
+                                <xs:element type="xs:byte" name="sequence-number"/>
+                                <xs:element type="xs:long" name="timestamp"/>
+                                <xs:element type="xs:string" name="comment"/>
+                                <xs:element name="person">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="id"/>
+                                      <xs:element type="xs:string" name="first-name"/>
+                                      <xs:element type="xs:string" name="last-name"/>
+                                      <xs:element type="xs:string" name="headline"/>
+                                      <xs:element name="api-standard-profile-request">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element type="xs:anyURI" name="url"/>
+                                            <xs:element name="headers">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="http-header">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="name"/>
+                                                        <xs:element type="xs:string" name="value"/>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute type="xs:byte" name="total"/>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="site-standard-profile-request">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element type="xs:anyURI" name="url"/>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:byte" name="total"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="is-likable"/>
+                    <xs:element type="xs:string" name="is-liked"/>
+                    <xs:element type="xs:byte" name="num-likes"/>
+                    <xs:element name="likes">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="like">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="person">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="id"/>
+                                      <xs:element type="xs:string" name="first-name"/>
+                                      <xs:element type="xs:string" name="last-name"/>
+                                      <xs:element type="xs:string" name="headline"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:byte" name="total"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

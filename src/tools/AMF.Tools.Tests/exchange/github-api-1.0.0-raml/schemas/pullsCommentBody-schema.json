@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"title": {
+    		"type": "string"
+    	},
+    	"body": {
+    		"type": "string"
+    	},
+    	"base": {
+    		"description": "The branch (or git ref) you want your changes pulled into. This should be an existing branch on the current repository. You cannot submit a pull request to one repo that requests a merge to a base of another repo.",
+    		"type": "string"
+    	},
+    	"head": {
+    		"description": "The branch (or git ref) where your changes are implemented.",
+    		"type": "string"
+    	}
+    },
+    "required": [ 
+    	"title",
+    	"base",
+    	"head"
+    ]
+}

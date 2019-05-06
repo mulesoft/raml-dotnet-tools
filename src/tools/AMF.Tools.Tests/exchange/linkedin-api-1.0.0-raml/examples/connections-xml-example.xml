@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<connections total='154'>
+  <person>
+    <id>id</id>
+    <first-name>first name</first-name>
+    <last-name>last name</last-name>
+    <headline>head line</headline>
+    <location>
+      <name>location name</name>
+      <country>
+        <code>804</code>
+      </country>
+    </location>
+    <industry>industry</industry>
+    <api-standard-profile-request>
+      <url>http://profile.linkedin.com</url>
+      <headers>
+        <http-header>
+          <name>Content-Type</name>
+          <value>plain/text</value>
+        </http-header>
+      </headers>
+    </api-standard-profile-request>
+    <site-standard-profile-request>
+      <url>http://profile.linkedin.com</url>
+    </site-standard-profile-request>
+    <picture-url>http://photo.profile.linkedin.com</picture-url>
+  </person>
+</connections>

@@ -1,0 +1,28 @@
+{
+"view" : {
+  "title" : "Kellys tickets" ,
+  "active" : "true" ,
+  "restriction" : {
+    "type" : "User" ,
+    "id" : "213977756"
+  } ,
+  "all" : [
+    {
+      "field" : "status" ,
+      "operator" : "less_than" ,
+      "value" : "solved"
+    } , {
+      "field" : "group_id" ,
+      "operator" : "is" ,
+      "value" : "24000932"
+    }
+  ] ,
+  "output" : {
+    "columns" : [
+      "status" ,
+      "requester" ,
+      "assignee"
+    ]
+  }
+}
+}

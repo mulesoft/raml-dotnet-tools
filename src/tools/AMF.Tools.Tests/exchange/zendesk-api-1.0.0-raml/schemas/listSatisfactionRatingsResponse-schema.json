@@ -1,0 +1,74 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "satisfaction_ratings" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "assignee_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "group_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "requester_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "ticket_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "score" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "updated_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "comment" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } , {
+          "type" : "object" ,
+          "properties" : {
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "updated_at" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

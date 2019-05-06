@@ -1,0 +1,24 @@
+{
+  "macros" : [
+    {
+      "id" : 25 ,
+      "title" : "Close and Save" ,
+      "active" : true,
+	  "actions" : [
+      ] ,
+      "restriction" : {
+      }
+    } , {
+      "id" : 28 ,
+      "title" : "Close and redirect to topics" ,
+      "active" : true,
+	  "actions" : [
+      ] ,
+      "restriction" : {
+      }
+    }
+  ] ,
+  "count" : 2 ,
+  "previous_page" : null ,
+  "next_page" : null
+}

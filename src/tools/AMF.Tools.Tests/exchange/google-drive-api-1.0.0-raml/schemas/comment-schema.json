@@ -1,0 +1,184 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "kind" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "selfLink" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "commentId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "createdDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "modifiedDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "author" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "kind" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "displayName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "picture" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "url" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "isAuthenticatedUser" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "permissionId" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "emailAddress" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "htmlContent" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "content" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "deleted" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "status" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "context" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "type" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "value" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "anchor" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "fileId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "fileTitle" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "replies" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "kind" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "replyId" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "createdDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "modifiedDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "author" : {
+              "type" : "object" ,
+              "required" : false ,
+              "properties" : {
+                "kind" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "displayName" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "picture" : {
+                  "type" : "object" ,
+                  "required" : false ,
+                  "properties" : {
+                    "url" : {
+                      "type" : "string" ,
+                      "required" : false
+                    }
+                  }
+                } ,
+                "isAuthenticatedUser" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "permissionId" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "emailAddress" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            } ,
+            "htmlContent" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "content" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "deleted" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "verb" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

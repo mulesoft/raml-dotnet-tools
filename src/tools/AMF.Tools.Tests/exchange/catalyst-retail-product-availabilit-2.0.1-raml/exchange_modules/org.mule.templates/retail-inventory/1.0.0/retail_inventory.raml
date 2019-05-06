@@ -1,0 +1,87 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides a set of resusable data types that describe concepts
+  related to inventory and availability
+
+uses:
+  partner: /exchange_modules/org.mule.templates/retail-partner/1.0.0/retail_partner.raml
+  store: /exchange_modules/org.mule.templates/retail-store/1.0.0/retail_store.raml
+
+types:
+
+  StoreAvailabilityData:
+    type: object
+    description: Information about the availability
+    properties:
+      storeInfo:
+        description: Store information
+        type: store.StoreInfo
+      quantityInStock:
+        description: Quantity of items available in stock
+        type: integer
+      quantityReserved?:
+        description: Quantity of reserved items
+        type: integer
+
+  WarehouseInventory:
+    type: object
+    description: Inventory of specific warehouse
+    properties:
+      warehouseId:
+        description: Identifier of warehouse
+        type: string
+      name?:
+        description: Name of warehouse
+        type: string
+      availableCount?:
+        type: number
+        minimum: 0
+        description: Quantity of items available in inventory
+      reservedCount?:
+        type: number
+        minimum: 0
+        description: Quantity of reserved items
+      lastUpdated?:
+        description: Data and time of last update
+        type: datetime
+
+  PartnerAvailabilityData:
+    type: object
+    description: Information about availability of product from partner
+    properties:
+      partnerInfo:
+        description: Information about partner
+        type: partner.PartnerInfo
+      quantityInStock:
+        description: Quantity of items available in stock of partner
+        type: integer
+      productPrice:
+        description: Partners product price
+        type: number
+      tax:
+        description: Partners tax price
+        type: number
+      quantityReserved?:
+        description: Quantity of reserved partners items
+        type: integer
+
+  Availability:
+    type: object
+    description: Availability info
+    properties:
+      productId:
+        description: Identifier of product
+        type: string
+      variantId:
+        description: Identifier of product variant
+        type: string
+      warehousesAvailability:
+        description: Information about the availability in warehouse
+        type: WarehouseInventory[]
+      storesAvailability:
+        description: Information about the availability in stores
+        type: StoreAvailabilityData[]
+      partnersAvailability:
+        description: Partners information about the availability of product
+        type: PartnerAvailabilityData[]

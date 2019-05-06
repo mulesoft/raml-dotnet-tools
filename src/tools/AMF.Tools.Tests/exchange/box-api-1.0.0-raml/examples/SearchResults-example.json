@@ -1,0 +1,136 @@
+{
+  "total_count" : 2 ,
+  "entries" : [
+    {
+      "type" : "file" ,
+      "id" : "16098267691" ,
+      "sequence_id" : "4" ,
+      "etag" : "4" ,
+      "sha1" : "f9415a2fd622bfd93f88077e1e0fdb7c327516de" ,
+      "name" : "sample.txt" ,
+      "description" : "" ,
+      "size" : 19 ,
+      "path_collection" : {
+        "total_count" : 1 ,
+        "entries" : [
+          {
+            "type" : "folder" ,
+            "id" : "0" ,
+            "sequence_id" : null ,
+            "etag" : null ,
+            "name" : "All Files"
+          }
+        ]
+      } ,
+      "created_at" : "2014-04-10T06:38:50-07:00" ,
+      "modified_at" : "2014-04-14T12:27:36-07:00" ,
+      "trashed_at" : null ,
+      "purged_at" : null ,
+      "content_created_at" : "2014-01-28T12:20:39-08:00" ,
+      "content_modified_at" : "2014-03-13T08:46:14-07:00" ,
+      "created_by" : {
+        "type" : "user" ,
+        "id" : "214268589" ,
+        "name" : "RAML QA" ,
+        "login" : "ramlqa@mulesoft.com"
+      } ,
+      "modified_by" : {
+        "type" : "user" ,
+        "id" : "214268589" ,
+        "name" : "RAML QA" ,
+        "login" : "ramlqa@mulesoft.com"
+      } ,
+      "owned_by" : {
+        "type" : "user" ,
+        "id" : "214268589" ,
+        "name" : "RAML QA" ,
+        "login" : "ramlqa@mulesoft.com"
+      } ,
+      "shared_link" : null ,
+      "parent" : {
+        "type" : "folder" ,
+        "id" : "0" ,
+        "sequence_id" : null ,
+        "etag" : null ,
+        "name" : "All Files"
+      } ,
+      "item_status" : "active"
+    } , {
+      "type" : "file" ,
+      "id" : "23629729463" ,
+      "sequence_id" : "3" ,
+      "etag" : "3" ,
+      "sha1" : "f9415a2fd622bfd93f88077e1e0fdb7c327516de" ,
+      "name" : "sample.txt" ,
+      "description" : "" ,
+      "size" : 19 ,
+      "path_collection" : {
+        "total_count" : 2 ,
+        "entries" : [
+          {
+            "type" : "folder" ,
+            "id" : "0" ,
+            "sequence_id" : null ,
+            "etag" : null ,
+            "name" : "All Files"
+          } , {
+            "type" : "folder" ,
+            "id" : "2776924507" ,
+            "sequence_id" : "0" ,
+            "etag" : "0" ,
+            "name" : "API Notebook Test Folder"
+          }
+        ]
+      } ,
+      "created_at" : "2014-12-05T08:34:11-08:00" ,
+      "modified_at" : "2015-03-16T03:25:12-07:00" ,
+      "trashed_at" : null ,
+      "purged_at" : null ,
+      "content_created_at" : "2014-03-13T08:46:14-07:00" ,
+      "content_modified_at" : "2014-03-13T08:46:14-07:00" ,
+      "created_by" : {
+        "type" : "user" ,
+        "id" : "214268589" ,
+        "name" : "RAML QA" ,
+        "login" : "ramlqa@mulesoft.com"
+      } ,
+      "modified_by" : {
+        "type" : "user" ,
+        "id" : "214268589" ,
+        "name" : "RAML QA" ,
+        "login" : "ramlqa@mulesoft.com"
+      } ,
+      "owned_by" : {
+        "type" : "user" ,
+        "id" : "214268589" ,
+        "name" : "RAML QA" ,
+        "login" : "ramlqa@mulesoft.com"
+      } ,
+      "shared_link" : {
+        "url" : "https://app.box.com/s/l2d9xqp9azqsi7ag1lll" ,
+        "download_url" : "https://app.box.com/shared/static/l2d9xqp9azqsi7ag1lll.txt" ,
+        "vanity_url" : null ,
+        "effective_access" : "open" ,
+        "is_password_enabled" : false ,
+        "unshared_at" : null ,
+        "download_count" : 1 ,
+        "preview_count" : 0 ,
+        "access" : "open" ,
+        "permissions" : {
+          "can_download" : true ,
+          "can_preview" : true
+        }
+      } ,
+      "parent" : {
+        "type" : "folder" ,
+        "id" : "2776924507" ,
+        "sequence_id" : "0" ,
+        "etag" : "0" ,
+        "name" : "API Notebook Test Folder"
+      } ,
+      "item_status" : "active"
+    }
+  ] ,
+  "limit" : 30 ,
+  "offset" : 0
+}

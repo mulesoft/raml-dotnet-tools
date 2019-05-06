@@ -1,0 +1,67 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides information about stores
+
+uses:
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+
+types:
+
+  StoreInfo:
+    description: Information about store
+    type: object
+    properties:
+      storeId?:
+        description: Identifier of store
+        type: string
+      name:
+        description: Name of store
+        type: string
+      description?: string
+      notes?:
+        description: Other store notes
+        type: string
+      openingHours:
+        type: string
+        example: "Mo,Tu,We,Th,Fr 08:00-18:00"
+        description: The times during which a store is open for business.
+      contact:
+        description: Store contact info
+        type: ContactInfo
+      address:
+        description: Address of store
+        type: Address
+      geo:
+        description: Geographic coordinates of store
+        type: Geo
+      distance?:
+        type: number
+      distanceUnit?:
+        type: string
+        enum: [mi, km]
+
+  ContactInfo:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email contact
+      phone:
+        type: string
+        description: Phone contact
+
+  Address:
+    type: common.PostalAddress
+    description: Store address
+
+  Geo:
+    type: object
+    description: Geographic coordinates of store
+    properties:
+      latitude:
+        type: number
+        format: double
+      longitude:
+        type: number
+        format: double

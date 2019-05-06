@@ -1,0 +1,48 @@
+[
+  {	
+	"resourceType": "Observation",
+	"subject": {
+	  "reference": "patients/mrn/12345"
+	},
+	"device": {
+      "reference": "Device/123456789"
+    },
+    "effectiveDateTime": "2016-07-18",
+	"code": {
+	  "coding": [
+	    {
+	      "system": "https://rtmms.nist.gov",
+	      "code": "8454247",
+	      "display": "MDC_HF_DISTANCE"
+	    }
+	  ]
+	},
+	"valueQuantity": {
+	    "value": "12450",
+	    "unit": "MDC_DIM_STEP"
+  	}
+  },
+  {	
+	"resourceType": "Observation",
+	"subject": {
+	  "reference": "patients/mrn/12345"
+	},
+	"device": {
+      "reference": "Device/123456789"
+    },
+    "effectiveDateTime": "2016-07-18",
+	"code": {
+		"coding": [
+	    {
+			"system": "http://browser.ihtsdotools.org/",
+			"code": "248263006",
+			"display": "Duration of sleep"
+		}
+	  ]
+	},
+	"valueQuantity": {
+		"value": "473",
+		"unit": "min"
+	}
+  }
+]

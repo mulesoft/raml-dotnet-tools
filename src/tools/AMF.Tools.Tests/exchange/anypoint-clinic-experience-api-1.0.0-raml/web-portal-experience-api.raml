@@ -1,0 +1,163 @@
+#%RAML 0.8
+title: healthcare-portal2fhir-ehr-experience-api
+baseUri: http://healthcare-portal2fhir-ehr-experience-api.cloudhub.io/api
+version: v1
+
+/signin:
+  displayName: User Signin
+  post:
+    description: Signs in user
+    body: 
+      application/json:
+        example: !include onboarding/signin-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include onboarding/signin-response.json
+      401:
+        body:
+          application/json:
+            example: !include onboarding/signin-error-response.json
+/signout:
+  displayName: User Signout
+  post:
+    description: Signs out user
+    body: 
+      application/json:
+        example: !include onboarding/signout-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include onboarding/signout-response.json
+/signup:
+  displayName: User Signup
+  post:
+    description: Signs up user
+    body: 
+      application/json:
+        example: !include onboarding/signup-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include onboarding/signup-response.json
+      400:
+        body:
+          application/json:
+            example: !include onboarding/signup-error-response.json
+
+/patient/{id}:
+  uriParameters:
+    id:
+      type: string
+      description: Patient ID
+  /info:
+    displayName: Patient info
+    get:
+      description: GET patient info from EHR system
+      queryParameters:
+        mock:
+          type: string
+          enum: [on, off]
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include patient-portal-response.json
+    put:
+      description: PUT patient info from Portal to SFDC Health Cloud
+      body:
+        application/json:
+          example: !include patient-portal-request.json
+      responses:
+        200:
+          body:
+            application/json:  
+  /health:
+    displayName: Patient health info
+    get:
+      description: GET patient health info from EHR
+      queryParameters:
+        mock:
+          type: string
+          enum: [on, off]
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include patient-portal-response.json
+    put:
+      description: PUT patient health info from Portal to SFDC Health Cloud and EHR
+      body:
+        application/json:
+          example: !include health-portal-request.json
+      responses:
+        200:
+          body:
+            application/json:
+  /appointments:
+    post:
+      description: POST new appointment for patient
+      body:
+        application/json:
+          example: !include appointment-portal-request.json
+      responses:
+        201: 
+    /upcomming:
+      displayName: Upcoming Appointments for Patient
+      get:
+        description: GET upcoming appointments for specific patient
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include upcomming-appointments-response.json
+    /history:
+      displayName: Past Appointments for Patient
+      get:
+        description: GET past appointments for specific patient
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include appointments-history-response.json
+            
+/practitioners:
+  displayName: Practitioners
+  get:
+    description: Get all information about practitioners in the FHIR format
+    queryParameters:
+        mock:
+          type: string
+          enum: [on, off]
+          required: false
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include practitioners-portal-response.json
+  /{id}:
+    get:
+      description: Get all information about practitioners with specificID in the FHIR format
+      queryParameters:
+        mock:
+          type: string
+          enum: [on, off]
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include practitioner-portal-response.json
+    /schedule:
+      get:
+        description: Get all information about practitioners with specificID in the FHIR format        
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include practitioner-schedule-response.json              

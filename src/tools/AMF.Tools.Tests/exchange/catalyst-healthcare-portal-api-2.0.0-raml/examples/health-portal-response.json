@@ -1,0 +1,34 @@
+{
+	"conditions": [{
+		"onsetDate": "2016-05-10",
+		"code": "39065001",
+		"system": "http://snomed.info/sct",
+		"name": "Burn of ear",
+		"status": "true"
+	},
+	{
+		"code": "74400008",
+		"system": "http://snomed.info/sct",
+		"name": "Appendicitis",
+		"status": "false"
+	},
+	{
+		"code": "368009",
+		"system": "http://snomed.info/sct",
+		"name": "Heart valve disorder",
+		"status": "NA"
+	}],
+	"allergies": [{
+		"onsetDate": "2016-05-11",
+		"name": "PEANUT",
+		"status": "true"
+	},
+	{
+		"name": "Cashew nuts",
+		"status": "false"
+	},
+	{
+		"name": "PENICILLINS",
+		"status": "NA"
+	}]
+}

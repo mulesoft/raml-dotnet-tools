@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "url": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "id": {
+            "type": "integer"
+        },
+        "permission": {
+            "type": "string"
+        },
+        "members_count": {
+            "type": "integer"
+        },
+        "repos_count": {
+            "type": "integer"
+        }
+    }
+}

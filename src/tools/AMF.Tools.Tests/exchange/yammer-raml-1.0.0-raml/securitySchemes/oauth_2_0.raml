@@ -1,0 +1,12 @@
+description: ""
+type: OAuth 2.0
+describedBy: 
+  headers: 
+    Authorization: 
+      description: |
+        Used to send a valid OAuth 2 access token. The token must be preceeded by the word "Bearer".
+      example: Bearer _token_
+settings: 
+  authorizationUri: https://www.yammer.com/dialog/oauth
+  accessTokenUri: https://www.yammer.com/oauth2/access_token.json
+  authorizationGrants: [ code ]

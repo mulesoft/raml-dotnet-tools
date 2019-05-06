@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "user": {
+      "required": false,
+      "type": "object",
+      "properties": {
+        "public_repo_count": {
+          "required": false,
+          "type": "integer"
+        },
+        "public_gist_count": {
+          "required": false,
+          "type": "integer"
+        },
+        "followers_count": {
+          "required": false,
+          "type": "integer"
+        },
+        "following_count": {
+          "required": false,
+          "type": "integer"
+        },
+        "created": {
+          "required": false,
+          "type": "string"
+        },
+        "created_at": {
+          "required": false,
+          "type": "string"
+        },
+        "name": {
+          "required": false,
+          "type": "string"
+        },
+        "company": {
+          "required": false,
+          "type": "string"
+        },
+        "blog": {
+          "required": false,
+          "type": "string"
+        },
+        "location": {
+          "required": false,
+          "type": "string"
+        },
+        "email": {
+          "required": false,
+          "type": "string"
+        },
+        "id": {
+          "required": false,
+          "type": "integer"
+        },
+        "login": {
+          "required": false,
+          "type": "string"
+        },
+        "type": {
+          "required": false,
+          "type": "string"
+        },
+        "gravatar_id": {
+          "required": false,
+          "type": "string"
+        }
+      }
+    }
+  }
+}

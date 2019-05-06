@@ -1,0 +1,10 @@
+{
+  "id": "UpdateCaseRequest",
+  "title": "UpdateCaseRequest",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "object"
+    }
+  }
+}

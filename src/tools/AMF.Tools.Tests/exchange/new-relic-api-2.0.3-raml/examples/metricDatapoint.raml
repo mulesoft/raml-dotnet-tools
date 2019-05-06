@@ -1,0 +1,70 @@
+#%RAML 1.0 NamedExample
+metric_data:
+  from: 2018-02-01T15:05:00+00:00
+  to: 2018-02-01T15:10:00+00:00
+  metrics_not_found: []
+  metrics_found:
+    - WebTransaction
+  metrics:
+    - name: WebTransaction
+      timeslices:
+        - from: 2018-02-01T15:05:00+00:00
+          to: 2018-02-01T15:06:00+00:00
+          values:
+            average_call_time: 28.8
+            average_response_time: 28.8
+            requests_per_minute: 57900
+            call_count: 57876
+            min_call_time: 0.704
+            max_call_time: 3210
+            total_call_time: 1670000
+            throughput: 965
+            standard_deviation: 71.9
+        - from: 2018-02-01T15:06:00+00:00
+          to: 2018-02-01T15:07:00+00:00
+          values:
+            average_call_time: 29.1
+            average_response_time: 29.1
+            requests_per_minute: 56300
+            call_count: 56256
+            min_call_time: 0.701
+            max_call_time: 3350
+            total_call_time: 1640000
+            throughput: 938
+            standard_deviation: 74.1
+        - from: 2018-02-01T15:07:00+00:00
+          to: 2018-02-01T15:08:00+00:00
+          values:
+            average_call_time: 29.3
+            average_response_time: 29.3
+            requests_per_minute: 55100
+            call_count: 55076
+            min_call_time: 0.701
+            max_call_time: 3350
+            total_call_time: 1610000
+            throughput: 918
+            standard_deviation: 76.6
+        - from: 2018-02-01T15:08:00+00:00
+          to: 2018-02-01T15:09:00+00:00
+          values:
+            average_call_time: 29.7
+            average_response_time: 29.7
+            requests_per_minute: 53700
+            call_count: 53670
+            min_call_time: 0.701
+            max_call_time: 6530
+            total_call_time: 1590000
+            throughput: 894
+            standard_deviation: 79.5
+        - from: 2018-02-01T15:09:00+00:00
+          to: 2018-02-01T15:10:00+00:00
+          values:
+            average_call_time: 29.7
+            average_response_time: 29.7
+            requests_per_minute: 50600
+            call_count: 50628
+            min_call_time: 0.716
+            max_call_time: 6530
+            total_call_time: 1500000
+            throughput: 844
+            standard_deviation: 80.7

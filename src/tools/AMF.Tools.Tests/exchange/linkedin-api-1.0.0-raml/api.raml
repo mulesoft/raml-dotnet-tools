@@ -1,0 +1,789 @@
+#%RAML 0.8
+title: LinkedIn
+version: v1
+baseUri: https://api.linkedin.com/{version}
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  - oauth_1_0: !include securitySchemes/oauth_1_0.raml
+schemas:
+  - error-schema: !include schemas/error-schema.json
+  - error-xml: !include schemas/error-xml-schema.xsd
+  - people-gm-group-xml: !include schemas/people-gm-group-xml-schema.xsd
+  - jobSuggestions-xml: !include schemas/jobSuggestions-xml-schema.xsd
+  - group-xml: !include schemas/group-xml-schema.xsd
+  - post-xml: !include schemas/post-xml-schema.xsd
+  - company-xml: !include schemas/company-xml-schema.xsd
+  - companies-xml: !include schemas/companies-xml-schema.xsd
+  - update-xml: !include schemas/update-xml-schema.xsd
+  - update-comment-xml: !include schemas/update-comment-xml-schema.xsd
+  - is-liked-xml: !include schemas/is-liked-xml-schema.xsd
+  - updates-xml: !include schemas/updates-xml-schema.xsd
+  - activity-xml: !include schemas/activity-xml-schema.xsd
+  - comment-xml: !include schemas/comment-xml-schema.xsd
+  - comments-xml: !include schemas/comments-xml-schema.xsd
+  - company-about-xml: !include schemas/company-about-xml-schema.xsd
+  - folowing-company-xml: !include schemas/folowing-company-xml-schema.xsd
+  - products-xml: !include schemas/products-xml-schema.xsd
+  - people-share-xml: !include schemas/people-share-xml-schema.xsd
+  - currentUser-xml: !include schemas/currentUser-xml-schema.xsd
+  - currentUser: !include schemas/currentUser-schema.json
+  - connections-xml: !include schemas/connections-xml-schema.xsd
+  - person-xml: !include schemas/person-xml-schema.xsd
+  - people: !include schemas/people-schema.json
+  - followedCompanies-xml: !include schemas/followedCompanies-xml-schema.xsd
+  - mailboxItem-xml: !include schemas/mailboxItem-xml-schema.xsd
+  - personShare-xml: !include schemas/personShare-xml-schema.xsd
+  - networkStats-xml: !include schemas/networkStats-xml-schema.xsd
+  - jobBookmarks-xml: !include schemas/jobBookmarks-xml-schema.xsd
+  - jobBookmark-xml: !include schemas/jobBookmark-xml-schema.xsd
+  - posts-xml: !include schemas/posts-xml-schema.xsd
+  - groupMembership-xml: !include schemas/groupMembership-xml-schema.xsd
+  - peopleSearch-xml: !include schemas/peopleSearch-xml-schema.xsd
+  - companySearch-xml: !include schemas/companySearch-xml-schema.xsd
+  - companyShare-xml: !include schemas/companyShare-xml-schema.xsd
+  - companyShare: !include schemas/companyShare-schema.json
+  - companyStatistics-xml: !include schemas/companyStatistics-xml-schema.xsd
+  - groupPost-xml: !include schemas/groupPost-xml-schema.xsd
+  - groupPosts-xml: !include schemas/groupPosts-xml-schema.xsd
+  - jobSearch-xml: !include schemas/jobSearch-xml-schema.xsd
+  - jobGet-xml: !include schemas/jobGet-xml-schema.xsd
+  - jobUpdate-xml: !include schemas/jobUpdate-xml-schema.xsd
+  - job-xml: !include schemas/job-xml-schema.xsd
+resourceTypes:
+  - member: !include resourceTypes/member.raml
+  - baseResource: !include resourceTypes/baseResource.raml
+  - fieldSelectorMember: !include resourceTypes/fieldSelectorMember.raml
+  - fieldSelectors: !include resourceTypes/fieldSelectors.raml
+  - collection: !include resourceTypes/collection.raml
+  - fieldSelectorCollection: !include resourceTypes/fieldSelectorCollection.raml
+traits:
+  - hasModifiedFilter: !include traits/hasModifiedFilter.raml
+  - hasMembership: !include traits/hasMembership.raml
+  - hasRole: !include traits/hasRole.raml
+  - paged: !include traits/paged.raml
+  - producesPosts: !include traits/producesPosts.raml
+  - filterable: !include traits/filterable.raml
+  - secureUrlParam: !include traits/secureUrlParam.raml
+securedBy: [ oauth_2_0 , oauth_1_0 ]
+/people: 
+  /~{fieldSelectors}: 
+    displayName: Profile API
+    type: { fieldSelectorMember: { type: currentUser } }
+    get: 
+      is: [ secureUrlParam ]
+      description: |
+        Returns profile of the current user
+  /~: 
+    /group-memberships{fieldSelectors}: 
+      displayName: Groups API
+      type: { fieldSelectorMember: { type: groupMembership } }
+      get: 
+        is: [ hasMembership , paged ]
+        description: |
+          Returns Group Memberships for a User
+      post: 
+        description: |
+          POSTs additional group settings information
+        body: 
+          application/xml: 
+          application/json: 
+        responses: 
+          200: 
+            description: OK
+    /group-memberships: 
+      /{groupId}{fieldSelectors}: 
+        displayName: Groups API
+        type: fieldSelectors
+        uriParameters: 
+          groupId: 
+            displayName: Numeric group ID
+            description: |
+              The unique identifier for a LinkedIn group
+            type: integer
+            required: true
+        get: 
+          is: [ hasMembership ]
+          description: |
+            Returns Group settings
+          responses: 
+            200: 
+              body: 
+                application/xml: 
+                  schema: people-gm-group-xml
+                  example: !include examples/people-gm-group-xml-example.xml
+        put: 
+          description: |
+            Change Group settings
+          body: 
+            application/xml: 
+              schema: people-gm-group-xml
+              example: !include examples/people-gm-group-xml-example.xml
+          responses: 
+            200: 
+              description: OK
+        delete: 
+          description: Leave a Group
+      /{groupId}/posts{fieldSelectors}: 
+        type: { fieldSelectorCollection: { type: post } }
+        get: 
+          is: [ paged , hasRole , producesPosts ]
+          description: |
+            Returns a Group's Discussion Posts
+    /job-bookmarks: 
+      displayName: Job Bookmarks and Suggestions API
+      type: { collection: { type: jobBookmark } }
+      get: 
+        description: |
+          Returns Job Bookmarks
+        responses:
+          200:
+            body:
+              application/xml:
+                example: !include examples/jobBookmarks-xml-example.xml
+      post: 
+        description: |
+          Bookmarking a Job
+        body:
+          application/xml:
+            example: !include examples/jobBookmark-xml-example.xml
+        responses: 
+          200: 
+            description: OK
+      /{jobId}: 
+        type: baseResource
+        uriParameters: 
+          jobId: 
+            displayName: Job ID
+            description: |
+              The unique identifier for a job.
+            required: true
+        delete: 
+          description: |
+            Deleting a Job Bookmark
+    /suggestions: 
+      displayName: Groups API
+      /groups{fieldSelectors}: 
+        type: fieldSelectors
+        get: 
+          description: |
+            Get Suggested Groups for a User
+        /{groupId}: 
+          type: baseResource
+          uriParameters: 
+            groupId: 
+              displayName: Numeric group ID
+              description: |
+                The unique identifier for a LinkedIn group
+              type: integer
+              required: true
+          delete: 
+            description: |
+              Remove a Group Suggestion for a Use
+            responses: 
+              200: 
+                description: OK
+      /job-suggestions{fieldSelectors}: 
+        type: { fieldSelectorCollection: { type: jobSuggestion } }
+        get: 
+          description: |
+            Retrieving a List of a Member's Suggested Jobs
+          responses:
+            200:
+              body:
+                application/xml:
+                  example: !include examples/jobSuggestions-xml-example.xml
+      /to-follow/companies: 
+        type: { collection: { type: company } }
+        get: 
+          description: You can retrieve a collection of suggested companies for the current user.
+          responses:
+            200:
+              body:
+                application/xml:
+                  example: !include examples/companies-xml-example.xml
+    /connections{fieldSelectors}: 
+      displayName: Connections API
+      type: { fieldSelectorCollection: { type: connection } }
+      is: [ paged , hasModifiedFilter ]
+      get: 
+        description: |
+          Returns a list of 1st degree connections for a user who has granted access to his/her accoun
+    /network: 
+      /updates: 
+        type: { member: { type: update } }
+        get: 
+          is: [ paged ]
+          description: Retreive updates.
+          queryParameters: 
+            scope: 
+              description: "self to return member's feed. Omitted to return aggregated network feed."
+              example: self
+            type: 
+              description: Any valid Network Update Type from the table below. Types must be in all capital letters. To specify more than one Network Update type, add the type parameter to the resource URL for each type.
+              enum: 
+                - PROF
+                - CCEM
+                - APPS
+                - SVPR
+                - STAT
+                - JGRP
+                - MSFC
+                - VIRL
+                - PREC
+                - PICU
+                - JOBP
+                - CONN
+                - CMPY
+                - SHAR
+                - APPM
+                - PFOL
+                - PRFX
+              example: JOBP
+            after: 
+              description: "timestamp after which to retrieve updates for (Ex: 1243834824000) note: precision is milliseconds since the epoch"
+              example: 1243834824000
+            before: 
+              description: "timestamp before which to retrieve updates for (Ex: 1243834824000) note: precision is milliseconds since the epoch"
+              example: 1243834824000
+            show-hidden-members: 
+              description: 'true or false. default is false. Whether to display updates from people the member has chosen to "hide" from their update stream.'
+              type: boolean
+          responses:
+            200:
+              body:
+                application/xml:
+                  example: !include examples/update-xml-example.xml
+        /key={NetworkUpdateKey}: 
+          /likes: 
+            type: { collection: { type: update } }
+            get: 
+              description: Use a similar syntax to retrive the complete list of people who liked an update
+              responses:
+                200:
+                  body:
+                    application/xml:
+                      example: !include examples/updates-xml-example.xml
+          /update-comments: 
+            type: baseResource
+            post: 
+              description: |
+                When you want to post a new comment to an existing update:
+                Ensure update/is-commentable is set to true
+                Take the update/update-key from an existing update and POST to the following URL structure:
+              body: 
+                application/xml: 
+                  schema: update-comment-xml
+                  example: !include examples/update-comment-xml-example.xml
+            get: 
+              description: By default, a network update containing more than 10 comments will only return you the most recent five. To retrieve all comments for a given network update
+          /is-liked: 
+            type: baseResource
+            put: 
+              description: A successful comment PUT will return a 201 Content Created status code.
+              body: 
+                application/xml: 
+                  schema: is-liked-xml
+                  example: !include examples/is-liked-xml-example.xml
+              responses: 
+                201: 
+      /network-stats: 
+        type: { collection: { type: networkStat } }
+        get: 
+          description: "Information about the member's network, such as how many connections they have one and two degrees away."
+          responses:
+            200:
+              body:
+                application/xml:
+                  example: !include examples/networkStats-xml-example.xml
+    /person-activities: 
+      type: { collection: { type: activity } }
+      post: 
+        description: 'The Post Network Update API allows you to send in an activity from your site to be posted to the first degree connections of the LinkedIn user. Network updates are the LinkedIn term for news feed activities and appear on the center column of the home page. Use it when a user on your site performs some activity on your site that they want to broadcast to their connections. For example, you might send a message "Peter Smith booked a trip to London, England on October 30."'
+        body:
+          application/xml:
+            example: !include examples/activity-xml-example.xml
+        responses: 
+          200: 
+    /shares: 
+      type: { collection: { type: personShare } }
+      post: 
+        description: Post a share
+        body:
+          application/xml:
+            example: !include examples/personShare-xml-example.xml
+        responses: 
+          200: 
+    /mailbox: 
+      type: { collection: { type: mailboxItem } }
+      post: 
+        description: |
+          This call requires that you identify only the person being invited. The inviter will always come from the access token you use when you make the call. There are two methods of identifying the user being invited:
+          Member ID + auth token: If the invitee was found using a search API call, then the search result will have included the member ID and auth token to make the API call. Use both of those to identify the member to invite.
+          Email: For all other cases, you can use email address to identify the member to invite.
+        body:
+          application/xml:
+            example: !include examples/mailboxItem-xml-example.xml
+        responses: 
+          200: 
+    /following/companies: 
+      type: { collection: { type: company } }
+      get: 
+        description: Retrieve a list of companies a member is following
+        responses:
+          200:
+            body:
+              application/xml:
+                example: !include examples/companies-xml-example.xml
+      post: 
+        description: Start following a company
+        body:
+          application/xml:
+            example: !include examples/company-xml-example.xml
+        responses: 
+          201: 
+      /id={id}: 
+        type: baseResource
+        delete: 
+          description: Stop following a company
+  /url={publicProfileUrl}{fieldSelectors}: 
+    displayName: Profile API
+    type: { fieldSelectorMember: { type: person } }
+    get: 
+      is: [ secureUrlParam ]
+      description: |
+        Returns profile of user by URL
+  /url={publicProfileUrl}/connections{fieldSelectors}: 
+    displayName: Connections API
+    type: { fieldSelectorCollection: { type: connection } }
+    get: 
+      is: [ paged , hasModifiedFilter ]
+      description: |
+        Returns a list of 1st degree connections for a user who has granted access to his/her accoun
+  /id={peopleId}{fieldSelectors}: 
+    displayName: Profile API
+    type: { fieldSelectorMember: { type: person } }
+    get: 
+      is: [ secureUrlParam ]
+      description: |
+        Returns profile of user by ID
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+  /id={peopleId}/connections{fieldSelectors}: 
+    displayName: Connections API
+    type: { fieldSelectorCollection: { type: connection } }
+    get: 
+      is: [ paged , hasModifiedFilter ]
+      description: |
+        Returns a list of 1st degree connections for a user who has granted access to his/her accoun
+/people-search{fieldSelectors}: 
+  displayName: People Search API
+  type: { fieldSelectorMember: { type: peopleSearch } }
+  get: 
+    is: [ paged , filterable ]
+    description: |
+      Returns information about people
+    queryParameters: 
+      first-name: 
+        description: |
+          Members with a matching first name. Matches must be exact. Multiple words should be separated by a space.
+      last-name: 
+        description: |
+          Members with a matching last name. Matches must be exactly. Multiple words should be separated by a space.
+      company-name: 
+        description: |
+          Members who have a matching company name on their profile. company-name can be combined with the current-company parameter
+          to specifies whether the person is or is not still working at the company.
+          
+          It's often valuable to not be too specific with the company name. LinkedIn has made great efforts at standardizing company names,
+          but including suffixes such as "Inc" and "Company" may overly limit your search, missing people who did not include those suffixes
+          on their company names. It's usually better to  search for the basic name of the company and all different versions will be returned.
+          This does increase the possibility of a false positive match return, though, so consider the most specific terms you can use.
+          For example, consider using "Acme" instead of "Acme, Inc" to find people from a company called Acme, Inc. But this runs the risk
+          of finding people from different companies with Acme in the title, such as "Acme Vending" and "Acme Services".
+      current-company: 
+        description: |
+          Valid values are true or false. A value of true matches members who currently work at the company specified in the company-name parameter.
+          A value of false matches members who once worked at the company. Omitting the parameter matches members who currently or once worked
+          the company.
+        type: boolean
+      title: 
+        description: |
+          Matches members with that title on their profile. Works with the current-title parameter.
+      current-title: 
+        description: |
+          Valid values are true or false. A value of true matches members whose title is currently the one specified in the title-name parameter.
+          A value of false matches members who once had that title. Omitting the parameter matches members who currently or once had that title.
+        type: boolean
+      school-name: 
+        description: |
+          Members who have a matching school name on their profile. school-name can be combined with the current-school parameter to specifies
+          whether the person is or is not still at the school.
+          
+          It's often valuable to not be too specific with the school name. The same explation provided with company name applies:
+          "Yale" vs. "Yale University".
+      current-school: 
+        description: |
+          Valid values are true or false. A value of true matches members who currently attend the school specified in the school-name parameter.
+          A value of false matches members who once attended the school. Omitting the parameter matches members who currently or once attended
+          the school.
+        type: boolean
+      country-code: 
+        description: |
+          Matches members with a location in a specific country. Values are defined in by ISO 3166 standard. Country codes must be in all lower case.
+      postal-code: 
+        description: |
+          Matches members centered around a Postal Code. Must be combined with the country-code parameter. Not supported for all countries.
+      distance: 
+        description: |
+          Matches members within a distance from a central point. This is measured in miles. This is best used in combination with both country-code
+          and postal-code.
+      facets: 
+        description: |
+          "Use facets to discover for a member:          
+          Who in their network works at a specific company, or group of companies.
+          How the people their network cluster together. What locations or industries are the most popular?          
+          Where their connections graduated from school."
+/groups: 
+  displayName: Groups API
+  /{groupId}{fieldSelectors}: 
+    type: { fieldSelectorMember: { type: group } }
+    uriParameters: 
+      groupId: 
+        displayName: Numeric group ID
+        description: |
+          The unique identifier for a LinkedIn group
+        type: integer
+        required: true
+    get: 
+      description: |
+        Returns Group's Profile Details
+  /{groupId}/posts: 
+    type: { fieldSelectorCollection: { type: groupPost } }
+    get: 
+      is: [ paged , hasRole , producesPosts ]
+      description: |
+        Returns a Group's Discussion Posts
+    post: 
+      description: Sharing content with a post is fairly straight forward. Simply make a POST call to the Groups API
+      responses: 
+        201: 
+/posts: 
+  displayName: ""
+  /{postId}{fieldSelectors}: 
+    type: { fieldSelectorMember: { type: post } }
+    uriParameters: 
+      postId: 
+        displayName: Post ID
+        description: |
+          The unique identifier for a post
+        required: true
+    get: 
+      description: |
+        Returns Discussion Post
+    delete: 
+      description: |
+        Deletes a Post
+  /{postId}/comments: 
+    type: { collection: { type: comment } }
+    post: 
+      description: Add a Comment to a Post
+      body:
+        application/xml:
+          example: !include examples/comment-xml-example.xml
+      responses: 
+        201: 
+    get: 
+/comments/{commentId}{fieldSelectors}: 
+  type: fieldSelectors
+  uriParameters: 
+    commentId: 
+      displayName: Comment ID
+      description: |
+        The unique identifier for a comment
+      type: integer
+      required: true
+  get: 
+    description: |
+      Returns Comments
+  delete: 
+    description: |
+      Deletes a Comment
+/jobs: 
+  displayName: Job Lookup API
+  type: { collection: { type: job } }
+  post: 
+    description: Post a job
+    headers: 
+      Content-Type: 
+        enum: [ text/xml ]
+    body:
+      application/xml:
+        example: !include examples/job-xml-example.xml
+    responses: 
+      402: 
+        description: No job inventory available
+      409: 
+        description: |
+          Duplicate job.Happens when you try to Post a New Job, but another job with the same Partner Job Id already exists. Partner Job Id has to be unique. So either repost with a new Partner Job Id, or edit the existing job.
+          Job is closed. Happens when you try to update or renew a job that has already been closed. Renew is not ReOpen. To reopen a closed job, post it again.
+          Job is expired. Happens when you try to update a job that has been expired. 
+          Make a renew call. You can edit and renew a job in the same call.
+      201: 
+  /{jobId}{fieldSelectors}: 
+    type: { fieldSelectorMember: { type: jobGet } }
+    uriParameters: 
+      jobId: 
+        displayName: Job ID
+        description: |
+          The unique identifier for a job.
+        required: true
+    get: 
+      description: |
+        Returns Job info
+  /partner-job-id={partnerJobId}: 
+    type: { member: { type: jobUpdate } }
+    uriParameters: 
+      partnerJobId: 
+        displayName: partnerJobId
+        description: Unique ID for the job created by the partner (must be unique for each job posted).
+        required: true
+        maxLength: 50
+    put: 
+      description: Edit or renew a job
+      body:
+        application/xml:
+          example: !include examples/jobUpdate-xml-example.xml
+      responses: 
+        200: 
+    delete: 
+      description: |
+        Close calls should not include XML; only the URL is required.
+        An HTTP DELETE must be used to close a job.
+/job-search{fieldSelectors}: 
+  displayName: Job Search API
+  type: { fieldSelectorMember: { type: jobSearch } }
+  get: 
+    is: [ paged , filterable ]
+    description: |
+      Returns Jobs found by some criteria
+    queryParameters: 
+      distance: 
+        description: Matches jobs within a distance from a central point. This is measured in miles. This is best used in combination with both country-code and postal-code.
+      postal-code: 
+        description: Matches jobs centered around a Postal Code. Must be combined with the country-code parameter. Not supported for all countries.
+      country-code: 
+        description: Matches jobs with a location in a specific country. Values are defined in by ISO 3166 standard. Country codes must be in all lower case.
+      job-title: 
+        description: Matches jobs with the same job title.
+      company-name: 
+        description: |
+          Jobs with a matching company name. It's often valuable to not be too specific with the company name. LinkedIn has made great efforts at standardizing company names, but including suffixes such as "Inc" and "Company" may overly limit your search, missing people who did not include those suffixes on their company names. It's usually better to  search for the basic name of the company and all different versions will be returned. This does increase the possibility of a false positive match return, though, so consider the most specific terms you can use. For example, consider using "Acme" instead of "Acme, Inc" to find people from a company called Acme, Inc. But this runs the risk of finding people from different companies with Acme in the title, such as "Acme Vending" and "Acme Services".
+        example: Acme Vending
+      facets: 
+        description: |
+          |Parameter| Definition| Values|
+          |---|---|---|
+          |company|The job postings by company.|| 
+          |date-posted|The job postings by the date posted.|Format: YearMonthDay (e.g. 20121031)|
+          |location|A geographical region. This is not necessarily a country. It could be a city or regional area, such as San Francisco Bay Area.|A geographical code, such as us:84 for San Francisco Bay Area or fr:0 for France.|
+          |job-function|The job postings by job function.|| 
+          |industry|An industry field.|Industry values are listed on a separate page.|
+          |salary|The job postings based on salary.||
+/companies{fieldSelectors}: 
+  type: { fieldSelectorCollection: { type: company } }
+  get: 
+    is: [ paged ]
+    queryParameters: 
+      is-company-admin: 
+        description: The authenticated user is an administrator
+        type: boolean
+        example: is-company-admin=true
+      email-domains: 
+        description: Company email domains.
+        example: email-domain=apple.com
+/companies: 
+  /{companyId}{fieldSelectors}: 
+    type: baseResource
+    uriParameters: 
+      companyId: 
+        displayName: companyId
+        description: The unique internal numeric company identifier.
+        required: true
+    get: 
+      description: Returns a single company if found.
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+              schema: company-about-xml
+              example: !include examples/company-about-xml-example.xml
+  /{companyId}: 
+    uriParameters: 
+      companyId: 
+        displayName: companyId
+        description: The unique internal numeric company identifier.
+        required: true
+    /updates: 
+      type: { member: { type: update } }
+      get: 
+        is: [ paged ]
+        description: "To retrieve the company's updates"
+        queryParameters: 
+          event-type: 
+            description: Any valid Company Update Type from the table below.
+            example: event-type=status-update
+        responses:
+          200:
+            body:
+              application/xml:
+                example: !include examples/update-xml-example.xml
+      /key={CompanyUpdateKey}: 
+        type: baseResource
+        /update-comments: 
+          type: baseResource
+          get: 
+            is: [ paged ]
+            queryParameters: 
+              event-type: 
+                description: Any valid Company Update Type from the table below.
+                example: event-type=status-update
+        /likes: 
+          type: baseResource
+          get: 
+            is: [ paged ]
+            queryParameters: 
+              event-type: 
+                description: Any valid Company Update Type from the table below.
+                example: event-type=status-update
+    /shares: 
+      type: { collection: { type: companyShare } }
+      post:
+        description: Full company share with content
+        body:
+          application/json:
+            schema: companyShare
+            example: !include examples/companyShare-example.json
+          application/xml:
+            example: !include examples/companyShare-xml-example.xml
+        responses: 
+          201: 
+            description: Created on success
+    /is-company-share-enabled: 
+      type: baseResource
+      get: 
+    /relation-to-viewer/is-company-share-enabled: 
+      type: baseResource
+      get: 
+    /num-followers: 
+      type: { member: { type: companyShare } }
+      get: 
+        queryParameters: 
+          geographies: 
+            description: See geographies for the valid values.
+            maxLength: 10
+            example: af.eg
+          jobFunc: 
+            description: See job functions for the valid values.
+            maxLength: 10
+            example: jobFunc=it
+          industries: 
+            description: See industry codes for the valid values.
+            maxLength: 10
+            example: 47
+          seniorities: 
+            description: Specify the level of seniority to target.
+            enum: 
+              - d
+              - c
+              - en
+              - ic
+              - m
+              - o
+              - p
+              - tr
+              - up
+              - vp
+            example: c
+          companySizes: 
+            description: Specify the size range for the company.
+            enum:
+              - self
+              - 1-10              
+              - 11-50
+              - 51-200
+              - 201-500             
+              - 501-1000
+              - 1001-5000
+              - 5001-10000
+              - 10001
+            maxLength: 10
+            example: self
+        responses:
+          200:
+            body:
+              application/json:
+                schema: companyShare
+                example: !include examples/companyShare-example.json
+    /company-statistics: 
+      type: { collection: { type: companyStatistic } }
+      get: 
+        description: The Company Statistics API provides the ability to retrieve statistics for a particular company page. These stats can give you insights on both company share and follower metrics. Currently, the numbers provided are not real-time. The analytics breakdown for a company page is provided on a daily basis.
+        responses:
+          200:
+            body:
+              application/xml:
+                example: !include examples/companyStatistics-xml-example.xml
+    /products{fieldSelectors}: 
+      type: { collection: { type: product } }
+      get: 
+        description: |
+          Use the Company Products API to:
+          Return a list of products and services supported by a company
+          Return recommendations for a particular product
+        responses:
+          200:
+            body:
+              application/xml:
+                example: !include examples/products-xml-example.xml
+  /universal-name={companyName}: 
+    type: baseResource
+    uriParameters: 
+      companyName: 
+        displayName: companyName
+        description: The unique string identifier for a company.
+        required: true
+        example: universal-name=linkedin
+    get: 
+      description: Returns a single company if found.
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+              schema: company-xml
+              example: !include examples/company-xml-example.xml
+/company-search{fieldSelectors}: 
+  type: { fieldSelectorMember: { type: companySearch } }
+  get: 
+    is: [ paged , filterable ]
+    description: |
+      Use the Company Search API to find companies using keywords, industry, location, or some other criteria. It returns a collection of matching companies. Each entry can contain much of the information available on the company page.
+      The API can also return facets. Facets provide you with data about the collection of companies, such as which companies are located in a certain area, size of the companies, and the industry a company is in. You can then use this data to make a new API call that further refines your original request. This is similar to clicking the buttons on the left-hand side of the LinkedIn Search results page.
+    queryParameters: 
+      hq-only: 
+        description: 'Matching companies by the headquarters location. When this is set to "true" and a location facet is used, this restricts returned companies to only those whose headquarters resides in the specified location.'
+      facets: 
+        description: |
+          |Parameter| Definition| Values|
+          |---|---|---|
+          |location|A geographical region. This is not necessarily a country. It could be a city or regional area, such as San Francisco Bay Area.|A geographical code, such as us:84 for San Francisco Bay Area or fr:0 for France.| 
+          |industry|An industry field.|Industry codes are listed on a separate page.|
+          |network|Collection of companies based on relationship.||
+          |company-size|The company collection based on size range specified.|Valid values are: B: 1-10 C: 11-50 D: 51-200 E: 201-500 F: 501-1000 G: 1001-5000 H: 5001-10,000 I: 10,000+|
+          |num-followers-range|The company collection based on the number of followers.||
+          |fortune|The company collection based on the Fortune ranking.||
+documentation: 
+  - title: Headline
+    content: !include docs/headline.md

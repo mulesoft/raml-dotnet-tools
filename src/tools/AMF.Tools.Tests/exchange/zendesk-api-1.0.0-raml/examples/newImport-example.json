@@ -1,0 +1,13 @@
+{
+  "ticket": {
+    "requester_id": 827,
+    "assignee_id": 19,
+    "subject": "Some subject",
+    "description": "A description",
+    "tags": [ "foo", "bar" ],
+    "comments": [
+      { "author_id": 827, "value": "This is a comment", "created_at": "2009-06-25T10:15:18Z" },
+      { "author_id": 19, "value": "This is a private comment", "public": false }
+    ]
+  }
+}

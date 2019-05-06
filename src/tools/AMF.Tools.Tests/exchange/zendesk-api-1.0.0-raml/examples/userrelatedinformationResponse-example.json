@@ -1,0 +1,10 @@
+{
+  "user_related" : {
+    "requested_tickets" : 10 ,
+    "ccd_tickets" : 3 ,
+    "topics" : 2 ,
+    "topic_comments" : 7 ,
+    "votes" : 3 ,
+    "subscriptions" : 4
+  }
+}

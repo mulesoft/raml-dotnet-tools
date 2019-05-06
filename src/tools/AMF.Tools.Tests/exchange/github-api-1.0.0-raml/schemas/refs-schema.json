@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "references": [
+        {
+            "properties": {
+                "ref": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "object": {
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "sha": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    ]
+}

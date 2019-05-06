@@ -1,0 +1,20 @@
+queryParameters: 
+  date: 
+    description: |
+      A filter on the list based on the object date field. The value can be a
+      string with an exact UTC timestamp, or it can be a dictionary with the
+      following options:
+        **gt**: optional Return values where the date field is after this timestamp.
+        **gte**: optional Return values where the date field is after or equal to this timestamp.
+        **lt**: optional Return values where the date field is before this timestamp.
+        **lte**: optional Return values where the date field is before or equal to this timestamp.
+  recipient: 
+    description: |
+      Only return transfers for the recipient specified by this recipient ID.
+  status: 
+    description: |
+      Only return transfers that have the given status: pending, paid, or failed.
+    enum: 
+      - pending
+      - paid
+      - failed

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "type": "object" ,
+  "properties": {
+    "item": {
+      "description": "The item that this comment will be placed on.",
+      "type": "object"
+    },
+    "type": {
+      "description": "The type of the item that this comment will be placed on.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The id of the item that this comment will be placed on.",
+      "type": "string"
+    },
+    "message": {
+      "description": "The text body of the comment.",
+      "type": "string"
+    }
+  },
+  "required": true
+}

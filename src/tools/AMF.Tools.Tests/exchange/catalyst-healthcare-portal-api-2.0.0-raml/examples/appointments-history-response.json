@@ -1,0 +1,26 @@
+[
+  {
+    "start": "Tue 05/24/16 at 2:00 PM",
+    "end": "Tue 05/24/16 at 3:00 PM",
+    "actor": "Mark Kingston",
+    "status": "cancelled"
+  },
+  {
+    "start": "Fri 06/24/16 at 3:00 PM",
+    "end": "Fri 06/24/16 at 4:00 PM",
+    "actor": "Jamie Fletcher",
+    "status": "cancelled"
+  },
+  {
+    "start": "Fri 06/03/16 at 4:00 PM",
+    "end": "Fri 06/03/16 at 5:00 PM",
+    "actor": "Dr. John Smith",
+    "status": "fulfilled"
+  },
+  {
+    "start": "Mon 06/20/16 at 1:00 PM",
+    "end": "Mon 06/20/16 at 2:00 PM",
+    "actor": "Dr. John Smith",
+    "status": "fulfilled"
+  }
+]

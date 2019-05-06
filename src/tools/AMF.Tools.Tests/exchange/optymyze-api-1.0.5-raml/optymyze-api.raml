@@ -1,0 +1,156 @@
+#%RAML 1.0
+version: v1
+title: Optymyze API
+description: Tables API For Reading & Adjusting Records
+
+
+securitySchemes:
+  basic:
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+
+traits:
+  hasHeaders:
+    headers:
+      Environment-ID:
+        displayName: Environment-ID
+        description: Environment id - check Optymyze cloud manager
+        type: string
+        required: true
+      Content-type:
+        displayName: Content-type
+        description: either xml or json
+        type: string
+        required: true
+
+types:
+  SortingInfo:
+    type: object
+    description: Accepts sort information
+    properties:
+      fieldName: string
+      sortDirection: string
+  PageInfo:
+    type: object
+    description: Accepts page information
+    properties:
+      page_number: integer
+      page_size: integer
+  Filter:
+    type: object
+    description: Filtering information
+    properties:
+      left_operand: string
+      operator: string
+      right_operand: string
+  RecordInfo:
+    type: object
+    description: Accepts filters, sort, page info and other details
+    properties:
+      fields: string[]
+      sortingInfo: SortingInfo
+      page_info: PageInfo
+      filters: Filter[]
+      formatted: boolean
+  ColumnValues:
+    type: object
+    description: Contains column values for a single row
+    properties:
+      columns: string[]
+  RowIdentifier:
+    type: object
+    description: Contains row identifier values
+    properties:
+      row_identifier: integer
+      row_version: integer
+  DatabaseRecord:
+    type: object
+    description: Contains row information for the database record
+    properties:
+      row_identifier: RowIdentifier
+      values: ColumnValues
+  Records:
+    type: object
+    description: Contains information of an requested entity
+    properties:
+      number_of_records: integer
+      records: DatabaseRecord[]
+
+
+  AddedRows:
+    type: object
+    description: Accepts information about rows to be added to a table
+    properties:
+      values: ColumnValues[]
+  EditedRows:
+    type: object
+    description: Accepts information about rows to be edited to a table
+    properties:
+      values: DatabaseRecord[]
+  DeletedRows:
+    type: object
+    description: Accepts information about rows to be deleted to a table
+    properties:
+      values: RowIdentifier[]
+  Tables:
+    type: object
+    description: Accepts information about one optymyze table to be adjusted
+    properties:
+      table_name: string
+      added_rows: AddedRows
+      edited_rows: EditedRows
+      deleted_rows: DeletedRows
+  AdjustmentInfo:
+    type: object
+    description: Accepts information about the optymyze tables to be adjusted
+    properties:
+      tables: Tables
+
+  Error:
+    type: object
+    description: Exception while accerssing obtymyze
+    properties:
+      values: string[]
+
+
+
+/read/records/{table}:
+  uriParameters:
+    table:
+      displayName: Table name - <type>.<table_UI_name>
+      type: string
+  post:
+    displayName: Read Records
+    securedBy: basic
+    description: api for reading records from the given Optymyze table
+    is: [hasHeaders]
+    body:
+      application/json:
+        type: RecordInfo
+    responses:
+      200:
+        description: Successful!
+        body:
+          application/json:
+            type: Records
+      401:
+        description: Invalid headers.
+        body:
+          application/json:
+            type: Error
+      451:
+        description: Invalid input to call.
+        body:
+          application/json:
+            type: Error
+
+/adjust:
+  post:
+    displayName: Modify Records
+    securedBy: basic
+    description: api that allows add/edit/delete of Optymyze table records
+    is: [hasHeaders]
+    body: 
+      application/json:
+        type: AdjustmentInfo

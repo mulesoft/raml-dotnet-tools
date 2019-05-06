@@ -1,0 +1,17 @@
+{
+  "user_field" : {
+    "url" : "https://company.zendesk.com/api/v2/user_fields/75.json" ,
+    "id" : 75 ,
+    "type" : "text" ,
+    "key" : "support_description" ,
+    "title" : "Support description" ,
+    "raw_title" : "Support description" ,
+    "description" : "This field describes the support plan this user has" ,
+    "raw_description" : "This field describes the support plan this user has" ,
+    "position" : 0 ,
+    "active" : true ,
+    "regexp_for_validation" : null ,
+    "created_at" : "2013-02-27T20:35:55Z" ,
+    "updated_at" : "2013-02-27T20:35:55Z"
+  }
+}

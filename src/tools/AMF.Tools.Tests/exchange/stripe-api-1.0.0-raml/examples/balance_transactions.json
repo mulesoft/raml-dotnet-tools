@@ -1,0 +1,30 @@
+{
+  "object": "list",
+  "url": "/v1/balance/history",
+  "count": 1,
+  "data": [
+    {
+    "id": "txn_2hrAStwRKjXiIp",
+    "object": "balance_transaction",
+    "source": "ch_2hrAFVP6jlr1jB",
+    "amount": 100,
+    "currency": "usd",
+    "net": 41,
+    "type": "charge",
+    "created": 1381104058,
+    "available_on": 1381104000,
+    "status": "available",
+    "fee": 59,
+    "fee_details": [
+      {
+        "amount": 45,
+        "currency": "usd",
+        "type": "stripe_fee",
+        "description": "Stripe processing fees",
+        "application": null
+      }
+    ],
+    "description": null
+  }
+  ]
+}

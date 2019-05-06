@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="Twilio Mule Extension API"
+        prefix="twilio-mule-extension-a-p-i"
+        namespace="http://www.mulesoft.org/schema/mule/twilio-mule-extension-a-p-i"
+        minMuleVersion="4.0.0-rc"
+        
+        xmlns="http://www.mulesoft.org/schema/mule/module"
+        xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+        xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+        xmlns:http="http://www.mulesoft.org/schema/mule/http"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.mulesoft.org/schema/mule/module http://www.mulesoft.org/schema/mule/module/current/mule-module.xsd
+           http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+           http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+
+    <property name="host" type="string" defaultValue="api.twilio.com" />
+    <property name="port" type="string" defaultValue="443" />
+    <property name="basePath" type="string" defaultValue="/2010-04-01" />
+    <property name="protocol" type="string" defaultValue="HTTPS" />
+
+            <property name="username" type="string" />
+        <property name="password" type="string" password="true" />
+    
+    <http:request-config name="twilio-mule-extension-a-p-i-httpreq-config" basePath="#[properties.basePath]">
+        <http:request-connection
+                    host="#[properties.host]"
+                    protocol="#[properties.protocol]"
+                    port="#[properties.port]">
+                    <http:authentication>
+                <http:basic-authentication username="#[properties.username]" password="#[properties.password]"/>
+            </http:authentication>
+                </http:request-connection>
+    </http:request-config>
+
+
+    <operation name="get-message-list" >
+                <parameters>
+                                        <parameter name="to" type="string"
+                    use="OPTIONAL" doc:description="Only show messages to this phone number."/>
+                            <parameter name="from" type="string"
+                    use="OPTIONAL" doc:description="Only show messages from this phone number or alphanumeric sender ID."/>
+                            <parameter name="date-sent" type="string"
+                    use="OPTIONAL" doc:description="Only show messages sent on this date (in GMT format), given as YYYY-MM-DD.
+Example: DateSent=2009-07-06.
+You can also specify inequality, such as DateSent&lt;=YYYY-MM-DD for messages that were sent on or before midnight on a date, and DateSent&gt;=YYYY-MM-DD for messages sent on or after midnight on a date."/>
+                            <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages.json" method="GET" >
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                                    <http:query-params>
+                        <![CDATA[#[ { 'To': parameters['to'],'From': parameters['from'],'DateSent': parameters['date-sent'] } filter $ != null ]]]>
+                    </http:query-params>
+                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json" />        </body>
+                    <output type="get-message-list-response-type" />
+            </operation>
+    <operation name="send-message" >
+                <parameters>
+                            <parameter name="send-message-request-data" type="send-message-request-type" use="REQUIRED" role="PRIMARY" />
+                                        <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages.json" method="POST" >
+                                    <http:body>
+                        #[output application/json --- parameters['send-message-request-data']]
+                    </http:body>
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json" />        </body>
+                    <output type="send-message-response-type" />
+            </operation>
+    <operation name="get-message" >
+                <parameters>
+                                        <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                            <parameter name="message-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any message successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages/{MessageSid}.json" method="GET" >
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'],'MessageSid': parameters['message-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json" />        </body>
+                    <output type="get-message-response-type" />
+            </operation>
+    <operation name="redact-message" >
+                <parameters>
+                            <parameter name="redact-message-request-data" type="redact-message-request-type" use="REQUIRED" role="PRIMARY" />
+                                        <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                            <parameter name="message-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any message successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages/{MessageSid}.json" method="POST" >
+                                    <http:body>
+                        #[output application/json --- parameters['redact-message-request-data']]
+                    </http:body>
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'],'MessageSid': parameters['message-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json" />        </body>
+                    <output type="redact-message-response-type" />
+            </operation>
+    <operation name="delete-message" >
+                <parameters>
+                                        <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                            <parameter name="message-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any message successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages/{MessageSid}.json" method="DELETE" >
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'],'MessageSid': parameters['message-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/xml" />        </body>
+                    <output type="string" />
+            </operation>
+    <operation name="get-media-list" >
+                <parameters>
+                                        <parameter name="date-created" type="string"
+                    use="OPTIONAL" doc:description="Only show media created on the given date. Should be formatted as YYYY-MM-DD. You can also specify inequality, such as DateCreated&lt;=YYYY-MM-DD for media generated at or before midnight on a date, and DateCreated&gt;=YYYY-MM-DD for media generated at or after midnight on a date."/>
+                            <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                            <parameter name="message-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any message successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages/{MessageSid}/Media.json" method="GET" >
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'],'MessageSid': parameters['message-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                                    <http:query-params>
+                        <![CDATA[#[ { 'DateCreated': parameters['date-created'] } filter $ != null ]]]>
+                    </http:query-params>
+                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json" />        </body>
+                    <output type="get-media-list-response-type" />
+            </operation>
+    <operation name="get-media" >
+                <parameters>
+                                        <parameter name="date-created" type="string"
+                    use="OPTIONAL" doc:description="Only show media created on the given date. Should be formatted as YYYY-MM-DD. You can also specify inequality, such as DateCreated&lt;=YYYY-MM-DD for media generated at or before midnight on a date, and DateCreated&gt;=YYYY-MM-DD for media generated at or after midnight on a date."/>
+                            <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                            <parameter name="message-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any message successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                            <parameter name="media-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any media successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages/{MessageSid}/Media/{MediaSid}.json" method="GET" >
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'],'MessageSid': parameters['message-sid'],'MediaSid': parameters['media-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                                    <http:query-params>
+                        <![CDATA[#[ { 'DateCreated': parameters['date-created'] } filter $ != null ]]]>
+                    </http:query-params>
+                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json" />        </body>
+                    <output type="get-media-response-type" />
+            </operation>
+    <operation name="delete-media" >
+                <parameters>
+                                        <parameter name="date-created" type="string"
+                    use="OPTIONAL" doc:description="Only show media created on the given date. Should be formatted as YYYY-MM-DD. You can also specify inequality, such as DateCreated&lt;=YYYY-MM-DD for media generated at or before midnight on a date, and DateCreated&gt;=YYYY-MM-DD for media generated at or after midnight on a date."/>
+                            <parameter name="account-sid" type="string"
+                    use="REQUIRED" doc:description="A 34 character string that uniquely identifies the user account."/>
+                            <parameter name="message-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any message successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                            <parameter name="media-sid" type="string"
+                    use="REQUIRED" doc:description="Unique ID for any media successfully created by Twilio&#8217;s API. It is a 34 character string that starts with &#8220;SM&#8230;&#8221; for SMS and &#8220;MM&#8230;&#8221; for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the &#8220;Sid&#8221; property in a message resource."/>
+                    </parameters>
+                <body>
+            <http:request config-ref="twilio-mule-extension-a-p-i-httpreq-config" path="/Accounts/{AccountSid}/Messages/{MessageSid}/Media/{MediaSid}.json" method="DELETE" >
+                                                                    <http:uri-params>
+                        <![CDATA[#[ { 'AccountSid': parameters['account-sid'],'MessageSid': parameters['message-sid'],'MediaSid': parameters['media-sid'] } filter $ != null ]]]>
+                    </http:uri-params>
+                                                    <http:query-params>
+                        <![CDATA[#[ { 'DateCreated': parameters['date-created'] } filter $ != null ]]]>
+                    </http:query-params>
+                            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/xml" />        </body>
+                    <output type="string" />
+            </operation>
+
+</module>

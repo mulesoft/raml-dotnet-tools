@@ -1,0 +1,21 @@
+#%RAML 1.0 DataType
+
+
+uses:
+  FHIR_primitive_types: /exchange_modules/org.mule.templates/fhir-primitive-types/1.0.0/fhir_primitive_types.raml
+  FHIR_element_types: /exchange_modules/org.mule.templates/fhir-element-types/1.0.0/fhir_element_types.raml
+
+description: Base Resource
+properties:
+  id?:
+    description: Logical id of this artifact
+    type: FHIR_primitive_types.id
+  meta?:
+    description: Metadata about the resource
+    type: FHIR_element_types.Meta
+  implicitRules?:
+    description: A set of rules under which this content was created
+    type: FHIR_primitive_types.uri
+  language?:
+    description: Language of the resource content
+    type: FHIR_primitive_types.code

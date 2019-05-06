@@ -1,0 +1,10 @@
+{
+  "message": "Validation Failed",
+  "errors": [
+    {
+      "code": "not_owned",
+      "field": "repository",
+      "resource": "TeamMember"
+    }
+  ]
+}

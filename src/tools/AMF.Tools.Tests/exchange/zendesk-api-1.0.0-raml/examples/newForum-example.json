@@ -1,0 +1,7 @@
+{
+	"forum": {
+		"name": "My Forum",
+		"forum_type": "articles",
+		"access": "logged-in users" 
+	}
+}

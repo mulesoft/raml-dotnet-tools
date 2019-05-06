@@ -1,0 +1,23 @@
+{
+  "id": 2,
+  "cookTime": 20.5,
+  "directions": [
+    "Cut the Apples",
+    "Put them in the oven",
+    "Remove from the oven after 20.0 minutes"
+  ],
+  "ingredients": [
+    {
+      "quantity": 0,
+      "unit": "UNIT",
+      "created": "2015-02-01 00:00:00",
+      "id": 1,
+      "lastModified": null,
+      "name": "Apple"
+    }
+  ],
+  "prepTime": 30.0,
+  "created": "2015-02-01 00:00:00",
+  "lastModified": null,
+  "name": "Baked Apples"
+}

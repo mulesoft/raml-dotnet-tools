@@ -1,0 +1,57 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "article" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "promoted" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "position" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "comments_disabled" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "label_names" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "string"
+            }
+          ]
+        } ,
+        "translations" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : [
+            {
+              "type" : "object" ,
+              "properties" : {
+                "locale" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "title" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "body" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

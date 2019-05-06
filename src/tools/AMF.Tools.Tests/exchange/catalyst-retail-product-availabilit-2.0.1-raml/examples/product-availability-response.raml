@@ -1,0 +1,58 @@
+#%RAML 1.0 NamedExample
+value: |
+      {
+        "productId": "122332665555",
+        "variantId": "88668866-2c6d-4fa6-9e17-4b2c42e0f051",
+        "warehousesAvailability": [
+          {
+            "warehouseId": "1",
+            "name": "Central Warehouse",
+            "availableCount": 100    
+          }
+        ], 
+        "partnersAvailability": [
+          {
+            "quantityInStock": 20,
+            "productPrice": 36.9,
+            "tax": 3.69,
+            "partnerInfo": {
+              "partnerId": "2d9df8be-a185-4dde-9577-d6edf6cdb398",
+              "name": "Best Amazing Store",
+              "description": "",
+              "email": "info@luckystore.example.com",
+              "phone": "+1-202-555-0119",
+              "url": "www.luckystore.example.com",
+              "shippingPrice": 5.5
+            }
+          }
+        ],   
+        "storesAvailability": [
+            {
+            "quantityInStock" : 55,
+            "storeInfo": {
+              "storeId": "1c9a20dc-c585-42fd-ac1a-1216085b76d2",
+              "name": "Anypoint Store 1",
+              "description": "Department store chain providing brand-name c",
+              "notes": "",
+              "openingHours": "Mo,Tu,We,Th,Fr 08:00-18:00",
+              "address": {
+                "address": "1223 Fake St.",
+                "city": "San Francisco",
+                "postalCode": "94108",
+                "state": "CA",
+                "country": "US"
+              },
+              "contact": {
+                "email": "store1@anypointstore.example.com",
+                "phone": "+1-202-555-0111"
+              },
+              "geo": {
+                "latitude": 37.78703308105469,
+                "longitude": -122.4060287475586
+              },
+              "distance": 0.12951756569805717,
+              "distanceUnit": "km"
+            }
+          }
+        ] 
+      }

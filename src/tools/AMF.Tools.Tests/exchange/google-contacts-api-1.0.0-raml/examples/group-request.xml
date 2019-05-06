@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<atom:entry xmlns:gd="http://schemas.google.com/g/2005">
+  <atom:category scheme="http://schemas.google.com/g/2005#kind"
+    term="http://schemas.google.com/contact/2008#group"/>
+  <atom:title type="text">Salsa group</atom:title>
+  <gd:extendedProperty name="more info about the group">
+    <info>Nice people.</info>
+  </gd:extendedProperty>
+</atom:entry>

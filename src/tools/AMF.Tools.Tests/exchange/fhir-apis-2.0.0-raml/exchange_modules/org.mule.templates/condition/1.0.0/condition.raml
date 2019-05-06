@@ -1,0 +1,112 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Condition.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: |
+  Detailed information about conditions, problems or diagnoses
+  + If condition is abated, then clinicalStatus must be either inactive, resolved, or remission
+  + Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error
+  
+type: FHIR_commons.DomainResource
+properties:
+  identifier?:
+    description: External Ids for this condition
+    type: FHIR_commons.Identifier[]
+  clinicalStatus?:
+    description: active | recurrence | inactive | remission | resolved
+    type: FHIR_commons.code
+    enum: [active, recurrence, inactive, remission, resolved]
+  verificationStatus?:
+    description: provisional | differential | confirmed | refuted | entered-in-error | unknown
+    type: FHIR_commons.code
+    enum: [provisional, differential, confirmed, refuted, entered-in-error, unknown]
+  category?:
+    description: problem-list-item | encounter-diagnosis
+    type: FHIR_commons.CodeableConcept[]
+  severity?:
+    description: Subjective severity of condition
+    type: FHIR_commons.CodeableConcept
+  code?:
+    description: Identification of the condition, problem or diagnosis
+    type: FHIR_commons.CodeableConcept
+  bodySite?:
+    description: Anatomical location, if relevant
+    type: FHIR_commons.CodeableConcept[]
+  subject:
+    description: Who has the condition?
+    type: FHIR_commons.Reference
+  context?:
+    description: Encounter or episode when condition first asserted
+    type: FHIR_commons.Reference
+  onsetDateTime?:
+    description: Estimated or actual date, date-time, or age
+    type: FHIR_commons.dateTime
+  onsetAge?:
+    description: Estimated or actual date, date-time, or age
+    type: FHIR_commons.Age
+  onsetPeriod?:
+    description: Estimated or actual date, date-time, or age
+    type: FHIR_commons.Period
+  onsetRange?:
+    description: Estimated or actual date, date-time, or age
+    type: FHIR_commons.Range
+  onsetString?:
+    description: Estimated or actual date, date-time, or age
+    type: string
+  abatementDateTime?:
+    description: If/when in resolution/remission
+    type: FHIR_commons.dateTime
+  abatementAge?:
+    description: If/when in resolution/remission
+    type: FHIR_commons.Age
+  abatementBoolean?:
+    description: If/when in resolution/remission
+    type: boolean
+  abatementPeriod?:
+    description: If/when in resolution/remission
+    type: FHIR_commons.Period
+  abatementRange?:
+    description: If/when in resolution/remission
+    type: FHIR_commons.Range
+  abatementString?:
+    description: If/when in resolution/remission
+    type: string
+  assertedDate?:
+    description: Date record was believed accurate
+    type: FHIR_commons.dateTime
+  asserter?:
+    description: Person who asserts this condition
+    type: FHIR_commons.Reference
+  evidence?:
+    description: |
+      Supporting evidence
+      + evidence SHALL have code or details
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        code?:
+          description: Manifestation/symptom
+          type: FHIR_commons.CodeableConcept[]
+        detail?:
+          description: Supporting information found elsewhere
+          type: FHIR_commons.Reference[]
+  stage?:
+    description: |
+      Stage/grade, usually assessed formally
+      + Stage SHALL have summary or assessment
+    type: FHIR_commons.BackboneElement
+    properties:
+      summary?:
+        description: Simple summary (disease specific)
+        type: FHIR_commons.CodeableConcept
+      asessment?:
+        description: Formal record of assessment
+        type: FHIR_commons.Reference[]
+
+  note?:
+    description: Additional information about the Condition
+    type: FHIR_commons.Annotation[]

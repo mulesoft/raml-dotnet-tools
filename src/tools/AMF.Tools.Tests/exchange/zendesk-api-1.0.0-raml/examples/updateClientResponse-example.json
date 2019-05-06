@@ -1,0 +1,7 @@
+{
+  "client" : {
+    "id" : 223443 ,
+    "name" : "My New OAuth2 Client" ,
+    "secret" : "truncated, existing secret"
+  }
+}

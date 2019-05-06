@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<job-search>
+  <jobs count="3" start="0">
+    <job>
+      <id>1550983</id>
+      <position>
+        <location>
+          <name>San Francisco Bay Area</name>
+          <country>
+            <code>us</code>
+          </country>
+        </location>
+      </position>
+      <job-poster>
+        <first-name>David</first-name>
+        <last-name>Sides</last-name>
+        <relation-to-viewer>
+          <distance>-1</distance>
+        </relation-to-viewer>
+      </job-poster>
+      <posting-date>
+        <year>2011</year>
+        <month>4</month>
+        <day>14</day>
+      </posting-date>
+    </job>
+    <job>
+      <id>1550465</id>
+      <position>
+        <location>
+          <name>San Francisco Bay Area</name>
+          <country>
+            <code>us</code>
+          </country>
+        </location>
+      </position>
+      <job-poster>
+        <first-name>Jeanmarie</first-name>
+        <last-name>Boben</last-name>
+        <relation-to-viewer>
+          <distance>3</distance>
+        </relation-to-viewer>
+      </job-poster>
+      <posting-date>
+        <year>2011</year>
+        <month>4</month>
+        <day>14</day>
+      </posting-date>
+    </job>
+    <job>
+      <id>1549868</id>
+      <position>
+        <location>
+          <name>San Francisco Bay Area</name>
+          <country>
+            <code>us</code>
+          </country>
+        </location>
+      </position>
+      <job-poster>
+        <first-name>Anne</first-name>
+        <last-name>Woods, CPA</last-name>
+        <relation-to-viewer>
+          <distance>3</distance>
+        </relation-to-viewer>
+      </job-poster>
+      <posting-date>
+        <year>2011</year>
+        <month>4</month>
+        <day>14</day>
+      </posting-date>
+    </job>
+  </jobs>
+</job-search>

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "issues": {
+      "required": false,
+      "type": "array",
+      "items": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "body": {
+            "required": false,
+            "type": "string"
+          },
+          "comments": {
+            "required": false,
+            "type": "integer"
+          },
+          "created_at": {
+            "required": false,
+            "type": "string"
+          },
+          "gravatar_id": {
+            "required": false,
+            "type": "string"
+          },
+          "html_url": {
+            "required": false,
+            "type": "string"
+          },
+          "labels": {
+            "required": false,
+            "type": "array",
+            "items": {
+              "required": false,
+              "type": "string"
+            }
+          },
+          "number": {
+            "required": false,
+            "type": "integer"
+          },
+          "position": {
+            "required": false,
+            "type": "integer"
+          },
+          "state": {
+            "required": false,
+            "type": "string"
+          },
+          "title": {
+            "required": false,
+            "type": "string"
+          },
+          "updated_at": {
+            "required": false,
+            "type": "string"
+          },
+          "user": {
+            "required": false,
+            "type": "string"
+          },
+          "votes": {
+            "required": false,
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

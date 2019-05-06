@@ -1,0 +1,46 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"name": {
+			"description": "The new name for the file.",
+			"type": "string"
+		},
+		"description": {
+			"description": "The new description for the file.",
+			"type": "string"
+		},
+		"parent": {
+			"description": "The parent folder of this file.",
+			"type": "object"
+		},
+		"id": {
+			"description": "The ID of the parent folder.",
+			"type": "string"
+		},
+		"shared_link": {
+			"description": "An object representing this item's shared link and associated permissions.",
+			"type": "object"
+		},
+		"access": {
+			"description": "The level of access required for this shared link.",
+			"type": ["open", "company", "collaborators" ]
+		},
+		"unshared_at": {
+			"description": "The day that this link should be disabled at. Timestamps are rounded off to the given day.",
+			"type": "timestamp"
+		},
+		"permissions": {
+			"description": "The set of permissions that apply to this link.",
+			"type": "object"
+		},
+		"permissions.download": {
+			"description": "Whether this link allows downloads.",
+			"type": "boolean"
+		},
+		"permissions.preview": {
+			"description": "Whether this link allows previews.",
+			"type": "boolean"
+		}
+	}
+}

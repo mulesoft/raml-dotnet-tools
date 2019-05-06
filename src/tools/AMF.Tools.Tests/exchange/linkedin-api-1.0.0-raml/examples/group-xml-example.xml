@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<group>
+  <id>5161023</id>
+  <name>group name</name>
+  <short-description>short description</short-description>
+  <description>description</description>
+  <relation-to-viewer>
+    <membership-state>state</membership-state>
+    <available-actions>state</available-actions>
+  </relation-to-viewer>
+  <posts>none</posts>
+  <counts-by-category>25</counts-by-category>
+  <is-open-to-non-members>false</is-open-to-non-members>
+  <category>category</category>
+  <website-url>http://pragmasoft.com.ua</website-url>
+  <locale>en-US</locale>
+  <location>
+    <name>name</name>
+    <country>
+      <postal-code>804</postal-code>
+    </country>
+  </location>
+  <allow-member-invites>true</allow-member-invites>
+  <site-group-url>http://site.group.com</site-group-url>
+  <small-logo-url>http://small.logo.com</small-logo-url>
+  <large-logo-url>http://large.logo.com</large-logo-url>
+</group>

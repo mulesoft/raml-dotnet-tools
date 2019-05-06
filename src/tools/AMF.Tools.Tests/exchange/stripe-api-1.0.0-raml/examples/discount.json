@@ -1,0 +1,19 @@
+{
+  "coupon": {
+    "id": "259FF",
+    "percent_off": 25,
+    "amount_off": null,
+    "currency": "usd",
+    "object": "coupon",
+    "livemode": false,
+    "duration": "repeating",
+    "redeem_by": null,
+    "max_redemptions": null,
+    "times_redeemed": 0,
+    "duration_in_months": 3
+  },
+  "start": 1332751833,
+  "object": "discount",
+  "customer": "cus_2hzElrZhmfV9my",
+  "end": 1335430233
+}

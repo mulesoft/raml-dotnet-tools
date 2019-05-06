@@ -1,0 +1,155 @@
+{
+  "id": "tr_2OKKQ4A6HN1WJy",
+  "object": "transfer",
+  "date": 1376524800,
+  "livemode": false,
+  "amount": 286710,
+  "currency": "usd",
+  "status": "paid",
+  "balance_transaction": "txn_2hrAStwRKjXiIp",
+  "summary": {
+    "charge_gross": 316670,
+    "charge_fees": 29960,
+    "charge_fee_details": [
+      {
+        "amount": 29960,
+        "currency": "usd",
+        "type": "stripe_fee",
+        "description": null,
+        "application": null
+      }
+    ],
+    "refund_gross": 0,
+    "refund_fees": 0,
+    "refund_fee_details": [
+
+    ],
+    "adjustment_gross": 0,
+    "adjustment_fees": 0,
+    "adjustment_fee_details": [
+
+    ],
+    "validation_fees": 0,
+    "validation_count": 0,
+    "charge_count": 682,
+    "refund_count": 0,
+    "adjustment_count": 0,
+    "net": 286710,
+    "currency": "usd",
+    "collected_fee_gross": 0,
+    "collected_fee_count": 0,
+    "collected_fee_refund_gross": 0,
+    "collected_fee_refund_count": 0
+  },
+  "transactions": {
+    "object": "list",
+    "count": 682,
+    "url": "/v1/transfers/tr_2OKKQ4A6HN1WJy/transactions",
+    "data": [
+      {
+        "id": "ch_2Nn7UTSkz0cxq9",
+        "type": "charge",
+        "amount": 500,
+        "currency": "usd",
+        "net": 455,
+        "created": 1376476192,
+        "description": null,
+        "fee": 45,
+        "fee_details": [
+          {
+            "amount": 45,
+            "currency": "usd",
+            "type": "stripe_fee",
+            "description": "Stripe processing fees",
+            "application": null
+          }
+        ]
+      },
+      {
+        "id": "ch_2Nn8hBMCCN0b1r",
+        "type": "charge",
+        "amount": 500,
+        "currency": "usd",
+        "net": 455,
+        "created": 1376476252,
+        "description": null,
+        "fee": 45,
+        "fee_details": [
+          {
+            "amount": 45,
+            "currency": "usd",
+            "type": "stripe_fee",
+            "description": "Stripe processing fees",
+            "application": null
+          }
+        ]
+      },
+      {
+        "id": "ch_2Nn9rrWLlKk7Mj",
+        "type": "charge",
+        "amount": 500,
+        "currency": "usd",
+        "net": 455,
+        "created": 1376476312,
+        "description": null,
+        "fee": 45,
+        "fee_details": [
+          {
+            "amount": 45,
+            "currency": "usd",
+            "type": "stripe_fee",
+            "description": "Stripe processing fees",
+            "application": null
+          }
+        ]
+      },
+      {
+        "id": "ch_2Nn9z9LTfcoJvW",
+        "type": "charge",
+        "amount": 100,
+        "currency": "usd",
+        "net": 67,
+        "created": 1376476323,
+        "description": null,
+        "fee": 33,
+        "fee_details": [
+          {
+            "amount": 33,
+            "currency": "usd",
+            "type": "stripe_fee",
+            "description": "Stripe processing fees",
+            "application": null
+          }
+        ]
+      },
+      {
+        "id": "ch_2Nn9jymNURQqY5",
+        "type": "charge",
+        "amount": 100,
+        "currency": "usd",
+        "net": 67,
+        "created": 1376476323,
+        "description": null,
+        "fee": 33,
+        "fee_details": [
+          {
+            "amount": 33,
+            "currency": "usd",
+            "type": "stripe_fee",
+            "description": "Stripe processing fees",
+            "application": null
+          }
+        ]
+      }
+    ]
+  },
+  "other_transfers": [
+    "tr_2OKKQ4A6HN1WJy"
+  ],
+  "account": null,
+  "description": "STRIPE TRANSFER",
+  "metadata": {
+  },
+  "statement_descriptor": null,
+  "recipient": null
+}

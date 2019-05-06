@@ -1,0 +1,110 @@
+{
+    "name": "Doug Williams",
+    "profile_sidebar_border_color": "87BC44",
+    "profile_sidebar_fill_color": "F2F8FC",
+    "profile_background_tile": false,
+    "created_at": "Sun Mar 18 06:42:26 +0000 2007",
+    "profile_image_url": "http://a0.twimg.com/profile_images/1947332700/dougw_avatar_can2_normal.jpg",
+    "location": "San Francisco, CA",
+    "profile_link_color": "0000FF",
+    "follow_request_sent": false,
+    "is_translator": false,
+    "id_str": "1401881",
+    "entities": {
+        "description": {
+            "urls": []
+        }
+    },
+    "default_profile": false,
+    "url": null,
+    "favourites_count": 2620,
+    "contributors_enabled": true,
+    "utc_offset": -28800,
+    "id": 1401881,
+    "profile_image_url_https": "https://si0.twimg.com/profile_images/1947332700/dougw_avatar_can2_normal.jpg",
+    "listed_count": 890,
+    "profile_use_background_image": true,
+    "profile_text_color": "000000",
+    "protected": false,
+    "lang": "en",
+    "followers_count": 306557,
+    "geo_enabled": true,
+    "time_zone": "Pacific Time (US & Canada)",
+    "notifications": false,
+    "verified": false,
+    "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/2752608/twitter_bg_grass.jpg",
+    "profile_background_color": "9AE4E8",
+    "description": "Partnerships at @twitter",
+    "profile_background_image_url": "http://a0.twimg.com/profile_background_images/2752608/twitter_bg_grass.jpg",
+    "friends_count": 1284,
+    "statuses_count": 11873,
+    "default_profile_image": false,
+    "status": {
+        "coordinates": null,
+        "truncated": false,
+        "created_at": "Sun Aug 26 21:58:35 +0000 2012",
+        "favorited": false,
+        "id_str": "239844310982459392",
+        "entities": {
+            "urls": [],
+            "media": [
+                {
+                    "media_url_https": "https://p.twimg.com/A1QZIU3CAAAnCkS.jpg",
+                    "expanded_url": "http://twitter.com/dougw/status/239844310982459392/photo/1",
+                    "sizes": {
+                        "large": {
+                            "w": 816,
+                            "resize": "fit",
+                            "h": 612
+                        },
+                        "medium": {
+                            "w": 600,
+                            "resize": "fit",
+                            "h": 450
+                        },
+                        "small": {
+                            "w": 340,
+                            "resize": "fit",
+                            "h": 255
+                        },
+                        "thumb": {
+                            "w": 150,
+                            "resize": "crop",
+                            "h": 150
+                        }
+                    },
+                    "id_str": "239844310986653696",
+                    "url": "http://t.co/1uG4mhaB",
+                    "id": 239844310986653700,
+                    "type": "photo",
+                    "indices": [
+                        45,
+                        65
+                    ],
+                    "media_url": "http://p.twimg.com/A1QZIU3CAAAnCkS.jpg",
+                    "display_url": "pic.twitter.com/1uG4mhaB"
+                }
+            ],
+            "hashtags": [],
+            "user_mentions": []
+        },
+        "in_reply_to_user_id_str": null,
+        "text": "Warm day by the Bay. Watching boats sail by. http://t.co/1uG4mhaB",
+        "contributors": null,
+        "id": 239844310982459400,
+        "retweet_count": 0,
+        "in_reply_to_status_id_str": null,
+        "geo": null,
+        "retweeted": false,
+        "in_reply_to_user_id": null,
+        "possibly_sensitive": false,
+        "place": null,
+        "possibly_sensitive_editable": true,
+        "source": "<a href=\"http://www.apple.com\" rel=\"nofollow\">Camera on iOS</a>",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null
+    },
+    "show_all_inline_media": true,
+    "screen_name": "dougw",
+    "following": true
+}

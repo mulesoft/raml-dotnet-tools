@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "sha": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "author": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "committer": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "message": {
+      "type": "string"
+    },
+    "tree": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "sha": {
+          "type": "string"
+        }
+      }
+    },
+    "parents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "sha": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

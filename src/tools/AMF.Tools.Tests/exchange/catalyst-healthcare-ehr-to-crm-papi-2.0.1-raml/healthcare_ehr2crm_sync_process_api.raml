@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: Healthcare EHR to CRM Sync Process API
+version: v2
+
+types: 
+  messageResponse: 
+    type: object
+    properties: 
+      message: string
+
+/patients/{patientId}/migrateClinicalData:
+  post:
+    displayName: Migrate Clinical Data
+    description: Migrate clinical data from EHR to CRM
+    responses:
+      202:
+        body:
+          application/json:
+            type: messageResponse
+            example: |
+              {
+                "message": "The migration process has started and will be completed asynchronously."
+              }

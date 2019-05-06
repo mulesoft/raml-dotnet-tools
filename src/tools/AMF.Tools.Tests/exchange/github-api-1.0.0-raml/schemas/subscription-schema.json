@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"subscribed":{
+    		"type": "boolean"
+    	},
+		"ignored": {
+			"type": "boolean"
+		},
+		"reason": {
+			"type": "boolean"
+		},
+		"created_at": {
+			"type": "string"
+		},
+		"url": {
+			"type": "string"
+		},
+		"thread_url": {
+			"type": "string"
+		}
+    }
+}

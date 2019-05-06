@@ -1,0 +1,45 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "recipient_address" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "email" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "default" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "brand_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "forwarding_status" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "updated_at" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

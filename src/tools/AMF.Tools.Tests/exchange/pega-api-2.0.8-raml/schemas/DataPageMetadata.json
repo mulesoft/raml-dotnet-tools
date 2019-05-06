@@ -1,0 +1,50 @@
+{
+  "id": "DataPageMetadata",
+  "title": "DataPageMetadata",
+  "type": "object",
+  "properties": {
+    "dataTypeID": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "usage": {
+      "type": "string"
+    },
+    "ID": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "structure": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "id": "Parameter",
+        "title": "Parameter",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "required": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

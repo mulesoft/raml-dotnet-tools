@@ -1,0 +1,47 @@
+{
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "required" : false ,
+  "type" : "object" ,
+  "properties" : {
+    "accessible_by" : {
+      "required" : false ,
+      "type" : "object" ,
+      "properties" : {
+        "type" : {
+          "required" : false ,
+          "type" : "string"
+        } ,
+        "id" : {
+          "required" : false ,
+          "type" : "string"
+        } ,
+        "name" : {
+          "required" : false ,
+          "type" : "string"
+        } ,
+        "login" : {
+          "required" : false ,
+          "type" : "string"
+        }
+      }
+    } ,
+    "role" : {
+      "required" : false ,
+      "type" : "string"
+    } ,
+    "item" : {
+      "required" : false ,
+      "type" : "object" ,
+      "properties" : {
+        "type" : {
+          "required" : false ,
+          "type" : "string"
+        } ,
+        "id" : {
+          "required" : false ,
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

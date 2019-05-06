@@ -1,0 +1,249 @@
+#%RAML 0.8
+title: Google Contacts API
+version: v3
+baseUri: https://www.google.com/m8/feeds
+mediaType: application/atom+xml
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  - oauth_1_0: !include securitySchemes/oauth_1_0.raml
+schemas:
+  - atom: !include schemas/atom.xsd
+resourceTypes:
+  - base: !include resourceTypes/base.raml
+  - emailed: !include resourceTypes/emailed.raml
+traits:
+  - override-checked: !include traits/override-checked.raml
+  - collection: !include traits/collection.raml
+  - versioned: !include traits/versioned.raml
+securedBy: [ oauth_2_0 , oauth_1_0 ]
+/contacts/{userEmail}/full: 
+  displayName: Contacts
+  type: emailed
+  description: |
+    Working with contacts:
+    * Retrieving all contacts
+    * Creating contacts
+  get: 
+    is: [ collection ]
+    description: |
+      To retrieve all of a user's contacts, send an authorized GET request.
+    responses: 
+      200: 
+        body: 
+          application/atom+xml: 
+            example: !include examples/contacts.xml
+  post: 
+    description: |
+      To create a new contact, send an authorized POST request to the user's contacts feed URL with contact data in the body.
+    body: 
+      application/atom+xml: 
+        example: !include examples/contact-request.xml
+    responses: 
+      201: 
+        description: Created
+        body: 
+          application/atom+xml: 
+            example: !include examples/contact.xml
+  /{contactId}: 
+    displayName: Contact
+    type: base
+    description: |
+      Working with contact:
+      * Retrieving a single contact
+      * Updating contact
+      * Deleting contact
+    uriParameters: 
+      contactId: 
+        displayName: Contact ID
+        description: |
+          Contact ID
+        required: true
+    get: 
+      description: |
+        To retrieve a single contact, send an authorized GET request to the contact's selfLink URL.
+      responses: 
+        200: 
+          body: 
+            application/atom+xml: 
+              example: !include examples/contact.xml
+    put: 
+      is: [ override-checked ]
+      description: |
+        To update a contact, first retrieve the contact entry, modify the data and send an authorized PUT reques
+        to the contact's edit URL with the modified contact entry in the body.
+        **Note**: To ensure forward compatibility, be sure that when you PUT an updated entry you preserve all the XML that was present
+        when you retrieved the entry from the server. Otherwise the ignored elements will be deleted
+      body: 
+        application/atom+xml: 
+          example: !include examples/contact.xml
+      responses: 
+        200: 
+          body: 
+            application/atom+xml: 
+              example: !include examples/contact.xml
+    delete: 
+      is: [ override-checked ]
+      description: |
+        To delete a contact, send an authorized DELETE request to the contact's edit URL.
+      responses: 
+        200: 
+          description: |
+            Contact deleted
+  /batch: 
+    displayName: Contact Batch
+    type: base
+    description: |
+      If you're performing a lot of operations, the time it takes to send and and receive all those HTTP messages can really add up,
+      making your app slow and unresponsive. With batch requests you can have the server perform multiple operations with a single
+      HTTP request. The basic idea is that you create a contacts or contact groups feed and add an entry for each operation you
+      want to perform.
+      
+      Batch requests are limited to 100 operations at a time.
+    post: 
+      description: |
+        To send a batch request for operations on contacts, send an authorized POST request to the contacts batch feed URL with the
+        batch feed data in the body.
+      body: 
+        application/atom+xml: 
+          example: !include examples/contacts-batch-request.xml
+      responses: 
+        200: 
+          body: 
+            application/atom+xml: 
+              example: !include examples/contacts-batch.xml
+/photos/media/{userEmail}/{contactId}: 
+  displayName: Contact photo management
+  type: emailed
+  description: |
+    Working with contact's photo:
+    * Retrieving a contact's photo
+    * Adding/Updating a photo for a contac
+    * Deleting a contact's photo
+  uriParameters: 
+    contactId: 
+      displayName: Contact ID
+      description: |
+        Contact ID
+      required: true
+  get: 
+    description: |
+      To retrieve a contact's photo, send an authorized GET request to the contact's photo link URL.
+    responses: 
+      200: 
+        body: 
+          "image/*": 
+  put: 
+    is: [ override-checked ]
+    description: |
+      To add or update a photo for a contact, send an authorized PUT request to the contact's photo
+      URL with the photo data bytes in the body.
+    body: 
+      "image/*": 
+    responses: 
+      200: 
+        description: |
+          Photo added/updated.
+  delete: 
+    is: [ override-checked ]
+    description: |
+      To delete a contact's photo, send an authorized DELETE request to the contact's photo URL.
+    responses: 
+      200: 
+        description: |
+          Contact's photo deleted
+/groups/{userEmail}/full: 
+  displayName: Groups
+  type: emailed
+  description: |
+    Working with contact groups:
+    * Retrieving all contact groups
+    * Creating contact groups
+  get: 
+    is: [ collection ]
+    description: |
+      To retrieve the user's contact groups, send an authorized GET request to the contact groups feed URL.
+    responses: 
+      200: 
+        body: 
+          application/atom+xml: 
+            example: !include examples/groups.xml
+  post: 
+    description: |
+      To create a new contact group, send an authorized POST request to the contact groups feed URL with the contact group entry data in the body.
+    body: 
+      application/atom+xml: 
+        example: !include examples/group-request.xml
+    responses: 
+      201: 
+        description: Created
+        body: 
+          application/atom+xml: 
+            example: !include examples/group.xml
+  /{groupId}: 
+    displayName: Group
+    type: base
+    description: |
+      Working with single group:
+      * Retrieving a single contact group
+      * Updating contact groups
+      * Deleting contact groups
+    uriParameters: 
+      groupId: 
+        displayName: Group ID
+        description: |
+          Group ID
+        required: true
+    get: 
+      description: |
+        To retrieve a single group, send an authorized HTTP GET request to the contact group's edit URL.
+      responses: 
+        200: 
+          body: 
+            application/atom+xml: 
+              example: !include examples/group.xml
+    put: 
+      is: [ override-checked ]
+      description: |
+        To update a contact group, first retrieve the group entry, modify the data and send an authorized PUT request to the contac
+        group's edit URL with the updated contact group's entry in the body.
+      body: 
+        application/atom+xml: 
+          example: !include examples/group.xml
+      responses: 
+        200: 
+          body: 
+            application/atom+xml: 
+              example: !include examples/group.xml
+    delete: 
+      is: [ override-checked ]
+      description: |
+        To delete a contact group, send an authorized DELETE request to the contact group's edit URL.
+      responses: 
+        200: 
+          description: |
+            Contact's group deleted
+  /batch: 
+    displayName: Batch operations for Contact Groups
+    type: base
+    description: |
+      If you're performing a lot of operations, the time it takes to send and and receive all those HTTP messages can really add up,
+      making your app slow and unresponsive. With batch requests you can have the server perform multiple operations with a single
+      HTTP request. The basic idea is that you create a contacts or contact groups feed and add an entry for each operation you
+      want to perform.
+      
+      Batch requests are limited to 100 operations at a time.
+    post: 
+      description: |
+        To send a batch request for operations on contact groups, send an authorized POST request to the contact groups batch feed URL
+        with the batch feed data in the body
+      body: 
+        application/atom+xml: 
+          example: !include examples/groups-batch-request.xml
+      responses: 
+        200: 
+          body: 
+            application/atom+xml: 
+              example: !include examples/groups-batch.xml
+documentation: 
+  - title: Headline
+    content: !include docs/headline.md

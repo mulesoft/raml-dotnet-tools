@@ -1,0 +1,142 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "kind" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "id" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "name" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "objectType" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "shortDescription" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "longDescription" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "supportsCreate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "supportsImport" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "supportsMultiOpen" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "supportsOfflineCreate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "installed" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "authorized" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "hasDriveWideScope" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "useByDefault" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "productUrl" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "productId" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "openUrlTemplate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "createUrl" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "createInFolderTemplate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "primaryMimeTypes" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    } ,
+    "secondaryMimeTypes" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    } ,
+    "primaryFileExtensions" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    } ,
+    "secondaryFileExtensions" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    } ,
+    "icons" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "category" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "size" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "iconUrl" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

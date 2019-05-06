@@ -1,0 +1,18 @@
+get?: 
+  responses: 
+    200: 
+      body: 
+        application/json: 
+        application/xml: 
+          schema: <<type|!pluralize>>-xml
+post?: 
+  body: 
+    application/json: 
+    application/xml: 
+      schema: <<type>>-xml
+put?: 
+  body: 
+    application/json: 
+    application/xml: 
+      schema: <<type>>-xml
+type: baseResource

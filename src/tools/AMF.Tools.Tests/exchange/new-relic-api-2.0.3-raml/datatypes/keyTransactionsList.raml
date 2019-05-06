@@ -1,0 +1,59 @@
+#%RAML 1.0 DataType
+required: true
+type: object
+properties:
+  key_transaction:
+    type: object
+    required: false
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      transaction_name:
+        type: string
+        required: false
+      application_summaries:
+        type: object
+        required: false
+        properties:
+          response_time:
+            type: number
+            required: false
+          throughput:
+            type: number
+            required: false
+          error_rate:
+            type: number
+            required: false
+          apdex_target:
+            type: number
+            required: false
+          apdex_score:
+            type: number
+            required: false
+      end_user_summaries:
+        type: object
+        required: false
+        properties:
+          response_time:
+            type: number
+            required: false
+          throughput:
+            type: number
+            required: false
+          apdex_target:
+            type: number
+            required: false
+          apdex_score:
+            type: number
+            required: false
+      links:
+        type: object
+        required: false
+        properties:
+          application:
+            type: number
+            required: false

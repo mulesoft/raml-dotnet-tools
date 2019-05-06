@@ -1,0 +1,106 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"amount": {
+			"type":"number",
+			"id": "http://jsonschema.net/amount",
+			"required":false
+		},
+		"available_on": {
+			"type":"number",
+			"id": "http://jsonschema.net/available_on",
+			"required":false
+		},
+		"created": {
+			"type":"number",
+			"id": "http://jsonschema.net/created",
+			"required":false
+		},
+		"currency": {
+			"type":"string",
+			"id": "http://jsonschema.net/currency",
+			"required":false
+		},
+		"description": {
+			"type":"null",
+			"id": "http://jsonschema.net/description",
+			"required":false
+		},
+		"fee_details": {
+			"type":"array",
+			"id": "http://jsonschema.net/fee_details",
+			"required":false,
+			"items":
+				{
+					"type":"object",
+					"id": "http://jsonschema.net/fee_details/0",
+					"required":false,
+					"properties":{
+						"amount": {
+							"type":"number",
+							"id": "http://jsonschema.net/fee_details/0/amount",
+							"required":false
+						},
+						"application": {
+							"type":"null",
+							"id": "http://jsonschema.net/fee_details/0/application",
+							"required":false
+						},
+						"currency": {
+							"type":"string",
+							"id": "http://jsonschema.net/fee_details/0/currency",
+							"required":false
+						},
+						"description": {
+							"type":"string",
+							"id": "http://jsonschema.net/fee_details/0/description",
+							"required":false
+						},
+						"type": {
+							"type":"string",
+							"id": "http://jsonschema.net/fee_details/0/type",
+							"required":false
+						}
+					}
+				}
+		},
+		"fee": {
+			"type":"number",
+			"id": "http://jsonschema.net/fee",
+			"required":false
+		},
+		"id": {
+			"type":"string",
+			"id": "http://jsonschema.net/id",
+			"required":false
+		},
+		"net": {
+			"type":"number",
+			"id": "http://jsonschema.net/net",
+			"required":false
+		},
+		"object": {
+			"type":"string",
+			"id": "http://jsonschema.net/object",
+			"required":false
+		},
+		"source": {
+			"type":"string",
+			"id": "http://jsonschema.net/source",
+			"required":false
+		},
+		"status": {
+			"type":"string",
+			"id": "http://jsonschema.net/status",
+			"required":false
+		},
+		"type": {
+			"type":"string",
+			"id": "http://jsonschema.net/type",
+			"required":false
+		}
+	}
+}

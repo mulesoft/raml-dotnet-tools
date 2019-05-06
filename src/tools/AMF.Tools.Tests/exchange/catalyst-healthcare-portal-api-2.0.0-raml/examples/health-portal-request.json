@@ -1,0 +1,71 @@
+{
+  "conditions": [
+    {
+      "onsetDate": "2016-05-10",
+      "code": "195967001",
+      "system": "http://snomed.info/sct",
+      "name": "Asthma",
+      "status": "true"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "code": "73211009",
+      "system": "http://snomed.info/sct",
+      "name": "Diabetes mellitus",
+      "status": "false"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "code": "38341003",
+      "system": "http://snomed.info/sct",
+      "name": "High Blood Pressure",
+      "status": "NA"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "code": "13644009",
+      "system": "http://snomed.info/sct",
+      "name": "High Cholesterol",
+      "status": "NA"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "code": "22298006",
+      "system": "http://snomed.info/sct",
+      "name": "Heart Attack",
+      "status": "NA"
+    }
+  ],
+  "allergies": [
+    {
+      "onsetDate": "2016-05-11",
+      "name": "Peanuts",
+      "status": "true"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "name": "Aspirin",
+      "status": "false"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "name": "Penicillin",
+      "status": "NA"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "name": "Gluten",
+      "status": "NA"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "name": "Dairy products",
+      "status": "NA"
+    },
+    {
+      "onsetDate": "2016-05-11",
+      "name": "Morphine",
+      "status": "NA"
+    }
+  ]
+}

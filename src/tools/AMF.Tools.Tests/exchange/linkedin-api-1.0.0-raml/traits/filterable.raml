@@ -1,0 +1,25 @@
+queryParameters: 
+  keywords: 
+    description: |
+      Members who have all the keywords anywhere in their profile. Use this field when you don't know how to
+      more accurately map the input to a more specific parameter. (Don't forget to URL encode this data.)
+  facet: 
+    description: |
+      Facet values to search over.
+  facets: 
+    description: |
+      Facet buckets to return.      
+  sort: 
+    description: |
+      "Controls the search result order. There are four options:
+      connections: Number of connections per person, from largest to smallest.
+      recommenders: Number of recommendations per person, from largest to smallest.
+      distance: Degree of separation within the member's network, from first degree, then second degree, and then all others mixed together, including third degree and out-of-network.
+      relevance: Relevance of results based on the query, from most to least relevant.          
+      By default, results are ordered by the number of connections."
+    enum: 
+      - connections
+      - recommenders
+      - distance
+      - relevance
+    default: connections

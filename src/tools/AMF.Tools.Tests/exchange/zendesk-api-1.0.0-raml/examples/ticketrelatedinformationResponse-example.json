@@ -1,0 +1,17 @@
+{
+  "topic_id" : null ,
+  "jira_issue_ids" : [
+  ] ,
+  "followup_source_ids" : [
+  ] ,
+  "from_archive" : false ,
+  "incidents" : 7 ,
+  "twitter" : {
+    "handle_id" : 10 ,
+    "profile" : {
+      "created_at" : "2013/01/08 23:24:49 -0800" ,
+      "description" : "Zendesk is the leading " ,
+    } ,
+    "direct" : false
+  }
+}

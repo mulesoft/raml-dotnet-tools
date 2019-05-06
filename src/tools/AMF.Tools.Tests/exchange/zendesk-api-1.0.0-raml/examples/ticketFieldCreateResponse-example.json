@@ -1,0 +1,24 @@
+{
+  "ticket_field" : {
+    "id" : 89 ,
+    "url" : "https://company.zendesk.com/api/v2/ticket_fields/89.json" ,
+    "type" : "text" ,
+    "title" : "Age" ,
+    "raw_title" : "Age" ,
+    "description" : "Age" ,
+    "raw_description" : "Age" ,
+    "position" : 9999 ,
+    "active" : true ,
+    "required" : true ,
+    "collapsed_for_agents" : false ,
+    "regexp_for_validation" : null ,
+    "title_in_portal" : "Age" ,
+    "raw_title_in_portal" : "Age" ,
+    "visible_in_portal" : false ,
+    "editable_in_portal" : false ,
+    "required_in_portal" : false ,
+    "tag" : null ,
+    "created_at" : "2012-04-02T22:55:29Z" ,
+    "updated_at" : "2012-04-02T22:55:29Z"
+  }
+}

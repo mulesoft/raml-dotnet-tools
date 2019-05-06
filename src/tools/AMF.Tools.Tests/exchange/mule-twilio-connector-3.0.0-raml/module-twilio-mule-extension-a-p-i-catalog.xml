@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogs xmlns="http://www.mulesoft.org/schema/mule/types" >
+
+    
+        
+                    <catalog name="get-message-list-response-type" format="application/json">
+                <schema format="application/json+schema" location="./get-message-list-response-data-schema.json" />
+            </catalog>
+        
+                                                                                        
+    
+                    <catalog name="send-message-request-type" format="application/json">
+                <schema format="application/json+schema" location="./send-message-request-data-schema.json" />
+            </catalog>
+        
+                    <catalog name="send-message-response-type" format="application/json">
+                <schema format="application/json+schema" location="./send-message-response-data-schema.json" />
+            </catalog>
+        
+                            
+    
+        
+                    <catalog name="get-message-response-type" format="application/json">
+                <schema format="application/json+schema" location="./get-message-response-data-schema.json" />
+            </catalog>
+        
+                                                
+    
+                    <catalog name="redact-message-request-type" format="application/json">
+                <schema format="application/json+schema" location="./redact-message-request-data-schema.json" />
+            </catalog>
+        
+                    <catalog name="redact-message-response-type" format="application/json">
+                <schema format="application/json+schema" location="./redact-message-response-data-schema.json" />
+            </catalog>
+        
+                                                
+    
+        
+        
+                                                
+    
+        
+                    <catalog name="get-media-list-response-type" format="application/json">
+                <schema format="application/json+schema" location="./get-media-list-response-data-schema.json" />
+            </catalog>
+        
+                                                                    
+    
+        
+                    <catalog name="get-media-response-type" format="application/json">
+                <schema format="application/json+schema" location="./get-media-response-data-schema.json" />
+            </catalog>
+        
+                                                                                        
+    
+        
+        
+                                                                                        
+    
+</catalogs>

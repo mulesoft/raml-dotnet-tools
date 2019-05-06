@@ -1,0 +1,9 @@
+{
+  "amount": {
+    "amount": "16.12",
+    "currency": "EUR" 
+  },
+  "label": "Spotify year payment",
+  "receiver_IBAN": "GB29NWBK60161331926000",
+  "description": "asd"
+}

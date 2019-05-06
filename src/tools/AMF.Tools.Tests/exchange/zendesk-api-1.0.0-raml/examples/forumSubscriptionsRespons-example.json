@@ -1,0 +1,16 @@
+{
+  "forum_subscriptions": [
+    {
+      "id":              35436,
+      "forum_id":        32,
+      "user_id":         482,
+      "created_at":      "2009-07-20T22:55:29Z"
+    },
+    {
+      "id":              43681,
+      "forum_id":        334,
+      "user_id":         9471,
+      "created_at":      "2011-08-22T21:12:09Z"
+    }
+  ]
+}

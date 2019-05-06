@@ -1,0 +1,149 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/e11ce162-c74a-474f-8d3c-92b0eec1e5b4/api # 
+version: v2.0
+title: Retail Locations System API
+
+uses: 
+  common: /exchange_modules/org.mule.templates/retail-common/1.0.0/retail_common.raml
+  store: /exchange_modules/org.mule.templates/retail-store/1.0.0/retail_store.raml
+  
+traits: 
+  geoSearch: !include /exchange_modules/org.mule.templates/retail-geosearch/1.0.0/retail_geosearch.raml
+  productSearch: !include traits/productSearch.raml
+      
+types:
+        
+  ItemAvailabilityResponse:
+    type: object
+    properties: 
+      searchCriteria: SearchCriteria
+      results: StoreAvailabilityData[]
+      
+  SearchCriteria:
+    type: object
+    properties: 
+      productId?: string
+      variantId?: string
+      quantity?: integer
+      latitude: number
+      longitude: number
+      radius: integer
+      useMetric: boolean
+      maxResults?: integer
+      zipcode?: string?
+      
+  StoreSearchResponse:
+    type: object
+    properties:
+      searchCriteria: SearchCriteria
+      results: store.StoreInfo[]
+      
+  StoreAvailabilityData:
+    type: object
+    properties: 
+      storeInfo: store.StoreInfo
+      quantityInStock: integer
+      quantityReserved?: integer
+      
+  Reservation: 
+    type: object
+    properties:
+      productId: string
+      variantId: string
+      customerId: string
+      quantity: 
+        type: integer
+        minimum: 1
+      storeId: string
+      deliveryMethod?: string
+
+
+/stores:
+  get:
+    displayName: Retrieve stores
+    is: [ geoSearch ]
+    queryParameters: 
+      zip: 
+        required: false
+        description: |
+          Zip code identifying area for store search. You must choose either zip, city or coordinates search, not all at once.
+    responses: 
+      200:
+        body:
+          application/json:
+            type: StoreSearchResponse
+            example: !include examples/store-search-response.raml
+  post:
+    displayName: Create new store
+    description: creates new store
+    body: 
+      application/json:
+        type: store.StoreInfo
+        example: !include ./examples/create-store-request.raml
+    responses: 
+      201:
+        headers: 
+          Location:
+        body: 
+          application/json:
+            example: !include examples/store-response.raml
+  
+  /{storeId}:
+    get:
+      displayName: Retrieve specific store
+      description: |
+        Retrieve info about particular store (address, name, etc.)
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: store.StoreInfo
+              example: !include examples/store-response.raml
+              
+    put:
+      displayName: Update store
+      description: | 
+        Updates information about particular store (address, name, etc)
+      body: 
+        application/json:
+          type: store.StoreInfo
+          example: !include examples/store-response.raml
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: store.StoreInfo
+              example: !include examples/store-response.raml
+      
+
+/productLocator:
+  get:
+    displayName: Locate stores with product
+    description: |
+      Searches for a product identified by productId and variantId. If quantity is provided as search parameter, only stores that have required number of items in stock are included in the response. Filtering by location coordinates and maximum radius can be used to further filter the search results.
+    is: [ geoSearch, productSearch ]
+    queryParameters: 
+      zipcode:
+        type: string
+        required: false
+        description: Narrow down the search to include only stores in particular zipcode.
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: ItemAvailabilityResponse
+            example: !include examples/item-search-response.raml
+   
+/reservation:
+    post:
+      displayName: Reserve product in store
+      description: reservation of product in store
+      body: 
+        application/json:
+          type: Reservation
+          example: !include examples/product-reserve-request.raml
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              example: !include ./examples/reservation-response.raml

@@ -1,0 +1,19 @@
+description: |
+  The Box API uses OAuth 2 for authentication. An authorization header containing
+  a valid access_token must be included in every request.
+type: OAuth 2.0
+describedBy: 
+  headers: 
+    Authorization: 
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use together with
+        the "access_token" query string parameter.
+  queryParameters: 
+    access_token: 
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use together with
+        the "Authorization" header
+settings: 
+  authorizationUri: https://www.box.com/api/oauth2/authorize
+  accessTokenUri: https://www.box.com/api/oauth2/token
+  authorizationGrants: [ code ]

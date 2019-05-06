@@ -1,0 +1,25 @@
+post?: 
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: <<item>>
+get?: 
+  description: used to get information about item
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: <<item>>
+type: standardResponse
+put: 
+  description: used to update item
+  body: 
+    application/json: 
+  responses: 
+    200: 
+      description: updated item
+      body: 
+        application/json: 
+          schema: <<item>>
+delete: 

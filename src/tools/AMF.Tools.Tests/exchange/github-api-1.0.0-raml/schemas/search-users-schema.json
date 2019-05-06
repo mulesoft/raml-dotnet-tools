@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "total_count": {
+      "type": "integer"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "avatar_url": {
+            "type": "string"
+          },
+          "gravatar_id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "html_url": {
+            "type": "string"
+          },
+          "followers_url": {
+            "type": "string"
+          },
+          "subscriptions_url": {
+            "type": "string"
+          },
+          "organizations_url": {
+            "type": "string"
+          },
+          "repos_url": {
+            "type": "string"
+          },
+          "received_events_url": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

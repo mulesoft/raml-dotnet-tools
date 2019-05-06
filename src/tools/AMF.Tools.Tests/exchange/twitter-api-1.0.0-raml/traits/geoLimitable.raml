@@ -1,0 +1,14 @@
+queryParameters: 
+  lat: 
+    description: |
+      The latitude to search around. This parameter will be ignored unless i
+      is inside the range -90.0 to +90.0 (North is positive) inclusive. I
+      will also be ignored if there isn't a corresponding long parameter.
+    required: true
+  long: 
+    description: |
+      The longitude to search around. The valid ranges for longitude is -180.0
+      to +180.0 (East is positive) inclusive. This parameter will be ignored
+      if outside that range, if it is not a number, if geo_enabled is disabled,
+      or if there not a corresponding lat parameter.
+    required: true

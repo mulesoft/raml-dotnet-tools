@@ -1,0 +1,21 @@
+description: |
+  Google recommend using OAuth 2.0 to authorize requests.
+type: OAuth 2.0
+describedBy: 
+  headers: 
+    Authorization: 
+      description: |
+        Used to send a valid OAuth 2 access token.
+  queryParameters: 
+    access_token: 
+      description: |
+        Used to send a valid OAuth 2 access token
+  responses: 
+    401: 
+      description: |
+        Authorization error.
+settings: 
+  authorizationUri: https://accounts.google.com/o/oauth2/auth
+  accessTokenUri: https://accounts.google.com/o/oauth2/token
+  authorizationGrants: [ code ]
+  scopes: [ "https://www.google.com/m8/feeds" ]

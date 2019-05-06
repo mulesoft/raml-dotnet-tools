@@ -1,0 +1,3153 @@
+#%RAML 0.8
+title: GitHub API
+version: v3
+baseUri: https://api.github.com
+mediaType: application/json
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+schemas:
+  - search-code: !include schemas/search-code-schema.json
+  - search-repositories: !include schemas/search-repositories-schema.json
+  - search-users: !include schemas/search-users-schema.json
+  - events: !include schemas/events-schema.json
+  - feeds: !include schemas/feeds-schema.json
+  - meta: !include schemas/meta-schema.json
+  - rate_limit: !include schemas/rate_limit-schema.json
+  - issues: !include schemas/issues-schema.json
+  - notifications: !include schemas/notifications-schema.json
+  - notificationMarkRead: !include schemas/notificationMarkRead-schema.json
+  - subscription: !include schemas/subscription-schema.json
+  - putSubscription: !include schemas/putSubscription-schema.json
+  - gists: !include schemas/gists-schema.json
+  - postGist: !include schemas/postGist-schema.json
+  - gist: !include schemas/gist-schema.json
+  - patchGist: !include schemas/patchGist-schema.json
+  - comments: !include schemas/comments-schema.json
+  - postComment: !include schemas/postComment-schema.json
+  - comment: !include schemas/comment-schema.json
+  - organization: !include schemas/organization-schema.json
+  - patchOrg: !include schemas/patchOrg-schema.json
+  - orgMembers: !include schemas/orgMembers-schema.json
+  - repos: !include schemas/repos-schema.json
+  - postRepo: !include schemas/postRepo-schema.json
+  - orgTeams: !include schemas/orgTeams-schema.json
+  - orgTeamsPost: !include schemas/orgTeamsPost-schema.json
+  - team: !include schemas/team-schema.json
+  - orgPublicMembers: !include schemas/orgPublicMembers-schema.json
+  - editTeam: !include schemas/editTeam-schema.json
+  - members: !include schemas/members-schema.json
+  - repositories: !include schemas/repositories-schema.json
+  - repo: !include schemas/repo-schema.json
+  - repoEdit: !include schemas/repoEdit-schema.json
+  - pulls: !include schemas/pulls-schema.json
+  - pullRequest: !include schemas/pullRequest-schema.json
+  - pullUpdate: !include schemas/pullUpdate-schema.json
+  - commits: !include schemas/commits-schema.json
+  - pullsComment: !include schemas/pullsComment-schema.json
+  - pullsCommentPost: !include schemas/pullsCommentPost-schema.json
+  - mergePullBody: !include schemas/mergePullBody-schema.json
+  - merge: !include schemas/merge-schema.json
+  - pullsComments: !include schemas/pullsComments-schema.json
+  - commentBody: !include schemas/commentBody-schema.json
+  - hook: !include schemas/hook-schema.json
+  - hookBody: !include schemas/hookBody-schema.json
+  - keys: !include schemas/keys-schema.json
+  - keyBody: !include schemas/keyBody-schema.json
+  - key: !include schemas/key-schema.json
+  - milestone: !include schemas/milestone-schema.json
+  - milestoneBody: !include schemas/milestoneBody-schema.json
+  - milestoneUpdate: !include schemas/milestoneUpdate-schema.json
+  - labels: !include schemas/labels-schema.json
+  - repoComments: !include schemas/repoComments-schema.json
+  - commitComments: !include schemas/commitComments-schema.json
+  - languages: !include schemas/languages-schema.json
+  - collaborators: !include schemas/collaborators-schema.json
+  - assignees: !include schemas/assignees-schema.json
+  - branches: !include schemas/branches-schema.json
+  - branch: !include schemas/branch-schema.json
+  - commit: !include schemas/commit-schema.json
+  - commitBody: !include schemas/commitBody-schema.json
+  - labelsBody: !include schemas/labelsBody-schema.json
+  - label: !include schemas/label-schema.json
+  - readme: !include schemas/readme-schema.json
+  - teams: !include schemas/teams-schema.json
+  - stargazers: !include schemas/stargazers-schema.json
+  - contributors: !include schemas/contributors-schema.json
+  - participationStats: !include schemas/participationStats-schema.json
+  - commitActivityStats: !include schemas/commitActivityStats-schema.json
+  - contributorsStats: !include schemas/contributorsStats-schema.json
+  - punchCardStats: !include schemas/punchCardStats-schema.json
+  - codeFrequencyStats: !include schemas/codeFrequencyStats-schema.json
+  - ref: !include schemas/ref-schema.json
+  - refBody: !include schemas/refBody-schema.json
+  - downloads: !include schemas/downloads-schema.json
+  - downloadBody: !include schemas/downloadBody-schema.json
+  - createDownload: !include schemas/createDownload-schema.json
+  - mergesBody: !include schemas/mergesBody-schema.json
+  - mergesSuccessful: !include schemas/mergesSuccessful-schema.json
+  - mergesConflict: !include schemas/mergesConflict-schema.json
+  - issueBody: !include schemas/issueBody-schema.json
+  - issue: !include schemas/issue-schema.json
+  - event: !include schemas/event-schema.json
+  - issuesComments: !include schemas/issuesComments-schema.json
+  - issuesComment: !include schemas/issuesComment-schema.json
+  - refs: !include schemas/refs-schema.json
+  - refsBody: !include schemas/refsBody-schema.json
+  - headBranch: !include schemas/headBranch-schema.json
+  - heads: !include schemas/heads-schema.json
+  - headBranchBody: !include schemas/headBranchBody-schema.json
+  - repoCommitBody: !include schemas/repoCommitBody-schema.json
+  - gitCommit: !include schemas/gitCommit-schema.json
+  - repoCommit: !include schemas/repoCommit-schema.json
+  - blob: !include schemas/blob-schema.json
+  - blobs: !include schemas/blobs-schema.json
+  - tag: !include schemas/tag-schema.json
+  - tags: !include schemas/tags-schema.json
+  - tree: !include schemas/tree-schema.json
+  - trees: !include schemas/trees-schema.json
+  - subscribition: !include schemas/subscribition-schema.json
+  - subscribitionBody: !include schemas/subscribitionBody-schema.json
+  - contents-path: !include schemas/contents-path-schema.json
+  - createFileBody: !include schemas/createFileBody-schema.json
+  - createFile: !include schemas/createFile-schema.json
+  - deleteFileBody: !include schemas/deleteFileBody-schema.json
+  - deleteFile: !include schemas/deleteFile-schema.json
+  - forks: !include schemas/forks-schema.json
+  - forkBody: !include schemas/forkBody-schema.json
+  - fork: !include schemas/fork-schema.json
+  - user: !include schemas/user-schema.json
+  - user-update: !include schemas/user-update-schema.json
+  - users: !include schemas/users-schema.json
+  - user-userId: !include schemas/user-userId-schema.json
+  - users-userId-orgs: !include schemas/users-userId-orgs-schema.json
+  - user-userId-starred: !include schemas/user-userId-starred-schema.json
+  - user-userId-subscribitions: !include schemas/user-userId-subscribitions-schema.json
+  - user-keys: !include schemas/user-keys-schema.json
+  - user-keys-post: !include schemas/user-keys-post-schema.json
+  - user-keys-keyId: !include schemas/user-keys-keyId-schema.json
+  - user-emails: !include schemas/user-emails-schema.json
+  - user-emails_final: !include schemas/user-emails_final-schema.json
+  - users-userId-keys: !include schemas/users-userId-keys-schema.json
+  - gitignore: !include schemas/gitignore-schema.json
+  - gitignore-lang: !include schemas/gitignore-lang-schema.json
+  - markdown: !include schemas/markdown-schema.json
+  - search-issues: !include schemas/search-issues-schema.json
+  - emojis: !include schemas/emojis-schema.json
+  - search-issues-by-keyword: !include schemas/search-issues-by-keyword-schema.json
+  - search-repositories-by-keyword: !include schemas/search-repositories-by-keyword-schema.json
+  - search-users-by-keyword: !include schemas/search-users-by-keyword-schema.json
+  - search-user-by-email: !include schemas/search-user-by-email-schema.json
+  - teamRepos: !include schemas/teamRepos-schema.json
+  - releases: !include schemas/releases-schema.json
+  - release-create: !include schemas/release-create-schema.json
+  - release: !include schemas/release-schema.json
+  - deployment-resp: !include schemas/deployment-resp-schema.json
+  - deployment-statuses: !include schemas/deployment-statuses-schema.json
+  - deployment-statuses-create: !include schemas/deployment-statuses-create-schema.json
+  - deployment: !include schemas/deployment-schema.json
+  - repo-deployments: !include schemas/repo-deployments-schema.json
+  - compare-commits: !include schemas/compare-commits-schema.json
+  - teams-list: !include schemas/teams-list-schema.json
+  - pullsPost: !include schemas/pullsPost-schema.json
+  - emailsPost: !include schemas/emailsPost-schema.json
+  - assets: !include schemas/assets-schema.json
+  - asset: !include schemas/asset-schema.json
+  - assetPatch: !include schemas/assetPatch-schema.json
+  - gitRefPatch: !include schemas/gitRefPatch-schema.json
+  - refStatus: !include schemas/refStatus-schema.json
+  - teamMembership: !include schemas/teamMembership-schema.json
+  - organizationAsTeamMember: !include schemas/organizationAsTeamMember-schema.json
+resourceTypes:
+  - item: !include resourceTypes/item.raml
+  - base: !include resourceTypes/base.raml
+  - collection: !include resourceTypes/collection.raml
+traits:
+  - filterableSince: !include traits/filterableSince.raml
+  - notifications: !include traits/notifications.raml
+  - filterable: !include traits/filterable.raml
+  - state: !include traits/state.raml
+  - ordering2: !include traits/ordering2.raml
+  - ordering: !include traits/ordering.raml
+  - historical: !include traits/historical.raml
+securedBy: [ oauth_2_0 ]
+/search: 
+  /code: 
+    type: collection
+    get: 
+      is: [ ordering ]
+      description: Search code.
+      queryParameters: 
+        q: 
+          description: |
+            The search terms. This can be any combination of the supported code
+            search parameters:
+            'Search In' Qualifies which fields are searched. With this qualifier
+            you can restrict the search to just the file contents, the file path,
+            or both.
+            'Languages' Searches code based on the language it's written in.
+            'Forks' Filters repositories based on the number of forks, and/or
+            whether code from forked repositories should be included in the results
+            at all.
+            'Size' Finds files that match a certain size (in bytes).
+            'Path' Specifies the path that the resulting file must be at.
+            'Extension' Matches files with a certain extension.
+            'Users' or 'Repositories' Limits searches to a specific user or repository.
+          required: true
+          example: "addClass+in:file+language:js+repo:jquery/jquery"
+        sort: 
+          description: |
+            Can only be 'indexed', which indicates how recently a file has been indexed
+            by the GitHub search infrastructure. If not provided, results are sorted
+            by best match.
+          enum: [ indexed ]
+          example: sort=stars
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-code
+              example: !include examples/search-code-example.json
+  /repositories: 
+    type: collection
+    get: 
+      is: [ ordering ]
+      description: Search repositories.
+      queryParameters: 
+        q: 
+          description: |
+            The search terms. This can be any combination of the supported repository
+            search parameters:
+            'Search In' Qualifies which fields are searched. With this qualifier you
+            can restrict the search to just the repository name, description, readme,
+            or any combination of these.
+            'Size' Finds repositories that match a certain size (in kilobytes).
+            'Forks' Filters repositories based on the number of forks, and/or whether
+            forked repositories should be included in the results at all.
+            'Created' and 'Last Updated' Filters repositories based on times of
+            creation, or when they were last updated.
+            'Users or Repositories' Limits searches to a specific user or repository.
+            'Languages' Searches repositories based on the language they are written in.
+            'Stars' Searches repositories based on the number of stars.
+          required: true
+        sort: 
+          description: If not provided, results are sorted by best match.
+          enum: 
+            - stars
+            - forks
+            - updated
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-repositories
+              example: !include examples/search-repositories-example.json
+  /users: 
+    type: collection
+    get: 
+      is: [ ordering ]
+      description: Search users.
+      queryParameters: 
+        q: 
+          description: |
+            The search terms. This can be any combination of the supported user
+            search parameters:
+            'Search In' Qualifies which fields are searched. With this qualifier you
+            can restrict the search to just the username, public email, full name,
+            location, or any combination of these.
+            'Repository count' Filters users based on the number of repositories they
+            have.
+            'Location' Filter users by the location indicated in their profile.
+            'Language' Search for users that have repositories that match a certain
+            language.
+            'Created' Filter users based on when they joined.
+            'Followers' Filter users based on the number of followers they have.
+          required: true
+        sort: 
+          description: If not provided, results are sorted by best match.
+          enum: 
+            - followers
+            - repositories
+            - joined
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-users
+              example: !include examples/search-users-example.json
+  /issues: 
+    type: base
+    get: 
+      is: [ ordering ]
+      description: Find issues by state and keyword. (This method returns up to 100 results per page.)
+      queryParameters: 
+        q: 
+          description: "The q search term can also contain any combination of the supported issue search qualifiers:"
+          required: true
+          example: "q=windows+label:bug+language:python+state:open&sort=created&order=asc"
+        sort: 
+          description: "The sort field. Can be comments, created, or updated. Default: results are sorted by best match."
+          enum: 
+            - updated
+            - created
+            - comments
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-issues
+              example: !include examples/search-issues-example.json
+/events: 
+  type: collection
+  get: 
+    description: List public events.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: events
+            example: !include examples/events-example.json
+/feeds: 
+  type: collection
+  get: 
+    description: |
+      List Feeds.
+      GitHub provides several timeline resources in Atom format. The Feeds API
+       lists all the feeds available to the authenticating user.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: feeds
+            example: !include examples/feeds-example.json
+/meta: 
+  type: collection
+  get: 
+    description: This gives some information about GitHub.com, the service.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: meta
+            example: !include examples/meta-example.json
+/rate_limit: 
+  type: collection
+  get: 
+    description: |
+      Get your current rate limit status
+      Note: Accessing this endpoint does not count against your rate limit.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: rate_limit
+            example: !include examples/rate_limit-example.json
+/issues: 
+  type: item
+  get: 
+    is: [ filterable ]
+    description: |
+      List issues.
+      List all issues across all the authenticated user's visible repositories.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: issues
+            example: !include examples/issues-example.json
+/notifications: 
+  type: collection
+  get: 
+    is: [ filterableSince , notifications ]
+    description: |
+      List your notifications.
+      List all notifications for the current user, grouped by repository.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: notifications
+            example: !include examples/notifications-example.json
+  put: 
+    description: |
+      Mark as read.
+      Marking a notification as "read" removes it from the default view on GitHub.com.
+    body: 
+      application/json: 
+        schema: notificationMarkRead
+        example: !include examples/notificationMarkRead-example.json
+    responses: 
+      205: 
+        description: Marked as read.
+  /threads/{id}: 
+    type: item
+    uriParameters: 
+      id: 
+        description: Id of thread.
+        type: integer
+    get: 
+      description: View a single thread.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: notifications
+              example: !include examples/notifications-example.json
+    patch: 
+      description: Mark a thread as read
+      responses: 
+        205: 
+          description: Thread marked as read.
+    /subscription: 
+      type: item
+      get: 
+        description: Get a Thread Subscription.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: subscription
+                example: !include examples/subscription-example.json
+      put: 
+        description: |
+          Set a Thread Subscription.
+          This lets you subscribe to a thread, or ignore it. Subscribing to a thread
+          is unnecessary if the user is already subscribed to the repository. Ignoring
+          a thread will mute all future notifications (until you comment or get @mentioned).
+        body: 
+          application/json: 
+            schema: putSubscription
+            example: !include examples/putSubscription-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: subscription
+                example: !include examples/subscription-example.json
+      delete: 
+        description: Delete a Thread Subscription.
+        responses: 
+          204: 
+            description: |
+              No Content
+/gists: 
+  securedBy: [ null , oauth_2_0 ]
+  type: collection
+  get: 
+    is: [ historical ]
+    description: |
+      List the authenticated user's gists or if called anonymously, this will
+      return all public gists.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: gists
+            example: !include examples/gists-example.json
+  post: 
+    description: Create a gist.
+    body: 
+      application/json: 
+        schema: postGist
+        example: !include examples/postGist-example.json
+    responses: 
+      201: 
+        body: 
+          application/json: 
+            schema: gist
+            example: !include examples/gist-example.json
+  /{id}: 
+    type: item
+    uriParameters: 
+      id: 
+        description: Id of gist.
+        type: integer
+    get: 
+      description: Get a single gist.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: gist
+              example: !include examples/gist-example.json
+    patch: 
+      description: Edit a gist.
+      body: 
+        application/json: 
+          schema: patchGist
+          example: !include examples/patchGist-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: gist
+              example: !include examples/gist-example.json
+    delete: 
+      description: Delete a gist.
+      responses: 
+        204: 
+          description: |
+            No content.
+    /star: 
+      type: base
+      put: 
+        description: Star a gist.
+        responses: 
+          204: 
+            description: Starred.
+      delete: 
+        description: Unstar a gist.
+        responses: 
+          204: 
+            description: Item removed.
+      get: 
+        description: Check if a gist is starred.
+        responses: 
+          204: 
+            description: Exists.
+          404: 
+            description: Not exists.
+    /comments: 
+      type: collection
+      get: 
+        description: List comments on a gist.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: comments
+                example: !include examples/comments-example.json
+      post: 
+        description: Create a commen
+        body: 
+          application/json: 
+            schema: postComment
+            example: !include examples/postComment-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: comment
+                example: !include examples/comment-example.json
+      /{commentId}: 
+        type: item
+        uriParameters: 
+          commentId: 
+            description: Id of comment.
+            type: integer
+        get: 
+          description: Get a single comment.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: comment
+                  example: !include examples/comment-example.json
+        patch: 
+          description: Edit a comment.
+          body: 
+            application/json: 
+              schema: comment
+              example: !include examples/comment-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: comment
+                  example: !include examples/comment-example.json
+        delete: 
+          description: Delete a comment.
+          responses: 
+            204: 
+              description: |
+                No content.
+    /forks: 
+      type: base
+      post: 
+        description: Fork a gist.
+        responses: 
+          204: 
+            description: Exists.
+          404: 
+            description: Not exists.
+  /public: 
+    securedBy: [ null , oauth_2_0 ]
+    type: collection
+    get: 
+      is: [ historical ]
+      description: List all public gists.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: gists
+              example: !include examples/gists-example.json
+  /starred: 
+    securedBy: [ null , oauth_2_0 ]
+    type: collection
+    get: 
+      is: [ historical ]
+      description: "List the authenticated user's starred gists."
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: gists
+              example: !include examples/gists-example.json
+/orgs/{org}: 
+  type: item
+  uriParameters: 
+    org: 
+      description: Name of organisation.
+  get: 
+    description: Get an Organization.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: organization
+            example: !include examples/organization-example.json
+  patch: 
+    description: Edit an Organization.
+    body: 
+      application/json: 
+        schema: patchOrg
+        example: !include examples/patchOrg-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: organization
+            example: !include examples/organization-example.json
+  /members: 
+    type: collection
+    get: 
+      description: |
+        Members list.
+        List all users who are members of an organization. A member is a user tha
+        belongs to at least 1 team in the organization. If the authenticated user
+        is also an owner of this organization then both concealed and public members
+        will be returned. If the requester is not an owner of the organization the
+        query will be redirected to the public members list.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: orgMembers
+              example: !include examples/orgMembers-example.json
+        302: 
+          description: Response if requester is not an organization member.
+    /{username}: 
+      type: item
+      uriParameters: 
+        username: 
+          description: Name of the user.
+      delete: 
+        description: |
+          Remove a member.
+          Removing a user from this list will remove them from all teams and they
+          will no longer have any access to the organization's repositories.
+        responses: 
+          204: 
+            description: |
+              No content.
+      get: 
+        description: Check if a user is, publicly or privately, a member of the organization.
+        responses: 
+          204: 
+            description: |
+              No content. Response if requester is an organization member and user is a member
+          404: 
+            description: |
+              Not Found.
+              a. Response if requester is an organization member and user is not a member
+              b. Response if requester is not an organization member and is inquiring about themselves
+          302: 
+            description: |
+              Found. Response if requester is not an organization member
+  /repos: 
+    type: collection
+    get: 
+      description: List repositories for the specified org.
+      queryParameters: 
+        type: 
+          enum: 
+            - all
+            - public
+            - private
+            - forks
+            - sources
+            - member
+          default: all
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: repos
+              example: !include examples/repos-example.json
+    post: 
+      description: |
+        Create a new repository for the authenticated user. OAuth users must supply
+        repo scope.
+      body: 
+        application/json: 
+          schema: postRepo
+          example: !include examples/postRepo-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: repos
+              example: !include examples/repos-example.json
+  /teams: 
+    type: collection
+    get: 
+      description: List teams.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: orgTeams
+              example: !include examples/orgTeams-example.json
+    post: 
+      description: |
+        Create team.
+        In order to create a team, the authenticated user must be an owner of organization.
+      body: 
+        application/json: 
+          schema: orgTeamsPost
+          example: !include examples/orgTeamsPost-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: team
+              example: !include examples/teams-example.json
+  /public_members: 
+    type: collection
+    get: 
+      description: |
+        Public members list.
+        Members of an organization can choose to have their membership publicized
+        or not.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: orgPublicMembers
+              example: !include examples/orgPublicMembers-example.json
+    /{username}: 
+      type: base
+      uriParameters: 
+        username: 
+          description: Name of the user.
+      get: 
+        description: Check public membership.
+        responses: 
+          204: 
+            description: User is a public member.
+          404: 
+            description: User is not a public member.
+      put: 
+        description: "Publicize a user's membership."
+        responses: 
+          204: 
+            description: Publicized.
+      delete: 
+        description: "Conceal a user's membership."
+        responses: 
+          204: 
+            description: Concealed.
+  /events: 
+    type: collection
+    get: 
+      description: List public events for an organization.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: events
+              example: !include examples/events-example.json
+  /issues: 
+    type: collection
+    get: 
+      is: [ filterable ]
+      description: |
+        List issues.
+        List all issues for a given organization for the authenticated user.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: issues
+              example: !include examples/issues-example.json
+/teams/{teamId}: 
+  type: item
+  uriParameters: 
+    teamId: 
+      description: Id of team.
+      type: integer
+  get: 
+    description: Get team.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: team
+            example: !include examples/teams-example.json
+  patch: 
+    description: |
+      Edit team.
+      In order to edit a team, the authenticated user must be an owner of the org
+      that the team is associated with.
+    body: 
+      application/json: 
+        schema: editTeam
+        example: !include examples/editTeam-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: team
+            example: !include examples/teams-example.json
+  delete: 
+    description: |
+      Delete team.
+      In order to delete a team, the authenticated user must be an owner of the
+      org that the team is associated with.
+    responses: 
+      204: 
+        description: |
+          No content.
+  /members: 
+    type: collection
+    get: 
+      description: |
+        List team members.
+        In order to list members in a team, the authenticated user must be a member
+        of the team.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: members
+              example: !include examples/members-example.json
+    /{username}: 
+      type: base
+      uriParameters: 
+        username: 
+          description: Name of a member.
+      get: 
+        description: |
+          The "Get team member" API is deprecated and is scheduled for removal in the next major version of the API. We recommend using the Get team membership API instead. It allows you to get both active and pending memberships.
+          
+          Get team member.
+          In order to get if a user is a member of a team, the authenticated user mus
+          be a member of the team.
+        responses: 
+          204: 
+            description: User is a member.
+          404: 
+            description: User is not a member.
+      put: 
+        description: |
+          The API (described below) is deprecated and is scheduled for removal in the next major version of the API. We recommend using the Add team membership API instead. It allows you to invite new organization members to your teams.
+          
+          Add team member.
+          In order to add a user to a team, the authenticated user must have 'admin'
+          permissions to the team or be an owner of the org that the team is associated
+          with.
+        responses: 
+          204: 
+            description: Team member added.
+          422: 
+            description: If you attempt to add an organization to a team, you will get this.
+            body: 
+              application/json: 
+                schema: organizationAsTeamMember
+                example: !include examples/organizationAsTeamMember-example.json
+      delete: 
+        description: |
+          The "Remove team member" API is deprecated and is scheduled for removal in the next major version of the API. We recommend using the Remove team membership API instead. It allows you to remove both active and pending memberships.
+          
+          Remove team member.
+          In order to remove a user from a team, the authenticated user must have 'admin'
+          permissions to the team or be an owner of the org that the team is associated
+          with.
+          NOTE This does not delete the user, it just remove them from the team.
+        responses: 
+          204: 
+            description: Team member removed.
+  /memberships/{username}: 
+    type: base
+    uriParameters: 
+      username: 
+        description: Name of a member.
+    get: 
+      description: |
+        Get team membership.
+        In order to get a user's membership with a team, the authenticated user must be a member of the team or an owner of the team's organization.
+      responses: 
+        200: 
+          description: User is a member.
+          body: 
+            application/json: 
+              schema: teamMembership
+              example: !include examples/teamMembership-example.json
+        404: 
+          description: User has no membership with team
+    put: 
+      description: |
+        Add team membership.
+        In order to add a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with.
+        
+        If the user is already a part of the team's organization (meaning they're on at least one other team in the organization), this endpoint will add the user to the team.
+        
+        If the user is completely unaffiliated with the team's organization (meaning they're on none of the organization's teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the 'pending' state until the user accepts the invitation, at which point the membership will transition to the 'active' state and the user will be added as a member of the team.
+      responses: 
+        200: 
+          description: Team member added.
+          body: 
+            application/json: 
+              schema: teamMembership
+              example: !include examples/teamMembership-example.json
+        422: 
+          description: If you attempt to add an organization to a team, you will get this.
+          body: 
+            application/json: 
+              schema: organizationAsTeamMember
+              example: !include examples/organizationAsTeamMember-example.json
+    delete: 
+      description: |
+        Remove team membership.
+        In order to remove a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with. NOTE: This does not delete the user, it just removes their membership from the team.
+      responses: 
+        204: 
+          description: Team member removed.
+  /repos: 
+    type: base
+    get: 
+      description: List team repos
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: teamRepos
+              example: !include examples/teamRepos-example.json
+    /{owner}/{repo}:
+      uriParameters: 
+        owner: 
+          description: Name of a repository owner. 
+        repo: 
+          description: Name of a repository.
+      type: base
+      get: 
+        description: Check if a team manages a repository
+      delete: 
+        description: "In order to remove a repository from a team, the authenticated user must be an owner of the org that the team is associated with. NOTE: This does not delete the repository, it just removes it from the team."
+        responses: 
+          204: 
+            description: |
+              No content.
+    /{org}/{repo}: 
+      uriParameters: 
+        org: 
+          description: Name of a organization. 
+        repo: 
+          description: Name of a repository.
+      type: base
+      put: 
+        description: In order to add a repository to a team, the authenticated user must be an owner of the org that the team is associated with. Also, the repository must be owned by the organization, or a direct fork of a repository owned by the organization.
+/repositories: 
+  type: collection
+  get: 
+    is: [ filterableSince ]
+    description: |
+      List all public repositories.
+      This provides a dump of every public repository, in the order that they
+      were created.
+      Note: Pagination is powered exclusively by the since parameter. is the
+      Link header to get the URL for the next page of repositories.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: repositories
+            example: !include examples/repositories-example.json
+    securedBy: [ null , oauth_2_0 ]
+/repos/{owner}/{repo}: 
+  type: item
+  uriParameters: 
+    owner: 
+      description: Name of repository owner.
+    repo: 
+      description: Name of repository.
+  get: 
+    description: Get repository.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: repo
+            example: !include examples/repo-example.json
+  patch: 
+    description: Edit repository.
+    body: 
+      application/json: 
+        schema: repoEdit
+        example: !include examples/repoEdit-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: repo
+            example: !include examples/repo-example.json
+  delete: 
+    description: |
+      Delete a Repository.
+      Deleting a repository requires admin access. If OAuth is used, the delete_repo
+      scope is required.
+  /pulls: 
+    type: collection
+    get: 
+      is: [ state ]
+      description: List pull requests.
+      queryParameters: 
+        head: 
+          description: |
+            Filter pulls by head user and branch name in the format of 'user:ref-name'.
+            Example: github:new-script-format.
+        base: 
+          description: Filter pulls by base branch name. Example - gh-pages.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: pulls
+              example: !include examples/pulls-example.json
+    post: 
+      description: Create a pull request.
+      body: 
+        application/json: 
+          schema: pullsPost
+          example: !include examples/pullsPost-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: pulls
+              example: !include examples/pulls-example.json
+    /{number}: 
+      type: item
+      uriParameters: 
+        number: 
+          description: Id of pull.
+          type: integer
+      get: 
+        description: Get a single pull request.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: pullRequest
+                example: !include examples/pullRequest-example.json
+      patch: 
+        description: Update a pull request.
+        body: 
+          application/json: 
+            schema: pullUpdate
+            example: !include examples/pullUpdate-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: repo
+                example: !include examples/repo-example.json
+      /files: 
+        type: item
+        get: 
+          description: List pull requests files.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: pulls
+                  example: !include examples/pulls-example.json
+      /commits: 
+        type: item
+        get: 
+          description: List commits on a pull request.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: commits
+                  example: !include examples/commits-example.json
+      /comments: 
+        type: collection
+        get: 
+          description: List comments on a pull request.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: pullsComment
+                  example: !include examples/pullsComment-example.json
+        post: 
+          description: |
+            Create a comment.
+              #TODO Alternative input ( http://developer.github.com/v3/pulls/comments/ )
+              description: |
+                Alternative Input.
+                Instead of passing commit_id, path, and position you can reply to an
+                existing Pull Request Comment like this:
+            
+                    body
+                       Required string
+                    in_reply_to
+                       Required number - Comment id to reply to.
+          body: 
+            application/json: 
+              schema: pullsCommentPost
+              example: !include examples/pullsCommentPost-example.json
+          responses: 
+            201: 
+              body: 
+                application/json: 
+                  schema: pullsComment
+                  example: !include examples/pullsComment-example.json
+      /merge: 
+        type: base
+        get: 
+          description: Get if a pull request has been merged.
+          responses: 
+            204: 
+              description: Pull request has been merged.
+            404: 
+              description: Pull request has not been merged.
+        put: 
+          description: "Merge a pull request (Merge Button's)"
+          body: 
+            application/json: 
+              schema: mergePullBody
+              example: !include examples/mergePullBody-example.json
+          responses: 
+            200: 
+              description: Response if merge was successful.
+              body: 
+                application/json: 
+                  schema: merge
+                  example: !include examples/mergesSuccessful-example.json
+            405: 
+              description: Response if merge cannot be performed.
+              body: 
+                application/json: 
+                  schema: merge
+                  example: !include examples/mergeFailed-example.json
+    /comments: 
+      type: collection
+      get: 
+        is: [ filterableSince , ordering2 ]
+        description: |
+          List comments in a repository.
+          By default, Review Comments are ordered by ascending ID.
+        queryParameters: 
+          sort: 
+            enum: [ created , updated ]
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: pullsComments
+                example: !include examples/pullsComments-example.json
+      /{commentId}: 
+        type: item
+        uriParameters: 
+          commentId: 
+            description: Id of comment.
+            type: integer
+        get: 
+          description: Get a single comment.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: pullsComment
+                  example: !include examples/pullsComment-example.json
+        patch: 
+          description: Edit a comment.
+          body: 
+            application/json: 
+              schema: commentBody
+              example: !include examples/commentBody-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: pullsComment
+                  example: !include examples/pullsComment-example.json
+        delete: 
+          description: Delete a comment.
+          responses: 
+            204: 
+              description: |
+                No content.
+  /hooks: 
+    type: collection
+    get: 
+      description: Get list of hooks.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: hook
+              example: !include examples/hook-example.json
+    post: 
+      description: Create a hook.
+      body: 
+        application/json: 
+          schema: hookBody
+          example: !include examples/hookBody-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: hook
+              example: !include examples/hook-example.json
+    /{hookId}: 
+      type: item
+      uriParameters: 
+        hookId: 
+          description: Id of hook.
+          type: integer
+      get: 
+        description: Get single hook.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: hook
+                example: !include examples/hook-example.json
+      patch: 
+        description: Edit a hook.
+        body: 
+          application/json: 
+            schema: hookBody
+            example: !include examples/hookBody-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: hook
+                example: !include examples/hook-example.json
+      delete: 
+        description: Delete a hook.
+        responses: 
+          204: 
+            description: |
+              No content.
+      /tests: 
+        type: base
+        post: 
+          description: |
+            Test a push hook.
+            This will trigger the hook with the latest push to the current repository
+            if the hook is subscribed to push events. If the hook is not subscribed
+            to push events, the server will respond with 204 but no test POST will
+            be generated.
+            Note: Previously /repos/:owner/:repo/hooks/:id/tes
+          responses: 
+            204: 
+              description: Hook is triggered.
+  /keys: 
+    type: collection
+    get: 
+      description: Get list of keys.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: keys
+              example: !include examples/keys-example.json
+    post: 
+      description: Create a key.
+      body: 
+        application/json: 
+          schema: keyBody
+          example: !include examples/keyBody-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: key
+              example: !include examples/key-example.json
+    /{keyId}: 
+      type: item
+      uriParameters: 
+        keyId: 
+          description: Id of key.
+          type: integer
+      get: 
+        description: Get a key
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: key
+                example: !include examples/key-example.json
+      delete: 
+        description: Delete a key.
+        responses: 
+          204: 
+            description: |
+              No content.
+  /milestones: 
+    type: collection
+    get: 
+      is: [ ordering2 , state ]
+      description: List milestones for a repository.
+      queryParameters: 
+        sort: 
+          enum: [ due_date , completeness ]
+          default: due_date
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: milestone
+              example: !include examples/milestone-example.json
+    post: 
+      description: Create a milestone.
+      body: 
+        application/json: 
+          schema: milestoneBody
+          example: !include examples/milestoneBody-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: milestone
+              example: !include examples/milestone-example.json
+    /{number}: 
+      type: item
+      uriParameters: 
+        number: 
+          description: Number of milestone.
+          type: integer
+      get: 
+        description: Get a single milestone.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: milestone
+                example: !include examples/milestone-example.json
+      patch: 
+        description: Update a milestone.
+        body: 
+          application/json: 
+            schema: milestoneUpdate
+            example: !include examples/milestoneUpdate-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: milestone
+                example: !include examples/milestone-example.json
+      delete: 
+        description: Delete a milestone.
+        responses: 
+          204: 
+            description: |
+              No content.
+      /labels: 
+        type: collection
+        get: 
+          description: Get labels for every issue in a milestone.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: labels
+                  example: !include examples/labels-example.json
+  /comments: 
+    type: collection
+    get: 
+      description: |
+        List commit comments for a repository.
+        Comments are ordered by ascending ID.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: repoComments
+              example: !include examples/repoComments-example.json
+    /{commentId}: 
+      type: item
+      uriParameters: 
+        commentId: 
+          description: Id of comment.
+          type: integer
+      get: 
+        description: Get a single commit comment.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: commitComments
+                example: !include examples/commitComments-example.json
+      patch: 
+        description: Update a commit comment.
+        body: 
+          application/json: 
+            schema: commentBody
+            example: !include examples/commentBody-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: commitComments
+                example: !include examples/commitComments-example.json
+      delete: 
+        description: Delete a commit comment
+        responses: 
+          204: 
+            description: |
+              No content.
+  /languages: 
+    type: collection
+    get: 
+      description: |
+        List languages.
+        List languages for the specified repository. The value on the right of a
+        language is the number of bytes of code written in that language.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: languages
+              example: !include examples/languages-example.json
+  /collaborators: 
+    type: collection
+    get: 
+      description: |
+        List.
+        When authenticating as an organization owner of an organization-owned
+        repository, all organization owners are included in the list of
+        collaborators. Otherwise, only users with access to the repository are
+        returned in the collaborators list.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: collaborators
+              example: !include examples/collaborators-example.json
+    /{user}: 
+      type: base
+      uriParameters: 
+        user: 
+          description: Login of the user.
+      get: 
+        description: Check if user is a collaborator
+        responses: 
+          204: 
+            description: User is a collaborator.
+          404: 
+            description: User is not a collaborator.
+      put: 
+        description: Add collaborator.
+        responses: 
+          204: 
+            description: Collaborator added.
+      delete: 
+        description: Remove collaborator.
+        responses: 
+          204: 
+            description: Collaborator removed.
+  /notifications: 
+    type: collection
+    get: 
+      is: [ filterableSince , notifications ]
+      description: |
+        List your notifications in a repository
+        List all notifications for the current user.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: notifications
+              example: !include examples/notifications-example.json
+    put: 
+      description: |
+        Mark notifications as read in a repository.
+        Marking all notifications in a repository as "read" removes them from the
+        default view on GitHub.com.
+      body: 
+        application/json: 
+          schema: notificationMarkRead
+          example: !include examples/notificationMarkRead-schema-example.json
+      responses: 
+        205: 
+          description: Marked as read.
+  /assignees: 
+    type: collection
+    get: 
+      description: |
+        List assignees.
+        This call lists all the available assignees (owner + collaborators) to which
+        issues may be assigned.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: assignees
+              example: !include examples/assignees-example.json
+    /{assignee}: 
+      type: base
+      uriParameters: 
+        assignee: 
+          description: Login of the assignee.
+      get: 
+        description: |
+          Check assignee.
+          You may also check to see if a particular user is an assignee for a repository.
+        responses: 
+          204: 
+            description: User is an assignee.
+          404: 
+            description: "User isn't an assignee."
+  /branches: 
+    type: collection
+    get: 
+      description: Get list of branches
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: branches
+              example: !include examples/branches-example.json
+    /{branch}: 
+      type: item
+      uriParameters: 
+        branch: 
+          description: Name of the branch.
+      get: 
+        description: Get Branch
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: branch
+                example: !include examples/branch-example.json
+  /commits: 
+    type: collection
+    get: 
+      is: [ filterableSince ]
+      description: List commits on a repository.
+      queryParameters: 
+        sha: 
+          description: Sha or branch to start listing commits from.
+        path: 
+          description: Only commits containing this file path will be returned.
+        author: 
+          description: GitHub login, name, or email by which to filter by commit author.
+        until: 
+          description: ISO 8601 Date - Only commits before this date will be returned.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: commits
+              example: !include examples/commits-example.json
+    /{shaCode}: 
+      type: item
+      uriParameters: 
+        shaCode: 
+          description: SHA-1 code of the commit.
+      get: 
+        description: Get a single commit.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: commit
+                example: !include examples/commit-example.json
+      /comments: 
+        type: collection
+        get: 
+          description: List comments for a single commitList comments for a single commit.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: repoComments
+                  example: !include examples/repoComments-example.json
+        post: 
+          description: Create a commit comment.
+          body: 
+            application/json: 
+              schema: commitBody
+              example: !include examples/commitBody-example.json
+          responses: 
+            201: 
+              body: 
+                application/json: 
+                  schema: commitComments
+                  example: !include examples/commitComments-example.json
+    /{ref}/status: 
+      type: base
+      get: 
+        description: |
+          Get the combined Status for a specific Ref
+          The Combined status endpoint is currently available for developers to preview. During the preview period, the API may change without advance notice. Please see the blog post for full details.
+          To access this endpoint during the preview period, you must provide a custom media type in the Accept header:
+          application/vnd.github.she-hulk-preview+json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: refStatus
+                example: !include examples/refStatus-example.json
+  /labels: 
+    type: collection
+    get: 
+      description: List all labels for this repository.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: labels
+              example: !include examples/labels-example.json
+    post: 
+      description: Create a label.
+      body: 
+        application/json: 
+          schema: labelsBody
+          example: !include examples/labelsBody-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: label
+              example: !include examples/label-example.json
+    /{name}: 
+      type: item
+      uriParameters: 
+        name: 
+          description: Name of the label.
+      get: 
+        description: Get a single label.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: label
+                example: !include examples/label-example.json
+      patch: 
+        description: Update a label.
+        body: 
+          application/json: 
+            schema: labelsBody
+            example: !include examples/labelsBody-schema-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: label
+                example: !include examples/label-example.json
+      delete: 
+        description: Delete a label.
+        responses: 
+          204: 
+            description: |
+              No content.
+  /readme: 
+    type: item
+    get: 
+      description: |
+        Get the README.
+        This method returns the preferred README for a repository.
+      queryParameters: 
+        ref: 
+          description: The String name of the Commit/Branch/Tag. Defaults to master.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: readme
+              example: !include examples/readme-example.json
+  /teams: 
+    type: collection
+    get: 
+      description: Get list of teams
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: teams
+              example: !include examples/teams-example.json
+  /subscribers: 
+    type: collection
+    get: 
+      description: List watchers.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: stargazers
+              example: !include examples/stargazers-example.json
+  /contributors: 
+    type: collection
+    get: 
+      description: Get list of contributors.
+      queryParameters: 
+        anon: 
+          description: Set to 1 or true to include anonymous contributors in results.
+          required: true
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: contributors
+              example: !include examples/contributors-example.json
+  /stats: 
+    /participation: 
+      type: collection
+      get: 
+        description: Get the weekly commit count for the repo owner and everyone else.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: participationStats
+                example: !include examples/participationStats-example.json
+    /commit_activity: 
+      type: collection
+      get: 
+        description: |
+          Get the last year of commit activity data.
+          Returns the last year of commit activity grouped by week. The days array
+          is a group of commits per day, starting on Sunday.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: commitActivityStats
+                example: !include examples/commitActivityStats-example.json
+    /contributors: 
+      type: collection
+      get: 
+        description: Get contributors list with additions, deletions, and commit counts.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: contributorsStats
+                example: !include examples/contributorsStats-example.json
+    /punch_card: 
+      type: collection
+      get: 
+        description: |
+          Get the number of commits per hour in each day.
+          Each array contains the day number, hour number, and number of commits
+          0-6 Sunday - Saturday
+          0-23 Hour of day
+          Number of commits
+          
+          For example, [2, 14, 25] indicates that there were 25 total commits, during
+          the 2.00pm hour on Tuesdays. All times are based on the time zone of
+          individual commits.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: punchCardStats
+                example: !include examples/punchCardStats-example.json
+    /code_frequency: 
+      type: collection
+      get: 
+        description: |
+          Get the number of additions and deletions per week.
+          Returns a weekly aggregate of the number of additions and deletions pushed
+          to a repository.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: codeFrequencyStats
+                example: !include examples/codeFrequencyStats-example.json
+  /watchers: 
+    type: collection
+    get: 
+      description: List Stargazers. New implementation.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: stargazers
+              example: !include examples/stargazers-example.json
+  /statuses/{ref}: 
+    type: collection
+    uriParameters: 
+      ref: 
+        description: |
+          Ref to list the statuses from. It can be a SHA, a branch name, or a tag name.
+    get: 
+      description: List Statuses for a specific Ref.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: ref
+              example: !include examples/ref-example.json
+    post: 
+      description: Create a Status.
+      body: 
+        application/json: 
+          schema: refBody
+          example: !include examples/refBody-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: ref
+              example: !include examples/ref-example.json
+  /downloads: 
+    type: collection
+    get: 
+      description: Deprecated. List downloads for a repository.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: downloads
+              example: !include examples/downloads-example.json
+    /{downloadId}: 
+      type: item
+      uriParameters: 
+        downloadId: 
+          description: Id of download.
+          type: integer
+      get: 
+        description: Deprecated. Get a single download.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: downloads
+                example: !include examples/downloads-example.json
+      delete: 
+        description: Deprecated. Delete a download.
+        responses: 
+          204: 
+            description: |
+              No content.
+  /merges: 
+    type: base
+    post: 
+      description: Perform a merge.
+      body: 
+        application/json: 
+          schema: mergesBody
+          example: !include examples/mergesBody-example.json
+      responses: 
+        201: 
+          description: Successful Response (The resulting merge commit)
+          body: 
+            application/json: 
+              schema: mergesSuccessful
+              example: !include examples/mergesSuccessful-example.json
+        204: 
+          description: No-op response (base already contains the head, nothing to merge)
+        409: 
+          description: Merge conflict response.
+          body: 
+            application/json: 
+              schema: mergesConflict
+              example: !include examples/mergesConflict-example.json
+        404: 
+          description: Missing base response or missing head response
+          body: 
+            application/json: 
+              schema: mergesConflict
+              example: !include examples/mergesMissing-example.json
+  /issues: 
+    type: collection
+    get: 
+      is: [ filterable ]
+      description: List issues for a repository.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: issues
+              example: !include examples/issues-example.json
+    post: 
+      description: |
+        Create an issue.
+        Any user with pull access to a repository can create an issue.
+      body: 
+        application/json: 
+          schema: issueBody
+          example: !include examples/issueBody-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: issue
+              example: !include examples/issue-example.json
+    /events: 
+      type: collection
+      get: 
+        description: List issue events for a repository.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: events
+                example: !include examples/events-example.json
+      /{eventId}: 
+        type: item
+        uriParameters: 
+          eventId: 
+            description: Id of the event.
+            type: integer
+        get: 
+          description: Get a single event.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: event
+                  example: !include examples/event-example.json
+    /{number}: 
+      type: item
+      uriParameters: 
+        number: 
+          description: Number of issue.
+          type: integer
+      get: 
+        description: Get a single issue
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: issue
+                example: !include examples/issue-example.json
+      patch: 
+        description: |
+          Edit an issue.
+          Issue owners and users with push access can edit an issue.
+        body: 
+          application/json: 
+            schema: issue
+            example: !include examples/issue-schema-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: issue
+                example: !include examples/issue-example.json
+      /events: 
+        type: collection
+        get: 
+          description: List events for an issue.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: events
+                  example: !include examples/events-example.json
+      /labels: 
+        type: collection
+        get: 
+          description: List labels on an issue.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: labels
+                  example: !include examples/labels-example.json
+        post: 
+          description: Add labels to an issue.
+          body: 
+            application/json: 
+              schema: labelsBody
+              example: !include examples/labelsBody-schema-example.json
+          responses: 
+            201: 
+              body: 
+                application/json: 
+                  schema: label
+                  example: !include examples/label-example.json
+        put: 
+          description: |
+            Replace all labels for an issue.
+            Sending an empty array ([]) will remove all Labels from the Issue.
+          body: 
+            application/json: 
+              schema: labelsBody
+              example: !include examples/labelsBody-schema-example.json
+          responses: 
+            201: 
+              body: 
+                application/json: 
+                  schema: label
+                  example: !include examples/label-example.json
+        delete: 
+          description: Remove all labels from an issue.
+          responses: 
+            204: 
+              description: |
+                No content.
+        /{name}: 
+          type: base
+          uriParameters: 
+            name: 
+              description: Name of the label.
+          delete: 
+            description: Remove a label from an issue.
+            responses: 
+              204: 
+                description: Item removed.
+      /comments: 
+        type: collection
+        get: 
+          description: List comments on an issue.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: issuesComments
+                  example: !include examples/issuesComments-example.json
+        post: 
+          description: Create a comment.
+          body: 
+            application/json: 
+              schema: commentBody
+              example: !include examples/commentBody-example.json
+          responses: 
+            201: 
+              body: 
+                application/json: 
+                  schema: issuesComment
+                  example: !include examples/issuesComment-example.json
+    /comments: 
+      type: collection
+      get: 
+        is: [ filterableSince , ordering2 ]
+        description: List comments in a repository.
+        queryParameters: 
+          sort: 
+            enum: [ created , updated ]
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: issuesComments
+                example: !include examples/issuesComments-example.json
+      /{commentId}: 
+        type: item
+        uriParameters: 
+          commentId: 
+            description: ID of comment.
+            type: integer
+        get: 
+          description: Get a single comment.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: issuesComment
+                  example: !include examples/issuesComment-example.json
+        patch: 
+          description: Edit a comment.
+          body: 
+            application/json: 
+              schema: commentBody
+              example: !include examples/commentBody-schema-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: issuesComment
+                  example: !include examples/issuesComment-example.json
+        delete: 
+          description: Delete a comment.
+          responses: 
+            204: 
+              description: |
+                No content.
+  /events: 
+    type: collection
+    get: 
+      description: Get list of repository events.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: events
+              example: !include examples/events-example.json
+  /git: 
+    /refs: 
+      type: collection
+      get: 
+        description: Get all References
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: refs
+                example: !include examples/refs-example.json
+      post: 
+        description: Create a Reference
+        body: 
+          application/json: 
+            schema: refsBody
+            example: !include examples/refsBody-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: headBranch
+                example: !include examples/headBranch-example.json
+      /{ref}: 
+        type: base
+        delete: 
+          description: |
+            Delete a Reference
+            Example: Deleting a branch: DELETE /repos/octocat/Hello-World/git/refs/heads/feature-a 
+            Example: Deleting a tag:        DELETE /repos/octocat/Hello-World/git/refs/tags/v1.0
+          responses: 
+            204: 
+        patch: 
+          description: Update a Reference
+          body: 
+            application/json: 
+              schema: gitRefPatch
+              example: !include examples/gitRefPatch-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: refBody
+                  example: !include examples/refBody-example.json
+        get: 
+          description: Get a Reference
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: refBody
+                  example: !include examples/refBody-example.json
+    /commits: 
+      type: item
+      post: 
+        description: Create a Commit.
+        body: 
+          application/json: 
+            schema: repoCommitBody
+            example: !include examples/repoCommitBody-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: gitCommit
+                example: !include examples/gitCommit-example.json
+      /{shaCode}: 
+        type: item
+        uriParameters: 
+          shaCode: 
+            description: SHA-1 code.
+        get: 
+          description: Get a Commit.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: repoCommit
+                  example: !include examples/repoCommit-example.json
+    /blobs: 
+      type: collection
+      post: 
+        description: Create a Blob.
+        body: 
+          application/json: 
+            schema: blob
+            example: !include examples/blob-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: blobs
+                example: !include examples/blobs-example.json
+      /{shaCode}: 
+        type: item
+        uriParameters: 
+          shaCode: 
+            description: SHA-1 code.
+        get: 
+          description: |
+            Get a Blob.
+            Since blobs can be any arbitrary binary data, the input and responses for
+            the blob API takes an encoding parameter that can be either utf-8 or
+            base64. If your data cannot be losslessly sent as a UTF-8 string, you can
+            base64 encode it.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: blob
+                  example: !include examples/blob-example.json
+    /tags: 
+      type: collection
+      post: 
+        description: |
+          Create a Tag Object.
+          Note that creating a tag object does not create the reference that makes a
+          tag in Git. If you want to create an annotated tag in Git, you have to do
+          this call to create the tag object, and then create the refs/tags/[tag]
+          reference. If you want to create a lightweight tag, you only have to create
+          the tag reference - this call would be unnecessary.
+        body: 
+          application/json: 
+            schema: tag
+            example: !include examples/tag-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: tags
+                example: !include examples/tag-example.json
+      /{shaCode}: 
+        type: item
+        get: 
+          description: Get a Tag.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: tag
+                  example: !include examples/tag-example.json
+    /trees: 
+      type: collection
+      post: 
+        description: |
+          Create a Tree.
+          The tree creation API will take nested entries as well. If both a tree and
+          a nested path modifying that tree are specified, it will overwrite the
+          contents of that tree with the new path contents and write a new tree out.
+        body: 
+          application/json: 
+            schema: tree
+            example: !include examples/tree-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: trees
+                example: !include examples/trees-example.json
+      /{shaCode}: 
+        type: item
+        uriParameters: 
+          shaCode: 
+            description: Tree SHA.
+        get: 
+          description: Get a Tree.
+          queryParameters: 
+            recursive: 
+              description: Get a Tree Recursively. (0 or 1)
+              type: integer
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: tree
+                  example: !include examples/tree-example.json
+  /subscription: 
+    type: collection
+    get: 
+      description: Get a Repository Subscription.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: subscribition
+              example: !include examples/subscribition-example.json
+    put: 
+      description: Set a Repository Subscription
+      body: 
+        application/json: 
+          schema: subscribitionBody
+          example: !include examples/subscribitionBody-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: subscribition
+              example: !include examples/subscribition-example.json
+    delete: 
+      description: Delete a Repository Subscription.
+      responses: 
+        204: 
+          description: |
+            No content.
+  /contents/{path}: 
+    type: base
+    get: 
+      description: |
+        Get contents.
+        This method returns the contents of a file or directory in a repository.
+        Files and symlinks support a custom media type for getting the raw content.
+        Directories and submodules do not support custom media types.
+        Note: This API supports files up to 1 megabyte in size.
+        Here can be many outcomes. For details see "http://developer.github.com/v3/repos/contents/"
+      queryParameters: 
+        path: 
+          description: The content path.
+        ref: 
+          description: "The String name of the Commit/Branch/Tag. Defaults to 'master'."
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: contents-path
+              example: !include examples/contents-path-example.json
+    put: 
+      description: Create a file.
+      body: 
+        application/json: 
+          schema: createFileBody
+          example: !include examples/createFileBody-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: createFile
+              example: !include examples/createFile-example.json
+    delete: 
+      description: |
+        Delete a file.
+        This method deletes a file in a repository.
+      body: 
+        application/json: 
+          schema: deleteFileBody
+          example: !include examples/deleteFileBody-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: deleteFile
+              example: !include examples/deleteFile-example.json
+  /stargazers: 
+    type: collection
+    get: 
+      description: List Stargazers.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: stargazers
+              example: !include examples/stargazers-example.json
+  /{archive_format}/{path}: 
+    type: base
+    uriParameters: 
+      archive_format: 
+        required: true
+        enum: [ tarball , zipball ]
+      path: 
+        description: "Valid Git reference, defaults to 'master'."
+    get: 
+      description: |
+        Get archive link.
+        This method will return a 302 to a URL to download a tarball or zipball
+        archive for a repository. Please make sure your HTTP framework is
+        configured to follow redirects or you will need to use the Location header
+        to make a second GET request.
+        Note: For private repositories, these links are temporary and expire quickly.
+      responses: 
+        302: 
+          description: Found.
+  /tags: 
+    type: collection
+    get: 
+      description: Get list of tags.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: tags
+              example: !include examples/tag-example.json
+  /forks: 
+    type: collection
+    get: 
+      description: List forks.
+      queryParameters: 
+        sort: 
+          enum: 
+            - newes
+            - oldes
+            - watchers
+          default: newes
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: forks
+              example: !include examples/forks-example.json
+    post: 
+      description: |
+        Create a fork.
+        Forking a Repository happens asynchronously. Therefore, you may have to wai
+        a short period before accessing the git objects. If this takes longer than 5
+        minutes, be sure to contact Support.
+      body: 
+        application/json: 
+          schema: forkBody
+          example: !include examples/forkBody-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: fork
+              example: !include examples/fork-example.json
+  /compare/{baseId}...{headId}: 
+    type: base
+    get: 
+      description: Compare two commits
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: compare-commits
+              example: !include examples/compare-commits-example.json
+  /deployments: 
+    type: base
+    get: 
+      description: Users with pull access can view deployments for a repository
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: repo-deployments
+              example: !include examples/repo-deployments-example.json
+    post: 
+      description: Users with push access can create a deployment for a given ref
+      body: 
+        application/json: 
+          schema: deployment
+          example: !include examples/deployment-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: deployment-resp
+              example: !include examples/deployment-resp-example.json
+    /{id}/statuses: 
+      type: base
+      uriParameters: 
+        id: 
+          displayName: id
+          description: The Deployment ID to list the statuses from.
+          type: integer
+          required: true
+      get: 
+        description: Users with pull access can view deployment statuses for a deployment
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: deployment-statuses
+                example: !include examples/deployment-statuses-example.json
+      post: 
+        description: |
+          Create a Deployment Status
+          Users with push access can create deployment statuses for a given deployment:
+        body: 
+          application/json: 
+            schema: deployment-statuses-create
+            example: !include examples/deployment-statuses-create-example.json
+        responses: 
+          201: 
+            description: ok
+  /releases: 
+    type: base
+    get: 
+      description: Users with push access to the repository will receive all releases (i.e., published releases and draft releases). Users with pull access will receive published releases only
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: releases
+              example: !include examples/releases-example.json
+    post: 
+      description: |
+        Create a release
+        Users with push access to the repository can create a release.
+      body: 
+        application/json: 
+          schema: release-create
+          example: !include examples/release-create-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: release
+              example: !include examples/release-example.json
+    /{id}: 
+      type: base
+      get: 
+        description: Get a single release
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: release
+                example: !include examples/release-example.json
+      patch: 
+        description: Users with push access to the repository can edit a release
+        body: 
+          application/json: 
+            schema: release-create
+            example: !include examples/release-create-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: release
+                example: !include examples/release-example.json
+      delete: 
+        description: Users with push access to the repository can delete a release.
+        responses: 
+          204: 
+      /assets: 
+        type: base
+        get: 
+          description: List assets for a release
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: assets
+                  example: !include examples/assets-example.json
+    /assets/{id}: 
+      type: base
+      delete: 
+        description: Delete a release asset
+        responses: 
+          204: 
+      get: 
+        description: Get a single release asset
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: asset
+                example: !include examples/asset-example.json
+      patch: 
+        description: |
+          Edit a release asset
+          Users with push access to the repository can edit a release asset.
+        body: 
+          application/json: 
+            schema: assetPatch
+            example: !include examples/assetPatch-example.json
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: asset
+                example: !include examples/asset-example.json
+/user: 
+  type: item
+  get: 
+    description: Get the authenticated user.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: user
+            example: !include examples/user-example.json
+  patch: 
+    description: Update the authenticated user.
+    body: 
+      application/json: 
+        schema: user-update
+        example: !include examples/user-update-example.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: user
+            example: !include examples/user-example.json
+  /following: 
+    type: collection
+    get: 
+      description: List who the authenticated user is following.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: users
+              example: !include examples/users-example.json
+    /{username}: 
+      type: base
+      uriParameters: 
+        username:
+          description: Name of user.
+      get: 
+        description: Check if you are following a user.
+        responses: 
+          204: 
+            description: Response if you are following this user.
+          404: 
+            description: Response if you are not following this user.
+      put: 
+        description: |
+          Follow a user.
+          Following a user requires the user to be logged in and authenticated with
+          basic auth or OAuth with the user:follow scope.
+        responses: 
+          204: 
+            description: You are now following the user.
+      delete: 
+        description: |
+          Unfollow a user.
+          Unfollowing a user requires the user to be logged in and authenticated with
+          basic auth or OAuth with the user:follow scope.
+        responses: 
+          204: 
+            description: User unfollowed.
+  /repos: 
+    type: collection
+    get: 
+      description: |
+        List repositories for the authenticated user. Note that this does not include
+        repositories owned by organizations which the user can access. You can lis
+        user organizations and list organization repositories separately.
+      queryParameters: 
+        type: 
+          enum: 
+            - all
+            - public
+            - private
+            - forks
+            - sources
+            - member
+          default: all
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: repos
+              example: !include examples/repos-example.json
+    post: 
+      description: |
+        Create a new repository for the authenticated user. OAuth users must supply
+        repo scope.
+      body: 
+        application/json: 
+          schema: postRepo
+          example: !include examples/postRepo-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: repos
+              example: !include examples/repos-example.json
+  /orgs: 
+    type: collection
+    get: 
+      description: List public and private organizations for the authenticated user.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: users-userId-orgs
+              example: !include examples/users-userId-orgs-example.json
+  /starred: 
+    type: collection
+    get: 
+      is: [ ordering2 ]
+      description: List repositories being starred by the authenticated user.
+      queryParameters: 
+        sort: 
+          enum: [ created , updated ]
+          default: created
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: user-userId-starred
+              example: !include examples/user-userId-starred-example.json
+    /{owner}/{repo}: 
+      type: base
+      uriParameters: 
+        owner: 
+          description: Name of a repository owner. 
+        repo: 
+          description: Name of a repository.
+      get: 
+        description: Check if you are starring a repository.
+        responses: 
+          204: 
+            description: This repository is starred by you.
+          404: 
+            description: This repository is not starred by you.
+      put: 
+        description: Star a repository.
+        responses: 
+          204: 
+            description: Repository starred.
+      delete: 
+        description: Unstar a repository
+        responses: 
+          204: 
+            description: Unstarred.
+  /keys: 
+    type: collection
+    get: 
+      description: |
+        List your public keys.
+        Lists the current user's keys. Management of public keys via the API requires
+        that you are authenticated through basic auth, or OAuth with the 'user', 'write:public_key' scopes.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: user-keys
+              example: !include examples/user-keys-example.json
+    post: 
+      description: Create a public key.
+      body: 
+        application/json: 
+          schema: user-keys-post
+          example: !include examples/user-keys-post-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: user-keys-keyId
+              example: !include examples/user-keys-keyId-example.json
+    /{keyId}: 
+      type: item
+      uriParameters: 
+        keyId: 
+          description: ID of key.
+          type: integer
+      get: 
+        description: Get a single public key.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: user-keys-keyId
+                example: !include examples/user-keys-keyId-example.json
+      delete: 
+        description: "Delete a public key. Removes a public key. Requires that you are authenticated via Basic Auth or via OAuth with at least admin:public_key scope."
+        responses: 
+          204: 
+            description: |
+              No content.
+  /emails: 
+    type: collection
+    get: 
+      description: |
+        List email addresses for a user.
+        In the final version of the API, this method will return an array of hashes
+        with extended information for each email address indicating if the address
+        has been verified and if it's primary email address for GitHub.
+        Until API v3 is finalized, use the application/vnd.github.v3 media type to
+        get other response format.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: user-emails
+              example: !include examples/user-emails-example.json
+            application/vnd.github.v3: 
+              schema: user-emails_final
+              example: !include examples/user-emails_final-example.json
+    post: 
+      description: |
+        Add email address(es).
+        You can post a single email address or an array of addresses.
+      body: 
+        application/json: 
+          schema: emailsPost
+          example: !include examples/emailsPost-example.json
+    delete: 
+      description: |
+        Delete email address(es).
+        You can include a single email address or an array of addresses.
+      body: 
+        application/json: 
+          schema: user-emails
+          example: !include examples/user-emails-example.json
+      responses: 
+        204: 
+          description: |
+            No content.
+  /issues: 
+    type: collection
+    get: 
+      is: [ filterable ]
+      description: |
+        List issues.
+        List all issues across owned and member repositories for the authenticated
+        user.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: issues
+              example: !include examples/issues-example.json
+  /subscriptions: 
+    type: collection
+    get: 
+      description: List repositories being watched by the authenticated user.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: user-userId-subscribitions
+              example: !include examples/user-userId-subscribitions-example.json
+    /{owner}/{repo}: 
+      type: base
+      uriParameters: 
+        owner: 
+          description: Name of the owner.
+        repo: 
+          description: Name of repository.
+      get: 
+        description: Check if you are watching a repository.
+        responses: 
+          204: 
+            description: Repository is watched by you.
+          404: 
+            description: Repository is not watched by you.
+      put: 
+        description: Watch a repository.
+        responses: 
+          204: 
+            description: Repository is watched.
+      delete: 
+        description: Stop watching a repository
+        responses: 
+          204: 
+            description: Unwatched.
+  /teams: 
+    type: base
+    get: 
+      description: List all of the teams across all of the organizations to which the authenticated user belongs. This method requires user or repo scope when authenticating via OAuth.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: teams-list
+              example: !include examples/teams-list-example.json
+  /followers: 
+    type: base
+    get: 
+      description: "List the authenticated user's followers"
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: users
+              example: !include examples/users-example.json
+/users: 
+  type: collection
+  get: 
+    description: |
+      Get all users.
+      This provides a dump of every user, in the order that they signed up for GitHub.
+      Note: Pagination is powered exclusively by the since parameter. Use the Link
+      header to get the URL for the next page of users.
+    queryParameters: 
+      since: 
+        description: The integer ID of the last User that you've seen.
+        type: integer
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: users
+            example: !include examples/users-example.json
+  /{username}: 
+    type: item
+    uriParameters: 
+      username:
+        description: Name of user.
+    get: 
+      description: Get a single user.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: users
+              example: !include examples/users-example.json
+    /repos: 
+      type: collection
+      get: 
+        description: List public repositories for the specified user.
+        queryParameters: 
+          type: 
+            enum: 
+              - all
+              - public
+              - private
+              - forks
+              - sources
+              - member
+            default: all
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: repos
+                example: !include examples/repos-example.json
+    /orgs: 
+      type: collection
+      get: 
+        description: List all public organizations for a user.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: users-userId-orgs
+                example: !include examples/users-userId-orgs-example.json
+    /gists: 
+      type: collection
+      get: 
+        is: [ filterableSince ]
+        description: List a users gists.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: gists
+                example: !include examples/gists-example.json
+        securedBy: [ null , oauth_2_0 ]
+    /following/{targetUser}: 
+      type: base
+      uriParameters: 
+        targetUser:
+          description: Name of user. 
+      get: 
+        description: Check if one user follows another.
+        responses: 
+          204: 
+            description: Response if user follows target user.
+          404: 
+            description: Response if user does not follow target user.
+    /keys: 
+      type: collection
+      get: 
+        description: |
+          List public keys for a user.
+          Lists the verified public keys for a user. This is accessible by anyone.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: users-userId-keys
+                example: !include examples/users-userId-keys-example.json
+    /events: 
+      type: base
+      get: 
+        description: "If you are authenticated as the given user, you will see your private events. Otherwise, you'll only see public events."
+      /orgs/{org}: 
+        type: base
+        get: 
+          description: "This is the user's organization dashboard. You must be authenticated as the user to view this."
+    /received_events: 
+      type: base
+      get: 
+        description: "These are events that you'll only see public events."
+      /public: 
+        type: base
+        get: 
+          description: List public events that a user has received
+    /starred: 
+      type: base
+      get: 
+        description: List repositories being starred by a user.
+    /subscriptions: 
+      type: base
+      get: 
+        description: List repositories being watched by a user.
+    /followers: 
+      type: base
+      get: 
+        description: "List a user's followers"
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: users
+                example: !include examples/users-example.json
+/gitignore/templates: 
+  type: collection
+  get: 
+    description: |
+      Listing available templates.
+      List all templates available to pass as an option when creating a repository.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: gitignore
+            example: !include examples/gitignore-example.json
+  /{language}: 
+    type: item
+    get: 
+      description: Get a single template.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: gitignore-lang
+              example: !include examples/gitignore-lang-example.json
+/markdown: 
+  type: base
+  description: ""
+  post: 
+    description: Render an arbitrary Markdown document
+    body: 
+      application/json: 
+        schema: markdown
+        example: !include examples/markdown-example.json
+    responses: 
+      200: 
+        body: 
+          text/html: 
+            example: !include examples/markdown-example.html
+  /raw: 
+    type: base
+    description: ""
+    post: 
+      description: Render a Markdown document in raw mode
+      body: 
+        text/plain: 
+          example: !include examples/raw-example.plain
+      responses: 
+        200: 
+          body: 
+            text/html: 
+              example: !include examples/raw-example.html
+/networks/{owner}/{repo}/events: 
+  type: collection
+  uriParameters: 
+    owner: 
+      description: Name of the owner.
+    repo: 
+      description: Name of repository.
+  get: 
+    description: List public events for a network of repositories.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: events
+            example: !include examples/events-example.json
+/legacy: 
+  /issues/search/{owner}/{repository}/{state}/{keyword}: 
+    type: base
+    uriParameters: 
+      keyword: 
+        displayName: keyword
+        description: The search term.
+        required: true
+      state: 
+        displayName: state
+        description: Indicates the state of the issues to return. Can be either open or closed.
+        required: true
+        enum: [ open , closed ]
+    get: 
+      description: Find issues by state and keyword.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-issues-by-keyword
+              example: !include examples/search-issues-by-keyword-example.json
+  /repos/search/{keyword}: 
+    type: base
+    uriParameters: 
+      keyword: 
+        displayName: keyword
+        description: The search term
+        required: true
+    get: 
+      is: [ ordering ]
+      description: Find repositories by keyword. Note, this legacy method does not follow the v3 pagination pattern. This method returns up to 100 results per page and pages can be fetched using the start_page parameter.
+      queryParameters: 
+        language: 
+          description: Filter results by language
+        start_page: 
+          description: The page number to fetch
+        sort: 
+          description: "The sort field. One of stars, forks, or updated. Default: results are sorted by best match."
+          enum: 
+            - updated
+            - stars
+            - forks
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-repositories-by-keyword
+              example: !include examples/search-repositories-by-keyword-example.json
+  /user/search/{keyword}: 
+    type: base
+    uriParameters: 
+      keyword: 
+        displayName: keyword
+        description: The search term
+        required: true
+    get: 
+      is: [ ordering ]
+      description: Find users by keyword.
+      queryParameters: 
+        start_page: 
+          description: The page number to fetch
+        sort: 
+          description: "The sort field. One of stars, forks, or updated. Default: results are sorted by best match."
+          enum: 
+            - updated
+            - stars
+            - forks
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-users-by-keyword
+              example: !include examples/search-users-by-keyword-example.json
+  /user/email/{email}: 
+    type: base
+    uriParameters: 
+      email: 
+        displayName: email
+        description: The email address
+        required: true
+    get: 
+      description: This API call is added for compatibility reasons only.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: search-user-by-email
+              example: !include examples/search-user-by-email-example.json
+/emojis: 
+  type: base
+  get: 
+    description: Lists all the emojis available to use on GitHub.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: emojis
+            example: !include examples/emojis-example.json
+documentation: 
+  - title: Headline
+    content: !include docs/api/headline.md

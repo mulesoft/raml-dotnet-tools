@@ -1,0 +1,22 @@
+type: base
+get: 
+  queryParameters: 
+    older_than: 
+      description: |
+        Returns messages older than the message ID specified as a numeric string. This is useful for paginating messages. For example, if you're currently viewing 20 messages and the oldest is number 2912, you could append "?older_than=2912" to your request to get the 20 messages prior to those you're seeing.
+      example: 2912
+    newer_than: 
+      description: |
+        Returns messages newer than the message ID specified as a numeric string. This should be used when polling for new messages. If you're looking at messages, and the most recent message returned is 3516, you can make a request with the parameter "?newer_than=3516" to ensure that you do not get duplicate copies of messages already on your page
+    threaded: 
+      description: will only return the first message in each thread. This parameter is intended for apps which display message threads collapsed. threaded=extended will return the thread starter messages in order of most recently active as well as the two most recent messages, as they are viewed in the default view on the Yammer web interface.
+      enum: [ extended , true ]
+    limit: 
+      description: Return only the specified number of messages. Works for threaded=true and threaded=extended.
+      type: integer
+      example: 22
+  responses: 
+    200: 
+      body: 
+        application/xml: 
+        application/json: 

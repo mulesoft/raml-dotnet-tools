@@ -1,0 +1,23 @@
+{
+  "renewalTerm" : "3" ,
+  "termType" : "TERMED" ,
+  "autoRenew" : true ,
+  "invoiceTargetDate" : "2013-12-31" ,
+  "accountKey" : "A00001115" ,
+  "contractEffectiveDate" : "2013-02-1" ,
+  "subscribeToRatePlans" : [
+    {
+      "chargeOverrides" : [
+        {
+          "productRatePlanChargeId" : "ff8080811ca15d19011cddad8c953b53" ,
+          "quantity" : 10
+        }
+      ] ,
+      "productRatePlanId" : "ff8080811ca15d19011cdda9b0ad3b51"
+    }
+  ] ,
+  "invoiceCollect" : false ,
+  "initialTerm" : "12" ,
+  "notes" : "Test POST subscription from z-ruby-sdk" ,
+  "myCustomField__c" : "test"
+}

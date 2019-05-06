@@ -1,0 +1,14 @@
+queryParameters: 
+  category: 
+    description: |
+      Category of posts.
+    enum: [ discussion ]
+  order: 
+    description: |
+      Sort order for posts.
+    enum: [ recency , popularity ]
+  modified-since: 
+    description: |
+      Timestamp filter for posts created after the specified value.
+    type: integer
+    example: 1302727083000

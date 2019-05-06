@@ -1,0 +1,60 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="company-search">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="companies">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="company" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="id"/>
+                    <xs:element type="xs:string" name="name"/>
+                    <xs:element type="xs:anyURI" name="logo-url"/>
+                    <xs:element type="xs:string" name="type"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:short" name="total"/>
+            <xs:attribute type="xs:byte" name="count"/>
+            <xs:attribute type="xs:byte" name="start"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:short" name="num-results"/>
+        <xs:element name="facets">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="facet">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="code"/>
+                    <xs:element type="xs:string" name="name"/>
+                    <xs:element name="buckets">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="bucket" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="code"/>
+                                <xs:element type="xs:string" name="name"/>
+                                <xs:element type="xs:short" name="count"/>
+                                <xs:element type="xs:string" name="selected"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:byte" name="total"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

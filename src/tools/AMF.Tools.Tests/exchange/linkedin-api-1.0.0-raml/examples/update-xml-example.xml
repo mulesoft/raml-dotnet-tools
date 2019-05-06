@@ -1,0 +1,47 @@
+<update>
+   <timestamp>1315338683355</timestamp>
+   <update-type>CMPY</update-type>
+   <update-content>
+      <company>
+         <id>1337</id>
+         <name>LinkedIn</name>
+      </company>
+      <company-person-update>
+          <person>
+              <id>14381178</id>
+                  <first-name>Patrick</first-name>
+                  <last-name>Smith</last-name>
+                  <headline>Enterprise Relationship Manager at LinkedIn</headline>
+                  <picture-url>http://media.linkedin.com/mpr/mprx/0_gPLYkP6SpokSOnUc0-vDkA9DYulmpzUc0tA3krFxTW5YiluBAvztoKPlKGAlx-sRyKF8wBMg5HkD</picture-url>
+                  <api-standard-profile-request>
+                      <url>http://api.linkedin.com/v1/people/14381178</url>
+                      <headers total="1">
+                           <http-header>
+                              <name>x-li-auth-token</name>
+                              <value>name:4gRT</value>
+                           </http-header>
+                      </headers>
+                  </api-standard-profile-request>
+                  <site-standard-profile-request>
+                        <url>http://www.linkedin.com/profile?viewProfile=&amp;key=14381178&amp;authToken=4gRT&amp;authType=name&amp;trk=api*</url>
+                  </site-standard-profile-request>
+             </person>
+             <action>
+                <code>joined</code>
+             </action>
+             <old-position>
+                  <title>Actor</title>
+                  <company>
+                       <name>IndependentContractor</name>
+                  </company>
+             </old-position>
+             <new-position>
+                  <title>Enterprise Relationship Manager</title>
+                  <company>
+                       <id>1337</id>
+                       <name>LinkedIn</name>
+                  </company>
+             </new-position>
+         </company-person-update>
+     </update-content>
+</update>

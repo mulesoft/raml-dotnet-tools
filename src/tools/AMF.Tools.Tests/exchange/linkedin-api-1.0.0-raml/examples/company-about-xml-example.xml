@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<company>
+  <id>1337</id>
+  <universal-name>linkedin</universal-name>
+  <name>LinkedIn</name>
+  <ticker>LNKD</ticker>
+  <logo-url>http://media.linkedin.com/mpr/mpr/p/2/000/072/3f9/35d2127.png</logo-url>
+  <description>LinkedIn takes your professional network online, giving you access to people, jobs and opportunities like never before. Built upon trusted connections and relationships, LinkedIn has established the worldÕs largest and most powerful professional network. Currently, more than 200 million professionals are on LinkedIn, including executives from all five hundred of the Fortune 500 companies, as well as a wide range of household names in technology, financial services, media, consumer packaged goods, entertainment, and numerous other industries. LinkedIn is backed by world-class investors including Sequoia Capital, Greylock, the European Founders Fund, Bessemer Venture Partners, Bain Capital, Goldman Sachs, SAP Ventures, and The McGraw-Hill Companies</description>
+  <company-type>
+    <code>P</code>
+    <name>Privately Held</name>
+  </company-type>
+  <industries total="1">
+    <industry>
+      <code>6</code>
+      <name>Internet</name>
+    </industry>
+  </industries>
+  <size>501-1000</size>
+  <specialties total="8">
+    <specialty>Online Professional Network</specialty>
+    <specialty>Jobs</specialty>
+    <specialty>People Search</specialty>
+    <specialty>Company Search</specialty>
+    <specialty>Address Book</specialty>
+    <specialty>Advertising</specialty>
+    <specialty>Professional Identity</specialty>
+    <specialty>Group Collaboration</specialty>
+  </specialties>
+  <blog-rss-url>http://feeds.feedburner.com/LinkedInBlog</blog-rss-url>
+  <twitter-id>linkedin</twitter-id>
+  <square-logo-url>http://media.linkedin.com/mpr/mpr/p/3/000/072/3db/1283f2d.png</square-logo-url>
+  <locations total="15">
+    <location>
+      <address>
+        <street1>2029 Stierlin Court</street1>
+        <city>Mountain View</city>
+        <postal-code>94043</postal-code>
+      </address>
+      <contact-info>
+      </contact-info>
+    </location>
+    <location>
+      <address>
+        <street1>2126 N 117th Ave</street1>
+        <city>Omaha</city>
+        <postal-code>68164</postal-code>
+      </address>
+      <contact-info>
+        <phone1>(402) 452-2320</phone1>
+      </contact-info>
+    </location>
+    <location>
+      <address>
+        <street1>15 Shady Brook Lane</street1>
+        <city>Belmont</city>
+        <postal-code>02478</postal-code>
+      </address>
+      <contact-info>
+      </contact-info>
+    </location>
+    <location>
+      <address>
+        <street1>2126 N 117th Ave</street1>
+        <city>Omaha</city>
+        <postal-code>68164</postal-code>
+      </address>
+      <contact-info>
+        <phone1>(402) 452-2320</phone1>
+      </contact-info>
+    </location>
+    <location>
+      <address>
+        <street1>2029 Stierlin Court</street1>
+        <city>Mountain View</city>
+        <postal-code>94043</postal-code>
+      </address>
+      <contact-info>
+      </contact-info>
+    </location>
+    <location>
+      <address>
+        <street1>2029 Stierlin Court</street1>
+        <city>Mountain View</city>
+        <postal-code>94043</postal-code>
+      </address>
+      <contact-info>
+      </contact-info>
+    </location>
+    <location>
+      <address>
+        <street1>30 S. Wacker Drive</street1>
+        <city>Chicago</city>
+        <postal-code>60606</postal-code>
+      </address>
+      <contact-info>
+      </contact-info>
+    </location>
+  </locations>
+  <founded-year>2003</founded-year>
+  <email-domains total="1">
+    <email-domain>linkedin.com</email-domain>
+  </email-domains>
+  <website-url>http://www.linkedin.com</website-url>
+  <status>
+   <code>OPR</code>
+   <name>Operating</name>
+  </status>
+  <employee-count-range>
+    <code>F</code>
+    <name>501-1000</name>
+  </employee-count-range>
+</company>

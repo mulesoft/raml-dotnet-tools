@@ -1,0 +1,37 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"name": {
+			"description": "The desired name for the folder.",
+			"type": "string",
+			"required": true
+		},
+		"parent": {
+			"description": "The parent folder.",
+			"type": "object",
+			"required": true
+		},
+		"id": {
+			"description": "The ID of the parent folder.",
+			"type": "string",
+			"required": true
+		},
+		"description": {
+			"description": "The description of the folder.",
+			"type": "string"
+		},
+		"shared_link": {
+			"description": "An object representing this item's shared link and associated permissions.",
+			"type": "object"
+		},
+		"access": {
+			"description": "The level of access required for this shared link.",
+			"type": "object"
+		},
+		"unshared_at": {
+			"description": "The day that this link should be disabled at. Timestamps are rounded off to the given day.",
+			"type": "object"
+		}
+	}
+}

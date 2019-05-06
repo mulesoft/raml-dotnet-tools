@@ -1,0 +1,94 @@
+{
+    "": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "always_use_https": {
+            "type": "boolean"
+        },
+        "discoverable_by_email": {
+            "type": "boolean"
+        },
+        "geo_enabled": {
+            "type": "boolean"
+        },
+        "language": {
+            "type": "string"
+        },
+        "protected": {
+            "type": "boolean"
+        },
+        "screen_name": {
+            "type": "string"
+        },
+        "show_all_inline_media": {
+            "type": "boolean"
+        },
+        "sleep_time": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "time_zone": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "tzinfo_name": {
+                    "type": "string"
+                },
+                "utc_offset": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "trend_location": 
+            {
+                "properties": {
+                    "country": {
+                        "type": "string"
+                    },
+                    "countryCode": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "parentid": {
+                        "type": "integer"
+                    },
+                    "placeType": {
+                        "properties": {
+                            "code": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "woeid": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        ,
+        "use_cookie_personalization": {
+            "type": "boolean"
+        }
+    }
+}

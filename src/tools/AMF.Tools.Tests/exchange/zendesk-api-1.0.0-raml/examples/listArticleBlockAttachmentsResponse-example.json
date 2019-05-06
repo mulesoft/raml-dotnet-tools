@@ -1,0 +1,21 @@
+{
+  "article_attachments" : [
+    {
+      "id" : 1428 ,
+      "article_id" : 23 ,
+      "file_name" : "logo.pdf" ,
+      "content_url" : "https://company.zendesk.com/hc/article_attachments/200109629/logo.pdf" ,
+      "content_type" : "application/pdf" ,
+      "size" : 1428 ,
+      "inline" : false
+    } , {
+      "id" : 2857 ,
+      "article_id" : 23 ,
+      "file_name" : "results.doc" ,
+      "content_url" : "https://company.zendesk.com/hc/article_attachments/200109629/results.doc" ,
+      "content_type" : "application/msword" ,
+      "size" : 234 ,
+      "inline" : false
+    } 
+  ]
+}

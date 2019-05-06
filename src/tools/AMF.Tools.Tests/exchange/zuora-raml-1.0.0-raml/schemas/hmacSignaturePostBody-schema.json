@@ -1,0 +1,19 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "uri" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "method" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "accountKey" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

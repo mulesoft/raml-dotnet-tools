@@ -1,0 +1,31 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "subscribed" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "ignored" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "reason" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "created_at" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "url" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "thread_url" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

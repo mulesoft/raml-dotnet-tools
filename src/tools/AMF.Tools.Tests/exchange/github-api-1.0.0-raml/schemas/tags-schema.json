@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"tag": {
+    		"type": "string",
+    		"required": true
+    	},
+    	"message": {
+    		"description": "String of the tag message.",
+    		"type": "string",
+    		"required": true
+    	},
+    	"object": {
+    		"description": "String of the SHA of the git object this is tagging.",
+    		"type": "string",
+    		"required": true
+    	},
+    	"type": {
+    		"description": "String of the type of the object we’re tagging. Normally this is a commit but it can also be a tree or a blob.",
+    		"type": "string",
+    		"required": true
+    	},
+        "tagger": {
+            "properties": {
+                "name": {
+                    "description": "String of the name of the author of the tag.",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "String of the email of the author of the tag.",
+                    "type": "string"
+                },
+                "date": {
+                    "description": "Timestamp of when this object was tagged.",
+                    "type": "string"
+                }
+            },
+            "type": "object",
+    		"required": true
+        }
+    }
+}

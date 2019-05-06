@@ -1,0 +1,744 @@
+#%RAML 1.0 Library
+
+
+types:
+
+  code:
+    type: string
+    description: |
+      Indicates that the value is taken from a set of controlled strings defined elsewhere (see Using codes for further discussion).
+      Technically, a code is restricted to a string which has at least one character and no leading or trailing whitespace, and where there is no whitespace other than single spaces in the contents.
+    pattern: ^[^\s]+([\s]+[^\s]+)*
+
+  base64Binary:
+    type: string
+
+  date:
+    type: string
+    description: |
+      A date, or partial date (e.g. just year or year + month) as used in human communication. There is no time zone. Dates SHALL be valid dates
+    pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1]))?)?$
+    example: 1970-08-07
+
+  dateTime:
+    type: string
+    description: |
+      A date, date-time or partial date (e.g. just year or year + month) as used in human communication. If hours and minutes are specified, a time zone SHALL be populated.
+      Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored. Dates SHALL be valid dates. The time "24:00" is not allowed
+    pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$
+
+  decimal:
+    type: number
+    description: |
+      Rational numbers that have a decimal representation. See below about the precision of the number
+
+  EncounterState:
+    type: code
+    enum: [planned, arrived, in-progress, onleave, finished, cancelled]
+
+  gender:
+    type: string
+    enum: [male, female, other, unknown]
+
+  id:
+    type: string
+    pattern: ^[A-Za-z0-9\-\.]{1,64}$
+    description: |
+      Any combination of upper or lower case ASCII letters ('A'..'Z', and 'a'..'z', numerals ('0'..'9'), '-' and '.', with a length limit of 64 characters.
+      (This might be an integer, an un-prefixed OID, UUID or any other identifier pattern that meets these constraints.)
+
+  instant:
+    type: string
+    description: |
+      An instant in time - known at least to the second and always includes a time zone.
+      Note: This is intended for precisely observed times (typically system logs etc.), and not human-reported times - for them, use date and dateTime. instant is a more constrained dateTime.
+      Note: This type is for system times, not human times (see date and dateTime).
+    pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))))$
+
+  markdown:
+    type: string
+    description: A string that may contain markdown syntax for optional processing by a markdown presentation engine
+
+  ObservationCode:
+    type: code
+    description: https://www.hl7.org/fhir/valueset-observation-codes.html
+
+  ObservationRelationshipType:
+    type: code
+    enum: [has-member, derived-from, sequel-to, replaces, qualified-by, interfered-by]
+
+  ObservationStatus:
+    type: code
+    enum: [registered, preliminary, final, ammended, cancelled, entered-in-error, unknown]
+
+  positiveInt:
+    type: integer
+    description: Any positive integer (e.g. >= 1) Regex - +?[1-9][0-9]*
+    minimum: 1
+
+  time:
+    type: string
+    description: |
+      A time during the day, with no date specified (can be converted to a Duration since midnight).
+      Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.
+      The time "24:00" is not allowed, and neither is a time zone.
+    pattern: ([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?
+
+  UnitOfTime:
+    type: code
+    description: A unit of time (UCUM)
+    enum: [s, min, h, d, wk, mo, a]
+
+  unsignedInt:
+    type: integer
+    description: Any non-negative integer (e.g. >= 0) Regex - [0]|([1-9][0-9]*)
+    minimum: 0
+
+  uri:
+    type: string
+    description: |
+      A Uniform Resource Identifier Reference (see: https://tools.ietf.org/html/rfc3986).
+      Note: URIs are case sensitive. For UUID (urn:uuid:53fefa32-fcbb-4ff8-8a92-55ee120877b7) use all lowercase.
+      URIs can be absolute or relative, and may have an optional fragment identifier.
+
+  xhtml:
+    type: string
+    description: |
+      Limited xhtml content (Escaped XHTML)
+
+  Element:
+    type: object
+    properties:
+      id?:
+        description: Internal id
+        type: id
+      extension?:
+        description: |
+          Additional Content defined by implementations - from Element: extension (recursive)
+        type: array
+        items: Extension
+
+  Address:
+    type: Element
+    description: |
+      An address expressed using postal conventions (as opposed to GPS or other location definition formats).
+      This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.
+      There are a variety of postal address formats defined around the world.
+    properties:
+      use?:
+        description: home | work | temp | old - purpose of this address
+        type: code
+        enum: [home, work, temp, old]
+      type?:
+        description: address type
+        type: code
+        enum: [postal, physical, both]
+      text?:
+        description: Text representation of the address
+        type: string
+      line?:
+        description: Street name, number, direction & P.O. Box etc.
+        type: string[]
+      city?:
+        description: Name of city, town etc.
+        type: string
+      district?:
+        description: District name (aka county)
+        type: string
+      state?:
+        description: Sub-unit of country (abbreviations ok)
+        type: string
+      postalCode?:
+        description: Postal code for area
+        type: string
+      country?:
+        description: Country (e.g. can be ISO 3166 2 or 3 letter code)
+        type: string
+      period?:
+        description: Time period when address was/is in use
+        type: Period
+
+  Age:
+    type: Quantity
+    description: An age value
+
+  Annotation:
+    type: Element
+    description: A text note which also contains information about who made the statement and when.
+    properties:
+      authorReference?:
+        description: Individual responsible for the annotation.
+        type: Reference
+      authorString?:
+        description: Individual responsible for the annotation.
+        type: string
+      time?:
+        description: When the annotation was made
+        type: dateTime
+      text:
+        description: The annotation  - text content
+        type: string
+
+  Attachment:
+    type: Element
+    description: |
+      This type is for containing or referencing attachments - additional data content defined in other formats.
+      The most common use of this type is to include images or reports in some report format such as PDF.
+      However it can be used for any data that has a MIME type.
+    properties:
+      contentType?:
+        type: code
+        description: Mime type of the content, with charset etc.
+      language?:
+        type: code
+        description: Human language of the content (BCP-47)
+      data?:
+        description: Data inline, base64ed
+        type: base64Binary
+      url?:
+        description: Uri where the data can be found
+        type: uri
+      size?:
+        description: Number of bytes of content (if url provided)
+        type: unsignedInt
+      hash?:
+        description: Hash of the data (sha-1, base64ed)
+        type: base64Binary
+      title?:
+        description: Label to display in place of the data
+        type: string
+      creation?:
+        description: Date attachment was first created
+        type: dateTime
+
+  BackboneElement:
+    type: Element
+    properties:
+      modifierExtension?:
+        description: Modifier Extensions
+        type: Extension
+
+  CodeableConcept:
+    type: Element
+    description: |
+      A CodeableConcept represents a value that is usually supplied by providing a reference to one or more terminologies or ontologies, but may also be defined by the provision of text.
+      This is a common pattern in healthcare data.
+    properties:
+      coding?:
+        description: Code defined by a terminology system
+        type: array
+        items: Coding
+      text?:
+        description: Plain text representation of the concept
+        type: string
+
+  Coding:
+    description: |
+      A Coding is a representation of a defined concept using a symbol from a defined "code system".
+      See http://hl7.org/fhir/STU3/terminologies.html for more details.
+    properties:
+      system?:
+        description: Identity of the terminology system
+        type: uri
+      version?:
+        description: Version of the system - if relevant
+        type: string
+      code?:
+        description: Symbol in syntax defined by the system
+        type: code
+      display?:
+        description: Representation defined by the system
+        type:
+          description: If this coding was chosen directly by the user
+          type: string
+      userSelected?: boolean
+
+  ContactPoint:
+    type: Element
+    description: |
+      Details for all kinds of technology-mediated contact points for a person or organization, including telephone, email, etc.
+    properties:
+      system?:
+        enum: [phone,fax,email,sms,pager,url,other]
+      value?:
+        description: The actual contact point details
+        type: string
+      use?:
+        description: purpose of this contact point
+        type: string
+      rank?:
+        description: Specify preferred order of use (1 = highest)
+        type: positiveInt
+      period?:
+        description: Time period when the contact point was/is in use
+        type: Period
+
+  Dosage:
+    description: How the medication is/was taken or should be taken
+    type: Element
+    properties:
+      sequence?:
+        description: The order of the dosage instructions
+        type: integer
+      text?:
+        description: Free text dosage instructions e.g. SIG
+        type: string
+      additionalInstruction?:
+        description: Supplemental instruction - e.g. "with meals"
+        type: CodeableConcept[]
+      patientInstruction?:
+        description: Patient or consumer oriented instructions
+        type: string
+      timing?:
+        description: When medication should be administered
+        type: Timing
+      asNeededBoolean?:
+        description: Take "as needed"
+        type: boolean
+      asNeededCodeableConcept?:
+        description: Take "as needed"
+        type: CodeableConcept
+      site?:
+        description: Body site to administer to
+        type: CodeableConcept
+      route?:
+        description: How drug should enter body
+        type: CodeableConcept
+      method?:
+        description: Technique for administering medication
+        type: CodeableConcept
+      doseRange?:
+        description: Amount of medication per dose
+        type: Range
+      doseQuantity?:
+        description: Amount of medication per dose
+        type: SimpleQuantity
+      maxDosePerPeriod?:
+        description: Upper limit on medication per unit of time
+        type: Ratio
+      maxDosePerAdministration?:
+        description: Upper limit on medication per administration
+        type: SimpleQuantity
+      maxDosePerLifetime?:
+        description: Upper limit on medication per lifetime of the patient
+        type: SimpleQuantity
+      rateRatio?:
+        description: Amount of medication per unit of timen
+        type: Ratio
+      rateRange?:
+        description: Amount of medication per unit of time
+        type: Range
+      rateQuantity?:
+        description: Amount of medication per unit of time
+        type: SimpleQuantity
+
+  Duration:
+    type: Quantity
+    description: a length of time
+
+  Extension:
+    description: |
+      Every element in a resource or data type includes an optional "extension" child element that may be present any number of times.
+      This is the content model of the extension as it appears in each resource.
+    properties:
+      url:
+       description: Value of extension.
+       type: uri
+      valueInteger?:
+       description: Value of extension.
+       type: integer
+      valueDecimal?:
+       description: Value of extension.
+       type: decimal
+      valueDateTime?:
+       description: Value of extension.
+       type: dateTime
+      valueDate?:
+       description: Value of extension.
+       type: date
+      valueInstant?:
+       description: Value of extension.
+       type: instant
+      valueString?:
+       description: Value of extension.
+       type: string
+      valueUri?:
+       description: Value of extension.
+       type: uri
+      valueBoolean?:
+       description: Value of extension.
+       type: boolean
+      valueCode?:
+       description: Value of extension.
+       type: code
+      valueBase64Binary?:
+       description: Value of extension.
+       type: base64Binary
+      valueCoding?:
+       description: Value of extension.
+       type: Coding
+      valueCodeableConcept?:
+       description: Value of extension.
+       type: CodeableConcept
+      valueAttachment?:
+       description: Value of extension.
+       type: Attachment
+      valueIdentifier?:
+       description: Value of extension.
+       type: Identifier
+      valueQuantity?:
+       description: Value of extension.
+       type: Quantity
+      valueRange?:
+       description: Value of extension.
+       type: Range
+      valuePeriod?:
+       description: Value of extension.
+       type: Period
+      valueRatio?:
+       description: Value of extension.
+       type: Range
+      valueHumanName?:
+       description: Value of extension.
+       type: HumanName
+      valueAddress?:
+       description: Value of extension.
+       type: Address
+      valueContactPoint?:
+       description: Value of extension.
+       type: ContactPoint
+      valueSchedule:
+        description: Value of extension.
+        type: Element
+      valueReference:
+       description: Value of extension.
+       type: Reference
+
+  HumanName:
+    type: Element
+    description: |
+      A name of a human with text, parts and usage information.
+    properties:
+      use?:
+        type: code
+        enum: [usual, official ,temp, nickname, anonymous, old, maiden]
+      text?:
+        type: string
+        description: Text representation of the full name
+      family?:
+        description: Family name (often called 'Surname')
+        type: string[]
+      given?:
+        description: Given names (not always 'first'). Includes middle names
+        type: string[]
+      prefix?:
+        description: Parts that come before the name
+        type: string[]
+      suffix?:
+        description: Parts that come after the name
+        type: string[]
+      period?:
+        description: Time period when name was/is in use
+        type: Period
+
+  Identifier:
+    description: |
+      A numeric or alphanumeric string that is associated with a single object or entity within a given system.
+      Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols.
+      Identifiers are associated with objects, and may be changed or retired due to human or system process and errors.
+    properties:
+      use?:
+        description: usual | official | temp | secondary (If known)
+        type: code
+        enum: [usual, official, temp, secondary]
+      type?:
+        description: Description of identifier
+        type: CodeableConcept
+      system?:
+        description: The namespace for the identifier value
+        type: uri
+      value?:
+        description: The value that is unique
+        type: string
+      period?:
+        description: Time period when id is/was valid for use
+        type: Period
+      assigner?:
+        description: Organization that issued id (may be just text)
+        type: Reference
+
+  Meta:
+    description: |
+      Each resource contains an element "meta", of type "Meta", which is a set of metadata that provides technical and workflow context to the resource.
+      The metadata items are all optional, though some or all of them may be required in particular implementations or contexts of use.
+    type: Element
+    properties:
+      versionId?:
+        description: Version specific identifier
+        type: id
+      lastUpdated?:
+        description: When the resource version last changed
+        type: instant
+      profile?:
+        description: Profiles this resource claims to conform to
+        type: uri
+      security?:
+        description: Security Labels applied to this resource
+        type: array
+        items: Coding
+      tag?:
+        description: Tags applied to this resource
+        type: array
+        items: Coding
+
+  Narrative:
+    description: |
+      Any resource that is a DomainResource (almost all types of resource) may include a human-readable narrative that contains a summary of the resource,
+      and may be used to represent the content of the resource to a human.
+    properties:
+      status:
+        type: code
+        enum: [generated, extensions, additional, empty]
+      div:
+        description: Limited xhtml content
+        type: xhtml
+
+  Period:
+    type: Element
+    description: A time period defined by a start and end date/time.
+    properties:
+      start?:
+        description: Starting time with inclusive boundary
+        type: dateTime
+      end?:
+        description: End time with inclusive boundary, if not ongoing
+        type: dateTime
+
+  Quantity:
+    type: Element
+    description: A measured amount (or an amount that can potentially be measured).
+    properties:
+      value?:
+        description: Numerical value (with implicit precision)
+        type: decimal
+      comparator?:
+        description: how to understand the value
+        type: code
+        enum: ['<', '<=', '>=', '>']
+      unit?:
+        description: Unit representation
+        type: string
+      system?:
+       description: System that defines coded unit form
+       type: uri
+      code?:
+        description: Coded form of the unit
+        type: code
+
+  Range:
+    type: Element
+    description: A set of ordered Quantity values defined by a low and high limit.
+    properties:
+      low?:
+        description: Low limit
+        type: Quantity
+      high?:
+        description: High limit
+        type: Quantity
+
+  Ratio:
+    type: Element
+    description: A relationship between two Quantity values expressed as a numerator and a denominator.
+    properties:
+      numerator?:
+        description: Numerator value
+        type: Quantity
+      denominator?:
+        description: Denominator value
+        type: Quantity
+
+  Reference:
+    type: Element
+    description: Many of the defined elements in a resource are references to other resources.
+      Using these references, the resources combine to build a web of information about healthcare.
+    properties:
+      reference?:
+        description: Literal reference, Relative, internal or absolute URL
+        type: string
+      identifier?:
+        description: Logical reference, when literal reference is not known
+        type: Identifier
+      display?:
+        description: Text alternative for the resource
+        type: string
+
+  SampledData:
+    type: Element
+    description: A series of measurements taken by a device
+    properties:
+      origin:
+        description: Zero value and units
+        type: Quantity
+      period:
+        description: Number of milliseconds between samples
+        type: decimal
+      factor?:
+        description: Multiply data by this before adding to origin
+        type: decimal
+      lowerLimit?:
+        description: Lower limit of detection
+        type: decimal
+      upperLimit?:
+        description: Upper limit of detection
+        type: decimal
+      dimensions:
+        description: Number of sample points at each time point
+        type: positiveInt
+      data:
+        description: Decimal values with spaces, or "E" | "U" | "L"
+        type: string
+        enum: [E, U, L]
+
+  SimpleQuantity:
+    type: Quantity
+    description: The comparator is not used on a SimpleQuantity
+
+  Signature:
+    description: |
+      A Signature holds an electronic representation of a signature and its supporting context in a FHIR accessible form.
+      The signature may either be a cryptographic type (XML DigSig or a JWT), which is able to provide non-repudiation proof, or it may be a graphical image that represents a signature or a signature process.
+    properties:
+      type:
+        description: Indication of the reason the entity signed the object(s)
+        type: array
+        items: Coding
+      when:
+        description: When the signature was created
+        type: instant
+      whoUri?:
+        description: Who signed
+        type: uri
+      whoReference?:
+        description: Who signed
+        type: Reference
+      onBehalfOfUri?:
+        description: The party represented
+        type: uri
+      onBehalfOfReference?:
+        description: The party represented
+        type: Reference
+      contentType?:
+        description: The technical format of the signature
+        type: code
+      blob?:
+        description: The actual signature content (XML DigSig. JWT, picture, etc.)
+        type: base64Binary
+
+  Timing:
+    description: |
+      Specifies an event that may occur multiple times.
+      Timing schedules are used for specifying when events are expected or requested to occur, and may also be used to represent a schedule that was followed for past events.
+      A Timing schedule can be a list of events and/or criteria for when the event happens, which can be expressed in a structured form and/or as a code. When both event and a repeating specification are provided, the list of events should be understood as an interpretation of the information in the repeat structure.
+    type: Element
+    properties:
+      event?:
+        description: When the event occurs
+        type: array
+        items: dateTime
+      repeat?:
+        description: When the event is to occur
+        type: Element
+        properties:
+          boundsDuration?:
+            type: Duration
+          boundsRange?:
+            type: Range
+          boundsPeriod?:
+            type: Period
+          count?:
+            description: Number of times to repeat
+            type: integer
+          countMax?:
+            description: Maximum number of times to repeat
+            type: integer
+          duration?:
+            description: How long when it happens
+            type: decimal
+          durationMax?:
+            description: How long when it happens (Max)
+            type: decimal
+          durationUnit?:
+            description: s | min | h | d | wk | mo | a - unit of time (UCUM)
+            type: UnitOfTime
+          frequency?:
+            description: Event occurs frequency times per period
+            type: integer
+          frequencyMax?:
+            description: Event occurs up to frequencyMax times per period
+            type: integer
+          period?:
+            description: Event occurs frequency times per period
+            type: decimal
+          periodMax?:
+            description: Upper limit of period (3-4 hours)
+            type: decimal
+          periodUnit?:
+            description: s | min | h | d | wk | mo | a - unit of time (UCUM)
+            type: UnitOfTime
+            enum: [s, min, h, d, wk, mo, a]
+          dayOfWeek?:
+            description: mon | tue | wed | thu | fri | sat | sun
+            type: code
+            enum: [mon, tue, wed, thu, fri, sat, sun]
+          timeOfDay:
+            description: Time of day for action
+            type: time
+          when?:
+            description: Regular life events the event is tied to
+            type: code
+            enum: [HS, WAKE, C, CM, CD, CV, AC, ACM, ACD, ACV, PC, PCM, PCD, PCV]
+          offset:
+            description: Minutes from event (before or after)
+            type: unsignedInt
+      code?:
+        description: BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H
+        type: CodeableConcept
+
+  DomainResource:
+    description: |
+      A resource with narrative, extensions, and contained resources
+      + If the resource is contained in another resource, it SHALL NOT contain nested Resources
+      + If the resource is contained in another resource, it SHALL NOT contain any narrative
+      + If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated
+      + If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource
+    type: Resource
+    properties:
+      text?:
+        description: Text summary of the resource, for human interpretation
+        type: Narrative
+      contained?:
+        description: Contained, inline Resources
+        type: array
+        items: Resource
+      extension?:
+        description: Additional Content defined by implementations
+        type: Extension[]
+      modifierExtension?:
+        description: Extensions that cannot be ignored
+        type: Extension[]
+
+  Resource:
+    description: Base Resource
+    properties:
+      id?:
+        description: Logical id of this artifact
+        type: id
+      meta?:
+        description: Metadata about the resource
+        type: Meta
+      implicitRules?:
+        description: A set of rules under which this content was created
+        type: uri
+      language?:
+        description: Language of the resource content
+        type: code

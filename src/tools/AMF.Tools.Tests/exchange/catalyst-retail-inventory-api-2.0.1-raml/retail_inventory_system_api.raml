@@ -1,0 +1,69 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/b8bcfaea-5ed6-4320-8a27-aaf5f04f4c41 # 
+title: Retail_Inventory_System_API
+version: v2.0
+
+uses:
+  inventory: /exchange_modules/org.mule.templates/retail-inventory/1.0.0/retail_inventory.raml
+
+traits:  
+  productSearch: !include traits/productSearch.raml
+
+types: 
+  
+  InventoryQueryResponse:
+    properties:
+      productId: 
+        type: string
+        description: identifier of product
+      variantId: 
+        type: string
+        description: identifier of variant
+      warehouses: inventory.WarehouseInventory[]
+      
+  InventoryReserveRequest:
+    properties:
+      productId:
+        type: string
+        description: identifier of product
+      variantId: 
+        type: string
+        description: identifier of variant
+      customerId: 
+        type: string
+        description: identifier of customer
+      quantity: 
+        type: integer
+        description: count of product
+      warehouseId: 
+        type: string
+        description: identifier of warehouse
+      
+/availability:
+    get:
+      displayName: Retrieve availability
+      description: This endpoint will return product variant availability information based on product/variant ID or further filtered by concrete location ID or location type (store/warehouse).
+      is: [ productSearch ]
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: InventoryQueryResponse
+              example: !include examples/inventory-availability-response.raml
+      
+/reservation:
+    post:
+      displayName: Create reservation
+      description: reservation of product in warehouse
+      body: 
+        application/json:
+          type: InventoryReserveRequest
+          example: !include examples/inventory-reserve-request.raml
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              example: |
+                {
+                  "message": "Product was reserved" 
+                }

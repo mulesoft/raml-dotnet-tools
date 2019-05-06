@@ -1,0 +1,25 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "current_queue_activity" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "calls_waiting" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "average_wait_time" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "longest_wait_time" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

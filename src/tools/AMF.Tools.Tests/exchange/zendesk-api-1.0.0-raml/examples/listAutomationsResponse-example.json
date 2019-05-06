@@ -1,0 +1,20 @@
+{
+  "automations" : [
+    {
+      "id" : 25 ,
+      "title" : "Close and Save" ,
+      "active" : true,
+	  "conditions" : [      ] ,
+      "actions" : [      ] 
+    } , {
+      "id" : 26 ,
+      "title" : "Assign priority tag" ,
+      "active" : false,
+	  "conditions" : [      ] ,
+      "actions" : [      ] 
+    }
+  ] ,
+  "count" : 2 ,
+  "previous_page" : null ,
+  "next_page" : null
+}

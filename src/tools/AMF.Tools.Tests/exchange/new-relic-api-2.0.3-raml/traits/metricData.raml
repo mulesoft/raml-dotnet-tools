@@ -1,0 +1,20 @@
+#%RAML 1.0 Trait
+description: This API endpoint returns a list of values for each of the requested metrics. The list of available metrics can be returned using the Metric Name API endpoint.
+queryParameters: 
+  names[]: 
+    description: Retrieve specific metrics by name
+    required: false
+  values[]: 
+    description: Retrieve specific metric values
+    required: false
+  from: 
+    description: Retrieve metrics after this time
+  to: 
+    description: Retrieve metrics before this time
+  summarize: 
+    description: Summarize the data
+    type: boolean
+    required: false
+  raw:
+    type: boolean
+    required: false

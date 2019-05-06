@@ -1,0 +1,24 @@
+{
+  "pending": [
+    {
+      "amount": 0,
+      "currency": "cad"
+    },
+    {
+      "amount": 363361,
+      "currency": "usd"
+    }
+  ],
+  "available": [
+    {
+      "amount": -358,
+      "currency": "cad"
+    },
+    {
+      "amount": -124791940,
+      "currency": "usd"
+    }
+  ],
+  "livemode": false,
+  "object": "balance"
+}

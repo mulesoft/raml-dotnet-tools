@@ -1,0 +1,59 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "topic_id" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "jira_issue_ids" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+      ]
+    } ,
+    "followup_source_ids" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+      ]
+    } ,
+    "from_archive" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "incidents" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "twitter" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "handle_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "profile" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "description" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "direct" : {
+          "type" : "boolean" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

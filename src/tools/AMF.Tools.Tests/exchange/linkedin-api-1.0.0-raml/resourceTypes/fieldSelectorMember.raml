@@ -1,0 +1,36 @@
+usage: |
+  Use this resource type when field selectors exist in resource path
+type: { member: { type: <<type>> } }
+description: |
+  Describes field selectors uri path parameter
+uriParameters: 
+  fieldSelectors: 
+    displayName: Field Selectors
+    description: |
+      Many of our resources allow you to specify what fields you want returned. We call this syntax field selectors.
+      By indicating exactly the information you need, we can optimize the amount of time needed to return your results.
+      It also reduces the amount of data passing across the wire. The two combine to make our APIs speedy and efficient,
+      a critical factor in any web application, and more so for anyone relying on external APIs.
+      
+      Field selectors are specified after the resource identifiers and path components of a resource, prefixed by a colon,
+      contained within parenthesis, and separated by commas. Fields will be returned in the order specified. When URL-encoding
+      your resource URLs, ensure that the parenthesis used in selectors remain unescaped.
+      
+      Examples
+      --------
+      To get a member's ID, first name, last name, and industry:
+        `http://api.linkedin.com/v1/people/~:(id,first-name,last-name,industry)`
+      
+      Or the same set of information for their connections:
+        `http://api.linkedin.com/v1/people/~/connections:(id,first-name,last-name,industry)`
+      
+      Fields selectors can also be nested to access individual fields from a larger collection. For example, to get just the
+      job titles and not the rest of the information about positions:
+        `http://api.linkedin.com/v1/people/~/connections:(id,first-name,last-name,positions:(title))`
+      
+      Field selectors with resource identifiers allow you to request information about multiple entities at once. Specify them
+      similarly, but append a double colon - here's an example getting profile information about thee members: the first is the
+      current member, indicated by a tilde; the next has an id of 12345; and the last has a public profile URL
+      
+        `http://api.linkedin.com/v1/people::(~, id=12345,url=http%3A%2F%2Fwww.linkedin.com%2Fin%2Fadamnash)`
+    example: ":(id,first-name,last-name,industry)"

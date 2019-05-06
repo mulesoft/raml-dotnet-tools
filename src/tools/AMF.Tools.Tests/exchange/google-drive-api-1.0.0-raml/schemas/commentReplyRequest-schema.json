@@ -1,0 +1,15 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "content" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "verb" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

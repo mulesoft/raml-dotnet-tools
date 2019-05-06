@@ -1,0 +1,5 @@
+{
+  "base" : "master" ,
+  "head" : "cool_feature" ,
+  "commit_message" : "Shipped cool_feature!"
+}

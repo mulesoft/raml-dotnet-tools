@@ -1,0 +1,10 @@
+{
+  "id" : "string" ,
+  "role" : "string" ,
+  "additionalRoles" : [
+    "string"
+  ] ,
+  "type" : "string" ,
+  "value" : "string" ,
+  "withLink" : "boolean"
+}

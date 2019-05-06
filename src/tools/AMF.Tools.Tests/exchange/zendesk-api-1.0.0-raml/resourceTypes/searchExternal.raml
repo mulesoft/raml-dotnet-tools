@@ -1,0 +1,16 @@
+uriParameters: 
+  mediaTypeExtension: 
+    enum: [ .json ]
+    default: .json
+    example: .json
+get: 
+  description: 'Specify a partial or full name or email address as the value of the query attribute. Example query="Gerry". Specify an id number as the value of the external_id attribute. For more advanced searches use the Search API.'
+  queryParameters: 
+    external_id: 
+      example: 123
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: searchResponse
+          example: !include examples/searchResponse-example.json

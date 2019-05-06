@@ -1,0 +1,39 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "sobjects" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "licensing" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "connect" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "search" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "query" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "tooling" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "chatter" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "recent" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

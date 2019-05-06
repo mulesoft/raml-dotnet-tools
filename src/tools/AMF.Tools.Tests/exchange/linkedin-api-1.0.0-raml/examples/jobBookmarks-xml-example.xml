@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<job-bookmarks total="2">
+  <job-bookmark>
+    <is-applied>false</is-applied>
+    <is-saved>true</is-saved>
+    <saved-timestamp>1306261147000</saved-timestamp>
+    <job>
+      <id>1641165</id>
+      <active>true</active>
+      <company>
+        <id>35876</id>
+        <name>ClairMail</name>
+      </company>
+      <position>
+        <title>Senior Technical Writer</title>
+      </position>
+      <description-snippet>The Technical Writer will be responsible for creating, maintaining and 
+updating documentation, including internal and external facing technical documentation of ClairMail software, 
+such as user guides, installation guides, configuration guides, and developers guides. The products are 
+enterprise software products and the audience is technical, so the candidate must be able to understand highly tec</description-snippet>
+      <posting-timestamp>1306256696000</posting-timestamp>
+    </job>
+  </job-bookmark>
+  <job-bookmark>
+    <is-applied>false</is-applied>
+    <is-saved>true</is-saved>
+    <saved-timestamp>1306261165000</saved-timestamp>
+    <job>
+      <id>1578133</id>
+      <active>true</active>
+      <company>
+        <id>26909</id>
+        <name>Greenplum</name>
+      </company>
+      <position>
+        <title>Senior Manager Technical Publications</title>
+      </position>
+      <description-snippet>Greenplum is seeking an experienced Senior Manager, Technical Publications to 
+support its worldwide technical content demand and generation efforts.  The Senior Manager will report to the 
+Vice-President of Engineering, and will be responsible for developing work plans, establishing technical and 
+other functional objectives, assigning tasks, and managing groups/teams. Maintains schedules and coordi</description-snippet>
+      <posting-timestamp>1303854887000</posting-timestamp>
+    </job>
+  </job-bookmark>
+</job-bookmarks>

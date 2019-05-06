@@ -1,0 +1,23 @@
+{
+  "identities" : [
+    {
+      "id" : 35436 ,
+      "user_id" : 135 ,
+      "type" : "email" ,
+      "value" : "someone@example.com" ,
+      "verified" : true ,
+      "primary" : true ,
+      "updated_at" : "2011-07-20T22:55:29Z" ,
+      "created_at" : "2011-07-20T22:55:29Z"
+    } , {
+      "id" : 77136 ,
+      "user_id" : 135 ,
+      "type" : "twitter" ,
+      "value" : "didgeridooboy" ,
+      "verified" : true ,
+      "primary" : false ,
+      "updated_at" : "2012-02-12T14:25:21Z" ,
+      "created_at" : "2012-02-12T14:25:21Z"
+    }
+  ]
+}

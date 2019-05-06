@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<comments total="1">
+  <comment>
+  <id>g-8158713-S-5960412487160516611-5960412716995801088</id>
+  <text>This comment was created by the &#39;LinkedIn&#39; API Notebook</text>
+  <creator>
+  <id>nRV9j6u4hS</id>
+  <first-name>Ramltest</first-name>
+  <last-name>Notebook</last-name>
+  <headline>manager</headline>
+  </creator>
+  <creation-timestamp>1421073130842</creation-timestamp>
+  <relation-to-viewer>
+  <available-actions total="1">
+  <action>
+  <code>delete</code>
+  </action>
+  </available-actions>
+  </relation-to-viewer>
+  </comment>
+</comments>

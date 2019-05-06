@@ -1,0 +1,41 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "article_attachment" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "article_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "file_name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "content_url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "content_type" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "size" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "inline" : {
+          "type" : "boolean" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+uriParameters: 
+  mediaTypeExtension: 
+    enum: [ .json ]
+    default: .json
+    example: .json
+post: 
+  description: |
+    The name must be at least 2 characters in length.
+     allows for[Agents, restrictions apply on certain actions]
+  queryParameters: 
+    ids: 
+      description: IDs
+      example: 7,8
+  body: 
+    application/json: 
+      schema: createMany
+      example: !include examples/createMany-example.json
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: createManyResponse
+          example: !include examples/createManyResponse-example.json

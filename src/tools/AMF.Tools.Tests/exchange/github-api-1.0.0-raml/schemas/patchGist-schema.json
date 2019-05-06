@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "description": {
+            "type": "string"
+        },
+        "files": {
+            "properties": {
+                "file1.txt": {
+                    "properties": {
+                        "content": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "old_name.txt": {
+                    "properties": {
+                        "filename": {
+                            "type": "string"
+                        },
+                        "content": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "new_file.txt": {
+                    "properties": {
+                        "content": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "delete_this_file.txt": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

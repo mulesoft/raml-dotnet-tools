@@ -1,0 +1,257 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "metrics" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "totalInvoiceBalance" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "contractedMrr" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "creditBalance" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "balance" : {
+          "type" : "number" ,
+          "required" : false
+        }
+      }
+    } ,
+    "basicInfo" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "communicationProfileId" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "status" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "invoiceTemplateId" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "crmId" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "notes" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "accountNumber" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "dfadsf__c" : {
+          "type" : "object" ,
+          "required" : false
+        }
+      }
+    } ,
+    "soldToContact" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "zipCode" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "taxRegion" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "fax" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "country" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "county" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "personalEmail" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "nickname" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "otherPhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "otherPhoneType" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workEmail" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "homePhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "firstName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address2" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address1" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workPhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "city" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "mobilePhone" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "success" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "billToContact" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "zipCode" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "taxRegion" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "fax" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "country" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "county" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "personalEmail" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "nickname" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "otherPhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "otherPhoneType" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workEmail" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "homePhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "firstName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address2" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address1" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workPhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "city" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "mobilePhone" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "billingAndPayment" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "billCycleDay" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "paymentTerm" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "currency" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

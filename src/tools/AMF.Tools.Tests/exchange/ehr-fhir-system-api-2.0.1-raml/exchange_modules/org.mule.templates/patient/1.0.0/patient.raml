@@ -1,0 +1,124 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Patient.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: Information about an individual or animal receiving health care services
+type: FHIR_commons.DomainResource
+properties:
+  identifier?:
+    description: An identifier for this patient
+    type: FHIR_commons.Identifier[]
+  active?:
+    description: Whether this patient's record is in active use
+    type: boolean
+  name?:
+    description: A name associated with the patient
+    type: FHIR_commons.HumanName[]
+  telecom?:
+    description: A contact detail for the individual
+    type: FHIR_commons.ContactPoint[]
+  gender?:
+    description: Gender - male | female | other | unknown
+    type: FHIR_commons.code
+    enum: [male, female, other, unknown]
+  birthDate?:
+    description: The date of birth for the individual
+    type: FHIR_commons.date
+  deceasedBoolean?:
+    description: Indicates if the individual is deceased or not
+    type: boolean
+  deceasedDateTime?:
+    description: Indicates if the individual is deceased or not
+    type: FHIR_commons.dateTime
+  address?:
+    description: Addresses for the individual
+    type: FHIR_commons.Address[]
+  maritalStatus?:
+    description: Marital (civil) status of a patient
+    type: FHIR_commons.CodeableConcept
+  multipleBirthBoolean?:
+    description: Whether patient is part of a multiple birth
+    type: boolean
+  multipleBirthInteger?:
+    description: Whether patient is part of a multiple birth
+    type: integer
+  photo?:
+    description: Image of the patient
+    type: FHIR_commons.Attachment[]
+  contact?:
+    description: |
+      A contact party (e.g. guardian, partner, friend) for the patient
+      SHALL at least contain a contact's details or a reference to an organization
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        relationship?:
+          description: The kind of relationship
+          type: FHIR_commons.CodeableConcept[]
+        name?:
+          description: A name associated with the contact person
+          type: FHIR_commons.HumanName
+        telecom?:
+          description: A contact detail for the person
+          type: FHIR_commons.ContactPoint[]
+        address?:
+          description: Address for the contact person
+          type: FHIR_commons.Address
+        gender?:
+          description: Gender - male | female | other | unknown
+          type: FHIR_commons.code
+          enum: [male, female, other, unknown]
+        organization?:
+          description: Organization that is associated with the contact
+          type: FHIR_commons.Reference
+        period?:
+          description: The period during which this contact person or organization is valid to be contacted relating to this patient
+          type: FHIR_commons.Period
+  animal?:
+    description: This patient is known to be an animal (non-human)
+    type: FHIR_commons.BackboneElement
+    properties:
+      species:
+        description: E.g. Dog, Cow
+        type: FHIR_commons.CodeableConcept
+      breed?:
+        description: E.g. Poodle, Angus
+        type: FHIR_commons.CodeableConcept
+      genderStatus?:
+        description: E.g. Neutered, Intact
+        type: FHIR_commons.CodeableConcept
+  communication?:
+    description: A list of Languages which may be used to communicate with the patient about his or her health
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        language:
+          description: The language which can be used to communicate with the patient about his or her health
+          type: FHIR_commons.CodeableConcept
+        preferred?:
+          description: Language preference indicator
+          type: boolean
+  generalPractitioner?:
+    description: Patient's nominated primary care provider
+    type: FHIR_commons.Reference[]
+  managingOrganization?:
+    description: Organization that is the custodian of the patient record
+    type: FHIR_commons.Reference
+  link?:
+    description: Link to another patient resource that concerns the same actual person
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        other:
+          description: The other patient or related person resource that the link refers to
+          type: FHIR_commons.Reference
+        type:
+          description: Type of link - replaced-by | replaces | refer | seealso
+          type: FHIR_commons.code
+          enum: [replaced-by, replace, refer, seealso]

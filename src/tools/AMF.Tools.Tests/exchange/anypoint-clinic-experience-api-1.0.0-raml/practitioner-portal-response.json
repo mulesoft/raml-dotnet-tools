@@ -1,0 +1,23 @@
+{
+  "id": "55555",
+  "name": {
+    "family": "Briet",
+    "given": "Ronald",
+    "prefix": "Dr.",
+    "suffix": "MD"
+  },
+  "phone": "608-999-9654",
+  "fax": "0205664440",
+  "email": "r.briet@bmc.nl",
+  "address":
+    {
+      "line": "1855 Folsom Street",
+      "city": "San Francisco",
+      "district": "DANE",
+      "state": "Wisconsin",
+      "postalCode": "53703",
+      "country": "United States of America"
+    },
+  "gender": "male",
+  "birthDate" : "1975-12-07"
+}

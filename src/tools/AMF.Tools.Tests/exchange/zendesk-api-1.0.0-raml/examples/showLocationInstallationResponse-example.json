@@ -1,0 +1,12 @@
+{
+  "location_installation" : {
+    "id" : 2 ,
+    "location_name" : "nav_bar" ,
+    "installations" : [
+      82 ,
+      56
+    ] ,
+    "created_at" : "2014-03-31T03:10:52Z" ,
+    "updated_at" : "2014-07-29T06:22:02Z"
+  }
+}

@@ -1,0 +1,84 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"type": {
+			"type": "string"
+		},
+		"id": {
+			"type": "string"
+		},
+		"item": {
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				},
+				"sequence_id": {
+					"type": "string"
+				},
+				"etag": {
+					"type": "string"
+				},
+				"sha1": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"assigned_to": {
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"login": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"message": {
+			"type": "string"
+		},
+		"completed_at": {
+			"type": "string"
+		},
+		"assigned_at": {
+			"type": "string"
+		},
+		"reminded_at": {
+			"type": "string"
+		},
+		"resolution_state": {
+			"type": "string"
+		},
+		"assigned_by": {
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"login": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		}
+	}
+}

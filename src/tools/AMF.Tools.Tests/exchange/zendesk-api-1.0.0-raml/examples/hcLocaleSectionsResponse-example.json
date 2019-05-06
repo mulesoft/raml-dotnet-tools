@@ -1,0 +1,17 @@
+{
+  "sections" : [
+    {
+      "id" : 35467 ,
+      "category_id" : 888887 ,
+      "name" : "Avionics" ,
+      "description" : "This section contains articles on flight instruments" ,
+      "locale" : "en-us"
+    } , {
+      "id" : 36169 ,
+      "category_id" : 887285 ,
+      "name" : "Weather" ,
+      "description" : "This section contains weather resources for pilots" ,
+      "locale" : "en-us"
+    }
+  ]
+}

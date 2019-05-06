@@ -1,0 +1,9 @@
+{
+  "sharing_agreements" : [
+    {
+      "id" : 1 ,
+      "name" : "Foo @ Zendesk" ,
+      "type" : "inbound" 
+    } 
+  ]
+}

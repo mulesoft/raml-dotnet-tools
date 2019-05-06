@@ -1,0 +1,21 @@
+[
+  {
+    "type" : "Site" ,
+    "url" : "/services/data/v26.0/sobjects/Site/describe"
+  } , {
+    "type" : "Idea" ,
+    "url" : "/services/data/v26.0/sobjects/Idea/describe"
+  } , {
+    "type" : "Case" ,
+    "url" : "/services/data/v26.0/sobjects/Case/describe"
+  } , {
+    "type" : "Opportunity" ,
+    "url" : "/services/data/v26.0/sobjects/Opportunity/describe"
+  } , {
+    "type" : "Account" ,
+    "url" : "/services/data/v26.0/sobjects/Account/describe"
+  } , {
+    "type" : "User" ,
+    "url" : "/services/data/v26.0/sobjects/User/describe"
+  }
+]

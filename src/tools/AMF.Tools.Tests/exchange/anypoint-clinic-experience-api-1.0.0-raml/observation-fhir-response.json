@@ -1,0 +1,21 @@
+[
+  {
+    "resourceType": "Observation",
+    "subject": {
+      "reference": "patients/mrn/12345"
+    },
+    "status": "preliminary",
+    "code": {
+      "coding": [
+        {
+          "system": "Internal",
+          "code": "86021",
+          "display": ""
+        }
+      ]
+    },
+    "comments": "",
+    "description": "",
+    "effectiveDateTime": "2015-05-07"
+  }
+]

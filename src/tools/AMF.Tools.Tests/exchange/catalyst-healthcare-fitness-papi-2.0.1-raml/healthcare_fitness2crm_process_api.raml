@@ -1,0 +1,41 @@
+#%RAML 1.0
+title: Healthcare Fitness to CRM Process API
+version: v2
+baseUri: http://localhost:8081/api/
+mediaType: application/json
+
+
+/patients/{id}:
+  uriParameters:
+    id:
+      type: string|integer
+      description: Patient ID
+  get:
+    displayName: Check if Patient (User) is authorized to Fitbit
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./examples/getPatientById-response.json
+  /register:
+    get:
+      displayName: Register Fitbit account
+      description: Register patient's Fitbit account
+      queryParameters:
+        code:
+          description: Authorization code from Fitbit
+          type: string
+          example: fs4ag1f35g43543b13f1v3a54gn4fsfs545s3143g
+      responses: 
+        200:  
+          body: 
+            application/json:
+              example: !include ./examples/getPatientRegister-response.json
+  /unauthorize:
+    get:
+      displayName: Unauthorize Fitbit user
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include ./examples/getPatientUnauthorize-response.json 

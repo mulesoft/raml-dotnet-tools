@@ -1,0 +1,33 @@
+{
+  "themeItems" : [
+    {
+      "name" : "Merchandise__c" ,
+      "icons" : [
+        {
+          "contentType" : "image/png" ,
+          "width" : 32 ,
+          "url" : "https://na1.salesforce.com/img/icon/computer32.png" ,
+          "height" : 32 ,
+          "theme" : "theme3"
+        } , {
+          "contentType" : "image/png" ,
+          "width" : 16 ,
+          "url" : "https://na1.salesforce.com/img/icon/computer16.png" ,
+          "height" : 16 ,
+          "theme" : "theme3"
+        }
+      ] ,
+      "colors" : [
+        {
+          "context" : "primary" ,
+          "color" : "6666CC" ,
+          "theme" : "theme3"
+        } , {
+          "context" : "primary" ,
+          "color" : "66895F" ,
+          "theme" : "theme4"
+        }
+      ] 
+    }
+  ]
+}

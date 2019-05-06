@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "list": [
+        {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "commit": {
+                    "properties": {
+                        "sha": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    ]
+}

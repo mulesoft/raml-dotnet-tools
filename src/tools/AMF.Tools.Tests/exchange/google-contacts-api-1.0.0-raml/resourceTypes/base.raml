@@ -1,0 +1,35 @@
+get?:
+  responses: 
+    200: 
+      body: 
+        application/atom+xml:
+          schema: atom 
+post?:
+  responses: 
+    200?: 
+      body: 
+        application/atom+xml:
+          schema: atom
+    201?: 
+      body: 
+        application/atom+xml:
+          schema: atom
+put?: 
+  responses: 
+    200: 
+      body: 
+        application/atom+xml:
+          schema: atom
+    412: 
+      description: |
+        If the Etag is outdated, the server responds with an HTTP 412 Precondition Failed status code.
+delete?: 
+  responses: 
+    412: 
+      description: |
+        If the Etag is outdated, the server responds with an HTTP 412 Precondition Failed status code.
+usage: |
+  All resources are versioned
+is: [ versioned ]
+description: |
+  Every request that you send using the Google Contacts API should specify version 3.0 of the API.

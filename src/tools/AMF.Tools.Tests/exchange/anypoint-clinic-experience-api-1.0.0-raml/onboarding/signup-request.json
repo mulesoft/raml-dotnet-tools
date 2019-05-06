@@ -1,0 +1,21 @@
+{
+  "login": "login",
+  "password": "password",
+  "name": {
+    "family": "Radonctest",
+    "given": "Veera",
+    "prefix": "",
+    "suffix": ""
+  },
+  "phone": "608-999-9654",
+  "careProvider": "10",
+  "address":
+    {
+      "line": "1855 Folsom Street",
+      "city": "San Francisco",
+      "district": "DANE",
+      "state": "Wisconsin",
+      "postalCode": "53703",
+      "country": "United States of America"
+    }
+}

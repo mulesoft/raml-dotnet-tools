@@ -1,0 +1,29 @@
+{
+    "sleep_time": {
+        "end_time": null,
+        "enabled": false,
+        "start_time": null
+    },
+    "use_cookie_personalization": true,
+    "trend_location": [
+        {
+            "name": "San Francisco",
+            "placeType": {
+                "name": "Town",
+                "code": 7
+            },
+            "woeid": 2487956,
+            "country": "United States",
+            "url": "http://where.yahooapis.com/v1/place/2487956",
+            "countryCode": "US",
+            "parentid": 23424977
+        }
+    ],
+    "language": "en",
+    "discoverable_by_email": true,
+    "always_use_https": true,
+    "protected": false,
+    "geo_enabled": true,
+    "show_all_inline_media": false,
+    "screen_name": "oauth_dancer"
+}

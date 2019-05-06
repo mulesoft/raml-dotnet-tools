@@ -1,0 +1,401 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "payments" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : 
+        {
+          "type" : "object" ,
+          "properties" : {
+            "paidInvoices" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : 
+                {
+                  "type" : "object" ,
+                  "properties" : {
+                    "invoiceNumber" : {
+                      "type" : "string" ,
+                      "required" : false
+                    } ,
+                    "appliedPaymentAmount" : {
+                      "type" : "number" ,
+                      "required" : false
+                    } ,
+                    "invoiceId" : {
+                      "type" : "string" ,
+                      "required" : false
+                    }
+                  }
+                }
+              
+            } ,
+            "paymentNumber" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "status" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "effectiveDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "paymentType" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      
+    } ,
+    "invoices" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : 
+        {
+          "type" : "object" ,
+          "properties" : {
+            "amount" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "status" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "invoiceNumber" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "invoiceDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "balance" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "dueDate" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      
+    } ,
+    "usage" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : 
+        {
+          "type" : "object" ,
+          "properties" : {
+            "unitOfMeasure" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "quantity" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "startDate" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      
+    } ,
+    "basicInfo" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "defaultPaymentMethod" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "creditCardNumber" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "paymentMethodType" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "creditCardExpirationMonth" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "creditCardExpirationYear" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "creditCardType" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "status" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastInvoiceDate" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastPaymentAmount" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "billCycleDay" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "balance" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "accountNumber" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "dfadsf__c" : {
+          "type" : "object" ,
+          "required" : false
+        } ,
+        "currency" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastPaymentDate" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "soldToContact" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "fax" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "taxRegion" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "country" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "zipCode" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "county" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workEmail" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address2" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address1" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "firstName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workPhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "city" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "success" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "subscriptions" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : 
+        {
+          "type" : "object" ,
+          "properties" : {
+            "termEndDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "termStartDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "status" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "initialTerm" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "autoRenew" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "subscriptionNumber" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "subscriptionStartDate" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "ratePlans" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : 
+                {
+                  "type" : "object" ,
+                  "properties" : {
+                    "productName" : {
+                      "type" : "string" ,
+                      "required" : false
+                    } ,
+                    "ratePlanName" : {
+                      "type" : "string" ,
+                      "required" : false
+                    }
+                  }
+                }
+              
+            } ,
+            "termType" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "renewalTerm" : {
+              "type" : "number" ,
+              "required" : false
+            }
+          }
+        }
+      
+    } ,
+    "billToContact" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "fax" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "taxRegion" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "country" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "zipCode" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "county" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "lastName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workEmail" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address2" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "address1" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "firstName" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "workPhone" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "city" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

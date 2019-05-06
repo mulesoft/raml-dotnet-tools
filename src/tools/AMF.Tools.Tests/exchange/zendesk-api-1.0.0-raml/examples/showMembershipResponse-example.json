@@ -1,0 +1,10 @@
+{
+  "group_membership" : {
+    "id" : 4 ,
+    "user_id" : 29 ,
+    "group_id" : 12 ,
+    "default" : true ,
+    "created_at" : "2009-05-13T00:07:08Z" ,
+    "updated_at" : "2011-07-22T00:11:12Z"
+  }
+}

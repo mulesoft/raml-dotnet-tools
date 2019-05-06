@@ -1,0 +1,62 @@
+#%RAML 1.0
+title: Healthcare EHR Appointments Process API
+version: v2
+
+types: 
+  Appointment: !include /exchange_modules/org.mule.templates/appointment/1.0.0/appointment.raml
+  Slot: !include /exchange_modules/org.mule.templates/slot/1.0.0/slot.raml
+  AppointmentBooking:
+    type: object
+    properties:
+      patientId: integer
+      practitionerId: integer
+      slotId: integer  
+
+/slots:
+  get:
+    displayName: Retrieve slots
+    queryParameters:
+      practitionerId:
+        type: integer
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            type: Slot[]
+            example: !include /examples/response/get_slot.json
+
+/appointments:
+  get:
+    displayName: Retrieve appointments
+    queryParameters:
+      practitionerId:
+        type: integer
+        required: false
+      patientId:
+        type: integer
+        required: false
+      startBefore:
+        type: string
+        required: false
+      startAfter:
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: Appointment[]
+            example: !include examples/response/get_appointment.json
+            
+  post:
+    displayName: Create appointment
+    body:
+      application/json:
+        type: AppointmentBooking
+        example: !include examples/request/post_appointmentBooking.json
+          
+    responses:
+      201:    
+        body:
+          application/json:

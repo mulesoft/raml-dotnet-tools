@@ -1,0 +1,17 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"name": {
+    		"type": "string",
+            "required": true
+    	},
+    	"permission": {
+    		"values": [
+    			"pull",
+    			"push",
+    			"admin"
+    		]
+    	}
+    }
+}

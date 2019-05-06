@@ -1,0 +1,13 @@
+{
+  "articles" : [
+    {
+      "id" : 35467 ,
+      "author_id" : 888887 ,
+      "draft" : true
+    } , {
+      "id" : 35468 ,
+      "author_id" : 888887 ,
+      "draft" : true
+    }
+  ]
+}

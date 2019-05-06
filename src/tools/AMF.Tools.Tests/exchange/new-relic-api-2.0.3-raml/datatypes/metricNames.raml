@@ -1,0 +1,19 @@
+#%RAML 1.0 DataType
+required: true
+type: object
+properties:
+  metrics:
+    type: array
+    required: false
+    items:
+      type: object
+      required: false
+      properties:
+        name:
+          type: string
+          required: false
+        values:
+          type: array
+          required: false
+          items:
+            type: string

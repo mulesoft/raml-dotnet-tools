@@ -1,0 +1,19 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object" ,
+	"properties": {
+		"name": {
+			"description": "The new name for this item.",
+			"type": "string"
+		},
+		"parent": {
+			"description": "The new parent folder for this item.",
+			"type": "object"
+		},
+		"id": {
+			"description": "The id of the new parent folder.",
+			"type": "string"
+		}
+	},
+	"required": true
+}

@@ -1,0 +1,43 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "location_installations" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "location_name" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "installations" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : [
+                {
+                  "type" : "number"
+                }
+              ]
+            } ,
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "updated_at" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "visibility" : {
+    "code" : "anyone"
+  } ,
+  "comment" : "Testing a full company share!" ,
+  "content" : {
+    "submitted-url" : "http://www.example.com/content.html" ,
+    "title" : "Test Share with Content" ,
+    "description" : "content description" ,
+    "submitted‐image-url" : "http://www.example.com/image.jpg"
+  }
+}

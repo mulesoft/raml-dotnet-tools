@@ -1,0 +1,24 @@
+{
+    "relationship": {
+        "target": {
+            "id_str": "1401881",
+            "id": 1401881,
+            "followed_by": true,
+            "screen_name": "dougw",
+            "following": true
+        },
+        "source": {
+            "can_dm": true,
+            "blocking": false,
+            "id_str": "819797",
+            "all_replies": false,
+            "want_retweets": true,
+            "id": 819797,
+            "marked_spam": false,
+            "followed_by": true,
+            "notifications_enabled": true,
+            "screen_name": "episod",
+            "following": true
+        }
+    }
+}

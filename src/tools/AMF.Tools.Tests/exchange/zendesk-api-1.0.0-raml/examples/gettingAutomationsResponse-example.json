@@ -1,0 +1,11 @@
+{
+  "automation" : {
+    "id" : 25 ,
+    "title" : "Tickets updated <12 Hours" ,
+    "active" : true,
+	"conditions" : [
+    ] ,
+    "actions" : [
+    ] 
+  }
+}

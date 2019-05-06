@@ -1,0 +1,1 @@
+The Box Content API gives you access to the content management features you see in our web app and lets you extend them for use in your own app. It strives to be RESTful and is organized around the main resources you're familiar with from the Box web interface.

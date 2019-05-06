@@ -1,0 +1,69 @@
+{
+    "": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "relationship": {
+            "properties": {
+                "target": {
+                    "properties": {
+                        "id_str": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "followed_by": {
+                            "type": "boolean"
+                        },
+                        "screen_name": {
+                            "type": "string"
+                        },
+                        "following": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "source": {
+                    "properties": {
+                        "can_dm": {
+                            "type": "boolean"
+                        },
+                        "blocking": {
+                            "type": "boolean"
+                        },
+                        "id_str": {
+                            "type": "string"
+                        },
+                        "all_replies": {
+                            "type": "boolean"
+                        },
+                        "want_retweets": {
+                            "type": "boolean"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "marked_spam": {
+                            "type": "boolean"
+                        },
+                        "followed_by": {
+                            "type": "boolean"
+                        },
+                        "notifications_enabled": {
+                            "type": "boolean"
+                        },
+                        "screen_name": {
+                            "type": "string"
+                        },
+                        "following": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

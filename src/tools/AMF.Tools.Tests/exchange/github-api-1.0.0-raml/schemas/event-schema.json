@@ -1,0 +1,203 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "actor": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "avatar_url": {
+          "type": "string"
+        },
+        "gravatar_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "event": {
+      "type": "string"
+    },
+    "commit_id": {
+      "type": "string"
+    },
+    "created_at": {
+      "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+      "type": "string"
+    },
+    "issue": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "html_url": {
+          "type": "string"
+        },
+        "number": {
+          "type": "integer"
+        },
+        "state": {
+          "enum": ["open",
+          "closed"]
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "login": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "avatar_url": {
+              "type": "string"
+            },
+            "gravatar_id": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "assignee": {
+          "properties": {
+            "login": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "avatar_url": {
+              "type": "string"
+            },
+            "gravatar_id": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "milestone": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "number": {
+              "type": "integer"
+            },
+            "state": {
+              "enum": ["open",
+              "closed"]
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "object",
+              "properties": {
+                "login": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "avatar_url": {
+                  "type": "string"
+                },
+                "gravatar_id": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              }
+            },
+            "open_issues": {
+              "type": "integer"
+            },
+            "closed_issues": {
+              "type": "integer"
+            },
+            "created_at": {
+              "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+              "type": "string"
+            },
+            "due_on": {
+              "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+              "type": "string"
+            }
+          }
+        },
+        "comments": {
+          "type": "integer"
+        },
+        "pull_request": {
+          "type": "object",
+          "properties": {
+            "html_url": {
+              "type": "string"
+            },
+            "diff_url": {
+              "type": "string"
+            },
+            "patch_url": {
+              "type": "string"
+            }
+          }
+        },
+        "closed_at": {
+          "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

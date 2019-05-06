@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "html_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "download_count": {
+                    "type": "integer"
+                },
+                "content_type": {
+                    "type": "string"
+                }
+            }
+}

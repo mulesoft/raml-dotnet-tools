@@ -1,0 +1,104 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="company">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:short" name="id"/>
+        <xs:element type="xs:string" name="universal-name"/>
+        <xs:element type="xs:string" name="name"/>
+        <xs:element type="xs:string" name="ticker"/>
+        <xs:element type="xs:anyURI" name="logo-url"/>
+        <xs:element type="xs:string" name="description"/>
+        <xs:element name="company-type">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="code"/>
+              <xs:element type="xs:string" name="name"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="industries">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="industry">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:byte" name="code"/>
+                    <xs:element type="xs:string" name="name"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="size"/>
+        <xs:element name="specialties">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="specialty" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:anyURI" name="blog-rss-url"/>
+        <xs:element type="xs:string" name="twitter-id"/>
+        <xs:element type="xs:anyURI" name="square-logo-url"/>
+        <xs:element name="locations">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="location" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="address">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="street1"/>
+                          <xs:element type="xs:string" name="city"/>
+                          <xs:element type="xs:int" name="postal-code"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="contact-info">
+                      <xs:complexType mixed="true">
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="phone1" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:short" name="founded-year"/>
+        <xs:element name="email-domains">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="email-domain"/>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="total"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:anyURI" name="website-url"/>
+        <xs:element name="status">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="code"/>
+              <xs:element type="xs:string" name="name"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="employee-count-range">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="code"/>
+              <xs:element type="xs:string" name="name"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

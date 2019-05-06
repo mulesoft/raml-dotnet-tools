@@ -1,0 +1,15 @@
+{
+  "variants" : [
+    {
+      "id" : 23 ,
+      "active" : false ,
+      "default" : false ,
+      "content" : "C'est mon contenu dynamique en français"
+    } , {
+      "id" : 24 ,
+      "active" : false ,
+      "default" : false ,
+      "content" : "Este es mi contenido dinámico en español"
+    }
+  ]
+}

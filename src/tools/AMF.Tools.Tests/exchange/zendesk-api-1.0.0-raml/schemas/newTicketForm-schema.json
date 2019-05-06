@@ -1,0 +1,37 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "ticket_form" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "end_user_visible" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "display_name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "position" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "active" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "default" : {
+          "type" : "boolean" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

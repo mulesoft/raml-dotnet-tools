@@ -1,0 +1,43 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "installation" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "app_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "enabled" : {
+          "type" : "boolean" ,
+          "required" : false
+        } ,
+        "settings" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "title" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "api_token" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "use_ssl" : {
+              "type" : "boolean" ,
+              "required" : false
+            }
+          }
+        }
+      }
+    }
+  }
+}

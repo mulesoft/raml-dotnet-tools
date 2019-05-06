@@ -1,0 +1,12 @@
+{
+  "invoices" : [
+    {
+      "invoiceId" : "402892053e100406013e1024aaec00d7" ,
+      "invoiceNumber" : "INV00000091" ,
+      "invoiceAmount" : 801.73
+    }
+  ] ,
+  "paymentId" : "402892053e100406013e1024ab7c00e3" ,
+  "amountCollected" : 801.73 ,
+  "success" : true
+}

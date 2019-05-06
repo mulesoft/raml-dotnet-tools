@@ -1,0 +1,1 @@
+The Google Contacts API allows applications to access Google Data API feeds in order to search for, view, and update contacts that are stored in a user's Google account. Client applications can use the Google Contacts API to create new contacts, edit or delete existing contacts, and query for contacts that match particular criteria.

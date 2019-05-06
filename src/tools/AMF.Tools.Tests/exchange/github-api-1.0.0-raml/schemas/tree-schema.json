@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "sha": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "tree": {
+            "items": {
+                "type": "object",
+                "properties": {
+                "path": {
+                    "type": "string"
+                },
+                "mode": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "sha": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+                }
+            },
+	        "type": "array"
+        }
+    }
+}

@@ -1,0 +1,2982 @@
+#%RAML 1.0
+securedBy:
+  - basicAuth
+title: STEP REST API V2
+description: '<h1>About</h1><p>The STEP REST API V2 provides read and write access to a set of core STEP objects using the standard HTTP operations GET, PUT, POST and DELETE.</p><h1>Resource Representation</h1><p>With the exception of two resource operations for retrieving and replacing asset content (binary data) all request and response bodies are JSON, compliant with the schema documented here.</p><h1>Context and Workspace</h1><p>All requests are handled in a specific STEP context and workspace and both can be specified via query parameters available for all resource operations. A context must always be specified while requests per default will be handled in the &quot;Main&quot; workspace.</p><h1>Polymorphism</h1><p>In STEP, attributes, reference types and data container types can all be either single- or multivalued. The STEP REST API V2 uses polymorphism to address this complexity with resources that include values, references and data containers specified to produce and consume a common &quot;abstract&quot; supertype that always will be one of either the single- or multivalued subtype.<br/>As an example, the GET /entities/{id}/values/{attributeId} resource operation is specified to return a &quot;Value&quot; but as evident from the model, the &quot;Value&quot; will always be &quot;oneOf&quot; either &quot;SingleValue&quot;, that has a &quot;value&quot; property for which the value is an object, or &quot;MultiValue&quot;, that has a &quot;values&quot; property for which the value is an array.<br/>Clients are advised to use the presence or absence of the plural array property (&quot;values&quot;, &quot;references&quot; and &quot;dataContainers&quot;) to determine the concrete type.</p><h1>Authentication</h1><p>In the current release, the only supported authentication option is Basic Authentication. With Basic Authentication, user name and password are supplied with each request and it is therefore highly recommended to only use the API in conjunction with HTTPS.</p><h1>Versioning</h1><p>The STEP REST API V2 is versioned using semantic versioning. Stibo Systems reserve the right to make non-breaking, minor / patch changes in any release without warning and clients must be coded / configured to be ''tolerant'' and capable of handling such changes.</p><p>Examples of breaking, major changes:</p><ul><li>Renaming of a property</li><li>Removal of a property</li><li>Property type change</li><li>Addition of new property required for write operations</li><li>Marking existing property as required for write operations</li><li>Removal of resource or resource operation</li><li>Materially different behavior for existing resource operation</li></ul><p>Examples of non-breaking, minor / patch changes:</p><ul><li>Addition of new properties in request responses</li><li>Addition of new query parameter not required for write operations</li><li>Addition of new resource or resource operation</li><li>Bug fixes that do not change the schema or resource operations as described here</li><li>Inclusion of a response body for resource operations specified to return a 200 response with no body</li><li>Change of response &quot;Model&quot; / &quot;schema&quot; to type extending the previously specified type</li><li>Renaming a &quot;Model&quot; / &quot;schema&quot; type</li></ul><p>In addition, error message texts may change without warning within the same version. Client program logic should not depend upon the message content.</p><h1>Error Handling</h1><p>The STEP REST API V2 responds with standard HTTP status codes, with 2** responses indicating a success, 4** responses indicating a client error and 5** indicating a server error. Notice that this specification does not specify common error responses like 500 (internal server error) or 401 (unauthorized) for the individual resource operations. Clients should however be capable of handling such responses.</p><p>Error responses have a JSON response body (see Error schema below) containing HTTP status code information in addition to a message providing details about the error. As mentioned above, client program logic should not depend upon the message content.</p><p>The specific status codes used in the API are:</p><ul><li>200 (OK): Success, response may or may not have a body</li><li>201 (Created): Entity successfully created, response may or may not have a body</li><li>400 (Bad request): The server cannot or will not process the request due to an apparent client error</li><li>401 (Unauthorized): Returned only in relation to failed authentication</li><li>404 (Not Found): Returned only in relation to objects specified via path parameters (variable parts of the URL). If STEP objects referenced in request bodies or via query parameters cannot be found, the response will be 400.</li><li>429 (Too Many Requests): Clients are per default limited to 100 requests per second. Returned if the rate limit is exceeded.</li><li>500 (Internal Server Error): Unexpected error (could potentially cover an issue that rightfully should be a 400)</li></ul>'
+version: 1.0.0
+annotationTypes:
+  components: any
+  oas-readOnly:
+    type: boolean
+    allowedTargets: TypeDeclaration
+  oas-body-name:
+    type: string
+    allowedTargets: TypeDeclaration
+  oas-summary:
+    type: string
+    allowedTargets: Method
+  oas-tags:
+    type: 'string[]'
+    allowedTargets: Method
+  oas-format:
+    type: string
+    allowedTargets: TypeDeclaration
+(components):
+  parameters:
+    context:
+      description: ID of the context in which to perform the operation
+      in: query
+      name: context
+      required: true
+      type: string
+    workspace:
+      default: Main
+      description: ID of the workspace in which to perform the operation. Defaults to "Main".
+      in: query
+      name: workspace
+      type: string
+securitySchemes:
+  basicAuth:
+    type: Basic Authentication
+types:
+  Asset:
+    description: An asset object
+    type: object
+    properties:
+      classifications:
+        description: IDs of the classifications that the asset is linked into
+        type: array
+        items:
+          type: string
+      contentMetadata:
+        description: Read-only asset content metadata values. Keys are attribute IDs and values simple string values.
+        type: object
+        properties:
+          //:
+            type: string
+        (oas-readOnly): true
+      id:
+        description: ID of the asset object
+        type: string
+        (oas-readOnly): true
+      name:
+        description: Asset name
+        type: string
+      objectType:
+        description: Object type ID
+        type: string
+      references:
+        description: References / links from the asset. Keys are reference / link type IDs and values either a SingleReference or a MultiReference depending on whether the reference type is multivalued.
+        type: object
+        properties:
+          //:
+            type: Reference
+      values:
+        description: Asset values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  Attribute:
+    description: An attribute object
+    type: object
+    properties:
+      calculated:
+        description: Boolean indicating whether the attribute is calculated
+        type: boolean
+      dataTypeGroups:
+        description: An array of IDs of the data type groups (a.k.a. "attribute groups") that the attribute is linked into
+        type: array
+        items:
+          type: string
+      defaultUnit:
+        description: 'ID of the default unit, if any. Otherwise "null".'
+        type: string
+      id:
+        description: ID of the attribute object
+        type: string
+        (oas-readOnly): true
+      listOfValues:
+        description: ID of a list of values if the attribute is list of values based. Otherwise "null".
+        type: string
+      multivalued:
+        description: Boolean indicating whether multiple values can be set for the attribute
+        type: boolean
+      name:
+        description: Attribute name
+        type: string
+      specification:
+        description: Boolean indicating whether the attribute is a "specification" attribute as opposed to a "description" attribute
+        type: boolean
+      units:
+        description: An array of IDs for the valid units
+        type: array
+        items:
+          type: string
+      values:
+        description: Attribute metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  AttributeLink:
+    description: A link between a product or a classification and a specification attribute
+    type: object
+    properties:
+      attribute:
+        description: ID of the attribute that the link points to
+        type: string
+      values:
+        description: Attribute link metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  Classification:
+    description: A classification object
+    type: object
+    properties:
+      attributeLinks:
+        description: Attribute links from the classification
+        type: array
+        items:
+          type: AttributeLink
+      id:
+        description: ID of the classification object
+        type: string
+        (oas-readOnly): true
+      name:
+        description: Classification name
+        type: string
+      objectType:
+        description: Object type ID
+        type: string
+      parent:
+        description: Parent classification ID
+        type: string
+      references:
+        description: References / links from the classification. Keys are reference / link type IDs and values either a SingleReference or a MultiReference depending on whether the reference type is multivalued.
+        type: object
+        properties:
+          //:
+            type: Reference
+      values:
+        description: Classification values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  DataContainer:
+    description: An "abstract" representation of a data container. Will always either be a SingleDataContainer or a MultiDataContainer depending on whether the data container type is multivalued.
+    type: SingleReference | MultiReference
+  DataContainerEntry:
+    description: An atomic data container a.k.a. a data container object
+    type: object
+    properties:
+      values:
+        description: Data container values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  DataContainerType:
+    description: A data container type object
+    type: object
+    properties:
+      id:
+        description: ID of the data container type object
+        type: string
+      multivalued:
+        description: Boolean indication of whether the data container type allows for multiple data container entries / objects
+        type: boolean
+      name:
+        description: Data container type name
+        type: string
+      values:
+        description: Data container type metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  DataTypeGroup:
+    description: A data type group (a.k.a. "attribute group") object
+    type: object
+    properties:
+      id:
+        description: ID of the data type group object
+        type: string
+        (oas-readOnly): true
+      name:
+        description: Data type group name
+        type: string
+      parent:
+        description: ID of parent data type group
+        type: string
+      values:
+        description: Data type group metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  Entity:
+    description: An entity object
+    type: object
+    properties:
+      dataContainers:
+        description: Entity data containers. Keys are data container type IDs and values either a SingleDataContainer or a MultiDataContainer depending on whether the data container type is multivalued.
+        type: object
+        properties:
+          //:
+            type: DataContainer
+      id:
+        description: ID of the entity object
+        type: string
+        (oas-readOnly): true
+      name:
+        description: Entity name
+        type: string
+      objectType:
+        description: Object type ID
+        type: string
+      parent:
+        description: Parent entity ID
+        type: string
+      references:
+        description: References from the entity. Keys are reference type IDs and values either a SingleReference or a MultiReference depending on whether the reference type is multivalued.
+        type: object
+        properties:
+          //:
+            type: Reference
+      values:
+        description: Entity values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  Error:
+    type: object
+    properties:
+      httpReason:
+        description: The name of the HTTP status code
+        type: string
+      httpStatus:
+        description: The HTTP status code
+        type: integer
+        format: int32
+      message:
+        description: Extended error information. Notice that error messages may change without warning and that programming logic should not rely upon the content of the message.
+        type: string
+  IncomingReferenceEntry:
+    description: An atomic reference seen from the reference target. Can represent both a "cross reference" and a "classifictaion product link".
+    type: object
+    properties:
+      source:
+        description: ID of the reference source
+        type: string
+        (oas-readOnly): true
+      sourceType:
+        description: Source "supertype"
+        type: string
+        enum:
+          - product
+          - classification
+          - entity
+          - asset
+        (oas-readOnly): true
+      values:
+        description: Reference metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  ListOfValues:
+    description: A list of values object. Notice that the representation does not include value entires. These must be obtained via a separate resource.
+    type: object
+    properties:
+      extendable:
+        description: Boolean indication of whether it is possible to add values to the list of values via data objects
+        type: boolean
+      id:
+        description: ID of the list of values object
+        type: string
+        (oas-readOnly): true
+      name:
+        description: List of values name
+        type: string
+      usesValueIds:
+        description: Boolean indication of whether the list of values uses value IDs
+        type: boolean
+      values:
+        description: List of values metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  ListOfValuesEntry:
+    description: A value entry for a list of values
+    type: object
+    properties:
+      unit:
+        description: Unit ID
+        type: string
+      value:
+        description: The "value" part of the value
+        type: string
+      valueId:
+        description: The value ID (for lists of values that use value IDs)
+        type: string
+  MultiDataContainer:
+    description: Data containers for a multivalued data container type
+    type: object
+    properties:
+      dataContainers:
+        description: Contained data entries / objects
+        type: array
+        items:
+          type: DataContainerEntry
+    additionalProperties: false
+  MultiReference:
+    description: References for a multivalued reference type. Covers both "cross references" and "classification product links".
+    type: object
+    properties:
+      references:
+        description: Multiple references of specific reference type
+        type: array
+        items:
+          type: ReferenceEntry
+    additionalProperties: false
+  MultiValue:
+    description: A value for a multivalued attribute
+    type: object
+    properties:
+      contextLocal:
+        description: 'Indicates whether the value is set locally or inherited from a dimension point / a combination dimension points different from the ones used for current context. Should not be supplied for value updates. If supplied with the value "false", the update of the specific value will be skipped.'
+        type: boolean
+        (oas-readOnly): true
+      values:
+        description: Multiple values entries for multivalued attribute
+        type: array
+        items:
+          type: ValueEntry
+    additionalProperties: false
+  ObjectType:
+    description: An object type object
+    type: object
+    properties:
+      id:
+        description: ID of the object type object
+        type: string
+      name:
+        description: Object type name
+        type: string
+      values:
+        description: Object type metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  Product:
+    description: A product object
+    type: object
+    properties:
+      attributeLinks:
+        description: Attribute links from the product
+        type: array
+        items:
+          type: AttributeLink
+      dataContainers:
+        description: Product data containers. Keys are data container type IDs and values either a SingleDataContainer or a MultiDataContainer depending on whether the data container type is multivalued.
+        type: object
+        properties:
+          //:
+            type: DataContainer
+      id:
+        description: ID of the product object
+        type: string
+        (oas-readOnly): true
+      name:
+        description: Product name
+        type: string
+      objectType:
+        description: Object type ID
+        type: string
+      parent:
+        description: Parent product ID
+        type: string
+      references:
+        description: References / links from the product. Keys are reference / link type IDs and values either a SingleReference or a MultiReference depending on whether the reference type is multivalued.
+        type: object
+        properties:
+          //:
+            type: Reference
+      values:
+        description: Product values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  Reference:
+    description: An "abstract" representation of references for a specific reference type. Will always either be a SingleReference or a MultiReference depending on whether the reference type is multivalued.
+    type: SingleReference | MultiReference
+  ReferenceEntry:
+    description: An atomic reference. Can represent both a "cross reference" and a "classification product link".
+    type: object
+    properties:
+      contextLocal:
+        description: 'Indicates whether the reference is set locally or inherited from a dimension point / a combination dimension points different from the ones used for current context. Should not be supplied for reference updates. If supplied with the value "false", the update will be skipped.'
+        type: boolean
+        (oas-readOnly): true
+      target:
+        description: ID of the target object
+        type: string
+      targetType:
+        description: Target "supertype"
+        type: string
+        enum:
+          - product
+          - classification
+          - asset
+          - entity
+        (oas-readOnly): true
+      values:
+        description: Reference metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  ReferenceType:
+    description: A reference type object. Can represent both "cross reference types" and "classification product link types".
+    type: object
+    properties:
+      id:
+        description: ID of the reference type object
+        type: string
+        (oas-readOnly): true
+      multivalued:
+        description: Boolean indication of whether multiple references / links from a single source are allowed. Notice that a "classification product link type" always will be multivalued when seen from the classification side.
+        type: boolean
+      name:
+        description: Reference type name
+        type: string
+      productClassificationLinkType:
+        description: Boolean indication of whether the type is a "classification product link type" as opposed to a "cross reference type"
+        type: boolean
+      validSourceObjectTypes:
+        description: IDs of the valid source object types
+        type: array
+        items:
+          type: string
+      validTargetObjectTypes:
+        description: IDs of the valid target object types
+        type: array
+        items:
+          type: string
+      values:
+        description: Reference type metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  SingleDataContainer:
+    description: A data container for a single-valued data container type
+    type: object
+    properties:
+      dataContainer:
+        type: DataContainerEntry
+    additionalProperties: false
+  SingleReference:
+    description: A reference for a single-valued reference type. Covers both "cross references" and "classification product links".
+    type: object
+    properties:
+      reference:
+        type: ReferenceEntry
+    additionalProperties: false
+  SingleValue:
+    description: A value for a single-valued attribute
+    type: object
+    properties:
+      calculated:
+        description: 'Indicates whether the value is calculated. Should not be supplied for value updates. If supplied with the value "true", the update of the specific value will be skipped.'
+        type: boolean
+        (oas-readOnly): true
+      contextLocal:
+        description: 'Indicates whether the value is set locally or inherited from a dimension point / a combination dimension points different from the ones used for current context. Should not be supplied for value updates. If supplied with the value "false", the update of the specific value will be skipped.'
+        type: boolean
+        (oas-readOnly): true
+      value:
+        type: ValueEntry
+    additionalProperties: false
+  Unit:
+    description: A unit object
+    type: object
+    properties:
+      id:
+        description: ID of the unit object
+        type: string
+      name:
+        description: Unit name
+        type: string
+      values:
+        description: Unit metadata values. Keys are attribute IDs and values either a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+        type: object
+        properties:
+          //:
+            type: Value
+  Value:
+    description: An "abstract" representation of a value. Will always either be a SingleValue or a MultiValue depending on whether the attribute is multivalued.
+    type: SingleReference | MultiReference
+  ValueEntry:
+    description: 'An atomic value. A value will consist of either a "value" alone, a "valueId" alone, a "value" and a "unit" or a "value", a "valueId" and a "unit". For writes, "valueId" takes precedence over "value" (and implicitly "unit") that will be ignored if "valueId" is supplied.'
+    type: object
+    properties:
+      unit:
+        description: Unit ID
+        type: string
+      value:
+        description: The "value" part of the value
+        type: string
+      valueId:
+        description: Value ID to be used with list of values based attributes for which the list of values uses value IDs
+        type: string
+/assets:
+  post:
+    description: 'Operation for creating a new asset object with autogenerated ID. Object type and at least one parent classification must be specified in the request body. Further, an auto ID pattern must be configured for the object type. An "id" must not be supplied in the request body. Supplied "contentMetadata" will be ignored.'
+    responses:
+      '201':
+        description: Asset object successfully created
+        body:
+          application/json:
+            type: Asset
+      '400':
+        description: 'Error caused by client. Returned if, for instance, an auto ID pattern is not configured for the specified object type, if insufficient or erroneous information is provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    body:
+      application/json:
+        type: Asset
+        required: false
+        (oas-body-name): body
+    (oas-summary): Creates a new asset object with autogenerated ID
+    (oas-tags):
+      - Assets
+  '/{id}':
+    delete:
+      description: Operation for deleting a specific asset. Operation can only be invoked in editable workspaces and will if successful move the asset to the recycle bin.
+      responses:
+        '200':
+          description: Asset successfully deleted (moved to recycle bin)
+        '400':
+          description: 'Error caused by client. Returned if, for instance, the asset cannot be deleted due to constraints like the existence of references pointing to the asset, if invalid context or workspace information is supplied or if the operation is invoked in a terminated workspace.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified asset cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Deletes the asset with the specified ID
+      (oas-tags):
+        - Assets
+    get:
+      description: 'Operation for retrieving information about a specific asset object. Notice that the response does not contain asset content (binary data). Use GET /assets/{id}/content to retrieve the binary data.'
+      responses:
+        '200':
+          description: The asset with the specified ID
+          body:
+            application/json:
+              type: Asset
+        '400':
+          description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified asset cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Returns the asset with the specified ID
+      (oas-tags):
+        - Assets
+    uriParameters:
+      id:
+        description: ID of the asset for which to retrieve data
+        type: string
+    /content:
+      get:
+        description: 'Operation for retrieving asset content (binary data). For images, a converted version of the content can be obtained by supplying the ID of an image conversion configuration for the "conversion-configuration-id" query parameter.'
+        responses:
+          '200':
+            description: Binary data for the asset with the specified ID
+            body:
+              application/json:
+                type: string
+                (oas-format): binary
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied or if invalid image conversion configuration information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified asset cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          conversion-configuration-id:
+            description: ID of a pre-configured image conversion configuration
+            type: string
+            required: false
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns asset content for the asset with the specified ID
+        (oas-tags):
+          - Assets
+      put:
+        description: Operation for replacing the binary data content for an asset. An optional file name can be supplied via the "fileName" query parameter.
+        responses:
+          '200':
+            description: Asset content successfully replaced
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified asset cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          fileName:
+            description: Optional file name for the supplied binary data
+            default: unknown
+            type: string
+            required: false
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        body:
+          multipart/form-data:
+            properties:
+              body:
+                type: file
+                required: false
+        (oas-summary): Replaces asset content
+        (oas-tags):
+          - Assets
+    '/incoming-references/{referenceTypeId}':
+      get:
+        description: Returns an array of incoming references (IncomingReferenceEntry) of the specified type as a stream
+        responses:
+          '200':
+            description: An array of incoming references of the specified type as a stream
+            body:
+              application/json:
+                type: array
+                items:
+                  type: IncomingReferenceEntry
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified asset or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns stream of incoming references of the specified type
+        (oas-tags):
+          - Assets
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve incoming references
+          type: string
+    '/references/{referenceTypeId}':
+      get:
+        description: Returns local reference(s) of the specified type owned by the asset. Response will either be an instance of SingleReference or MultiReference depending on whether the reference type is multivalued.
+        responses:
+          '200':
+            description: Either a MultiReference or SingleReference depending on whether the specified reference type is multivalued
+            body:
+              application/json:
+                type: Reference
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified asset or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns reference(s) of the specified type
+        (oas-tags):
+          - Assets
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve references
+          type: string
+      '/{targetId}':
+        delete:
+          description: 'Deletes the specified reference. Notice that it is only possible to delete references that are defined locally ("contextLocal": true).'
+          responses:
+            '200':
+              description: Reference successfully deleted
+            '400':
+              description: 'Error caused by client. Returned if, for instance, the reference cannot be deleted due to a constraint, if an attempt is made to delete a reference that is not defined locally or if invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified asset, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Deletes the reference
+          (oas-tags):
+            - Assets
+        get:
+          description: Returns the local reference (ReferenceEntry) of specified type from specified asset to specified target
+          responses:
+            '200':
+              description: A reference (ReferenceEntry) of specified type from specified asset to specified target
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified asset, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Returns a specific reference
+          (oas-tags):
+            - Assets
+        put:
+          description: 'Replaces the specified reference. If a locally defined reference to the same target already exists or if the reference type is single-valued and a locally defined reference from the source already exists, the "allow-overwrite" query parameter must be set to "true" in order for the existing reference to be replaced. Notice that if "target" or "targetType" is supplied in the request body, the values must match the target ID and reference type specified in the URL. If the property "contextLocal" is supplied with the value "false", the update will be ignored.'
+          responses:
+            '200':
+              description: The updated reference (ReferenceEntry). Returned when a local reference to the target existed in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '201':
+              description: The created reference (ReferenceEntry). Returned when a local reference to the target did not exist in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, a/the reference exists and value for the query parameter "allow-overwrite" is "false", if the reference cannot be successfully created / updated based on information provided in the request body, if invalid context or workspace information is supplied, if operation is invoked in a terminated workspace or if "target" or "targetType" is supplied and the values do not match the target ID and reference type specified in the URL.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified asset, reference type or target cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            allow-overwrite:
+              description: 'Specifies whether existing references may be overwritten. This includes references of the same type to the same target and for single-valued reference types, references of the same type to any target. Defaults to "false".'
+              default: false
+              type: boolean
+              required: false
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          body:
+            application/json:
+              type: ReferenceEntry
+              required: false
+              (oas-body-name): body
+          (oas-summary): Replaces a reference
+          (oas-tags):
+            - Assets
+        uriParameters:
+          targetId:
+            description: ID of the desired reference target (type given by reference type)
+            type: string
+        '/values/{attributeId}':
+          delete:
+            description: 'Operation for deleting the value of an attribute on a reference. Notice that it is only possible to delete non-calculated values on references that are defined locally ("contextLocal": true).'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied, if an attempt is made to delete a value on a reference that is not locally defined or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified asset, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Deletes the value for a reference metadata attribute
+            (oas-tags):
+              - Assets
+          get:
+            description: Returns the value for the specified attribute for the specified local reference. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            responses:
+              '200':
+                description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified asset, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Returns the value for a reference metadata attribute
+            (oas-tags):
+              - Assets
+          put:
+            description: 'Operation for replacing the value of an attribute on a local reference. It is only possible to replace values on references that are defined locally ("contextLocal": true). Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored.'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied, if an attempt is made to update a value on a reference that is not locally defined or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified asset, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            body:
+              application/json:
+                type: Value
+                required: false
+                (oas-body-name): body
+            (oas-summary): Replaces the value for a reference metadata attribute
+            (oas-tags):
+              - Assets
+          uriParameters:
+            attributeId:
+              description: ID of the attribute for which to replace the value
+              type: string
+    '/values/{attributeId}':
+      delete:
+        description: 'Operation for deleting an asset attribute value. Notice that it is only possible to delete non-calculated, locally defined values.'
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified asset or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Deletes the value for an asset attribute
+        (oas-tags):
+          - Assets
+      get:
+        description: Returns the value for the specified attribute. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+        responses:
+          '200':
+            description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified asset or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns the value for an asset attribute
+        (oas-tags):
+          - Assets
+      put:
+        description: Operation for replacing an asset attribute value. Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored.
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified asset or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        body:
+          application/json:
+            type: Value
+            required: false
+            (oas-body-name): body
+        (oas-summary): Replaces the value for an asset attribute
+        (oas-tags):
+          - Assets
+      uriParameters:
+        attributeId:
+          description: ID of the attribute for which to replace the value
+          type: string
+/classifications:
+  post:
+    description: 'Operation for creating a new classification object with autogenerated ID. Object type and a parent classification must be specified in the request body. Further, an auto ID pattern must be configured for the object type. An "id" must not be supplied in the request body.'
+    responses:
+      '201':
+        description: Classification created successfully
+        body:
+          application/json:
+            type: Classification
+      '400':
+        description: 'Error caused by client. Returned if, for instance, an auto ID pattern is not configured for the specified object type, if the specified object type is not valid below the specified parent, if insufficient or erroneous information is provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    body:
+      application/json:
+        type: Classification
+        required: false
+        (oas-body-name): body
+    (oas-summary): Creates a new classification object with autogenerated ID
+    (oas-tags):
+      - Classifications
+  '/{id}':
+    delete:
+      description: Operation for deleting a specific classification. Operation can only be invoked in editable workspaces and will if successful move the classification to the recycle bin.
+      responses:
+        '200':
+          description: Classification successfully deleted (moved to recycle bin)
+        '400':
+          description: 'Error caused by client. Returned if, for instance, the classification cannot be deleted due to constraints like the classification having children or the existence of references pointing to the classification, if invalid context or workspace information is supplied or if the operation is invoked in a terminated workspace.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified classification cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Deletes the classification with the specified ID
+      (oas-tags):
+        - Classifications
+    get:
+      description: Operation for retrieving information about a specific classification object
+      responses:
+        '200':
+          description: The classification with the specified ID
+          body:
+            application/json:
+              type: Classification
+        '400':
+          description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified classification cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Returns the classification with the specified ID
+      (oas-tags):
+        - Classifications
+    uriParameters:
+      id:
+        description: ID of the classification for which to retrieve data
+        type: string
+    /assets:
+      get:
+        description: Returns a streamed array of IDs for assets directly below the specified classification
+        responses:
+          '200':
+            description: A streamed array of IDs for assets linked into the specified classification
+            body:
+              application/json:
+                type: array
+                items:
+                  type: string
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified classification cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns a streamed array of IDs for assets linked to the classification
+        (oas-tags):
+          - Classifications
+    /children:
+      get:
+        description: Returns a streamed array of IDs for classifications directly below the specified classification
+        responses:
+          '200':
+            description: A streamed array of IDs for classifications directly below the specified classification
+            body:
+              application/json:
+                type: array
+                items:
+                  type: string
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified classification cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns a streamed array of IDs for classification children
+        (oas-tags):
+          - Classifications
+    '/incoming-references/{referenceTypeId}':
+      get:
+        description: Returns an array of incoming references (IncomingReferenceEntry) of the specified type as a stream. Notice that this resource covers both "cross references" and  "classification product links" owned by the product side.
+        responses:
+          '200':
+            description: An array of incoming references of the specified type as a stream
+            body:
+              application/json:
+                type: array
+                items:
+                  type: IncomingReferenceEntry
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified classification or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns stream of incoming references of the specified type
+        (oas-tags):
+          - Classifications
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve incoming references
+          type: string
+    '/references/{referenceTypeId}':
+      get:
+        description: Returns local reference(s) of the specified type owned by the classification. Response will either be an instance of SingleReference or MultiReference depending on whether the reference type is multivalued. Notice that this resource covers both "cross references" and  "classification product links" owned by the classification side and that the latter when seen from the classification side always will be multivalued.
+        responses:
+          '200':
+            description: Either a MultiReference or SingleReference depending on whether the specified reference type is multivalued ("classification product links" will when seen from the classification side always be multivalued)
+            body:
+              application/json:
+                type: Reference
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified classification or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns reference(s) of the specified type
+        (oas-tags):
+          - Classifications
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve references
+          type: string
+      '/{targetId}':
+        delete:
+          description: 'Deletes the specified reference. Notice that it is only possible to delete references that are defined locally ("contextLocal": true). Further notice that this resource covers both "cross references" and "classification product links" owned by the classification side.'
+          responses:
+            '200':
+              description: Reference successfully deleted
+            '400':
+              description: 'Error caused by client. Returned if, for instance, the reference cannot be deleted due to a constraint, if an attempt is made to delete a reference that is not defined locally or if invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified classification, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Deletes the reference
+          (oas-tags):
+            - Classifications
+        get:
+          description: Returns the local reference (ReferenceEntry) of specified type from specified classification to specified target. Notice that this resource covers both "cross references" and "classification product links" owned by the classification side.
+          responses:
+            '200':
+              description: A reference (ReferenceEntry) of specified type from specified classification to specified target
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified classification, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Returns a specific reference
+          (oas-tags):
+            - Classifications
+        put:
+          description: 'Replaces the specified reference. If a locally defined reference to the same target already exists or if the reference type is single-valued and a locally defined reference from the source already exists, the "allow-overwrite" query parameter must be set to "true" in order for the existing reference to be replaced. Notice that this resource covers both "cross references" and "classification product links" owned by the classification side. Further notice that if "target" or "targetType" is supplied in the request body, the values must match the target ID and reference type specified in the URL. If the property "contextLocal" is supplied with the value "false", the update will be ignored.'
+          responses:
+            '200':
+              description: The updated reference (ReferenceEntry). Returned when a local reference to the target existed in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '201':
+              description: The created reference (ReferenceEntry). Returned when a local reference to the target did not exist in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, a/the reference exists and value for the query parameter "allow-overwrite" is "false", if the reference cannot be successfully created / updated based on information provided in the request body, if invalid context or workspace information is supplied, if operation is invoked in a terminated workspace or if "target" or "targetType" is supplied and the values do not match the target ID and reference type specified in the URL.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified classification, reference type or target cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            allow-overwrite:
+              description: 'Specifies whether existing references may be overwritten. This includes references of the same type to the same target and for single-valued reference types, references of the same type to any target. Defaults to "false".'
+              default: false
+              type: boolean
+              required: false
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          body:
+            application/json:
+              type: ReferenceEntry
+              required: false
+              (oas-body-name): body
+          (oas-summary): Replaces a reference
+          (oas-tags):
+            - Classifications
+        uriParameters:
+          targetId:
+            description: ID of the desired reference target (type given by reference type)
+            type: string
+        '/values/{attributeId}':
+          delete:
+            description: 'Operation for deleting the value of an attribute on a local reference. Notice that it is only possible to delete non-calculated values on references that are defined locally ("contextLocal": true). Further notice that this resource covers values on both "cross references" and "classification product links" owned by the classification side.'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied, if an attempt is made to delete a value on a reference that is not locally defined or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified classification, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Deletes the value for a reference metadata attribute
+            (oas-tags):
+              - Classifications
+          get:
+            description: Returns the value for the specified attribute for the specified local reference. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued. Notice that this resource covers both "cross references" and "classification product links" owned by the classification side.
+            responses:
+              '200':
+                description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified classification, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Returns the value for a reference metadata attribute
+            (oas-tags):
+              - Classifications
+          put:
+            description: 'Operation for replacing the value of an attribute on a local reference. It is only possible to replace values on references that are defined locally ("contextLocal": true). Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored. Further notice that this resource covers values on both "cross references" and "classification product links" owned by the classification side.'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied, if an attempt is made to update a value on a reference that is not locally defined or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified classification, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            body:
+              application/json:
+                type: Value
+                required: false
+                (oas-body-name): body
+            (oas-summary): Replaces the value for a reference metadata attribute
+            (oas-tags):
+              - Classifications
+          uriParameters:
+            attributeId:
+              description: ID of the attribute for which to replace the value
+              type: string
+    '/values/{attributeId}':
+      delete:
+        description: 'Operation for deleting a classification attribute value. Notice that it is only possible to delete non-calculated, locally defined values.'
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified classification or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Deletes the value for a classification attribute
+        (oas-tags):
+          - Classifications
+      get:
+        description: Returns the value for the specified attribute. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+        responses:
+          '200':
+            description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified classification or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns the value for a classification attribute
+        (oas-tags):
+          - Classifications
+      put:
+        description: Operation for replacing a classification attribute value. Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored.
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified classification or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        body:
+          application/json:
+            type: Value
+            required: false
+            (oas-body-name): body
+        (oas-summary): Replaces the value for a classification attribute
+        (oas-tags):
+          - Classifications
+      uriParameters:
+        attributeId:
+          description: ID of the attribute for which to replace the value
+          type: string
+/entities:
+  post:
+    description: 'Operation for creating a new entity object with autogenerated ID. Object type and a parent entity must be specified in the request body. Further, an auto ID pattern must be configured for the object type. An "id" must not be supplied in the request body.'
+    responses:
+      '201':
+        description: Entity created successfully
+        body:
+          application/json:
+            type: Entity
+      '400':
+        description: 'Error caused by client. Returned if, for instance, an auto ID pattern is not configured for the specified object type, if the specified object type is not valid below the specified parent, if insufficient or erroneous information is provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    body:
+      application/json:
+        type: Entity
+        required: false
+        (oas-body-name): body
+    (oas-summary): Creates a new entity object with autogenerated ID
+    (oas-tags):
+      - Entities
+  '/{id}':
+    delete:
+      description: Operation for deleting a specific entity. Operation can only be invoked in editable workspaces and will if successful move the entity to the recycle bin or remove it completely depending on whether the entity object type is workspace revised.
+      responses:
+        '200':
+          description: Entity successfully deleted (moved to recycle bin or removed)
+        '400':
+          description: 'Error caused by client. Returned if, for instance, the entity cannot be deleted due to constraints like e.g. the entity having children or the existence of references pointing to the entity, if invalid context or workspace information is supplied or if the operation is invoked in a terminated workspace.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified entity cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Deletes the entity with the specified ID
+      (oas-tags):
+        - Entities
+    get:
+      description: Operation for retrieving information about a specific entity object
+      responses:
+        '200':
+          description: The entity with the specified ID
+          body:
+            application/json:
+              type: Entity
+        '400':
+          description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified entity cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Returns the entity with the specified ID
+      (oas-tags):
+        - Entities
+    uriParameters:
+      id:
+        description: ID of the entity for which to retrieve data
+        type: string
+    /children:
+      get:
+        description: Returns a streamed array of IDs for entities directly below the specified entity
+        responses:
+          '200':
+            description: A streamed array of IDs for entities directly below the specified entity
+            body:
+              application/json:
+                type: array
+                items:
+                  type: string
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified entity cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns a streamed array of IDs for entity children
+        (oas-tags):
+          - Entities
+    '/data-containers/{dataContainerTypeId}':
+      get:
+        description: Returns data container(s) of the specified type. Response will either be a SingleDataContainer or a MultiDataContainer depending on whether the data container type is multivalued.
+        responses:
+          '200':
+            description: Either a MultiDataContainer or SingleDataContainer depending on whether the specified data container type is multivalued
+            body:
+              application/json:
+                type: DataContainer
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified entity or data container type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns data container(s) of the specified type
+        (oas-tags):
+          - Entities
+      uriParameters:
+        dataContainerTypeId:
+          description: ID of the data container type
+          type: string
+    '/incoming-references/{referenceTypeId}':
+      get:
+        description: Returns an array of incoming references (IncomingReferenceEntry) of the specified type as a stream
+        responses:
+          '200':
+            description: An array of incoming references of the specified type as a stream
+            body:
+              application/json:
+                type: array
+                items:
+                  type: IncomingReferenceEntry
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified entity or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns stream of incoming references of the specified type
+        (oas-tags):
+          - Entities
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve incoming references
+          type: string
+    '/references/{referenceTypeId}':
+      get:
+        description: Returns local reference(s) of the specified type owned by the entity. Response will either be a SingleReference or a MultiReference depending on whether the reference type is multivalued.
+        responses:
+          '200':
+            description: Either a MultiReference or SingleReference depending on whether the specified reference type is multivalued
+            body:
+              application/json:
+                type: Reference
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified entity or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns reference(s) of the specified type
+        (oas-tags):
+          - Entities
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve references
+          type: string
+      '/{targetId}':
+        delete:
+          description: 'Deletes the specified reference. Notice that it is only possible to delete references that are defined locally ("contextLocal": true).'
+          responses:
+            '200':
+              description: Reference successfully deleted
+            '400':
+              description: 'Error caused by client. Returned if, for instance, the reference cannot be deleted due to a constraint, if an attempt is made to delete a reference that is not defined locally or if invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified entity, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Deletes the reference
+          (oas-tags):
+            - Entities
+        get:
+          description: Returns the local reference (ReferenceEntry) of specified type from specified entity to specified target.
+          responses:
+            '200':
+              description: A reference (ReferenceEntry) of specified type from specified entity to specified target
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified entity, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Returns a specific reference
+          (oas-tags):
+            - Entities
+        put:
+          description: 'Replaces the specified reference. If a locally defined reference to the same target already exists or if the reference type is single-valued and a locally defined reference from the source already exists, the "allow-overwrite" query parameter must be set to "true" in order for the existing reference to be replaced. Further notice that if "target" or "targetType" is supplied in the request body, the values must match the target ID and reference type specified in the URL. If the property "contextLocal" is supplied with the value "false", the update will be ignored.'
+          responses:
+            '200':
+              description: The updated reference (ReferenceEntry). Returned when a local reference to the target existed in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '201':
+              description: The created reference (ReferenceEntry). Returned when a local reference to the target did not exist in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, a/the reference exists and value for the query parameter "allow-overwrite" is "false", if the reference cannot be successfully created / updated based on information provided in the request body, if invalid context or workspace information is supplied, if operation is invoked in a terminated workspace or if "target" or "targetType" is supplied and the values do not match the target ID and reference type specified in the URL.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified entity, reference type or target cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            allow-overwrite:
+              description: 'Specifies whether existing references may be overwritten. This includes references of the same type to the same target and for single-valued reference types, references of the same type to any target. Defaults to "false".'
+              default: false
+              type: boolean
+              required: false
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          body:
+            application/json:
+              type: ReferenceEntry
+              required: false
+              (oas-body-name): body
+          (oas-summary): Replaces a reference
+          (oas-tags):
+            - Entities
+        uriParameters:
+          targetId:
+            description: ID of the desired reference target (type given by reference type)
+            type: string
+        '/values/{attributeId}':
+          delete:
+            description: 'Operation for deleting the value of an attribute on a reference. Notice that it is only possible to delete non-calculated values on references that are defined locally ("contextLocal": true).'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied, if an attempt is made to delete a value on a reference that is not locally defined or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified entity, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Deletes the value for a reference metadata attribute
+            (oas-tags):
+              - Entities
+          get:
+            description: Returns the value for the specified attribute for the specified local reference. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            responses:
+              '200':
+                description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified entity, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Returns the value for a reference metadata attribute
+            (oas-tags):
+              - Entities
+          put:
+            description: 'Operation for replacing the value of an attribute on a local reference. It is only possible to replace values on references that are defined locally ("contextLocal": true). Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored.'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied, if an attempt is made to delete a reference that is not defined locally or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified entity, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            body:
+              application/json:
+                type: Value
+                required: false
+                (oas-body-name): body
+            (oas-summary): Replaces the value for a reference metadata attribute
+            (oas-tags):
+              - Entities
+          uriParameters:
+            attributeId:
+              description: ID of the attribute for which to replace the value
+              type: string
+    '/values/{attributeId}':
+      delete:
+        description: 'Operation for deleting an entity attribute value. Notice that it is only possible to delete non-calculated, locally defined values.'
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified entity or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Deletes the value for an entity attribute
+        (oas-tags):
+          - Entities
+      get:
+        description: Returns the value for the specified attribute. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+        responses:
+          '200':
+            description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified entity or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns the value for an entity attribute
+        (oas-tags):
+          - Entities
+      put:
+        description: Operation for replacing an entity attribute value. Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored.
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified entity or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        body:
+          application/json:
+            type: Value
+            required: false
+            (oas-body-name): body
+        (oas-summary): Replaces the value for an entity attribute
+        (oas-tags):
+          - Entities
+      uriParameters:
+        attributeId:
+          description: ID of the attribute for which to replace the value
+          type: string
+/products:
+  post:
+    description: 'Operation for creating a new product object with autogenerated ID. Object type and a parent product must be specified in the request body. Further, an auto ID pattern must be configured for the object type. An "id" must not be supplied in the request body.'
+    responses:
+      '201':
+        description: Product created successfully
+        body:
+          application/json:
+            type: Product
+      '400':
+        description: 'Error caused by client. Returned if, for instance, an auto ID pattern is not configured for the specified object type, if the specified object type is not valid below the specified parent, if insufficient or erroneous information is provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    body:
+      application/json:
+        type: Product
+        required: false
+        (oas-body-name): body
+    (oas-summary): Creates a new product object with autogenerated ID
+    (oas-tags):
+      - Products
+  '/{id}':
+    delete:
+      description: Operation for deleting a specific product. Operation can only be invoked in editable workspaces and will if successful move the product to the recycle bin.
+      responses:
+        '200':
+          description: Product successfully deleted (moved to recycle bin)
+        '400':
+          description: 'Error caused by client. Returned if, for instance, the product cannot be deleted due to constraints like e.g. the product having children or the existence of references pointing to the product, if invalid context or workspace information is supplied or if the operation is invoked in a terminated workspace.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified product cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Deletes the product with the specified ID
+      (oas-tags):
+        - Products
+    get:
+      description: Operation for retrieving information about a specific product object
+      responses:
+        '200':
+          description: The product with the specified ID
+          body:
+            application/json:
+              type: Product
+        '400':
+          description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified product cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Returns the product with the specified ID
+      (oas-tags):
+        - Products
+    uriParameters:
+      id:
+        description: ID of the product for which to retrieve data
+        type: string
+    /children:
+      get:
+        description: Returns a streamed array of IDs for products directly below the specified product
+        responses:
+          '200':
+            description: A streamed array of IDs for products directly below the specified product
+            body:
+              application/json:
+                type: array
+                items:
+                  type: string
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified product cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns a streamed array of IDs for product children
+        (oas-tags):
+          - Products
+    '/data-containers/{dataContainerTypeId}':
+      get:
+        description: Returns data container(s) of the specified type. Response will either be a SingleDataContainer or a MultiDataContainer depending on whether the data container type is multivalued.
+        responses:
+          '200':
+            description: Either a MultiDataContainer or SingleDataContainer depending on whether the specified data container type is multivalued
+            body:
+              application/json:
+                type: DataContainer
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified product or data container type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns data container(s) of the specified type
+        (oas-tags):
+          - Products
+      uriParameters:
+        dataContainerTypeId:
+          description: ID of the data container type
+          type: string
+    '/incoming-references/{referenceTypeId}':
+      get:
+        description: Returns an array of incoming references (IncomingReferenceEntry) of the specified type as a stream. Notice that this resource covers both "cross references" and "classification product links" owned by the classification side.
+        responses:
+          '200':
+            description: An array of incoming references of the specified type as a stream
+            body:
+              application/json:
+                type: array
+                items:
+                  type: IncomingReferenceEntry
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified product or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns stream of incoming references of the specified type
+        (oas-tags):
+          - Products
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve incoming references
+          type: string
+    '/references/{referenceTypeId}':
+      get:
+        description: Returns local reference(s) of the specified type owned by the product. Response will either be a SingleReference or a MultiReference depending on whether the reference type is multivalued. Notice that this resource covers both "cross references" and  "classification product links" owned by the product side.
+        responses:
+          '200':
+            description: Either a MultiReference or SingleReference depending on whether the specified reference type is multivalued
+            body:
+              application/json:
+                type: Reference
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified product or reference type cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns reference(s) of the specified type
+        (oas-tags):
+          - Products
+      uriParameters:
+        referenceTypeId:
+          description: ID of the reference type for which to retrieve references
+          type: string
+      '/{targetId}':
+        delete:
+          description: 'Deletes the specified reference. Notice that it is only possible to delete references that are defined locally ("contextLocal": true). Further notice that this resource covers both "cross references" and "classification product links" owned by the product side.'
+          responses:
+            '200':
+              description: Reference successfully deleted
+            '400':
+              description: 'Error caused by client. Returned if, for instance, the reference cannot be deleted due to a constraint, if an attempt is made to delete a reference that is not defined locally or if invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified product, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Deletes the reference
+          (oas-tags):
+            - Products
+        get:
+          description: Returns the local reference (ReferenceEntry) of specified type from specified product to specified target. Notice that this resource covers both "cross references" and "classification product links" owned by the product side.
+          responses:
+            '200':
+              description: A reference (ReferenceEntry) of specified type from specified product to specified target
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified product, reference type, target or reference cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          (oas-summary): Returns a specific reference
+          (oas-tags):
+            - Products
+        put:
+          description: 'Replaces the specified reference. If a locally defined reference to the same target already exists or if the reference type is single-valued and a locally defined reference from the source already exists, the "allow-overwrite" query parameter must be set to "true" in order for the existing reference to be replaced. Notice that this resource covers both "cross references" and "classification product links" owned by the product side. Further notice that if "target" or "targetType" is supplied in the request body, the values must match the target ID and reference type specified in the URL. If the property "contextLocal" is supplied with the value "false", the update will be ignored.'
+          responses:
+            '200':
+              description: The updated reference (ReferenceEntry). Returned when a local reference to the target existed in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '201':
+              description: The created reference (ReferenceEntry). Returned when a local reference to the target did not exist in advance.
+              body:
+                application/json:
+                  type: ReferenceEntry
+            '400':
+              description: 'Error caused by client. Returned if, for instance, a/the reference exists and value for the query parameter "allow-overwrite" is "false", If the reference cannot be successfully created / updated based on information provided in the request body, if invalid context or workspace information is supplied, if operation is invoked in a terminated workspace or if "target" or "targetType" is supplied and the values do not match the target ID and reference type specified in the URL'
+              body:
+                application/json:
+                  type: Error
+            '404':
+              description: 'If the specified product, reference type or target cannot be found'
+              body:
+                application/json:
+                  type: Error
+          queryParameters:
+            allow-overwrite:
+              description: 'Specifies whether existing references may be overwritten. This includes references of the same type to the same target and for single-valued reference types, references of the same type to any target. Defaults to "false".'
+              default: false
+              type: boolean
+              required: false
+            context:
+              description: ID of the context in which to perform the operation
+              type: string
+            workspace:
+              description: ID of the workspace in which to perform the operation. Defaults to "Main".
+              default: Main
+              type: string
+              required: false
+          body:
+            application/json:
+              type: ReferenceEntry
+              required: false
+              (oas-body-name): body
+          (oas-summary): Replaces a reference
+          (oas-tags):
+            - Products
+        uriParameters:
+          targetId:
+            description: ID of the desired reference target (type given by reference type)
+            type: string
+        '/values/{attributeId}':
+          delete:
+            description: 'Operation for deleting the value of an attribute on a reference. Notice that it is only possible to delete non-calculated values on references that are defined locally ("contextLocal": true). Further notice that this resource covers values on both "cross references" and "classification product links" owned by the product side.'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied, if an attempt is made to delete a value on a reference that is not locally defined or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified product, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Deletes the value for a reference metadata attribute
+            (oas-tags):
+              - Products
+          get:
+            description: Returns the value for the specified attribute for the specified local reference. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued. Notice that this resource covers both "cross references" and "classification product links" owned by the product side.
+            responses:
+              '200':
+                description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified product, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            (oas-summary): Returns the value for a reference metadata attribute
+            (oas-tags):
+              - Products
+          put:
+            description: 'Operation for replacing the value of an attribute on a local reference. It is only possible to replace values on references that are defined locally ("contextLocal": true). Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored. Further notice that this resource covers values on both "cross references" and "classification product links" owned by the product side.'
+            responses:
+              '200':
+                description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+                body:
+                  application/json:
+                    type: Value
+              '400':
+                description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied, if an attempt is made to update a value on a reference that is not locally defined or if operation is invoked in a terminated workspace.'
+                body:
+                  application/json:
+                    type: Error
+              '404':
+                description: 'If the specified product, reference type, target, reference or attribute cannot be found'
+                body:
+                  application/json:
+                    type: Error
+            queryParameters:
+              context:
+                description: ID of the context in which to perform the operation
+                type: string
+              workspace:
+                description: ID of the workspace in which to perform the operation. Defaults to "Main".
+                default: Main
+                type: string
+                required: false
+            body:
+              application/json:
+                type: Value
+                required: false
+                (oas-body-name): body
+            (oas-summary): Replaces the value for a reference metadata attribute
+            (oas-tags):
+              - Products
+          uriParameters:
+            attributeId:
+              description: ID of the attribute for which to replace the value
+              type: string
+    '/values/{attributeId}':
+      delete:
+        description: 'Operation for deleting a product attribute value. Notice that it is only possible to delete non-calculated, locally defined values.'
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully deleted, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified product or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Deletes the value for a product attribute
+        (oas-tags):
+          - Products
+      get:
+        description: Returns the value for the specified attribute. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+        responses:
+          '200':
+            description: The value for the attribute with the specified ID. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified product or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        (oas-summary): Returns the value for a product attribute
+        (oas-tags):
+          - Products
+      put:
+        description: Operation for replacing a product attribute value. Request body must be either a SingleValue or a MultiValue depending on whether the attribute is multivalued. Notice that supplying the property "contextLocal" with the value "false" or the SingleValue "calculated" property with the value "true" will cause the value update to be ignored.
+        responses:
+          '200':
+            description: The updated value. Will either be an instance of SingleValue or MultiValue depending on whether the attribute is multivalued.
+            body:
+              application/json:
+                type: Value
+          '400':
+            description: 'Error caused by client. Returned if, for instance, the value cannot be successfully updated based on information provided in the request body, if invalid context or workspace information is supplied or if operation is invoked in a terminated workspace.'
+            body:
+              application/json:
+                type: Error
+          '404':
+            description: If the specified product or attribute cannot be found
+            body:
+              application/json:
+                type: Error
+        queryParameters:
+          context:
+            description: ID of the context in which to perform the operation
+            type: string
+          workspace:
+            description: ID of the workspace in which to perform the operation. Defaults to "Main".
+            default: Main
+            type: string
+            required: false
+        body:
+          application/json:
+            type: Value
+            required: false
+            (oas-body-name): body
+        (oas-summary): Replaces the value for a product attribute
+        (oas-tags):
+          - Products
+      uriParameters:
+        attributeId:
+          description: ID of the attribute for which to replace the value
+          type: string
+'/attributes/{id}':
+  get:
+    description: Operation for retrieving information about a specific attribute object
+    responses:
+      '200':
+        description: The attribute with the specified ID
+        body:
+          application/json:
+            type: Attribute
+      '400':
+        description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+        body:
+          application/json:
+            type: Error
+      '404':
+        description: If the specified attribute cannot be found
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    (oas-summary): Returns the attribute with the specified ID
+    (oas-tags):
+      - Attributes
+  uriParameters:
+    id:
+      description: ID of the attribute for which to retrieve data
+      type: string
+'/data-container-types/{id}':
+  get:
+    description: Operation for retrieving information about a specific data container type object
+    responses:
+      '200':
+        description: The data container type with the specified ID
+        body:
+          application/json:
+            type: DataContainerType
+      '400':
+        description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+        body:
+          application/json:
+            type: Error
+      '404':
+        description: If the specified data container type cannot be found
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    (oas-summary): Returns the data container type with the specified ID
+    (oas-tags):
+      - Data Container Types
+  uriParameters:
+    id:
+      description: ID of the data container type
+      type: string
+'/data-type-groups/{id}':
+  get:
+    description: Operation for retrieving information about a specific data type group (a.k.a. "attribute group") object
+    responses:
+      '200':
+        description: The data type group (a.k.a. "attribute group") with the specified ID
+        body:
+          application/json:
+            type: DataTypeGroup
+      '400':
+        description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+        body:
+          application/json:
+            type: Error
+      '404':
+        description: If the specified data type group cannot be found
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    (oas-summary): Returns the data type group with the specified ID
+    (oas-tags):
+      - Data Type Groups
+  uriParameters:
+    id:
+      description: ID of the data type group for which to retrieve data
+      type: string
+'/list-of-values/{id}':
+  get:
+    description: 'Operation for retrieving information about a specific list of values object. Notice that the response does not contain the list of values value entries. Use GET /lists-of-values/{id}/value-entries to retrieve these as a streamed array.'
+    responses:
+      '200':
+        description: The list of values with the specified ID
+        body:
+          application/json:
+            type: ListOfValues
+      '400':
+        description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+        body:
+          application/json:
+            type: Error
+      '404':
+        description: If the specified list of values cannot be found
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    (oas-summary): Returns the list of values with the specified ID
+    (oas-tags):
+      - Lists Of Values
+  uriParameters:
+    id:
+      description: ID of the list of values for which to retrieve data
+      type: string
+  /value-entries:
+    get:
+      description: Returns a streamed array of value entries (ListOfValuesEntry) for the list of values with the specified ID.
+      responses:
+        '200':
+          description: Stream of value entries (ListOfValuesEntry) for the list of values with the specified ID
+          body:
+            application/json:
+              type: array
+              items:
+                type: ListOfValuesEntry
+        '400':
+          description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+          body:
+            application/json:
+              type: Error
+        '404':
+          description: If the specified list of values cannot be found
+          body:
+            application/json:
+              type: Error
+      queryParameters:
+        context:
+          description: ID of the context in which to perform the operation
+          type: string
+        workspace:
+          description: ID of the workspace in which to perform the operation. Defaults to "Main".
+          default: Main
+          type: string
+          required: false
+      (oas-summary): Returns a streamed array of value entries (ListOfValuesEntry)
+      (oas-tags):
+        - Lists Of Values
+'/object-types/{id}':
+  get:
+    description: Operation for retrieving information about a specific object type
+    responses:
+      '200':
+        description: The object type with the specified ID
+        body:
+          application/json:
+            type: ObjectType
+      '400':
+        description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+        body:
+          application/json:
+            type: Error
+      '404':
+        description: If the specified object type cannot be found
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    (oas-summary): Returns the object type with the specified ID
+    (oas-tags):
+      - Object Types
+  uriParameters:
+    id:
+      description: ID of the object type for which to retrieve data
+      type: string
+'/reference-types/{id}':
+  get:
+    description: Operation for retrieving information about a specific reference type object. Notice that this resource covers both "cross reference types" and "classification product link types".
+    responses:
+      '200':
+        description: The reference type with the specified ID
+        body:
+          application/json:
+            type: ReferenceType
+      '400':
+        description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+        body:
+          application/json:
+            type: Error
+      '404':
+        description: If the specified reference type cannot be found
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    (oas-summary): Returns the reference type with the specified ID
+    (oas-tags):
+      - Reference Types
+  uriParameters:
+    id:
+      description: ID of the reference type for which to retrieve data
+      type: string
+'/units/{id}':
+  get:
+    description: Operation for retrieving information about a specific unit object
+    responses:
+      '200':
+        description: The unit with the specified ID
+        body:
+          application/json:
+            type: Unit
+      '400':
+        description: 'Error caused by client. Returned if, for instance, invalid context or workspace information is supplied.'
+        body:
+          application/json:
+            type: Error
+      '404':
+        description: If the specified unit cannot be found
+        body:
+          application/json:
+            type: Error
+    queryParameters:
+      context:
+        description: ID of the context in which to perform the operation
+        type: string
+      workspace:
+        description: ID of the workspace in which to perform the operation. Defaults to "Main".
+        default: Main
+        type: string
+        required: false
+    (oas-summary): Returns the unit with the specified ID
+    (oas-tags):
+      - Units
+  uriParameters:
+    id:
+      description: ID of the unit for which to retrieve data
+      type: string

@@ -1,0 +1,48 @@
+{
+  "id": "CaseTypesResponse",
+  "title": "CaseTypesResponse",
+  "type": "object",
+  "properties": {
+    "pxObjClass": {
+      "type": "string"
+    },
+    "caseTypes": {
+      "type": "array",
+      "items": {
+        "id": "CaseType",
+        "title": "CaseType",
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pxObjClass": {
+            "type": "string"
+          },
+          "startingProcesses": {
+            "type": "array",
+            "items": {
+              "id": "StartingProcess",
+              "title": "StartingProcess",
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "pxObjClass": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

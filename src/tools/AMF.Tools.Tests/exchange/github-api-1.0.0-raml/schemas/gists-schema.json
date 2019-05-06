@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "gists": [
+        {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                },
+                "user": {
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "avatar_url": {
+                            "type": "string"
+                        },
+                        "gravatar_id": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "files": {
+                    "properties": {
+                        "ring.erl": {
+                            "properties": {
+                                "size": {
+                                    "type": "integer"
+                                },
+                                "filename": {
+                                    "type": "string"
+                                },
+                                "raw_url": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "comments": {
+                    "type": "integer"
+                },
+                "comments_url": {
+                    "type": "string"
+                },
+                "html_url": {
+                    "type": "string"
+                },
+                "git_pull_url": {
+                    "type": "string"
+                },
+                "git_push_url": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}

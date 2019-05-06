@@ -1,0 +1,85 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Device.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: Item used in healthcare
+type: FHIR_commons.DomainResource
+properties:
+  identifier?:
+    description: Instance identifier
+    type: FHIR_commons.Identifier[]
+  udi?:
+    description: Unique Device Identifier (UDI) Barcode string
+    type: FHIR_commons.BackboneElement
+    properties:
+      deviceIdentifier?:
+        description: Mandatory fixed portion of UDI
+        type: string
+      name?:
+        description: Device Name as appears on UDI label
+        type: string
+      jurisdiction?:
+        description: Regional UDI authority
+        type: FHIR_commons.uri
+      carrierHRF?:
+        description: UDI Human Readable Barcode String
+        type: string
+      carrierAIDC?:
+        description: UDI Machine Readable Barcode String
+        type: FHIR_commons.base64Binary
+      issuer?:
+        description: UDI Issuing Organization
+        type: FHIR_commons.uri
+      entryType?:
+        description: Type of entry
+        type: FHIR_commons.code
+        enum: [barcode, rfid, manual, card, self-reported, unknown]
+  status?:
+    description: Device status
+    type: FHIR_commons.code
+    enum: [active , inactive, entered-in-error, unknown]
+  type?:
+    description: What kind of device this is
+    type: FHIR_commons.CodeableConcept
+  lotNumber?:
+    description: Lot number of manufacture
+    type: string
+  manufacturer?:
+    description: Name of device manufacturer
+    type: string
+  manufactureDate?:
+    description: Date when the device was made
+    type: FHIR_commons.dateTime
+  expirationDate?:
+    description: Date and time of expiry of this device (if applicable)
+    type: FHIR_commons.dateTime
+  model?:
+    description: Model id assigned by the manufacturer
+    type: string
+  version?:
+    description: Version number (i.e. software)
+    type: string
+  patient?:
+    description: Patient to whom Device is affixed
+    type: FHIR_commons.Reference
+  owner?:
+    description: Organization responsible for device
+    type: FHIR_commons.Reference
+  contact?:
+    description: Details for human/organization for support
+    type: FHIR_commons.ContactPoint[]
+  location?:
+    description: Where the resource is found
+    type: FHIR_commons.Reference
+  url?:
+    description: Network address to contact device
+    type: FHIR_commons.uri
+  note?:
+    description: Device notes and comments
+    type: FHIR_commons.Annotation[]
+  safety?:
+    description: Safety Characteristics of Device
+    type: FHIR_commons.CodeableConcept[]

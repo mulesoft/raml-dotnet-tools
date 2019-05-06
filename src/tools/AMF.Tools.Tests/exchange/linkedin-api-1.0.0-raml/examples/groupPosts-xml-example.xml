@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<posts total="1">
+  <post>
+    <id>g-5161023-S-270459579</id>
+    <type>
+      <code>standard</code>
+    </type>
+    <creator>
+      <id>AGBKeo0Eup</id>
+      <first-name>first name</first-name>
+      <last-name>second name</last-name>
+      <headline>developer</headline>
+    </creator>
+    <title>first message</title>
+  </post>
+</posts>

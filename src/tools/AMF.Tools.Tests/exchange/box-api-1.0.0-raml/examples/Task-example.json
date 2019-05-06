@@ -1,0 +1,46 @@
+{
+  "type" : "task" ,
+  "id" : "5595397" ,
+  "item" : {
+    "type" : "file" ,
+    "id" : "23629729463" ,
+    "sequence_id" : "3" ,
+    "etag" : "3" ,
+    "sha1" : "f9415a2fd622bfd93f88077e1e0fdb7c327516de" ,
+    "name" : "sample.txt"
+  } ,
+  "due_at" : null ,
+  "action" : "review" ,
+  "message" : "" ,
+  "task_assignment_collection" : {
+    "total_count" : 1 ,
+    "entries" : [
+      {
+        "type" : "task_assignment" ,
+        "id" : "7740085" ,
+        "item" : {
+          "type" : "file" ,
+          "id" : "23629729463" ,
+          "sequence_id" : "3" ,
+          "etag" : "3" ,
+          "sha1" : "f9415a2fd622bfd93f88077e1e0fdb7c327516de" ,
+          "name" : "sample.txt"
+        } ,
+        "assigned_to" : {
+          "type" : "user" ,
+          "id" : "214268589" ,
+          "name" : "RAML QA" ,
+          "login" : "ramlqa@mulesoft.com"
+        }
+      }
+    ]
+  } ,
+  "is_completed" : false ,
+  "created_by" : {
+    "type" : "user" ,
+    "id" : "214268589" ,
+    "name" : "RAML QA" ,
+    "login" : "ramlqa@mulesoft.com"
+  } ,
+  "created_at" : "2015-03-16T11:22:56-07:00"
+}

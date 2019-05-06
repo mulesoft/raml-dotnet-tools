@@ -1,0 +1,81 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "renewalTerm" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "termType" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "autoRenew" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "invoiceTargetDate" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "accountKey" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "contractEffectiveDate" : {
+      "type" : "string" ,
+      "required" : true
+    } ,
+    "subscribeToRatePlans" : {
+      "type" : "array" ,
+      "required" : true ,
+      "items" : 
+        {
+          "type" : "object" ,
+          "properties" : {
+            "chargeOverrides" : {
+              "type" : "array" ,
+              "required" : false ,
+              "items" : 
+                {
+                  "type" : "object" ,
+                  "properties" : {
+                    "productRatePlanChargeId" : {
+                      "type" : "string" ,
+                      "required" : true
+                    } ,
+                    "quantity" : {
+                      "type" : "number" ,
+                      "required" : true
+                    }
+                  }
+                }
+              
+            } ,
+            "productRatePlanId" : {
+              "type" : "string" ,
+              "required" : true
+            }
+          }
+        }
+      
+    } ,
+    "invoiceCollect" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "initialTerm" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "notes" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "myCustomField__c" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "forum" : {
+    "id" : 35436 ,
+    "name" : "FAQs" ,
+    "description:" : "This forum contains all product FAQs" ,
+    "category_id" : null ,
+    "organization_id" : null ,
+    "locale_id" : null ,
+    "locked" : true ,
+    "position" : 4 ,
+    "forum_type" : "articles" ,
+    "access" : "everybody" ,
+    "created_at" : "2010-07-20T22:55:29Z" ,
+    "updated_at" : "2012-03-05T10:38:52Z"
+  }
+}

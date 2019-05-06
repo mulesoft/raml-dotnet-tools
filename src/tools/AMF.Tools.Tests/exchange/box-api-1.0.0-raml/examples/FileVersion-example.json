@@ -1,0 +1,15 @@
+{
+  "type" : "file_version" ,
+  "id" : "871399" ,
+  "sha1" : "12039d6dd9a7e6eefc78846802e" ,
+  "name" : "Stark Family Lineage.doc" ,
+  "size" : 11 ,
+  "created_at" : "2013-11-20T13:20:50-08:00" ,
+  "modified_at" : "2013-11-20T13:26:48-08:00" ,
+  "modified_by" : {
+    "type" : "user" ,
+    "id" : "13711334" ,
+    "name" : "Eddard Stark" ,
+    "login" : "ned@winterfell.com"
+  }
+}

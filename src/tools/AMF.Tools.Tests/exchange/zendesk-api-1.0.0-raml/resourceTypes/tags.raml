@@ -1,0 +1,49 @@
+uriParameters: 
+  mediaTypeExtension: 
+    enum: [ .json ]
+    default: .json
+    example: .json
+get: 
+  description: Lists the most popular recent tags in decreasing popularity
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: tagResponse
+          example: !include examples/tagResponse-example.json
+post: 
+  description: Lists the most popular recent tags in decreasing popularity
+  body: 
+    application/json: 
+      schema: createTag
+      example: !include examples/createTag-example.json
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: createTag
+          example: !include examples/createTag-example.json
+put: 
+  description: Lists the most popular recent tags in decreasing popularity
+  body: 
+    application/json: 
+      schema: updateTagRequest
+      example: !include examples/updateTagRequest-example.json
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: updateTagResponse
+          example: !include examples/updateTagResponse-example.json
+delete: 
+  description: Lists the most popular recent tags in decreasing popularity
+  body: 
+    application/json: 
+      schema: deleteTagResponse
+      example: !include examples/deleteTagResponse-example.json
+  responses: 
+    200: 
+      body: 
+        application/json: 
+          schema: deleteTagResponse
+          example: !include examples/deleteTagResponse-example.json

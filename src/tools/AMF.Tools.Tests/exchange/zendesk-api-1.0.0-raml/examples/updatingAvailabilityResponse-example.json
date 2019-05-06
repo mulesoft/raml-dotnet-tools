@@ -1,0 +1,7 @@
+{
+  "availability" : {
+    "via" : "client" ,
+    "available" : true ,
+    "status" : "available"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "title" : "string" ,
+  "description" : "string" ,
+  "labels" : {
+    "starred" : "boolean" ,
+    "hidden" : "boolean" ,
+    "trashed" : "boolean" ,
+    "restricted" : "boolean" ,
+    "viewed" : "boolean"
+  } ,
+  "modifiedDate" : "datetime" ,
+  "lastViewedByMeDate" : "datetime" ,
+  "markedViewedByMeDate" : "datetime" ,
+  "writersCanShare" : "boolean" ,
+  "parents" : [
+    {
+      "kind" : "drive#parentReference" ,
+      "id" : "string" ,
+      "selfLink" : "string" ,
+      "parentLink" : "string" ,
+      "isRoot" : "boolean"
+    }
+  ] ,
+  "properties" : [
+    {
+      "kind" : "drive#property" ,
+      "etag" : "etag" ,
+      "selfLink" : "string" ,
+      "key" : "string" ,
+      "visibility" : "string" ,
+      "value" : "string"
+    }
+  ] 
+}

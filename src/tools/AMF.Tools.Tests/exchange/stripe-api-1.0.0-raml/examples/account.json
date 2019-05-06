@@ -1,0 +1,14 @@
+{
+  "id": "BKFamDcAnurQgZDPT6vvOzGJboJhPCcF",
+  "email": "site@stripe.com",
+  "statement_descriptor": null,
+  "details_submitted": false,
+  "charge_enabled": false,
+  "transfer_enabled": false,
+  "currencies_supported": [
+    "USD"
+  ],
+  "default_currency": "USD",
+  "country": "US",
+  "object": "account"
+}

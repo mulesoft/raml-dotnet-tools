@@ -1,0 +1,7 @@
+{
+  "id" : "string" ,
+  "expiration" : "long" ,
+  "token" : "string" ,
+  "type" : "string" ,
+  "address" : "string"
+}

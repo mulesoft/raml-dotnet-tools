@@ -1,0 +1,35 @@
+{
+  "topic" : {
+    "id" : 35436 ,
+    "title" : "How to Disassemble the ED209" ,
+    "body" : "Carefully with very large pliers" ,
+    "topic_type" : "articles" ,
+    "submitter_id" : 116 ,
+    "updater_id" : 116 ,
+    "forum_id" : 1239 ,
+    "locked" : true ,
+    "pinned" : false ,
+    "locked" : true ,
+    "position" : 1 ,
+    "tags" : [
+      "danger"
+    ] ,
+    "search_phrases" : [
+      "red" ,
+      "yellow"
+    ] ,
+    "attachments" : [
+      {
+        "id" : 498483 ,
+        "name" : "crash.log" ,
+        "content_url" : "https://company.zendesk.com/attachments/crash.log" ,
+        "content_type" : "text/plain" ,
+        "size" : 2532 ,
+        "thumbnails" : [
+        ]
+      }
+    ] ,
+    "created_at" : "2011-05-05T10:38:52Z" ,
+    "updated_at" : "2011-05-05T10:38:52Z"
+  }
+}

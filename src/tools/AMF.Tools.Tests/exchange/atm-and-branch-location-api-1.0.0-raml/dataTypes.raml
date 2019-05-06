@@ -1,0 +1,50 @@
+Location:
+  properties:
+    lat:
+      type: number
+      format: double
+      example: 37.4224764
+    lng: 
+      type: number
+      format: double
+      example: -122.0842499     
+
+Address:
+  properties:
+    street: string[]
+    city: string
+    postal_code: integer
+    state?: string
+    country: string
+    formatted: 
+      type: string
+      description: Formatted address
+      example: 77 Geary Street, Suite 400, San Francisco, CA 94108, USA
+
+DayOfWeek: 
+  enum: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+
+OpenHours:
+  properties:
+    day_of_week: DayOfWeek[]
+    start: time-only
+    end: time-only
+    
+BankProperty:
+  properties:
+    name: string
+    description?: string
+    address: Address
+    location: Location
+    wheelchair: boolean
+
+Branch:
+  type: BankProperty
+  properties: 
+    open_at: OpenHours[]
+    phone?: string
+          
+Atm:
+  type: BankProperty
+  properties:
+    operational: boolean

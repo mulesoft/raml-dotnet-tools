@@ -1,0 +1,20 @@
+{
+"view" : {
+  "title" : "Code red tickets" ,
+  "all" : [
+    {
+      "field" : "priority" ,
+      "operator" : "is" ,
+      "value" : "urgent"
+    }
+  ] ,
+  "output" : {
+    "columns" : [
+      "status" ,
+      "requester" ,
+      "assignee" ,
+      "updated"
+    ]
+  }
+}
+}

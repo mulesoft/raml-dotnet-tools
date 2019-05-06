@@ -1,0 +1,26 @@
+{
+  "variants" : [
+    {
+      "id" : 23 ,
+      "content" : "C'est mon contenu dynamique en français" ,
+      "locale_id" : 127 ,
+      "outdated" : false ,
+      "active" : true ,
+      "default" : false ,
+      "created_at" : "2014-04-09T19:53:23Z" ,
+      "updated_at" : "2014-04-09T19:53:23Z" ,
+      "url" : "https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/23.json"
+    } , {
+      "id" : 24 ,
+      "content" : "Este es mi contenido dinámico en español" ,
+      "locale_id" : 126 ,
+      "outdated" : false ,
+      "active" : true ,
+      "default" : false ,
+      "created_at" : "2014-04-09T19:53:23Z" ,
+      "updated_at" : "2014-04-09T19:53:23Z" ,
+      "url" : "https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/24.json"
+    } , {
+    }
+  ]
+}

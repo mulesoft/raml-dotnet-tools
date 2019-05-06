@@ -1,0 +1,19 @@
+{
+  "object": "list",
+  "url": "/v1/invoiceitems",
+  "count": 1,
+  "data": [
+    {
+    "object": "invoiceitem",
+    "id": "ii_2Xovytvup4IajJ",
+    "date": 1378789336,
+    "amount": 0,
+    "livemode": false,
+    "proration": true,
+    "currency": "usd",
+    "customer": "cus_2hzElrZhmfV9my",
+    "description": "Remaining time on Prep Plan 2 after 10 Sep 2013",
+    "invoice": null
+  }
+  ]
+}

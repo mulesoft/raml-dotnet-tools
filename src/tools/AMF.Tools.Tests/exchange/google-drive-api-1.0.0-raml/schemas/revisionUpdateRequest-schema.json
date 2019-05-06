@@ -1,0 +1,23 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "pinned" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "published" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "publishAuto" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "publishedOutsideDomain" : {
+      "type" : "string" ,
+      "required" : false
+    }
+  }
+}

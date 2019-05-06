@@ -1,0 +1,93 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "name" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "fields" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : 
+        {
+          "type" : "object" ,
+          "properties" : {
+            "length" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "name" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "type" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "defaultValue" : {
+              "type" : "object" ,
+              "required" : false
+            } ,
+            "updateable" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "label" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      
+    } ,
+    "updateable" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "label" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "keyPrefix" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "custom" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "urls" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "childRelationships" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : 
+        {
+          "type" : "object" ,
+          "properties" : {
+            "field" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "deprecatedAndHidden" : {
+              "type" : "boolean" ,
+              "required" : false
+            }
+          }
+        }
+      
+    } ,
+    "createable" : {
+      "type" : "boolean" ,
+      "required" : false
+    } ,
+    "customSetting" : {
+      "type" : "boolean" ,
+      "required" : false
+    }
+  }
+}

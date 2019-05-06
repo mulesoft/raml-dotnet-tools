@@ -1,0 +1,24 @@
+#%RAML 1.0 DataType
+required: false
+type: object
+properties:
+  application:
+    required: false
+    type: object
+    properties:
+      name:
+        required: false
+        type: string
+      settings:
+        required: false
+        type: object
+        properties:
+          app_apdex_threshold:
+            required: false
+            type: number
+          end_user_apdex_threshold:
+            required: false
+            type: number
+          enable_real_user_monitoring:
+            required: false
+            type: boolean

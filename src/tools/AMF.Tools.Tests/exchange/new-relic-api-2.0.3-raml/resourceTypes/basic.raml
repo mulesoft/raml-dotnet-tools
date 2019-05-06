@@ -1,0 +1,46 @@
+#%RAML 1.0 ResourceType
+get?: 
+  responses: 
+    200: 
+      body: 
+        application/json: 
+        application/xml: 
+    401: 
+      description: Invalid API key or Invalid request, API key required
+    403: 
+      description: New Relic API access has not been enabled
+    500: 
+      description: An server error occured, please contact New Relic support
+put?: 
+  headers: 
+    Content-Type: 
+      enum: [ application/json , application/xml ]
+  body: 
+    application/json: 
+    application/xml: 
+  responses: 
+    200: 
+      body: 
+        application/json: 
+        application/xml: 
+    401: 
+      description: Invalid API key or Invalid request, API key required
+    403: 
+      description: New Relic API access has not been enabled
+    500: 
+      description: An server error occured, please contact New Relic support
+    422: 
+      description: Invalid attributes were sent to update
+delete?: 
+  responses: 
+    200: 
+      body: 
+        application/json: 
+        application/xml: 
+    401: 
+      description: Invalid API key or Invalid request, API key required
+    403: 
+      description: New Relic API access has not been enabled
+    500: 
+      description: An server error occured, please contact New Relic support
+securedBy: [ x-Api-Key ]

@@ -1,0 +1,1 @@
+Zendesk is a customer support platform that supports more than 40,000 businesses and over 300 million end users in 140 countries around the globe. Many of these businesses use the Zendesk API (the \"API\") to automate and enhance their customer support with Zendesk.

@@ -1,0 +1,315 @@
+delete?: 
+  headers: 
+    Stripe-Version: 
+      description: |
+        When we make backwards-incompatible changes to the API, we release new dated versions.
+      example: 2013-08-13
+  queryParameters: 
+    expand[]: 
+      description: |
+        Many objects contain the id of another object in their response properties. Those objects can be expanded in
+        inline with the expand request parameter. Objects that can be expanded are noted in this documentation.
+        
+        This parameter is available on all API requests, and applies to the response of that request only. You can nes
+        expand requests with the dot property. For example, requesting invoice.customer on a charge will expand the invoice
+        property into a full invoice object, and will then expand the customer property on that invoice into a full customer
+        object. You can expand multiple things at once by sending an array.
+      repeat: true
+      example: expand%5B%5D=customer
+  responses: 
+    400: 
+      description: |
+        Bad Request - Often missing a required parameter.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    401: 
+      description: |
+        Unauthorized - No valid API key provided.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    402: 
+      description: |
+        Request Failed - Parameters were valid but request failed.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    404: 
+      description: |
+        Not Found - The requested item doesn't exist.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    500: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    502: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    503: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    504: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    200: 
+      body: 
+        application/json: 
+post?: 
+  headers: 
+    Stripe-Version: 
+      description: |
+        When we make backwards-incompatible changes to the API, we release new dated versions.
+      example: 2013-08-13
+  queryParameters: 
+    expand[]: 
+      description: |
+        Many objects contain the id of another object in their response properties. Those objects can be expanded in
+        inline with the expand request parameter. Objects that can be expanded are noted in this documentation.
+        
+        This parameter is available on all API requests, and applies to the response of that request only. You can nes
+        expand requests with the dot property. For example, requesting invoice.customer on a charge will expand the invoice
+        property into a full invoice object, and will then expand the customer property on that invoice into a full customer
+        object. You can expand multiple things at once by sending an array.
+      repeat: true
+      example: expand%5B%5D=customer
+  responses: 
+    400: 
+      description: |
+        Bad Request - Often missing a required parameter.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    401: 
+      description: |
+        Unauthorized - No valid API key provided.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    402: 
+      description: |
+        Request Failed - Parameters were valid but request failed.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    404: 
+      description: |
+        Not Found - The requested item doesn't exist.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    500: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    502: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    503: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    504: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    200: 
+      body: 
+        application/json: 
+put?: 
+  headers: 
+    Stripe-Version: 
+      description: |
+        When we make backwards-incompatible changes to the API, we release new dated versions.
+      example: 2013-08-13
+  queryParameters: 
+    expand[]: 
+      description: |
+        Many objects contain the id of another object in their response properties. Those objects can be expanded in
+        inline with the expand request parameter. Objects that can be expanded are noted in this documentation.
+        
+        This parameter is available on all API requests, and applies to the response of that request only. You can nes
+        expand requests with the dot property. For example, requesting invoice.customer on a charge will expand the invoice
+        property into a full invoice object, and will then expand the customer property on that invoice into a full customer
+        object. You can expand multiple things at once by sending an array.
+      repeat: true
+      example: expand%5B%5D=customer
+  responses: 
+    400: 
+      description: |
+        Bad Request - Often missing a required parameter.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    401: 
+      description: |
+        Unauthorized - No valid API key provided.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    402: 
+      description: |
+        Request Failed - Parameters were valid but request failed.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    404: 
+      description: |
+        Not Found - The requested item doesn't exist.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    500: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    502: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    503: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    504: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    200: 
+      body: 
+        application/json: 
+get?: 
+  headers: 
+    Stripe-Version: 
+      description: |
+        When we make backwards-incompatible changes to the API, we release new dated versions.
+      example: 2013-08-13
+  queryParameters: 
+    expand[]: 
+      description: |
+        Many objects contain the id of another object in their response properties. Those objects can be expanded in
+        inline with the expand request parameter. Objects that can be expanded are noted in this documentation.
+        
+        This parameter is available on all API requests, and applies to the response of that request only. You can nes
+        expand requests with the dot property. For example, requesting invoice.customer on a charge will expand the invoice
+        property into a full invoice object, and will then expand the customer property on that invoice into a full customer
+        object. You can expand multiple things at once by sending an array.
+      repeat: true
+      example: expand%5B%5D=customer
+  responses: 
+    400: 
+      description: |
+        Bad Request - Often missing a required parameter.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    401: 
+      description: |
+        Unauthorized - No valid API key provided.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    402: 
+      description: |
+        Request Failed - Parameters were valid but request failed.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    404: 
+      description: |
+        Not Found - The requested item doesn't exist.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    500: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    502: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    503: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    504: 
+      description: |
+        Server errors - something went wrong on Stripe's end.
+      body: 
+        application/json: 
+          schema: !include ../schemas/error-schema.json
+          example: !include ../examples/error.json
+    200: 
+      body: 
+        application/json: 
+usage: |
+  This is base resource type described common request and response headers and error response codes
+  All Stripe resources should use i

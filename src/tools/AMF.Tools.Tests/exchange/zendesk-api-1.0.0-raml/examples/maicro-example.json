@@ -1,0 +1,8 @@
+{"macro":
+	{
+	"title": "Roger Wilco II",
+       "actions": [
+         {"field": "status", "value": "solved"}
+       ]
+	}
+}

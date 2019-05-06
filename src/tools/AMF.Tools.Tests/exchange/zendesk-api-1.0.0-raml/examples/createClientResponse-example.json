@@ -1,0 +1,7 @@
+{
+  "client" : {
+    "id" : 223443 ,
+    "name" : "Test Client" ,
+    "secret" : "full, generated secret"
+  }
+}

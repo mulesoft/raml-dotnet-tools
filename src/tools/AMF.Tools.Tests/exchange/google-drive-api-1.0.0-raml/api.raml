@@ -1,0 +1,817 @@
+#%RAML 0.8
+title: Google Drive
+version: v2
+baseUri: https://www.googleapis.com/drive/{version}
+mediaType: application/json
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+schemas:
+  - file: !include /schemas/file-schema.json
+  - newFileRequest: !include /schemas/newFileRequest-schema.json
+  - fileList: !include /schemas/fileList-schema.json
+  - watchRequest: !include /schemas/watchRequest-schema.json
+  - channel: !include /schemas/channel-schema.json
+  - about: !include /schemas/about-schema.json
+  - change: !include /schemas/change-schema.json
+  - changeList: !include /schemas/changeList-schema.json
+  - childReference: !include /schemas/childReference-schema.json
+  - childList: !include /schemas/childList-schema.json
+  - parentReference: !include /schemas/parentReference-schema.json
+  - parentList: !include /schemas/parentList-schema.json
+  - permission: !include /schemas/permission-schema.json
+  - permissionRequest: !include /schemas/permissionRequest-schema.json
+  - permissionList: !include /schemas/permissionList-schema.json
+  - permissionUpdateRequest: !include /schemas/permissionUpdateRequest-schema.json
+  - permissionId: !include /schemas/permissionId-schema.json
+  - revision: !include /schemas/revision-schema.json
+  - revisionList: !include /schemas/revisionList-schema.json
+  - revisionUpdateRequest: !include /schemas/revisionUpdateRequest-schema.json
+  - appList: !include /schemas/appList-schema.json
+  - app: !include /schemas/app-schema.json
+  - comment: !include /schemas/comment-schema.json
+  - commentCreateRequest: !include /schemas/commentCreateRequest-schema.json
+  - commentList: !include /schemas/commentList-schema.json
+  - stopWatchingRequest: !include /schemas/stopWatchingRequest-schema.json
+  - commentReply: !include /schemas/commentReply-schema.json
+  - commentReplyRequest: !include /schemas/commentReplyRequest-schema.json
+  - commentReplyList: !include /schemas/commentReplyList-schema.json
+  - commentReplyUpdateRequest: !include /schemas/commentReplyUpdateRequest-schema.json
+  - property: !include /schemas/property-schema.json
+  - propertyList: !include /schemas/propertyList-schema.json
+traits:
+  - results: !include traits/results.raml
+  - visibility: !include traits/visibility.raml
+  - file: !include traits/file.raml
+securedBy: [ oauth_2_0 ]
+/files: 
+  post: 
+    is: [ file , visibility ]
+    description: Insert a new file.
+    headers: 
+      X-Upload-Content-Type: 
+        description: Set to the media MIME type of the upload data to be transferred in subsequent requests.
+        example: image/jpeg
+      X-Upload-Content-Length: 
+        description: Set to the number of bytes of upload data to be transferred in subsequent requests.  If the length is unknown at the time of this request, you can omit this header.
+        example: 8000000
+    queryParameters: 
+      uploadType: 
+        description: |
+          The type of upload request to the /upload URI. Acceptable values are:
+          media - Simple upload. Upload the media only, without any metadata.
+          multipart - Multipart upload. Upload both the media and its metadata, in a single request.
+          resumable - Resumable upload. Upload the file in a resumable fashion, using a series of at least two requests where the first request includes the metadata.
+        required: true
+        example: multipart
+    body: 
+      application/json: 
+        schema: newFileRequest
+        example: !include examples/newFileRequest-example.json
+    responses: 
+      201: 
+        body: 
+          application/json: 
+            schema: file
+            example: !include examples/file-example.json
+  get: 
+    description: "Lists the user's files."
+    queryParameters: 
+      corpus: 
+        description: |
+          The body of items (files/documents) to which the query applies. 
+          
+          Acceptable values are:
+          "DEFAULT": The items that the user has accessed.
+          "DOMAIN": Items shared to the user's domain.
+        example: DOMAIN
+      maxResults: 
+        description: "Maximum number of files to return. Acceptable values are 0 to 1000, inclusive. (Default: 100)"
+        type: integer
+        default: 100
+        example: 25
+      pageToken: 
+        description: Page token for files.
+      q: 
+        description: Query string for searching files. See Searching for files for more information about supported fields and operations.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: fileList
+            example: !include examples/fileList-example.json
+  /{fileId}: 
+    get: 
+      description: "Gets a file's metadata by ID."
+      queryParameters: 
+        acknowledgeAbuse: 
+          description: "Whether the user is acknowledging the risk of downloading known malware or other abusive files. (Default: false)"
+          type: boolean
+          default: false
+          example: false
+        updateViewedDate: 
+          description: "Whether to update the view date after successfully retrieving the file. (Default: false)"
+          type: boolean
+          default: false
+          example: true
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: file
+              example: !include examples/file-example.json
+    patch: 
+      is: [ file ]
+      description: Updates file metadata. This method supports patch semantics.
+      queryParameters: 
+        addParents: 
+          description: Comma-separated list of parent IDs to add.
+        newRevision: 
+          description: "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota). (Default: true)"
+          type: boolean
+          default: true
+          example: true
+        removeParents: 
+          description: Comma-separated list of parent IDs to remove.
+        setModifiedDate: 
+          description: "Whether to set the modified date with the supplied modified date. (Default: false)"
+          type: boolean
+          default: false
+          example: true
+        updateViewedDate: 
+          description: "Whether to update the view date after successfully updating the file. (Default: true)"
+          type: boolean
+          default: false
+          example: true
+      body: 
+        application/json: 
+          schema: file
+          example: !include examples/file-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: file
+              example: !include examples/file-example.json
+    put: 
+      is: [ file ]
+      description: Updates file metadata and/or content.
+      headers: 
+        X-Upload-Content-Type: 
+          description: Set to the media MIME type of the upload data to be transferred in subsequent requests.
+          example: image/jpeg
+        X-Upload-Content-Length: 
+          description: Set to the number of bytes of upload data to be transferred in subsequent requests.  If the length is unknown at the time of this request, you can omit this header.
+          example: 8000000
+      queryParameters: 
+        uploadType: 
+          description: |
+            The type of upload request to the /upload URI. Acceptable values are:
+            media - Simple upload. Upload the media only, without any metadata.
+            multipart - Multipart upload. Upload both the media and its metadata, in a single request.
+            resumable - Resumable upload. Upload the file in a resumable fashion, using a series of at least two requests where the first request includes the metadata.
+          required: true
+          example: multipart
+        addParents: 
+          description: Comma-separated list of parent IDs to add.
+        newRevision: 
+          description: "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota). (Default: true)"
+          type: boolean
+          default: true
+          example: true
+        removeParents: 
+          description: Comma-separated list of parent IDs to remove.
+        setModifiedDate: 
+          description: "Whether to set the modified date with the supplied modified date. (Default: false)"
+          type: boolean
+          default: false
+          example: true
+        updateViewedDate: 
+          description: "Whether to update the view date after successfully updating the file. (Default: true)"
+          type: boolean
+          default: false
+          example: true
+      body: 
+        application/json: 
+          schema: newFileRequest
+          example: !include examples/newFileRequest-example.json
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: file
+              example: !include examples/file-example.json
+    delete: 
+      description: Permanently deletes a file by ID. Skips the trash.
+      responses: 
+        200: 
+    /copy: 
+      post: 
+        is: [ visibility ]
+        description: Creates a copy of the specified file.
+        queryParameters: 
+          convert: 
+            description: "Whether to convert this file to the corresponding Google Docs format. (Default: false)"
+            type: boolean
+            default: false
+            example: false
+          ocr: 
+            description: "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads. (Default: false)"
+            type: boolean
+            default: false
+            example: false
+          ocrLanguage: 
+            description: If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
+            example: ab
+          pinned: 
+            description: "Whether to pin the new revision. A file can have a maximum of 200 pinned revisions. (Default: false)"
+            type: boolean
+            default: false
+            example: false
+          timedTextLanguage: 
+            description: The language of the timed text.
+          timedTextTrackName: 
+            description: The timed text track name.
+        body: 
+          application/json: 
+            schema: newFileRequest
+            example: !include examples/newFileRequest-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: file
+                example: !include examples/file-example.json
+    /touch: 
+      post: 
+        description: "Set the file's updated time to the current server time."
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: file
+                example: !include examples/file-example.json
+    /trash: 
+      post: 
+        description: Moves a file to the trash.
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: file
+                example: !include examples/file-example.json
+    /untrash: 
+      post: 
+        description: Restores a file from the trash.
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: file
+                example: !include examples/file-example.json
+    /watch: 
+      post: 
+        description: Start watching for changes to a file.
+        body: 
+          application/json: 
+            schema: watchRequest
+            example: !include examples/watchRequest-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: channel
+                example: !include examples/channel-example.json
+    /parents: 
+      get: 
+        description: "Lists a file's parents."
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: parentList
+                example: !include examples/parentList-example.json
+      post: 
+        description: Adds a parent folder for a file.
+        body: 
+          application/json: 
+            schema: parentReference
+            example: !include examples/parentReference-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: parentReference
+                example: !include examples/parentReference-example.json
+      /{parentId}: 
+        get: 
+          description: Gets a specific parent reference.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: parentReference
+                  example: !include examples/parentReference-example.json
+        delete: 
+          description: Removes a parent from a file.
+          responses: 
+            204: 
+    /permissions: 
+      get: 
+        description: "Lists a file's permissions."
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: permissionList
+                example: !include examples/permissionList-example.json
+      post: 
+        description: |
+          Inserts a permission for a file.
+          
+          Warning: Concurrent permissions operations on the same file are not supported; only the last update is applied.
+        queryParameters: 
+          emailMessage: 
+            description: A custom message to include in notification emails.
+          sendNotificationEmails: 
+            description: "Whether to send notification emails when sharing to users or groups. This parameter is ignored and an email is sent if the role is owner. (Default: true)"
+            type: boolean
+            default: true
+            example: false
+        body: 
+          application/json: 
+            schema: permissionRequest
+            example: !include examples/permissionRequest-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: permission
+                example: !include examples/permission-example.json
+      /{permissionId}: 
+        get: 
+          description: Gets a permission by ID.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: permission
+                  example: !include examples/permission-example.json
+        put: 
+          description: |
+            Updates a permission.
+            
+            Warning: Concurrent permissions operations on the same file are not supported; only the last update is applied.
+          queryParameters: 
+            transferOwnership: 
+              description: "Whether changing a role to 'owner' should also downgrade the current owners to writers. (Default: false)"
+              type: boolean
+              default: false
+              example: false
+          body: 
+            application/json: 
+              schema: permissionUpdateRequest
+              example: !include examples/permissionUpdateRequest-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: permission
+                  example: !include examples/permission-example.json
+        delete: 
+          description: |
+            Deletes a permission from a file. 
+            
+            Warning: Concurrent permissions operations on the same file are not supported; only the last update is applied.
+          responses: 
+            204: 
+        patch: 
+          description: |
+            Updates a permission. This method supports patch semantics.
+            
+            Warning: Concurrent permissions operations on the same file are not supported; only the last update is applied.
+          queryParameters: 
+            transferOwnership: 
+              description: "Whether changing a role to 'owner' should also downgrade the current owners to writers. (Default: false)"
+              type: boolean
+              default: false
+              example: false
+          body: 
+            application/json: 
+              example: !include examples/permission-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  example: !include examples/permission-example.json
+    /revisions: 
+      get: 
+        description: "Lists a file's revisions."
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: revisionList
+                example: !include examples/revisionList-example.json
+      /{revisionId}: 
+        get: 
+          description: Gets a specific revision.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: revision
+                  example: !include examples/revision-example.json
+        put: 
+          description: Updates a revision.
+          body: 
+            application/json: 
+              schema: revisionUpdateRequest
+              example: !include examples/revisionUpdateRequest-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: revision
+                  example: !include examples/revision-example.json
+        delete: 
+          description: Removes a revision.
+          responses: 
+            204: 
+        patch: 
+          description: Updates a revision. This method supports patch semantics.
+          body: 
+            application/json: 
+              example: !include examples/revision-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  example: !include examples/revision-example.json
+    /comments: 
+      get: 
+        is: [ results ]
+        description: "Lists a file's comments."
+        queryParameters: 
+          updatedMin: 
+            description: Only discussions that were updated after this timestamp will be returned. Formatted as an RFC 3339 timestamp.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: commentList
+                example: !include examples/commentList-example.json
+      post: 
+        description: Creates a new comment on the given file.
+        body: 
+          application/json: 
+            schema: commentCreateRequest
+            example: !include examples/commentCreateRequest-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: comment
+                example: !include examples/comment-example.json
+      /{commentId}: 
+        get: 
+          description: Gets a comment by ID.
+          queryParameters: 
+            includeDeleted: 
+              description: "If set, this will succeed when retrieving a deleted comment, and will include any deleted replies. (Default: false)"
+              type: boolean
+              default: false
+              example: true
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: comment
+                  example: !include examples/comment-example.json
+        put: 
+          body: 
+            application/json: 
+              schema: commentCreateRequest
+              example: !include examples/commentCreateRequest-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: comment
+                  example: !include examples/comment-example.json
+        delete: 
+          description: Deletes a comment.
+          responses: 
+            204: 
+        patch: 
+          description: Updates an existing comment. This method supports patch semantics.
+          body: 
+            application/json: 
+              example: !include examples/comment-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  example: !include examples/comment-example.json
+        /replies: 
+          get: 
+            is: [ results ]
+            description: Lists all of the replies to a comment.
+            responses: 
+              200: 
+                body: 
+                  application/json: 
+                    schema: commentReplyList
+                    example: !include examples/commentReplyList-example.json
+          post: 
+            description: Creates a new reply to the given comment.
+            body: 
+              application/json: 
+                schema: commentReplyRequest
+                example: !include examples/commentReplyRequest-example.json
+            responses: 
+              201: 
+                description: ""
+                body: 
+                  application/json: 
+                    schema: commentReply
+                    example: !include examples/commentReply-example.json
+          /{replyId}: 
+            get: 
+              description: Gets a reply.
+              queryParameters: 
+                includeDeleted: 
+                  description: "If set, this will succeed when retrieving a deleted reply. (Default: false)"
+                  type: boolean
+                  default: false
+                  example: true
+              responses: 
+                200: 
+                  body: 
+                    application/json: 
+                      schema: commentReply
+                      example: !include examples/commentReply-example.json
+            put: 
+              description: Updates an existing reply.
+              body: 
+                application/json: 
+                  schema: commentReplyUpdateRequest
+                  example: !include examples/commentReplyUpdateRequest-example.json
+              responses: 
+                200: 
+                  body: 
+                    application/json: 
+                      schema: commentReply
+                      example: !include examples/commentReply-example.json
+            delete: 
+              description: Deletes a reply.
+              responses: 
+                204: 
+            patch: 
+              description: Updates an existing reply. This method supports patch semantics.
+              body: 
+                application/json: 
+                  schema: commentReply
+                  example: !include examples/commentReply-example.json
+              responses: 
+                200: 
+                  body: 
+                    application/json: 
+                      schema: commentReply
+                      example: !include examples/commentReply-example.json
+    /realtime: 
+      get: 
+        description: Exports the contents of the Realtime API data model associated with this file as JSON.
+        queryParameters: 
+          revision: 
+            description: The revision of the Realtime API data model to export. Revisions start at 1 (the initial empty data model) and are incremented with each change. If this parameter is excluded, the most recent data model will be returned.
+            type: integer
+            example: 5
+        responses: 
+          200: 
+            body: 
+              application/json: 
+    /properties: 
+      get: 
+        description: "Lists a file's properties."
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: propertyList
+                example: !include examples/propertyList-example.json
+      post: 
+        description: Adds a property to a file.
+        body: 
+          application/json: 
+            schema: property
+            example: !include examples/property-example.json
+        responses: 
+          201: 
+            body: 
+              application/json: 
+                schema: property
+                example: !include examples/property-example.json
+      /{propertyKey}: 
+        get: 
+          is: [ visibility ]
+          description: Gets a property by its key.
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: property
+                  example: !include examples/property-example.json
+        put: 
+          is: [ visibility ]
+          description: Updates a property.
+          body: 
+            application/json: 
+              schema: property
+              example: !include examples/property-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: property
+                  example: !include examples/property-example.json
+        delete: 
+          is: [ visibility ]
+          description: Deletes a property.
+          responses: 
+            204: 
+        patch: 
+          is: [ visibility ]
+          description: Updates a property. This method supports patch semantics.
+          body: 
+            application/json: 
+              schema: property
+              example: !include examples/property-example.json
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  schema: property
+                  example: !include examples/property-example.json
+  /trash: 
+    delete: 
+      description: "Permanently deletes all of the user's trashed files."
+      responses: 
+        204: 
+  /{folderId}/children: 
+    post: 
+      description: Inserts a file into a folder.
+      body: 
+        application/json: 
+          schema: childReference
+          example: !include examples/childReference-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: childReference
+              example: !include examples/childReference-example.json
+    get: 
+      description: "Lists a folder's children. To list all children of the root folder, use the alias root for the folderId value."
+      queryParameters: 
+        maxResults: 
+          description: "Maximum number of children to return. Acceptable values are 0 to 1000, inclusive. (Default: 100)"
+          type: integer
+          default: 100
+          example: 25
+        pageToken: 
+          description: Page token for children.
+        q: 
+          description: Query string for searching children. See Searching for files for more information about supported fields and operations.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: childList
+              example: !include examples/childList-example.json
+    /{childId}: 
+      delete: 
+        description: Removes a child from a folder.
+        responses: 
+          204: 
+      get: 
+        description: Gets a specific child reference.
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: childReference
+                example: !include examples/childReference-example.json
+/about: 
+  get: 
+    description: Gets the information about the current user along with Drive API settings.
+    queryParameters: 
+      includeSubscribed: 
+        description: "When calculating the number of remaining change IDs, whether to include public files the user has opened and shared files. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explicitly added to a folder they own. (Default: true)"
+        type: boolean
+        default: true
+        example: true
+      maxChangeIdCount: 
+        description: Maximum number of remaining change IDs to count
+        type: integer
+        example: 700000
+      startChangeId: 
+        description: Change ID to start counting from when calculating number of remaining change IDs
+        type: integer
+        example: 700000
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: about
+            example: !include examples/about-example.json
+/changes: 
+  get: 
+    is: [ results ]
+    description: Lists the changes for a user.
+    queryParameters: 
+      includeSubscribed: 
+        description: "Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own. (Default: true)"
+        type: boolean
+        default: true
+        example: true
+      startChangeId: 
+        description: Change ID to start listing changes from.
+        type: integer
+        example: 700000
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: changeList
+            example: !include examples/changeList-example.json
+  /{changeId}: 
+    get: 
+      description: Gets a specific change.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: change
+              example: !include examples/change-example.json
+  /watch: 
+    post: 
+      description: "Watch for all changes to a user's Drive."
+      body: 
+        application/json: 
+          schema: watchRequest
+          example: !include examples/watchRequest-example.json
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: channel
+              example: !include examples/channel-example.json
+/permissionIds/{email}: 
+  get: 
+    description: Returns the permission ID for an email address.
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: permissionId
+            example: !include examples/permissionId-example.json
+/apps: 
+  get: 
+    description: "Lists a user's installed apps."
+    queryParameters: 
+      appFilterExtensions: 
+        description: A comma-separated list of file extensions for open with filtering. All apps within the given app query scope which can open any of the given file extensions will be included in the response. If appFilterMimeTypes are provided as well, the result is a union of the two resulting app lists.
+      appFilterMimeTypes: 
+        description: A comma-separated list of MIME types for open with filtering. All apps within the given app query scope which can open any of the given MIME types will be included in the response. If appFilterExtensions are provided as well, the result is a union of the two resulting app lists.
+      languageCode: 
+        description: A language or locale code, as defined by BCP 47, with some extensions from the Unicode LDML format.
+        example: fr
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: appList
+            example: !include examples/appList-example.json
+  /{appId}: 
+    get: 
+      description: Gets a specific app.
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: app
+              example: !include examples/app-example.json
+/channels/stop: 
+  post: 
+    description: |
+      Stop watching for changes to a resource.
+      If successful, this method returns an empty response body.
+    body: 
+      application/json: 
+        schema: stopWatchingRequest
+        example: !include examples/stopWatchingRequest-example.json
+    responses: 
+      201: 
+documentation: 
+  - title: Headline
+    content: !include docs/api/headline.md

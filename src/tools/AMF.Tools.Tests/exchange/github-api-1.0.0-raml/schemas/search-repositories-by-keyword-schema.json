@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "repositories": {
+      "required": false,
+      "type": "array",
+      "items": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "created": {
+            "required": false,
+            "type": "string"
+          },
+          "created_at": {
+            "required": false,
+            "type": "string"
+          },
+          "description": {
+            "required": false,
+            "type": "string"
+          },
+          "followers": {
+            "required": false,
+            "type": "integer"
+          },
+          "fork": {
+            "required": false,
+            "type": "boolean"
+          },
+          "forks": {
+            "required": false,
+            "type": "integer"
+          },
+          "has_downloads": {
+            "required": false,
+            "type": "boolean"
+          },
+          "has_issues": {
+            "required": false,
+            "type": "boolean"
+          },
+          "has_wiki": {
+            "required": false,
+            "type": "boolean"
+          },
+          "homepage": {
+            "required": false,
+            "type": "string"
+          },
+          "language": {
+            "required": false,
+            "type": "string"
+          },
+          "name": {
+            "required": false,
+            "type": "string"
+          },
+          "open_issues": {
+            "required": false,
+            "type": "integer"
+          },
+          "owner": {
+            "required": false,
+            "type": "string"
+          },
+          "private": {
+            "required": false,
+            "type": "boolean"
+          },
+          "pushed": {
+            "required": false,
+            "type": "string"
+          },
+          "pushed_at": {
+            "required": false,
+            "type": "string"
+          },
+          "score": {
+            "required": false,
+            "type": "number"
+          },
+          "size": {
+            "required": false,
+            "type": "integer"
+          },
+          "type": {
+            "required": false,
+            "type": "string"
+          },
+          "url": {
+            "required": false,
+            "type": "string"
+          },
+          "username": {
+            "required": false,
+            "type": "string"
+          },
+          "watchers": {
+            "required": false,
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

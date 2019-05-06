@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "chunk_size": {
+      "type": "integer"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "ttl": {
+            "type": "string"
+          },
+          "max_retries": {
+            "type": "string"
+          },
+          "retry_timeout": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

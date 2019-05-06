@@ -1,0 +1,49 @@
+{
+    "object": "list", 
+    "url": "/v1/customers/cu_2W3K3PwO1ECFGh/cards", 
+    "count": 2, 
+    "data": [
+        {
+            "id": "card_2W6ZlG7CMrI5Us", 
+            "object": "card", 
+            "last4": "4242", 
+            "type": "Visa", 
+            "exp_month": 1, 
+            "exp_year": 2050, 
+            "fingerprint": "qhjxpr7DiCdFYTlH", 
+            "customer": null, 
+            "country": "US", 
+            "name": null, 
+            "address_line1": null, 
+            "address_line2": null, 
+            "address_city": null, 
+            "address_state": null, 
+            "address_zip": null, 
+            "address_country": null, 
+            "cvc_check": "pass", 
+            "address_line1_check": null, 
+            "address_zip_check": null
+        }, 
+        {
+            "id": "card_2W6ZlGsdfMrI5Us", 
+            "object": "card", 
+            "last4": "1234", 
+            "type": "Visa", 
+            "exp_month": 1, 
+            "exp_year": 2051, 
+            "fingerprint": "qhjxpr7DiCdFYTlH", 
+            "customer": null, 
+            "country": "US", 
+            "name": null, 
+            "address_line1": null, 
+            "address_line2": null, 
+            "address_city": null, 
+            "address_state": null, 
+            "address_zip": null, 
+            "address_country": null, 
+            "cvc_check": "pass", 
+            "address_line1_check": null, 
+            "address_zip_check": null
+        }
+    ]
+}

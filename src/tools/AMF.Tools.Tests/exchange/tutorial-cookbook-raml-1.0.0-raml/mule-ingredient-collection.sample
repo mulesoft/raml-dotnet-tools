@@ -1,0 +1,18 @@
+[
+  {
+    "id":1,
+    "name":"Apple",
+    "quantity":0.0,
+    "unit":"UNIT",
+    "created": "2015-02-01 00:00:00",
+    "lastModified":null
+  },
+  {
+    "id":2,
+    "name":"Sugar",
+    "quantity":0.0,
+    "unit":"GRAMS",
+    "created": "2015-02-01 00:00:00",
+    "lastModified": "2015-02-02 00:00:00"
+  }
+]

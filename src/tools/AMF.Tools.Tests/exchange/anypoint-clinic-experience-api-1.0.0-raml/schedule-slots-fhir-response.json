@@ -1,0 +1,202 @@
+[
+  {
+    "resourceType": "Slot",
+    "id": "1",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T13:00:00-05:00",
+    "end": "2016-02-23T13:15:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "2",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T13:15:00-05:00",
+    "end": "2016-02-23T13:30:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "3",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T13:30:00-05:00",
+    "end": "2016-02-23T13:45:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "4",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T13:45:00-05:00",
+    "end": "2016-02-23T14:00:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "5",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T14:00:00-05:00",
+    "end": "2016-02-23T14:15:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "6",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T14:15:00-05:00",
+    "end": "2016-02-23T14:30:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "7",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T14:30:00-05:00",
+    "end": "2016-02-23T14:45:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "8",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T14:45:00-05:00",
+    "end": "2016-02-23T15:00:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "9",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T15:00:00-05:00",
+    "end": "2016-02-23T15:15:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "10",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T15:15:00-05:00",
+    "end": "2016-02-23T15:30:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "11",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T15:30:00-05:00",
+    "end": "2016-02-23T15:45:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "12",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T15:45:00-05:00",
+    "end": "2016-02-23T16:00:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "13",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T16:00:00-05:00",
+    "end": "2016-02-23T16:15:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "14",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T16:15:00-05:00",
+    "end": "2016-02-23T16:30:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "15",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T16:30:00-05:00",
+    "end": "2016-02-23T16:45:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "16",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T16:45:00-05:00",
+    "end": "2016-02-23T17:00:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "17",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T17:00:00-05:00",
+    "end": "2016-02-23T17:15:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "18",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T17:15:00-05:00",
+    "end": "2016-02-23T17:30:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "19",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T17:30:00-05:00",
+    "end": "2016-02-23T17:45:00-05:00",
+    "freeBusyType": "free"
+  },
+  {
+    "resourceType": "Slot",
+    "id": "20",
+    "schedule": {
+      "reference": "schedules/25796"
+    },
+    "start": "2016-02-23T17:45:00-05:00",
+    "end": "2016-02-23T18:00:00-05:00",
+    "freeBusyType": "free"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "recipient_addresses" : [
+    {
+      "id" : 33 ,
+      "email" : "name@domain.com" ,
+      "name" : "Sales" ,
+      "default" : true ,
+      "brand_id" : 123 
+    } , {
+      "id" : 34 ,
+      "email" : "name2@domain.com" ,
+      "name" : "Marketing" ,
+      "default" : false ,
+      "brand_id" : 123 
+    } 
+  ]
+}

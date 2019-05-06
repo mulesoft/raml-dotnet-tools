@@ -1,0 +1,12 @@
+{
+  "total_count" : 1 ,
+  "entries" : [
+    {
+      "type" : "group" ,
+      "id" : "1786931" ,
+      "name" : "friends"
+    }
+  ] ,
+  "limit" : 100 ,
+  "offset" : 0
+}

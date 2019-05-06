@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "first_page_uri": {
+      "type": "string"
+    },
+    "media_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sid": {
+            "type": "string"
+          },
+          "account_sid": {
+            "type": "string"
+          },
+          "parent_sid": {
+            "type": "string"
+          },
+          "content_type": {
+            "type": "string"
+          },
+          "date_created": {
+            "type": "string"
+          },
+          "date_updated": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sid",
+          "account_sid",
+          "parent_sid",
+          "content_type",
+          "date_created",
+          "date_updated",
+          "uri"
+        ]
+      }
+    },
+    "previous_page_uri": {
+      "type": ["string","null"]
+    },
+    "uri": {
+      "type": "string"
+    },
+    "page_size": {
+      "type": "integer"
+    },
+    "next_page_uri": {
+      "type": ["string","null"]
+    },
+    "page": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "first_page_uri",
+    "media_list",
+    "previous_page_uri",
+    "uri",
+    "page_size",
+    "next_page_uri",
+    "page"
+  ]
+}

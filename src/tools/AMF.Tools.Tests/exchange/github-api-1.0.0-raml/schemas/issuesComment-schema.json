@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "url": {
+            "type": "string"
+        },
+        "html_url": {
+            "type": "string"
+        },
+        "body": {
+            "type": "string"
+        },
+        "user": {
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "avatar_url": {
+                    "type": "string"
+                },
+                "gravatar_id": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "created_at": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+        },
+        "updated_at": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,119 @@
+#%RAML 1.0
+title: open-bank-system-api
+baseUri: https://mocksvc.mulesoft.com/mocks/4477d1e1-a655-4bf8-8b16-5feb29ade6a4/mocks/66c3241d-774f-42f3-bd87-4aa5da9d68bb/api # baseUri: https://mocksvc.mulesoft.com/mocks/66c3241d-774f-42f3-bd87-4aa5da9d68bb/api
+version: v1
+mediaType: [application/json]
+
+
+traits:
+  transactionSearch: !include traits/transactionSearch.raml
+      
+types: !include dataTypes.raml
+ 
+
+/users:
+  description: Info about all users
+  get:
+    queryParameters: 
+      ssn:
+        description: SSN number of specific User
+        required: false
+        type: SSN
+        example: 123-45-6789
+    responses:
+        200:
+          body:
+            application/json:
+              type: User[]
+              example: !include ./examples/get_user.json
+  
+  /{id}:
+    uriParameters:
+      id:
+        description: Bank user ID
+    get: 
+      responses:
+        200:
+          body:
+            application/json:
+              type: User
+              example: !include ./examples/get_user_id.json
+
+    /transactions:
+      description: Transactions for all accounts
+      get:
+        is: [transactionSearch]
+        responses:
+          200:
+            body:
+              application/json:
+                type: Transaction[]
+                example: !include ./examples/get_transactions.json
+    /accounts:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: Account[]
+                example: !include ./examples/get_account.json
+
+/accounts:
+  get:
+    queryParameters: 
+      ssn:
+        description: SSN number of specific User
+        required: false
+        type: SSN
+        example: 123-45-6789  
+    responses:
+      200:
+        body:
+          application/json:
+            type: Account[]
+            example: !include ./examples/get_account.json
+            
+  /{id}:
+    uriParameters:
+      id: 
+        description: Account ID
+
+    get:
+      queryParameters:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Account
+              example: !include ./examples/get_account_id.json
+    
+    /transactions:
+      get:
+        is: [transactionSearch]
+        responses:
+          200:
+            body:
+              application/json:
+                type: Transaction[]
+                example: !include ./examples/get_transactions.json
+
+      post:
+        description: Use to make a new payment.
+        body:
+          application/json:
+            type: PaymentRequest
+            example: !include ./examples/post_transaction.json
+        responses: 
+          200:
+            body: 
+              application/json:
+                type: PaymentStatus
+                example: !include ./examples/post_transaction_response.json
+          422:
+            body: 
+              application/json:
+                type: PaymentStatus
+                
+
+            
+    

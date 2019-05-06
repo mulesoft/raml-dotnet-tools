@@ -1,0 +1,25 @@
+{
+  "kind" : "drive#permissionList" ,
+  "etag" : "etag" ,
+  "selfLink" : "string" ,
+  "items" : [
+    {
+      "kind" : "drive#permission" ,
+      "etag" : "etag" ,
+      "id" : "string" ,
+      "selfLink" : "string" ,
+      "name" : "string" ,
+      "emailAddress" : "string" ,
+      "domain" : "string" ,
+      "role" : "string" ,
+      "additionalRoles" : [
+        "string"
+      ] ,
+      "type" : "string" ,
+      "value" : "string" ,
+      "authKey" : "string" ,
+      "withLink" : "boolean" ,
+      "photoLink" : "string"
+    }
+  ]
+}

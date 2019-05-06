@@ -1,0 +1,16 @@
+description: |
+  You can use OAuth 2 to authenticate all your application's API requests to Zendesk. OAuth provides a secure way for your application to access Zendesk data without requiring that sensitive information like usernames and passwords be sent with the requests.
+  To use OAuth authentication, you need to register your application with Zendesk. You also need to add some functionality to your application to support the OAuth authorization flow.
+type: OAuth 2.0
+describedBy: 
+  headers: 
+    Authorization: 
+      description: "Set the token in the request's authorization header as follows: Authorization: Bearer {a_valid_access_token}"
+  responses: 
+    404: 
+      description: Unauthorized
+settings: 
+  authorizationUri: https://{domain}.zendesk.com/oauth/authorizations/new
+  accessTokenUri: https://{domain}.zendesk.com/oauth/tokens
+  authorizationGrants: [ code ]
+  scopes: [ read , write ]

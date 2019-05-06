@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "required": true,
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "compactLayouts": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "array"
+      }
+    },
+    "defaultCompactLayoutId": {
+      "type": "string",
+      "required": false
+    },
+    "recordTypeCompactLayoutMappings": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "recordTypeId": {
+              "type": "string",
+              "required": false
+            },
+            "compactLayoutId": {
+              "type": "string",
+              "required": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

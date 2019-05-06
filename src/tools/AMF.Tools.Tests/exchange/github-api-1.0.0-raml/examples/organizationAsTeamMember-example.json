@@ -1,0 +1,10 @@
+{
+  "message" : "Cannot add an organization as a member." ,
+  "errors" : [
+    {
+      "code" : "org" ,
+      "field" : "user" ,
+      "resource" : "TeamMember"
+    }
+  ]
+}

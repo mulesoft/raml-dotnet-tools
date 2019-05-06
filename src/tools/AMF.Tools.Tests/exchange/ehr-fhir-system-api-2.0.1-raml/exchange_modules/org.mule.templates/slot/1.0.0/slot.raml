@@ -1,0 +1,47 @@
+#%RAML 1.0 DataType
+
+#This file is located at dataTypes/resources/Slot.raml
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+type: FHIR_commons.DomainResource
+description: |
+  A slot of time on a schedule that may be available for booking appointments
+properties:
+  identifier?:
+    description: External Ids for this item
+    type: FHIR_commons.Identifier[]
+  serviceCategory?:
+    description: A broad categorisation of the service that is to be performed during this appointment
+    type: FHIR_commons.CodeableConcept
+  serviceType?:
+    description: |
+      The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself).
+      If provided then this overrides the value provided on the availability resource
+    type: FHIR_commons.CodeableConcept[]
+  specialty?:
+    description: The specialty of a practitioner that would be required to perform the service requested in this appointment
+    type: FHIR_commons.CodeableConcept[]
+  appointmentType?:
+    description: The style of appointment or patient that may be booked in the slot (not service type)
+    type: FHIR_commons.CodeableConcept
+  schedule?:
+    description: The schedule resource that this slot defines an interval of status information
+    type: FHIR_commons.Reference
+  status:
+    description: Status of slot
+    type: FHIR_commons.code
+    enum: [busy, free, busy-unavailable, busy-tentative, entered-in-error]
+  start:
+    description: Date/Time that the slot is to begin
+    type: FHIR_commons.instant
+  end:
+    description: Date/Time that the slot is to conclude
+    type: FHIR_commons.instant
+  overbooked?:
+    description: This slot has already been overbooked, appointments are unlikely to be accepted for this time
+    type: boolean
+  comment?:
+    description: Comments on the slot to describe any extended information. Such as custom constraints on the slot
+    type: string

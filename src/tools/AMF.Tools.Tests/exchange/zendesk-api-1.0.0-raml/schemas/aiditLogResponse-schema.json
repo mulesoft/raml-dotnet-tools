@@ -1,0 +1,53 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "audit_log" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "actor_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "source_id" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "source_type" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "source_label" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "action" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "changes_description" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "ip_address" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "url" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    }
+  }
+}

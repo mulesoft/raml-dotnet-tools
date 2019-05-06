@@ -1,0 +1,313 @@
+#%RAML 0.8
+title: Yammer
+version: v1
+baseUri: https://www.yammer.com/api/{version}
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+resourceTypes:
+  - base: !include resourceTypes/base.raml
+  - messages: !include resourceTypes/messages.raml
+traits:
+  - subscriptionManagement: !include traits/subscriptionManagement.raml
+  - acceptUserId: !include traits/acceptUserId.raml
+  - acceptsPage: !include traits/acceptsPage.raml
+  - acceptsMessageId: !include traits/acceptsMessageId.raml
+  - acceptsGroupId: !include traits/acceptsGroupId.raml
+securedBy: [ oauth_2_0 ]
+/messages{mediaTypeExtension}: 
+  type: messages
+  description: "All public messages in the user's (whose access token is being used to make the API call henceforth referred to as current user) Yammer network. Corresponds to conversations in the Yammer web interface."
+  post: 
+    description: Create a new message. The response body will include the new message formatted the same way as message polling above. This allows your app to immediately display the newly-posted message back to the user.
+    body: 
+      application/x-www-form-urlencoded: 
+/pending_attachments: 
+  description: Create a new pending attachment.
+  post: 
+    body: 
+      multipart/form-data: 
+    responses: 
+      201: 
+  /{id}: 
+    description: Delete a pending attachment owned by the current user.
+    delete: 
+      responses: 
+        200: 
+/threads/{id}{mediaTypeExtension}: 
+  type: base
+  description: The conversation view for a thread specified by the numeric string ID.
+  get: 
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+/topics/{id}{mediaTypeExtension}: 
+  type: base
+  description: The users that have used the topic specified by the numeric string ID.
+  get: 
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+/group_memberships{mediaTypeExtension}: 
+  type: base
+  description: Allow current user to join or leave a specified group
+  post: 
+    is: [ acceptsGroupId ]
+    description: Join the group specified by the numeric string ID.
+    responses: 
+      200: 
+  delete: 
+    is: [ acceptsGroupId ]
+    description: Leave a group.
+    responses: 
+      200: 
+/users{mediaTypeExtension}: 
+  type: base
+  description: "Retrieve users in the current user's Yammer network. Supports page, sort_by, reverse, and letter parameters."
+  get: 
+    is: [ acceptsPage ]
+    description: "Retrieve users in the current user's Yammer network. Supports page, sort_by, reverse, and letter parameters."
+    queryParameters: 
+      sort_by: 
+      reverse: 
+        type: boolean
+      letter: 
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+  post: 
+    description: Create a new user. Current user should be a verified admin in a paid Yammer network to perform this action.
+    body: 
+      application/json: 
+/relationships{mediaTypeExtension}: 
+  type: base
+  description: Show org chart relationships. Defaults to user_current, supports user_id.
+  get: 
+    is: [ acceptUserId ]
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+  post: 
+    is: [ acceptUserId ]
+    description: Add an org chart relationship. Specify id of the user for whom the relationship is being added as user_id, if the user is not the current user. Use [ subordinate | superior | colleague ] to create the relationship.
+    queryParameters: 
+      subordinate: 
+        description: Pass email addresses as the value of the subordinate, superior or colleague parameters to add them to your org chart. All three can be passed in one request, and each can be passed multiple times.
+        repeat: true
+      superior: 
+        description: Pass email addresses as the value of the subordinate, superior or colleague parameters to add them to your org chart. All three can be passed in one request, and each can be passed multiple times
+        repeat: true
+      colleague: 
+        description: Pass email addresses as the value of the subordinate, superior or colleague parameters to add them to your org chart. All three can be passed in one request, and each can be passed multiple times.
+/relationships/{id}{mediaTypeExtension}: 
+  type: base
+  description: Remove the relationship specified by relationship_type from the user specified by the numeric string ID.
+  delete: 
+    is: [ acceptUserId ]
+    queryParameters: 
+      type: 
+        description: relationship type
+        enum: 
+          - superior
+          - colleague
+          - subordinate
+/streams/notifications{mediaTypeExtension}: 
+  type: base
+  get: 
+    description: Get the notifications feed for the current user.
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+/suggestions{mediaTypeExtension}: 
+  type: base
+  description: Show suggested groups to join and users to follow.
+  get: 
+    queryParameters: 
+      limit: 
+        description: Return only the specified number of suggestions.
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+/suggestions/{id}{mediaTypeExtension}: 
+  type: base
+  description: Decline a suggestion.
+  delete: 
+/subscriptions: 
+  post: 
+    is: [ subscriptionManagement ]
+    description: Subscribe to a user or topic. Supports target_type and target_id parameters.
+  delete: 
+    is: [ subscriptionManagement ]
+    description: Unsubscribe to a user or topic. Supports target_type and target_id parameters.
+  /to_topic/{id}{mediaTypeExtension}: 
+    type: base
+    description: Check to see if you are subscribed to topic with the given id. Returns 404 when you are not following a given topic.
+    get: 
+      responses: 
+        200: 
+        404: 
+  /to_user/{id}{mediaTypeExtension}: 
+    type: base
+    description: Check to see if you are subscribed to the user with the given id. Returns 404 when you are not following a given user. If you are in a Community that is set to follow everyone all requests will return 404.
+    get: 
+      responses: 
+        200: 
+        404: 
+  /to_thread/{id}{mediaTypeExtension}: 
+    type: base
+    description: Check to see if you are subscribed to thread with the given id. Returns 404 when you are not following a given thread. If you are in a Community that is set to follow everyone all requests will return 404.
+    get: 
+      responses: 
+        200: 
+        404: 
+/autocomplete/ranked: 
+  description: Return typeahead suggestions for the prefix passed
+  get: 
+    queryParameters: 
+      prefix: 
+        description: 'A string for matching against the searchable fields in the specified models. For example, specifying the parameter prefix=ab would return autocomplete results for models that have searchable fields that begin with "ab".'
+        required: true
+      models: 
+        description: "modelName:count -  Accepts a comma separated list of the models that should be searched on and the how many results should be returned for each model. This is specified in the format modelName1:count1,modelName2:count2 where count is an integer and modelName can be the following:"
+        required: true
+    responses: 
+      200: 
+        body: 
+          application/json: 
+      400: 
+        description: If prefix or models parameter is missing, a 400 -- Bad Request is returned.
+/invitations{mediaTypeExtension}: 
+  type: base
+  description: Sends an email invitation to a user who has not yet joined the current users yammer network. If the current user is a verified admin in a paid yammer network, users with external email domains can be added. If the current user is not, only email addresses for official company domains will be allowed.
+  post: 
+    queryParameters: 
+      email: 
+        description: The email address of the user being invited. This can be specified multiple times to invite multiple users, or using email1 through email20.
+/search{mediaTypeExtension}: 
+  type: base
+  description: The search resource will return a list of messages, users, topics and groups that match the users search query.
+  get: 
+    queryParameters: 
+      "search ": 
+        description: The search query.
+      page: 
+        description: Only 20 results of each type will be returned for each page, but a total count is returned with each query. page=1 (the default) will return items 1-20, page=2 will return items 21-30, etc.
+        type: integer
+      num_per_page: 
+        description: This allows you to limit the number of results of each type per page, up to a maximum of 20, the default value.
+        type: number
+        default: 20
+/networks/current{mediaTypeExtension}: 
+  type: base
+  description: Returns a list of networks to which the current user has access. Supports included_suspended parameter.
+  get: 
+    queryParameters: 
+      include_suspended: 
+        description: Include networks the user is suspended in.
+        type: boolean
+      exclude_own_messages_from_unseen: 
+        description: Exclude the users own messages from the unseen count. This is good for unread badges.
+        type: boolean
+    responses: 
+      200: 
+/messages: 
+  /my_feed{mediaTypeExtension}: 
+    type: messages
+    description: "The user's feed, based on the selection they have made between  conversations."
+  /received{mediaTypeExtension}: 
+    type: messages
+    description: All messages received by the user.
+  /algo{mediaTypeExtension}: 
+    type: messages
+    description: The algorithmic feed for the user that corresponds to conversations, which is what the vast majority of users will see in the Yammer web interface.
+  /sent{mediaTypeExtension}: 
+    type: messages
+    description: All messages sent by the user. Alias for /api/v1/messages/from_user/logged-in_user_id.format.
+  /private{mediaTypeExtension}: 
+    type: messages
+    description: All messages received by the user.
+  /{id}: 
+    description: Remove a message. The message must be owned by the current user.
+    delete: 
+      description: |
+        Remove a message. The message must be owned by the current user.
+        If your app does not support the DELETE method you can do a POST with the parameter _method=DELETE.
+      responses: 
+        200: 
+    post: 
+      description: Send the current user a copy of the message specified by the numeric string ID.
+  /liked_by/current{mediaTypeExtension}: 
+    type: base
+    description: Marks the specified message as liked by the current user.
+    post: 
+      is: [ acceptsMessageId ]
+    delete: 
+      is: [ acceptsMessageId ]
+  /about_topic/{id}{mediaTypeExtension}: 
+    type: messages
+    description: The feed of messages for a hashtag specified by the numeric string ID.
+    get: 
+  /following{mediaTypeExtension}: 
+    type: messages
+    description: The  feed which is conversations involving people, groups and topics that the user is following.
+/users: 
+  /in_group/{id}{mediaTypeExtension}: 
+    type: base
+    description: Users in a group. Supports the page parameter.
+    get: 
+      is: [ acceptsPage ]
+  /{id}{mediaTypeExtension}: 
+    type: base
+    description: View data about a user.
+    get: 
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+    put: 
+      description: Update information about a user. The target user should be the current user or a verified admin in a paid Yammer network.
+      body: 
+        application/json: 
+      responses: 
+        200: 
+    delete: 
+      description: Suspend or delete a user. Current user should be a verified admin in a paid Yammer network to perform this action.
+      responses: 
+        200: 
+  /current{mediaTypeExtension}: 
+    type: base
+    description: View data about the current user.
+    get: 
+      description: View data about the current user.
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+  /by_email{mediaTypeExtension}: 
+    type: base
+    description: Alias to /api/v1/users/current users id.format. Supports include_followed_users, include_followed_tags, and include_group_memberships parameters.
+    get: 
+      queryParameters: 
+        email: 
+          required: true
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+documentation: 
+  - title: Headline
+    content: !include docs/headline.md

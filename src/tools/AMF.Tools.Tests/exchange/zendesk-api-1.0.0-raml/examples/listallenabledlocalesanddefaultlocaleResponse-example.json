@@ -1,0 +1,14 @@
+{
+  "locales" : [
+    "de-de" ,
+    "en-uk" ,
+    "en-us" ,
+    "es-419" ,
+    "es-es" ,
+    "fr-fr" ,
+    "it-it" ,
+    "ja-jp" ,
+    "pt-br"
+  ] ,
+  "default_locale" : "it-it"
+}

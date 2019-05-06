@@ -1,0 +1,20 @@
+{
+  "attributes" : {
+    "type" : "Merchandise__c" ,
+    "url" : "/services/data/v20.0/sobjects/Merchandise__c/a00D0000008oWP8IAM"
+  } ,
+  "Id" : "a00D0000008oWP8IAM" ,
+  "OwnerId" : "005D0000001KyEIIA0" ,
+  "IsDeleted" : false ,
+  "Name" : "Example Merchandise" ,
+  "CreatedDate" : "2012-07-12T17:49:01.000+0000" ,
+  "CreatedById" : "005D0000001KyEIIA0" ,
+  "LastModifiedDate" : "2012-07-12T17:49:01.000+0000" ,
+  "LastModifiedById" : "005D0000001KyEIIA0" ,
+  "SystemModstamp" : "2012-07-12T17:49:01.000+0000" ,
+  "Description__c" : "Merch with external ID" ,
+  "Price__c" : 10.0 ,
+  "Total_Inventory__c" : 100.0 ,
+  "Distributor__c" : null ,
+  "MerchandiseExtID__c" : 123.0
+}

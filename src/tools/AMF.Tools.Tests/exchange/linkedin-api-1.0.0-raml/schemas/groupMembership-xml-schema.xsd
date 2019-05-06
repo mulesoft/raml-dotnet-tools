@@ -1,0 +1,36 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="group-membership">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="group">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:int" name="id"/>
+              <xs:sequence minOccurs="0">
+              <xs:element type="xs:string" name="name"/>
+              </xs:sequence>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="show-group-logo-in-profile"/>
+        <xs:element name="email-digest-frequency">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="code"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="email-announcements-from-managers"/>
+        <xs:element type="xs:string" name="allow-messages-from-members"/>
+        <xs:element type="xs:string" name="email-for-every-new-post"/>
+        <xs:element name="membership-state">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="code"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

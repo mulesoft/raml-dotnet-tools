@@ -1,0 +1,16 @@
+{
+  "description": "the description for this gist",
+  "files": {
+    "file1.txt": {
+      "content": "updated file contents"
+    },
+    "old_name.txt": {
+      "filename": "new_name.txt",
+      "content": "modified contents"
+    },
+    "new_file.txt": {
+      "content": "a new file"
+    },
+    "delete_this_file.txt": null
+  }
+}

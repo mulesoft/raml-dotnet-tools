@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "previous_cursor": {
+      "type": "integer"
+    },
+    "ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "previous_cursor_str": {
+      "type": "string"
+    },
+    "next_cursor": {
+      "type": "integer"
+    },
+    "next_cursor_str": {
+      "type": "string"
+    }
+  }
+}

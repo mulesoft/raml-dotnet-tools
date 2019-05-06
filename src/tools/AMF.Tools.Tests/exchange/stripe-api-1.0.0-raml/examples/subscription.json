@@ -1,0 +1,27 @@
+{
+  "id": "su_2i0bDIlnaMV0Vq",
+  "plan": {
+    "interval": "month",
+    "name": "Java Bindings Plan",
+    "amount": 100,
+    "currency": "usd",
+    "id": "JAVA-PLAN-dbfd01a0-c28c-421d-8ae9-5a999575fa1b",
+    "object": "plan",
+    "livemode": false,
+    "interval_count": 1,
+    "trial_period_days": null
+  },
+  "object": "subscription",
+  "start": 1381139171,
+  "status": "active",
+  "customer": "cus_2hzElrZhmfV9my",
+  "cancel_at_period_end": false,
+  "current_period_start": 1381139171,
+  "current_period_end": 1383817571,
+  "ended_at": null,
+  "trial_start": null,
+  "trial_end": null,
+  "canceled_at": null,
+  "quantity": 1,
+  "application_fee_percent": null
+}

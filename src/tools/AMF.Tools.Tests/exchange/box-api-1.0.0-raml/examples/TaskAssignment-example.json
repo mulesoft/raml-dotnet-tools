@@ -1,0 +1,29 @@
+{
+    "type": "task_assignment",
+    "id": "2698512",
+    "item": {
+        "type": "file",
+        "id": "8018809384",
+        "sequence_id": "0",
+        "etag": "0",
+        "sha1": "7840095ee096ee8297676a138d4e316eabb3ec96",
+        "name": "scrumworksToTrello.js"
+    },
+    "assigned_to": {
+        "type": "user",
+        "id": "1992432",
+        "name": "rhaegar@box.com",
+        "login": "rhaegar@box.com"
+    },
+    "message": "hello!!!",
+    "completed_at": null,
+    "assigned_at": "2013-05-10T11:43:41-07:00",
+    "reminded_at": null,
+    "resolution_state": "incomplete",
+    "assigned_by": {
+        "type": "user",
+        "id": "11993747",
+        "name": "sean",
+        "login": "sean@box.com"
+    }
+}

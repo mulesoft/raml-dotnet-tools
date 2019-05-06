@@ -1,0 +1,22 @@
+[
+    {
+        "path": "api.raml",
+        "type": "FILE"
+    },
+    {
+        "path": "types",
+        "type": "FOLDER"
+    },
+    {
+        "path": "types/customer.raml",
+        "type": "FILE"
+    },
+    {
+        "path": "types/person.raml",
+        "type": "FILE"
+    },
+    {
+        "path": "types/address.raml",
+        "type": "FILE"
+    }
+]

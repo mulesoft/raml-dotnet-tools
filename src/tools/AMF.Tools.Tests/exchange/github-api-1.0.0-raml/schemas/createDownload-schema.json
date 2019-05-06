@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+        "url": {
+            "type": "string"
+        },
+        "html_url": {
+            "type": "string"
+        },
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "size": {
+            "type": "integer"
+        },
+        "download_count": {
+            "type": "integer"
+        },
+        "content_type": {
+            "type": "string"
+        },
+        "policy": {
+            "type": "string"
+        },
+        "signature": {
+            "type": "string"
+        },
+        "bucket": {
+            "type": "string"
+        },
+        "accesskeyid": {
+            "type": "string"
+        },
+        "path": {
+            "type": "string"
+        },
+        "acl": {
+            "type": "string"
+        },
+        "expirationdate": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+        },
+        "prefix": {
+            "type": "string"
+        },
+        "mime_type": {
+            "type": "string"
+        },
+        "redirect": {
+            "type": "boolean"
+        },
+        "s3_url": {
+            "type": "string"
+        }
+    }
+}

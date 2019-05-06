@@ -1,0 +1,433 @@
+#%RAML 1.0
+# RAML spec for the Pharmacy Coverage API
+# see http://raml.org/spec.html
+title: PokitDok Pharmacy Coverage API
+description: The Pharmacy Coverage endpoint can be used to determine medication coverage, out of pocket cost, and plan specific limitations.
+version: 4.0.0
+baseUri: https://platform.pokitdok.com/api/v4
+securedBy: [oauth_2_0]
+securitySchemes:
+  oauth_2_0:
+    description: PokitDok supports the OAuth 2.0 client credentials flow for authenticating all API requests.
+    type: OAuth 2.0
+    describedBy:
+      responses:
+        401:
+          description: Bad or expired token. This can happen if the user or PokitDok revoked or expired an access token. To fix, re-authenticate the user.
+        403:
+          description: Bad OAuth request (wrong consumer key, bad nonce, expired timestamp, etc). Unfortunately, re-authenticating won't help here.
+    settings:
+      accessTokenUri: https://platform.pokitdok.com/oauth2/token
+      authorizationGrants: [client_credentials]
+mediaType: application/json
+/pharmacy/coverage:
+  description: Determine medication coverage and out of pocket cost.
+  post:
+    displayName: Get Coverage
+    body:
+      example: |
+        {
+          "pharmacy_npi": "1306905203",
+          "prescriber": {
+            "npi": "1912301953",
+            "last_name": "PokitDok"
+          },
+          "member": {
+            "gender": "Male",
+            "last_name": "Doe",
+            "date_of_birth": "19901126"
+          },
+          "insurance": {
+            "bin_number": "017010",
+            "pcn": "05180000",
+            "cardholder_id": "123456789",
+            "group_id": "1234567"
+          },
+          "drugs": [
+            {
+              "ndc": "00003089321",
+              "quantity_dispensed": 30
+            },
+            {
+              "ndc": "50090143700",
+              "quantity_dispensed": 30
+            }
+          ]
+        }
+      type: object
+      properties:
+        pharmacy_npi:
+          type: string
+          required: true
+          description: NPI of Pharmacy (PokitDok will supply).
+        prescriber:
+          type: object
+          required: true
+          description: The prescriber data object.
+          properties:
+            last_name:
+              type: string
+              required: true
+              description: Last name of prescriber.
+            npi:
+              type: string
+              required: true
+              description: NPI of prescribing physician.
+        member:
+          required: true
+          type: object
+          description: The member data object.
+          properties:
+            first_name:
+              type: string
+              required: false
+              description: The member's first name as specified on their policy.
+              example: John
+            last_name:
+              type: string
+              required: true
+              description: The member's last name as specified on their policy.
+              example: Doe
+            date_of_birth:
+              type: string
+              pattern: ^\d{8}$
+              required: true
+              description: The member's birth date as specified on their policy (in the format YYYYMMDD).
+              example: '19901126'
+            gender:
+              type: string
+              enum: [Male, Female, Unknown]
+              required: true
+              description: The member's gender.
+              example: Female
+            address:
+              type: object
+              required: false
+              description: The member's address object.
+              properties:
+                address_lines:
+                  type: array
+                  items: string
+                  required: false
+                  description: List of strings representing the member's street address. (e.g. ["123 MAIN ST.", "Suite 4"]).
+                city:
+                  type: string
+                  required: false
+                  description: The member's city.
+                state:
+                  type: string
+                  required: false
+                  description: The member's state.
+                zipcode:
+                  type: string
+                  required: false
+                  description: The member's zipcode.
+        insurance:
+          type: object
+          required: true
+          description: The member's insurance object.
+          properties:
+            group_id:
+              type: string
+              required: false
+              description: Group ID (on member's card).
+              example: '1234567'
+            cardholder_id:
+              type: string
+              required: true
+              description: Cardholder ID (on member's card).
+              example: '123456789'
+            bin_number:
+              type: string
+              required: true
+              description: Bank Information Number (RxBIN -- on member's card).
+              example: '017010'
+            pcn:
+              type: string
+              required: true
+              description: Processor Control Number (RxPCN -- on member's card). If no PCN is included on member's card, submit an empty field.
+              example: Jane
+            patient_relationship_code:
+              type: string
+              required: false
+              description: Patient relationship code.
+        drugs:
+          type: array
+          minItems: 1
+          maxItems: 4
+          required: true
+          description: The drugs object.
+          items:
+            type: object
+            properties:
+              ndc:
+                type: string
+                pattern: ^\d{11}$
+                required: true
+                description: 11 digit NDC of medication.
+              ingredient_cost_submitted:
+                required: false
+                type: number
+                description: Price billed by pharmacy. Useful for calculating coinsurance.
+              quantity_dispensed:
+                required: true
+                type: number
+                description: Quantity of medication dispensed.
+              submission_clarification_codes:
+                type: array
+                items: string
+                required: false
+                description: List of submission clarification codes.
+              prior_authorization_number_submitted:
+                type: string
+                required: false
+                description: Prior authorization number as specified by the payer.
+              dispense_as_written_product_selection_code:
+                type: string
+                required: false
+                description: Dispense as written code.
+              scheduled_prescription_id_number:
+                type: string
+                required: false
+                description: Scheduled rx ID number (as required by payer).
+    responses:
+      200:
+        body:
+          example: |
+            {
+              "meta": {
+                "processing_time": 1234,
+                "application_mode": "production",
+                "rate_limit_cap": 123,
+                "rate_limit_reset": 1234567890,
+                "rate_limit_amount": 123,
+                "activity_id": "507f1f77bcf86cd799439011"
+              },
+              "data": {
+                "drugs": [
+                  {
+                    "prescription_service_reference_number": "12345",
+                    "ndc": "00003089321",
+                    "quantity_dispensed": "30",
+                    "additional_information": [
+                      {
+                        "information": "UNDER MAX POCKET"
+                      }
+                    ],
+                    "patient_pay_amount": {
+                      "amount": "50.00",
+                      "currency": "USD",
+                      "display": "$50.00"
+                    },
+                    "amount_of_copay": {
+                      "amount": "50.00",
+                      "currency": "USD",
+                      "display": "$50.00"
+                    }
+                  },
+                  {
+                    "prescription_service_reference_number": "12346",
+                    "ndc": "50090143700",
+                    "quantity_dispensed": "30",
+                    "rejections": [
+                      "Product/Service Not Covered - Plan/Benefit Exclusion"
+                    ]
+                  }
+                ]
+              }
+            }
+          type: object
+          properties:
+            meta:
+              type: object
+              properties:
+                processing_time:
+                  type: number
+                  required: true
+                application_mode:
+                  type: string
+                  required: true
+                rate_limit_cap:
+                  type: number
+                  required: true
+                rate_limit_reset:
+                  type: number
+                  required: true
+                rate_limit_amount:
+                  type: number
+                  required: true
+                activity_id:
+                  type: string
+                  required: true
+            data:
+              type: object
+              properties:
+                drugs:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      ndc:
+                        type: string
+                        pattern: ^\d{11}$
+                        required: true
+                        description: 11 digit NDC of medication.
+                      quantity_dispensed:
+                        type: string
+                        required: true
+                        description: Quantity of medication dispensed.
+                      rejections:
+                        type: array
+                        items: string
+                        required: false
+                        description: List of reasons why price was not available/not returned (if applicable).
+                      prescription_service_reference_number:
+                        type: string
+                        required: false
+                        description: Prescription service reference number (Rx billing number).
+                      patient_pay_amount:
+                        type: object
+                        required: false
+                        description: Information about the patient's cost for a medication.
+                        properties:
+                          amount:
+                            type: string
+                            required: false
+                            description: Amount a patient would expect to pay for a drug.
+                          currency:
+                            type: string
+                            required: false
+                            description: Currency that is returned.
+                          display:
+                            type: string
+                            required: false
+                            description: Patient pay amount formatted to be displayed to user.
+                      amount_of_copay:
+                        type: object
+                        required: false
+                        description: Information about the patient's copay (if copay is returned).
+                        properties:
+                          amount:
+                            type: string
+                            required: false
+                            description: Copay amount.
+                          currency:
+                            type: string
+                            required: false
+                            description: Currency that is returned.
+                          display:
+                            type: string
+                            required: false
+                            description: Copay amount formatted to be displayed to the user.
+                      amount_of_coinsurance:
+                        type: array
+                        required: false
+                        description: Information about the patient's coinsurance (if coinsurance is returned).
+                        items:
+                          type: object
+                          properties:
+                            amount:
+                              type: number
+                              required: false
+                              description: Coinsurance amount.
+                            currency:
+                              type: string
+                              required: false
+                              description: Currency that is returned.
+                            display:
+                              type: string
+                              required: false
+                              description: Coinsurance amount formatted to be displayed to the user.
+                      additional_information:
+                        type: array
+                        required: false
+                        description: List of additional information objects.
+                        items:
+                          type: object
+                          properties:
+                            qualifier:
+                              type: string
+                              required: false
+                              description: Information clarifying the additional_information segment that follows.
+                            information:
+                              type: string
+                              required: false
+                              description: Additional info message text (if applicable).
+                      history:
+                        type: array
+                        required: false
+                        description: Information about the patient's history regarding the specified medication.
+                        items:
+                          type: object
+                          properties:
+                            previous_date_of_fill:
+                              type: string
+                              required: false
+                              description: sDate that the patient last filled a prescription for the specified drug.
+                            quantity_of_previous_fill:
+                              type: number
+                              required: false
+                              description: Quantity of the previous fill for the specified drug.
+                            free_text:
+                              type: string
+                              required: false
+                              description: Free text intended to give more information about the fill requirements.
+                            additional_text:
+                              type: string
+                              required: false
+                              description: Additional information about the fill requirements.
+      422:
+        body:
+          description: An error was encountered while processing the client's submitted data.
+          example: |
+            {
+              "data": {
+                "errors": {
+                  "validation": {
+                    "prescriber": [
+                      {
+                        "npi": [
+                          "prescriber NPI fails validation check"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "meta": {
+                "processing_time": 1234,
+                "application_mode": "production",
+                "rate_limit_cap": 123,
+                "rate_limit_reset": 1234567890,
+                "rate_limit_amount": 123
+              }
+            }
+          type: object
+          properties:
+            meta:
+              type: object
+              properties:
+                processing_time:
+                  type: number
+                  required: true
+                application_mode:
+                  type: string
+                  required: true
+                rate_limit_cap:
+                  type: number
+                  required: true
+                rate_limit_reset:
+                  type: number
+                  required: true
+                rate_limit_amount:
+                  type: number
+                  required: true
+            data:
+              type: object
+              properties:
+                errors:
+                  type: object
+                  properties:
+                    validation:
+                      type: object
+                      required: false

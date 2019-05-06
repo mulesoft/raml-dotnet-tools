@@ -1,0 +1,153 @@
+{
+            "required" : true ,
+            "$schema" : "http://json-schema.org/draft-03/schema" ,
+            "type" : "object" ,
+            "properties" : {
+              "creditCard" : {
+                "type" : "object" ,
+                "required" : false
+              } ,
+              "invoiceTargetDate" : {
+                "type" : "string" ,
+                "required" : false
+              } ,
+              "name" : {
+                "type" : "string" ,
+                "required" : true
+              } ,
+              "billCycleDay" : {
+                "type" : "string" ,
+                "required" : false
+              } ,
+              "soldToContact" : {
+                "type" : "object" ,
+                "required" : false
+              } ,
+              "billToContact" : {
+                "type" : "object" ,
+                "required" : true ,
+                "properties" : {
+                  "country" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "lastName" : {
+                    "type" : "string" ,
+                    "required" : true
+                  } ,
+                  "workEmail" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "address1" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "address2" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "state" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "firstName" : {
+                    "type" : "string" ,
+                    "required" : true
+                  } ,
+                  "city" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "mobilePhone" : {
+                    "type" : "string" ,
+                    "required" : false
+                  }
+                }
+              } ,
+              "invoiceCollect" : {
+                "type" : "boolean" ,
+                "required" : false
+              } ,
+              "notes" : {
+                "type" : "string" ,
+                "required" : false
+              } ,
+              "subscription" : {
+                "type" : "object" ,
+                "required" : false ,
+                "properties" : {
+                  "subscribeToRatePlans" : {
+                    "type" : "array" ,
+                    "required" : false ,
+                    "items" : 
+                      {
+                        "type" : "object" ,
+                        "properties" : {
+                          "productRatePlanId" : {
+                            "type" : "string" ,
+                            "required" : true
+                          } ,
+                          "chargeOverrides" : {
+                            "type" : "array" ,
+                            "required" : false ,
+                            "items" : 
+                              {
+                                "type" : "object" ,
+                                "properties" : {
+                                  "productRatePlanChargeId" : {
+                                    "type" : "string" ,
+                                    "required" : true
+                                  } ,
+                                  "quantity" : {
+                                    "type" : "number" ,
+                                    "required" : true
+                                  }
+                                }
+                              }
+                            
+                          }
+                        }
+                      }
+                    
+                  } ,
+                  "contractEffectiveDate" : {
+                    "type" : "string" ,
+                    "required" : true
+                  } ,
+                  "initialTerm" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "autoRenew" : {
+                    "type" : "boolean" ,
+                    "required" : false
+                  } ,
+                  "termType" : {
+                    "type" : "string" ,
+                    "required" : true
+                  } ,
+                  "renewalTerm" : {
+                    "type" : "string" ,
+                    "required" : false
+                  } ,
+                  "myCustomField__c" : {
+                    "type" : "string" ,
+                    "required" : false
+                  }
+                }
+              } ,
+              "paymentTerm" : {
+                "type" : "string" ,
+                "required" : false
+              } ,
+              "currency" : {
+                "type" : "string" ,
+                "required" : true
+              } ,
+              "myCustomField__c" : {
+                "type" : "string" ,
+                "required" : false
+              }
+            }
+          }

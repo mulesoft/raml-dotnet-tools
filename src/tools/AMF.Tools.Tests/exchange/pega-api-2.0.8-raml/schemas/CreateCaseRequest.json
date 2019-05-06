@@ -1,0 +1,19 @@
+{
+  "id": "CreateCaseRequest",
+  "title": "CreateCaseRequest",
+  "type": "object",
+  "properties": {
+    "caseTypeID": {
+      "type": "string"
+    },
+    "processID": {
+      "type": "string"
+    },
+    "parentCaseID": {
+      "type": "string"
+    },
+    "content": {
+      "type": "object"
+    }
+  }
+}

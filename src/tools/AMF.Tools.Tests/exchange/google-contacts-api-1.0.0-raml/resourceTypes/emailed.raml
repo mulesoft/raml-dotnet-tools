@@ -1,0 +1,12 @@
+usage: |
+  Use this type as base for resources with "e-mail" parameter in path
+type: base
+description: |
+  Description of "email" URI parameter which is common for all resources
+uriParameters: 
+  userEmail: 
+    displayName: User e-mail
+    description: |
+      User e-mail for performing operations.
+      **Note**: The special userEmail value __default__ can be used to refer to the authenticated user.
+    required: true

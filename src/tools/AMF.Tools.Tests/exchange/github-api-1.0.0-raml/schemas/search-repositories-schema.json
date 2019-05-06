@@ -1,0 +1,115 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "total_count": {
+      "type": "integer"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "full_name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "avatar_url": {
+                "type": "string"
+              },
+              "gravatar_id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "received_events_url": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          },
+          "private": {
+            "type": "boolean"
+          },
+          "html_url": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "fork": {
+            "type": "boolean"
+          },
+          "url": {
+            "type": "string"
+          },
+          "created_at": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+          },
+          "pushed_at": {
+            "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+            "type": "string"
+          },
+          "homepage": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "watchers_count": {
+            "type": "integer"
+          },
+          "language": {
+            "type": "string"
+          },
+          "forks_count": {
+            "type": "integer"
+          },
+          "open_issues_count": {
+            "type": "integer"
+          },
+          "forks": {
+            "type": "integer"
+          },
+          "open_issues": {
+            "type": "integer"
+          },
+          "watchers": {
+            "type": "integer"
+          },
+          "master_branch": {
+            "type": "string"
+          },
+          "default_branch": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "list": [
+        {
+            "author": {
+                "login": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "avatar_url": {
+                    "type": "string"
+                },
+                "gravatar_id": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "total": {
+                "description": "The Total number of commits authored by the contributor.",                
+                "type": "integer"
+            },
+            "weeks": [
+                {
+                    "properties": {
+                        "w": {
+                            "description": "Start of the week.",                            
+                            "type": "string"
+                        },
+                        "a": {
+                            "description": "Number of additions.",                            
+                            "type": "integer"
+                        },
+                        "d": {
+                            "description": "Number of deletions.",                            
+                            "type": "integer"
+                        },
+                        "c": {
+                            "description": "Number of commits.",                            
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            ],
+            "type": "array"
+        }
+    ]
+}

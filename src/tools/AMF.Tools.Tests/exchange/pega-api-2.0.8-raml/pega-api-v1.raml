@@ -1,0 +1,1432 @@
+#%RAML 1.0
+title: Pega API
+version: v1.1
+documentation:
+- title: Pega API
+  content: The Pega API provides a set of built-in REST services for Pega 7 applications. All APIs require authentication. Provide the credentials for a Pega operator in the Authorization header for each request. Pega recommends accessing APIs using TLS 1.2.
+baseUri: https://pegahost/api/v1
+securitySchemes:
+  basic:
+    displayName: HTTP Basic Authentication
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+securedBy: [ basic ]
+types:
+  Action:
+    displayName: Action
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  Assignment:
+    displayName: Assignment
+    type: object
+    properties:
+      caseID:
+        required: false
+        displayName: caseID
+        type: string
+      executedDeadlineTime:
+        required: false
+        displayName: executedDeadlineTime
+        type: datetime
+      executedGoalTime:
+        required: false
+        displayName: executedGoalTime
+        type: datetime
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      routedTo:
+        required: false
+        displayName: routedTo
+        type: string
+      scheduledDeadlineTime:
+        required: false
+        displayName: scheduledDeadlineTime
+        type: datetime
+      scheduledGoalTime:
+        required: false
+        displayName: scheduledGoalTime
+        type: datetime
+      type:
+        required: false
+        displayName: type
+        type: string
+      urgency:
+        required: false
+        displayName: urgency
+        type: string
+      instructions:
+        required: false
+        displayName: instructions
+        type: string
+  AssignmentAction:
+    displayName: AssignmentAction
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      type:
+        required: false
+        displayName: type
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  AssignmentActionRequest:
+    displayName: AssignmentActionRequest
+    type: object
+    properties:
+      content:
+        required: false
+        displayName: content
+        type: object
+  AssignmentResponse:
+    displayName: AssignmentResponse
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      caseID:
+        required: false
+        displayName: caseID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      type:
+        required: false
+        displayName: type
+        type: string
+      routedTo:
+        required: false
+        displayName: routedTo
+        type: string
+      instructions:
+        required: false
+        displayName: instructions
+        type: string
+      scheduledGoalTime:
+        required: false
+        displayName: scheduledGoalTime
+        type: datetime
+      executedGoalTime:
+        required: false
+        displayName: executedGoalTime
+        type: datetime
+      scheduledDeadlineTime:
+        required: false
+        displayName: scheduledDeadlineTime
+        type: datetime
+      executedDeadlineTime:
+        required: false
+        displayName: executedDeadlineTime
+        type: datetime
+      urgency:
+        required: false
+        displayName: urgency
+        type: string
+      actions:
+        required: false
+        displayName: actions
+        type: array
+        items:
+          type: AssignmentAction
+  AssignmentsResponse:
+    displayName: AssignmentsResponse
+    type: object
+    properties:
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      assignments:
+        required: false
+        displayName: assignments
+        type: array
+        items:
+          type: Assignment
+  Case:
+    displayName: Case
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      parentCaseID:
+        required: false
+        displayName: parentCaseID
+        type: string
+      caseTypeID:
+        required: false
+        displayName: caseTypeID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      stage:
+        required: false
+        displayName: stage
+        type: string
+      status:
+        required: false
+        displayName: status
+        type: string
+      urgency:
+        required: false
+        displayName: urgency
+        type: string
+      createTime:
+        required: false
+        displayName: createTime
+        type: datetime
+      createdBy:
+        required: false
+        displayName: createdBy
+        type: string
+      lastUpdateTime:
+        required: false
+        displayName: lastUpdateTime
+        type: datetime
+      lastUpdatedBy:
+        required: false
+        displayName: lastUpdatedBy
+        type: string
+  CaseAssignment:
+    displayName: CaseAssignment
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      type:
+        required: false
+        displayName: type
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      routedTo:
+        required: false
+        displayName: routedTo
+        type: string
+      instructions:
+        required: false
+        displayName: instructions
+        type: string
+      scheduledGoalTime:
+        required: false
+        displayName: scheduledGoalTime
+        type: datetime
+      executedGoalTime:
+        required: false
+        displayName: executedGoalTime
+        type: datetime
+      scheduledDeadlineTime:
+        required: false
+        displayName: scheduledDeadlineTime
+        type: datetime
+      executedDeadlineTime:
+        required: false
+        displayName: executedDeadlineTime
+        type: datetime
+      urgency:
+        required: false
+        displayName: urgency
+        type: string
+      actions:
+        required: false
+        displayName: actions
+        type: array
+        items:
+          type: Action
+  CaseResponse:
+    displayName: CaseResponse
+    type: object
+    properties:
+      status:
+        required: false
+        displayName: status
+        type: string
+      caseTypeID:
+        required: false
+        displayName: caseTypeID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      parentCaseID:
+        required: false
+        displayName: parentCaseID
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      stage:
+        required: false
+        displayName: stage
+        type: string
+      urgency:
+        required: false
+        displayName: urgency
+        type: string
+      createTime:
+        required: false
+        displayName: createTime
+        type: datetime
+      createdBy:
+        required: false
+        displayName: createdBy
+        type: string
+      lastUpdateTime:
+        required: false
+        displayName: lastUpdateTime
+        type: datetime
+      lastUpdatedBy:
+        required: false
+        displayName: lastUpdatedBy
+        type: string
+      owner:
+        required: false
+        displayName: owner
+        type: string
+      content:
+        required: false
+        displayName: content
+        type: object
+      stages:
+        required: false
+        displayName: stages
+        type: array
+        items:
+          type: Stage
+      SLA:
+        required: false
+        displayName: SLA
+        type: SLA
+      childCases:
+        required: false
+        displayName: childCases
+        type: array
+        items:
+          type: ChildCase
+      childCaseTypes:
+        required: false
+        displayName: childCaseTypes
+        type: array
+        items:
+          type: CaseType
+      assignments:
+        required: false
+        displayName: assignments
+        type: array
+        items:
+          type: CaseAssignment
+      actions:
+        required: false
+        displayName: actions
+        type: array
+        items:
+          type: Action
+  CaseType:
+    displayName: CaseType
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      startingProcesses:
+        required: false
+        displayName: startingProcesses
+        type: array
+        items:
+          type: StartingProcess
+  CaseTypesResponse:
+    displayName: CaseTypesResponse
+    type: object
+    properties:
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      caseTypes:
+        required: false
+        displayName: caseTypes
+        type: array
+        items:
+          type: CaseType
+  CasesResponse:
+    displayName: CasesResponse
+    type: object
+    properties:
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      cases:
+        required: false
+        displayName: cases
+        type: array
+        items:
+          type: Case
+  ChildCase:
+    displayName: ChildCase
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  Conflict:
+    displayName: Conflict
+    type: object
+    properties:
+      pyCollisionStatus:
+        required: false
+        displayName: pyCollisionStatus
+        type: string
+      pyCollisionStatusDescription:
+        required: false
+        displayName: pyCollisionStatusDescription
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      pzCollisionCategory:
+        required: false
+        displayName: pzCollisionCategory
+        type: string
+      pzRuleName:
+        required: false
+        displayName: pzRuleName
+        type: string
+      pxSourceBranchName:
+        required: false
+        displayName: pxSourceBranchName
+        type: string
+      pzTargetRuleSetVersion:
+        required: false
+        displayName: pzTargetRuleSetVersion
+        type: string
+      pzSourceInsKey:
+        required: false
+        displayName: pzSourceInsKey
+        type: string
+      pzTargetInsKey:
+        required: false
+        displayName: pzTargetInsKey
+        type: string
+      pzTargetUpdateDateTime:
+        required: false
+        displayName: pzTargetUpdateDateTime
+        type: string
+  ConflictsResponse:
+    displayName: ConflictsResponse
+    type: object
+    properties:
+      conflictsCount:
+        required: false
+        displayName: conflictsCount
+        type: integer
+        format: int32
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      statusValue:
+        required: false
+        displayName: statusValue
+        type: string
+      conflicts:
+        required: false
+        displayName: conflicts
+        type: array
+        items:
+          type: Conflict
+  CreateCaseRequest:
+    displayName: CreateCaseRequest
+    type: object
+    properties:
+      caseTypeID:
+        required: true
+        displayName: caseTypeID
+        type: string
+      processID:
+        required: false
+        displayName: processID
+        type: string
+      parentCaseID:
+        required: false
+        displayName: parentCaseID
+        type: string
+      content:
+        required: false
+        displayName: content
+        type: object
+        properties:
+          businessType: 
+            required: false
+            displayName: businessType
+            type: string
+          Description: 
+            required: false
+            displayName: Description
+            type: string
+
+
+  CreateCaseResponse:
+    displayName: CreateCaseResponse
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  CreateReviewRequest:
+    displayName: CreateReviewRequest
+    type: object
+    properties:
+      reviewers:
+        required: true
+        displayName: reviewers
+        type: array
+        items:
+          type: Reviewer
+      author:
+        required: false
+        displayName: author
+        type: string
+      description:
+        required: false
+        displayName: description
+        type: string
+  CreateReviewResponse:
+    displayName: CreateReviewResponse
+    type: object
+    properties:
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      statusValue:
+        required: false
+        displayName: statusValue
+        type: string
+  DataPageMetadata:
+    displayName: DataPageMetadata
+    type: object
+    properties:
+      dataTypeID:
+        required: false
+        displayName: dataTypeID
+        type: string
+      description:
+        required: false
+        displayName: description
+        type: string
+      usage:
+        required: false
+        displayName: usage
+        type: string
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      structure:
+        required: false
+        displayName: structure
+        type: string
+      parameters:
+        required: false
+        displayName: parameters
+        type: array
+        items:
+          type: Parameter
+  Error:
+    displayName: Error
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      message:
+        required: false
+        displayName: message
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  ErrorResponse:
+    displayName: ErrorResponse
+    type: object
+    properties:
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      errors:
+        required: false
+        displayName: errors
+        type: array
+        items:
+          type: Error
+  MergeResponse:
+    displayName: MergeResponse
+    type: object
+    properties:
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      statusValue:
+        required: false
+        displayName: statusValue
+        type: string
+  MergeStatusResponse:
+    displayName: MergeStatusResponse
+    type: object
+    properties:
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+      statusValue:
+        required: false
+        displayName: statusValue
+        type: string
+      statusMessage:
+        required: false
+        displayName: statusMessage
+        type: string
+  Parameter:
+    displayName: Parameter
+    type: object
+    properties:
+      name:
+        required: false
+        displayName: name
+        type: string
+      description:
+        required: false
+        displayName: description
+        type: string
+      dataType:
+        required: false
+        displayName: dataType
+        type: string
+      required:
+        required: false
+        displayName: required
+        type: string
+      defaultValue:
+        required: false
+        displayName: defaultValue
+        type: string
+  Reviewer:
+    displayName: Reviewer
+    type: object
+    properties:
+      ID:
+        required: true
+        displayName: ID
+        type: string
+  SLA:
+    displayName: SLA
+    type: object
+    properties:
+      stageSLAGoal:
+        required: false
+        displayName: stageSLAGoal
+        type: datetime
+      stageSLADeadline:
+        required: false
+        displayName: stageSLADeadline
+        type: datetime
+      overallSLAGoal:
+        required: false
+        displayName: overallSLAGoal
+        type: datetime
+      overallSLADeadline:
+        required: false
+        displayName: overallSLADeadline
+        type: datetime
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  Stage:
+    displayName: Stage
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  StartingProcess:
+    displayName: StartingProcess
+    type: object
+    properties:
+      ID:
+        required: false
+        displayName: ID
+        type: string
+      name:
+        required: false
+        displayName: name
+        type: string
+      pxObjClass:
+        required: false
+        displayName: pxObjClass
+        type: string
+  UpdateCaseRequest:
+    displayName: UpdateCaseRequest
+    type: object
+    properties:
+      content:
+        required: false
+        displayName: content
+        type: object
+  UserDisablementRequest:
+    displayName: UserDisablementRequest
+    type: object
+    properties:
+      Message:
+        required: false
+        displayName: Message
+        type: string
+      Mode:
+        required: false
+        displayName: Mode
+        type: string
+      User:
+        required: false
+        displayName: User
+        type: array
+        items:
+          type: string
+      Excluded:
+        required: false
+        displayName: Excluded
+        type: array
+        items:
+          type: string
+  UserDisablementResponse:
+    displayName: UserDisablementResponse
+    type: object
+    properties:
+      pyStatusMessage:
+        required: false
+        displayName: pyStatusMessage
+        type: string
+      pyStatusValue:
+        required: false
+        displayName: pyStatusValue
+        type: string
+  UserEnablementRequest:
+    displayName: UserEnablementRequest
+    type: object
+    properties:
+      Mode:
+        required: false
+        displayName: Mode
+        type: string
+      User:
+        required: false
+        displayName: User
+        type: array
+        items:
+          type: string
+      Excluded:
+        required: false
+        displayName: Excluded
+        type: array
+        items:
+          type: string
+  UserEnablementResponse:
+    displayName: UserEnablementResponse
+    type: object
+    properties:
+      pyStatusMessage:
+        required: false
+        displayName: pyStatusMessage
+        type: string
+      pyStatusValue:
+        required: false
+        displayName: pyStatusValue
+        type: string
+  UserSessionTerminationRequest:
+    displayName: UserSessionTerminationRequest
+    type: object
+    properties:
+      Message:
+        required: false
+        displayName: Message
+        type: string
+      User:
+        required: false
+        displayName: User
+        type: array
+        items:
+          type: string
+  UserSessionTerminationResponse:
+    displayName: UserSessionTerminationResponse
+    type: object
+    properties:
+      pyStatusMessage:
+        required: false
+        displayName: pyStatusMessage
+        type: string
+      pyStatusValue:
+        required: false
+        displayName: pyStatusValue
+        type: string
+/assignments:
+  get:
+    displayName: Get Assignments
+    description: Get assignments - Returns the authenticated user's list of assignments.
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            displayName: response
+            description: OK
+            type: AssignmentsResponse
+      401:
+        description: Unauthorized
+        body: {}
+      403:
+        description: Forbidden
+        body:
+          application/json:
+            description: Forbidden
+            type: ErrorResponse
+  /{ID}:
+    uriParameters:
+      ID:
+        required: true
+        displayName: ID
+        description: Assignment ID/'next'
+        type: string
+    get:
+      displayName: Get Assignment Details by Id
+      description: Get assignment details - Returns a single assignment's details given its ID (or) Returns the next available assignment for the requestor if 'next' is passed.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              displayName: response
+              description: OK
+              type: AssignmentResponse
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            application/json:
+              description: Forbidden
+              type: ErrorResponse
+        404:
+          description: No assignment found or available
+          body:
+            application/json:
+              description: No assignment found or available
+              type: ErrorResponse
+    post:
+      displayName: Perform Assignment Action
+      description: Perform assignment action - Performs an action on an assignment given its ID and an optional content in the request body.
+      body:
+        text/plain:
+          displayName: requestBody
+          description: Content should mirror the clipboard structure
+          type: AssignmentActionRequest
+      queryParameters:
+        actionID:
+          required: true
+          displayName: actionID
+          description: Assignment action to perform
+          type: string
+      responses:
+        400:
+          description: Bad request
+          body:
+            text/plain:
+              description: Bad request
+              type: ErrorResponse
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            text/plain:
+              description: Forbidden
+              type: ErrorResponse
+        404:
+          description: Not found
+          body:
+            text/plain:
+              description: Not found
+              type: ErrorResponse
+/authenticate:
+  get:
+    displayName: Authenticate
+    description: Verify user credentials - Verifies if the credentials provided in Authorization header using *Basic* authentication are valid or not.
+    responses:
+      401:
+        description: Unauthorized
+        body: {}
+      403:
+        description: Forbidden
+        body:
+          text/plain:
+            description: Forbidden
+            type: ErrorResponse
+/branches:
+  /{ID}:
+    uriParameters:
+      ID:
+        required: true
+        displayName: ID
+        description: Branch Name
+        type: string
+    /conflicts:
+      get:
+        displayName: Get Branch Conflicts by Id
+        description: Get branch conflicts - Returns a list of conflicts that would occur if that branch was merged.
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                displayName: response
+                description: OK
+                type: ConflictsResponse
+          400:
+            description: Bad request
+            body:
+              application/json:
+                description: Bad request
+                type: ErrorResponse
+    /merge:
+      post:
+        displayName: Post Branch Merge
+        description: Merge branches - Perform conflict detection and merge branches. This service immediately returns an id for the caller to poll for status. Use GET /merges/{ID} to get the status.
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                displayName: response
+                description: OK
+                type: MergeResponse
+          400:
+            description: Bad request
+            body:
+              application/json:
+                description: Bad request
+                type: ErrorResponse
+          404:
+            description: Not found
+            body:
+              application/json:
+                description: Not found
+                type: ErrorResponse
+    /reviews:
+      post:
+        displayName: Post Review
+        description: Create branch review - Create new review item for given branch
+        body:
+          application/json:
+            displayName: requestBody
+            description: Content should mirror the clipboard structure
+            type: CreateReviewRequest
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                displayName: response
+                description: OK
+                type: CreateReviewResponse
+          400:
+            description: Bad request
+            body:
+              application/json:
+                description: Bad request
+                type: ErrorResponse
+          401:
+            description: Unauthorized
+            body:
+              application/json:
+                description: Unauthorized
+                type: ErrorResponse
+          403:
+            description: Forbidden
+            body:
+              application/json:
+                description: Forbidden
+                type: ErrorResponse
+          404:
+            description: Not found
+            body:
+              application/json:
+                description: Not found
+                type: ErrorResponse
+          422:
+            description: Invalid data
+            body:
+              application/json:
+                description: Invalid data
+                type: ErrorResponse
+          423:
+            description: Already an open review
+            body:
+              application/json:
+                description: Already an open review
+                type: ErrorResponse
+/cases:
+  get:
+    displayName: Get Cases
+    description: Get cases - Gets all cases that the authenticated user has created in the default work pool.
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            displayName: response
+            description: OK
+            type: CasesResponse
+      401:
+        description: Unauthorized
+        body: {}
+      403:
+        description: Forbidden
+        body:
+          application/json:
+            description: Forbidden
+            type: ErrorResponse
+  post:
+    displayName: Create Case
+    description: Create a new case - Creates a new case of the given type.
+    body:
+      application/json:
+        displayName: requestBody
+        description: Input parameters (caseTypeID, processID, parentCaseID, content) that are needed to create a case
+        type: CreateCaseRequest
+    responses:
+      200:
+        description: Created
+        body:
+          application/json:
+            displayName: response
+            description: Created
+            type: CreateCaseResponse
+      400:
+        description: Bad request
+        body:
+          application/json:
+            description: Bad request
+            type: ErrorResponse
+      401:
+        description: Unauthorized
+        body: {}
+      403:
+        description: Forbidden
+        body:
+          application/json:
+            description: Forbidden
+            type: ErrorResponse
+  /{ID}:
+    uriParameters:
+      ID:
+        required: true
+        displayName: ID
+        description: Case ID
+        type: string
+    get:
+      displayName: Get CaseDetails by Id
+      description: Get case details - Gets the details of a case given its ID.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              displayName: response
+              description: OK
+              type: CaseResponse
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            application/json:
+              description: Forbidden
+              type: ErrorResponse
+        404:
+          description: Not found
+          body:
+            application/json:
+              description: Not found
+              type: ErrorResponse
+    put:
+      displayName: Update Case
+      description: Update a case - Performs an action given a case ID and an optional content in the request body.
+      body:
+        text/plain:
+          displayName: requestBody
+          description: Content should mirror the clipboard structure
+          type: UpdateCaseRequest
+      queryParameters:
+        actionID:
+          required: false
+          displayName: actionID
+          description: Local action or a stage local action to perform
+          type: string
+      headers:
+        If-Match:
+          required: true
+          displayName: If-Match
+          description: Value of the entity tag that is received as ETag header in responses to create case and get case details APIs
+          type: string
+      responses:
+        400:
+          description: Bad request
+          body:
+            text/plain:
+              description: Bad request
+              type: ErrorResponse
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            text/plain:
+              description: Forbidden
+              type: ErrorResponse
+        404:
+          description: Not found
+          body:
+            text/plain:
+              description: Not found
+              type: ErrorResponse
+        412:
+          description: Precondition failed
+          body:
+            text/plain:
+              description: Precondition failed
+              type: ErrorResponse
+/casetypes:
+  get:
+    displayName: Get Case Types
+    description: Get case types - Gets the case types from the authenticated user's application.
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            displayName: response
+            description: OK
+            type: CaseTypesResponse
+      401:
+        description: Unauthorized
+        body: {}
+      403:
+        description: Forbidden
+        body:
+          application/json:
+            description: Forbidden
+            type: ErrorResponse
+/data:
+  /{ID}:
+    uriParameters:
+      ID:
+        required: true
+        displayName: ID
+        description: Data page identifier
+        type: string
+    get:
+      displayName: Get Data Page by Id
+      description: Get data page contents - Gets the contents of a data page given its name and parameters.
+      responses:
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            text/plain:
+              description: Forbidden
+              type: ErrorResponse
+        404:
+          description: Not found
+          body:
+            text/plain:
+              description: Not found
+              type: ErrorResponse
+    /metadata:
+      get:
+        displayName: Get Data Page Metadata
+        description: Get data page metadata - Gets the metadata of a data page given its name.
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                displayName: response
+                description: OK
+                type: DataPageMetadata
+          401:
+            description: Unauthorized
+            body: {}
+          403:
+            description: Forbidden
+            body:
+              application/json:
+                description: Forbidden
+                type: ErrorResponse
+          404:
+            description: Not found
+            body:
+              application/json:
+                description: Not found
+                type: ErrorResponse
+/docs:
+  get:
+    displayName: Get Docs
+    description: Get the complete documentation for Pega API
+    responses:
+      401:
+        description: Unauthorized
+        body: {}
+      403:
+        description: Forbidden
+        body:
+          text/plain:
+            description: Forbidden
+            type: ErrorResponse
+/merges/{ID}:
+  uriParameters:
+    ID:
+      required: true
+      displayName: ID
+      description: Merge ID
+      type: string
+  get:
+    displayName: Get Merge Status by Id
+    description: Get Merge Status - Given a unique id returned from POST /branches/{ID}/merge, return the status of the merge. The caller should continue to poll until the status returned is not Processing or ConflictCheckComplete. The status for a successful merge is MergeComplete. Failures are described in detail in the status and should get passed back to the user for future action.
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            displayName: response
+            description: OK
+            type: MergeStatusResponse
+      400:
+        description: Bad request
+        body:
+          application/json:
+            description: Bad request
+            type: ErrorResponse
+      404:
+        description: Not found
+        body:
+          application/json:
+            description: Not found
+            type: ErrorResponse
+/users:
+  /logout:
+    post:
+      displayName: Logout
+      description: Terminates all existing sessions in all nodes of the cluster for the given set of users
+      body:
+        application/json:
+          displayName: requestBody
+          description: Input parameters (Message and userids for the operators whose session needs to be terminated)
+          type: UserSessionTerminationRequest
+      responses:
+        200:
+          description: Request Received Succesfully
+          body:
+            application/json:
+              displayName: response
+              description: Request Received Succesfully
+              type: UserSessionTerminationResponse
+        400:
+          description: Bad request
+          body:
+            application/json:
+              description: Bad request
+              type: ErrorResponse
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            application/json:
+              description: Forbidden
+              type: ErrorResponse
+  /disable:
+    post:
+      displayName: Disable
+      description: Terminates and disables all existing sessions in all nodes for a given set of users
+      body:
+        application/json:
+          displayName: requestBody
+          description: Input parameters:Message , Mode ('Operators' or 'All' scope of users to be disabled), User ( for 'Operators' Mode) and Excluded (for 'All' Mode)
+          type: UserDisablementRequest
+      responses:
+        200:
+          description: Request Received Succesfully
+          body:
+            application/json:
+              displayName: response
+              description: Request Received Succesfully
+              type: UserDisablementResponse
+        400:
+          description: Bad request
+          body:
+            application/json:
+              description: Bad request
+              type: ErrorResponse
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            application/json:
+              description: Forbidden
+              type: ErrorResponse
+  /enable:
+    post:
+      displayName: Enable
+      description: Enables the given list of disabled users
+      body:
+        application/json:
+          displayName: requestBody
+          description: Input parameters:Mode('Operators' or 'All' scope of users to be enabled),User ( for 'Operators' Mode) and Excluded (optional for any mode)
+          type: UserEnablementRequest
+      responses:
+        200:
+          description: Request Received Succesfully
+          body:
+            application/json:
+              displayName: response
+              description: Request Received Succesfully
+              type: UserEnablementResponse
+        400:
+          description: Bad request
+          body:
+            application/json:
+              description: Bad request
+              type: ErrorResponse
+        401:
+          description: Unauthorized
+          body: {}
+        403:
+          description: Forbidden
+          body:
+            application/json:
+              description: Forbidden
+              type: ErrorResponse
+

@@ -1,0 +1,124 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "custom_roles" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "name" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "description" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "updated_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "configuration" : {
+              "type" : "object" ,
+              "required" : false ,
+              "properties" : {
+                "chat_access" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "end_user_profile" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "forum_access" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "forum_access_restricted_content" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "macro_access" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "manage_business_rules" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "manage_dynamic_content" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "manage_extensions_and_channels" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "manage_facebook" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "organization_editing" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "report_access" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "ticket_access" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "ticket_comment_access" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "ticket_deletion" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "ticket_editing" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "ticket_merge" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "ticket_tag_editing" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "twitter_search_access" : {
+                  "type" : "boolean" ,
+                  "required" : false
+                } ,
+                "view_access" : {
+                  "type" : "string" ,
+                  "required" : false
+                } ,
+                "user_view_access" : {
+                  "type" : "string" ,
+                  "required" : false
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

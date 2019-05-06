@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "required": true,
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "appMenuItems": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "required": false
+            },
+            "content": {
+              "type": "object",
+              "required": false
+            },
+            "icons": {
+              "type": "object",
+              "required": false
+            },
+            "colors": {
+              "type": "object",
+              "required": false
+            },
+            "label": {
+              "type": "string",
+              "required": false
+            },
+            "url": {
+              "type": "string",
+              "required": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "views" : [
+    {
+      "id" : 25 ,
+      "title" : "Tickets updated <12 Hours" ,
+      "active" : true ,
+      "execution" : {      } ,
+      "conditions" : {      } ,
+      "restriction" : {      }
+    } , {
+      "id" : 23 ,
+      "title" : "Unassigned tickets" ,
+      "active" : false ,
+      "execution" : {      } ,
+      "conditions" : {      } ,
+      "restriction" : {      }
+    } 
+  ] ,
+  "count" : 7 ,
+  "next_page" : null ,
+  "previous_page" : null
+}

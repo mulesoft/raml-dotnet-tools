@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"name": {
+    		"type": "string"
+    	},
+    	"size": {
+    		"description": "Size of file in bytes.",
+    		"type": "integer"
+    	},
+    	"description": {
+    		"type": "string"
+    	},
+    	"content_type": {
+    		"type": "string"
+    	}
+	},
+	"required": [ "name", "size" ]
+}

@@ -1,0 +1,82 @@
+#%RAML 1.0 DataType
+
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+description: Definition of a Medication
+type: FHIR_commons.DomainResource
+properties:
+  code?:
+    description: Codes that identify this medication
+    type: FHIR_commons.CodeableConcept
+  status?:
+    description: Medication status
+    type: FHIR_commons.code
+    enum: [active, inactive, entered-in-error]
+  isBrand?:
+    description: True if a brand
+    type: boolean
+  isOverTheCounter?:
+    description: True if medication does not require a prescription
+    type: boolean
+  manufacturer?:
+    description: Manufacturer of the item
+    type: FHIR_commons.Reference
+  form?:
+    description: powder | tablets | capsule
+    type: FHIR_commons.CodeableConcept
+  ingredient?:
+    description: Active or inactive ingredient
+    type: array
+    items:
+      type: FHIR_commons.BackboneElement
+      properties:
+        itemCodeableConcept?:
+          description: The product contained
+          type: FHIR_commons.CodeableConcept
+        itemReference?:
+          description: The product contained
+          type: FHIR_commons.Reference
+        isActive?:
+          description: Active ingredient indicator
+          type: boolean
+        amount?:
+          description: Quantity of ingredient present
+          type: FHIR_commons.Ratio
+  package?:
+    description: Details about packaged medications
+    type: FHIR_commons.BackboneElement
+    properties:
+      container?:
+        description: E.g. box, vial, blister-pack
+        type: FHIR_commons.CodeableConcept
+      content?:
+        description: What is in the package
+        type: array
+        items:
+          type: FHIR_commons.BackboneElement
+          properties:
+            itemCodeableConcept?:
+              description: The item in the package
+              type: FHIR_commons.CodeableConcept
+            itemReference?:
+              description: The item in the package
+              type: FHIR_commons.Reference
+            amount?:
+              description: Quantity present in the package
+              type: FHIR_commons.SimpleQuantity
+      batch?:
+        description: Identifies a single production run
+        type: array
+        items:
+          type: FHIR_commons.BackboneElement
+          properties:
+            lotNumber?:
+              description: Identifier assigned to batch
+              type: string
+            expirationDate?:
+              description: When batch will expire
+              type: FHIR_commons.dateTime
+  image?:
+    description: Picture of the medication
+    type: FHIR_commons.Attachment[]

@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"sha": {
+    		"description": "SHA of the commit to comment on.",
+    		"type": "string",
+            "required": true
+    	},
+    	"body": {
+    		"type": "string",
+            "required": true
+    	},
+    	"path": {
+    		"description": "Relative path of the file to comment on.",
+    		"type": "string"
+    	},
+    	"position": {
+    		"description": "Line index in the diff to comment on.",
+    		"type": "integer"
+    	},
+    	"line": {
+    		"description": "Deprecated - Use position parameter instead.",
+    		"type": "string"
+    	},
+    	"number": {
+    		"description": "Line number in the file to comment on. Defaults to null.",
+    		"type": "string"
+    	}
+    }
+}

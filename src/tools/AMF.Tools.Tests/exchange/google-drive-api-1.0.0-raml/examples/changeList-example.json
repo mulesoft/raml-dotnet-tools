@@ -1,0 +1,181 @@
+{
+  "kind" : "drive#changeList" ,
+  "etag" : "etag" ,
+  "selfLink" : "string" ,
+  "nextPageToken" : "string" ,
+  "nextLink" : "string" ,
+  "largestChangeId" : "long" ,
+  "items" : [
+    {
+      "kind" : "drive#change" ,
+      "id" : "long" ,
+      "fileId" : "string" ,
+      "selfLink" : "string" ,
+      "deleted" : "boolean" ,
+      "modificationDate" : "datetime" ,
+      "file" : {
+        "kind" : "drive#file" ,
+        "id" : "string" ,
+        "etag" : "etag" ,
+        "selfLink" : "string" ,
+        "webContentLink" : "string" ,
+        "webViewLink" : "string" ,
+        "alternateLink" : "string" ,
+        "embedLink" : "string" ,
+        "openWithLinks" : {
+        } ,
+        "defaultOpenWithLink" : "string" ,
+        "iconLink" : "string" ,
+        "thumbnailLink" : "string" ,
+        "thumbnail" : {
+          "image" : "bytes" ,
+          "mimeType" : "string"
+        } ,
+        "title" : "string" ,
+        "mimeType" : "string" ,
+        "description" : "string" ,
+        "labels" : {
+          "starred" : "boolean" ,
+          "hidden" : "boolean" ,
+          "trashed" : "boolean" ,
+          "restricted" : "boolean" ,
+          "viewed" : "boolean"
+        } ,
+        "createdDate" : "datetime" ,
+        "modifiedDate" : "datetime" ,
+        "modifiedByMeDate" : "datetime" ,
+        "lastViewedByMeDate" : "datetime" ,
+        "markedViewedByMeDate" : "datetime" ,
+        "sharedWithMeDate" : "datetime" ,
+        "version" : "long" ,
+        "sharingUser" : {
+          "kind" : "drive#user" ,
+          "displayName" : "string" ,
+          "picture" : {
+            "url" : "string"
+          } ,
+          "isAuthenticatedUser" : "boolean" ,
+          "permissionId" : "string" ,
+          "emailAddress" : "string"
+        } ,
+        "parents" : [
+          {
+            "kind" : "drive#parentReference" ,
+            "id" : "string" ,
+            "selfLink" : "string" ,
+            "parentLink" : "string" ,
+            "isRoot" : "boolean"
+          }
+        ] ,
+        "downloadUrl" : "string" ,
+        "exportLinks" : {
+        } ,
+        "indexableText" : {
+          "text" : "string"
+        } ,
+        "userPermission" : "permissions Resource" ,
+        "permissions" : [
+          {
+            "kind" : "drive#permission" ,
+            "etag" : "etag" ,
+            "id" : "string" ,
+            "selfLink" : "string" ,
+            "name" : "string" ,
+            "emailAddress" : "string" ,
+            "domain" : "string" ,
+            "role" : "string" ,
+            "additionalRoles" : [
+              "strings"
+            ] ,
+            "type" : "string" ,
+            "value" : "string" ,
+            "authKey" : "string" ,
+            "withLink" : "boolean" ,
+            "photoLink" : "string"
+          }
+        ] ,
+        "originalFilename" : "string" ,
+        "fileExtension" : "string" ,
+        "md5Checksum" : "string" ,
+        "fileSize" : "long" ,
+        "quotaBytesUsed" : "long" ,
+        "ownerNames" : [
+          "string"
+        ] ,
+        "owners" : [
+          {
+            "kind" : "drive#user" ,
+            "displayName" : "string" ,
+            "picture" : {
+              "url" : "string"
+            } ,
+            "isAuthenticatedUser" : "boolean" ,
+            "permissionId" : "string" ,
+            "emailAddress" : "string"
+          }
+        ] ,
+        "lastModifyingUserName" : "string" ,
+        "lastModifyingUser" : {
+          "kind" : "drive#user" ,
+          "displayName" : "string" ,
+          "picture" : {
+            "url" : "string"
+          } ,
+          "isAuthenticatedUser" : "boolean" ,
+          "permissionId" : "string" ,
+          "emailAddress" : "string"
+        } ,
+        "editable" : "boolean" ,
+        "copyable" : "boolean" ,
+        "writersCanShare" : "boolean" ,
+        "shared" : "boolean" ,
+        "explicitlyTrashed" : "boolean" ,
+        "appDataContents" : "boolean" ,
+        "headRevisionId" : "string" ,
+        "properties" : [
+          {
+            "kind" : "drive#property" ,
+            "etag" : "etag" ,
+            "selfLink" : "string" ,
+            "key" : "string" ,
+            "visibility" : "string" ,
+            "value" : "string"
+          }
+        ] ,
+        "folderColorRgb" : "string" ,
+        "imageMediaMetadata" : {
+          "width" : "integer" ,
+          "height" : "integer" ,
+          "rotation" : "integer" ,
+          "location" : {
+            "latitude" : "double" ,
+            "longitude" : "double" ,
+            "altitude" : "double"
+          } ,
+          "date" : "string" ,
+          "cameraMake" : "string" ,
+          "cameraModel" : "string" ,
+          "exposureTime" : "float" ,
+          "aperture" : "float" ,
+          "flashUsed" : "boolean" ,
+          "focalLength" : "float" ,
+          "isoSpeed" : "integer" ,
+          "meteringMode" : "string" ,
+          "sensor" : "string" ,
+          "exposureMode" : "string" ,
+          "colorSpace" : "string" ,
+          "whiteBalance" : "string" ,
+          "exposureBias" : "float" ,
+          "maxApertureValue" : "float" ,
+          "subjectDistance" : "integer" ,
+          "lens" : "string"
+        } ,
+        "videoMediaMetadata" : {
+          "width" : "integer" ,
+          "height" : "integer" ,
+          "durationMillis" : "long"
+        }
+      }
+    }
+  ]
+}

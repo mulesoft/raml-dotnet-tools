@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "type": {
+      "required": false,
+      "type": "string"
+    },
+    "id": {
+      "required": false,
+      "type": "string"
+    },
+    "created_by": {
+      "required": false,
+      "type": "object",
+      "properties": {
+        "type": {
+          "required": false,
+          "type": "string"
+        },
+        "id": {
+          "required": false,
+          "type": "string"
+        },
+        "name": {
+          "required": false,
+          "type": "string"
+        },
+        "login": {
+          "required": false,
+          "type": "string"
+        }
+      }
+    },
+    "created_at": {
+      "required": false,
+      "type": "string"
+    },
+    "modified_at": {
+      "required": false,
+      "type": "string"
+    },
+    "expires_at": {
+      "required": false,
+      "type": "null"
+    },
+    "status": {
+      "required": false,
+      "type": "string"
+    },
+    "accessible_by": {
+      "required": false,
+      "type": "object",
+      "properties": {
+        "type": {
+          "required": false,
+          "type": "string"
+        },
+        "id": {
+          "required": false,
+          "type": "string"
+        },
+        "name": {
+          "required": false,
+          "type": "string"
+        },
+        "login": {
+          "required": false,
+          "type": "string"
+        }
+      }
+    },
+    "role": {
+      "required": false,
+      "type": "string"
+    },
+    "acknowledged_at": {
+      "required": false,
+      "type": "string"
+    },
+    "item": {
+      "required": false,
+      "type": "object",
+      "properties": {
+        "type": {
+          "required": false,
+          "type": "string"
+        },
+        "id": {
+          "required": false,
+          "type": "string"
+        },
+        "sequence_id": {
+          "required": false,
+          "type": "string"
+        },
+        "etag": {
+          "required": false,
+          "type": "string"
+        },
+        "name": {
+          "required": false,
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "object": "list",
+  "url": "v1/recipients",
+  "count": 1,
+  "data": [
+    {
+    "id": "rp_2dlCVjwuvlBoSm",
+    "object": "recipient",
+    "created": 1380159281,
+    "livemode": false,
+    "type": "individual",
+    "description": null,
+    "email": "jesse@mybitfix.com",
+    "name": "Jessiford P Franklin",
+    "verified": false,
+    "metadata": {
+    },
+    "active_account": {
+      "object": "bank_account",
+      "bank_name": "STRIPE TEST BANK",
+      "last4": "6789",
+      "country": "US",
+      "currency": "usd",
+      "validated": false,
+      "fingerprint": "StvKx0vy9W8cn6pd"
+    }
+  }
+  ]
+}

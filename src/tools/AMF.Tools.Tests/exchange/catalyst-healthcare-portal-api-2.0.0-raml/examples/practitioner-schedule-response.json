@@ -1,0 +1,124 @@
+{
+  "practitionerId": "11",
+  "datesWithFreeSlots": [
+    {
+      "date": "2016-07-29",
+      "slots": [
+        {
+          "scheduleID": "scheduleId2",
+          "id": "slotID1",
+          "start": "10:15 AM",
+          "end": "11:15 AM"
+        },
+        {
+          "scheduleID": "scheduleId1",
+          "id": "slotID2",
+          "start": "09:15 AM",
+          "end": "10:15 AM"
+        }
+      ]
+    },
+    {
+      "date": "2016-08-01",
+      "slots": [
+        {
+          "scheduleID": "scheduleId2",
+          "id": "slotID1",
+          "start": "10:15 AM",
+          "end": "11:15 AM"
+        },
+        {
+          "scheduleID": "scheduleId1",
+          "id": "slotID2",
+          "start": "09:15 AM",
+          "end": "10:15 AM"
+        }
+      ]
+    },
+    {
+      "date": "2016-08-02",
+      "slots": [
+        {
+          "scheduleID": "scheduleId2",
+          "id": "slotID1",
+          "start": "10:15 AM",
+          "end": "11:15 AM"
+        },
+        {
+          "scheduleID": "scheduleId1",
+          "id": "slotID2",
+          "start": "09:15 AM",
+          "end": "10:15 AM"
+        }
+      ]
+    },
+    {
+      "date": "2016-08-05",
+      "slots": [
+        {
+          "scheduleID": "scheduleId2",
+          "id": "slotID1",
+          "start": "10:15 AM",
+          "end": "11:15 AM"
+        },
+        {
+          "scheduleID": "scheduleId1",
+          "id": "slotID2",
+          "start": "09:15 AM",
+          "end": "10:15 AM"
+        }
+      ]
+    },
+    {
+      "date": "2016-08-07",
+      "slots": [
+        {
+          "scheduleID": "scheduleId2",
+          "id": "slotID1",
+          "start": "10:15 AM",
+          "end": "11:15 AM"
+        },
+        {
+          "scheduleID": "scheduleId1",
+          "id": "slotID2",
+          "start": "09:15 AM",
+          "end": "10:15 AM"
+        }
+      ]
+    },
+    {
+      "date": "2016-08-08",
+      "slots": [
+        {
+          "scheduleID": "scheduleId2",
+          "id": "slotID1",
+          "start": "10:15 AM",
+          "end": "11:15 AM"
+        },
+        {
+          "scheduleID": "scheduleId1",
+          "id": "slotID2",
+          "start": "09:15 AM",
+          "end": "10:15 AM"
+        }
+      ]
+    },
+    {
+      "date": "2016-08-10",
+      "slots": [
+        {
+          "scheduleID": "scheduleId2",
+          "id": "slotID1",
+          "start": "10:15 AM",
+          "end": "11:15 AM"
+        },
+        {
+          "scheduleID": "scheduleId1",
+          "id": "slotID2",
+          "start": "09:15 AM",
+          "end": "10:15 AM"
+        }
+      ]
+    }
+  ]
+}

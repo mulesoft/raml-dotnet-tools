@@ -1,0 +1,278 @@
+#%RAML 1.0
+title: Twilio Mule Extension API
+baseUri: https://api.twilio.com/2010-04-01
+version: 3.0
+securitySchemes:
+  basic:
+    displayName: HTTP Basic Authentication
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+traits:
+  messageFiltered: !include traits/messageFilters.raml
+  mediaFiltered: !include traits/mediaFilters.raml
+uses:
+  Message: libraries/types/message.raml
+securedBy: [ basic ]
+/Accounts:
+  /{AccountSid}:
+    uriParameters:
+      AccountSid:
+        displayName: Account SID
+        type: string
+        description: |
+          A 34 character string that uniquely identifies the user account.
+        required: true
+        example: AC18d65e6d3ad248167232abad28bab4cb
+    /Messages.json:
+      get:
+        is: [ messageFiltered ]
+        displayName: Get Message List
+        description: |
+          Retrieves a list of messages associated with the user account. The list includes paging information.
+        responses:
+          200:
+            headers:
+              Access-Control-Allow-Credentials:
+              Access-Control-Allow-Headers:
+              Access-Control-Allow-Methods:
+              Access-Control-Expose-Headers:
+              X-Shenanigans:
+              X-Powered-By:
+              Twilio-Request-Duration:
+                type: string
+                description: |
+                  This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+                example: '0.270'
+              Twilio-Request-Id:
+                type: string
+                description: |
+                  The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+                example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0
+            description: |
+              Successful call.
+            body:
+              application/json:
+                example:  !include samples/response/getMessageListResponseSample.json
+                schema:  !include schemas/response/getMessageListResponseSchema.json
+      post:
+        displayName: Send Message
+        description: |
+          Sends a new outgoing message.
+        body:
+          application/x-www-form-urlencoded:
+            type: Message.MessageInput
+        responses:
+          201:
+            headers:
+              Access-Control-Allow-Credentials:
+              Access-Control-Allow-Headers:
+              Access-Control-Allow-Methods:
+              Access-Control-Expose-Headers:
+              X-Shenanigans:
+              X-Powered-By:
+              Twilio-Request-Duration:
+                type: string
+                description: |
+                  This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+                example: '0.270'
+              Twilio-Request-Id:
+                type: string
+                description: |
+                  The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+                example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0
+            description: |
+              Successful call.
+            body:
+              application/json:
+                example:  !include samples/response/sendMessageResponseSample.json
+                schema:  !include schemas/response/sendMessageResponseSchema.json
+    /Messages/{MessageSid}.json:
+      uriParameters:
+        MessageSid:
+          displayName: Message SID
+          description: |
+            Unique ID for any message successfully created by Twilio’s API. It is a 34 character string that starts with “SM…” for SMS and “MM…” for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the “Sid” property in a message resource.
+          type: string
+          required: true
+          example: MMad366608c91c46b98d2bc2b428d87676
+      get:
+        displayName: Get Message
+        description: |
+          Returns a single message specified by the provided Message SID.
+        responses:
+          200:
+            headers:
+              Access-Control-Allow-Credentials:
+              Access-Control-Allow-Headers:
+              Access-Control-Allow-Methods:
+              Access-Control-Expose-Headers:
+              X-Shenanigans:
+              X-Powered-By:
+              Twilio-Request-Duration:
+                type: string
+                description: |
+                  This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+                example: '0.270'
+              Twilio-Request-Id:
+                type: string
+                description: |
+                  The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+                example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0
+            description: |
+              Successful call.
+            body:
+              application/json:
+                example:  !include samples/response/getMessageResponseSample.json
+                schema:  !include schemas/response/getMessageResponseSchema.json
+      post:
+        displayName: Redact Message
+        description: |
+          Removes (blacks-out) the body from a previously sent message record. Usually done for security purposes, when a user doesn't want to delete the message from history entirely. Redacting a message is done by posting an empty body to the message resource.
+          NOTE: To redact is to edit. Frequently, a redacted document has simply had personal (or possibly actionable) information deleted or blacked out; as a consequence, redacted is often used to describe documents from which sensitive information has been expunged.
+        body:
+          application/x-www-form-urlencoded:
+            type: Message.RedactInput
+        responses:
+          200:
+            headers:
+              Access-Control-Allow-Credentials:
+              Access-Control-Allow-Headers:
+              Access-Control-Allow-Methods:
+              Access-Control-Expose-Headers:
+              X-Shenanigans:
+              X-Powered-By:
+              Twilio-Request-Duration:
+                type: string
+                description: |
+                  This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+                example: '0.270'
+              Twilio-Request-Id:
+                type: string
+                description: |
+                  The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+                example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0
+            description: |
+              Successful call.
+            body:
+              application/json:
+                example:  !include samples/response/redactMessageResponseSample.json
+                schema: !include schemas/response/redactMessageResponseSchema.json
+      delete:
+        displayName: Delete Message
+        description: |
+           Deletes a message record from the user account. Once the record is deleted, it will no longer appear in the API and Account Portal logs. However, deleting a message does not delete any media associated with the message. That media is still available at its original URI.
+        responses:
+          204:
+            headers:
+              Access-Control-Allow-Credentials:
+              Access-Control-Allow-Headers:
+              Access-Control-Allow-Methods:
+              Access-Control-Expose-Headers:
+              X-Shenanigans:
+              X-Powered-By:
+              Twilio-Request-Duration:
+                type: string
+                description: |
+                  This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+                example: '0.270'
+              Twilio-Request-Id:
+                type: string
+                description: |
+                  The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+                example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0
+            description: |
+                Successful deletion.
+            body:
+              application/xml: !!null
+              application/json: !!null
+    /Messages/{MessageSid}:
+      uriParameters:
+        MessageSid:
+          displayName: Message SID
+          description: |
+            Unique ID for any message successfully created by Twilio’s API. It is a 34 character string that starts with “SM…” for SMS and “MM…” for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the “Sid” property in a message resource.
+          type: string
+          required: true
+          example: MMad366608c91c46b98d2bc2b428d87676
+      /Media.json:
+        get:
+          is: [ mediaFiltered ]
+          displayName: Get Media List
+          description: |
+            Retrieves a list of media associated with the message.
+          responses:
+            200:
+              description: |
+                Successful call.
+              body:
+                application/json:
+                  example:  !include samples/response/getMediaListResponseSample.json
+                  schema:  !include schemas/response/getMediaListResponseSchema.json
+      /Media/{MediaSid}.json:
+        uriParameters:
+          MediaSid:
+            displayName: Media SID
+            description: |
+              Unique ID for any media successfully created by Twilio’s API. It is a 34 character string that starts with “SM…” for SMS and “MM…” for MMS. To find the SID for a specific message via the API, make a GET request to the Messages List Resource. This will return a list of SMS messages associated with your account along with details about each message. It would be the “Sid” property in a message resource.
+            type: string
+            required: true
+            example: ME557ce644e5ab84fa21cc21112e22c485
+        is: [ mediaFiltered ]
+        get:
+          displayName: Get Media
+          description: |
+            Retrieves a single media resource using one of several representations.
+          responses:
+            200:
+              headers:
+                Access-Control-Allow-Credentials:
+                Access-Control-Allow-Headers:
+                Access-Control-Allow-Methods:
+                Access-Control-Expose-Headers:
+                X-Shenanigans:
+                X-Powered-By:
+                Twilio-Request-Duration:
+                  type: string
+                  description: |
+                    This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+                  example: '0.270'
+                Twilio-Request-Id:
+                  type: string
+                  description: |
+                    The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+                  example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0
+              description: |
+                Successful call.
+              body:
+                application/json:
+                  example:  !include samples/response/getMediaResponseSample.json
+                  schema:  !include schemas/response/getMediaResponseSchema.json
+        delete:
+          displayName: Delete Media
+          description: |
+             Deletes Media from the user account. Once the media is deleted, you will no longer be billed for this storage.
+          responses:
+            204:
+              headers:
+                Access-Control-Allow-Credentials:
+                Access-Control-Allow-Headers:
+                Access-Control-Allow-Methods:
+                Access-Control-Expose-Headers:
+                X-Shenanigans:
+                X-Powered-By:
+                Twilio-Request-Duration:
+                  type: string
+                  description: |
+                    This is the length of time--in seconds-- your request spent being processed in Twilio's cluster. By always logging this header and comparing it to the amount of time your application perceived the request to take, you can better understand where any latency in the system is being introduced.
+                  example: '0.270'
+                Twilio-Request-Id:
+                  type: string
+                  description: |
+                    The ID of your API request. By always logging this header in your own application and providing it to us during any issues, we can investigate exactly what happened with your individual request.
+                  example: RQ5cedae4e7e7e4e70937a8198f5d2d1c0
+              description: |
+                  Successful deletion.
+              body:
+                application/xml: !!null
+                application/json: !!null

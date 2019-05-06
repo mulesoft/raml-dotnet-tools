@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<company-search>
+  <companies total="4493" count="10" start="0">
+    <company>
+      <id>162479</id>
+      <name>Apple Inc.</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/2/000/082/2e6/39570d2.png</logo-url>
+      <type>Public Company</type>
+    </company>
+    <company>
+      <id>1276</id>
+      <name>Apple Retail</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/2/000/039/353/3e84d05.png</logo-url>
+      <type>Public Company</type>
+    </company>
+    <company>
+      <id>1373</id>
+      <name>Xerox</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/2/000/014/3d1/21af29f.png</logo-url>
+      <type>Public Company</type>
+    </company>
+    <company>
+      <id>163801</id>
+      <name>FileMaker</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/2/000/05e/384/25520f9.png</logo-url>
+      <type>Public Company</type>
+    </company>
+    <company>
+      <id>165158</id>
+      <name>Netflix</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/3/000/058/201/1aa9aa0.png</logo-url>
+      <type>Public Company</type>
+    </company>
+    <company>
+      <id>19271</id>
+      <name>Apple Vacations</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/1/000/066/291/33c3a4d.png</logo-url>
+      <type>Privately Held</type>
+    </company>
+    <company>
+      <id>772044</id>
+      <name>Stone Apple Solutions</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/1/000/047/0aa/3e536ab.png</logo-url>
+      <type>Privately Held</type>
+    </company>
+    <company>
+      <id>88452</id>
+      <name>Apple REIT Companies</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/</logo-url>
+      <type>Public Company</type>
+    </company>
+    <company>
+      <id>112136</id>
+      <name>Apple and Associates</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/2/000/075/322/292f760.png</logo-url>
+      <type>Privately Held</type>
+    </company>
+    <company>
+      <id>21482</id>
+      <name>GHA Technologies</name>
+      <logo-url>http://media.linkedin.com/mpr/mpr/p/3/000/051/38b/17fe472.png</logo-url>
+      <type>Privately Held</type>
+    </company>
+  </companies>
+  <num-results>4493</num-results>
+  <facets total="1">
+    <facet>
+      <code>location</code>
+      <name>Location</name>
+      <buckets total="10">
+        <bucket>
+          <code>us:0</code>
+          <name>United States</name>
+          <count>1548</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>gb:0</code>
+          <name>United Kingdom</name>
+          <count>403</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>us:84</code>
+          <name>San Francisco Bay Area</name>
+          <count>204</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>nl:0</code>
+          <name>Netherlands</name>
+          <count>182</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>us:70</code>
+          <name>Greater New York City Area</name>
+          <count>178</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>ca:0</code>
+          <name>Canada</name>
+          <count>164</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>us:49</code>
+          <name>Greater Los Angeles Area</name>
+          <count>106</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>gb:4573</code>
+          <name>London, United Kingdom</name>
+          <count>97</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>au:0</code>
+          <name>Australia</name>
+          <count>93</count>
+          <selected>false</selected>
+        </bucket>
+        <bucket>
+          <code>in:0</code>
+          <name>India</name>
+          <count>91</count>
+          <selected>false</selected>
+        </bucket>
+      </buckets>
+    </facet>
+  </facets>
+</company-search>

@@ -1,0 +1,9 @@
+usage: |
+  Use this trait for avoid data overwriting.
+headers: 
+  If-Match: 
+    description: |
+      To ensure that the data sent to the API doesn't overwrite another client's changes, the contact entry's Etag should be
+      provided in the request header.
+      **Note**: The special Etag value "*" can be used to bypass this verification and process the update regardless of updates
+      from other clients.

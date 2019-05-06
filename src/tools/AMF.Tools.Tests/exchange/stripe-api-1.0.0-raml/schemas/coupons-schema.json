@@ -1,0 +1,88 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required": false,
+    "properties": {
+        "object": {
+            "type": "string",
+            "required": false
+        },
+        "url": {
+            "type": "string",
+            "required": false
+        },
+        "count": {
+            "type": "number",
+            "id": "http://jsonschema.net/count",
+            "required": false
+        },
+        "data": {
+            "type": "array",
+            "id": "http://jsonschema.net/data",
+            "required": false,
+            "items": {
+                "type": "object",
+                "id": "http://jsonschema.net",
+                "required": false,
+                "properties": {
+                    "amount_off": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/amount_off",
+                        "required": false
+                    },
+                    "currency": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/currency",
+                        "required": false
+                    },
+                    "duration_in_months": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/duration_in_months",
+                        "required": false
+                    },
+                    "duration": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/duration",
+                        "required": false
+                    },
+                    "id": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/id",
+                        "required": false
+                    },
+                    "livemode": {
+                        "type": "boolean",
+                        "id": "http://jsonschema.net/livemode",
+                        "required": false
+                    },
+                    "max_redemptions": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/max_redemptions",
+                        "required": false
+                    },
+                    "object": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/object",
+                        "required": false
+                    },
+                    "percent_off": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/percent_off",
+                        "required": false
+                    },
+                    "redeem_by": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/redeem_by",
+                        "required": false
+                    },
+                    "times_redeemed": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/times_redeemed",
+                        "required": false
+                    }
+                }
+            }
+        }
+    }
+}

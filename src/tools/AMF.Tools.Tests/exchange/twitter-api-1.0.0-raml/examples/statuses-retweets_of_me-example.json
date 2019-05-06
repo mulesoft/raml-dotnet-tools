@@ -1,0 +1,85 @@
+[
+    {
+        "coordinates": null,
+        "truncated": false,
+        "favorited": false,
+        "created_at": "Fri Oct 19 15:51:49 +0000 2012",
+        "id_str": "259320959964680192",
+        "entities": {
+            "urls": [],
+            "hashtags": [],
+            "user_mentions": []
+        },
+        "in_reply_to_user_id_str": null,
+        "contributors": null,
+        "text": "It's bring your migraine to work day today!",
+        "in_reply_to_status_id_str": null,
+        "id": 259320959964680200,
+        "retweet_count": 1,
+        "geo": null,
+        "retweeted": false,
+        "in_reply_to_user_id": null,
+        "source": "<a href=\"http://sites.google.com/site/yorufukurou/\" rel=\"nofollow\">YoruFukurou</a>",
+        "user": {
+            "name": "Taylor Singletary",
+            "profile_sidebar_fill_color": "FBFBFB",
+            "profile_background_tile": false,
+            "profile_sidebar_border_color": "000000",
+            "location": "San Francisco, CA",
+            "profile_image_url": "http://a0.twimg.com/profile_images/2766969649/5e1a50995a9f9bfcdcdc7503e1271422_normal.jpeg",
+            "created_at": "Wed Mar 07 22:23:19 +0000 2007",
+            "profile_link_color": "CC1442",
+            "is_translator": false,
+            "id_str": "819797",
+            "follow_request_sent": false,
+            "entities": {
+                "url": {
+                    "urls": [
+                        {
+                            "expanded_url": "http://soundcloud.com/reality-technician",
+                            "url": "http://t.co/bKlJ80Do",
+                            "indices": [
+                                0,
+                                20
+                            ],
+                            "display_url": "soundcloud.com/reality-techni…"
+                        }
+                    ]
+                },
+                "description": {
+                    "urls": []
+                }
+            },
+            "favourites_count": 17094,
+            "url": "http://t.co/bKlJ80Do",
+            "contributors_enabled": false,
+            "default_profile": false,
+            "profile_image_url_https": "https://si0.twimg.com/profile_images/2766969649/5e1a50995a9f9bfcdcdc7503e1271422_normal.jpeg",
+            "profile_banner_url": "https://si0.twimg.com/profile_banners/819797/1351262715",
+            "utc_offset": -28800,
+            "id": 819797,
+            "profile_use_background_image": false,
+            "listed_count": 351,
+            "followers_count": 7701,
+            "profile_text_color": "D20909",
+            "protected": false,
+            "lang": "en",
+            "geo_enabled": true,
+            "time_zone": "Pacific Time (US & Canada)",
+            "notifications": false,
+            "profile_background_color": "6B0F0F",
+            "description": "Reality Technician, Twitter API team, synth enthusiast. A most excellent adventure in timelines. Through the darkness of future past, the magician longs to see.",
+            "verified": false,
+            "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/686878932/6447abb9f83c76fb4fbd68e626c6c8c1.png",
+            "friends_count": 5549,
+            "default_profile_image": false,
+            "profile_background_image_url": "http://a0.twimg.com/profile_background_images/686878932/6447abb9f83c76fb4fbd68e626c6c8c1.png",
+            "statuses_count": 18626,
+            "screen_name": "episod",
+            "following": false
+        },
+        "place": null,
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null
+    }
+]

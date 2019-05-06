@@ -1,0 +1,1292 @@
+#%RAML 1.0
+traits:
+  CreateSheetBodyParameter:
+    body:
+      application/json:
+        description: Properties for creating a new sheet
+        type: CreateSheetBody
+        (oas-body-name): CreateSheetBodyParameter
+  Page:
+    queryParameters:
+      page:
+        description: The page of results to return.
+        required: false
+        type: integer
+        format: int32
+  PerPage:
+    queryParameters:
+      per_page:
+        description: |
+          The number of items to return per page. Leave blank for no limit,
+          returning all results.
+        required: false
+        type: integer
+        format: int32
+  RangeDataBodyParameter:
+    body:
+      application/json:
+        description: Multidimensional array of cell values in row-major order. The `null` JSON value may be used to avoid modifying a cell.
+        type: RangeDataBody
+        (oas-body-name): RangeDataBodyParameter
+  Revision:
+    queryParameters:
+      revision:
+        description: 'The spreadsheet revision from which to select data. If no revision is provided, the latest revision will be selected.'
+        required: false
+        type: integer
+        format: int32
+  SpreadsheetBodyParameter:
+    body:
+      application/json:
+        description: Properties for creating a new spreadsheet
+        type: SpreadsheetBody
+        (oas-body-name): SpreadsheetBodyParameter
+  UpdateSheetBodyParameter:
+    body:
+      application/json:
+        description: Properties for updating a sheet
+        type: UpdateSheetBody
+        (oas-body-name): UpdateSheetBodyParameter
+  ValueStyle:
+    queryParameters:
+      value_style:
+        description: |
+          The style of cell value to return. For example, if a cell's value is `=1+1` you can use:
+          - `raw` to get the raw value `=1+1` 
+          - `calculated` to get the calculated value `2`
+
+          Calculated values will be returned by default.
+        required: false
+        default: calculated
+        type: string
+        enum:
+          - raw
+          - calculated
+title: Workiva Wdesk Spreadsheets API
+description: |-
+  Import, update, and fetch data from Spreadsheets.
+   - Build: ca59a1b
+version: 1.0.0
+mediaType: application/json
+protocols:
+  - HTTPS
+baseUri: 'https://api.app.wdesk.com/spreadsheets/v1'
+securitySchemes:
+  oauth:
+    type: OAuth 2.0
+    describedBy:
+      headers:
+          Authorization:
+              description: Sends a valid OAuth 2 access token.
+              type: string
+      responses:
+          401:
+              description: Bad or expired token.
+          403:
+              description: Bad OAuth request.
+    settings:
+      accessTokenUri: 'https://api.app.wdesk.com/iam/v1/oauth2/token'
+      authorizationGrants: [ client_credentials ]
+      scopes:
+        - data_tables|r
+        - data_tables|w
+types:
+  CreateSheetBody:
+    type: object
+    properties:
+      index:
+        description: Zero-based index specifying the position of this sheet in relation to sibling sheets. The special value -1 may be used to position a sheet at the end of its siblings list in the outline without knowing how many sheets are in the list.
+        type: integer
+        format: int32
+      name:
+        description: Display name for the sheet
+        type: string
+      parent_id:
+        description: Unique identifier for the parent sheet of the sheet. The empty string value may be used to position the sheet at the top level of the spreadsheet outline.
+        type: string
+  DataValue:
+    description: 'String, numeric, or boolean value'
+  EmptyResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        required: false
+      request_id:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        required: false
+      field:
+        type: string
+        required: false
+      resource:
+        type: string
+        required: false
+  ErrorResponse:
+    type: object
+    properties:
+      errors:
+        description: 'A list of errors detailing the resource, field, and error code to aid clients in diagnosing problems.'
+        type: array
+        items:
+          type: Error
+        required: false
+      message:
+        description: Human readable description of the response
+        type: string
+        required: false
+      request_id:
+        type: string
+        required: false
+  RangeData:
+    type: object
+    example:
+      range: 'A1:B2'
+      values:
+        - - Row1-Column1 Data
+          - Row1-Column2 Data
+        - - Row2-Column1 Data
+          - Row2-Column2 Data
+    properties:
+      range:
+        description: A1 style representation of the range containing this data
+        type: string
+        required: false
+      values:
+        type: RangeValues
+        required: false
+  RangeDataBody:
+    type: object
+    example:
+      values:
+        - - Row1-Column1 Data
+          - Row1-Column2 Data
+        - - Row2-Column1 Data
+          - Row2-Column2 Data
+    properties:
+      values:
+        type: RangeValues
+        required: false
+  RangeDataResponse:
+    type: object
+    properties:
+      data:
+        type: RangeData
+        required: false
+      message:
+        description: Human readable descriptions of the response condition
+        type: string
+        required: false
+      next_url:
+        description: 'A fully qualified URL, including required query parameters, for the next page of results. If there is no next page to query for, this will be empty.'
+        type: string
+        required: false
+      page:
+        description: |
+          The one based page index that the result corresponds to.
+          Only included during paging.
+        type: integer
+        required: false
+      paged_region:
+        description: |
+          The entire region that the collection of pages represents. Only included
+          during data paging.
+        type: string
+        required: false
+      per_page:
+        description: |
+          The maximum number of items in a page. A page is not
+          guaranteed to have exactly this many items. Only included during paging.
+        type: integer
+        required: false
+      request_id:
+        description: A unique identifier for the request
+        type: string
+        required: false
+      revision:
+        description: The revision number of this spreadsheet
+        type: integer
+        required: false
+  RangeValues:
+    description: Row-major ordered multidimensional array of cell values
+    type: array
+    items:
+      type: RowValues
+  RowValues:
+    type: array
+    items:
+      type: DataValue
+  Sheet:
+    type: object
+    properties:
+      child_ids:
+        description: Array of unique identifiers for the child sheets of the sheet. This will be empty if the sheet has no children in the spreadsheet outline.
+        type: array
+        items:
+          type: string
+        required: false
+      id:
+        description: Unique identifier for the sheet
+        type: string
+        required: false
+      index:
+        description: Zero-based index specifying the position of this sheet in relation to sibling sheets
+        type: integer
+        required: false
+      name:
+        description: Display name for the sheet
+        type: string
+        required: false
+      parent_id:
+        description: Unique identifier for the parent sheet of the sheet. This will be empty if the sheet is at the top level of the spreadsheet outline.
+        type: string
+        required: false
+  SheetResponse:
+    type: object
+    properties:
+      data:
+        type: Sheet
+        required: false
+      message:
+        description: Human readable descriptions of the response condition
+        type: string
+        required: false
+      request_id:
+        description: A unique identifier for the request
+        type: string
+        required: false
+      revision:
+        description: The revision number of this spreadsheet
+        type: integer
+        required: false
+  SheetsResponse:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          type: Sheet
+        required: false
+      message:
+        description: Human readable descriptions of the response condition
+        type: string
+        required: false
+      request_id:
+        description: A unique identifier for the request
+        type: string
+        required: false
+      revision:
+        description: The revision number of this spreadsheet
+        type: integer
+        required: false
+  Spreadsheet:
+    type: object
+    properties:
+      created:
+        description: Date-time (UTC) corresponding to the creation of the spreadsheet
+        type: datetime
+        required: false
+      id:
+        description: Unique identifier for the spreadsheet
+        type: string
+        required: false
+      last_modified:
+        description: Date-time (UTC) corresponding to the last modification of the spreadsheet
+        type: datetime
+        required: false
+      name:
+        description: Display name for the spreadsheet
+        type: string
+        required: false
+  SpreadsheetBody:
+    type: object
+    properties:
+      name:
+        description: Display name for the spreadsheet
+        type: string
+  SpreadsheetResponse:
+    type: object
+    properties:
+      data:
+        type: Spreadsheet
+        required: false
+      message:
+        description: Human readable descriptions of the response condition
+        type: string
+        required: false
+      request_id:
+        description: A unique identifier for the request
+        type: string
+        required: false
+      revision:
+        description: The revision number of this spreadsheet
+        type: integer
+        required: false
+  UpdateSheetBody:
+    type: object
+    properties:
+      index:
+        description: Zero-based index specifying the position of this sheet in relation to sibling sheets. The special value -1 may be used to position a sheet at the end of its siblings list in the outline without knowing how many sheets are in the list.
+        type: integer
+        format: int32
+        required: false
+      name:
+        description: Display name for the sheet
+        type: string
+        required: false
+      parent_id:
+        description: Unique identifier for the parent sheet of the sheet. The empty string value may be used to position the sheet at the top level of the spreadsheet outline.
+        type: string
+        required: false
+annotationTypes:
+  oas-body-name:
+    type: string
+    allowedTargets: TypeDeclaration
+  oas-summary:
+    type: string
+    allowedTargets: Method
+  oas-tags:
+    type: 'string[]'
+    allowedTargets: Method
+/spreadsheets:
+  post:
+    is:
+      - SpreadsheetBodyParameter
+    displayName: Create Spreadsheet
+    responses:
+      '201':
+        description: Created
+        headers:
+          X-Request-ID:
+            description: Correlates HTTP requests between a client and server.
+            type: string
+          X-Version:
+            type: string
+        body:
+          application/json:
+            type: SpreadsheetResponse
+      '400':
+        description: Bad Request
+        headers:
+          X-Request-ID:
+            description: Correlates HTTP requests between a client and server.
+            type: string
+          X-Version:
+            type: string
+        body:
+          application/json:
+            type: ErrorResponse
+      '401':
+        description: Unauthorized
+        headers:
+          X-Request-ID:
+            description: Correlates HTTP requests between a client and server.
+            type: string
+          X-Version:
+            type: string
+        body:
+          application/json:
+            type: ErrorResponse
+      '403':
+        description: Forbidden
+        headers:
+          X-Request-ID:
+            description: Correlates HTTP requests between a client and server.
+            type: string
+          X-Version:
+            type: string
+        body:
+          application/json:
+            type: ErrorResponse
+      '422':
+        description: Unprocessable Entity
+        headers:
+          X-Request-ID:
+            description: Correlates HTTP requests between a client and server.
+            type: string
+          X-Version:
+            type: string
+        body:
+          application/json:
+            type: ErrorResponse
+      '500':
+        description: Internal Server Error
+        headers:
+          X-Request-ID:
+            description: Correlates HTTP requests between a client and server.
+            type: string
+          X-Version:
+            type: string
+        body:
+          application/json:
+            type: ErrorResponse
+    securedBy:
+      - oauth:
+          scopes:
+            - data_tables|w
+    (oas-summary): Creates a new spreadsheet
+    (oas-tags):
+      - Spreadsheets
+  '/{SpreadsheetId}':
+    delete:
+      displayName: Delete Spreadsheet
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: EmptyResponse
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '403':
+          description: Forbidden
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '404':
+          description: Not Found
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '500':
+          description: Internal Server Error
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+      securedBy:
+        - oauth:
+            scopes:
+              - data_tables|w
+      (oas-summary): Deletes a spreadsheet
+      (oas-tags):
+        - Spreadsheets
+    get:
+      is:
+        - Revision
+      displayName: Get Spreadsheet
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: SpreadsheetResponse
+        '400':
+          description: Bad Request
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '403':
+          description: Forbidden
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '404':
+          description: Not Found
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '500':
+          description: Internal Server Error
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+      securedBy:
+        - oauth:
+            scopes:
+              - data_tables|r
+      (oas-summary): Returns spreadsheet properties
+      (oas-tags):
+        - Spreadsheets
+    put:
+      description: |
+        Updates a spreadsheet using the given spreadsheet properties.
+
+        If any property is null or not included in the request the property
+        will not be modified.
+      is:
+        - SpreadsheetBodyParameter
+      displayName: Update Spreadsheet
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: EmptyResponse
+        '400':
+          description: Bad Request
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '403':
+          description: Forbidden
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '404':
+          description: Not Found
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '422':
+          description: Unprocessable Entity
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+        '500':
+          description: Internal Server Error
+          headers:
+            X-Request-ID:
+              description: Correlates HTTP requests between a client and server.
+              type: string
+            X-Version:
+              type: string
+          body:
+            application/json:
+              type: ErrorResponse
+      securedBy:
+        - oauth:
+            scopes:
+              - data_tables|w
+      (oas-summary): Updates spreadsheet properties
+      (oas-tags):
+        - Spreadsheets
+    uriParameters:
+      SpreadsheetId:
+        description: A unique identifier for a spreadsheet
+        type: string
+    /sheets:
+      get:
+        is:
+          - Revision
+        displayName: Get Sheets
+        responses:
+          '200':
+            description: OK
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: SheetsResponse
+          '400':
+            description: Bad Request
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '401':
+            description: Unauthorized
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '403':
+            description: Forbidden
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '404':
+            description: Not Found
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '500':
+            description: Internal Server Error
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+        securedBy:
+          - oauth:
+              scopes:
+                - data_tables|r
+        (oas-summary): Returns a list of all sheets in the outline and their properties
+        (oas-tags):
+          - Spreadsheets
+      post:
+        is:
+          - CreateSheetBodyParameter
+        displayName: Create Sheet
+        responses:
+          '201':
+            description: Created
+            headers:
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: SheetResponse
+          '400':
+            description: Bad Request
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '401':
+            description: Unauthorized
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '403':
+            description: Forbidden
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '404':
+            description: Not Found
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '422':
+            description: Unprocessable Entity
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+          '500':
+            description: Internal Server Error
+            headers:
+              X-Request-ID:
+                description: Correlates HTTP requests between a client and server.
+                type: string
+              X-Version:
+                type: string
+            body:
+              application/json:
+                type: ErrorResponse
+        securedBy:
+          - oauth:
+              scopes:
+                - data_tables|w
+        (oas-summary): Creates a new sheet
+        (oas-tags):
+          - Spreadsheets
+      '/{SheetId}':
+        delete:
+          displayName: Delete Sheet
+          responses:
+            '200':
+              description: OK
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: EmptyResponse
+            '401':
+              description: Unauthorized
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '403':
+              description: Forbidden
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '404':
+              description: Not Found
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '500':
+              description: Internal Server Error
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+          securedBy:
+            - oauth:
+                scopes:
+                  - data_tables|w
+          (oas-summary): Deletes a sheet and all of its child sheets (recursively)
+          (oas-tags):
+            - Spreadsheets
+        get:
+          is:
+            - Revision
+          displayName: Get Sheet
+          responses:
+            '200':
+              description: OK
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: SheetResponse
+            '400':
+              description: Bad Request
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '401':
+              description: Unauthorized
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '403':
+              description: Forbidden
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '404':
+              description: Not Found
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '500':
+              description: Internal Server Error
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+          securedBy:
+            - oauth:
+                scopes:
+                  - data_tables|r
+          (oas-summary): Returns sheet properties
+          (oas-tags):
+            - Spreadsheets
+        put:
+          description: |
+            Updates a sheet using the given sheet properties. 
+
+            If the name property is set to null or not included in the request the sheet will not be renamed.
+
+            If both the parent_id and index properties are set to null or not included in the request the 
+            sheet will not be moved.
+          is:
+            - UpdateSheetBodyParameter
+          displayName: Update Sheet
+          responses:
+            '200':
+              description: OK
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: EmptyResponse
+            '400':
+              description: Bad Request
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '401':
+              description: Unauthorized
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '403':
+              description: Forbidden
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '404':
+              description: Not Found
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '422':
+              description: Unprocessable Entity
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+            '500':
+              description: Internal Server Error
+              headers:
+                X-Request-ID:
+                  description: Correlates HTTP requests between a client and server.
+                  type: string
+                X-Version:
+                  type: string
+              body:
+                application/json:
+                  type: ErrorResponse
+          securedBy:
+            - oauth:
+                scopes:
+                  - data_tables|w
+          (oas-summary): Updates sheet properties
+          (oas-tags):
+            - Spreadsheets
+        uriParameters:
+          SheetId:
+            description: A unique identifier for a sheet within a spreadsheet
+            type: string
+        '/data/{Region}':
+          get:
+            description: |
+              Returns all data from a region, paging if necessary.
+
+              When paging, the revision parameter must be set and the per_page parameter
+              indicates the maximum number of cells to include in a single response.
+              The server enforces a maximum per_page of 50,000. An unbounded region
+              may only be used to obtain the first page of results. Use the
+              paged_region or next_url from the first page to retrieve subsequent
+              pages. All cells in the requested region will appear exactly once
+              during the paging process, however ordering is not guaranteed.
+            is:
+              - ValueStyle
+              - Revision
+              - Page
+              - PerPage
+            displayName: Get Data
+            responses:
+              '200':
+                description: OK
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: RangeDataResponse
+              '400':
+                description: Bad Request
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '401':
+                description: Unauthorized
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '403':
+                description: Forbidden
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '404':
+                description: Not Found
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '500':
+                description: Internal Server Error
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+            securedBy:
+              - oauth:
+                  scopes:
+                    - data_tables|r
+            (oas-summary): Returns data from a region
+            (oas-tags):
+              - Spreadsheets
+          put:
+            description: |
+              Overwrites all data in a region with new data. If the provided
+              range data is smaller than the specified region, all cells in the
+              region and not covered by the range data will be cleared. The provided
+              range data must not be larger than the specified region. An empty
+              range data is valid and may be used to clear a region.
+            is:
+              - RangeDataBodyParameter
+            displayName: Update Data
+            responses:
+              '200':
+                description: OK
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: EmptyResponse
+              '400':
+                description: Bad Request
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '401':
+                description: Unauthorized
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '403':
+                description: Forbidden
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '404':
+                description: Not Found
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '422':
+                description: Unprocessable Entity
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+              '500':
+                description: Internal Server Error
+                headers:
+                  X-Request-ID:
+                    description: Correlates HTTP requests between a client and server.
+                    type: string
+                  X-Version:
+                    type: string
+                body:
+                  application/json:
+                    type: ErrorResponse
+            securedBy:
+              - oauth:
+                  scopes:
+                    - data_tables|w
+            (oas-summary): Writes data to a region
+            (oas-tags):
+              - Spreadsheets
+          uriParameters:
+            Region:
+              description: |
+                Cell Syntax: `[Column][Row]`
+
+                Range Syntax: `[Start Column][Start Row]:[Stop Column][Stop Row]`
+
+                A1 style representation of a cell or range. A range may be unbounded in
+                any/all directions by leaving off the corresponding column or row. 
+
+                Examples:
+                * The region `A1` selects data in the cell `A1`
+                * The region `A2:D8` selects all data in the range between `A2` and `D8` (inclusive)
+                * The region `A:A` selects all data in column `A`
+                * The region `1:3` selects all data in rows `1` through `3`
+                * The region `B3:` selects all data below and to the right of `B3` (inclusive)
+                * The region `:` selects all data in the sheet
+
+                Be sure to URL encode the region to avoid misinterpretation of the `:`.
+              pattern: '^[a-zA-Z]*(?:[1-9][0-9]*)?(?::[a-zA-Z]*(?:[1-9][0-9]*)?)?$'
+              type: string

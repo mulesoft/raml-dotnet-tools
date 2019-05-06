@@ -1,0 +1,1 @@
+Twitter is an online social networking and microblogging service that enables users to send and read short 140-character text messages, called \"tweets\". Registered users can read and post tweets, but unregistered users can only read them. Users access Twitter through the website interface, SMS, or mobile device app.

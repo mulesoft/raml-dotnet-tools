@@ -1,0 +1,6 @@
+{
+  "id": 1,
+  "key": "ssh-rsa AAA...",
+  "url": "https://api.github.com/user/keys/1",
+  "title": "octocat@octomac"
+}

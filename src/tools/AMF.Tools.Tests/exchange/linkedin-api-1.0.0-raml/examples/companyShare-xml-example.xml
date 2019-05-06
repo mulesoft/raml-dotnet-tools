@@ -1,0 +1,28 @@
+<share>
+  <visibility>
+  <code>anyone</code>
+  </visibility>
+  <comment>Testing a targeted share!</comment>
+  <content>
+    <submitted-url>http://www.example.com/content.html</submitted-url>
+    <title>Test Share with Content</title>
+    <description>content description</description>
+    <submitted-image-url>http://www.example.com/image.jpg</submitted-image-url>
+  </content>
+  <share-target-reach>
+    <share-targets>
+      <share-target>
+        <code>geos</code>
+        <tvalues>
+          <tvalue>as</tvalue>
+        </tvalues>
+      </share-target>
+      <share-target>
+        <code>jobFunc</code>
+        <tvalues>
+          <tvalue>acct</tvalue>
+        </tvalues>
+      </share-target>
+    </share-targets>
+  </share-target-reach>
+</share>

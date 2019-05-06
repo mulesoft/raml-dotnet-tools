@@ -1,0 +1,23 @@
+{
+  "upload" : {
+    "token" : "6bk3gql82em5nmf" ,
+    "attachment" : {
+      "id" : 498483 ,
+      "name" : "crash.log" ,
+      "content_url" : "https://company.zendesk.com/attachments/crash.log" ,
+      "content_type" : "text/plain" ,
+      "size" : 2532 ,
+      "thumbnails" : []
+    } ,
+    "attachments" : [
+      {
+        "id" : 498483 ,
+        "name" : "crash.log" ,
+        "content_url" : "https://company.zendesk.com/attachments/crash.log" ,
+        "content_type" : "text/plain" ,
+        "size" : 2532 ,
+        "thumbnails" : []
+      }
+    ]
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "sha": {
+      "type": "string"
+    },
+    "merged": {
+      "required": false,
+      "type": "boolean"
+    },
+    "message": {
+      "required": false,
+      "type": "string"
+    },
+    "commit": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "committer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "tree": {
+          "type": "object",
+          "properties": {
+            "sha": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "comment_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "url": {
+      "type": "string"
+    },
+    "comments_url": {
+      "type": "string"
+    },
+    "author": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "avatar_url": {
+          "type": "string"
+        },
+        "gravatar_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "html_url": {
+          "type": "string"
+        },
+        "followers_url": {
+          "type": "string"
+        },
+        "following_url": {
+          "type": "string"
+        },
+        "gists_url": {
+          "type": "string"
+        },
+        "starred_url": {
+          "type": "string"
+        },
+        "subscriptions_url": {
+          "type": "string"
+        },
+        "organizations_url": {
+          "type": "string"
+        },
+        "repos_url": {
+          "type": "string"
+        },
+        "events_url": {
+          "type": "string"
+        },
+        "received_events_url": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "committer": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "avatar_url": {
+          "type": "string"
+        },
+        "gravatar_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "html_url": {
+          "type": "string"
+        },
+        "followers_url": {
+          "type": "string"
+        },
+        "following_url": {
+          "type": "string"
+        },
+        "gists_url": {
+          "type": "string"
+        },
+        "starred_url": {
+          "type": "string"
+        },
+        "subscriptions_url": {
+          "type": "string"
+        },
+        "organizations_url": {
+          "type": "string"
+        },
+        "repos_url": {
+          "type": "string"
+        },
+        "events_url": {
+          "type": "string"
+        },
+        "received_events_url": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "parents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sha": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

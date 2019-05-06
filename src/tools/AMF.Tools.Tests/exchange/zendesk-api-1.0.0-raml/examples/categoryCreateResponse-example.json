@@ -1,0 +1,10 @@
+{
+  "category": {
+    "id":              14215,
+    "name":            "My Category",
+    "description":     null,
+    "position":        9999,
+    "created_at":      "2012-02-02T04:31:29Z",
+    "updated_at":      "2012-02-02T04:31:29Z"
+  }
+}

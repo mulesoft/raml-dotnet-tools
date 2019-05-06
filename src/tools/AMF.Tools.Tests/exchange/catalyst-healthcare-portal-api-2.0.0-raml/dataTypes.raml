@@ -1,0 +1,117 @@
+#%RAML 1.0 Library
+uses:
+  FHIR_commons: /exchange_modules/org.mule.templates/fhir-commons/1.0.0/fhir_commons.raml
+
+types:
+ 
+  Address:
+    properties: 
+      line: string
+      district?: string
+      city: string
+      state: string
+      postalCode: string
+      country: string  
+
+  Allergy:
+    properties: 
+      id?: string
+      onsetDate?: FHIR_commons.date
+      name?: string
+      status?: string
+
+  Appointment:
+    properties: 
+      practitionerID?: integer
+      slotID?: integer
+      start?: string
+      end?: string
+      actor?: string
+      status?: string
+
+  Condition:
+    properties: 
+      id?: string
+      onsetDate?: FHIR_commons.date
+      code?:  string
+      system?: FHIR_commons.uri
+      name?: string
+      status?: string
+
+  DateWithFreeSlots:  
+    properties: 
+      date: FHIR_commons.date
+      slots: Slot[]
+
+  Health:
+    properties: 
+      conditions: Condition[]
+      allergies: Allergy[]
+
+  MessageResponse:
+    properties: 
+      message: string
+
+  Name: 
+    properties:
+      family: string
+      given: string
+      prefix: string
+      suffix: string
+
+  Patient:
+    type: Person
+    properties: 
+      careProvider: string
+      
+  Person:
+    properties: 
+      id?: string
+      name?: Name
+      phone?: string
+      fax?: string
+      email?: string
+      address?: Address
+      gender?: FHIR_commons.gender
+      birthDate?: FHIR_commons.date
+
+  Schedule: 
+    properties: 
+      practitionerId: string
+      datesWithFreeSlots: DateWithFreeSlots[]
+
+  SigninRequest:
+    properties: 
+      login: string
+      password: string
+
+  SigninResponse:
+    properties: 
+      patientId: string
+
+  SignoutRequest:
+    properties: 
+      login: string
+
+  SignupRequest:
+    properties: 
+      login: string
+      password: string
+      name?: Name
+      phone?: string
+      address?: Address
+      gender?: FHIR_commons.gender
+      birthDate?: FHIR_commons.date 
+      careProvider: string   
+
+  SignupResponse:
+    properties: 
+      patientId: string
+      message:  string
+      
+  Slot:
+    properties: 
+      scheduleID: string
+      id: string
+      start: string
+      end: string

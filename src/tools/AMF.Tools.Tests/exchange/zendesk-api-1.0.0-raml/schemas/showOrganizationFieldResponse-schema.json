@@ -1,0 +1,82 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "organization_fields" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "type" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "key" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "title" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "raw_title" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "description" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "raw_description" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "position" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "active" : {
+              "type" : "boolean" ,
+              "required" : false
+            } ,
+            "regexp_for_validation" : {
+              "type" : "object" ,
+              "required" : false
+            } ,
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "updated_at" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    } ,
+    "next_page" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "previous_page" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "count" : {
+      "type" : "number" ,
+      "required" : false
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "items" : [
+    {
+      "url" : "https://company.zendesk.com/api/v2/dynamic_content/items/47.json" ,
+      "id" : 47 ,
+      "name" : "Snowboard Problem" ,
+      "placeholder" : "{{dc.snowboard_problem}}" ,
+      "default_locale_id" : 1 ,
+      "status" : "current" ,
+      "created_at" : "2012-04-02T22:55:29Z" ,
+      "updated_at" : "2012-04-02T22:55:29Z"
+    }
+  ]
+}

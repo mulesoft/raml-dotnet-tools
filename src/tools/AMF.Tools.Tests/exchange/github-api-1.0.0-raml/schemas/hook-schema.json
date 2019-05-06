@@ -1,0 +1,62 @@
+{
+  "type": "array",
+  "$schema": "http://json-schema.org/draft-03/schema",
+"items": {
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "updated_at": {
+      "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+      "type": "string"
+    },
+    "created_at": {
+      "description": "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "push",
+          "issues",
+          "issue_comment",
+          "commit_comment",
+          "pull_request",
+          "pull_request_review_comment",
+          "gollum",
+          "watch",
+          "download",
+          "fork",
+          "fork_apply",
+          "member",
+          "public",
+          "team_add",
+          "status"
+        ]
+      }
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "content_type": {
+          "type": "string"
+        }
+      }
+    },
+    "id": {
+      "type": "integer"
+    }
+  }
+}
+}

@@ -1,0 +1,26 @@
+{
+  "result" : {
+    "ticket" : {
+      "id" : 35436 ,
+      "url" : "https://company.zendesk.com/api/v2/tickets/35436.json" ,
+      "assignee_id" : 235323 ,
+      "group_id" : 98738 ,
+      "fields" : [
+        {
+          "id" : 27642 ,
+          "value" : "745"
+        }
+      ] ,
+    } ,
+    "comment" : {
+      "body" : "Assigned to Agent Uno." ,
+      "scoped_body" : [
+        [
+          "channel:all" ,
+          "Assigned to Agent Uno."
+        ]
+      ] ,
+      "public" : false
+    }
+  }
+}

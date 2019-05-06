@@ -1,0 +1,9 @@
+{
+  "name" : "Hello-World" ,
+  "description" : "This is your first repository" ,
+  "homepage" : "https://github.com" ,
+  "private" : true ,
+  "has_issues" : true ,
+  "has_wiki" : true ,
+  "has_downloads" : true
+}

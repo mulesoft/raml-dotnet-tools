@@ -1,0 +1,100 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required": false,
+    "properties": {
+        "object": {
+            "type": "string",
+            "required": false
+        },
+        "url": {
+            "type": "string",
+            "required": false
+        },
+        "count": {
+            "type": "number",
+            "id": "http://jsonschema.net/count",
+            "required": false
+        },
+        "data": {
+            "type": "array",
+            "id": "http://jsonschema.net/data",
+            "required": false,
+            "items": {
+                "type": "object",
+                "id": "http://jsonschema.net",
+                "required": false,
+                "properties": {
+                    "amount": {
+                        "type": "number",
+                        "id": "http://jsonschema.net/amount",
+                        "required": false
+                    },
+                    "currency": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/currency",
+                        "required": false
+                    },
+                    "description": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/description",
+                        "required": false
+                    },
+                    "id": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/id",
+                        "required": false
+                    },
+                    "livemode": {
+                        "type": "boolean",
+                        "id": "http://jsonschema.net/livemode",
+                        "required": false
+                    },
+                    "object": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/object",
+                        "required": false
+                    },
+                    "period": {
+                        "type": "object",
+                        "id": "http://jsonschema.net/period",
+                        "required": false,
+                        "properties": {
+                            "end": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/period/end",
+                                "required": false
+                            },
+                            "start": {
+                                "type": "number",
+                                "id": "http://jsonschema.net/period/start",
+                                "required": false
+                            }
+                        }
+                    },
+                    "plan": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/plan",
+                        "required": false
+                    },
+                    "proration": {
+                        "type": "boolean",
+                        "id": "http://jsonschema.net/proration",
+                        "required": false
+                    },
+                    "quantity": {
+                        "type": "null",
+                        "id": "http://jsonschema.net/quantity",
+                        "required": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "id": "http://jsonschema.net/type",
+                        "required": false
+                    }
+                }
+            }
+        }
+    }
+}

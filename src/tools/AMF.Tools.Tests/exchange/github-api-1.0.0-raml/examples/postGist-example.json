@@ -1,0 +1,9 @@
+{
+  "description" : "blablabla" ,
+  "public" : true ,
+  "files" : {
+    "file1.txt" : {
+      "content" : "String file contents"
+    }
+  }
+}

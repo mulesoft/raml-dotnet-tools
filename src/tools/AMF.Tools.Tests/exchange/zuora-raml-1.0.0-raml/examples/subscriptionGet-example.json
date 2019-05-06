@@ -1,0 +1,48 @@
+{
+  "contractedMrr" : 33.33 ,
+  "termStartDate" : "2013-02-01" ,
+  "subscriptionNumber" : "A-S00001084" ,
+  "accountNumber" : "A00001115" ,
+  "success" : true ,
+  "totalContractedValue" : 400 ,
+  "accountName" : "subscribeCallYan_1" ,
+  "ratePlans" : [
+    {
+      "ratePlanName" : "QSF_Tier" ,
+      "productName" : "Recurring Charge" ,
+      "ratePlanCharges" : [
+        {
+          "name" : "TieredPrice Prepayment Charge" ,
+          "billingPeriod" : null ,
+          "model" : "FlatFee" ,
+          "type" : "OneTime" ,
+          "pricingSummary" : "USD200" ,
+          "quantity" : null ,
+          "billingDay" : "DefaultFromCustomer" ,
+          "id" : "2c92c8f83dcbd8b1013dcce0eb510075"
+        } , {
+          "name" : "TieredPrice" ,
+          "billingPeriod" : "Quarter" ,
+          "model" : "Tiered" ,
+          "type" : "Recurring" ,
+          "pricingSummary" : "0 to 10 ONE_DOWN: USD10/ONE_DOWN;  10.1 to 20 ONE_DOWN: USD20/ONE_DOWN;  20.1 to 30 ONE_DOWN: USD30/ONE_DOWN;  30.1 to 40 ONE_DOWN: USD40/ONE_DOWN;  40.1 ONE_DOWN or more: USD50/ONE_DOWN" ,
+          "quantity" : 10 ,
+          "billingDay" : "DefaultFromCustomer" ,
+          "id" : "2c92c8f83dcbd8b1013dcce0ea7e0070"
+        }
+      ] ,
+      "id" : "2c92c8f83dcbd8b1013dcce0ea7e006f"
+    }
+  ] ,
+  "status" : "Active" ,
+  "renewalTerm" : 3 ,
+  "accountId" : "2c92a0f9391832b10139183e277a0042" ,
+  "autoRenew" : true ,
+  "termType" : "TERMED" ,
+  "termEndDate" : "2014-02-01" ,
+  "contractEffectiveDate" : "2013-02-01" ,
+  "notes" : "Test POST subscription from z-ruby-sdk" ,
+  "initialTerm" : 12 ,
+  "subscriptionStartDate" : "2013-02-01" ,
+  "id" : "2c92c8f83dcbd8b1013dcce0ead40071"
+}

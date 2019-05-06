@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "object",
+  "properties": {
+    "invoices": {
+      "required": false,
+      "type": "array",
+      "items": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "required": false,
+            "type": "string"
+          },
+          "accountName": {
+            "required": false,
+            "type": "string"
+          },
+          "accountNumber": {
+            "required": false,
+            "type": "string"
+          },
+          "amount": {
+            "required": false,
+            "type": "integer"
+          },
+          "balance": {
+            "required": false,
+            "type": "integer"
+          },
+          "createdBy": {
+            "required": false,
+            "type": "string"
+          },
+          "dueDate": {
+            "required": false,
+            "type": "string"
+          },
+          "id": {
+            "required": false,
+            "type": "string"
+          },
+          "invoiceDate": {
+            "required": false,
+            "type": "string"
+          },
+          "invoiceItems": {
+            "required": false,
+            "type": "array",
+            "items": {
+              "required": false,
+              "type": "object",
+              "properties": {
+                "chargeAmount": {
+                  "required": false,
+                  "type": "integer"
+                },
+                "chargeDescription": {
+                  "required": false,
+                  "type": "string"
+                },
+                "chargeId": {
+                  "required": false,
+                  "type": "string"
+                },
+                "chargeName": {
+                  "required": false,
+                  "type": "string"
+                },
+                "id": {
+                  "required": false,
+                  "type": "string"
+                },
+                "productName": {
+                  "required": false,
+                  "type": "string"
+                },
+                "quantity": {
+                  "required": false,
+                  "type": "integer"
+                },
+                "serviceEndDate": {
+                  "required": false,
+                  "type": "string"
+                },
+                "serviceStartDate": {
+                  "required": false,
+                  "type": "string"
+                },
+                "subscriptionId": {
+                  "required": false,
+                  "type": "string"
+                },
+                "subscriptionName": {
+                  "required": false,
+                  "type": "string"
+                },
+                "taxAmount": {
+                  "required": false,
+                  "type": "integer"
+                },
+                "unitOfMeasure": {
+                  "required": false,
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "invoiceNumber": {
+            "required": false,
+            "type": "string"
+          },
+          "invoiceTargetDate": {
+            "required": false,
+            "type": "string"
+          },
+          "status": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    },
+    "success": {
+      "required": false,
+      "type": "boolean"
+    }
+  }
+}

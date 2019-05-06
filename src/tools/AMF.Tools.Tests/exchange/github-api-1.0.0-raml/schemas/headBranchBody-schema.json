@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object",
+    "properties": {
+    	"sha": {
+    		"description": "String of the SHA1 value to set this reference to.",
+    		"type": "string"
+    	},
+    	"force": {
+    		"description": "Boolean indicating whether to force the update or to make sure the update is a fast-forward update. The default is false, so leaving this out or setting it to false will make sure you’re not overwriting work.",
+    		"type": "boolean"
+    	}
+    },
+    "required": [
+    	"sha",
+    	"force"
+    ]
+}

@@ -1,0 +1,36 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides information about partners
+
+types:
+
+  PartnerInfo:
+    type: object
+    description: Information about partner
+    properties:
+      partnerId?:
+        description: Identifier of partner
+        type: string
+      name:
+        description: Name of partner
+        type: string
+      description?:
+        type: string
+      email:
+        description: Email contact
+        type: string
+      phone:
+        description: Phone number
+        type: string
+      url:
+        description: Website URL
+        type: string
+      shippingPrice:
+        description: Shipping price
+        type: number
+      rating?:
+        description: Rating of partner
+        minimum: 0
+        maximum: 5
+        type: number

@@ -1,0 +1,42 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "requirements" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "object" ,
+          "properties" : {
+            "account_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "identifier" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "requirement_id" : {
+              "type" : "number" ,
+              "required" : false
+            } ,
+            "requirement_type" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "created_at" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "updated_at" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

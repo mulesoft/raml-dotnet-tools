@@ -1,0 +1,32 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "title" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "body" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "assignee" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "milestone" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "labels" : {
+      "type" : "array" ,
+      "required" : false ,
+      "items" : [
+        {
+          "type" : "string"
+        }
+      ]
+    }
+  }
+}

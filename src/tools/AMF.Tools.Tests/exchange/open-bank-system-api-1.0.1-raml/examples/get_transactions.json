@@ -1,0 +1,40 @@
+[
+   {
+       "uuid": "b05f550d-1915-4def-9a36-2042adfbf558",
+       "id": "b05f550d-1915-4def-9a36-2042adfbf558",
+       "this_account": {
+           "id":"123456",
+           "number": "31926819",
+           "type": "CHECKING",
+           "IBAN": "GB29NWBK60161331926819",
+           "bank": {
+               "national_identifier": "NWBKGB2L",
+               "name": "NATIONAL WESTMINSTER BANK PLC"
+           }
+       },
+       "other_account": {
+           "id":"123213",
+           "number": "31926820",
+           "type": "CHECKING",
+           "IBAN": "GB29NWBK60161331926820",
+           "bank": {
+               "national_identifier": "NWBKGB2L",
+               "name": "NATIONAL WESTMINSTER BANK PLC"
+           }
+       },
+       "details": {
+           "type": "sepa_direct_transfer",
+           "label": "Spotify",
+           "posted": "2012-03-07T00:00:00.001Z",
+           "completed": "2012-03-07T00:00:00.001Z",
+           "new_balance": {
+               "currency": "EUR",
+               "amount": "+5998.55"
+           },
+           "value": {
+               "currency": "EUR",
+               "amount": "-1.45"
+           }
+       }
+   }
+]

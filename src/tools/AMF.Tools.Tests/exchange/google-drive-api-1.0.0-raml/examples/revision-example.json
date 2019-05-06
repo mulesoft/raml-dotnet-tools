@@ -1,0 +1,31 @@
+{
+  "kind" : "drive#revision" ,
+  "etag" : "etag" ,
+  "id" : "string" ,
+  "selfLink" : "string" ,
+  "mimeType" : "string" ,
+  "modifiedDate" : "datetime" ,
+  "pinned" : "boolean" ,
+  "published" : "boolean" ,
+  "publishedLink" : "string" ,
+  "publishAuto" : "boolean" ,
+  "publishedOutsideDomain" : "boolean" ,
+  "downloadUrl" : "string" ,
+  "exportLinks" : {
+    "link" : "string"
+  } ,
+  "lastModifyingUserName" : "string" ,
+  "lastModifyingUser" : {
+    "kind" : "drive#user" ,
+    "displayName" : "string" ,
+    "picture" : {
+      "url" : "string"
+    } ,
+    "isAuthenticatedUser" : "boolean" ,
+    "permissionId" : "string" ,
+    "emailAddress" : "string"
+  } ,
+  "originalFilename" : "string" ,
+  "md5Checksum" : "string" ,
+  "fileSize" : "long"
+}

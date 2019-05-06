@@ -1,0 +1,10 @@
+#%RAML 1.0 Trait
+usage: Apply this to any method that needs interaction with vcs
+description: Provides user information that the client already has, to avoid requesting this to CS. Should be temporary until performance is better.
+headers:
+  x-owner-id:
+    description: vcs ownerId
+    example: abcuser
+  x-organization-id:
+    description: vcs organizationId
+    example: abcorg

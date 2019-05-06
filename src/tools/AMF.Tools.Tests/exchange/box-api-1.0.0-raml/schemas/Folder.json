@@ -1,0 +1,272 @@
+{
+  "type": "object",
+  "required": true,
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "type": {
+      "type": "string",
+      "required": false
+    },
+    "id": {
+      "type": "string",
+      "required": false
+    },
+    "sequence_id": {
+      "type": "string",
+      "required": false
+    },
+    "etag": {
+      "type": "string",
+      "required": false
+    },
+    "name": {
+      "type": "string",
+      "required": false
+    },
+    "created_at": {
+      "type": "string",
+      "required": false
+    },
+    "modified_at": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "size": {
+      "type": "number",
+      "required": false
+    },
+    "path_collection": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "total_count": {
+          "type": "number",
+          "required": false
+        },
+        "entries": {
+          "type": "array",
+          "required": false,
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "required": false
+                },
+                "id": {
+                  "type": "string",
+                  "required": false
+                },
+                "sequence_id": {
+                  "type": "object",
+                  "required": false
+                },
+                "etag": {
+                  "type": "object",
+                  "required": false
+                },
+                "name": {
+                  "type": "string",
+                  "required": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "created_by": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "required": false
+        },
+        "id": {
+          "type": "string",
+          "required": false
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "login": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "modified_by": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "required": false
+        },
+        "id": {
+          "type": "string",
+          "required": false
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "login": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "owned_by": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "required": false
+        },
+        "id": {
+          "type": "string",
+          "required": false
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "login": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "shared_link": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "required": false
+        },
+        "download_url": {
+          "type": "string",
+          "required": false
+        },
+        "vanity_url": {
+          "type": "object",
+          "required": false
+        },
+        "is_password_enabled": {
+          "type": "boolean",
+          "required": false
+        },
+        "unshared_at": {
+          "type": "object",
+          "required": false
+        },
+        "download_count": {
+          "type": "number",
+          "required": false
+        },
+        "preview_count": {
+          "type": "number",
+          "required": false
+        },
+        "access": {
+          "type": "string",
+          "required": false
+        },
+        "permissions": {
+          "type": "object",
+          "required": false,
+          "properties": {
+            "can_download": {
+              "type": "boolean",
+              "required": false
+            },
+            "can_preview": {
+              "type": "boolean",
+              "required": false
+            }
+          }
+        }
+      }
+    },
+    "folder_upload_email": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "access": {
+          "type": "string",
+          "required": false
+        },
+        "email": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "parent": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "required": false
+        },
+        "id": {
+          "type": "string",
+          "required": false
+        },
+        "sequence_id": {
+          "type": "object",
+          "required": false
+        },
+        "etag": {
+          "type": "object",
+          "required": false
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "item_status": {
+      "type": "string",
+      "required": false
+    },
+    "item_collection": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "total_count": {
+          "type": "number",
+          "required": false
+        },
+        "entries": {
+          "type": "array",
+          "required": false,
+          "items": {
+            "type": "array"
+          }
+        },
+        "offset": {
+          "type": "number",
+          "required": false
+        },
+        "limit": {
+          "type": "number",
+          "required": false
+        }
+      }
+    }
+  }
+}

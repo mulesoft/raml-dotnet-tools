@@ -1,0 +1,16 @@
+{
+  "ticket" : {
+    "via_id" : 45 ,
+    "description" : "Incoming phone call from: +16617480240" ,
+    "voice_comment" : {
+      "from" : "+16617480240" ,
+      "to" : "+16617480123" ,
+      "recording_url" : "http://yourdomain.com/recordings/1.mp3" ,
+      "started_at" : "2013-07-11 15:31:44 +0000" ,
+      "call_duration" : 40 ,
+      "answered_by_id" : 28 ,
+      "transcription_text" : "The transcription of the call" ,
+      "location" : "Dublin, Ireland"
+    }
+  }
+}

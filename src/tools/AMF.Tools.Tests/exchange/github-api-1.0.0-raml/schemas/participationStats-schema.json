@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "properties": {
+    "all": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "owner": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    }
+  }
+}

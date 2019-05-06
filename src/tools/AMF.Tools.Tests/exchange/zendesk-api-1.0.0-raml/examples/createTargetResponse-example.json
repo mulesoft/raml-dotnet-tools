@@ -1,0 +1,10 @@
+{
+  "target" : {
+    "type" : "email_target" ,
+    "title" : "Test Email Target" ,
+    "active" : true ,
+    "email" : "hello@example.com" ,
+    "subject" : "Test Target" ,
+    "created_at" : "2009-05-13T00:07:08Z"
+  }
+}

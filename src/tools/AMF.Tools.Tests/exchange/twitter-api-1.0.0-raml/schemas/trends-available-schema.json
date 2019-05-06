@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "required": false,
+  "type": "array",
+  "items": {
+    "required": false,
+    "type": "object",
+    "properties": {
+      "country": {
+        "required": false,
+        "type": "string"
+      },
+      "countryCode": {
+        "required": false,
+        "type": "string"
+      },
+      "name": {
+        "required": false,
+        "type": "string"
+      },
+      "parentid": {
+        "required": false,
+        "type": "integer"
+      },
+      "placeType": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "code": {
+            "required": false,
+            "type": "integer"
+          },
+          "name": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      },
+      "url": {
+        "required": false,
+        "type": "string"
+      },
+      "woeid": {
+        "required": false,
+        "type": "integer"
+      }
+    }
+  }
+}

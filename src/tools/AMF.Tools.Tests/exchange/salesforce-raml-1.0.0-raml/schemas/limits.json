@@ -1,0 +1,27 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "DailyApiRequests" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "DailyAsyncApexExecutions" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "DailyBulkApiRequests" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "DailyStreamingApiEvents" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "StreamingApiConcurrentClients" : {
+      "type" : "object" ,
+      "required" : false
+    }
+  }
+}

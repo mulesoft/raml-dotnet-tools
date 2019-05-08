@@ -32,6 +32,9 @@ namespace AMF.Tools.TestRunner
         {
             var tests = new RamlExchangeTests();
 
+            await tests.box_api_raml(); // RP-572
+
+
             await tests.catalyst_healthcare_appointment_api_raml();
 
             await tests.banking_aisp_experience_api();
@@ -68,7 +71,7 @@ namespace AMF.Tools.TestRunner
             await tests.api_designer_experience_api_raml();
             await tests.appointments_process_api_raml();
             await tests.atm_and_branch_location_api_raml();
-            // await tests.box_api_raml(); // RP-572
+
             await tests.cardconnect_rest_api_raml();
             
             await tests.catalyst_healthcare_ehr_to_crm_papi_raml();

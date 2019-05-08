@@ -116,7 +116,7 @@ namespace AMF.Tools.Core
             if (shape is FileShape file)
                 return TypeStringConversion["file"];
 
-            if (shape.Id.Contains("#/declarations"))
+            if (shape.Id != null && shape.Id.Contains("#/declarations"))
             {
                 var key = GetTypeFromLinkOrId(shape.Id);
                 if (existingObjects != null && (existingObjects.ContainsKey(key)

@@ -32,6 +32,8 @@ namespace AMF.Tools.TestRunner
         {
             var tests = new RamlExchangeTests();
 
+            await tests.github_api_raml(); // TODO: issue RP-573?
+
             await tests.box_api_raml(); // RP-572
 
 
@@ -89,7 +91,6 @@ namespace AMF.Tools.TestRunner
             await tests.ehr_fhir_system_api_raml();
             await tests.fhir_apis_raml();
             await tests.fitness_fhir_system_api_raml();
-            //await tests.github_api_raml(); // TODO: issue RP-573?
             await tests.google_contacts_api_raml();
             //await tests.google_drive_api_raml(); // RP-574
             await tests.linkedin_api_raml();

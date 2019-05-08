@@ -68,7 +68,8 @@ namespace AMF.Tools.Core
 
             var operationWithSecurity = resource.Operations.FirstOrDefault(m => m.Method == method.Method && m.Security != null
                                 && m.Security.Any());
-            var securedBy = operationWithSecurity?.Security.Select(s => s.Name).ToArray();
+            var securedBy = operationWithSecurity?.Security?.Where(s => s != null)
+                .Select(s => s.Name).ToArray();
 
             return new ControllerMethod
             {
@@ -97,7 +98,7 @@ namespace AMF.Tools.Core
             if (securedBy == null)
                 return securityParams;
 
-            var secured = securedBy.First(); //TODO: check, how to choose ?
+            var secured = securedBy.First(s => s != null); //TODO: check, how to choose ?
 
             return queryParametersParser.ConvertParametersToProperties(secured.QueryParameters);
         }

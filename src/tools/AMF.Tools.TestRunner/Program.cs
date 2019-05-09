@@ -32,13 +32,12 @@ namespace AMF.Tools.TestRunner
         {
             var tests = new RamlExchangeTests();
 
-            await tests.github_api_raml(); // TODO: issue RP-573?
+            await tests.salesforce_raml_raml(); // RP-575
 
+            await tests.google_drive_api_raml(); // RP-574
+            await tests.github_api_raml(); // RP-573
             await tests.box_api_raml(); // RP-572
-
-
             await tests.catalyst_healthcare_appointment_api_raml();
-
             await tests.banking_aisp_experience_api();
             await tests.appian_api_raml();
             await tests.catalyst_retail_partners_api_raml();
@@ -73,9 +72,7 @@ namespace AMF.Tools.TestRunner
             await tests.api_designer_experience_api_raml();
             await tests.appointments_process_api_raml();
             await tests.atm_and_branch_location_api_raml();
-
             await tests.cardconnect_rest_api_raml();
-            
             await tests.catalyst_healthcare_ehr_to_crm_papi_raml();
             //await tests.catalyst_healthcare_fitbit_sapi_raml();
             await tests.catalyst_healthcare_fitness_papi_raml();
@@ -92,7 +89,6 @@ namespace AMF.Tools.TestRunner
             await tests.fhir_apis_raml();
             await tests.fitness_fhir_system_api_raml();
             await tests.google_contacts_api_raml();
-            //await tests.google_drive_api_raml(); // RP-574
             await tests.linkedin_api_raml();
             await tests.mule_twilio_connector_raml();
             await tests.new_relic_api_raml();
@@ -102,7 +98,6 @@ namespace AMF.Tools.TestRunner
             await tests.optymyze_api_raml();
             await tests.pega_api_raml();
             await tests.pokitdok_pharmacy_coverage_api_raml();
-            // await tests.salesforce_raml_raml(); // RP-575
             await tests.stibo_api_raml();
             //await tests.stripe_api_raml(); // RP 576
             await tests.tutorial_cookbook_raml_raml();

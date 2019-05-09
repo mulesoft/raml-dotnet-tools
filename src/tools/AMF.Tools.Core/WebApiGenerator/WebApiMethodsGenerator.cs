@@ -56,6 +56,9 @@ namespace AMF.Tools.Core
 
         private string GetRelativePath(string path, string prefixUri)
         {
+            if (string.IsNullOrWhiteSpace(prefixUri))
+                return path;
+
             return path.Replace(prefixUri, string.Empty);
         }
 

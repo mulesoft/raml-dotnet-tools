@@ -55,7 +55,7 @@ namespace AMF.Tools.Core
             if (isRootType && (apiObj.IsArray || apiObj.IsScalar))
                 apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
 
-            if (shape is NodeShape node && node.Properties.Count() == 1 && node.Properties.First().Path.StartsWith("/")
+            if (shape is NodeShape node && node.Properties.Count() == 1 && node.Properties.First().Path != null && node.Properties.First().Path.StartsWith("/")
                 && node.Properties.First().Path.EndsWith("/"))
             {
                 apiObj.IsMap = true;
@@ -121,25 +121,41 @@ namespace AMF.Tools.Core
         {
             if(shape is NodeShape)
             {
-                return ((NodeShape)shape).Properties.Select(p => MapProperty(p, parentClassName)).ToArray();
+                return ((NodeShape)shape).Properties.Where(p => p != null)
+                    .Select(p => MapProperty(p, parentClassName)).ToArray();
             }
 
             return new Property[0];
         }
 
+        private string GetPropertyName(PropertyShape p)
+        {
+            if (p.Path != null)
+                return GetNameFromPath(p.Path);
+
+            if(p.Range == null)
+                return "prop" + DateTime.Now.Ticks.ToString();
+
+            if(!string.IsNullOrWhiteSpace(p.Range.Name))
+                return p.Range.Name;
+
+            return GetNameFromPath(p.Range.Id);
+        }
+
         private Property MapProperty(PropertyShape p, string parentClassName)
         {
+            var name = GetPropertyName(p);
             var prop = new Property(parentClassName)
             {
-                Name = NetNamingMapper.GetObjectName(GetNameFromPath(p.Path)),
+                Name = NetNamingMapper.GetObjectName(name),
                 Required = p.Required,
-                Type = NetNamingMapper.GetObjectName(GetNameFromPath(p.Path)) //TODO: check
+                Type = NetNamingMapper.GetObjectName(name)
             };
 
             if (p.Range == null)
                 return prop;
 
-            prop.Name = NetNamingMapper.GetObjectName(string.IsNullOrWhiteSpace(p.Path) ? p.Range.Name : GetNameFromPath(p.Path));
+            prop.Name = NetNamingMapper.GetObjectName(name);
             prop.Description = p.Range.Description;
             prop.Example = MapExample(p.Range);
             prop.Type = NewNetTypeMapper.GetNetType(p.Range, existingObjects, newObjects, existingEnums, newEnums);

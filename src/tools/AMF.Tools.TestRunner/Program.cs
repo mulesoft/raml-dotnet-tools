@@ -31,9 +31,10 @@ namespace AMF.Tools.TestRunner
         private static async Task RunExchangeTestsAsync()
         {
             var tests = new RamlExchangeTests();
+            
+            await tests.stripe_api_raml(); // RP 576
 
             await tests.salesforce_raml_raml(); // RP-575
-
             await tests.google_drive_api_raml(); // RP-574
             await tests.github_api_raml(); // RP-573
             await tests.box_api_raml(); // RP-572
@@ -99,7 +100,6 @@ namespace AMF.Tools.TestRunner
             await tests.pega_api_raml();
             await tests.pokitdok_pharmacy_coverage_api_raml();
             await tests.stibo_api_raml();
-            //await tests.stripe_api_raml(); // RP 576
             await tests.tutorial_cookbook_raml_raml();
             // await tests.twitter_api_raml(); // RP 577
             await tests.workiva_wdesk_spreadsheets_api_raml();

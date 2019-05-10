@@ -523,7 +523,7 @@ namespace Raml.Tools.Tests
         public async Task zendesk_api_raml()
         {
             var model = await BuildModel("exchange/zendesk-api-1.0.0-raml/api.raml");
-            Assert.AreEqual(82, model.Controllers.Count());
+            Assert.AreEqual(81, model.Controllers.Count());
         }
 
         [Test]

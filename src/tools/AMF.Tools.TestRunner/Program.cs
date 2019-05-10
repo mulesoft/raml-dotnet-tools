@@ -31,9 +31,10 @@ namespace AMF.Tools.TestRunner
         private static async Task RunExchangeTestsAsync()
         {
             var tests = new RamlExchangeTests();
-            
-            await tests.stripe_api_raml(); // RP 576
 
+            await tests.zendesk_api_raml(); // RP-578
+            await tests.twitter_api_raml(); // RP 577
+            await tests.stripe_api_raml(); // RP 576
             await tests.salesforce_raml_raml(); // RP-575
             await tests.google_drive_api_raml(); // RP-574
             await tests.github_api_raml(); // RP-573
@@ -47,7 +48,6 @@ namespace AMF.Tools.TestRunner
             await tests.here_geocoder_api_batch_raml();
             await tests.here_geocoder_api_forward_raml();
             await tests.here_geocoder_api_reverse_raml();
-            //await tests.paypal_orders_api_raml();
             await tests.paypal_payments_api_oas();
             await tests.paypal_payments_api_raml();
             await tests.quick_start_nto_orders_api_raml();
@@ -75,17 +75,13 @@ namespace AMF.Tools.TestRunner
             await tests.atm_and_branch_location_api_raml();
             await tests.cardconnect_rest_api_raml();
             await tests.catalyst_healthcare_ehr_to_crm_papi_raml();
-            //await tests.catalyst_healthcare_fitbit_sapi_raml();
             await tests.catalyst_healthcare_fitness_papi_raml();
-            //await tests.catalyst_healthcare_onboarding_api_raml();
             await tests.catalyst_healthcare_portal_api_raml();
             await tests.catalyst_retail_inventory_api_raml();
             await tests.catalyst_retail_location_api_raml();
             await tests.catalyst_retail_notification_api_raml();
             await tests.catalyst_retail_product_api_raml();
             await tests.catalyst_retail_product_availabilit_raml();
-            //await tests.crm_fhir_system_api_raml();
-            //await tests.customer_api_for_visual_editing_raml();
             await tests.ehr_fhir_system_api_raml();
             await tests.fhir_apis_raml();
             await tests.fitness_fhir_system_api_raml();
@@ -101,11 +97,16 @@ namespace AMF.Tools.TestRunner
             await tests.pokitdok_pharmacy_coverage_api_raml();
             await tests.stibo_api_raml();
             await tests.tutorial_cookbook_raml_raml();
-            // await tests.twitter_api_raml(); // RP 577
             await tests.workiva_wdesk_spreadsheets_api_raml();
             await tests.yammer_raml_raml();
-            // await tests.zendesk_api_raml(); // RP-578
             await tests.zuora_raml_raml();
+
+            //
+            await tests.paypal_orders_api_raml();
+            await tests.catalyst_healthcare_fitbit_sapi_raml();
+            await tests.catalyst_healthcare_onboarding_api_raml();
+            await tests.crm_fhir_system_api_raml();
+            await tests.customer_api_for_visual_editing_raml();
 
             TestCount += tests.TestCount;
         }

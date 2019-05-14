@@ -171,7 +171,7 @@ namespace AMF.Tools.Core.ClientGenerator
             }
             else if (generatedMethod.ResponseHeaders.Count == 1)
             {
-                generatedMethod.ResponseHeaderType = generatedMethod.ModelsNamespace + generatedMethod.ResponseHeaders.First().Value.Name;
+                generatedMethod.ResponseHeaderType = generatedMethod.ModelsNamespace + "." + generatedMethod.ResponseHeaders.First().Value.Name;
             }
             else
             {
@@ -194,7 +194,7 @@ namespace AMF.Tools.Core.ClientGenerator
             };
             responseHeadersObjects.Add(new KeyValuePair<string, ApiObject>(name, apiObject));
 
-            generatedMethod.ResponseHeaderType = generatedMethod.ModelsNamespace + name;
+            generatedMethod.ResponseHeaderType = generatedMethod.ModelsNamespace + "." + name;
         }
 
         private static List<Property> BuildProperties(ClientGeneratorMethod generatedMethod)

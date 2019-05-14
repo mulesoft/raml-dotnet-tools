@@ -1,3 +1,5 @@
+using System;
+
 namespace AMF.Tools.Core
 {
     public class CollectionTypeHelper
@@ -23,6 +25,14 @@ namespace AMF.Tools.Core
         public static bool IsCollection(string type)
         {
             return type.StartsWith(CollectionType);
+        }
+
+        internal static string GetConcreteType(string type)
+        {
+            if (IsCollection(type))
+                return type.Substring(1);
+
+            return type;
         }
 
     }

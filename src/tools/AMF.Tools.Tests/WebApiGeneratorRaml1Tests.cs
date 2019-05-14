@@ -183,7 +183,7 @@ namespace Raml.Tools.Tests
             //Assert.AreEqual("Person", model.Objects.First(c => c.Name == "Customer").BaseClass);
 
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Controllers.First(c => c.Name == "Persons").Methods.First(m => m.Verb == "Post").Parameter.Type);
-            Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Controllers.First(c => c.Name == "Persons").Methods.First(m => m.Verb == "Get").ReturnType);
+            Assert.AreEqual("ArrayOfPerson", model.Controllers.First(c => c.Name == "Persons").Methods.First(m => m.Verb == "Get").ReturnType);
         }
 
         [Test]
@@ -269,7 +269,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandle_SalesOrdersCase()
         {
             var model = await BuildModel("files/raml1/salesOrders.raml");
-            Assert.AreEqual(46, model.Objects.Count());
+            Assert.AreEqual(48, model.Objects.Count());
         }
 
         [Test]

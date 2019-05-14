@@ -88,6 +88,13 @@ namespace AMF.Tools.Core
                 apiObj.Type = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Type, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
             }
 
+            if(shape.Inherits != null && shape.Inherits.Count() == 1)
+            {
+                var baseClass = NewNetTypeMapper.GetNetType(shape.Inherits.First(), existingObjects, newObjects, existingEnums, newEnums);
+                if(!string.IsNullOrWhiteSpace(baseClass))
+                    apiObj.BaseClass = CollectionTypeHelper.GetConcreteType(baseClass);
+            }
+
             if(!newObjects.ContainsKey(apiObj.Type))
                 newObjects.Add(apiObj.Type, apiObj);
 

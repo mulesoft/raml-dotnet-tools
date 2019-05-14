@@ -39,6 +39,10 @@ namespace AMF.Tools
             if (installerServices.IsPackageInstalled(proj, "Microsoft.AspNetCore.All"))
                 return true;
 
+            // net core app 2.2
+            if (installerServices.IsPackageInstalled(proj, "Microsoft.AspNetCore.App"))
+                return true;
+
             return false;
         }
 

@@ -110,11 +110,6 @@ namespace AMF.Tools.Core
                 }
                 return GetNetType(scalar.DataType.Substring(scalar.DataType.LastIndexOf('#') + 1), scalar.Format);
             }
-            if (shape is ArrayShape array)
-                return CollectionTypeHelper.GetCollectionType(GetNetType(array.Items, existingObjects, newObjects, existingEnums, newEnums));
-
-            if (shape is FileShape file)
-                return TypeStringConversion["file"];
 
             if (shape.Id != null && shape.Id.Contains("#/declarations"))
             {
@@ -122,7 +117,7 @@ namespace AMF.Tools.Core
                 if (existingObjects != null && (existingObjects.ContainsKey(key)
                     || existingObjects.Keys.Any(k => k.ToLowerInvariant() == key.ToLowerInvariant())))
                 {
-                    if(existingObjects.ContainsKey(key))
+                    if (existingObjects.ContainsKey(key))
                         return existingObjects[key].Type;
 
                     return existingObjects.First(kv => kv.Key.ToLowerInvariant() == key.ToLowerInvariant()).Value.Type;
@@ -130,6 +125,12 @@ namespace AMF.Tools.Core
                 if (newObjects != null && newObjects.ContainsKey(key))
                     return newObjects[key].Type;
             }
+
+            if (shape is ArrayShape array)
+                return CollectionTypeHelper.GetCollectionType(GetNetType(array.Items, existingObjects, newObjects, existingEnums, newEnums));
+
+            if (shape is FileShape file)
+                return TypeStringConversion["file"];
 
             if (shape.Inherits.Count() == 1)
             {
@@ -223,6 +224,5 @@ namespace AMF.Tools.Core
         {
             return !NotNullableTypes.Contains(type);
         }
-
     }
 }

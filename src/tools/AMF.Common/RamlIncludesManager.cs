@@ -376,6 +376,11 @@ namespace AMF.Common
             if (File.Exists(joinedPath))
                 return joinedPath;
 
+            // try join include path with base path
+            joinedPath = JoinPath(path, includeSource);
+            if (File.Exists(joinedPath))
+                return joinedPath;
+
             string fixedPath = FixOverlappingPath(includeSource, pathToUse, "/", "\\");
             if (fixedPath != string.Empty && File.Exists(fixedPath))
                 return fixedPath;

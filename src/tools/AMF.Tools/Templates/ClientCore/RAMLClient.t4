@@ -84,7 +84,7 @@ namespace $(namespace)
 	            foreach (var p in method.UriParameters)
 	            {
 #>
-            url = url.Replace("{<#= p.Name #>}", <#= p.Name #>.ToString());
+            url = url.Replace("{<#= p.Name #>}", <#= p.ParamName #>.ToString());
 <#
         	    }
 
@@ -540,7 +540,7 @@ namespace $(namespace)
 	            foreach (var p in method.UriParameters)
 	            {
 #>
-            url = url.Replace("{<#= p.Name #>}", <#= p.Name #>.ToString());
+            url = url.Replace("{<#= p.Name #>}", <#= p.ParamName #>.ToString());
 <#
         	    }
 

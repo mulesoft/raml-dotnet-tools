@@ -7,12 +7,12 @@ namespace AMF.Tools.Core
     public class GeneratorParameter
     {
         private readonly string[] reservedWords = { "ref", "out", "in", "base", "long", "int", "short", "bool", "string", "decimal", "float", "double", "default" };
-        private string name;
-
+        
         public string Type { get; set; }
 
         public string Description { get; set; }
 
+        private string name;
         public string Name
         {
             get
@@ -23,7 +23,25 @@ namespace AMF.Tools.Core
                 return name; 
             }
 
-            set { name = value; }
+            set {
+                name = value;
+                paramName = value;
+            }
         }
+
+        private string paramName;
+        public string ParamName
+        {
+            get
+            {
+                if (reservedWords.Contains(paramName))
+                    return "Ip" + paramName;
+
+                return paramName;
+            }
+
+            set { paramName = value; }
+        }
+
     }
 }

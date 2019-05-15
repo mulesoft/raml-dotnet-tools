@@ -105,30 +105,29 @@ namespace AMF.Tools.Core.ClientGenerator
             {
                 if (string.IsNullOrWhiteSpace(Verb))
                     return "HttpMethod.Get";
-                
-                if(Verb == "Patch")
+
+                if (Verb == "Patch")
                     return "new HttpMethod(\"PATCH\")";
 
                 return "HttpMethod." + Verb;
             }
         }
 
-        public IEnumerable<GeneratorParameter> UriParameters { get; set; }
+        public IEnumerable<GeneratorParameter> UriParameters
+        {
+            get
+            {
+                if (simpleParameterString == null)
+                    SetSimpleParameterString();
+
+                return _uriParameters;
+            }
+            set => _uriParameters = value;
+        }
 
         public int UriParametersCount { get { return UriParameters == null ? 0 : UriParameters.Count(); } }
 
         public ClientGeneratorMethod Parent { get; set; }
-
-        public string UriParametersString
-        {
-            get
-            {
-                if(UriParameters == null || !UriParameters.Any())
-                    return string.Empty;
-
-                return string.Join(", ", UriParameters.Select(p => p.Type + " " + p.Name).ToArray());
-            }
-        }
 
         public ApiObject Query { get; set; }
 
@@ -142,12 +141,12 @@ namespace AMF.Tools.Core.ClientGenerator
         {
             get
             {
-                if (ReturnType == "string") 
+                if (ReturnType == "string")
                     return "HttpContent";
 
                 if (CollectionTypeHelper.IsCollection(ReturnType) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
                     return ReturnType;
-                
+
                 return ModelsNamespace + "." + OkReturnType;
             }
         }
@@ -156,29 +155,55 @@ namespace AMF.Tools.Core.ClientGenerator
         {
             get
             {
-                var paramsString = string.Empty;
-                if (HasInputParameter())
-                    paramsString += ((CollectionTypeHelper.IsCollection(Parameter.Type) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
-                        ? Parameter.Type 
-                        : ModelsNamespace + "." + Parameter.Type) + " " + Parameter.Name;
+                if (simpleParameterString == null)
+                    SetSimpleParameterString();
 
-                if (!string.IsNullOrWhiteSpace(UriParametersString))
-                {
-                    if (string.IsNullOrWhiteSpace(paramsString))
-                        paramsString = UriParametersString;
-                    else
-                        paramsString += ", " + UriParametersString;
-                }
-                if (Query != null)
-                {
-                    if (string.IsNullOrWhiteSpace(paramsString))
-                        paramsString = ModelsNamespace + "." + Query.Name + " " + Query.Name.ToLower();
-                    else
-                        paramsString += ", " + ModelsNamespace + "." + Query.Name + " " + Query.Name.ToLower();
-                }
-
-                return paramsString;
+                return simpleParameterString;
             }
+        }
+
+        public void SetSimpleParameterString()
+        {
+            var parameters = new Dictionary<string, string>();
+            if (HasInputParameter())
+            {
+                var key = AddParameter(parameters, Parameter.Name,
+                    ((CollectionTypeHelper.IsCollection(Parameter.Type) || NewNetTypeMapper.IsPrimitiveType(Parameter.Type))
+                            ? Parameter.Type
+                            : ModelsNamespace + "." + Parameter.Type));
+            }
+
+            if (_uriParameters != null)
+            {
+                foreach (var uriParam in _uriParameters)
+                {
+                    var key = AddParameter(parameters, uriParam.Name, uriParam.Type);
+                    uriParam.ParamName = key;
+                }
+            }
+
+            if (Query != null)
+            {
+                var key = AddParameter(parameters, Query.Name.ToLower(), ModelsNamespace + "." + Query.Name);
+            }
+
+            simpleParameterString = string.Join(", ", parameters.Select(p => p.Value).ToArray());
+        }
+
+        private int i = 1;
+        private string simpleParameterString;
+        private IEnumerable<GeneratorParameter> _uriParameters;
+
+        private string AddParameter(Dictionary<string, string> paramKeys, string key, string value)
+        {
+            if (paramKeys.ContainsKey(key))
+            {
+                key += i;
+                i++;
+            }
+            value += " " + key;
+            paramKeys.Add(key, value);
+            return key;
         }
 
         public string ParameterString

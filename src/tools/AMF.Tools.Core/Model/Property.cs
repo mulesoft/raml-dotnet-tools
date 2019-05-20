@@ -68,6 +68,8 @@ namespace AMF.Tools.Core
             }
         }
 
+        public Guid TypeId { get; internal set; }
+
         private void BuildRangeAttribute(Collection<string> attributes, string identation)
         {
             if (Type == "int")

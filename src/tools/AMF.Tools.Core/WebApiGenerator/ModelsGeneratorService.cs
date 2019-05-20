@@ -26,6 +26,8 @@ namespace AMF.Tools.Core.WebApiGenerator
             //schemaRequestObjects = GetRequestObjects();
             //schemaResponseObjects = GetResponseObjects();
 
+            FixTypes(schemaObjects.Values);
+
             return new ModelsGeneratorModel
             {
                 ModelsNamespace = modelsNamespace,

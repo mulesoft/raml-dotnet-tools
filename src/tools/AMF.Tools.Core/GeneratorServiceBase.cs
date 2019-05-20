@@ -125,29 +125,57 @@ namespace AMF.Tools.Core
 
         protected void AddElement(KeyValuePair<string, ApiObject> newElement, IDictionary<string, ApiObject> objects)
         {
-            if (objects.ContainsKey(newElement.Key))
-            {
-                if (UniquenessHelper.HasSameProperties(objects[newElement.Key], objects, newElement.Key,
-                    new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))
-                    return;
+            if(!objects.ContainsKey(newElement.Key))
+                objects.Add(newElement.Key, newElement.Value);
 
-                var apiObject = objects[newElement.Key];
-                var oldName = apiObject.Name;
-                apiObject.Name = UniquenessHelper.GetUniqueName(objects, apiObject.Name, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
-                var newKey = UniquenessHelper.GetUniqueKey(objects, newElement.Key, new Dictionary<string, ApiObject>());
-                objects.Add(newKey, apiObject);
-                objects.Remove(objects.First(o => o.Key == newElement.Key));
-                foreach (var apiObj in objects)
+            if (UniquenessHelper.HasSameProperties(newElement.Value, objects, newElement.Key,
+                new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))
+                return;
+
+            var apiObject = newElement.Value;
+            var oldName = apiObject.Name;
+            apiObject.Name = UniquenessHelper.GetUniqueName(objects, apiObject.Name, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
+            var newKey = UniquenessHelper.GetUniqueKey(objects, newElement.Key, new Dictionary<string, ApiObject>());
+            objects.Add(newKey, apiObject);
+            //objects.Remove(objects.First(o => o.Key == newElement.Key));
+            foreach (var apiObj in objects)
+            {
+                foreach (var prop in apiObj.Value.Properties)
                 {
-                    foreach (var prop in apiObj.Value.Properties)
-                    {
-                        if (prop.Type == oldName)
-                            prop.Type = apiObject.Name;
-                    }
+                    if (prop.TypeId == apiObject.Id)
+                        prop.Type = apiObject.Name;
+                }
+            }            
+        }
+
+        protected void FixTypes(ICollection<ApiObject> objects)
+        {
+            foreach (var obj in objects)
+            {
+                UpdateObjects(obj, schemaObjects.Values);
+                UpdateObjects(obj, schemaRequestObjects.Values);
+                UpdateObjects(obj, schemaResponseObjects.Values);
+            }
+        }
+
+        private void UpdateObjects(ApiObject obj, ICollection<ApiObject> values)
+        {
+            foreach (var type in values)
+            {
+                foreach (var prop in type.Properties.Where(p => p.TypeId != null))
+                {
+                    if (NeedsFixing(obj, prop))
+                        prop.Type = obj.Name;
                 }
             }
-            objects.Add(newElement.Key, newElement.Value);
         }
+
+        private static bool NeedsFixing(ApiObject obj, Property prop)
+        {
+            return prop.TypeId == obj.Id && ((!CollectionTypeHelper.IsCollection(prop.Type) && prop.Type != obj.Name)
+                || (CollectionTypeHelper.IsCollection(prop.Type) && CollectionTypeHelper.GetCollectionType(obj.Type) != prop.Type));
+        }
+
 
         protected void CleanProperties(IDictionary<string, ApiObject> apiObjects)
         {
@@ -181,18 +209,28 @@ namespace AMF.Tools.Core
             return type.EndsWith(">") && type.StartsWith(CollectionTypeHelper.CollectionType);
         }
 
+        private IList<string> ids = new List<string>();
+
         protected void ParseSchemas()
         {
             foreach (var shape in raml.Shapes)
             {
                 if (shape == null)
                     continue;
+                if (schemaObjects.ContainsKey(shape.Name))
+                    continue;
+
+                if (ids.Contains(shape.Id))
+                    continue;
+
+                ids.Add(shape.Id);
 
                 var key = shape.Name;
-
-                var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums, isRootType:true);
+                var id = Guid.NewGuid();
+                var newElements = objectParser.ParseObject(id, key, shape, schemaObjects, warnings, enums, isRootType:true);
 
                 AddNewElements(newElements);
+
             }
         }
 
@@ -341,7 +379,8 @@ namespace AMF.Tools.Core
 
         private void ParseObjects(string key, IDictionary<string, ApiObject> objects, Shape shape)
         {
-            var newElements = objectParser.ParseObject(key, shape, schemaObjects, warnings, enums);
+            var id = Guid.NewGuid();
+            var newElements = objectParser.ParseObject(id, key, shape, schemaObjects, warnings, enums);
             AddNewEnums(newElements.Item2);
             AddObjects(objects, newElements.Item1);
         }

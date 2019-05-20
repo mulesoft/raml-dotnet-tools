@@ -49,6 +49,10 @@ namespace AMF.Tools.Core.ClientGenerator
             schemaRequestObjects = GetRequestObjects();
             schemaResponseObjects = GetResponseObjects();
 
+            FixTypes(schemaObjects.Values);
+            FixTypes(schemaRequestObjects.Values);
+            FixTypes(schemaResponseObjects.Values);
+
             CleanProperties(schemaObjects);
             CleanProperties(schemaRequestObjects);
             CleanProperties(schemaResponseObjects);

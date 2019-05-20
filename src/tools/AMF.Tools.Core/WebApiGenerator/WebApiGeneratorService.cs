@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AMF.Api.Core;
@@ -33,6 +34,10 @@ namespace AMF.Tools.Core.WebApiGenerator
             //CleanProperties(schemaObjects);
             //CleanProperties(schemaRequestObjects);
             //CleanProperties(schemaResponseObjects);
+
+            FixTypes(schemaObjects.Values);
+            FixTypes(schemaRequestObjects.Values);
+            FixTypes(schemaResponseObjects.Values);
 
             HandleScalarTypes();
 
@@ -73,6 +78,7 @@ namespace AMF.Tools.Core.WebApiGenerator
             };
         }
 
+
         private void GetRequestObjects()
         {
             if (raml.WebApi == null)
@@ -85,7 +91,8 @@ namespace AMF.Tools.Core.WebApiGenerator
                     var payloads = operation.Request.Payloads; //.Where(p => p.MediaType.Contains("json"));
                     foreach (var payload in payloads)
                     {
-                        var newElements = new ObjectParser().ParseObject(GeneratorServiceHelper.GetKeyForResource(operation, endpoint) , payload.Schema, 
+                        var id = Guid.NewGuid();
+                        var newElements = new ObjectParser().ParseObject(id, GeneratorServiceHelper.GetKeyForResource(operation, endpoint) , payload.Schema, 
                             schemaObjects, warnings, enums);
 
                         foreach (var el in newElements.Item1)

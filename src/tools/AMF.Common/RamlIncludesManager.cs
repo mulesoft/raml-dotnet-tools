@@ -160,7 +160,7 @@ namespace AMF.Common
 
         private static void WriteAllTextWithCorrectPermissions(IList<string> lines, string writeToFilePath)
         {
-            FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
+            FileStream fileStream = File.Open(writeToFilePath, FileMode.Create, FileAccess.Write);
 
             StreamWriter fileWriter = new StreamWriter(fileStream);
             foreach (var line in lines)
@@ -173,7 +173,7 @@ namespace AMF.Common
 
         private static void WriteAllTextWithCorrectPermissions(string content, string writeToFilePath)
         {
-            FileStream fileStream = File.Open(writeToFilePath, FileMode.Append, FileAccess.Write);
+            FileStream fileStream = File.Open(writeToFilePath, FileMode.Create, FileAccess.Write);
 
             StreamWriter fileWriter = new StreamWriter(fileStream);
             fileWriter.Write(content);

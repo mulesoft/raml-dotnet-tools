@@ -196,7 +196,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="node_modules\amf-client-js\typings\" />
     <Folder Include="node_modules\uri-js\src\schemes\" />
   </ItemGroup>
   <ItemGroup>

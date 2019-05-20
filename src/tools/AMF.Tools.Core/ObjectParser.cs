@@ -16,7 +16,7 @@ namespace AMF.Tools.Core
         private IDictionary<string, ApiEnum> existingEnums;
         private IDictionary<string, string> warnings;
 
-        public Tuple<IDictionary<string, ApiObject>,IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, IDictionary<string, ApiObject> existingObjects, 
+        public Tuple<IDictionary<string, ApiObject>,IDictionary<string, ApiEnum>> ParseObject(Guid id, string key, Shape shape, IDictionary<string, ApiObject> existingObjects, 
             IDictionary<string, string> warnings, IDictionary<string, ApiEnum> existingEnums, bool isRootType = false)
         {
             this.existingObjects = existingObjects;
@@ -24,24 +24,29 @@ namespace AMF.Tools.Core
             this.warnings = warnings;
 
             if (shape is ScalarShape scalar && scalar.Values != null && scalar.Values.Any())
-                return ParseEnum(warnings, existingEnums, scalar);
+                return ParseEnum(id, warnings, existingEnums, scalar);
 
-            return ParseObject(key, shape, existingObjects, isRootType);
+            return ParseObject(id, key, shape, existingObjects, isRootType);
         }
 
-        private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseEnum(IDictionary<string, string> warnings, 
+        private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseEnum(Guid id, IDictionary<string, string> warnings, 
             IDictionary<string, ApiEnum> existingEnums, ScalarShape scalar)
         {
+            if (existingEnums.ContainsKey(scalar.Name))
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
+
             var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
+            apiEnum.Id = id;
             newEnums.Add(apiEnum.Name, apiEnum);
             return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>>(newObjects, newEnums);
         }
 
-        private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseObject(string key, Shape shape, 
+        private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> ParseObject(Guid id, string key, Shape shape, 
             IDictionary<string, ApiObject> existingObjects, bool isRootType)
         {
             var apiObj = new ApiObject
             {
+                Id = id,
                 BaseClass = GetBaseClass(shape),
                 IsArray = shape is ArrayShape,
                 IsScalar = shape is ScalarShape,
@@ -187,17 +192,22 @@ namespace AMF.Tools.Core
                 return prop;
             }
 
-            if (existingObjects.ContainsKey(prop.Type) || newObjects.ContainsKey(prop.Type))
-                return prop;
+            //if (existingObjects.ContainsKey(prop.Type) || newObjects.ContainsKey(prop.Type))
+            //    return prop;
 
             if (p.Range is NodeShape)
             {
-                var tuple = ParseObject(prop.Name, p.Range, existingObjects, warnings, existingEnums);
+                var id = Guid.NewGuid();
+                prop.TypeId = id;
+                var tuple = ParseObject(id, prop.Name, p.Range, existingObjects, warnings, existingEnums);
                 prop.Type = NetNamingMapper.GetObjectName(prop.Name);
             }
             if (p.Range is ArrayShape array)
             {
                 if (array.Items is ScalarShape)
+                    return prop;
+
+                if (!string.IsNullOrWhiteSpace(array.Items.LinkTargetName))
                     return prop;
 
                 var itemType = NewNetTypeMapper.GetNetType(array.Items, existingObjects, newObjects, existingEnums, newEnums);
@@ -210,18 +220,23 @@ namespace AMF.Tools.Core
                     prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(array.Name));
                 }
 
-                if (existingObjects.ContainsKey(itemType) || newObjects.ContainsKey(itemType))
-                    return prop;
+                //if (existingObjects.ContainsKey(itemType) || newObjects.ContainsKey(itemType))
+                //    return prop;
 
-                ParseObject(array.Name, array.Items, existingObjects, warnings, existingEnums);
+                var newId = Guid.NewGuid();
+                prop.TypeId = newId;
+                ParseObject(newId, array.Name, array.Items, existingObjects, warnings, existingEnums);
             }
 
             foreach (var parent in p.Range.Inherits)
             {
-                if(!(parent is ScalarShape) && !NewNetTypeMapper.IsPrimitiveType(prop.Type) 
+                if (!(parent is ScalarShape) && !NewNetTypeMapper.IsPrimitiveType(prop.Type)
                     && !(CollectionTypeHelper.IsCollection(prop.Type) && NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(prop.Type)))
                     && string.IsNullOrWhiteSpace(parent.LinkTargetName))
-                    ParseObject(prop.Name, parent, existingObjects, warnings, existingEnums);
+                {
+                    var newId = Guid.NewGuid();
+                    ParseObject(newId, prop.Name, parent, existingObjects, warnings, existingEnums);
+                }
             }
             return prop;
         }

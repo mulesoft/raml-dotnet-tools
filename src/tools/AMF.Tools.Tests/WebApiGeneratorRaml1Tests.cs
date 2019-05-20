@@ -199,7 +199,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldBuildDependentTypes()
         {
             var model = await BuildModel("files/raml1/dependentTypes.raml");
-            Assert.AreEqual(2, model.Objects.Count());
+            Assert.AreEqual(3, model.Objects.Count());
             Assert.AreEqual("TypeA", model.Controllers.First().Methods.First().Parameter.Type);
         }
 
@@ -269,7 +269,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandle_SalesOrdersCase()
         {
             var model = await BuildModel("files/raml1/salesOrders.raml");
-            Assert.AreEqual(48, model.Objects.Count());
+            Assert.AreEqual(30, model.Objects.Count());
         }
 
         [Test]

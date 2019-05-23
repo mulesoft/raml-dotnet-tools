@@ -33,7 +33,7 @@ namespace AMF.Tools.Core
 
         public static string GetUniqueName(IDictionary<string, ApiObject> objects, string name, IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects)
         {
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 200; i++)
             {
                 var unique = name + i;
                 if (schemaObjects.All(p => p.Value.Name != unique) && objects.All(p => p.Value.Name != unique) && otherObjects.All(p => p.Value.Name != unique))
@@ -42,7 +42,7 @@ namespace AMF.Tools.Core
 
             foreach (var suffix in Suffixes)
             {
-                for (var i = 0; i < 100; i++)
+                for (var i = 0; i < 200; i++)
                 {
                     var unique = name + suffix + i;
                     if (schemaObjects.All(p => p.Value.Name != unique) && objects.All(p => p.Value.Name != unique) && otherObjects.All(p => p.Value.Name != unique))
@@ -90,7 +90,17 @@ namespace AMF.Tools.Core
             throw new InvalidOperationException("Could not find a unique name for enum: " + name);
         }
 
-        public static ApiObject FindObjectWithSameProperties(ApiObject apiObject, string key, IDictionary<string, ApiObject> objects,
+        public static IEnumerable<ApiObject> FindAllObjectsWithSameProperties(ApiObject apiObject, string key, IDictionary<string, ApiObject> objects,
+             IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects)
+        {
+            var objs = FindAllObjects(apiObject, schemaObjects, key);
+            objs.AddRange(FindAllObjects(apiObject, objects, key));
+            objs.AddRange(FindAllObjects(apiObject, otherObjects, key));
+            return objs;
+        }
+
+
+        public static ApiObject FindObjectByKeyNameOrType(ApiObject apiObject, string key, IDictionary<string, ApiObject> objects,
              IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects)
         {
             var obj = FindObject(apiObject, schemaObjects, key);
@@ -104,10 +114,29 @@ namespace AMF.Tools.Core
             return obj;
         }
 
+        public static bool AnyWithSameProperties(ApiObject apiObject, IDictionary<string, ApiObject> objects, string key, IDictionary<string, ApiObject> otherObjects,
+            IDictionary<string, ApiObject> schemaObjects)
+        {
+            var objs = FindAllObjectsWithSameProperties(apiObject, key, objects, otherObjects, schemaObjects);
+
+            if (objs.Any(obj => apiObject.Properties.All(property => obj.Properties.Any(p => p.Name == property.Name && p.Type == property.Type))))
+                return true;
+
+            return false;
+        }
+
+        public static ApiObject FirstOrDefaultWithSameProperties(ApiObject apiObject, IDictionary<string, ApiObject> objects, string key, 
+            IDictionary<string, ApiObject> otherObjects, IDictionary<string, ApiObject> schemaObjects)
+        {
+            var objs = FindAllObjectsWithSameProperties(apiObject, key, objects, otherObjects, schemaObjects);
+            return objs.FirstOrDefault(o => apiObject.Properties.All(property => o.Properties.Any(p => p.Name == property.Name && p.Type == property.Type)));
+        }
+
+
         public static bool HasSameProperties(ApiObject apiObject, IDictionary<string, ApiObject> objects, string key, IDictionary<string, ApiObject> otherObjects, 
             IDictionary<string, ApiObject> schemaObjects)
         {
-            var obj = FindObjectWithSameProperties(apiObject, key, objects, otherObjects, schemaObjects);
+            var obj = FindObjectByKeyNameOrType(apiObject, key, objects, otherObjects, schemaObjects);
 
             if (obj == null)
                 throw new InvalidOperationException("Could not find object with key " + key);
@@ -162,6 +191,31 @@ namespace AMF.Tools.Core
                 return objects.First(byType).Value;
 
             return null;
+        }
+
+        private static List<ApiObject> FindAllObjects(ApiObject apiObject, IDictionary<string, ApiObject> objects, string key)
+        {
+            var found = new List<ApiObject>();
+
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                var byKey = new Func<KeyValuePair<string, ApiObject>, bool>(o => o.Key != null && o.Value != null && o.Key.StartsWith(key)
+                                                                        && o.Value.Properties.Count == apiObject.Properties.Count);
+                if (objects.Any(byKey))
+                    found.Add(objects.First(byKey).Value);
+            }
+
+            var byName = new Func<KeyValuePair<string, ApiObject>, bool>(o => o.Value.Name != null && o.Value.Name.StartsWith(apiObject.Name) 
+                                                                && o.Value.Properties.Count == apiObject.Properties.Count);
+            if (objects.Any(byName))
+                found.Add(objects.First(byName).Value);
+
+            var byType = new Func<KeyValuePair<string, ApiObject>, bool>(o => o.Value.Type != null && o.Value.Type.StartsWith(apiObject.Type) 
+                                                                         && o.Value.Properties.Count == apiObject.Properties.Count);
+            if (objects.Any(byType))
+                found.Add(objects.First(byType).Value);
+
+            return found;
         }
 
     }

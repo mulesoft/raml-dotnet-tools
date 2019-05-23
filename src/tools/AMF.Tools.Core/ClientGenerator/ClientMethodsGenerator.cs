@@ -183,7 +183,7 @@ namespace AMF.Tools.Core.ClientGenerator
         {
             var properties = BuildProperties(generatedMethod);
 
-            var name = NetNamingMapper.GetObjectName("Multiple" + generatedMethod.Name + "Header");
+            var name = NetNamingMapper.GetObjectName("Multiple" + generatedMethod.Url + generatedMethod.Name + "Header");
 
             var apiObject = new ApiObject
             {

@@ -21,6 +21,7 @@ namespace AMF.Tools.Core
         protected IDictionary<string, ApiObject> schemaRequestObjects = new Dictionary<string, ApiObject>();
         protected IDictionary<string, ApiObject> schemaResponseObjects = new Dictionary<string, ApiObject>();
         protected IDictionary<string, string> linkKeysWithObjectNames = new Dictionary<string, string>();
+        protected IDictionary<Guid, string> linkIdsWithTypes = new Dictionary<Guid, string>();
 
         protected ApiObjectsCleaner apiObjectsCleaner;        
 
@@ -166,11 +167,13 @@ namespace AMF.Tools.Core
                 {
                     if (NeedsFixing(obj, prop))
                         prop.Type = obj.Name;
+                    else if (linkIdsWithTypes.ContainsKey(prop.TypeId))
+                        prop.Type = linkIdsWithTypes[prop.TypeId];
                 }
             }
         }
 
-        private static bool NeedsFixing(ApiObject obj, Property prop)
+        private bool NeedsFixing(ApiObject obj, Property prop)
         {
             return prop.TypeId == obj.Id && ((!CollectionTypeHelper.IsCollection(prop.Type) && prop.Type != obj.Name)
                 || (CollectionTypeHelper.IsCollection(prop.Type) && CollectionTypeHelper.GetCollectionType(obj.Type) != prop.Type));
@@ -234,10 +237,15 @@ namespace AMF.Tools.Core
             }
         }
 
-        protected void AddNewElements(Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>> newElements)
+        protected void AddNewElements(Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>> newElements)
         {
             AddNewObjects(newElements.Item1);
             AddNewEnums(newElements.Item2);
+            foreach(var link in newElements.Item3)
+            {
+                if (!linkIdsWithTypes.ContainsKey(link.Key))
+                    linkIdsWithTypes.Add(link);
+            }
         }
 
         protected void AddNewEnums(IDictionary<string, ApiEnum> newEnums)

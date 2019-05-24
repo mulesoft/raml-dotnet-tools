@@ -7,7 +7,7 @@ namespace AMF.Api.Core
 {
 	public class NetNamingMapper
 	{
-		private static readonly string[] ReservedWords = {"Get", "Post", "Put", "Delete", "Options", "Head", "ApiClient", "Type"};
+		private static readonly string[] ReservedWords = {"Get", "Post", "Put", "Delete", "Options", "Head", "ApiClient", "Type", "null", "true", "false"};
 
 		public static string GetNamespace(string input)
 		{
@@ -93,12 +93,16 @@ namespace AMF.Api.Core
             validnamespace = validnamespace.Replace("=", string.Empty);
             validnamespace = validnamespace.Replace("~", string.Empty);
             validnamespace = validnamespace.Replace("+", string.Empty);
+            validnamespace = validnamespace.Replace("-", string.Empty);
             validnamespace = validnamespace.Replace(">=", "GreatOrEqual");
             validnamespace = validnamespace.Replace("<=", "LessOrEqual");
             validnamespace = validnamespace.Replace("<", "Less");
             validnamespace = validnamespace.Replace(">", "Great");
             validnamespace = validnamespace.Replace("*", "Asterisk");
             validnamespace = ReplaceSpecialChars(validnamespace, "-");
+
+            if (ReservedWords.Contains(validnamespace))
+                validnamespace = "A" + validnamespace;
 
             if (string.IsNullOrWhiteSpace(validnamespace))
                 return "a" + DateTime.Now.Ticks.ToString();
@@ -171,7 +175,8 @@ namespace AMF.Api.Core
 
             propName = propName.Replace("+", "Plus");
             propName = propName.Replace(".", "Dot");
-			propName = Capitalize(propName);
+            propName = RemoveIndalidChars(propName);
+            propName = Capitalize(propName);
 
 			if (StartsWithNumber(propName))
 				propName = "P" + propName;
@@ -192,6 +197,8 @@ namespace AMF.Api.Core
 
             if (StartsWithNumber(value))
                 value = "E" + value;
+
+            value = RemoveIndalidChars(value);
 
 	        int number;
 	        if (int.TryParse(enumValue, out number))

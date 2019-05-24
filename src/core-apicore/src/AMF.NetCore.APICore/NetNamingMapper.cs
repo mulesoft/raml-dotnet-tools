@@ -7,7 +7,7 @@ namespace AMF.Common
 {
 	public class NetNamingMapper
 	{
-		private static readonly string[] ReservedWords = {"Get", "Post", "Put", "Delete", "Options", "Head", "ApiClient"};
+        private static readonly string[] ReservedWords = { "Get", "Post", "Put", "Delete", "Options", "Head", "ApiClient", "Type", "null", "true", "false" };
 
 		public static string GetNamespace(string title)
 		{
@@ -100,6 +100,9 @@ namespace AMF.Common
             validnamespace = validnamespace.Replace("*", "Asterisk");
             validnamespace = ReplaceSpecialChars(validnamespace, "-");
 
+            if (ReservedWords.Contains(validnamespace))
+                validnamespace = "A" + validnamespace;
+
             if (string.IsNullOrWhiteSpace(validnamespace))
                 return "a" + DateTime.Now.Ticks.ToString();
 
@@ -171,9 +174,10 @@ namespace AMF.Common
 
             propName = propName.Replace("+", "Plus");
             propName = propName.Replace(".", "Dot");
-			propName = Capitalize(propName);
+            propName = RemoveIndalidChars(propName);
+            propName = Capitalize(propName);
 
-			if (StartsWithNumber(propName))
+            if (StartsWithNumber(propName))
 				propName = "P" + propName;
 
 			return propName;
@@ -193,7 +197,9 @@ namespace AMF.Common
             if (StartsWithNumber(value))
                 value = "E" + value;
 
-	        int number;
+            value = RemoveIndalidChars(value);
+
+            int number;
 	        if (int.TryParse(enumValue, out number))
 	            value = value + " = " + number;
 

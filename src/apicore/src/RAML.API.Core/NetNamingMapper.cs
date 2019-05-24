@@ -92,6 +92,10 @@ namespace AMF.Api.Core
             validnamespace = validnamespace.Replace("%", string.Empty);
             validnamespace = validnamespace.Replace("=", string.Empty);
             validnamespace = validnamespace.Replace("~", string.Empty);
+            validnamespace = validnamespace.Replace(">=", "GreatOrEqual");
+            validnamespace = validnamespace.Replace("<=", "LessOrEqual");
+            validnamespace = validnamespace.Replace("<", "Less");
+            validnamespace = validnamespace.Replace(">", "Great");
             return validnamespace;
 		}
 

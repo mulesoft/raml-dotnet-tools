@@ -92,12 +92,18 @@ namespace AMF.Common
             validnamespace = validnamespace.Replace("%", string.Empty);
             validnamespace = validnamespace.Replace("=", string.Empty);
             validnamespace = validnamespace.Replace("~", string.Empty);
+            validnamespace = validnamespace.Replace("+", string.Empty);
             validnamespace = validnamespace.Replace(">=", "GreatOrEqual");
             validnamespace = validnamespace.Replace("<=", "LessOrEqual");
             validnamespace = validnamespace.Replace("<", "Less");
             validnamespace = validnamespace.Replace(">", "Great");
+            validnamespace = validnamespace.Replace("*", "Asterisk");
             validnamespace = ReplaceSpecialChars(validnamespace, "-");
-            return validnamespace;
+
+            if (string.IsNullOrWhiteSpace(validnamespace))
+                return "a" + DateTime.Now.Ticks.ToString();
+
+            return validnamespace.Trim();
 		}
 
 		public static bool HasIndalidChars(string input)

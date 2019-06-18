@@ -149,6 +149,29 @@ namespace AMF.Tools.Core
             }            
         }
 
+        protected void FixEnumNamesClashing()
+        {
+            foreach (var enumObj in enums)
+            {
+                FixNameClashing(enumObj, schemaObjects);
+                FixNameClashing(enumObj, schemaRequestObjects);
+                FixNameClashing(enumObj, schemaResponseObjects);
+            }
+        }
+
+        private void FixNameClashing(KeyValuePair<string, ApiEnum> enumObj, IDictionary<string, ApiObject> objects)
+        {
+            if (objects.Values.Any(o => o.Name == enumObj.Value.Name))
+            {
+                var oldName = enumObj.Value.Name;
+                enumObj.Value.Name = GetUniqueObjectName(enumObj.Value.Name);
+                foreach (var prop in objects.Values.SelectMany(p => p.Properties).Where(p => p.IsEnum && p.Type == oldName))
+                {
+                    prop.Type = enumObj.Value.Name;
+                }
+            }
+        }
+
         protected void FixTypes(ICollection<ApiObject> objects)
         {
             foreach (var obj in objects)

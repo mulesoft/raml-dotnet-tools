@@ -35,6 +35,8 @@ namespace AMF.Tools.Core.WebApiGenerator
             //CleanProperties(schemaRequestObjects);
             //CleanProperties(schemaResponseObjects);
 
+            FixEnumNamesClashing();
+
             FixTypes(schemaObjects.Values);
             FixTypes(schemaRequestObjects.Values);
             FixTypes(schemaResponseObjects.Values);
@@ -77,7 +79,6 @@ namespace AMF.Tools.Core.WebApiGenerator
                 ApiVersion = raml.WebApi.Version
             };
         }
-
 
         private void GetRequestObjects()
         {

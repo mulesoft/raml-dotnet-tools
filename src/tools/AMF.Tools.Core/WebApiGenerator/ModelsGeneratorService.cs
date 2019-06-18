@@ -25,7 +25,7 @@ namespace AMF.Tools.Core.WebApiGenerator
             ParseSchemas();
             //schemaRequestObjects = GetRequestObjects();
             //schemaResponseObjects = GetResponseObjects();
-
+            FixEnumNamesClashing();
             FixTypes(schemaObjects.Values);
 
             return new ModelsGeneratorModel

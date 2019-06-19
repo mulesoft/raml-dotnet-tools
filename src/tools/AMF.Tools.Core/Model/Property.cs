@@ -57,6 +57,9 @@ namespace AMF.Tools.Core
                     Pattern = Pattern.Replace("\\\\", "\\");
                     if (IsValidEcmaRegex(Pattern))
                     {
+                        if (Pattern.Contains("\""))
+                            Pattern = Pattern.Replace("\"", "\"\"");
+
                         attributes.Add(string.Format("[RegularExpression(@\"{0}\")]", Pattern).Insert(0, identation));
                     }
                 }

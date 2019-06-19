@@ -7,7 +7,9 @@ namespace AMF.Tools.Core
     [Serializable]
     public class PropertyBase
     {
-        private readonly List<string> reservedWords = new List<string> { "ref", "out", "in", "base", "long", "int", "short", "bool", "string", "decimal", "float", "double" };
+        private readonly List<string> reservedWords = new List<string> { "ref", "out", "in", "base", "long", "int", "short", "bool", "string", "decimal",
+            "float", "double", "null", "true", "false", "public", "private" };
+
         private string name;
 
         public PropertyBase(string parentClassName = null)
@@ -24,6 +26,9 @@ namespace AMF.Tools.Core
             {
                 if (reservedWords.Contains(name.ToLowerInvariant()) || name == ParentClassName)
                     return "Ip" + name.ToLowerInvariant();
+
+                if (string.IsNullOrWhiteSpace(name))
+                    return "empty" + DateTime.Now.Ticks;
 
                 return name;
             }

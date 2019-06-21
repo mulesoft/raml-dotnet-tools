@@ -79,26 +79,6 @@ namespace AMF.Tools
             return folderPath;
         }
 
-        protected override void ManageIncludes(ProjectItem folderItem, RamlIncludesManagerResult result)
-        {
-            var includesFolderItem = folderItem.ProjectItems.Cast<ProjectItem>()
-                .FirstOrDefault(i => i.Name == InstallerServices.IncludesFolderName);
-
-            if (includesFolderItem == null)
-                includesFolderItem = folderItem.ProjectItems.AddFolder(InstallerServices.IncludesFolderName);
-
-            foreach (var file in result.IncludedFiles)
-            {
-                if (!File.Exists(file))
-                    includesFolderItem.ProjectItems.AddFromFile(file);
-            }
-
-            // TODO: check if this should be enabled when in a csproj
-            //var existingIncludeItems = includesFolderItem.ProjectItems.Cast<ProjectItem>();
-            //var oldIncludedFiles = existingIncludeItems.Where(item => !result.IncludedFiles.Contains(item.FileNames[0]));
-            //InstallerServices.RemoveSubItemsAndAssociatedFiles(oldIncludedFiles);
-        }
-
         private static void AddXmlFormatterInWebApiConfig(Project proj)
         {
             var appStart = proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == "App_Start");

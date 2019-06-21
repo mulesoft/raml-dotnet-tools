@@ -70,9 +70,5 @@ namespace AMF.Tools
         {
             return folderPath + Path.GetFileNameWithoutExtension(targetFilename) + Path.DirectorySeparatorChar;
         }
-
-        protected override void ManageIncludes(ProjectItem folderItem, RamlIncludesManagerResult result)
-        {
-        }
     }
 }

@@ -7,7 +7,7 @@
     <authors>MuleSoft Inc</authors>
     <owners>MuleSoft Inc</owners>
     <projectUrl>https://github.com/mulesoft-labs/amf-dotnet-tools</projectUrl>
-	<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+	<license type="expression">Apache-2.0</license>
 	<iconUrl>http://raml.org/images/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Core API support classes for the AMF tools package</description>

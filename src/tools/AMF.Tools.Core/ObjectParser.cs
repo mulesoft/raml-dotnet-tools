@@ -36,12 +36,15 @@ namespace AMF.Tools.Core
         {
             var linkedTypes = new Dictionary<Guid, string>();
 
-            if (existingEnums.ContainsKey(scalar.Name))
+            if (existingEnums.ContainsKey(scalar.Id))
                 return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedTypes);
 
             var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
             apiEnum.Id = id;
-            newEnums.Add(apiEnum.Name, apiEnum);
+            apiEnum.AmfId = scalar.Id;
+            if(!newEnums.ContainsKey(apiEnum.AmfId))
+                newEnums.Add(apiEnum.AmfId, apiEnum);
+
             return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedTypes);
         }
 
@@ -53,6 +56,7 @@ namespace AMF.Tools.Core
             var apiObj = new ApiObject
             {
                 Id = id,
+                AmfId = shape.Id,
                 BaseClass = GetBaseClass(shape),
                 IsArray = shape is ArrayShape,
                 IsScalar = shape is ScalarShape,
@@ -136,8 +140,12 @@ namespace AMF.Tools.Core
                     apiObj.BaseClass = CollectionTypeHelper.GetConcreteType(baseClass);
             }
 
-            if(!newObjects.ContainsKey(apiObj.Type))
-                newObjects.Add(apiObj.Type, apiObj);
+            var amfId = shape.Id;
+            if (string.IsNullOrWhiteSpace(amfId))
+                amfId = apiObj.Name;
+
+            if (!newObjects.ContainsKey(amfId))
+                newObjects.Add(amfId, apiObj);
 
             return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedType);
         }
@@ -203,6 +211,7 @@ namespace AMF.Tools.Core
             if (p.Range == null)
                 return prop;
 
+            prop.AmfId = p.Range.Id;
             prop.Name = NetNamingMapper.GetObjectName(name);
             prop.Description = p.Range.Description;
             prop.Example = MapExample(p.Range);
@@ -217,11 +226,16 @@ namespace AMF.Tools.Core
                 prop.Minimum = string.IsNullOrWhiteSpace(scalar.Minimum) ? (double?)null : Convert.ToDouble(scalar.Minimum);
                 if(scalar.Values != null && scalar.Values.Any())
                 {
-                    // enum ??
                     prop.IsEnum = true;
+
                     var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
-                    if(!newEnums.ContainsKey(apiEnum.Name))
-                        newEnums.Add(apiEnum.Name, apiEnum);
+
+                    string amfId = apiEnum.AmfId;
+                    if (string.IsNullOrWhiteSpace(amfId))
+                        amfId = prop.AmfId ?? prop.Name;
+
+                    if (!newEnums.ContainsKey(amfId))
+                        newEnums.Add(amfId, apiEnum);
 
                     prop.Type = apiEnum.Name;
                 }
@@ -256,8 +270,8 @@ namespace AMF.Tools.Core
                     prop.Type = CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(array.Name));
                 }
 
-                //if (existingObjects.ContainsKey(itemType) || newObjects.ContainsKey(itemType))
-                //    return prop;
+                if (existingObjects.ContainsKey(array.Id))
+                    return prop;
 
                 var newId = Guid.NewGuid();
                 prop.TypeId = newId;

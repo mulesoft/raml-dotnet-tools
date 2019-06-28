@@ -20,7 +20,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldBuildArrays()
         {
             var model = await BuildModel("files/raml1/arrayTypes.raml");
-            Assert.AreEqual(5, model.Objects.Count());
+            Assert.AreEqual(4, model.Objects.Count());
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldBuildDependentTypes()
         {
             var model = await BuildModel("files/raml1/dependentTypes.raml");
-            Assert.AreEqual(3, model.Objects.Count());
+            Assert.AreEqual(2, model.Objects.Count());
             Assert.AreEqual("TypeA", model.Controllers.First().Methods.First().Parameter.Type);
         }
 

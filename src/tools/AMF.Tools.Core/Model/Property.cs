@@ -72,6 +72,7 @@ namespace AMF.Tools.Core
         }
 
         public Guid TypeId { get; internal set; }
+        public string AmfId { get; set; }
 
         private void BuildRangeAttribute(Collection<string> attributes, string identation)
         {

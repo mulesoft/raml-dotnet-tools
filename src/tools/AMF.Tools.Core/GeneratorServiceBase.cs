@@ -243,7 +243,7 @@ namespace AMF.Tools.Core
             {
                 if (shape == null)
                     continue;
-                if (schemaObjects.ContainsKey(shape.Name))
+                if (schemaObjects.ContainsKey(shape.Id))
                     continue;
 
                 if (ids.Contains(shape.Id))

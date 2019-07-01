@@ -39,6 +39,9 @@ namespace AMF.Tools.Core
             if (existingEnums.ContainsKey(scalar.Id))
                 return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedTypes);
 
+            if (newEnums.ContainsKey(scalar.Id))
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedTypes);
+
             var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
             apiEnum.Id = id;
             apiEnum.AmfId = scalar.Id;
@@ -247,6 +250,18 @@ namespace AMF.Tools.Core
 
             if (p.Range is NodeShape)
             {
+                if (existingObjects.ContainsKey(p.Range.Id))
+                {
+                    prop.Type = existingObjects[p.Range.Id].Type;
+                    return prop;
+                }
+
+                if (newObjects.ContainsKey(p.Range.Id))
+                {
+                    prop.Type = newObjects[p.Range.Id].Type;
+                    return prop;
+                }
+
                 var id = Guid.NewGuid();
                 prop.TypeId = id;
                 var tuple = ParseObject(id, prop.Name, p.Range, existingObjects, warnings, existingEnums);

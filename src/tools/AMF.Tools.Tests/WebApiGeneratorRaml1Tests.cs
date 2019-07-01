@@ -47,7 +47,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldMapPatternAttributes()
         {
             var model = await BuildModel("files/raml1/patterns.raml");
-            Assert.AreEqual(2, model.Objects.Count());
+            Assert.AreEqual(3, model.Objects.Count());
             Assert.IsTrue( model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop1").CustomAttributes.Contains("[RegularExpression(@\""));
             Assert.AreEqual("^/dev/[^/]+(/[^/]+)*$", model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop1").Pattern);
             Assert.AreEqual("^(/[^/]+)+$", model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop2").Pattern);
@@ -216,7 +216,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandleDates()
         {
             var model = await BuildModel("files/raml1/dates.raml");
-            Assert.AreEqual(3, model.Objects.Count());
+            Assert.AreEqual(7, model.Objects.Count());
             Assert.AreEqual("DateTime", model.Objects.First(x => x.Name == "Person").Properties.First(x => x.Name == "Born").Type);
             Assert.AreEqual("DateTime", model.Objects.First(x => x.Name == "User").Properties.First(x => x.Name == "Lastaccess").Type);
             Assert.AreEqual("DateTime", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Prop1").Type);
@@ -269,7 +269,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandle_SalesOrdersCase()
         {
             var model = await BuildModel("files/raml1/salesOrders.raml");
-            Assert.AreEqual(36, model.Objects.Count());
+            Assert.AreEqual(22, model.Objects.Count());
         }
 
         [Test]

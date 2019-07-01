@@ -76,10 +76,10 @@ namespace AMF.Tools.Core.ClientGenerator
             var apiResponseObjects = apiResponseGenerator.Generate(classObjects);
 
 
-            apiObjectsCleaner = new ApiObjectsCleaner(schemaRequestObjects, schemaResponseObjects, schemaObjects);
+            //apiObjectsCleaner = new ApiObjectsCleaner(schemaRequestObjects, schemaResponseObjects, schemaObjects);
             uriParametersGenerator = new UriParametersGenerator(schemaObjects);
 
-            CleanNotUsedObjects(classObjects);
+            //CleanNotUsedObjects(classObjects);
 
 
 
@@ -124,14 +124,14 @@ namespace AMF.Tools.Core.ClientGenerator
             return objects;
         }
 
-        private void CleanNotUsedObjects(IEnumerable<ClassObject> classes)
-        {
-            apiObjectsCleaner.CleanObjects(classes, schemaRequestObjects, apiObjectsCleaner.IsUsedAsParameterInAnyMethod);
+        //private void CleanNotUsedObjects(IEnumerable<ClassObject> classes)
+        //{
+        //    apiObjectsCleaner.CleanObjects(classes, schemaRequestObjects, apiObjectsCleaner.IsUsedAsParameterInAnyMethod);
 
-            apiObjectsCleaner.CleanObjects(classes, schemaResponseObjects, apiObjectsCleaner.IsUsedAsResponseInAnyMethod);
+        //    apiObjectsCleaner.CleanObjects(classes, schemaResponseObjects, apiObjectsCleaner.IsUsedAsResponseInAnyMethod);
 
-            apiObjectsCleaner.CleanObjects(classes, schemaObjects, apiObjectsCleaner.IsUsedAnywhere);
-        }
+        //    apiObjectsCleaner.CleanObjects(classes, schemaObjects, apiObjectsCleaner.IsUsedAnywhere);
+        //}
 
 
         private ICollection<ClassObject> GetClasses(IEnumerable<EndPoint> resources, EndPoint parent, ClassObject parentClass, string url, 

@@ -22,7 +22,7 @@ namespace Raml.Tools.Tests
         {
             var model = await BuildModel("exchange/account-information-api-2.0.2-raml/banking_aisp_experience_api.raml");
             Assert.AreEqual(3, model.Controllers.Count());
-            Assert.AreEqual(15, model.Objects.Count());  //11
+            Assert.AreEqual(28, model.Objects.Count());
         }
 
         [Test]

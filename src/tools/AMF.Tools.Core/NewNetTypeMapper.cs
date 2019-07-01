@@ -98,6 +98,21 @@ namespace AMF.Tools.Core
             if (!string.IsNullOrWhiteSpace(shape.LinkTargetName))
                 return NetNamingMapper.GetObjectName(GetTypeFromLinkOrId(shape.LinkTargetName));
 
+            if (!string.IsNullOrWhiteSpace(shape.Id))
+            {
+                if (existingObjects != null && existingObjects.ContainsKey(shape.Id))
+                    return existingObjects[shape.Id].Type;
+
+                if (newObjects != null && newObjects.ContainsKey(shape.Id))
+                    return newObjects[shape.Id].Type;
+
+                if (existingEnums != null && existingEnums.ContainsKey(shape.Id))
+                    return existingEnums[shape.Id].Name;
+
+                if (newEnums != null && newEnums.ContainsKey(shape.Id))
+                    return newEnums[shape.Id].Name;
+            }
+
             if (shape is ScalarShape scalar)
             {
                 if(shape.Values != null && shape.Values.Any())

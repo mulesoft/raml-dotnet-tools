@@ -61,10 +61,10 @@ namespace AMF.Tools.Core.WebApiGenerator
                 enums);
             var controllers = GetControllers().ToArray();
 
-            apiObjectsCleaner = new ApiObjectsCleaner(schemaRequestObjects, schemaResponseObjects, schemaObjects);
+            //apiObjectsCleaner = new ApiObjectsCleaner(schemaRequestObjects, schemaResponseObjects, schemaObjects);
             uriParametersGenerator = new UriParametersGenerator(schemaObjects);
 
-            CleanNotUsedObjects(controllers);
+            //CleanNotUsedObjects(controllers);
 
             return new WebApiGeneratorModel
             {
@@ -105,14 +105,14 @@ namespace AMF.Tools.Core.WebApiGenerator
             }
         }
 
-        private void CleanNotUsedObjects(IEnumerable<ControllerObject> controllers)
-        {
-            apiObjectsCleaner.CleanObjects(controllers, schemaRequestObjects, apiObjectsCleaner.IsUsedAsParameterInAnyMethod);
+        //private void CleanNotUsedObjects(IEnumerable<ControllerObject> controllers)
+        //{
+        //    apiObjectsCleaner.CleanObjects(controllers, schemaRequestObjects, apiObjectsCleaner.IsUsedAsParameterInAnyMethod);
 
-            apiObjectsCleaner.CleanObjects(controllers, schemaResponseObjects, apiObjectsCleaner.IsUsedAsResponseInAnyMethod);
+        //    apiObjectsCleaner.CleanObjects(controllers, schemaResponseObjects, apiObjectsCleaner.IsUsedAsResponseInAnyMethod);
 
-            apiObjectsCleaner.CleanObjects(controllers, schemaObjects, apiObjectsCleaner.IsUsedAnywhere);
-        }
+        //    apiObjectsCleaner.CleanObjects(controllers, schemaObjects, apiObjectsCleaner.IsUsedAnywhere);
+        //}
 
         private IEnumerable<ControllerObject> GetControllers()
         {

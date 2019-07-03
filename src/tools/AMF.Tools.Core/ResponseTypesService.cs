@@ -29,7 +29,8 @@ namespace AMF.Tools.Core
 
             returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
 
-            if (!string.IsNullOrWhiteSpace(returnType) && RamlTypesHelper.IsPrimitiveOrSchemaObject(returnType, schemaObjects))
+            if (!string.IsNullOrWhiteSpace(returnType) && (RamlTypesHelper.IsPrimitiveOrSchemaObject(returnType, schemaObjects)
+                || RamlTypesHelper.IsPrimitiveOrSchemaObject(returnType, schemaResponseObjects)))
                 return returnType;
 
             if (ResponseHasKey(key))
@@ -143,7 +144,7 @@ namespace AMF.Tools.Core
 
         private string GetNamedReturnType(Operation method, EndPoint resource, Payload mimeType, string fullUrl)
         {
-            return NewNetTypeMapper.GetNetType(mimeType.Schema, schemaObjects, null, enums);
+            return NewNetTypeMapper.GetNetType(mimeType.Schema, schemaObjects, schemaResponseObjects, enums);
 
             //if (mimeType.Schema != null && mimeType.Schema.Contains("<<") && mimeType.Schema.Contains(">>"))
             //    return GetReturnTypeFromParameter(method, resource, fullUrl, mimeType.Schema);

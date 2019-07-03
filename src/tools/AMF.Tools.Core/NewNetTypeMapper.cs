@@ -98,26 +98,13 @@ namespace AMF.Tools.Core
             if (!string.IsNullOrWhiteSpace(shape.LinkTargetName))
                 return NetNamingMapper.GetObjectName(GetTypeFromLinkOrId(shape.LinkTargetName));
 
-            if (!string.IsNullOrWhiteSpace(shape.Id))
-            {
-                if (existingObjects != null && existingObjects.ContainsKey(shape.Id))
-                    return existingObjects[shape.Id].Type;
-
-                if (newObjects != null && newObjects.ContainsKey(shape.Id))
-                    return newObjects[shape.Id].Type;
-
-                if (existingEnums != null && existingEnums.ContainsKey(shape.Id))
-                    return existingEnums[shape.Id].Name;
-
-                if (newEnums != null && newEnums.ContainsKey(shape.Id))
-                    return newEnums[shape.Id].Name;
-            }
+            string id = shape.Id;
 
             if (shape is ScalarShape scalar)
             {
                 if(shape.Values != null && shape.Values.Any())
                 {
-                    var key = GetTypeFromLinkOrId(shape.Id);
+                    var key = GetTypeFromLinkOrId(id);
                     if (existingEnums != null && existingEnums.ContainsKey(key))
                         return existingEnums[key].Name;
                     if (newEnums != null && newEnums.ContainsKey(key))
@@ -126,9 +113,22 @@ namespace AMF.Tools.Core
                 return GetNetType(scalar.DataType.Substring(scalar.DataType.LastIndexOf('#') + 1), scalar.Format);
             }
 
-            if (shape.Id != null && shape.Id.Contains("#/declarations"))
+            string type = null;
+            if (shape is ArrayShape arr && !(arr.Items is ScalarShape) && !string.IsNullOrWhiteSpace(arr.Items.Id))
+                type = FindTypeById(arr.Items.Id, existingObjects, newObjects, existingEnums, newEnums);
+
+            if (type != null)
+                return CollectionTypeHelper.GetCollectionType(type);
+
+            if (!(shape is ArrayShape) && !string.IsNullOrWhiteSpace(id))
+                type = FindTypeById(id, existingObjects, newObjects, existingEnums, newEnums);
+
+            if (type != null)
+                return type;
+
+            if (id != null && id.Contains("#/declarations"))
             {
-                var key = GetTypeFromLinkOrId(shape.Id);
+                var key = GetTypeFromLinkOrId(id);
                 if (existingObjects != null && (existingObjects.ContainsKey(key)
                     || existingObjects.Keys.Any(k => k.ToLowerInvariant() == key.ToLowerInvariant())))
                 {
@@ -180,6 +180,24 @@ namespace AMF.Tools.Core
                 return "object";
 
             return NetNamingMapper.GetObjectName(shape.Name);
+        }
+
+        private static string FindTypeById(string id, IDictionary<string, ApiObject> existingObjects = null,
+            IDictionary<string, ApiObject> newObjects = null, IDictionary<string, ApiEnum> existingEnums = null, IDictionary<string, ApiEnum> newEnums = null)
+        {
+            if (existingObjects != null && existingObjects.ContainsKey(id))
+                return existingObjects[id].Type;
+
+            if (newObjects != null && newObjects.ContainsKey(id))
+                return newObjects[id].Type;
+
+            if (existingEnums != null && existingEnums.ContainsKey(id))
+                return existingEnums[id].Name;
+
+            if (newEnums != null && newEnums.ContainsKey(id))
+                return newEnums[id].Name;
+
+            return null;
         }
 
         private static string GetTypeFromLinkOrId(string linkOrId)

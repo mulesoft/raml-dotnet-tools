@@ -189,9 +189,20 @@ namespace AMF.Tools.Core
                 foreach (var prop in type.Properties.Where(p => p.TypeId != null))
                 {
                     if (NeedsFixing(obj, prop))
-                        prop.Type = obj.Name;
+                    {
+                        if (CollectionTypeHelper.IsCollection(prop.Type))
+                            prop.Type = CollectionTypeHelper.GetCollectionType(obj.Name);
+                        else
+                            prop.Type = obj.Name;
+                    }
                     else if (linkIdsWithTypes.ContainsKey(prop.TypeId))
-                        prop.Type = linkIdsWithTypes[prop.TypeId];
+                    {
+                        if (CollectionTypeHelper.IsCollection(prop.Type))
+                            prop.Type = CollectionTypeHelper.GetCollectionType(linkIdsWithTypes[prop.TypeId]);
+                        else
+                            prop.Type = linkIdsWithTypes[prop.TypeId];
+
+                    }
                 }
             }
         }

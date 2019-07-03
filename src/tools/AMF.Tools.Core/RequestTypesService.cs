@@ -30,10 +30,10 @@ namespace AMF.Tools.Core
                 return new GeneratorParameter { Name = "content", Type = "string" };
 
             var mimeType = GetMimeType(method.Request.Payloads, defaultMediaTypes);
-            var type = NewNetTypeMapper.GetNetType(mimeType, schemaObjects, null, enums);
-            if (RamlTypesHelper.IsPrimitiveOrSchemaObject(type, schemaObjects))
+            var type = NewNetTypeMapper.GetNetType(mimeType, schemaObjects, schemaRequestObjects, enums);
+            if (RamlTypesHelper.IsPrimitiveOrSchemaObject(type, schemaObjects) || RamlTypesHelper.IsPrimitiveOrSchemaObject(type, schemaRequestObjects))
             {
-                return new GeneratorParameter //TODO: check
+                return new GeneratorParameter
                 {
                     Name = string.IsNullOrWhiteSpace(mimeType.Name) ? GetParameterName(type) : GetParameterName(mimeType.Name),
                     Description = mimeType.Description,

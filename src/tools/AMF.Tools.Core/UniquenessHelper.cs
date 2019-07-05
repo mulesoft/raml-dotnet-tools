@@ -69,12 +69,12 @@ namespace AMF.Tools.Core
             throw new InvalidOperationException("Could not find a unique name for property");
         }
 
-        public static string GetUniqueName(IDictionary<string, ApiEnum> enums, string name)
+        public static string GetUniqueName(string name, IDictionary<string, ApiEnum> existingEnums, IDictionary<string, ApiEnum> newEnums)
         {
             for (var i = 0; i < 100; i++)
             {
                 var unique = name + i;
-                if (enums.All(p => p.Key != unique))
+                if (existingEnums.All(p => p.Key != unique) && newEnums.All(p => p.Key != unique))
                     return unique;
             }
 
@@ -83,11 +83,31 @@ namespace AMF.Tools.Core
                 for (var i = 0; i < 100; i++)
                 {
                     var unique = name + suffix + i;
-                    if (enums.All(p => p.Key != unique))
+                    if (existingEnums.All(p => p.Key != unique) && newEnums.All(p => p.Key != unique))
                         return unique;
                 }
             }
             throw new InvalidOperationException("Could not find a unique name for enum: " + name);
+        }
+
+        internal static bool HasSamevalues(ApiEnum apiEnum, IDictionary<string, ApiEnum> existingEnums, IDictionary<string, ApiEnum> newEnums)
+        {
+            var matchName = existingEnums.FirstOrDefault(e => e.Value.Name == apiEnum.Name).Value;
+            if (matchName == null)
+                matchName = newEnums.FirstOrDefault(e => e.Value.Name == apiEnum.Name).Value;
+
+            if (matchName == null)
+                return false;
+
+            if (matchName.Values.Count != apiEnum.Values.Count)
+                return false;
+
+            foreach(var val in matchName.Values)
+            {
+                if (!apiEnum.Values.Any(v => v.OriginalName == val.OriginalName))
+                    return false;
+            }
+            return true;
         }
 
         public static IEnumerable<ApiObject> FindAllObjectsWithSameProperties(ApiObject apiObject, string key, IDictionary<string, ApiObject> objects,

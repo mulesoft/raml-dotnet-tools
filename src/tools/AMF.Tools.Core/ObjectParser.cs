@@ -10,7 +10,7 @@ namespace AMF.Tools.Core
     public class ObjectParser
     {
         //private readonly JsonSchemaParser jsonSchemaParser = new JsonSchemaParser();
-        private IDictionary<string, ApiObject> emptyDic = new Dictionary<string, ApiObject>();
+        private readonly IDictionary<string, ApiObject> emptyDic = new Dictionary<string, ApiObject>();
         private IDictionary<string, ApiObject> newObjects = new Dictionary<string, ApiObject>();
         private IDictionary<string, ApiEnum> newEnums = new Dictionary<string, ApiEnum>();
         private IDictionary<string, ApiObject> existingObjects;
@@ -25,35 +25,60 @@ namespace AMF.Tools.Core
             this.existingEnums = existingEnums;
             this.warnings = warnings;
 
+            string amfId = shape.Id;
+            if (AlreadyExists(existingObjects, existingEnums, amfId))
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>
+                    (newObjects, newEnums, new Dictionary<Guid, string>());
+
             if (shape is ScalarShape scalar && scalar.Values != null && scalar.Values.Any())
                 return ParseEnum(id, warnings, existingEnums, scalar);
 
             return ParseObject(id, key, shape, existingObjects, isRootType);
         }
 
+        private bool AlreadyExists(IDictionary<string, ApiObject> existingObjects, IDictionary<string, ApiEnum> existingEnums, string amfId)
+        {
+            return !string.IsNullOrWhiteSpace(amfId) && amfId.Contains("amf")
+                            && (existingObjects.ContainsKey(amfId) || existingEnums.ContainsKey(amfId) 
+                            || newObjects.ContainsKey(amfId) || newEnums.ContainsKey(amfId));
+        }
+
         private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>> ParseEnum(Guid id, IDictionary<string, string> warnings, 
             IDictionary<string, ApiEnum> existingEnums, ScalarShape scalar)
         {
-            var linkedTypes = new Dictionary<Guid, string>();
-
             if (existingEnums.ContainsKey(scalar.Id))
-                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedTypes);
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
 
             if (newEnums.ContainsKey(scalar.Id))
-                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedTypes);
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
 
-            var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
+            var apiEnum = CreateEnum(scalar, existingEnums, warnings, newEnums);
             apiEnum.Id = id;
             apiEnum.AmfId = scalar.Id;
-            if(!newEnums.ContainsKey(apiEnum.AmfId))
-                newEnums.Add(apiEnum.AmfId, apiEnum);
 
-            return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedTypes);
+            if (!newEnums.ContainsKey(apiEnum.AmfId))
+            {
+                if (existingEnums.Values.Any(o => o.Name == apiEnum.Name) || newEnums.Values.Any(o => o.Name == apiEnum.Name))
+                {
+                    if (UniquenessHelper.HasSamevalues(apiEnum, existingEnums, newEnums))
+                        return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
+
+                    apiEnum.Name = UniquenessHelper.GetUniqueName(apiEnum.Name, existingEnums, newEnums);
+                }
+
+                newEnums.Add(apiEnum.AmfId, apiEnum);
+            }
+
+            return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
         }
 
         private Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>> ParseObject(Guid id, string key, Shape shape, 
             IDictionary<string, ApiObject> existingObjects, bool isRootType)
         {
+            if (AlreadyExists(existingObjects, existingEnums, shape.Id))
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>
+                    (newObjects, newEnums, new Dictionary<Guid, string>());
+
             var linkedType = new Dictionary<Guid, string>();
 
             var apiObj = new ApiObject
@@ -82,6 +107,7 @@ namespace AMF.Tools.Core
                     valueType = NewNetTypeMapper.GetNetType(node.Properties.First().Range, existingObjects);
 
                 apiObj.Type = $"Dictionary<string, {valueType}>";
+                AddNewObject(shape, apiObj);
                 return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedType);
             }
 
@@ -94,47 +120,29 @@ namespace AMF.Tools.Core
                 if (UniquenessHelper.HasSameProperties(apiObj, existingObjects, key, newObjects, emptyDic))
                     return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedType);
 
-                match = UniquenessHelper.FirstOrDefaultWithSameProperties(apiObj, existingObjects, key, newObjects, emptyDic);
-                if (match != null)
-                {
-                    linkedType.Add(id, match.Type);
-                }
-                else
-                {
-                    apiObj.Name = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Name, newObjects, emptyDic);
-                    foreach (var prop in apiObj.Properties)
-                    {
-                        prop.ParentClassName = apiObj.Name;
-                    }
-                }
+                match = HandleNameDuplication(id, apiObj, key, linkedType);
             }
+
             if (existingObjects.Values.Any(o => o.Type == apiObj.Type) || newObjects.Values.Any(o => o.Type == apiObj.Type))
             {
                 if (UniquenessHelper.HasSameProperties(apiObj, existingObjects, key, newObjects, emptyDic))
                     return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedType);
 
-                match = UniquenessHelper.FirstOrDefaultWithSameProperties(apiObj, existingObjects, key, newObjects, emptyDic);
-                if (match != null)
-                {
-                    if(!linkedType.ContainsKey(id))
-                        linkedType.Add(id, match.Type);
-                }
-                else
-                {
-                    apiObj.Type = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Type, newObjects, emptyDic);
-                }
+                match = HandleTypeDuplication(id, apiObj, key, linkedType);
             }
 
-            if (match == null)
-            {
-                match = UniquenessHelper.FirstOrDefaultWithSameProperties(apiObj, existingObjects, key, newObjects, emptyDic);
-                if (match != null)
-                {
-                    if (!linkedType.ContainsKey(id))
-                        linkedType.Add(id, match.Type);
-                }
-            }
+            if(match != null)
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedType);
 
+            //if (match == null)
+            //{
+            //    match = UniquenessHelper.FirstOrDefaultWithSameProperties(apiObj, existingObjects, key, newObjects, emptyDic);
+            //    if (match != null)
+            //    {
+            //        if (!linkedType.ContainsKey(id))
+            //            linkedType.Add(id, match.Type);
+            //    }
+            //}
 
             if (shape.Inherits != null && shape.Inherits.Count() == 1)
             {
@@ -143,17 +151,54 @@ namespace AMF.Tools.Core
                     apiObj.BaseClass = CollectionTypeHelper.GetConcreteType(baseClass);
             }
 
+            AddNewObject(shape, apiObj);
+
+            return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedType);
+        }
+
+        private void AddNewObject(Shape shape, ApiObject apiObj)
+        {
             var amfId = shape.Id;
             if (string.IsNullOrWhiteSpace(amfId))
                 amfId = apiObj.Name;
 
             if (!newObjects.ContainsKey(amfId))
                 newObjects.Add(amfId, apiObj);
-
-            return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, linkedType);
         }
 
-        //TODO: check
+        private ApiObject HandleNameDuplication(Guid id, ApiObject apiObj, string key, IDictionary<Guid, string> linkedType)
+        {
+            var match = UniquenessHelper.FirstOrDefaultWithSameProperties(apiObj, existingObjects, key, newObjects, emptyDic);
+            if (match != null)
+            {
+                linkedType.Add(id, match.Type);
+            }
+            else
+            {
+                apiObj.Name = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Name, newObjects, emptyDic);
+                foreach (var prop in apiObj.Properties)
+                {
+                    prop.ParentClassName = apiObj.Name;
+                }
+            }
+            return match;
+        }
+
+        private ApiObject HandleTypeDuplication(Guid id, ApiObject apiObj, string key, IDictionary<Guid, string> linkedType)
+        {
+            var match = UniquenessHelper.FirstOrDefaultWithSameProperties(apiObj, existingObjects, key, newObjects, emptyDic);
+            if (match != null)
+            {
+                if (!linkedType.ContainsKey(id))
+                    linkedType.Add(id, match.Type);
+            }
+            else
+            {
+                apiObj.Type = UniquenessHelper.GetUniqueName(existingObjects, apiObj.Type, newObjects, emptyDic);
+            }
+            return match;
+        }
+
         private string GetBaseClass(Shape shape)
         {
             if (shape.Inherits.Count() == 0)
@@ -231,16 +276,26 @@ namespace AMF.Tools.Core
                 {
                     prop.IsEnum = true;
 
-                    var apiEnum = ParseEnum(scalar, existingEnums, warnings, newEnums);
+                    var apiEnum = CreateEnum(scalar, existingEnums, warnings, newEnums);
 
                     string amfId = apiEnum.AmfId;
                     if (string.IsNullOrWhiteSpace(amfId))
                         amfId = prop.AmfId ?? prop.Name;
 
-                    if (!newEnums.ContainsKey(amfId))
-                        newEnums.Add(amfId, apiEnum);
-
                     prop.Type = apiEnum.Name;
+
+                    if (newEnums.ContainsKey(amfId))
+                        return prop;
+
+                    if (existingEnums.Values.Any(o => o.Name == apiEnum.Name) || newEnums.Values.Any(o => o.Name == apiEnum.Name))
+                    {
+                        if (UniquenessHelper.HasSamevalues(apiEnum, existingEnums, newEnums))
+                            return prop;
+
+                        apiEnum.Name = UniquenessHelper.GetUniqueName(apiEnum.Name, existingEnums, newEnums);
+                        prop.Type = apiEnum.Name;
+                    }
+                    newEnums.Add(amfId, apiEnum);
                 }
                 return prop;
             }
@@ -317,7 +372,7 @@ namespace AMF.Tools.Core
             return CollectionTypeHelper.GetCollectionType(NetNamingMapper.GetObjectName(itemType));
         }
 
-        private ApiEnum ParseEnum(ScalarShape scalar, IDictionary<string, ApiEnum> existingEnums, IDictionary<string, string> warnings, IDictionary<string, ApiEnum> newEnums)
+        private ApiEnum CreateEnum(ScalarShape scalar, IDictionary<string, ApiEnum> existingEnums, IDictionary<string, string> warnings, IDictionary<string, ApiEnum> newEnums)
         {
             return new ApiEnum
             {

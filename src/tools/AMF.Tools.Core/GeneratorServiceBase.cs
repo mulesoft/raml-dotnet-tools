@@ -124,15 +124,26 @@ namespace AMF.Tools.Core
             }
         }
 
+        private readonly IDictionary<string, ApiObject> emptyDic = new Dictionary<string, ApiObject>();
+
         protected void AddElement(KeyValuePair<string, ApiObject> newElement, IDictionary<string, ApiObject> objects)
         {
-            if(!objects.ContainsKey(newElement.Key))
-                objects.Add(newElement.Key, newElement.Value);
-
-            if (UniquenessHelper.HasSameProperties(newElement.Value, objects, newElement.Key,
-                new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>()))
+            if (objects.ContainsKey(newElement.Key))
                 return;
 
+            if (objects.Values.Any(o => o.Name == newElement.Value.Name))
+            {
+                if (UniquenessHelper.HasSameProperties(newElement.Value, objects, newElement.Key, emptyDic, emptyDic))
+                    return;
+
+                newElement = HandleDuplicatedObjectName(newElement, objects);
+            }
+
+            objects.Add(newElement.Key, newElement.Value);
+        }
+
+        private static KeyValuePair<string, ApiObject> HandleDuplicatedObjectName(KeyValuePair<string, ApiObject> newElement, IDictionary<string, ApiObject> objects)
+        {
             var apiObject = newElement.Value;
             var oldName = apiObject.Name;
             apiObject.Name = UniquenessHelper.GetUniqueName(objects, apiObject.Name, new Dictionary<string, ApiObject>(), new Dictionary<string, ApiObject>());
@@ -146,7 +157,9 @@ namespace AMF.Tools.Core
                     if (prop.TypeId == apiObject.Id)
                         prop.Type = apiObject.Name;
                 }
-            }            
+            }
+
+            return newElement;
         }
 
         protected void FixEnumNamesClashing()

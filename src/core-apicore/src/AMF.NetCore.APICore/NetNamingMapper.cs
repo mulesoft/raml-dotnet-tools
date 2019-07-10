@@ -76,37 +76,34 @@ namespace AMF.Common
 
 		public static string RemoveIndalidChars(string input)
 		{
-            var validnamespace = Path.GetInvalidPathChars()
+            var value = Path.GetInvalidPathChars()
                 .Aggregate(input, (current, invalidChar) =>
                     current.Replace(invalidChar.ToString(), string.Empty));
 
-			validnamespace = validnamespace.Replace(" ", string.Empty);
-			validnamespace = validnamespace.Replace(".", string.Empty);
-            validnamespace = validnamespace.Replace("?", string.Empty);
-            validnamespace = validnamespace.Replace("[]", string.Empty);
-            validnamespace = validnamespace.Replace("[", string.Empty);
-            validnamespace = validnamespace.Replace("]", string.Empty);
-            validnamespace = validnamespace.Replace("(", string.Empty);
-            validnamespace = validnamespace.Replace(")", string.Empty);
-            validnamespace = validnamespace.Replace("|", string.Empty);
-            validnamespace = validnamespace.Replace("%", string.Empty);
-            validnamespace = validnamespace.Replace("=", string.Empty);
-            validnamespace = validnamespace.Replace("~", string.Empty);
-            validnamespace = validnamespace.Replace("+", string.Empty);
-            validnamespace = validnamespace.Replace(">=", "GreatOrEqual");
-            validnamespace = validnamespace.Replace("<=", "LessOrEqual");
-            validnamespace = validnamespace.Replace("<", "Less");
-            validnamespace = validnamespace.Replace(">", "Great");
-            validnamespace = validnamespace.Replace("*", "Asterisk");
-            validnamespace = ReplaceSpecialChars(validnamespace, "-");
+			value = value.Replace(" ", string.Empty);
+			value = value.Replace(".", string.Empty);
+            value = value.Replace("?", string.Empty);
+            value = value.Replace("[]", string.Empty);
+            value = value.Replace("[", string.Empty);
+            value = value.Replace("]", string.Empty);
+            value = value.Replace("(", string.Empty);
+            value = value.Replace(")", string.Empty);
+            value = value.Replace("|", string.Empty);
+            value = value.Replace("%", string.Empty);
+            value = value.Replace("=", string.Empty);
+            value = value.Replace("~", string.Empty);
+            value = value.Replace("+", string.Empty);
+            value = value.Replace(">=", "GreatOrEqual");
+            value = value.Replace("<=", "LessOrEqual");
+            value = value.Replace("<", "Less");
+            value = value.Replace(">", "Great");
+            value = value.Replace("*", "Asterisk");
+            value = ReplaceSpecialChars(value, "-");
 
-            if (ReservedWords.Contains(validnamespace))
-                validnamespace = "A" + validnamespace;
-
-            if (string.IsNullOrWhiteSpace(validnamespace))
+            if (string.IsNullOrWhiteSpace(value))
                 return "a" + DateTime.Now.Ticks.ToString();
 
-            return validnamespace.Trim();
+            return value.Trim();
 		}
 
 		public static bool HasIndalidChars(string input)
@@ -177,6 +174,9 @@ namespace AMF.Common
             propName = RemoveIndalidChars(propName);
             propName = Capitalize(propName);
 
+            if (ReservedWords.Contains(propName))
+                propName = "A" + propName;
+
             if (StartsWithNumber(propName))
 				propName = "P" + propName;
 
@@ -199,9 +199,11 @@ namespace AMF.Common
 
             value = RemoveIndalidChars(value);
 
-            int number;
-	        if (int.TryParse(enumValue, out number))
-	            value = value + " = " + number;
+            if (ReservedWords.Contains(value))
+                value = "A" + value;
+
+            if (int.TryParse(enumValue, out int number))
+                value = value + " = " + number;
 
             return value;
 	    }

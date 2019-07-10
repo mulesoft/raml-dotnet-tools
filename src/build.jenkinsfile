@@ -25,7 +25,7 @@ pipeline {
                     steps {
                         bat 'nuget pack src/apicore/src/RAML.API.Core/AMF.Api.Core.csproj -Prop Configuration=Release'
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
-                            bat "nuget push *.nupkg -s https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }
                     }
                 }

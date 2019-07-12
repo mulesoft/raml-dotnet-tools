@@ -237,8 +237,9 @@ namespace AMF.Tools.Core
             if (p.Path != null)
                 return GetNameFromPath(p.Path);
 
+            var randInt = new Random().Next(short.MaxValue);
             if(p.Range == null)
-                return "prop" + DateTime.Now.Ticks.ToString();
+                return "prop" + randInt;
 
             if(!string.IsNullOrWhiteSpace(p.Range.Name))
                 return p.Range.Name;

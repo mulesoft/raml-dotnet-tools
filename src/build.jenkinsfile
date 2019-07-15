@@ -43,6 +43,9 @@ pipeline {
                 stage('Pack') {
                     steps {
                         bat 'nuget pack src/raml/RAML.Parser.Model/RAML.Parser.Model.csproj -Prop Configuration=Release'
+                        withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
+                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                        }
                     }
                 }
             }
@@ -60,6 +63,9 @@ pipeline {
                 stage('Pack'){
                     steps {
                         bat "dotnet pack src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
+                        withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
+                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                        }
                     }
                 }
             }
@@ -82,6 +88,9 @@ pipeline {
                 stage('Pack') {
                     steps {
                         bat 'nuget pack src/apiexplorer/src/AMF.WebApiExplorer/AMF.WebApiExplorer.csproj -Prop Configuration=Release'
+                        withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
+                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                        }
                     }
                 }
             }
@@ -105,6 +114,9 @@ pipeline {
                     steps {
                         bat "dotnet pack src/core-apiexplorer/src/RAML.Parser.Expressions/RAML.Parser.Expressions.csproj"
                         bat "dotnet pack src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/AMF.NetCoreAPIExplorer.csproj"
+                        withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
+                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                        }
                     }
                 }
             }

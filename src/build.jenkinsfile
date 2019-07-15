@@ -128,7 +128,8 @@ pipeline {
                 stage('Build') {
                     steps {
                         withCredentials([usernamePassword(credentialsId: 'jenkins-amf-net.service', usernameVariable: 'user', passwordVariable: 'passwd')]) {
-                            bat 'nuget sources add -Name nexus2 -Source https://nexus.dev.build.msap.io/nexus/content/repositories/NuGet -UserName $user -Password $passwd -StorePasswordInClearText'
+                            bat 'nuget sources add -Name nexus4 -Source https://nexus.dev.build.msap.io/nexus/content/repositories/NuGet -UserName $user -Password $passwd -StorePasswordInClearText'
+                            // bat 'nuget sources add -Name nexus5 -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $user -Password $passwd -StorePasswordInClearText'
                             bat 'nuget restore src/tools/AMF.Tools.sln'
                             bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
                         }

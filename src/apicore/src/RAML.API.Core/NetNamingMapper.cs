@@ -101,8 +101,9 @@ namespace AMF.Api.Core
             value = value.Replace("*", "Asterisk");
             value = ReplaceSpecialChars(value, "-");
 
+            var randInt = new Random().Next(short.MaxValue);
             if (string.IsNullOrWhiteSpace(value))
-                return "a" + DateTime.Now.Ticks.ToString();
+                return "A" + randInt;
 
             return value.Trim();
         }

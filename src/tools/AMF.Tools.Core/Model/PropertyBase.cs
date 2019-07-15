@@ -27,8 +27,9 @@ namespace AMF.Tools.Core
                 if (reservedWords.Contains(name.ToLowerInvariant()) || name == ParentClassName)
                     return "Ip" + name.ToLowerInvariant();
 
+                var randInt = new Random().Next(short.MaxValue);
                 if (string.IsNullOrWhiteSpace(name))
-                    return "empty" + DateTime.Now.Ticks;
+                    return "empty" + randInt;
 
                 return name;
             }

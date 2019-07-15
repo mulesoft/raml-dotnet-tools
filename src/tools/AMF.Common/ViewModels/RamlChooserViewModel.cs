@@ -137,7 +137,8 @@ namespace AMF.Common.ViewModels
 
                 var zipPath = Path.Combine(Path.GetTempPath(), assetName + ".zip");
                 File.WriteAllBytes(zipPath, byteArray);
-                var destinationFolder = Path.Combine(Path.GetTempPath(), assetName + DateTime.Now.Ticks);
+                var randInt = new Random().Next(short.MaxValue);
+                var destinationFolder = Path.Combine(Path.GetTempPath(), assetName + randInt);
                 ZipFile.ExtractToDirectory(zipPath, destinationFolder);
 
                 RamlTempFilePath = GetRamlPath(destinationFolder, file.MainFile, uri);

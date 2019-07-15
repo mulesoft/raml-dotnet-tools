@@ -1,5 +1,8 @@
 pipeline {
 
+    environment {
+        NUGET_CREDS = credentials('jenkins-amf-net.service')
+    }
     agent {
         node {
             label 'windows10'
@@ -127,13 +130,11 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
-                        withCredentials([UsernamePasswordMultiBinding(credentialsId: 'jenkins-amf-net.service', usernameVariable: 'NugetUser', passwordVariable: 'NugetPassword')]) {
-                            bat 'nuget sources remove -Name nexus'
-                            // bat 'nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/content/repositories/NuGet/ -UserName $NugetUser -Password $NugetPassword -StorePasswordInClearText'
-                            bat 'nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $NugetUser -Password $NugetPassword -StorePasswordInClearText'
-                            bat 'nuget restore src/tools/AMF.Tools.sln'
-                            bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
-                        }
+                        bat 'nuget sources remove -Name nexus'
+                        // bat 'nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/content/repositories/NuGet/ -UserName $NugetUser -Password $NugetPassword -StorePasswordInClearText'
+                        bat 'nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $NUGET_CREDS_USR -Password $NUGET_CREDS_PSW -StorePasswordInClearText'
+                        bat 'nuget restore src/tools/AMF.Tools.sln'
+                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
                     }
                 }
                 stage('Test') {

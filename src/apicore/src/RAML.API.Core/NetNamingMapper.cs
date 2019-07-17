@@ -101,9 +101,10 @@ namespace AMF.Api.Core
             value = value.Replace("*", "Asterisk");
             value = ReplaceSpecialChars(value, "-");
 
-            var randInt = new Random().Next(short.MaxValue);
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value)) {
+                var randInt = new Random(input.GetHashCode()).Next(short.MaxValue);
                 return "A" + randInt;
+            }
 
             return value.Trim();
         }

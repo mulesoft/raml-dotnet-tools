@@ -13,6 +13,12 @@ namespace AMF.Api.Core.Tests
         }
 
         [Fact]
+        public void Should_Generate_Random_Values()
+        {
+            Assert.NotEqual(NetNamingMapper.RemoveIndalidChars(">"), NetNamingMapper.RemoveIndalidChars("<"));
+        }
+
+        [Fact]
         public void Should_Convert_Method_Names()
         {
             Assert.Equal("GetContactsById", NetNamingMapper.GetMethodName("get-/contacts/{id}"));

@@ -74,7 +74,7 @@ namespace AMF.Tools.Core
             for (var i = 0; i < 100; i++)
             {
                 var unique = name + i;
-                if (existingEnums.All(p => p.Key != unique) && newEnums.All(p => p.Key != unique))
+                if (existingEnums.All(p => p.Value.Name != unique) && newEnums.All(p => p.Value.Name != unique))
                     return unique;
             }
 
@@ -83,7 +83,7 @@ namespace AMF.Tools.Core
                 for (var i = 0; i < 100; i++)
                 {
                     var unique = name + suffix + i;
-                    if (existingEnums.All(p => p.Key != unique) && newEnums.All(p => p.Key != unique))
+                    if (existingEnums.All(p => p.Value.Name != unique) && newEnums.All(p => p.Value.Name != unique))
                         return unique;
                 }
             }

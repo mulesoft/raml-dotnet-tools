@@ -56,18 +56,18 @@ namespace AMF.Tools.Core
             apiEnum.Id = id;
             apiEnum.AmfId = scalar.Id;
 
-            if (!newEnums.ContainsKey(apiEnum.AmfId))
+            if (newEnums.ContainsKey(apiEnum.AmfId) || existingEnums.ContainsKey(apiEnum.AmfId))
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
+
+            if (existingEnums.Values.Any(o => o.Name == apiEnum.Name) || newEnums.Values.Any(o => o.Name == apiEnum.Name))
             {
-                if (existingEnums.Values.Any(o => o.Name == apiEnum.Name) || newEnums.Values.Any(o => o.Name == apiEnum.Name))
-                {
-                    if (UniquenessHelper.HasSamevalues(apiEnum, existingEnums, newEnums))
-                        return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
+                if (UniquenessHelper.HasSamevalues(apiEnum, existingEnums, newEnums))
+                    return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
 
-                    apiEnum.Name = UniquenessHelper.GetUniqueName(apiEnum.Name, existingEnums, newEnums);
-                }
-
-                newEnums.Add(apiEnum.AmfId, apiEnum);
+                apiEnum.Name = UniquenessHelper.GetUniqueName(apiEnum.Name, existingEnums, newEnums);
             }
+
+            newEnums.Add(apiEnum.AmfId, apiEnum);
 
             return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>(newObjects, newEnums, new Dictionary<Guid, string>());
         }

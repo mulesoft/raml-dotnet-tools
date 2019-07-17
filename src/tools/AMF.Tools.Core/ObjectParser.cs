@@ -379,7 +379,9 @@ namespace AMF.Tools.Core
             {
                 Name = NetNamingMapper.GetObjectName(scalar.Name),
                 Description = scalar.Description,
-                Values = scalar.Values.Select(p => new PropertyBase { Name = NetNamingMapper.GetEnumValueName(p), OriginalName = p }).ToArray()
+                Values = scalar.Values.Distinct()
+                    .Select(p => new PropertyBase { Name = NetNamingMapper.GetEnumValueName(p), OriginalName = p.Replace("\\","\\\\") })
+                    .ToArray()
             };
         }
 

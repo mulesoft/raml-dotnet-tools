@@ -99,6 +99,7 @@ namespace AMF.Common
             value = value.Replace(">", "Great");
             value = value.Replace("*", "Asterisk");
             value = value.Replace("#", "Sharp");
+            value = value.Replace("\\", "");
             value = ReplaceSpecialChars(value, "-");
 
             if (string.IsNullOrWhiteSpace(value))

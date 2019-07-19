@@ -910,7 +910,7 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
     if(hasXmlSchemas && !apiObject.Properties.Any())
         continue;
 
-    if(apiObject.IsArray && apiObject.Type != null)
+    if(apiObject.IsArray && apiObject.Type != null && apiObject.BaseClass == null)
         continue;
 
     if(apiObject.IsScalar)

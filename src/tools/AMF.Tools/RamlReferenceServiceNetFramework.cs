@@ -10,6 +10,7 @@ using System.IO;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.ComponentModelHost;
 using System.Linq;
+using AMF.Tools.Core;
 
 namespace AMF.Tools
 {
@@ -94,6 +95,14 @@ namespace AMF.Tools
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
 
             TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath, "Client");
+
+            // when array has no properties, set it collection on base type
+            foreach (var arrayModel in model.Objects.Where(o => o.IsArray && o.Properties.Count == 0 && o.Type != null
+                             && CollectionTypeHelper.IsCollection(o.Type) && !NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(o.Type))))
+            {
+                arrayModel.BaseClass = arrayModel.Type.Substring(1); // remove the initil "I" to make it a concrete class
+            }
+
 
             var t4Service = new T4Service(ServiceProvider);
             var res = t4Service.TransformText(templateFilePath, model, extensionPath, ramlDestFile, targetNamespace);

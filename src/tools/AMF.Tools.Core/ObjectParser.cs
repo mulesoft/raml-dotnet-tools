@@ -95,8 +95,30 @@ namespace AMF.Tools.Core
                 Example = MapExample(shape)
             };
 
-            if (isRootType && (apiObj.IsArray || apiObj.IsScalar))
+            if (isRootType && apiObj.IsScalar)
                 apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
+
+            if (isRootType && apiObj.IsArray && shape is ArrayShape arrShape)
+            {
+                var itemShape = arrShape.Items;
+                if (itemShape is NodeShape)
+                {
+                    var itemId = Guid.NewGuid();
+                    ParseObject(itemId, itemShape.Name, itemShape, existingObjects, false);
+
+                    apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
+                }
+                else
+                {
+
+                    //if (newObjects.ContainsKey(itemShape.Id))
+                    //    apiObj.Type = CollectionTypeHelper.GetCollectionType(newObjects[itemShape.Id].Type);
+                    //else if(existingObjects.ContainsKey(itemShape.Id))
+                    //    apiObj.Type = CollectionTypeHelper.GetCollectionType(existingObjects[itemShape.Id].Type);
+                    //else
+                    apiObj.Type = NewNetTypeMapper.GetNetType(shape, existingObjects);
+                }
+            }
 
             if (shape is NodeShape node && node.Properties.Count() == 1 && node.Properties.First().Path != null && node.Properties.First().Path.StartsWith("/")
                 && node.Properties.First().Path.EndsWith("/"))

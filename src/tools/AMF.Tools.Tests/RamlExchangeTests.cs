@@ -48,6 +48,7 @@ namespace Raml.Tools.Tests
             var model = await BuildModel("exchange/devrel-quick_start-product_api-1.0.8-raml/devrel-quick_start_products_api.raml");
             Assert.AreEqual(1, model.Controllers.Count());
             Assert.IsTrue(model.Controllers.All(c => c.Methods.All(m => m.SecuredBy.First() == "basic")));
+            Assert.IsTrue(model.Objects.FirstOrDefault(o => o.Name == "IdentifierMap") != null);
         }
 
         [Test]

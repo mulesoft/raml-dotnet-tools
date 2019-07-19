@@ -130,7 +130,6 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
-                        bat 'nuget sources remove -Name nexus'
                         bat "nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $NUGET_CREDS_USR -Password $NUGET_CREDS_PSW -StorePasswordInClearText"
                         bat 'nuget restore src/tools/AMF.Tools.sln'
                         bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"

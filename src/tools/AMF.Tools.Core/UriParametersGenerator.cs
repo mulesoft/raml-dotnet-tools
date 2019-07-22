@@ -58,11 +58,17 @@ namespace AMF.Tools.Core
 
         public IEnumerable<GeneratorParameter> GetUriParameters(EndPoint resource, string url, IDictionary<string, Parameter> parentUriParameters)
         {
-            var parameters = resource.Parameters
-                    .Select(p => new GeneratorParameter { Name = p.Name, Type = NewNetTypeMapper.GetNetType(p.Schema), Description = p.Description })
+            if (resource == null || resource.Parameters == null)
+                return new List<GeneratorParameter>();
+
+            var parameters = resource.Parameters.Where(p => p != null)
+                    .Select(p => new GeneratorParameter {
+                        Name = p.Name,
+                        Type = p.Schema != null ? NewNetTypeMapper.GetNetType(p.Schema) : "string",
+                        Description = p.Description
+                    })
                     .ToList();
 
-            //TODO: check
             var urlParameters = ExtractParametersFromUrl(url).ToArray();
             var distincUrlParameters = urlParameters.Where(up => parameters.All(p => up.Name != p.Name)).ToArray();
 

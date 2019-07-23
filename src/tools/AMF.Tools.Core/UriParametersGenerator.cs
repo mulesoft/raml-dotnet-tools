@@ -63,7 +63,8 @@ namespace AMF.Tools.Core
 
             var parameters = resource.Parameters.Where(p => p != null)
                     .Select(p => new GeneratorParameter {
-                        Name = p.Name,
+                        OriginalName = p.Name,
+                        Name = NetNamingMapper.RemoveIndalidChars(p.Name),
                         Type = p.Schema != null ? NewNetTypeMapper.GetNetType(p.Schema) : "string",
                         Description = p.Description
                     })
@@ -101,7 +102,13 @@ namespace AMF.Tools.Core
 
             var regex = new Regex("{([^}]+)}");
             var matches = regex.Matches(url);
-            parameters.AddRange(matches.Cast<Match>().Select(match => new GeneratorParameter { Name = match.Groups[1].Value, Type = "string" }).ToArray());
+            parameters.AddRange(matches.Cast<Match>().Select(match => 
+                new GeneratorParameter {
+                    OriginalName = match.Groups[1].Value,
+                    Name = NetNamingMapper.RemoveIndalidChars(match.Groups[1].Value),
+                    Type = "string"
+                })
+                .ToArray());
             return parameters;
         }
 

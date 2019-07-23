@@ -82,7 +82,7 @@ namespace $(namespace)
 	            foreach (var p in method.UriParameters)
 	            {
 #>
-            url = url.Replace("{<#= p.Name #>}", <#= p.ParamName #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", <#= p.ParamName #>.ToString());
 <#
         	    }
 
@@ -148,7 +148,7 @@ namespace $(namespace)
 	                if (method.Parameter == null || method.Parameter.Type == "string")
 	                {
 #>
-            req.Content = new StringContent(content);
+            req.Content = new StringContent(<#= method.Parameter.Name #>);
 <#
 	                }
 	                else
@@ -252,7 +252,7 @@ namespace $(namespace)
 			if(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #> == null)
 				throw new InvalidOperationException("Uri Parameter <#= NetNamingMapper.Capitalize(p.Name) #> cannot be null");
 
-            url = url.Replace("{<#= p.Name #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
 <#
 	            }
 
@@ -538,7 +538,7 @@ namespace $(namespace)
 	            foreach (var p in method.UriParameters)
 	            {
 #>
-            url = url.Replace("{<#= p.Name #>}", <#= p.ParamName #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", <#= p.ParamName #>.ToString());
 <#
         	    }
 
@@ -604,7 +604,7 @@ namespace $(namespace)
 	                if (method.Parameter == null || method.Parameter.Type == "string")
 	                {
 #>
-            req.Content = new StringContent(content);
+            req.Content = new StringContent(<#= method.Parameter.Name #>);
 <#
 	                }
 	                else
@@ -708,7 +708,7 @@ namespace $(namespace)
 			if(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #> == null)
 				throw new InvalidOperationException("Uri Parameter <#= NetNamingMapper.Capitalize(p.Name) #> cannot be null");
 
-            url = url.Replace("{<#= p.Name #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
 <#
 	            }
 

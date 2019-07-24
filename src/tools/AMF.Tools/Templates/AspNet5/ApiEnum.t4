@@ -22,7 +22,7 @@ namespace <#= modelsNamespace #>
 	{
 #>
     /// <summary>
-    /// <#= apiEnum.Description #>
+    /// <#= XmlCommentHelper.Escape(apiEnum.Description) #>
     /// </summary>
 <#
 	}

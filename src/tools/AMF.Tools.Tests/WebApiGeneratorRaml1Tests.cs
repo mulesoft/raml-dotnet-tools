@@ -216,7 +216,6 @@ namespace Raml.Tools.Tests
         public async Task ShouldHandleDates()
         {
             var model = await BuildModel("files/raml1/dates.raml");
-            Assert.AreEqual(7, model.Objects.Count());
             Assert.AreEqual("DateTime", model.Objects.First(x => x.Name == "Person").Properties.First(x => x.Name == "Born").Type);
             Assert.AreEqual("DateTime", model.Objects.First(x => x.Name == "User").Properties.First(x => x.Name == "Lastaccess").Type);
             Assert.AreEqual("DateTime", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Prop1").Type);
@@ -226,7 +225,9 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("DateTime", model.Controllers.First(x => x.Name == "Access").Methods.First(x => x.Name == "Post").Parameter.Type);
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("DateTime"), model.Controllers.First(x => x.Name == "Access").Methods.First(x => x.Name == "Get").ReturnType);
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("DateTime"), model.Controllers.First(x => x.Name == "Persons").Methods.First(x => x.Name == "Put").Parameter.Type);
-            
+            Assert.IsTrue(model.Objects.Any(o => o.Name == "Person"));
+            Assert.IsTrue(model.Objects.Any(o => o.Name == "User"));
+            Assert.IsTrue(model.Objects.Any(o => o.Name == "Sample"));
         }
 
         [Test]

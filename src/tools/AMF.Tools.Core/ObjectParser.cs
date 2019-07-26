@@ -79,6 +79,11 @@ namespace AMF.Tools.Core
                 return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>
                     (newObjects, newEnums, new Dictionary<Guid, string>());
 
+            // if is array of scalar or array of object there's no new object, except when is a root type
+            if(!isRootType && shape is ArrayShape array && (array.Items is ScalarShape || array.Items is AnyShape))
+                return new Tuple<IDictionary<string, ApiObject>, IDictionary<string, ApiEnum>, IDictionary<Guid, string>>
+                    (newObjects, newEnums, new Dictionary<Guid, string>());
+
             var linkedType = new Dictionary<Guid, string>();
 
             var apiObj = new ApiObject
@@ -364,6 +369,9 @@ namespace AMF.Tools.Core
                 }
 
                 if (existingObjects.ContainsKey(array.Id))
+                    return prop;
+
+                if(array.Items is ScalarShape || array.Items is AnyShape)
                     return prop;
 
                 var newId = Guid.NewGuid();

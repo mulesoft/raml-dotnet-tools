@@ -189,9 +189,9 @@ namespace AMF.Tools.Core
         {
             foreach (var obj in objects)
             {
-                UpdateObjects(obj, schemaObjects.Values);
-                UpdateObjects(obj, schemaRequestObjects.Values);
-                UpdateObjects(obj, schemaResponseObjects.Values);
+                //UpdateObjects(obj, schemaObjects.Values);
+                //UpdateObjects(obj, schemaRequestObjects.Values);
+                //UpdateObjects(obj, schemaResponseObjects.Values);
             }
         }
 

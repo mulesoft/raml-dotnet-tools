@@ -18,7 +18,7 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <Version>0.0.3</Version>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/mulesoft/amf-dotnet-tools/tree/develop/src/core-apiexplorer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mulesoft/amf-dotnet-tools/</RepositoryUrl>
   </PropertyGroup>

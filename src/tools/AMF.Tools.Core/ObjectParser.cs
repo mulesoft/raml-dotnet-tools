@@ -279,7 +279,7 @@ namespace AMF.Tools.Core
             var name = GetPropertyName(p);
             var prop = new Property(parentClassName)
             {
-                Name = NetNamingMapper.GetObjectName(name),
+                Name = NetNamingMapper.GetPropertyName(name),
                 Required = p.Required,
                 Type = NetNamingMapper.GetObjectName(name)
             };
@@ -288,7 +288,7 @@ namespace AMF.Tools.Core
                 return prop;
 
             prop.AmfId = p.Range.Id;
-            prop.Name = NetNamingMapper.GetObjectName(name);
+            
             prop.Description = p.Range.Description;
             prop.Example = MapExample(p.Range);
             prop.Type = NewNetTypeMapper.GetNetType(p.Range, existingObjects, newObjects, existingEnums, newEnums);

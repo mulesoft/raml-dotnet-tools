@@ -10,10 +10,10 @@
       <description>This package is used by the AMF Tools for .NET Visual Studio extension to generate RAML metadata from an existing WebAPI implementation.
       In Visual Studio, go to Tools -> Extensions and Updates, then search for AMF in the Online gallery.</description>
       <releaseNotes>AMF WebApi Explorer</releaseNotes>
-      <copyright>MuleSoft Inc, Copyright (c) 2018</copyright>
+      <copyright>MuleSoft Inc, Copyright (c) 2019</copyright>
       <tags>RAML WebApi Reverse Engineering</tags>
-	  <licenseUrl>https://www.mulesoft.com/cpal</licenseUrl>
-      <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-apiexplorer</projectUrl>
+	  <license type="expression">CPAL-1.0</license>
+	  <projectUrl>https://github.com/mulesoft/amf-dotnet-tools/tree/develop/src/apiexplorer</projectUrl>
       <iconUrl>http://raml.org/images/logo.png</iconUrl>
       <dependencies>
 		  <dependency id="Microsoft.AspNet.Mvc" version="5.1.2" />

@@ -130,8 +130,16 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
-                        // bat 'nuget sources remove -Name nexus' || true
-                        bat "nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $NUGET_CREDS_USR -Password $NUGET_CREDS_PSW -StorePasswordInClearText" || true
+                        script {
+                            try {
+                                // bat 'nuget sources remove -Name nexus'
+                                bat "nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $NUGET_CREDS_USR -Password $NUGET_CREDS_PSW -StorePasswordInClearText"
+                            }
+                            catch (err) {
+                                // ignore already present source error
+                                echo err.getMessage()
+                            }
+                        }
                         bat 'nuget restore src/tools/AMF.Tools.sln'
                         bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
                     }

@@ -747,7 +747,7 @@ namespace AMF.Common.ViewModels
                 var result = includesManager.Manage(RamlTempFilePath, Path.GetTempPath(), Path.GetTempPath());
                 var parser = new AmfParser();
 
-                var tempPath = Path.GetTempFileName();
+                var tempPath = Path.GetTempFileName().Replace(".tmp",Path.GetExtension(RamlTempFilePath));
                 File.WriteAllText(tempPath, result.ModifiedContents);
 
                 var amfModel = await parser.Load(tempPath);

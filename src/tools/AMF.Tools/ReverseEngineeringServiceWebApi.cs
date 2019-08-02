@@ -122,9 +122,9 @@ namespace AMF.Tools
                 "4.0.0", Settings.Default.NugetExternalPackagesSource);
 
             // RAML.Parser
-            if (!installerServices.IsPackageInstalled(proj, "RAML.Parser.Model"))
+            if (!installerServices.IsPackageInstalled(proj, Settings.Default.RamlParserModelPackageId))
             {
-                installer.InstallPackage(NugetPackagesSource, proj, "RAML.Parser.Model", "1.0.7",
+                installer.InstallPackage(NugetPackagesSource, proj, Settings.Default.RamlParserModelPackageId, Settings.Default.RamlParserModelPackageVersion,
                     false);
             }
 

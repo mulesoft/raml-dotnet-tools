@@ -24,7 +24,7 @@
       <Value Profile="(Default)">AMF.Api.Core</Value>
     </Setting>
     <Setting Name="RAMLApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.9.12</Value>
+      <Value Profile="(Default)">0.9.14</Value>
     </Setting>
     <Setting Name="ApiReferencesFolderName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">API References</Value>
@@ -63,13 +63,13 @@
       <Value Profile="(Default)">AMF.WebApiExplorer</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1.2.4</Value>
+      <Value Profile="(Default)">1.2.5</Value>
     </Setting>
     <Setting Name="RAMLParserPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">AMF.Parser</Value>
     </Setting>
     <Setting Name="RAMLParserPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.9.3</Value>
+      <Value Profile="(Default)">0.9.6</Value>
     </Setting>
     <Setting Name="MicrosoftNetHttpPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Microsoft.Net.Http</Value>
@@ -93,7 +93,7 @@
       <Value Profile="(Default)">AMF.NetCoreApiExplorer</Value>
     </Setting>
     <Setting Name="RamlNetCoreApiExplorerPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.0.2</Value>
+      <Value Profile="(Default)">0.0.3</Value>
     </Setting>
     <Setting Name="RamlParserExpressionsPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">RAML.Parser.Expressions</Value>
@@ -105,13 +105,19 @@
       <Value Profile="(Default)">AMF.NetCore.APICore</Value>
     </Setting>
     <Setting Name="AMFNetCoreApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.0.3</Value>
+      <Value Profile="(Default)">0.0.4</Value>
     </Setting>
     <Setting Name="BaseControllerTestsTemplateTitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Controller Unit Tests Base</Value>
     </Setting>
     <Setting Name="ControllerUnitTestsImplementationTemplateTitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Controller Unit Tests Implementation</Value>
+    </Setting>
+    <Setting Name="RamlParserModelPackageId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">RAML.Parser.Model</Value>
+    </Setting>
+    <Setting Name="RamlParserModelPackageVersion" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1.0.7</Value>
     </Setting>
   </Settings>
 </SettingsFile>

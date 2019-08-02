@@ -88,7 +88,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.9.12")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9.14")]
         public string RAMLApiCorePackageVersion {
             get {
                 return ((string)(this["RAMLApiCorePackageVersion"]));
@@ -205,7 +205,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.2.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.2.5")]
         public string RAMLWebApiExplorerPackageVersion {
             get {
                 return ((string)(this["RAMLWebApiExplorerPackageVersion"]));
@@ -223,7 +223,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.9.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9.6")]
         public string RAMLParserPackageVersion {
             get {
                 return ((string)(this["RAMLParserPackageVersion"]));
@@ -295,7 +295,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.3")]
         public string RamlNetCoreApiExplorerPackageVersion {
             get {
                 return ((string)(this["RamlNetCoreApiExplorerPackageVersion"]));
@@ -331,7 +331,7 @@ namespace AMF.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.4")]
         public string AMFNetCoreApiCorePackageVersion {
             get {
                 return ((string)(this["AMFNetCoreApiCorePackageVersion"]));
@@ -353,6 +353,24 @@ namespace AMF.Tools.Properties {
         public string ControllerUnitTestsImplementationTemplateTitle {
             get {
                 return ((string)(this["ControllerUnitTestsImplementationTemplateTitle"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RAML.Parser.Model")]
+        public string RamlParserModelPackageId {
+            get {
+                return ((string)(this["RamlParserModelPackageId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.0.7")]
+        public string RamlParserModelPackageVersion {
+            get {
+                return ((string)(this["RamlParserModelPackageVersion"]));
             }
         }
     }

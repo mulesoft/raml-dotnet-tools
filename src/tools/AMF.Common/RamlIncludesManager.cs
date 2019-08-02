@@ -81,7 +81,7 @@ namespace AMF.Common
 
             ManageNestedFiles(lines, destinationFolder, includedFiles, path, path, destinationFilePath, confirmOverrite, rootRamlPath, true);
 
-            return new RamlIncludesManagerResult(string.Join(Environment.NewLine, lines), includedFiles);
+            return new RamlIncludesManagerResult(string.Join(Environment.NewLine, lines) + Environment.NewLine, includedFiles);
         }
 
         private static bool HasIncludedFiles(string[] lines)

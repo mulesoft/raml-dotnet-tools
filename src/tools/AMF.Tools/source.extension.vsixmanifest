@@ -4,11 +4,11 @@
         <Identity Id="AMF.Tools.a1f8ba2f-ef20-491a-b985-cc2e48676376" Version="0.3" Language="en-US" Publisher="MuleSoft Inc" />
         <DisplayName>AMF.Tools</DisplayName>
         <Description xml:space="preserve">AMF Tools for .NET allows developers to easily integrate and consume APIs that exposes a RAML or OAS (swagger) definitions, or generate a new ASP.NET Web API implementation from scratch using a contract-first approach from a previously created RAML or OAS (swagger) definition.
-Project home: https://github.com/mulesoft-labs/amf-dotnet-tools</Description>
-        <MoreInfo>https://github.com/mulesoft-labs/amf-dotnet-tools</MoreInfo>
+Project home: https://github.com/mulesoft/amf-dotnet-tools</Description>
+        <MoreInfo>https://github.com/mulesoft/amf-dotnet-tools</MoreInfo>
         <License>license.txt</License>
-        <GettingStartedGuide>https://github.com/mulesoft-labs/amf-dotnet-tools</GettingStartedGuide>
-        <ReleaseNotes>https://github.com/mulesoft-labs/amf-dotnet-tools</ReleaseNotes>
+        <GettingStartedGuide>https://github.com/mulesoft/amf-dotnet-tools</GettingStartedGuide>
+        <ReleaseNotes>https://github.com/mulesoft/amf-dotnet-tools/releases</ReleaseNotes>
         <Tags>RAML OAS SWAGGER API WEBAPI ASP.NET REST</Tags>
     </Metadata>
     <Installation>

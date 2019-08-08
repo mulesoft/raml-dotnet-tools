@@ -37,11 +37,13 @@ namespace AMF.Tools.Core.WebApiGenerator
 
             FixEnumNamesClashing();
 
-            FixTypes(schemaObjects.Values);
-            FixTypes(schemaRequestObjects.Values);
-            FixTypes(schemaResponseObjects.Values);
+            //FixTypes(schemaObjects.Values);
+            //FixTypes(schemaRequestObjects.Values);
+            //FixTypes(schemaResponseObjects.Values);
 
             HandleScalarTypes();
+
+            ReconstructInheritance();
 
             if (raml.WebApi == null)
             {

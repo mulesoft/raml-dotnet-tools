@@ -144,6 +144,19 @@ namespace Raml.Tools.Tests
         }
 
         [Test]
+        public async Task ShouldHandeInheritance()
+        {
+            var model = await BuildModel("files/raml1/chinook-v1.raml");
+
+            Assert.AreEqual("Person", model.Objects.First(c => c.Name == "Customer").BaseClass);
+            Assert.AreEqual("Person", model.Objects.First(c => c.Name == "ReportsTo").BaseClass);
+
+            Assert.AreEqual(2, model.Objects.First(c => c.Name == "Customer").Properties.Count);
+            Assert.AreEqual(1, model.Objects.First(c => c.Name == "ReportsTo").Properties.Count);
+            Assert.AreEqual(14, model.Objects.First(c => c.Name == "Person").Properties.Count);
+        }
+
+        [Test]
         public async Task ShouldHandleUnionTypes()
         {
             var model = await BuildModel("files/raml1/uniontypes.raml");

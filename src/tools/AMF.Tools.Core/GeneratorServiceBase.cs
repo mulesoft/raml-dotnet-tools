@@ -45,6 +45,32 @@ namespace AMF.Tools.Core
             //raml1TypesParser = new RamlTypeParser(raml.Shapes, schemaObjects, targetNamespace, enums, warnings);
 		}
 
+        protected void ReconstructInheritance()
+        {
+            foreach (var obj in schemaObjects.Values)
+            {
+                if (!string.IsNullOrWhiteSpace(obj.BaseClass))
+                    continue;
+
+                var number = obj.Properties.Count;
+                for (var i = number - 1; i >= 0; i--) {
+                    if (string.IsNullOrWhiteSpace(obj.Properties[i].InheritanceProvenance))
+                        continue;
+
+                    if (obj.Properties[i].InheritanceProvenance == obj.AmfId)
+                        continue;
+
+                    if (schemaObjects.ContainsKey(obj.Properties[i].InheritanceProvenance))
+                    {
+                        if (string.IsNullOrWhiteSpace(obj.BaseClass))
+                            obj.BaseClass = schemaObjects[obj.Properties[i].InheritanceProvenance].Name;
+
+                        obj.Properties.RemoveAt(i); // property is from the parent object
+                    }
+                }
+            }
+        }
+
         protected void HandleScalarTypes()
         {
             foreach (var obj in schemaObjects)

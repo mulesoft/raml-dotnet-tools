@@ -281,7 +281,8 @@ namespace AMF.Tools.Core
             {
                 Name = NetNamingMapper.GetPropertyName(name),
                 Required = p.Required,
-                Type = NetNamingMapper.GetObjectName(name)
+                Type = NetNamingMapper.GetObjectName(name),
+                InheritanceProvenance = p.InheritanceProvenance
             };
 
             if (p.Range == null)

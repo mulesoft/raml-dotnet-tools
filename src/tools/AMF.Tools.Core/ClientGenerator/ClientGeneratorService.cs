@@ -50,9 +50,11 @@ namespace AMF.Tools.Core.ClientGenerator
             schemaResponseObjects = GetResponseObjects();
 
             FixEnumNamesClashing();
-            FixTypes(schemaObjects.Values);
-            FixTypes(schemaRequestObjects.Values);
-            FixTypes(schemaResponseObjects.Values);
+            //FixTypes(schemaObjects.Values);
+            //FixTypes(schemaRequestObjects.Values);
+            //FixTypes(schemaResponseObjects.Values);
+
+            ReconstructInheritance();
 
             CleanProperties(schemaObjects);
             CleanProperties(schemaRequestObjects);

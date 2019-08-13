@@ -1,0 +1,18 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  timestamp: !include ../utils/timestamp.raml
+  techs:
+    type: array
+    items:
+      type: object
+      properties:
+        id: integer
+        value: string
+  missions:
+    type: array
+    items:
+      type: object
+      properties:
+        id: integer
+        value: string

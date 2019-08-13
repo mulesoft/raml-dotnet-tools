@@ -1,0 +1,132 @@
+#%RAML 1.0 DataType
+type: object
+properties: 
+  timestamp: !include ../utils/timestamp.raml
+  serverId:
+    type: string
+    description: Universe Unique Identifier
+    example: ar118
+  name:
+    type: string
+    description: Universe Name
+    example: Rigel
+  number:
+    type: integer
+    minimum: 1
+    description: Server Unique Identifier
+    example: 118
+  language:
+    type: string
+    description: Server region
+    example: ar
+  timezone:
+    type: string
+    description: Server timezone
+    example: America/Buenos_Aires
+  timezoneOffset:
+    type: string
+    description: Server Greenwich Mean Time
+    example: -03:00
+  domain:
+    type: string
+    description: Server domain
+    example: s118-ar.ogame.gameforge.com
+  version:
+    type: string
+    description: Server OGame version
+    example: 6.7.0-pl3
+  speed:
+    type: integer
+    minimum: 1
+    maximum: 50
+    description: Server Economy Speed
+  speedFleet:
+    type: integer
+    minimum: 1
+    maximum: 50
+    description: Server Fleet Speed
+  galaxies:
+    type: integer
+    minimum: 6
+    maximum: 9
+    description: Server Amount of Galaxies
+  systems:
+    type: integer
+    minimum: 499
+    description: Server Solar Systems per Galaxy
+  acs:
+    type: boolean
+    description: Alliance Combat System Enablement
+  rapidFire:
+    type: boolean
+    description: Rapid Fire Enablement
+  defToTF:
+    type: boolean
+    description: Defense to Debris Enablements. If enabled, destroyed defenses will provide debris
+  debrisFactor:
+    type: number
+    description: The percentage of the resources worth of all the ships that were destroyed in the battle turns into debris
+    minimum: 0.3
+    maximum: 0.8
+    multipleOf: 0.01
+  debrisFactorDef:
+    type: number
+    description: The percentage of the resources worth of all the defenses that were destroyed in the battle turns into debris
+    minimum: 0
+    maximum: 0.8
+    multipleOf: 0.1
+  repairFactor:
+    type: number
+    description: The percentage of the defenses that will be repaired after battle
+    minimum: 0
+    maximum: 0.8
+    multipleOf: 0.1
+  newbieProtectionLimit:
+    type: integer
+    description: Newbie Protection Limit
+    minimum: 50000
+  newbieProtectionHigh:
+    type: integer
+    description: Newbie Protection High
+    minimum: 10000
+  topScore:
+    type: integer
+    description: Top Score
+    minimum: 0
+  bonusFields:
+    type: integer
+    description: Bonus planet fields
+    minimum: 0
+  donutGalaxy:
+    type: boolean
+    description: Donut Galaxy Enablement
+  donutSystem:
+    type: boolean
+    description: Donut System Enablement
+  wfEnabled:
+    type: boolean
+    description: Wreck Fields Enablement
+  wfMinimumRessLost:
+    type: integer
+    description: Wreck Fields Minimum Ress Lost
+    minimum: 150000
+  wfMinimumLossPercentage:
+    type: integer
+    description: Wreck Fields Minimum Loss Percentage
+    minimum: 5
+  wfBasicPercentageRepairable:
+    type: integer
+    description: Wreck Field Basic Percentage Repairable
+    minimum: 45
+  globalDeuteriumSaveFactor:
+    type: integer
+    description: Global Deuterio Save Factor
+    minimum: 0.5
+    maximum: 1
+    multipleOf: 0.1 
+  bashLimit:
+    type: boolean
+    description: Bash Limit Enablement
+  probeCargo:
+    type: boolean
+    description: Probe Cargo Enablement

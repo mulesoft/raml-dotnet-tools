@@ -372,7 +372,7 @@ namespace AMF.Tools.Core
                 if (existingObjects.ContainsKey(array.Id))
                     return prop;
 
-                if(array.Items is ScalarShape || array.Items is AnyShape)
+                if(array.Items is ScalarShape || array.Items.GetType() == typeof(AnyShape))
                     return prop;
 
                 var newId = Guid.NewGuid();

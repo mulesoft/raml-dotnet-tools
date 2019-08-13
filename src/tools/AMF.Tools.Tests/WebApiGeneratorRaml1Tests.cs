@@ -157,6 +157,15 @@ namespace Raml.Tools.Tests
         }
 
         [Test]
+        public async Task OGame_Test()
+        {
+            var model = await BuildModel("files/raml1/ogame/ogame.raml");
+
+            Assert.AreEqual("Universes", model.Objects.First(c => c.Name == "Universes").Type);
+        }
+
+
+        [Test]
         public async Task ShouldHandleUnionTypes()
         {
             var model = await BuildModel("files/raml1/uniontypes.raml");

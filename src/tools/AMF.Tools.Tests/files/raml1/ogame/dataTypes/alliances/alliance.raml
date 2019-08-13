@@ -1,0 +1,42 @@
+#%RAML 1.0 DataType
+type: object
+properties: 
+  id: 
+    type: integer
+    minimum: 1
+    description: Alliance Unique Identifier
+    example: 1
+  name:
+    type: string
+    description: The Alliance Name
+    example: "LES TITANS LAPINS FRANCOPHONES"
+  tag:
+    type: string
+    description: The Alliance Tag
+    example: "TILC-FR"
+  founder:
+    type: integer
+    description: The Player Id of the founder
+    example: 321669
+  foundDate:
+    type: !include ../utils/timestamp.raml
+    description: The Alliance found date
+    example: "Sun, 28 Feb 2016 16:41:41 GMT"
+  homepage:
+    type: string
+    description: The Alliance homepage URL
+    example: "http://homepage-url.com"
+  logo:
+    type: string
+    description: The Alliance logo URL
+    example: "http://logo-url.com"
+  open:
+    type: boolean
+    description: If the alliance is admiting new members
+  player:
+    type: array
+    minItems: 1
+    items: 
+      type: object
+      properties:
+        id: integer

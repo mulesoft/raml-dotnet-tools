@@ -1,0 +1,18 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  timestamp: !include ../utils/timestamp.raml
+  universes: 
+    type: array 
+    items: !include universe.raml
+    description: Universe Identifier Information
+    example:
+      -
+        id: 101
+        href: "https://s101-ar.ogame.gameforge.com"
+        name: "Andromeda"
+      -
+        id: 118
+        href: "https://s118-ar.ogame.gameforge.com"
+        name: "Rigel"

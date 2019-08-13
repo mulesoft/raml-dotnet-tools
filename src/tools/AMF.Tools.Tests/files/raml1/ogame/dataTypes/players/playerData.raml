@@ -1,0 +1,54 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  timestamp: !include ../utils/timestamp.raml
+  positions: 
+    type: array 
+    items: !include positions.raml
+    description: Player positions Information
+    example:
+      -
+        type: "Total"
+        score: 913697150
+        position: 1
+      -
+        type: Military
+        score: 15845097
+        position: 25
+        ships: 749082
+  planets:
+    type: array
+    items: !include ../galaxies/planet.raml
+    description: Player Planets and Moons data
+    example:
+      -
+        id: 33622803
+        player: 302624
+        name: "Homeworld"
+        coords: "2:26:8"
+      -
+        id: 33622803
+        player: 302624
+        name: "Homeworld"
+        coords: "2:26:8"
+        moon:
+          id: 33969999
+          name: "Moon"
+          size: 3741
+  alliance:
+    type: object
+    required: false
+    properties: 
+      id:
+        type: integer
+        description: Alliance Unique Identifier
+        example: 500087
+      name:
+        type: string
+        description: Alliance Name
+        example: "JusT KnucK N FutZ"
+      tag:
+        type: string
+        description: Alliance Tag
+        example: "Knuck"

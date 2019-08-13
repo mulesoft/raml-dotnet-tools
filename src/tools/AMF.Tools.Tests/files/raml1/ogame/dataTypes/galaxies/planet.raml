@@ -1,0 +1,24 @@
+#%RAML 1.0 DataType
+type: object
+properties: 
+  id: 
+    type: integer
+    minimum: 1
+    description: Planet Unique Identifier
+    example: 1
+  player:
+    type: integer
+    description: Player Unique Identifier
+    example: 301472
+  name:
+    type: string
+    description: The Planet Name
+    example: "Homeworld"
+  coords:
+    type: string
+    description: Planet Location (Galaxy:SolarSystem:Position)
+    example: "1:295:8"
+  moon:
+    type: !include moon.raml
+    required: false
+  

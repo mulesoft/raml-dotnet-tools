@@ -1,0 +1,87 @@
+{
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "highscore": {
+      "$id": "/properties/highscore",
+      "type": "object",
+      "properties": {
+        "category": {
+          "$id": "/properties/highscore/properties/category",
+          "type": "string",
+          "title": "The Category Schema ",
+          "default": "",
+          "examples": [
+            "Player"
+          ]
+        },
+        "type": {
+          "$id": "/properties/highscore/properties/type",
+          "type": "string",
+          "title": "The Type Schema ",
+          "default": "",
+          "examples": [
+            "Military"
+          ]
+        },
+        "timestamp": {
+          "$id": "/properties/highscore/properties/timestamp",
+          "type": "string",
+          "title": "The Timestamp Schema ",
+          "default": "",
+          "examples": [
+            "Sun, 28 Feb 2016 16:41:41 GMT"
+          ]
+        },
+        "player": {
+          "$id": "/properties/highscore/properties/player",
+          "type": "array",
+          "items": {
+            "$id": "/properties/highscore/properties/player/items",
+            "type": "object",
+            "properties": {
+              "position": {
+                "$id": "/properties/highscore/properties/player/items/properties/position",
+                "type": "string",
+                "title": "The Position Schema ",
+                "default": "",
+                "examples": [
+                  "1"
+                ]
+              },
+              "id": {
+                "$id": "/properties/highscore/properties/player/items/properties/id",
+                "type": "string",
+                "title": "The Id Schema ",
+                "default": "",
+                "examples": [
+                  "304962"
+                ]
+              },
+              "score": {
+                "$id": "/properties/highscore/properties/player/items/properties/score",
+                "type": "string",
+                "title": "The Score Schema ",
+                "default": "",
+                "examples": [
+                  "71578725"
+                ]
+              },
+              "ships": {
+                "$id": "/properties/highscore/properties/player/items/properties/ships",
+                "type": "string",
+                "title": "The Ships Schema ",
+                "default": "",
+                "examples": [
+                  "1402644"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -151,8 +151,9 @@ namespace AMF.Tools.TestRunner
         private static async Task RunServerRaml1TestsAsync()
         {
             var tests = new WebApiGeneratorRaml1Tests();
-            await tests.ShouldHandeInheritance();
+            await tests.OGame_Test();
 
+            await tests.ShouldHandeInheritance();
             await tests.ShouldMapPatternAttributes();
             await tests.ShouldBuildTypes_WhenMovies();
             await tests.ShouldDetectArrayTypes_WhenMovies();

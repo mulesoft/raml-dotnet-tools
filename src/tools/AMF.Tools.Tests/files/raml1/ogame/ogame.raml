@@ -1,0 +1,193 @@
+#%RAML 1.0
+title: OGame
+version: 0.0.1
+description: OGame REST API 
+baseUri: https://mocksvc.mulesoft.com/mocks/d116e45a-a756-418f-8333-794dfb91b7d6/api/ # baseUri: https://ogame.gameforge.com/api/
+
+/{region}:
+  /universes:
+    description: Retrieves all universes of the given region.
+    get:
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: !include dataTypes/universes/universes.raml
+              examples: !include examples/universes/universesResponseExample.raml
+        400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+        404:
+          description: Entity <<resourcePathName|!singularize>> was not found.
+          body: 
+            application/json:
+              type: !include dataTypes/error.raml
+
+  /server:
+    description: Retrieves server settings. Updates every day
+    get:
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: !include dataTypes/server/server.raml
+              examples: !include examples/server/serverResponseExample.raml
+        400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+        404:
+          description: Entity <<resourcePathName|!singularize>> was not found.
+          body: 
+            application/json:
+              type: !include dataTypes/error.raml
+
+  /localization:
+    description: Retrieves the techs and missions names in the according server language
+    get:
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: !include dataTypes/localization/localization.raml
+              examples: !include examples/localization/localizationResponseExample.raml
+        400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+        404:
+          description: Entity <<resourcePathName|!singularize>> was not found.
+          body: 
+            application/json:
+              type: !include dataTypes/error.raml
+
+  /{universeName}:
+    /players:
+      description: Retrieves players details. Updates every day
+      get:
+        responses: 
+          200:
+            body:
+              application/json:
+                type: !include dataTypes/players/players.raml
+                examples: !include examples/players/playersResponseExample.raml
+          400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+          404:
+            description: Entity <<resourcePathName|!singularize>> was not found.
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+              
+    /universe:
+      description: Retrieves how the universe is composed (Update interval 1 week)
+      get:
+        responses: 
+          200:
+            body: 
+              application/json:
+                type: !include dataTypes/galaxies/galaxy.raml
+                examples: !include examples/galaxy/galaxyResponseExample.raml
+          400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+          404:
+            description: Entity <<resourcePathName|!singularize>> was not found.
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+
+    /highscore:
+      description: Rerieves highscore information. You can use queryParams in order to filter information Update interval 1 hour
+      get:
+        queryParameters:
+          category:
+            enum: [Player, Alliance]
+          types:
+            enum: [Total, Economy, Research, Military, Military Built, Military Destroyed, Military Lost, Honor]
+        responses: 
+          200:
+            body:
+              player/total:
+                type: !include examples/highscore/highscore-schema.json
+                example: !include examples/highscore/player-total-responseExample.json
+              player/economy:
+                type: !include examples/highscore/highscore-schema.json
+                example: !include examples/highscore/player-economy-responseExample.json
+              player/research:
+                type: !include examples/highscore/highscore-schema.json
+                example: !include examples/highscore/player-research-responseExample.json
+              player/military:
+                type: !include examples/highscore/highscore-military-schema.json
+                example: !include examples/highscore/player-military-responseExample.json
+              player/military_built:
+                type: !include examples/highscore/highscore-schema.json
+                example: !include examples/highscore/player-militarybuilt-responseExample.json
+              player/military_destroyed:
+                type: !include examples/highscore/highscore-schema.json
+                example: !include examples/highscore/player-militarydestroyed-responseExample.json
+              player/military_lost:
+                type: !include examples/highscore/highscore-schema.json
+                example: !include examples/highscore/player-militarylost-responseExample.json
+              player/honor:
+                type: !include examples/highscore/highscore-schema.json
+                example: !include examples/highscore/player-honor-responseExample.json
+          400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+          404:
+            description: Entity <<resourcePathName|!singularize>> was not found.
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+
+    /alliances:
+      description: Retrieves alliances details as well as members of it. Update interval 1 day
+      get:
+        responses: 
+          200:
+            body: 
+              application/json:
+                type: !include dataTypes/alliances/alliances.raml
+                examples: !include examples/alliances/allianceResponseExample.raml
+          400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+          404:
+            description: Entity <<resourcePathName|!singularize>> was not found.
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+    
+    /{playerId}:
+      description: Retrieves the given player data
+      get:
+        responses: 
+          200:
+            body: 
+              application/json:
+                type: !include dataTypes/players/playerData.raml
+                examples: !include examples/players/playerDataResponseExample.raml
+          400:
+            description: Show failed response
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml
+          404:
+            description: Entity <<resourcePathName|!singularize>> was not found.
+            body: 
+              application/json:
+                type: !include dataTypes/error.raml

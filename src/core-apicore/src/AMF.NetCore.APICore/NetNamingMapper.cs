@@ -11,13 +11,13 @@ namespace AMF.Common
 
 		public static string GetNamespace(string title)
 		{
-			return Capitalize(RemoveIndalidChars(title));
+			return Capitalize(RemoveInvalidChars(title));
 		}
 
 	    public static string GetVersionName(string input)
 	    {
 	        input = input.Replace(".", "_");
-	        input = RemoveIndalidChars(input);
+	        input = RemoveInvalidChars(input);
             input = input.Replace("+", string.Empty);
 	        input = Capitalize(input);
 
@@ -46,7 +46,7 @@ namespace AMF.Common
 			name = ReplaceSpecialChars(name, "}");
             name = ReplaceSpecialChars(name, "-");
 
-            name = RemoveIndalidChars(name);
+            name = RemoveInvalidChars(name);
 
 			if (ReservedWords.Contains(name))
 				name += "Object";
@@ -54,7 +54,7 @@ namespace AMF.Common
 			if (StartsWithNumber(name))
 				name = "O" + name;
 
-			return name;
+			return Capitalize(name);
 		}
 
 		private static string ReplaceSpecialChars(string key, string separator)
@@ -62,19 +62,27 @@ namespace AMF.Common
 			return ReplaceSpecialChars(key, new[] {separator});
 		}
 
-		private static string ReplaceSpecialChars(string key, string[] separator)
-		{
-			var name = String.Empty;
-			var words = key.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-			return words.Aggregate(name, (current, word) => current + Capitalize(word));
-		}
+        private static string ReplaceSpecialChars(string key, string[] separator)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                return key;
 
-		public static string Capitalize(string word)
+            var name = String.Empty;
+            var words = key.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            var replaced = words.Aggregate(name, (current, word) => current + Capitalize(word));
+
+            if (key[0].ToString() == replaced[0].ToString().ToLowerInvariant())
+                return key.Substring(0, 1) + replaced.Substring(1);
+
+            return replaced;
+        }
+
+        public static string Capitalize(string word)
 		{
 			return word.Substring(0, 1).ToUpper() + word.Substring(1);
 		}
 
-		public static string RemoveIndalidChars(string input)
+		public static string RemoveInvalidChars(string input)
 		{
             var value = Path.GetInvalidPathChars()
                 .Aggregate(input, (current, invalidChar) =>
@@ -129,12 +137,12 @@ namespace AMF.Common
             name = ReplaceSpecialChars(name, "`");
 			name = ReplaceUriParameters(name);
 			name = name.Replace(":", string.Empty);
-			name = RemoveIndalidChars(name);
+			name = RemoveInvalidChars(name);
 
 			if (StartsWithNumber(name))
 				name = "M" + name;
 
-			return name;
+			return Capitalize(name);
 		}
 
 		private static bool StartsWithNumber(string name)
@@ -176,7 +184,7 @@ namespace AMF.Common
 
             propName = propName.Replace("+", "Plus");
             propName = propName.Replace(".", "Dot");
-            propName = RemoveIndalidChars(propName);
+            propName = RemoveInvalidChars(propName);
             propName = Capitalize(propName);
 
             if (ReservedWords.Contains(propName))
@@ -202,7 +210,7 @@ namespace AMF.Common
             if (StartsWithNumber(value))
                 value = "E" + value;
 
-            value = RemoveIndalidChars(value);
+            value = RemoveInvalidChars(value);
 
             if (ReservedWords.Contains(value))
                 value = "A" + value;

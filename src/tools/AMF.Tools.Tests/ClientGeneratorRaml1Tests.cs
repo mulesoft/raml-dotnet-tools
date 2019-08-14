@@ -104,10 +104,11 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(3, model.Enums.Count());
             Assert.AreEqual("E1_year", model.Enums.First(e => e.Name == "Something").Values.First().Name);
             Assert.AreEqual("two years", model.Enums.First(e => e.Name == "Something").Values.Last().OriginalName);
-            Assert.AreEqual("Two_years", model.Enums.First(e => e.Name == "Something").Values.Last().Name);
+            Assert.AreEqual("two_years", model.Enums.First(e => e.Name == "Something").Values.Last().Name);
             Assert.AreEqual("Something", model.Objects.First(e => e.Name == "Person").Properties.First(p => p.Name == "Something").Type);
             Assert.AreEqual("Country", model.Objects.First(e => e.Name == "Person").Properties.First(p => p.Name == "Country").Type);
             Assert.AreEqual("Size", model.Objects.First(e => e.Name == "Person").Properties.First(p => p.Name == "Size").Type);
+            Assert.AreEqual("usa", model.Enums.First(e => e.Name == "Country").Values.First().Name);
         }
 
         [Test]

@@ -12,9 +12,16 @@ namespace AMF.Api.Core.Tests
         }
 
         [Test]
+        public void Should_Not_Capitalize_Enum_Values()
+        {
+            Assert.AreEqual("i", NetNamingMapper.GetEnumValueName("i"));
+        }
+
+
+        [Test]
         public void Should_Generate_Random_Values()
         {
-            Assert.AreNotEqual(NetNamingMapper.RemoveIndalidChars(">"), NetNamingMapper.RemoveIndalidChars("<"));
+            Assert.AreNotEqual(NetNamingMapper.RemoveInvalidChars(">"), NetNamingMapper.RemoveInvalidChars("<"));
         }
 
 

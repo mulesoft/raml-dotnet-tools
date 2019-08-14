@@ -490,7 +490,7 @@ namespace AMF.Common.ViewModels
             //if (!filename.ToLowerInvariant().EndsWith(RamlFileExtension))
             //    filename += RamlFileExtension;
 
-            filename = NetNamingMapper.RemoveIndalidChars(Path.GetFileNameWithoutExtension(filename)) +
+            filename = NetNamingMapper.RemoveInvalidChars(Path.GetFileNameWithoutExtension(filename)) +
                        Path.GetExtension(filename);
 
             return filename;

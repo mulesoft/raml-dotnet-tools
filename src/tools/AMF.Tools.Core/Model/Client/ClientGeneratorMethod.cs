@@ -197,7 +197,7 @@ namespace AMF.Tools.Core.ClientGenerator
 
         private string AddParameter(Dictionary<string, string> paramKeys, string key, string value)
         {
-            key = RemoveInvalidChars(key);
+            key = NetNamingMapper.RemoveInvalidChars(key);
             if (paramKeys.ContainsKey(key))
             {
                 key += i;
@@ -206,18 +206,6 @@ namespace AMF.Tools.Core.ClientGenerator
             value += " " + key;
             paramKeys.Add(key, value);
             return key;
-        }
-
-        private static string RemoveInvalidChars(string key)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                return key;
-
-            // avoid capitalization
-            if (key.Length == 1)
-                return NetNamingMapper.RemoveIndalidChars(key).Substring(0, 1).ToLower();
-            
-            return NetNamingMapper.RemoveIndalidChars(key).Substring(0, 1).ToLower() + NetNamingMapper.RemoveIndalidChars(key).Substring(1);
         }
 
         public string ParameterString

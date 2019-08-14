@@ -16,7 +16,7 @@ namespace AMF.Tools.Core
 
         private static GeneratorParameter ConvertAmfParameterToGeneratorParameter(Parameter parameter)
         {
-            return new GeneratorParameter { OriginalName = parameter.Name,  Name = NetNamingMapper.RemoveIndalidChars(parameter.Name), Type = NewNetTypeMapper.GetNetType(parameter.Schema), Description = parameter.Description };
+            return new GeneratorParameter { OriginalName = parameter.Name,  Name = NetNamingMapper.Capitalize(NetNamingMapper.RemoveInvalidChars(parameter.Name)), Type = NewNetTypeMapper.GetNetType(parameter.Schema), Description = parameter.Description };
         }
 
     }

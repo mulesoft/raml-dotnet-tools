@@ -392,7 +392,7 @@ namespace AMF.Common.ViewModels
                 return;
 
             SelectNewRamlOption();
-            NewRamlFilename = NetNamingMapper.RemoveIndalidChars(Title) + RamlFileExtension;
+            NewRamlFilename = NetNamingMapper.RemoveInvalidChars(Title) + RamlFileExtension;
             NewRamlNamespace = GetNamespace(NewRamlFilename);
         }
 

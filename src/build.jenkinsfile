@@ -49,11 +49,11 @@ pipeline {
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NexusNugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NexusNugetApiKey"
                         }
-                        withCredentials([string(credentialsId: 'AMF-Net-MasterNugetKey', variable: 'NugetApiKey')]) {
-                            if(env.BRANCH_NAME == 'master') {
-                                bat "nuget push *.nupkg -source https://api.nuget.org/v3/index.json $NugetApiKey"
-                            }                            
-                        }
+                        // withCredentials([string(credentialsId: 'AMF-Net-MasterNugetKey', variable: 'NugetApiKey')]) {
+                        //     if(env.BRANCH_NAME == 'master') {
+                        //         bat "nuget push *.nupkg -source https://api.nuget.org/v3/index.json $NugetApiKey"
+                        //     }                            
+                        // }
                     }
                 }
             }

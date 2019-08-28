@@ -46,8 +46,13 @@ pipeline {
                 stage('Pack') {
                     steps {
                         bat 'nuget pack src/raml/RAML.Parser.Model/RAML.Parser.Model.csproj -Prop Configuration=Release'
-                        withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
-                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                        withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NexusNugetApiKey')]) {
+                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NexusNugetApiKey"
+                        }
+                        withCredentials([string(credentialsId: 'AMF-Net-MasterNugetKey', variable: 'NugetApiKey')]) {
+                            if(env.BRANCH_NAME == 'master') {
+                                bat "nuget push *.nupkg -source https://api.nuget.org/v3/index.json $NugetApiKey"
+                            }                            
                         }
                     }
                 }

@@ -30,6 +30,7 @@ namespace AMF.Tools
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionOpening_string, PackageAutoLoadFlags.BackgroundLoad)]
     [InstalledProductRegistration("#1110", "#1112", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
     [Guid(AmfToolsPackage.PackageGuidString)]
@@ -90,10 +91,10 @@ namespace AMF.Tools
 
             if (isSolutionLoaded)
             {
-                HandleOpenSolution();
+                HandleOpenSolutionAsync();
             }
 
-            Microsoft.VisualStudio.Shell.Events.SolutionEvents.OnAfterOpenSolution += HandleOpenSolution;
+            Microsoft.VisualStudio.Shell.Events.SolutionEvents.OnAfterOpenSolution += HandleOpenSolutionAsync;
         }
 
         private async Task<bool> IsSolutionLoadedAsync()
@@ -106,15 +107,17 @@ namespace AMF.Tools
             return value is bool isSolOpen && isSolOpen;
         }
 
-        private void HandleOpenSolution(object sender = null, EventArgs e = null)
+        private async void HandleOpenSolutionAsync(object sender = null, EventArgs e = null)
         {
             //AddContractCommand.Initialize(this);
             //AddReferenceCommand.Initialize(this);
             //EditPropertiesCommand.Initialize(this);
             //ExtractRAMLCommand.Initialize(this);
 
+            // Query service asynchronously from the UI thread
+            var dte = await GetServiceAsync(typeof(DTE)) as DTE;
+
             // trigger scaffold when RAML document gets saved
-            var dte = GetService(typeof(SDTE)) as DTE;
             events = dte.Events;
             documentEvents = events.DocumentEvents;
             documentEvents.DocumentSaved += DocumentEventsOnDocumentSaved;

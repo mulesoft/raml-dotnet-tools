@@ -87,7 +87,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RamlClientTool.cs" />
     <Compile Include="RamlReferenceServiceBase.cs" />
     <Compile Include="RamlReferenceServiceNetCore.cs" />
     <Compile Include="RamlReferenceServiceNetFramework.cs" />

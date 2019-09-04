@@ -25,23 +25,16 @@ namespace AMF.Tools
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly Package package;
+        private readonly AsyncPackage package;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddReferenceCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private AddReferenceCommand(Package package)
+        private AddReferenceCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
-
             this.package = package;
-
-            OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -74,9 +67,15 @@ namespace AMF.Tools
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(Package package)
+        public static async System.Threading.Tasks.Task InitializeAsync(AsyncPackage package)
         {
-            Instance = new AddReferenceCommand(package);
+            if (package == null)
+            {
+                throw new ArgumentNullException("package");
+            }
+
+            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            Instance = new AddReferenceCommand(package, commandService);
         }
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace AMF.Tools
         {
             var generationServices = RamlReferenceServiceBase.GetRamlReferenceService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, new ActivityLogger());
             var ramlChooserViewModel = new RamlChooserViewModel();
-            ramlChooserViewModel.Load(this.ServiceProvider, generationServices.AddRamlReference, "Add RAML Reference", false, Settings.Default.RAMLExchangeUrl);
+            ramlChooserViewModel.Load(ServiceProvider, generationServices.AddRamlReference, "Add RAML Reference", false, Settings.Default.RAMLExchangeUrl);
             dynamic settings = new ExpandoObject();
             settings.Height = 475;
             AmfToolsPackage.WindowManager.ShowDialog(ramlChooserViewModel, null, settings);

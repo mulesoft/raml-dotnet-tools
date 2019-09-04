@@ -25,36 +25,10 @@ namespace AMF.Tools
         /// </summary>
         public static readonly Guid CommandSet = new Guid("5cf85f6a-50ee-4fe6-b316-838cbeafff00");
 
-        /// <summary>
-        /// VS AsyncPackage that provides this command, not null.
-        /// </summary>
-        private readonly AsyncPackage package;
+        private static DTE _dte;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AddContractCommand"/> class.
-        /// Adds our command handlers for menu (commands must exist in the command table file)
-        /// </summary>
-        /// <param name="package">Owner package, not null.</param>
-        private AddContractCommand(AsyncPackage package)
-        {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
 
-            this.package = package;
-
-            OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (commandService != null)
-            {
-                var menuCommandID = new CommandID(CommandSet, CommandId);
-                var menuItem = new OleMenuCommand(this.MenuItemCallback, menuCommandID);
-                menuItem.BeforeQueryStatus += BeforeQueryStatus;
-                commandService.AddCommand(menuItem);
-            }
-        }
-
-        private void BeforeQueryStatus(object sender, EventArgs e)
+        private static void BeforeQueryStatus(object sender, EventArgs e)
         {
             var menuCommand = sender as OleMenuCommand;
             if (menuCommand == null) return;
@@ -70,8 +44,7 @@ namespace AMF.Tools
 
         private static bool IsAspNet5OrWebApiCoreInstalled()
         {
-            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
-            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
+            var proj = VisualStudioAutomationHelper.GetActiveProject(_dte);
 
             if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
                 return CommandsUtil.IsAspNet5MvcInstalled(proj);
@@ -89,24 +62,41 @@ namespace AMF.Tools
             private set;
         }
 
-        /// <summary>
-        /// Gets the service provider from the owner package.
-        /// </summary>
-        private IServiceProvider ServiceProvider
+        // Asynchronous initialization
+        public static async System.Threading.Tasks.Task InitializeAsync(AsyncPackage package, EnvDTE.DTE dte)
         {
-            get
+            var cmdId = new CommandID(CommandSet, CommandId);
+            _dte = dte;
+
+            var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (commandService != null)
             {
-                return this.package;
+                var menuCommandID = new CommandID(CommandSet, CommandId);
+                var menuItem = new OleMenuCommand(MenuItemCallback, menuCommandID);
+                menuItem.BeforeQueryStatus += BeforeQueryStatus;
+                commandService.AddCommand(menuItem);
             }
         }
+
 
         /// <summary>
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(AsyncPackage package)
+        public static void Initialize(AsyncPackage package, EnvDTE.DTE dte)
         {
-            Instance = new AddContractCommand(package);
+            var cmdId = new CommandID(CommandSet, CommandId);
+            _dte = dte;
+
+            var serviceProvider = (IServiceProvider)package;
+            var commandService = serviceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (commandService != null)
+            {
+                var menuCommandID = new CommandID(CommandSet, CommandId);
+                var menuItem = new OleMenuCommand(MenuItemCallback, menuCommandID);
+                menuItem.BeforeQueryStatus += BeforeQueryStatus;
+                commandService.AddCommand(menuItem);
+            }
         }
 
         /// <summary>
@@ -116,7 +106,7 @@ namespace AMF.Tools
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
-        private void MenuItemCallback(object sender, EventArgs e)
+        private static void MenuItemCallback(object sender, EventArgs e)
         {
             var ramlScaffoldUpdater = RamlScaffoldServiceBase.GetRamlScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
             var ramlChooserViewModel = new RamlChooserViewModel();

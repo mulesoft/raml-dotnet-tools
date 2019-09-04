@@ -12,6 +12,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
@@ -764,7 +765,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <VSCTCompile Include="Commands\AddContractCommandPackage.vsct">
+    <VSCTCompile Include="AddContractCommandPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
       <SubType>Designer</SubType>
     </VSCTCompile>

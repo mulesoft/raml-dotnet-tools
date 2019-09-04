@@ -25,7 +25,8 @@ namespace AMF.Tools
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionOpening_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndFullyLoaded_string, PackageAutoLoadFlags.BackgroundLoad)]
     [InstalledProductRegistration("#5110", "#5112", "1.0", IconResourceID = 5400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus3.ctmenu", 1)]
     [Guid(EditPropertiesCommandPackage.PackageGuidString)]

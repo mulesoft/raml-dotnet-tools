@@ -31,8 +31,8 @@ namespace AMF.Tools
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionOpening_string, PackageAutoLoadFlags.BackgroundLoad)]
-    [InstalledProductRegistration("#1110", "#1112", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndFullyLoaded_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [InstalledProductRegistration("AMF .Net Tools", "RAML/OAS client proxy and ASP.Net generator", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
     [Guid(AmfToolsPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class AmfToolsPackage : AsyncPackage
@@ -60,8 +60,6 @@ namespace AMF.Tools
                 if(windowManager == null)
                 {
                     bootstrapper.Initialize();
-                    Tracking.Init();
-
                     try
                     {
                         windowManager = IoC.Get<IWindowManager>();
@@ -79,52 +77,35 @@ namespace AMF.Tools
 
 
         private static Bootstrapper bootstrapper = new Bootstrapper();
-        #region AsyncPackage Members
-
         private static Events events;
         private static DocumentEvents documentEvents;
 
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            bool isSolutionLoaded = await IsSolutionLoadedAsync();
 
-            if (isSolutionLoaded)
-            {
-                HandleOpenSolutionAsync();
-            }
+            //var solService = await GetServiceAsync(typeof(SVsSolution)) as IVsSolution;
 
-            Microsoft.VisualStudio.Shell.Events.SolutionEvents.OnAfterOpenSolution += HandleOpenSolutionAsync;
-        }
+            //ErrorHandler.ThrowOnFailure(solService.GetProperty((int)__VSPROPID.VSPROPID_IsSolutionOpen, out object value));
 
-        private async Task<bool> IsSolutionLoadedAsync()
-        {
-            await JoinableTaskFactory.SwitchToMainThreadAsync();
-            var solService = await GetServiceAsync(typeof(SVsSolution)) as IVsSolution;
-
-            ErrorHandler.ThrowOnFailure(solService.GetProperty((int)__VSPROPID.VSPROPID_IsSolutionOpen, out object value));
-
-            return value is bool isSolOpen && isSolOpen;
-        }
-
-        private async void HandleOpenSolutionAsync(object sender = null, EventArgs e = null)
-        {
-            //AddContractCommand.Initialize(this);
-            //AddReferenceCommand.Initialize(this);
-            //EditPropertiesCommand.Initialize(this);
-            //ExtractRAMLCommand.Initialize(this);
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             // Query service asynchronously from the UI thread
             var dte = await GetServiceAsync(typeof(DTE)) as DTE;
+
+            await AddContractCommand.InitializeAsync(this, dte);
+            //AddReferenceCommand.Initialize(this);
+            //EditPropertiesCommand.Initialize(this);
+            //ExtractRAMLCommand.Initialize(this);
 
             // trigger scaffold when RAML document gets saved
             events = dte.Events;
             documentEvents = events.DocumentEvents;
             documentEvents.DocumentSaved += DocumentEventsOnDocumentSaved;
 
+            Tracking.Init();
         }
 
-        #endregion
 
         private void DocumentEventsOnDocumentSaved(Document document)
         {

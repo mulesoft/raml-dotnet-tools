@@ -1,26 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-    <Metadata>
-        <Identity Id="AMF.Tools.a1f8ba2f-ef20-491a-b985-cc2e48676376" Version="0.3" Language="en-US" Publisher="MuleSoft Inc" />
-        <DisplayName>AMF.Tools</DisplayName>
-        <Description xml:space="preserve">AMF Tools for .NET allows developers to easily integrate and consume APIs that exposes a RAML or OAS (swagger) definitions, or generate a new ASP.NET Web API implementation from scratch using a contract-first approach from a previously created RAML or OAS (swagger) definition.
-Project home: https://github.com/mulesoft/amf-dotnet-tools</Description>
-        <MoreInfo>https://github.com/mulesoft/amf-dotnet-tools</MoreInfo>
-        <License>license.txt</License>
-        <GettingStartedGuide>https://github.com/mulesoft/amf-dotnet-tools</GettingStartedGuide>
-        <ReleaseNotes>https://github.com/mulesoft/amf-dotnet-tools/releases</ReleaseNotes>
-        <Tags>RAML OAS SWAGGER API WEBAPI ASP.NET REST</Tags>
-    </Metadata>
-    <Installation InstalledByMsi="false">
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,17.0)" />
-    </Installation>
-    <Dependencies>
-        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-    </Dependencies>
-    <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
-    </Prerequisites>
-    <Assets>
-        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    </Assets>
+  <Metadata>
+    <Identity Id="AMF.Tools.1034e5df-3b62-4707-aba9-fc087b4a7c91" Version="1.0" Language="en-US" Publisher="pedro.wood@outlook.com" />
+    <DisplayName>AMF.Tools</DisplayName>
+    <Description>Empty VSIX Project.</Description>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 16.0)" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    <Dependency Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" d:Source="Installed" Version="[15.0]" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+  </Assets>
 </PackageManifest>

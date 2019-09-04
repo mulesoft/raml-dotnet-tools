@@ -1,13 +1,18 @@
 ﻿using System;
 using System.ComponentModel.Design;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 using AMF.Common;
 using EnvDTE;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Threading;
 using NuGet.VisualStudio;
+using Task = System.Threading.Tasks.Task;
 
-namespace AMF.Tools
+namespace AMF.Tools.Commands
 {
     /// <summary>
     /// Command handler
@@ -17,15 +22,16 @@ namespace AMF.Tools
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int CommandId = 256;
 
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("a72f02a8-cd0c-419f-b2d5-d0b11f14beb4");
+        public static readonly Guid CommandSet = new Guid("a68674ed-a933-4709-a663-ae979526c056");
+        private static DTE _dte;
 
         /// <summary>
-        /// VS AsyncPackage that provides this command, not null.
+        /// VS Package that provides this command, not null.
         /// </summary>
         private readonly AsyncPackage package;
 
@@ -34,64 +40,17 @@ namespace AMF.Tools
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private ExtractRAMLCommand(AsyncPackage package)
+        /// <param name="commandService">Command service to add command to, not null.</param>
+        private ExtractRAMLCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
+            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
-            this.package = package;
-
-            OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (commandService != null)
-            {
-                var menuCommandID = new CommandID(CommandSet, CommandId);
-                var menuItem = new OleMenuCommand(this.MenuItemCallback, menuCommandID);
-                menuItem.BeforeQueryStatus += BeforeQueryStatus;
-                commandService.AddCommand(menuItem);
-            }
+            var menuCommandID = new CommandID(CommandSet, CommandId);
+            var menuItem = new OleMenuCommand(this.Execute, menuCommandID);
+            menuItem.BeforeQueryStatus += BeforeQueryStatus;
+            commandService.AddCommand(menuItem);
         }
-
-        private void BeforeQueryStatus(object sender, EventArgs e)
-        {
-            var menuCommand = sender as OleMenuCommand;
-            if (menuCommand == null) return;
-
-            CommandsUtil.ShowAndEnableCommand(menuCommand, false);
-
-            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
-            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
-
-            if (!VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsWebApiCoreInstalled(proj) || IsWebApiExplorerInstalled()))
-                return;
-
-            if (VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsAspNet5MvcInstalled(proj) || IsNetCoreApiExplorerInstalled()))
-                return;
-
-            CommandsUtil.ShowAndEnableCommand(menuCommand, true);
-        }
-
-        private bool IsNetCoreApiExplorerInstalled()
-        {
-            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
-            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
-            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
-            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "AMF.NetCoreApiExplorer");
-            return isWebApiCoreInstalled;
-        }
-
-        private bool IsWebApiExplorerInstalled()
-        {
-            var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
-            var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
-            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
-            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
-            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "AMF.WebApiExplorer");
-            return isWebApiCoreInstalled;
-        }
-
 
         /// <summary>
         /// Gets the instance of the command.
@@ -105,7 +64,7 @@ namespace AMF.Tools
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private IServiceProvider ServiceProvider
+        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
         {
             get
             {
@@ -117,9 +76,15 @@ namespace AMF.Tools
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(AsyncPackage package)
+        public static async Task InitializeAsync(AsyncPackage package, DTE dte)
         {
-            Instance = new ExtractRAMLCommand(package);
+            _dte = dte;
+            // Switch to the main thread - the call to AddCommand in ExtractRAMLCommand's constructor requires
+            // the UI thread.
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
+
+            OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
+            Instance = new ExtractRAMLCommand(package, commandService);
         }
 
         /// <summary>
@@ -129,9 +94,11 @@ namespace AMF.Tools
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
-        private void MenuItemCallback(object sender, EventArgs e)
+        private void Execute(object sender, EventArgs e)
         {
-            StartProgressBar("Enable RAML metadata output", "Installing...", "Processing...");
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            package.JoinableTaskFactory.Run(() => StartProgressBarAsync("Enable RAML metadata output", "Installing...", "Processing..."));
 
             var service = ReverseEngineeringServiceBase.GetReverseEngineeringService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
             service.AddReverseEngineering();
@@ -141,21 +108,54 @@ namespace AMF.Tools
             System.Diagnostics.Process.Start("https://github.com/mulesoft-labs/raml-dotnet-tools#metadata-extract-a-raml-definition-from-your-web-app");
         }
 
-        private IVsThreadedWaitDialog3 attachingDialog;
-
-        private void StopProgressBar()
+        private void BeforeQueryStatus(object sender, EventArgs e)
         {
-            if (attachingDialog == null)
+            var menuCommand = sender as OleMenuCommand;
+            if (menuCommand == null) return;
+
+            CommandsUtil.ShowAndEnableCommand(menuCommand, false);
+
+            var proj = VisualStudioAutomationHelper.GetActiveProject(_dte);
+
+            if (!VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsWebApiCoreInstalled(proj) || IsWebApiExplorerInstalled()))
                 return;
 
-            int canceled;
-            attachingDialog.EndWaitDialog(out canceled);
-            attachingDialog = null;
+            if (VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsAspNet5MvcInstalled(proj) || IsNetCoreApiExplorerInstalled()))
+                return;
+
+            CommandsUtil.ShowAndEnableCommand(menuCommand, true);
         }
 
-        private void StartProgressBar(string title, string message, string progressMessage)
+        private bool IsNetCoreApiExplorerInstalled()
         {
-            var dialogFactory = this.ServiceProvider.GetService(typeof(SVsThreadedWaitDialogFactory)) as IVsThreadedWaitDialogFactory;
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var proj = VisualStudioAutomationHelper.GetActiveProject(_dte);
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
+            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
+            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "AMF.NetCoreApiExplorer");
+            return isWebApiCoreInstalled;
+        }
+
+        private bool IsWebApiExplorerInstalled()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var proj = VisualStudioAutomationHelper.GetActiveProject(_dte);
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
+            var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
+            var isWebApiCoreInstalled = installerServices.IsPackageInstalled(proj, "AMF.WebApiExplorer");
+            return isWebApiCoreInstalled;
+        }
+
+
+        private IVsThreadedWaitDialog3 attachingDialog;
+
+        private async Task StartProgressBarAsync(string title, string message, string progressMessage)
+        {
+            await package.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            var dialogFactory = await this.ServiceProvider.GetServiceAsync(typeof(SVsThreadedWaitDialogFactory)) as IVsThreadedWaitDialogFactory;
             IVsThreadedWaitDialog2 dialog = null;
             if (dialogFactory != null)
             {
@@ -168,6 +168,18 @@ namespace AMF.Tools
                 message, string.Empty, null,
                 progressMessage, true, 0,
                 true, 0, 0, this);
+        }
+
+        private void StopProgressBar()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (attachingDialog == null)
+                return;
+
+            int canceled;
+            attachingDialog.EndWaitDialog(out canceled);
+            attachingDialog = null;
         }
 
         public void OnCanceled()

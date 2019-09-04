@@ -8156,6 +8156,7 @@
     <None Include="node_modules\punycode\package.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="node_modules\undefined\package.json" />
     <None Include="node_modules\uri-js\bower.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -8557,6 +8558,7 @@
     <Content Include="node_modules\punycode\punycode.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="node_modules\undefined\undefined.js" />
     <Content Include="node_modules\uri-js\dist\es5\uri.all.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

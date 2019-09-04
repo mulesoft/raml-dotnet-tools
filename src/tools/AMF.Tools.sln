@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.Tools", "AMF.Tools\AMF.Tools.csproj", "{C122C92A-7216-4A49-9F67-E07401ED353B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.Tools", "AMF.Tools\AMF.Tools.csproj", "{C20A6B26-887C-4202-936A-0A5BC2B83B8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.Tools.Core", "AMF.Tools.Core\AMF.Tools.Core.csproj", "{D5482ED5-6B2D-4342-A9FF-21878BBC98F8}"
 EndProject
@@ -19,10 +19,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C122C92A-7216-4A49-9F67-E07401ED353B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C122C92A-7216-4A49-9F67-E07401ED353B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C122C92A-7216-4A49-9F67-E07401ED353B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C122C92A-7216-4A49-9F67-E07401ED353B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20A6B26-887C-4202-936A-0A5BC2B83B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20A6B26-887C-4202-936A-0A5BC2B83B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20A6B26-887C-4202-936A-0A5BC2B83B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20A6B26-887C-4202-936A-0A5BC2B83B8F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D5482ED5-6B2D-4342-A9FF-21878BBC98F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D5482ED5-6B2D-4342-A9FF-21878BBC98F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5482ED5-6B2D-4342-A9FF-21878BBC98F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,6 +44,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {2C08A3EB-607E-45DB-9328-CE9817546340}
+		SolutionGuid = {BB93F348-5150-418E-B356-80E5D9A68918}
 	EndGlobalSection
 EndGlobal

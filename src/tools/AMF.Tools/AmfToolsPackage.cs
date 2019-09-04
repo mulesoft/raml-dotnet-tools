@@ -1,5 +1,8 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,9 +10,12 @@ using AMF.Common;
 using Caliburn.Micro;
 using EnvDTE;
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.Win32;
 using Task = System.Threading.Tasks.Task;
+using AMF.Tools.Commands;
 
 namespace AMF.Tools
 {
@@ -31,21 +37,21 @@ namespace AMF.Tools
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndFullyLoaded_string, PackageAutoLoadFlags.BackgroundLoad)]
-    [InstalledProductRegistration("AMF .Net Tools", "RAML/OAS client proxy and ASP.Net generator", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
-    [Guid(AmfToolsPackage.PackageGuidString)]
+    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
+    [Guid(AMFToolsPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class AmfToolsPackage : AsyncPackage
+    [ProvideMenuResource("Menus.ctmenu", 1)]
+    public sealed class AMFToolsPackage : AsyncPackage
     {
         /// <summary>
-        /// VSPackage1 GUID string.
+        /// AMFToolsPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "d24cb627-9b37-4ac3-aec3-aba333e88419";
+        public const string PackageGuidString = "5d360b46-ec9c-4f14-94ab-14d941cf681b";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AmfToolsPackage"/> class.
+        /// Initializes a new instance of the <see cref="AMFToolsPackage"/> class.
         /// </summary>
-        public AmfToolsPackage()
+        public AMFToolsPackage()
         {
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
@@ -53,11 +59,57 @@ namespace AMF.Tools
             // initialization is the Initialize method.
         }
 
+        private static Bootstrapper bootstrapper = new Bootstrapper();
+        private static Events events;
+        private static DocumentEvents documentEvents;
+
+        /// <summary>
+        /// Initialization of the package; this method is called right after the package is sited, so this is the place
+        /// where you can put all the initialization code that rely on services provided by VisualStudio.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
+        /// <param name="progress">A provider for progress updates.</param>
+        /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        {
+            // When initialized asynchronously, the current thread may be a background thread at this point.
+            // Do any initialization that requires the UI thread after switching to the UI thread.
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            var dte = await GetServiceAsync(typeof(DTE)) as DTE;
+
+            // trigger scaffold when RAML document gets saved
+            events = dte.Events;
+            documentEvents = events.DocumentEvents;
+            documentEvents.DocumentSaved += DocumentEventsOnDocumentSaved;
+
+            await AddContractCommand.InitializeAsync(this, dte);
+            await ExtractRAMLCommand.InitializeAsync(this, dte);
+            await AddReferenceCommand.InitializeAsync(this);
+            await EditPropertiesCommand.InitializeAsync(this);
+
+            Tracking.Init();
+        }
+
+        private void DocumentEventsOnDocumentSaved(Document document)
+        {
+            RamlScaffoldServiceBase.TriggerScaffoldOnRamlChanged(document);
+            //RamlClientTool.TriggerClientRegeneration(document, GetExtensionPath());
+        }
+
+        // workaround http://stackoverflow.com/questions/29362125/visual-studio-extension-could-not-find-a-required-assembly
+        private static void LoadSystemWindowsInteractivity()
+        {
+            // HACK: Force load System.Windows.Interactivity.dll from plugin's 
+            // directory
+            typeof(System.Windows.Interactivity.Behavior).ToString();
+        }
+
         private static IWindowManager windowManager;
-        public static IWindowManager WindowManager {
+        public static IWindowManager WindowManager
+        {
             get
             {
-                if(windowManager == null)
+                if (windowManager == null)
                 {
                     bootstrapper.Initialize();
                     try
@@ -73,53 +125,6 @@ namespace AMF.Tools
                 }
                 return windowManager;
             }
-        }
-
-
-        private static Bootstrapper bootstrapper = new Bootstrapper();
-        private static Events events;
-        private static DocumentEvents documentEvents;
-
-
-        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
-        {
-
-            //var solService = await GetServiceAsync(typeof(SVsSolution)) as IVsSolution;
-
-            //ErrorHandler.ThrowOnFailure(solService.GetProperty((int)__VSPROPID.VSPROPID_IsSolutionOpen, out object value));
-
-            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-
-            // Query service asynchronously from the UI thread
-            var dte = await GetServiceAsync(typeof(DTE)) as DTE;
-
-            await AddContractCommand.InitializeAsync(this, dte);
-            //AddReferenceCommand.Initialize(this);
-            //EditPropertiesCommand.Initialize(this);
-            //ExtractRAMLCommand.Initialize(this);
-
-            // trigger scaffold when RAML document gets saved
-            events = dte.Events;
-            documentEvents = events.DocumentEvents;
-            documentEvents.DocumentSaved += DocumentEventsOnDocumentSaved;
-
-            Tracking.Init();
-        }
-
-
-        private void DocumentEventsOnDocumentSaved(Document document)
-        {
-            RamlScaffoldServiceBase.TriggerScaffoldOnRamlChanged(document);
-
-            //RamlClientTool.TriggerClientRegeneration(document, GetExtensionPath());
-        }
-
-        // workaround http://stackoverflow.com/questions/29362125/visual-studio-extension-could-not-find-a-required-assembly
-        private static void LoadSystemWindowsInteractivity()
-        {
-            // HACK: Force load System.Windows.Interactivity.dll from plugin's 
-            // directory
-            typeof(System.Windows.Interactivity.Behavior).ToString();
         }
 
     }

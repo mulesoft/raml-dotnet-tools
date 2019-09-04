@@ -160,6 +160,10 @@
     <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular2.woff2" />
     <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro-2.woff2" />
     <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2" />
+    <Content Include="license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="node_modules\ajv\lib\dot\allOf.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

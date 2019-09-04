@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+var amf = require(__dirname + "/../amf.js");
+
+amf.Main.main(process.argv.slice(2, process.argv.length));

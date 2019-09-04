@@ -65,7 +65,7 @@
     <Compile Include="Commands\AddContractCommand.cs" />
     <Compile Include="Commands\CommandsUtil.cs" />
     <Compile Include="Commands\ExtractRAMLCommand.cs" />
-    <Compile Include="EditPropertiesCommand.cs" />
+    <Compile Include="Commands\EditPropertiesCommand.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="JsonSchemaMessagesManager.cs" />
     <Compile Include="NugetInstallerHelper.cs" />

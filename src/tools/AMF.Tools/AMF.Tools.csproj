@@ -111,64 +111,238 @@
     </Content>
     <None Include="App.config" />
     <None Include="Key.snk" />
-    <None Include="MetadataPackage\Content\Controllers\RamlController.class" />
-    <None Include="MetadataPackage\Content\Views\Raml\Index.cshtml" />
-    <None Include="MetadataPackage\Content\Views\Raml\oauth1.cshtml" />
-    <None Include="MetadataPackage\Content\Views\Raml\oauth2.cshtml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\array.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\box.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\discriminator.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\documentation.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\example.json" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\example.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\examples.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\extensions.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\facets.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\github.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\includes.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\inline-schema.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\instagram.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\leagues.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\another-types.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\file-type.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\person-schema.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\security.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\libraries\type.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\library-security.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\library.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\linkedin.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\mini-library.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\person.json" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\properties-08.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\properties.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\simple.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\stripe.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\twitter.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\examples\types.raml" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro-2.woff2" />
-    <None Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2" />
+    <Content Include="MetadataPackage\Content\Controllers\RamlController.class">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\Views\Raml\Index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\Views\Raml\oauth1.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\Views\Raml\oauth2.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\array.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\box.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\discriminator.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\documentation.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\example.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\examples.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\extensions.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\facets.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\github.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\includes.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\inline-schema.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\instagram.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\leagues.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\libraries\another-types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\libraries\file-type.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\libraries\person-schema.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\libraries\security.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\libraries\type.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\library-security.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\library.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\linkedin.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\mini-library.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\person.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\properties-08.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\properties.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\simple.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\stripe.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\twitter.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\examples\types.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Black2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-BlackItalic2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Blak2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Bold2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-BoldItalic2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline-Italic2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Hairline2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Italic2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Light2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-LightItalic2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Lato-Regular2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro-2.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\fonts\Source-Code-Pro.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -467,14 +641,38 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="index.html" />
-    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html" />
-    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth2.html" />
-    <Content Include="MetadataPackage\Content\wwwroot\favicon.ico" />
-    <Content Include="MetadataPackage\Content\wwwroot\img\spinner.gif" />
-    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console-vendor.js" />
-    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console.js" />
-    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-dark-theme.css" />
-    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-light-theme.css" />
+    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\authentication\oauth2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\img\spinner.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console-vendor.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\scripts\api-console.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-dark-theme.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="MetadataPackage\Content\wwwroot\styles\api-console-light-theme.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="node_modules\ajv\.tonic_example.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

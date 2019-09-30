@@ -12,6 +12,7 @@ namespace AMF.Tools
 {
     public class ReverseEngineeringAspNetCore : ReverseEngineeringServiceBase
     {
+        private const string AspNetCoreStaticFilesPackageId = "Microsoft.AspNetCore.StaticFiles";
         private static readonly string RamlParserExpressionsPackageId = Settings.Default.RamlParserExpressionsPackageId;
         private static readonly string RamlParserExpressionsPackageVersion = Settings.Default.RamlParserExpressionsPackageVersion;
         private static readonly string RamlNetCoreApiExplorerPackageId = Settings.Default.RamlNetCoreApiExplorerPackageId;
@@ -57,9 +58,7 @@ namespace AMF.Tools
             if (!File.Exists(startUpPath)) return;
 
             var lines = File.ReadAllLines(startUpPath).ToList();
-
             ConfigureNetCoreMvcServices(lines);
-
             ConfigureNetCoreMvc(lines);
 
             File.WriteAllText(startUpPath, string.Join(Environment.NewLine, lines));
@@ -164,9 +163,12 @@ namespace AMF.Tools
             line = TextFileHelper.FindLineWith(lines, "services.AddMvc()");
             if (line > 0)
             {
-                lines.Insert(line - 1, addService);
-                lines.RemoveAt(line);
-                lines.Insert(line, AddMvcWithOptions());
+                var index = lines[line].IndexOf(".AddMvc(") + ".AddMvc(".Length;
+                var modifiedText = lines[line].Insert(index, AddMvcWithOptions());
+                lines[line] = modifiedText;
+
+                lines.Insert(line, addService);
+
                 return;
             }
 
@@ -180,10 +182,10 @@ namespace AMF.Tools
 
         private static string AddMvcWithOptions()
         {
-            return "            services.AddMvc(options =>" + Environment.NewLine
+            return "options =>" + Environment.NewLine
                    + "                {" + Environment.NewLine
                    + AddOptions()
-                   + "                });";
+                   + "                }";
         }
 
         private static string AddOptions()
@@ -195,8 +197,14 @@ namespace AMF.Tools
 
         private void InstallNetCoreDependencies(Project proj, IVsPackageMetadata[] packs, IVsPackageInstaller installer, IVsPackageInstallerServices installerServices)
         {
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "Microsoft.AspNetCore.StaticFiles",
-                "1.0.0", Settings.Default.NugetExternalPackagesSource);
+            var version = VisualStudioAutomationHelper.GetTargetFrameworkVersion(proj);
+            // RAML.Parser.Expressions
+            if (!installerServices.IsPackageInstalled(proj, AspNetCoreStaticFilesPackageId))
+            {
+                if(version.StartsWith("1"))
+                    NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, AspNetCoreStaticFilesPackageId, "1.0.0", 
+                        Settings.Default.NugetExternalPackagesSource);
+            }
 
             // RAML.Parser.Expressions
             if (!installerServices.IsPackageInstalled(proj, RamlParserExpressionsPackageId))

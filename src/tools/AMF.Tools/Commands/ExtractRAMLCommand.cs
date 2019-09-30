@@ -97,15 +97,18 @@ namespace AMF.Tools.Commands
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
+            try
+            {
+                package.JoinableTaskFactory.Run(() => StartProgressBarAsync("Enable RAML metadata output", "Installing...", "Processing..."));
 
-            package.JoinableTaskFactory.Run(() => StartProgressBarAsync("Enable RAML metadata output", "Installing...", "Processing..."));
-
-            var service = ReverseEngineeringServiceBase.GetReverseEngineeringService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
-            service.AddReverseEngineering();
-
-            StopProgressBar();
-
-            System.Diagnostics.Process.Start("https://github.com/mulesoft-labs/raml-dotnet-tools#metadata-extract-a-raml-definition-from-your-web-app");
+                var service = ReverseEngineeringServiceBase.GetReverseEngineeringService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
+                service.AddReverseEngineering();
+                System.Diagnostics.Process.Start("https://github.com/mulesoft-labs/raml-dotnet-tools#metadata-extract-a-raml-definition-from-your-web-app");
+            }
+            finally
+            {
+                StopProgressBar();
+            }
         }
 
         private void BeforeQueryStatus(object sender, EventArgs e)
@@ -184,7 +187,6 @@ namespace AMF.Tools.Commands
 
         public void OnCanceled()
         {
-            throw new NotImplementedException();
         }
     }
 }

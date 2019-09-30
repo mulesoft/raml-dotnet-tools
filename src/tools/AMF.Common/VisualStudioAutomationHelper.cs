@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -120,6 +121,28 @@ namespace AMF.Common
             if (proj.FileName.EndsWith("xproj") || proj.FileName.EndsWith("json"))
                 return true;
 
+            string targetFramework = GetTargetFrameworkMoniker(proj);
+            if (targetFramework.Contains("netcore") || targetFramework.Contains("netstandard"))
+                return true;
+
+            if (targetFramework.Contains("netframework"))
+                return false;
+
+            throw new InvalidOperationException("Cannot determine .net framework. " + targetFramework);
+        }
+
+        public static string GetTargetFrameworkVersion(Project project)
+        {
+            var moniker = GetTargetFrameworkMoniker(project);
+            var regex = new Regex(".+version=v([0-9]{1,2}(.[0-9]){0,2}(.[0-9]){0,2})", RegexOptions.IgnoreCase);
+            var match = regex.Match(moniker);
+            if (match.Success && match.Groups.Count > 1)
+                return match.Groups[1].Value;
+
+            return string.Empty;
+        }
+        public static string GetTargetFrameworkMoniker(Project proj)
+        {
             //.NETCoreApp,Version = v2.0
             //.NETCoreApp,Version = v1.1
             //.NETFramework,Version = v4.6.1
@@ -133,13 +156,7 @@ namespace AMF.Common
                 throw new InvalidOperationException("Cannot determine .net framework. TargetFrameworkMoniker not present.", ex);
             }
             var targetFramework = (targetFwkObj.Value as string).ToLowerInvariant();
-            if (targetFramework.Contains("netcore") || targetFramework.Contains("netstandard"))
-                return true;
-
-            if (targetFramework.Contains("netframework"))
-                return false;
-
-            throw new InvalidOperationException("Cannot determine .net framework. " + targetFramework);
+            return targetFramework;
         }
 
         public static bool IsJsonOrXProj(Project proj)

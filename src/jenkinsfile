@@ -27,9 +27,6 @@ pipeline {
                     steps {
                         withCredentials([file(credentialsId: 'amf_codesign_cert_thumbprint', variable: 'THUMBPRINT')]) {
                                     bat ".\\signtool.exe sign /v /fd sha256 /sha1 $THUMBPRINT /sm src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
-
-
-                                }
                             }
                         }
                     }

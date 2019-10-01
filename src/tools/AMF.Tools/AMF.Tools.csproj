@@ -973,7 +973,7 @@
     <Reference Include="AMF.Api.Core, Version=0.9.15.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AMF.Api.Core.0.9.15\lib\net45\AMF.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="AMF.Parser, Version=0.9.6.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="AMF.Parser, Version=0.9.7.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Analytics.NET, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Analytics.3.0.0\lib\Analytics.NET.dll</HintPath>
     </Reference>

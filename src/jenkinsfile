@@ -1,0 +1,50 @@
+pipeline {
+
+    agent {
+        node {
+            label 'code-sigining-hsm'
+            customWorkspace 'c:\\cp'
+        }
+    }
+    stages {
+        stage('AMF.Tools')
+        {
+            stages {
+                stage('Build') {
+                    steps {
+                        bat 'nuget restore src/tools/AMF.Tools.sln'
+                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
+                            bat 'AMF.Tools.TestRunner.exe'
+                        }
+                    }
+                }
+                stage('Sing Vsix') {
+                    steps {
+                        withCredentials([file(credentialsId: 'amf_codesign_cert_thumbprint', variable: 'THUMBPRINT')]) {
+                                    bat ".\signtool.exe sign /v /fd sha256 /sha1 $THUMBPRINT /sm src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
+
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts 'src/tools/AMF.Tools/bin/Release/*.vsix'
+            nunit testResultsPattern: '*.xml'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

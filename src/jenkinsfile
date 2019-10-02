@@ -26,7 +26,8 @@ pipeline {
                 stage('Sing Vsix') {
                     steps {
                         withCredentials([string(credentialsId: 'amf_codesign_cert_thumbprint', variable: 'THUMBPRINT')]) {
-                                    bat "'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\x64\\signtool.exe' sign /v /fd sha256 /sha1 $THUMBPRINT /sm src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
+                            bat "OpenVsixSignTool.exe sign --sha1 $THUMBPRINT --timestamp http://timestamp.digicert.com -ta sha256 -fd sha256 src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
+                            //bat "'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\x64\\signtool.exe' sign /v /fd sha256 /sha1 $THUMBPRINT /sm src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
                         }
                     }
                 }

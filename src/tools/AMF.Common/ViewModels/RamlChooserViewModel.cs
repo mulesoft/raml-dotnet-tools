@@ -11,6 +11,7 @@ using System.Linq;
 using System.IO.Compression;
 using System.Security;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace AMF.Common.ViewModels
 {
@@ -46,6 +47,12 @@ namespace AMF.Common.ViewModels
                 username = value;
                 NotifyOfPropertyChange();
             }
+        }
+
+        public void OpenApiDesigner()
+        {
+            var url = "https://www.mulesoft.com/platform/api/anypoint-designer";
+            Process.Start(new ProcessStartInfo(url));
         }
 
         private string ConvertToUnsecureString(SecureString securePassword)

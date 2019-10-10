@@ -1,0 +1,47 @@
+#%RAML 0.8
+title: foo
+
+baseUri: http://localhost/foo/v1
+mediaType: application/json
+
+schemas:
+  - fooList: |
+      {
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "type": "array",
+        "items": 
+        {
+          "type": "object",
+          "properties": 
+          {
+            "name": { "type": "string", "required": true },
+            "location": { "type": "string", "required": true }
+          }
+        }
+      }
+  - fooItem: |
+      {
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "type": "object",
+        "properties": 
+        {
+          "name": { "type": "string", "required": true },
+          "location": { "type": "string", "required": true }
+        }
+      }
+
+/foo:
+  get:
+    description: do something
+    responses:
+      200:
+        body:
+          schema: fooItem
+
+/foolist:
+  get:
+    description: get a list of foo
+    responses:
+      200:
+        body:
+          schema: fooList

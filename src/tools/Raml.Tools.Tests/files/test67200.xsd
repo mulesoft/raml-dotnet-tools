@@ -1,0 +1,13 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:complexType name="typeAbstract" abstract="true"/>
+	<xs:complexType name="typeA">
+		<xs:complexContent>
+			<xs:extension base="typeAbstract">
+				<xs:sequence>
+					<xs:element name="elt2"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="elt1" type="typeAbstract"/>
+</xs:schema>

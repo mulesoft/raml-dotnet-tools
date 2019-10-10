@@ -1,5 +1,0 @@
-{
-  "ambientDependencies": {
-    "typescript": "github:DefinitelyTyped/DefinitelyTyped/typescript/typescript.d.ts#3b2ed809b9e8f7dc4fcc1d80199129a0b73fb277"
-  }
-}

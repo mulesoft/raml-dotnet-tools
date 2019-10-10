@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: My Api
+annotationTypes:
+  paged:
+      description: This annotation takes one parameter of type number
+      properties:
+        sizeOfPage:
+          type: number
+/list:
+  (paged):
+    sizeOfPage: 8
+  get:
+    responses:
+      200:

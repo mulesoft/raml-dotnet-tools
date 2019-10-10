@@ -1,6 +1,0 @@
-{
-  "ambientDependencies": {
-    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#315f5612ceb4de6f1f81f8cf49878084ea3f364a",
-    "underscore": "github:DefinitelyTyped/DefinitelyTyped/underscore/underscore.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711"
-  }
-}

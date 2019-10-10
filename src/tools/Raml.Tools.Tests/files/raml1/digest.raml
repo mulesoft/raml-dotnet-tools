@@ -1,0 +1,15 @@
+#%RAML 1.0 
+title: Dropbox API
+version: 1
+baseUri: https://api.dropbox.com/{version}
+securitySchemes:
+    - digest:
+        description: |
+            This API supports DigestSecurityScheme Authentication.
+        type: DigestSecurityScheme Authentication
+/list:
+  get:
+    responses:
+      200:
+  post:
+    securedBy: [digest]

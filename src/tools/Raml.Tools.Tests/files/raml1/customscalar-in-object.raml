@@ -1,0 +1,22 @@
+#%RAML 1.0 
+title: My API With Types
+types:
+  CustomString:
+    type: string
+    minLength: 5
+    maxLength: 255
+  CustomInt:
+    type: integer
+    minimum: 0
+    maximum: 100
+  MyObj:
+    properties:
+        Some: CustomInt
+        Other: CustomString
+/test:
+    get:
+        responses:
+            200:
+                body:
+                    application/json:
+                        type: MyObj

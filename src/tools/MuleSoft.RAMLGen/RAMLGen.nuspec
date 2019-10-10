@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>RAMLGen</id>
+    <version>0.1.0</version>
+    <title>RAML Generator</title>
+    <authors>MuleSoft Inc</authors>
+    <owners>MuleSoft Inc</owners>
+    <description>RAMLGenerator is a command line for generating client and server code based on a RAML spec.</description>
+    <copyright>MuleSoft Inc Copyright © 2016</copyright>
+  </metadata>
+  <files>
+    <file src="bin\Debug\**\*.*" target="tools" />
+  </files>
+</package>

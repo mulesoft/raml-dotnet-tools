@@ -1,0 +1,233 @@
+#%RAML 0.8
+version: "1.0.0"
+title: "PolicyServicingAPI"
+baseUri: "http://nvbiz028.prci.com:80/vinsuranceswaggerserver"
+schemas: 
+    - "vehicle": '{"type":"object","title":"vehicle","properties":{"VIN":{"type":"string","required":true,"title":"VIN"},"make":{"type":"string","required":true,"title":"make"},"year":{"type":"string","required":true,"title":"year"},"model":{"type":"string","required":true,"title":"model"}}}'
+    - "address": '{"type":"object","title":"address","properties":{"addressLine1":{"type":"string","required":false,"title":"addressLine1"},"addressLine2":{"type":"string","required":false,"title":"addressLine2"},"municipality":{"type":"string","required":false,"title":"municipality"},"stateCode":{"type":"string","required":false,"title":"stateCode"},"postalCode":{"type":"integer","required":false,"title":"postalCode"},"postalExtensionCode":{"type":"integer","required":false,"title":"postalExtensionCode"}}}'   
+    - "driver": '{"type":"object","title":"driver","properties":{"driverId":{"type":"string","required":true,"title":"driverId"},"firstName":{"type":"string","required":false,"title":"firstName"},"lastName":{"type":"string","required":false,"title":"lastName"},"dateOfBirth":{"type":"string","required":false,"title":"dateOfBirth"},"driverLicense":{"type":"string","required":false,"title":"driverLicense"},"mailingAddress":{"type":"object","$ref":"address","required":false,"title":"mailingAddress"},"primaryInsured":{"type":"boolean","required":false,"title":"primaryInsured"}}}'    
+    - "quote": '{"type":"object","title":"quote","properties":{"quoteId":{"type":"string","required":false,"title":"quoteId"},"preminum":{"type":"number","required":false,"title":"preminum"},"drivers":{"type":"array","required":false,"title":"drivers","items":{"type":"object",    "$ref":"driver"},"uniqueItems":false},"vehicles":{"type":"array","required":false,"title":"vehicles","items":{"type":"object","$ref":"vehicle"},"uniqueItems":false},"collision":{"type":"boolean","required":false,"title":"collision"},"liability":{"type":"boolean","required":false,"title":"liability"},"roadSideAssistance":{"type":"boolean","required":false,"title":"roadSideAssistance"}}}'   
+    - "paymentInfo": '{"type":"object","title":"paymentInfo","properties":{"creditCardNumber":{"type":"string","required":true,"title":"creditCardNumber"},"expirationDate":{"type":"string","required":true,"title":"expirationDate"},"amount":{"type":"number","required":true,"title":"amount"}}}'
+    - "payment": '{"type":"object","title":"payment","properties":{"confirmationNumber":{"type":"string","required":true,"title":"confirmationNumber"},"amount":{"type":"number","required":true,"title":"amount"},"paymentDate":{"type":"string","required":true,"title":"paymentDate"}}}'
+    - "policyRequest": '{"type":"object","title":"policyRequest","properties":{"quote":{"type":"object","$ref":"quote","required":false,"title":"quote"},"paymentInfo":{"type":"object","$ref":"paymentInfo","required":false,"title":"paymentInfo"}}}'
+    - "errorResponse": '{"type":"object","title":"errorResponse","properties":{"httpStatusCode":{"type":"string","required":true,"title":"httpStatusCode"},"errorCode":{"type":"string","required":true,"title":"errorCode"},"developerMessage":{"type":"string","required":false,"title":"developerMessage"},"moreInfo":{"type":"string","required":false,"title":"moreInfo"}}}'
+    - "policy": '{"type":"object","$schema": "http://json-schema.org/draft-03/schema","id": "http://jsonschema.net","required":false,"properties":{ "collision": { "type":"string", "id": "http://jsonschema.net/collision", "required":false }, "drivers": { "type":"array", "id": "http://jsonschema.net/drivers", "required":false, "items": { "type":"object", "id": "http://jsonschema.net/drivers/0", "required":false, "properties":{ "dateOfBirth": { "type":"string", "id": "http://jsonschema.net/drivers/0/dateOfBirth", "required":false }, "driverId": { "type":"string", "id": "http://jsonschema.net/drivers/0/driverId", "required":false }, "driverLicense": { "type":"string", "id": "http://jsonschema.net/drivers/0/driverLicense", "required":false }, "firstName": { "type":"string", "id": "http://jsonschema.net/drivers/0/firstName", "required":false }, "lastName": { "type":"string", "id": "http://jsonschema.net/drivers/0/lastName", "required":false }, "address": {"type":"object","title":"address","properties":{"addressLine1":{"type":"string","required":false,"title":"addressLine1"},"addressLine2":{"type":"string","required":false,"title":"addressLine2"},"municipality":{"type":"string","required":false,"title":"municipality"},"stateCode":{"type":"string","required":false,"title":"stateCode"},"postalCode":{"type":"integer","required":false,"title":"postalCode"},"postalExtensionCode":{"type":"integer","required":false,"title":"postalExtensionCode"}}}, "primaryInsured": { "type":"string", "id": "http://jsonschema.net/drivers/0/primaryInsured", "required":false } } } }, "effectiveEndDate": { "type":"string", "id": "http://jsonschema.net/effectiveEndDate", "required":false }, "effectiveStartDate": { "type":"string", "id": "http://jsonschema.net/effectiveStartDate", "required":false }, "liability": { "type":"string", "id": "http://jsonschema.net/liability", "required":false }, "paymentHistory": { "type":"array", "id": "http://jsonschema.net/paymentHistory", "required":false, "items": { "type":"object", "id": "http://jsonschema.net/paymentHistory/0", "required":false, "properties":{ "amount": { "type":"number", "id": "http://jsonschema.net/paymentHistory/0/amount", "required":false }, "confirmationNumber": { "type":"string", "id": "http://jsonschema.net/paymentHistory/0/confirmationNumber", "required":false }, "paymentDate": { "type":"string", "id": "http://jsonschema.net/paymentHistory/0/paymentDate", "required":false } } } }, "policyNumber": { "type":"string", "id": "http://jsonschema.net/policyNumber", "required":false }, "preminum": { "type":"number", "id": "http://jsonschema.net/preminum", "required":false }, "roadSideAssistance": { "type":"string", "id": "http://jsonschema.net/roadSideAssistance", "required":false }, "vehicles": { "type":"array", "id": "http://jsonschema.net/vehicles", "required":false, "items": { "type":"object", "id": "http://jsonschema.net/vehicles/0", "required":false, "properties":{ "VIN": { "type":"string", "id": "http://jsonschema.net/vehicles/0/VIN", "required":false }, "make": { "type":"string", "id": "http://jsonschema.net/vehicles/0/make", "required":false }, "model": { "type":"string", "id": "http://jsonschema.net/vehicles/0/model", "required":false }, "year": { "type":"string", "id": "http://jsonschema.net/vehicles/0/year", "required":false } } } } }}'
+    - "claim": '{"type":"object","title":"claim","properties":{"claimNumber":{"type":"integer","required":false,"title":"claimNumber"},"policyNumber":{"type":"string","required":false,"title":"policyNumber"},"claimStatus":{"type":"string","required":false,"title":"claimStatus"},"collision":{"type":"boolean","required":false,"title":"collision"},"liability":{"type":"boolean","required":false,"title":"liability"},"roadSideAssistance":{"type":"boolean","required":false,"title":"roadSideAssistance"},"damage":{"type":"string","required":false,"title":"damage"},"vehicle":{"type":"object","$ref":"vehicle","required":false,"title":"vehicle"},"driver":{"type":"object","$ref":"driver","required":false,"title":"driver"}}}'
+"/V2/PolicyServicingAPI/func/decode": 
+    displayName: "V2PolicyServicingAPIFuncDecode"
+    get: 
+        description: "Decode VIN"
+        queryParameters: 
+            "VIN": 
+                displayName: "VIN"
+                type: string
+                required: false
+                repeat: true
+        responses: 
+            "200": 
+                description: "Okei Dokie"
+                body: 
+                    "application/json": 
+                        schema: "vehicle"
+                        example: '{"model":"Station Wagon","VIN":"JH4TB2H26CC000000","year":"2012","make":"Acura"}'
+            "400": 
+                description: "What did you ask for?!"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "401": 
+                description: "Oh no you didn't!"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "404": 
+                description: "That's ain't here."
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "500": 
+                description: "Internal Server Boo boo"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+"/V2/PolicyServicingAPI/policies": 
+    displayName: "V2PolicyServicingAPIPolicies"
+    get: 
+        description: "All policies in the application."
+        queryParameters: 
+            "page": 
+                displayName: "page"
+                description: "the page number requested"
+                type: string
+                required: false
+                repeat: true
+            "perPage": 
+                displayName: "perPage"
+                description: "number of results per page"
+                type: string
+                required: false
+                repeat: true
+            "fields": 
+                displayName: "fields"
+                description: "comma-separated list of fields to return"
+                type: string
+                required: false
+                repeat: true
+            "sort": 
+                displayName: "sort"
+                description: "comma-delimited list of field to sort on. Use negative (-) to indicate descending sort order."
+                type: string
+                required: false
+                repeat: true
+            "policyNumber": 
+                displayName: "policyNumber"
+                type: string
+                required: false
+                repeat: true
+        responses: 
+            "200": 
+                description: "200 - OK"
+                body: 
+                    "application/json": 
+                        schema: "policy"
+                        example: '{"drivers":[],"effectiveStartDate":"05/21/2015","roadSideAssistance":true,"liability":false,"paymentHistory":[],"vehicles":[],"policyNumber":"123456","preminum":null,"collision":false,"effectiveEndDate":"05/22/2016"}'
+            "400": 
+                description: "400-Bad Request"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "401": 
+                description: "401 - Unauthorized"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "404": 
+                description: "404 - Not Found"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "500": 
+                description: "500 - Internal Server Error"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+    post: 
+        description: "Create a Policy based on a Quote."
+        responses: 
+            "200": 
+                description: "200 - OK"
+                body: 
+                    "application/json": 
+                        schema: "policy"
+                        example: '{"drivers":[],"effectiveStartDate":"05/21/2015","roadSideAssistance":true,"liability":false,"paymentHistory":[],"vehicles":[],"policyNumber":"123456","preminum":null,"collision":false,"effectiveEndDate":"05/22/2016"}'
+            "400": 
+                description: "400 - Bad Request"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "401": 
+                description: "401-Unauthorized"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "404": 
+                description: "404 - Not Found"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "500": 
+                description: "500-Internal Server Error"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+"/V2/PolicyServicingAPI/policies/{policyNumber}": 
+    displayName: "V2PolicyServicingAPIPoliciesPolicyNumber"
+    uriParameters: 
+        "policyNumber": 
+            displayName: "policyNumber"
+            type: string
+            required: false
+            repeat: false
+    get: 
+        description: "Retrieve a particular policy."
+        queryParameters: 
+            "fields": 
+                displayName: "fields"
+                description: "comma-separated list of field to return"
+                type: string
+                required: false
+                repeat: true
+            "embed": 
+                displayName: "embed"
+                description: "list of sub-resources to include in the response"
+                type: string
+                required: false
+                repeat: true
+        responses: 
+            "200": 
+                description: "200 - OK"
+                body: 
+                    "application/json": 
+                        schema: "policy"
+                        example: '{"drivers":[],"effectiveStartDate":"05/21/2015","roadSideAssistance":true,"liability":false,"paymentHistory":[],"vehicles":[],"policyNumber":"123456","preminum":null,"collision":false,"effectiveEndDate":"05/22/2016"}'
+            "400": 
+                description: "400 - Bad Request"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "401": 
+                description: "401 - Unauthorized"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "404": 
+                description: "404 - Not Found"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+            "500": 
+                description: "500 - Internal Server Error"
+                body: 
+                    "application/json": 
+                        example: '{"httpStatusCode":"sample httpStatusCode","developerMessage":"sample developerMessage","errorCode":"sample errorCode","moreInfo":"sample moreInfo"}'
+    put: 
+        description: "Update a particular Policy."
+        body: 
+            "application/json": 
+                schema: "policy"
+                example: '{"drivers":[],"effectiveStartDate":"05/21/2015","roadSideAssistance":true,"liability":false,"paymentHistory":[],"vehicles":[],"policyNumber":"123456","preminum":null,"collision":false,"effectiveEndDate":"05/22/2016"}'
+        responses: 
+            "200": 
+                description: "200 - OK"
+            "400": 
+                description: "400 - Bad Request"
+            "401": 
+                description: "401 - Unauthorized"
+            "404": 
+                description: "404 - Not Found"
+            "500": 
+                description: "500 - Internal Server Error"
+    delete: 
+        description: "Delete a particular Policy"
+        responses: 
+            "200": 
+                description: "200 - OK"
+            "400": 
+                description: "400 - Bad Request"
+            "401": 
+                description: "401 - Unauthorized"
+            "500": 
+                description: "500 - Internal Server Error"
+    patch: 
+        description: "Update a small set of a resource properties."
+        responses: 
+            "200": 
+                description: "200 - OK"
+            "400": 
+                description: "400 - Bad Request"
+            "401": 
+                description: "401 - Unauthoirized"
+            "404": 
+                description: "404 - Not Found"
+            "500": 
+                description: "500 - Internal Server Error"

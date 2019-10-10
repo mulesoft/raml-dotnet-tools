@@ -1,9 +1,0 @@
-/*global unescape, module, define, window, global*/
-
-/*
- UriTemplate Copyright (c) 2012-2013 Franz Antesberger. All Rights Reserved.
- Available via the MIT license.
-*/
-
-(function (exportCallback) {
-    "use strict";

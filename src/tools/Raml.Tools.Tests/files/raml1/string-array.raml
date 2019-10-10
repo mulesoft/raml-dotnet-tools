@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: string array
+version: 1.0
+baseUri: http://string.com/api
+mediaType: application/json
+types:
+    Other:
+        properties:
+            Messages?: string []
+    Some:
+        properties:
+            Messages?:
+                type: array
+                items:
+                  type: string
+/messages:
+  get:
+    responses:
+      200:
+        body:
+          type: Other
+  post:
+    body:
+      type: Some

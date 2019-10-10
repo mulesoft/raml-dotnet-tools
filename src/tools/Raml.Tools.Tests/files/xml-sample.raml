@@ -1,0 +1,28 @@
+#%RAML 0.8
+title: XML TEST API
+version: v1
+baseUri: /
+mediaType: application/atom+xml
+schemas:
+  - atom: !include files/atom.xsd
+/contacts:
+  displayName: Contacts
+  get:
+    responses:
+      200:
+        body:
+          application/atom+xml:
+            schema: feedType
+            example: !include files/contacts.xml
+  post:
+    body: 
+      application/atom+xml:
+        schema: feedType
+        example: !include files/contact-request.xml
+    responses:
+      201:
+        description: Created
+        body:
+          application/atom+xml:
+            schema: feedType
+            example: !include files/contact.xml

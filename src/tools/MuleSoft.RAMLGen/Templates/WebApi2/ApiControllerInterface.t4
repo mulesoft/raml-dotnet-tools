@@ -1,0 +1,44 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="$(binDir)Raml.Tools.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Raml.Tools" #>
+<#@ import namespace="Raml.Tools.WebApiGenerator" #>
+<#@ parameter name="controllerObject" type="Raml.Tools.WebApiGenerator.ControllerObject" #>
+<#@ parameter name="hasModels" type="System.Boolean" #>
+<#@ parameter name="useAsyncMethods" type="System.Boolean" #>
+<#@ output extension=".cs" #>
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+<# if(hasModels){ #>
+using $(namespace).Models;
+<# } #>
+
+
+namespace $(namespace)
+{
+    public interface I<#= controllerObject.Name #>Controller
+    {
+
+<#
+		foreach (var method in controllerObject.Methods)
+		{
+            if(useAsyncMethods)
+            {
+#>
+        Task<IHttpActionResult> <#= method.Name #>(<#= method.ParametersString #>);
+<#          
+            } 
+            else 
+            { 
+#>
+        IHttpActionResult <#= method.Name #>(<#= method.ParametersString #>);
+<#
+            }
+		}
+#>
+    }
+}

@@ -1,0 +1,8 @@
+
+v 1.4.0
+ - New Features:
+   - Support for ASP.NET 5 Scaffolding
+   - Support for query objects (RAML Metadata)
+ 
+ - Issues fixed: 54, 53, 52, 50, 49, 46, 45, 44, 43, 42
+ 

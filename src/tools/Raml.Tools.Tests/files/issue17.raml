@@ -1,0 +1,29 @@
+#%RAML 0.8
+title: Issue 17 check
+version: 1.0
+baseUri: http://issue17.com/api
+mediaType: application/json
+schemas:
+    - example: |
+        {  "$schema": "http://json-schema.org/draft-03/schema",
+          "type": "object",
+          "description": "A single support status",
+          "properties": {
+            "id":  { "type": "string", "required": true },
+            "name": { "type": "string", "required": true },
+            "exampleBoolProp": { "type": "boolean", "required": true },
+            "exampleIntProp": { "type": "integer", "required": true }
+           }
+        }
+/movies:
+  post:
+    description: adds a movie to the catalogue
+    body:
+        schema: example
+  /{id}:
+      get:
+        description: gets a movie
+        responses:
+          200:
+            body:
+              schema: example

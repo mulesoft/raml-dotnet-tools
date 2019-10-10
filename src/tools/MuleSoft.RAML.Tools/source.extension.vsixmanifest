@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="49d3aa6e-2e80-4568-92e9-4bcb3eb2b40d" Version="2.1.2" Language="en-US" Publisher="MuleSoft Inc" />
+        <DisplayName>RAML Tools for .NET</DisplayName>
+        <Description xml:space="preserve">RAML Tools for .NET allows developers to easily integrate and consume APIs that exposes a RAML definition, or generate a new ASP.NET Web API implementation from scratch using a contract-first approach from a previously created RAML definition. See http://raml.org for information on RAML (RESTful API Modeling Language).
+
+Project home: https://github.com/mulesoft-labs/raml-dotnet-tools
+
+A number of sample projects can be found under the /samples directory in this repository.</Description>
+        <MoreInfo>https://github.com/mulesoft-labs/raml-dotnet-tools</MoreInfo>
+        <License>license.txt</License>
+        <Icon>Resources\MuleSoft-Logo.png</Icon>
+        <Tags>RAML, API, Client, Service, Scaffold, Code Generation</Tags>
+    </Metadata>
+    <Installation InstalledByMsi="false">
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0, 16.0)" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+        <Dependency Id="Microsoft.VisualStudio.MPF.14.0" DisplayName="Visual Studio MPF 14.0" d:Source="Installed" Version="[14.0]" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.ManagedDesktop.Core" Version="[15.0,16.0)" DisplayName="WPF" />
+  </Prerequisites>
+</PackageManifest>

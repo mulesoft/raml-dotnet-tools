@@ -1,0 +1,14 @@
+#%RAML 1.0
+# This file is located at librarybooks.raml
+title: traits lib
+uses:
+  Lib: ./traits.raml
+
+/lessons:
+  get:
+    is: [Lib.filtered_by_month]
+    displayName: Get all lessons in a given month
+    responses:
+      200:
+        body:
+          application/json:

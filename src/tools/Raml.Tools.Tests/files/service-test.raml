@@ -1,0 +1,350 @@
+#%RAML 0.8
+title: Api
+baseUri: AccrualServices/api
+schemas:
+- AccrualRequest: |
+    {
+      "id": "AccrualRequest",
+      "type": "object",
+      "properties":
+      {
+        "CompanyNumber": { "type": "string"},
+        "GeoCode": { "type": "string"},
+        "WorkerId": { "type": "string" },
+        "TransactionId": { "type": "integer" },
+        "HoursWorked": { "type": "number" },
+        "AccrualDate": { "type": "date" }
+      }
+    }
+- LrAccrualReversal: |
+    {
+      "id": "LrAccrualReversal",
+      "type": "object",
+      "properties":
+      {
+        "WorkerId": { "type": "string" },
+        "TransactionId": { "type": "integer" }
+      }
+    }
+- LrAccrualRequest: |
+    {
+      "id": "LrAccrualRequest"
+      "type": "object",
+      "properties":
+      {
+        "Brand": { "type": "integer" },
+        "CompanyNumber": { "type": "string"},
+        "GeoCode": { "type": "string" },
+        "WorkerId": { "type": "string"},
+        "TransactionId": { "type": "integer" },
+        "HoursWorked": { "type": "number" },
+        "AccrualDate": { "type": "date" },
+        "PrevailingWageFlag": { "type": "boolean" }
+      }
+    }
+- PayoutRequest: |
+    {
+      "id": "PayoutRequest",
+      "type": "object",
+      "properties":
+      {
+        "TransactionId": { "type": "number" },
+        "PayRate": { "type": "number" },
+        "Brand": { "type": "number" },
+        "CompanyNumber": { "type": "number" },
+        "GeoCode": { "type": "string" },
+        "WorkerId": { "type": "number" },
+        "RequestedHours": { "type": "number" }
+      }
+    }
+- PayoutReversal: |
+    {
+      "id": "PayoutReversal",
+      "type": "object",
+      "properties":
+      {
+        "WorkerId": { "type": "number" },
+        "TransactionId": { "type": "number" },
+        "Brand": { "type": "number" }
+      }
+    }
+- PTOBalance: |
+    {
+      "id": "PTOBalance",
+      "type": "object",
+      "properties":
+      {
+        "Balance": { "type": "number" },
+        "Brand": { "type": "string" },
+        "CompanyNumber": { "type": "string" },
+        "DisplayIntegerBalance": { "type": "boolean" },
+        "Eligibility": { "type": "boolean" },
+        "QualifyingLifetimeHours": { "type": "number" },
+        "ShowOnPayStub": { "type": "boolean" },
+        "YtdUsed": { "type": "number" },
+        "ZoneDescription": { "type": "string" }
+      }
+    }
+- PTOResponse: |
+    {
+      "id": "PTOResponse",
+      "type": "object",
+      "properties":
+      {
+        "PayRateCalcuation": { "type": "string" },
+        "StatusReasons": 
+        { 
+          "id": "StatusReasons",
+          "type": "array", 
+          "items": 
+          {
+            "type": "object",
+            "id": "StatusReason",
+            "properties":
+            {
+              "RequestStatus": { "type": "string" },
+              "ApprovedHours": { "type": "number" },
+              "Code": { "type": "string" },
+              "ZoneDescription": { "type": "string" },
+              "Reason": { "type": "string" }
+            }
+          }
+        },
+        "ZoneCompanyId": { "type": "number" },
+        "RequestStatus": { "type": "string" },
+        "ApprovedHours": { "type": "number" },
+        "Code": { "type": "string" },
+        "ZoneDescription": { "type": "string" },
+        "Reason": { "type": "string" }
+      }
+    }
+- SickPayBalance: |
+    {
+      "id": "SickPayBalance",
+      "type": "array",
+      "items":
+      {
+        "id": "SickPayBalanceObject",
+        "type": "object",
+        "properties":
+        {
+          "CompanyNumber": { "type": "string" },
+          "ZoneDescription": { "type": "string" },
+          "Balance": { "type": "number" },
+          "YtdUsed": { "type": "number" },
+          "Eligibility": { "type": "boolean" },
+          "DisplayIntegerBalance": { "type": "boolean" },
+          "ShowOnPayStub": { "type": "boolean" }
+        }
+      }
+    }
+- SickPayRequest: |
+    {
+      "id": "SickPayRequest",
+      "type": "object",
+      "properties":
+      {
+        "CompanyNumber": { "type": "string"},
+        "GeoCode": { "type": "string" },
+        "WorkerId": { "type": "string" },
+        "TransactionId": { "type": "integer" },
+        "RequestedHours": { "type": "number"},
+        "PayRate": { "type": "number" }
+      }
+    }
+- SickPayReversal: |
+    {
+      "id": "SickPayReversal",
+      "type": "object",
+      "properties":
+      {
+        "WorkerId": { "type": "string" },
+        "TransactionId": { "type": "integer" }
+      }
+    }
+- SickPayResponse: |
+    {
+      "id": "SickPayResponse",
+      "type": "object",
+      "properties":
+      {
+        "PayRateCalculation": { "type": "string" },
+        "StatusReasons": 
+        { 
+          "type": "array", 
+          "items": 
+          {
+            "id": "StatusReason",
+            "type": "object",
+            "properties":
+            {
+              "RequestStatus": { "type": "string" },
+              "ApprovedHours": { "type": "number" },
+              "Code": { "type": "string" },
+              "ZoneDescription": { "type": "string" },
+              "Reason": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+/sickpay:
+  /Accrual:
+    /lr/v1:
+      /Update:
+        post:
+          description: "Determines the accrual amount (if any) and commits the update for given transaction"
+          body:
+            application/json:
+              schema: AccrualRequest
+      /Reverse:
+        post:
+          description: "Get all branch parameters that match the specified hard code (Branch.GetBranchParameters)"
+          body:
+            application/json:
+              schema: LrAccrualReversal
+  /zonevalidate:
+    /lr/v1/{CompanyNumber}/{GeoCode}:
+        uriParameters: 
+          CompanyNumber: 
+            type: string
+          GeoCode:
+            type: string
+        get:
+          description: "Validate that the zone is available"
+          queryParameters:
+            Brand:
+              description: "Brand identification"
+              type: "string"
+  /Payout:
+    /lr/v1:
+      /Update:
+        post:
+          description: "Determines availability and if approved commits update for given transaction, otherwise returns available hours and reason"
+          body:
+            application/json:
+              schema: SickPayRequest
+      /Approve/{Company}/{GeoCode}/{WorkerId}/{Hours}:
+        uriParameters:
+          Company:
+            description: "Company shorthand"
+            type: "string"
+            required: true
+          GeoCode:
+            description: "Geocode"
+            type: "string"
+            required: true
+          WorkerId:
+            description: "Worker Id"
+            type: "string"
+            required: true
+          Hours:
+            description: "Hours"
+            type: "number"
+            required: true
+        get:
+          description: "Determines availability and returns response without commit"
+          responses:
+            200:
+              body:
+                application/json:
+                  schema: SickPayResponse
+      /Reverse: 
+        post:
+          description: Based on previous transaction- reverses sick pay usage for given transaction
+          body:
+            application/json:
+              schema: SickPayReversal
+  /Balances:
+    /lr/v1:
+      /GetByLocation/{CompanyNumber}/{GeoCode}/{WorkerId}:
+        uriParameters:
+          CompanyNumber:
+            description: "Company number"
+            type: "string"
+            required: true
+          GeoCode:
+            description: "Geocode"
+            type: "string"
+            required: true
+          WorkerId:
+            description: "Worker Id"
+            type: "string"
+            required: true
+        get:
+          description: "Retrieves worker balances for a location"
+          responses:
+            200:
+              body:
+                application/json:
+                  schema: SickPayBalance
+/PTO:
+  /Balance/v1/get/{WorkerId}:
+    uriParameters:
+      WorkerId:
+        description: "Worker Id"
+        type: "string"
+        required: true
+    get:
+      description: "Retrieves worker balances"
+      responses:
+        200:
+          body:
+            application/json:
+              schema: PTOBalance
+  /Accrual/v1:
+    /update:
+      post:
+        description: "Accrues PTO for a worker"
+        body:
+          application/json: 
+            schema: LrAccrualRequest
+    /reverse:
+      post:
+        description: "Reverse PTO accrual for a worker"
+        body:
+          application/json:
+            schema: AccrualReversal
+  /payout/v1:
+    /approve/{CompanyNumber}/{GeoCode}/{WorkerId}/{RequestedHours}:
+      uriParameters:
+        CompanyNumber:
+          description: "Company number"
+          type: "string"
+          required: true
+        GeoCode:
+          description: "Geo code"
+          type: "string"
+          required: true
+        WorkerId:
+          description: "Worker Id"
+          type: "string"
+          required: true
+        RequestedHours:
+          description: "Requested hours"
+          type: "string"
+          required: true
+      get:
+        queryParameters:
+          Brand:
+            displayName: Brand
+            type: string
+            description: Brand marker
+            required: true
+        responses:
+          200:
+            body:
+              application/json:
+                schema: PTOResponse
+    /update:
+      post:
+        description: "Pays save PTO out to a worker"
+        body:
+          application/json:
+            schema: PayoutRequest
+    /reverse:
+      post:
+        description: 
+        body:
+          application/json:
+            schema: PayoutReversal

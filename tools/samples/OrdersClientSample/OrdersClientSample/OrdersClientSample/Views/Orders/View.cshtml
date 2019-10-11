@@ -1,0 +1,18 @@
+﻿@using System.Activities.Expressions
+@model OrdersClientSample.Models.OrderViewModel
+@{
+    ViewBag.Title = "View Order";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Order</h2>
+        <div>
+            <p>Date: @Model.Date.ToShortDateString()</p>
+            <p>Addresses: @string.Join(", ", Model.Addresses)</p>
+            <p>Products: @string.Join(", ", Model.Products.Select(p => p.Description))</p>
+        </div>
+
+    </div>
+
+</div>

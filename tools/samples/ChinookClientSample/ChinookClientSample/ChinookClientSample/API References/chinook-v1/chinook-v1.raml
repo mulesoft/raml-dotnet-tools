@@ -1,0 +1,262 @@
+#%RAML 1.0
+title: Chinook RAML 1 Api
+types:
+  Person:
+    properties:
+        Id: 
+            type: integer
+        Title?:
+        BirthDate?:
+        FirstName:
+        LastName:
+        Address?:
+        City?:
+        State?:
+        Country?:
+        PostalCode?:
+            type: string
+            minLength: 4
+            maxLength: 14
+        Phone?:
+            type: string
+            minLength: 8
+        Fax?:
+        Email?:
+        Picture?:
+            type: file
+  Employee:
+    type: Person
+    properties:
+        HireDate?:
+  SupportRepresentant:
+    type: Employee
+    properties:
+        ReportsTo:
+            type: Employee
+  Customer:
+        type: Person
+        properties:
+          Company:
+  Artist:
+    properties:
+          Id: 
+            type: integer
+          Name:
+    examples:
+      - content:
+          Id: 1
+          Name: Dave Mathews Band
+      - content:
+          Id: 2
+          Name: Pearl Jam
+  Album:
+    properties:
+        Artist:
+          type: Artist
+        Id: 
+            type: integer
+        Title:
+  Track:
+        properties:
+          Id: 
+            type: integer
+          Name:
+          Album:
+            type: Album
+          MediaType:
+              properties:
+                Id: 
+                    type: integer
+                Name:
+          Genre:
+              properties:
+                Id:
+                    type: integer
+                Name:
+          Composer:
+          Milliseconds: 
+            type: integer
+          Bytes:
+            type: integer
+          UnitPrice: 
+            type: number     
+  InvoiceLine:
+    properties: 
+        Id: 
+            type: integer
+        Track:
+            type: Track
+        UnitPrice: 
+            type: number
+            minimum: 0
+        Quantity: 
+            type: integer
+            minimum: 1  
+  Invoice:
+        properties:
+          Customer:
+              type: Customer
+          InvoiceDate:
+          BillingAddress:
+          BillingCity:
+          BillingState:
+          BillingCountry:
+          BillingPostalCode:
+          Lines:
+              type: InvoiceLine[]
+  ArtistByTrack:
+      type: object
+      properties:
+          []:
+              type: Artist
+  TracksByArtist:
+      type: object
+      properties:
+          []:
+              type: Track[]
+/customers:
+  get:
+    responses:
+      200:   
+        body:
+          application/json:
+            type: Customer[]
+  post:
+    body:
+      application/json:
+        type: Customer
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:   
+              body:
+                application/json:
+                  type: Customer
+    put:
+      body:
+        application/json:
+          type: Customer
+    delete:
+/tracks:
+  get:
+    responses:
+      200:   
+          body:
+            application/json:
+              type: Track[]
+  post:
+    body:
+      application/json:
+        type: Track
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:   
+              body:
+                application/json:
+                  type: Track
+    put:
+      body:
+        application/json:
+          type: Track
+    delete:
+  /byartist:
+    /{id}:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: TracksByArtist
+/artists:
+  get:
+    responses:
+        200:   
+          body:
+            application/json:
+              type: Artist[]
+  post:
+    body:
+      application/json:
+        type: Artist
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+            200:   
+              body:
+                application/json:
+                  type: Artist
+    put:
+      body:
+        application/json:
+          type: Artist
+    delete:
+  /bytrack:
+    /{id}:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: ArtistByTrack
+/albums:
+  get:
+    responses:
+      200:   
+        body:
+          application/json:
+            type: Album[]
+  post:
+    body:
+      application/json:
+        type: Album
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:   
+            body:
+              application/json:
+                type: Album
+    put:
+      body:
+        application/json:
+          type: Album
+    delete:
+/invoices:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Invoice[]
+  post:
+    body:
+      application/json:
+        type: Invoice
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+    get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: Invoice
+    put:
+      body:
+        application/json:
+          type: Invoice
+    delete:

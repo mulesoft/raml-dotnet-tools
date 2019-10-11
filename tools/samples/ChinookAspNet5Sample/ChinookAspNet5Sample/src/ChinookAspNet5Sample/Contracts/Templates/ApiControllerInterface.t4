@@ -1,0 +1,49 @@
+<#
+// title: Controller Interface
+// hash: 4736ae1d3ab42c60b065451cff0e9694
+// version: 3.0
+#>
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="$(binDir)Raml.Tools.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Raml.Tools" #>
+<#@ import namespace="Raml.Tools.WebApiGenerator" #>
+<#@ import namespace="System.Linq" #>
+<#@ parameter name="controllerObject" type="Raml.Tools.WebApiGenerator.ControllerObject" #>
+<#@ parameter name="hasModels" type="System.Boolean" #>
+<#@ parameter name="useAsyncMethods" type="System.Boolean" #>
+<#@ output extension=".cs" #>
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Mvc;
+<# if(hasModels){ #>
+using $(namespace).Models;
+<# } #>
+
+
+namespace $(namespace)
+{
+    public interface I<#= controllerObject.Name #>Controller
+    {
+
+<#
+		foreach (var method in controllerObject.Methods)
+		{
+            if(useAsyncMethods)
+            {
+#>
+        Task<IActionResult> <#= method.Name #>(<#= method.ParametersStringForAspNet5 #>);
+<#          
+            } 
+            else 
+            { 
+#>
+        IActionResult <#= method.Name #>(<#= method.ParametersStringForAspNet5 #>);
+<#
+            }
+		}
+#>
+    }
+}

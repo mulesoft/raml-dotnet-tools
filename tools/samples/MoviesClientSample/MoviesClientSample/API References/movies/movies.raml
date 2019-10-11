@@ -1,0 +1,416 @@
+#%RAML 0.8
+title: Movies
+version: 1.0
+baseUri: http://movies.com/api
+mediaType: application/json
+protocols: [HTTP]
+securitySchemes:
+  - oauth_2_0:
+      type: OAuth 2.0
+      describedBy:
+        headers:
+          Authorization:
+            description: |
+              Used to send a valid OAuth 2 access token. Do not use together with
+              the "access_token" queryParameters string parameter.
+            type: string
+        queryParameters:
+          access_token:
+            description: |
+              Used to send a valid OAuth 2 access token. Do not use together with
+              the "Authorization" header
+            type: string
+      settings:
+        authorizationUri: https://localhost:8081/oauth/authorize
+        accessTokenUri: https://localhost:8081/oauth/access_token
+        authorizationGrants: [ code, token ]
+        scopes:
+          - read
+          - write
+/movies:
+  get:
+    description: gets all movies in the catalogue
+    responses:
+      200:
+        body:
+          schema: |
+            { "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "array",
+              "description": "movies",
+              "items": 
+                {
+                  "type": "object",  
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string"},
+                    "director": { "type": "string"},
+                    "genre": { "type": "string" },
+                    "cast":{ "type": "string" },
+                    "duration":{ "type": "number" },
+                    "storyline":{ "type": "string" },
+                    "language":{ "type": "string" },
+                    "rented":{ "type": "boolean" }
+                }
+              }
+            }
+          example: |
+            [
+              {
+                 "id" : "1",
+                 "name": "Big Fish",
+                 "director": "Tim Burton",
+                 "genre": "Drama, Fantasy",
+                 "cast": "Ewan McGregor, Albert Finney, Billy Crudup",
+                 "language": "English",
+                 "rented": false
+              },
+              {
+                 "id" : "2",	      
+                 "name": "Midnight in Paris",
+                 "director": "Woody Allen",
+                 "genre": "Comedy",
+                 "cast": "Owen Wilson, Rachel McAdams, Kathy Bates",
+                 "language": "English",
+                 "rented": false
+              },
+              {
+                 "id" : "3",
+                 "name": "Relatos Salvajes",
+                 "director": "Dami�n Szifr�n",
+                 "genre": "Comedy, Drama",
+                 "cast": " Ricardo Dar�n, Oscar Mart�nez, Leonardo Sbaraglia",
+                 "language": "Spanish",
+                 "rented": true
+              }
+            ]
+  post:
+    description: adds a movie to the catalogue
+    securedBy: [ oauth_2_0 ]
+    body:
+      application/json:
+        schema: |
+          { 
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "type": "object",
+            "description": "a movie",
+            "properties": {
+            "id": { "type": "integer"},
+            "name": { "type": "string"},
+            "director": { "type": "string"},
+            "genre": { "type": "string" },
+            "cast":{ "type": "string" },
+            "duration":{ "type": "number" },
+            "storyline":{ "type": "string" },
+            "language":{ "type": "string" }
+            }
+          }
+        example: |
+          {
+            "id" : "1",
+            "name": "Big Fish",
+            "director": "Tim Burton",
+            "genre": "Drama, Fantasy",
+            "cast": "Ewan McGregor, Albert Finney, Billy Crudup",
+            "language": "English"
+          }
+  /{id}:
+    get:
+      description: get the info of a movie
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                { 
+                  "$schema": "http://json-schema.org/draft-03/schema",
+                  "type": "object",
+                  "description": "a movie",
+                  "properties": {
+                    "id": { "type": "integer"},
+                    "name": { "type": "string"},
+                    "director": { "type": "string"},
+                    "genre": { "type": "string" },
+                    "cast":{ "type": "string" },
+                    "duration":{ "type": "number" },
+                    "storyline":{ "type": "string" },
+                    "language":{ "type": "string" },
+                    "rented":{ "type": "boolean" }
+                  }
+                }
+              example: |
+                {
+                  "id" : "1",
+                  "name": "Big Fish",
+                  "director": "Tim Burton",
+                  "genre": "Drama, Fantasy",
+                  "cast": "Ewan McGregor, Albert Finney, Billy Crudup",
+                  "language": "English",
+                  "rented": false
+                }
+    put:
+      description: update the info of a movie
+      body:
+        application/json:
+          schema: |
+            { 
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "object",
+              "description": "a movie",
+              "properties": {
+              "id": { "type": "integer"},
+              "name": { "type": "string"},
+              "director": { "type": "string"},
+              "genre": { "type": "string" },
+              "cast":{ "type": "string" },
+              "duration":{ "type": "number" },
+              "storyline":{ "type": "string" },
+              "language":{ "type": "string" }
+              }
+            }
+          example: |
+            {
+              "name": "Big Fish",
+              "director": "Tim Burton",
+              "genre": "Drama, Fantasy",
+              "cast": "Ewan McGregor, Albert Finney, Billy Crudup",
+              "language": "English"
+            }
+    delete:
+      description: remove a movie from the catalogue
+      responses:
+        200:
+          description: movie deleted
+        404:
+          description: movie not found
+    /rent:
+      description: rent a movie
+      put:
+        securedBy: [ oauth_2_0 ]
+        responses:
+          201:
+            description: succesfully rented
+          202:
+            description: movie already rented
+          404: 
+            description: movie not found
+    /return:
+      description: return a movie
+      put:
+        securedBy: [ oauth_2_0 ]
+        responses:
+          201:
+            description: succesfully returned
+          404: 
+            description: movie not found
+  /wishlist:
+    get:
+      description: gets the current user movies wishlist
+      securedBy: [ oauth_2_0 ]
+      responses:
+        200:
+          body:
+            schema: |
+              { "$schema": "http://json-schema.org/draft-03/schema",
+                "type": "array",
+                "description": "movies",
+                "items": 
+                  {
+                    "type": "object",  
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "name": { "type": "string"},
+                      "director": { "type": "string"},
+                      "genre": { "type": "string" },
+                      "cast":{ "type": "string" },
+                      "duration":{ "type": "number" },
+                      "storyline":{ "type": "string" },
+                      "language":{ "type": "string" },
+                      "rented":{ "type": "boolean" }
+                  }
+                }
+              }
+            example: |
+              [
+                {
+                   "id" : "1",
+                   "name": "Big Fish",
+                   "director": "Tim Burton",
+                   "genre": "Drama, Fantasy",
+                   "cast": "Ewan McGregor, Albert Finney, Billy Crudup",
+                   "language": "English",
+                   "rented": false
+                },
+                {
+                   "id" : "2",	      
+                   "name": "Midnight in Paris",
+                   "director": "Woody Allen",
+                   "genre": "Comedy",
+                   "cast": "Owen Wilson, Rachel McAdams, Kathy Bates",
+                   "language": "English",
+                   "rented": false
+                }
+              ]
+    /{id}:
+      post:
+        description: add a movie to the current user movies wishlist
+        securedBy: [ oauth_2_0 ]
+      delete:
+        description: removes a movie from the current user movies wishlist
+        securedBy: [ oauth_2_0 ]
+  /rented:
+    get:
+      description: gets the user rented movies
+      responses:
+        200:
+          body:
+            schema: |
+              { "$schema": "http://json-schema.org/draft-03/schema",
+                "type": "array",
+                "description": "movies",
+                "items": 
+                  {
+                    "type": "object",  
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "name": { "type": "string"},
+                      "director": { "type": "string"},
+                      "genre": { "type": "string" },
+                      "cast":{ "type": "string" },
+                      "duration":{ "type": "number" },
+                      "storyline":{ "type": "string" },
+                      "language":{ "type": "string" },
+                      "rented":{ "type": "boolean" }
+                  }
+                }
+              }
+            example: |
+              [
+                {
+                   "id" : "3",
+                   "name": "Relatos Salvajes",
+                   "director": "Dami�n Szifr�n",
+                   "genre": "Comedy, Drama",
+                   "cast": " Ricardo Dar�n, Oscar Mart�nez, Leonardo Sbaraglia",
+                   "language": "Spanish",
+                   "rented": true
+                }
+              ]
+  /available:
+    get:
+      description: get all movies that are not currently rented
+      responses:
+        200:
+          body:
+            schema: |
+              { "$schema": "http://json-schema.org/draft-03/schema",
+                "type": "array",
+                "description": "movies",
+                "items": 
+                  {
+                    "type": "object",  
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "name": { "type": "string"},
+                      "director": { "type": "string"},
+                      "genre": { "type": "string" },
+                      "cast":{ "type": "string" },
+                      "duration":{ "type": "number" },
+                      "storyline":{ "type": "string" },
+                      "language":{ "type": "string" },
+                      "rented":{ "type": "boolean" }
+                  }
+                }
+              }
+            example: |
+              [
+                {
+                   "id" : "1",
+                   "name": "Big Fish",
+                   "director": "Tim Burton",
+                   "genre": "Drama, Fantasy",
+                   "cast": "Ewan McGregor, Albert Finney, Billy Crudup",
+                   "language": "English",
+                   "rented": false
+                },
+                {
+                   "id" : "2",	      
+                   "name": "Midnight in Paris",
+                   "director": "Woody Allen",
+                   "genre": "Comedy",
+                   "cast": "Owen Wilson, Rachel McAdams, Kathy Bates",
+                   "language": "English",
+                   "rented": false
+                },
+                {
+                   "id" : "3",
+                   "name": "Relatos Salvajes",
+                   "director": "Dami�n Szifr�n",
+                   "genre": "Comedy, Drama",
+                   "cast": " Ricardo Dar�n, Oscar Mart�nez, Leonardo Sbaraglia",
+                   "language": "Spanish",
+                   "rented": true
+                }
+              ]
+/search:
+  get:
+    description: search movies by name or director
+    queryParameters:
+      name:
+        description: Name of the movie
+        type: string
+      director:
+        description: Director of the movie
+        type: string
+    responses:
+      200:
+        body:
+          schema: |
+            { "$schema": "http://json-schema.org/draft-03/schema",
+              "type": "array",
+              "description": "movies",
+              "items": 
+                {
+                  "type": "object",  
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string"},
+                    "director": { "type": "string"},
+                    "genre": { "type": "string" },
+                    "cast":{ "type": "string" },
+                    "duration":{ "type": "number" },
+                    "storyline":{ "type": "string" },
+                    "language":{ "type": "string" },
+                    "rented":{ "type": "boolean" }
+                }
+              }
+            }
+          example: |
+            [
+              {
+                 "id" : "1",
+                 "name": "Big Fish",
+                 "director": "Tim Burton",
+                 "genre": "Drama, Fantasy",
+                 "cast": "Ewan McGregor, Albert Finney, Billy Crudup",
+                 "language": "English",
+                 "rented": false
+              },
+              {
+                 "id" : "2",	      
+                 "name": "Midnight in Paris",
+                 "director": "Woody Allen",
+                 "genre": "Comedy",
+                 "cast": "Owen Wilson, Rachel McAdams, Kathy Bates",
+                 "language": "English",
+                 "rented": false
+              },
+              {
+                 "id" : "3",
+                 "name": "Relatos Salvajes",
+                 "director": "Dami�n Szifr�n",
+                 "genre": "Comedy, Drama",
+                 "cast": " Ricardo Dar�n, Oscar Mart�nez, Leonardo Sbaraglia",
+                 "language": "Spanish",
+                 "rented": true
+              }
+            ]

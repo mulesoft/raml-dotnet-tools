@@ -1,0 +1,111 @@
+﻿@using System.Activities.Expressions
+@model OrdersClientSample.Models.OrderEditModel
+@{
+    ViewBag.Title = "View Order";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Order</h2>
+        <div>
+            <form method="POST" action="/orders">
+
+                <div class="col-lg-10">
+                    @Html.HiddenFor(x => x.Id)
+                    <div>Date:</div>
+                    <div>@Html.EditorFor(x => x.Date)</div>
+                    
+                    <br/>
+
+                    <fieldset>
+                        <legend>Bill To</legend>
+
+                        <div>Name:</div>
+                        <div><input type="text" name="BillTo.name" value="@Model.BillTo.name" /></div>
+
+                        <div>Street:</div>
+                        <div><input type="text" name="BillTo.street" value="@Model.BillTo.street" /></div>
+
+                        <div>City:</div>
+                        <div><input type="text" name="BillTo.city" value="@Model.BillTo.city" /></div>
+                    </fieldset>
+
+                    <br />
+
+                    <fieldset>
+                        <legend>Ship To</legend>
+
+                        <div>Name:</div>
+                        <div><input type="text" name="ShipTo.name" value="@Model.ShipTo.name" /></div>
+
+                        <div>Street:</div>
+                        <div><input type="text" name="ShipTo.street" value="@Model.ShipTo.street" /></div>
+
+                        <div>City:</div>
+                        <div><input type="text" name="ShipTo.city" value="@Model.ShipTo.city" /></div>
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-12 col-lg-offset-11">
+                    <div>Products:</div>
+                    <ul id="products"class="list-group">
+                        @foreach (var prod in Model.Products)
+                        {
+                            <li>@prod.Description</li>
+                        }
+                    </ul>
+                    <br />
+
+                    <fieldset>
+                        <legend>Add Product:</legend>
+                        <div>Name:</div>
+                        <div><input type="text" id="name" name="name" /></div>
+                        <div>Part Number:</div>
+                        <div><input type="text" id="partNumber" name="partNumber" /></div>
+                        <div>Price:</div>
+                        <div><input type="text" id="price" name="price" /></div>
+                        <div>Quantity:</div>
+                        <div><input type="text" id="quantity" name="quantity" /></div>
+                        <div><button type="button" onclick="addProduct()">Add</button></div>
+                    </fieldset>
+                </div>
+                
+                
+
+                <div class="col-lg-8">
+                    <div class="clearfix"></div>
+                    <br />
+                    <div><button type="submit">Save</button></div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function addProduct() {
+
+        var data = {
+            name: $('#name').val(),
+            partNumber: $('#partNumber').val(),
+            price: $('#price').val(),
+            quantity: $('#quantity').val()
+        };
+
+        $.post("/orders/addproduct", data, function(products) {
+            var html = '';
+            for (var i = 0; i < products.length; i++) {
+                html += '<li>' + products[i].Name + ' ' + products[i].Quantity + ' ' + products[i].Price + '</li>';
+            }
+            $('#products').html(html);
+
+            $('#name').val('');
+            $('#partNumber').val('');
+            $('#price').val('');
+            $('#quantity').val('');
+        });
+    }
+</script>

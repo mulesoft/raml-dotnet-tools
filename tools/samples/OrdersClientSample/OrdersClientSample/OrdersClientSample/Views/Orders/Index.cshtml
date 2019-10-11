@@ -1,0 +1,32 @@
+﻿@using System.Activities.Expressions
+@model IEnumerable<OrdersClientSample.Models.OrderViewModel>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@ViewBag.Title</h2>
+        <table class="table-bordered table-striped table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Address</th>
+                    <th>Products</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var order in Model) { 
+                <tr>
+                    <td>@order.Date.ToShortDateString()</td>
+                    <td>@string.Join(", ", order.Addresses)</td>
+                    <td>@string.Join(", ", order.Products.Select(p => p.Description))</td>
+                    <td>
+                        <a href="@string.Format("/orders/{0}", @order.Id)"><i class="glyphicon glyphicon-zoom-in"></i></a> 
+                        <a href="@string.Format("/orders/{0}/edit", @order.Id)"><i class="glyphicon glyphicon-pencil"></i></a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+</div>

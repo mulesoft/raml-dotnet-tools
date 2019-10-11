@@ -1,0 +1,60 @@
+<#
+// title: Controller Implementation
+// hash: 065bf18e84ef632e215d95a63a1fdc08
+// version: 3.0
+#>
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="$(binDir)Raml.Tools.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Raml.Tools" #>
+<#@ import namespace="Raml.Tools.WebApiGenerator" #>
+<#@ import namespace="System.Linq" #>
+<#@ parameter name="controllerObject" type="Raml.Tools.WebApiGenerator.ControllerObject" #>
+<#@ parameter name="hasModels" type="System.Boolean" #>
+<#@ parameter name="useAsyncMethods" type="System.Boolean" #>
+<#@ output extension=".cs" #>
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+<# if(hasModels){ #>
+using $(namespace).Models;
+<# } #>
+
+namespace $(namespace)
+{
+    public partial class <#= controllerObject.Name #>Controller : I<#= controllerObject.Name #>Controller
+    {
+
+<#
+		foreach (var method in controllerObject.Methods)
+		{
+#>
+		<#= method.XmlComment ?? string.Empty #>
+<# if(useAsyncMethods) { #>
+        public async Task<IHttpActionResult> <#= method.Name #>(<#= method.ParametersString #>)
+<# } else { #>
+        public IHttpActionResult <#= method.Name #>(<#= method.ParametersString #>)
+<# } #>
+        {
+            // TODO: implement <#= method.Name #> - route: <#= controllerObject.PrefixUri + "/" + method.Url #>
+<#
+    if (method.ReturnType != null && method.ReturnType != "string")
+    {
+#>
+			// var result = new <#= method.ReturnType #>();
+			// return Ok(result);
+<#
+	}
+#>
+			return Ok();
+        }
+
+<#
+
+		}
+#>
+    }
+}

@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raml.Api.Core", "RAML.API.Core\Raml.Api.Core.csproj", "{38B9703D-6167-4AAE-BAED-0C896C24A762}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{050DDE2F-D543-4728-B79A-94DAA02D94E3}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raml.Api.Core.Tests", "Raml.Api.Core.Tests\Raml.Api.Core.Tests.csproj", "{EE496728-16DA-4B0D-B899-337A7D390A4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38B9703D-6167-4AAE-BAED-0C896C24A762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38B9703D-6167-4AAE-BAED-0C896C24A762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38B9703D-6167-4AAE-BAED-0C896C24A762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38B9703D-6167-4AAE-BAED-0C896C24A762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE496728-16DA-4B0D-B899-337A7D390A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE496728-16DA-4B0D-B899-337A7D390A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE496728-16DA-4B0D-B899-337A7D390A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE496728-16DA-4B0D-B899-337A7D390A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

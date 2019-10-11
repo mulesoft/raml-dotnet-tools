@@ -1,0 +1,34 @@
+pipeline {
+
+    agent {
+        label 'windows10'
+    }
+
+    stages{
+        stage('Build'){
+            steps {
+                bat "dotnet restore RAML.NetCore.APICore/RAML.NetCore.APICore.sln"
+                bat "dotnet build RAML.NetCore.APICore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.xproj"
+                bat "dotnet build RAML.NetCore.APICore/src/Raml.NetCore.APICore.Tests/Raml.NetCore.APICore.Tests.xproj"
+            }
+        }
+        stage('Test'){
+            steps{
+                bat 'dotnet test RAML.NetCore.APICore/src/RAML.NetCore.APICore.Tests/RAML.NetCore.APICore.Tests.xproj'
+            }
+        }
+        stage('Pack'){
+            steps {
+                bat "dotnet pack RAML.NetCore.APICore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.xproj"
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts 'RAML.NetCore.APICore/src/RAML.NetCore.APICore/bin/Debug/*.nupkg'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

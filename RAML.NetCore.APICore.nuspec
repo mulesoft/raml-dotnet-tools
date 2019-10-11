@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RAML.NetCore.APICore</id>
+    <version>0.1.0</version>
+    <title>RAML.NetCore.APICore</title>
+    <authors>MuleSoft Inc</authors>
+    <owners>MuleSoft Inc</owners>
+    <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-apicore</projectUrl>
+	<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+	<iconUrl>http://raml.org/images/logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Core API support classes for the RAML tools package</description>
+    <copyright>Copyright © 2015 MuleSoft</copyright>
+    <tags>RAML REST API SCHEMA MARKUP CLIENT SERVICE</tags>
+      <dependencies>
+          <dependency id="Microsoft.AspNetCore.Mvc.Abstractions" version="1.0.0" />
+          <dependency id="Newtonsoft.Json" version="9.0.1" />
+      </dependencies>
+  </metadata>
+    <files>
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\net45\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\wpa81\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\win8\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\MonoAndroid10\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\xamarinios10\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\MonoTouch10\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\portable-net45+win+wpa81\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\Xamarin.iOS10\Raml.Api.Core.dll" />
+        <file src="bin\debug\Raml.Api.Core.dll" target="lib\dotnet\Raml.Api.Core.dll" />
+    </files>
+</package>

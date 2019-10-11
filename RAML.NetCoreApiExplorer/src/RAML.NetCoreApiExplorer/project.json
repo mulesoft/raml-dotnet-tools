@@ -1,0 +1,21 @@
+{
+  "version": "0.0.1",
+  "title": "RAML.NetCoreApiExplorer",
+  "copyright": "MuleSoft Inc",
+  "description": "This package is used by the RAML Tools for .NET Visual Studio extension to generate RAML metadata from an existing ASP.NET Core implementation. In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.",
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc.ApiExplorer": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+    "NETStandard.Library": "1.6.0",
+    "RAML.NetCore.APICore": "0.0.1",
+    "RAML.Parser.Expressions": "0.0.1",
+    "System.ComponentModel.Annotations": "4.1.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

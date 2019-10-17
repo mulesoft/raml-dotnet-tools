@@ -1,3 +1,6 @@
+def openCover = "%WORKSPACE%/src/tools/packages/OpenCover.4.7.922/tools/OpenCover.Console.exe"
+def nunitRunner = "%WORKSPACE%/src/tools/packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe"
+
 pipeline {
 
     environment {
@@ -27,7 +30,7 @@ pipeline {
                 stage('Coverage'){
                     steps {
                         dir("src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\") {
-                            bat '"../../../../../tools/packages/OpenCover.4.7.922/tools/OpenCover.Console.exe" -target:"../../../../../tools/packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe" -targetArgs:AMF.Api.Core.Tests.dll -register'
+                            bat '${openCover} -target:"${nunitRunner}" -targetArgs:AMF.Api.Core.Tests.dll -register'
                         }
                     }
                 }
@@ -168,7 +171,7 @@ pipeline {
                 stage('Coverage'){
                     steps {
                         dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
-                            bat '"../../../packages/OpenCover.4.7.922/tools/OpenCover.Console.exe" -target:AMF.Tools.TestRunner.exe -register'
+                            bat '"${OpenCover}" -target:AMF.Tools.TestRunner.exe -register'
                         }
                     }
                 }

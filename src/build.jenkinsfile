@@ -1,5 +1,5 @@
-def openCover = "%WORKSPACE%/src/tools/packages/OpenCover.4.7.922/tools/OpenCover.Console.exe"
-def nunitRunner = "%WORKSPACE%/src/tools/packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe"
+def openCover = "%WORKSPACE%\\src\\tools\\packages\\OpenCover.4.7.922\\tools\\OpenCover.Console.exe"
+def nunitRunner = "%WORKSPACE%\\src\\tools\\packages\\NUnit.ConsoleRunner.3.10.0\\tools\\nunit3-console.exe"
 
 pipeline {
 
@@ -30,7 +30,7 @@ pipeline {
                 stage('Coverage'){
                     steps {
                         dir("src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\") {
-                            bat "'$openCover' -target:'$nunitRunner' -targetArgs:AMF.Api.Core.Tests.dll -register"
+                            bat """$openCover"" -target:""$nunitRunner"" -targetArgs:AMF.Api.Core.Tests.dll -register"
                         }
                     }
                 }

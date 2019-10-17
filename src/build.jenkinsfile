@@ -24,13 +24,13 @@ pipeline {
                         bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml'
                     }
                 }
-                // stage('Coverage'){
-                //     steps {
-                //         dir("src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\") {
-                //             bat '../../../../../tools/packages/OpenCover.4.7.922/tools/OpenCover.Console.exe -target:../../../../../tools/packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe -targetArgs:AMF.Api.Core.Tests.dll -register'
-                //         }
-                //     }
-                // }
+                stage('Coverage'){
+                    steps {
+                        dir("src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\") {
+                            bat '"../../../../../tools/packages/OpenCover.4.7.922/tools/OpenCover.Console.exe" -target:"../../../../../tools/packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe" -targetArgs:AMF.Api.Core.Tests.dll -register'
+                        }
+                    }
+                }
                 stage('Pack') {
                     steps {
                         bat 'nuget pack src/apicore/src/RAML.API.Core/AMF.Api.Core.csproj -Prop Configuration=Release'

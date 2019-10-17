@@ -124,7 +124,7 @@ pipeline {
                 }
                 stage ("Nexus IQ") {
                     steps {
-                        nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/RAML.Parser.Expressions.nupkg")
+                        // nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/RAML.Parser.Expressions.nupkg")
                         nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/AMF.NetCoreAPIExplorer.nupkg")
                     }
                 }

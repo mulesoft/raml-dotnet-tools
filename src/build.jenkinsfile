@@ -168,7 +168,7 @@ pipeline {
                 stage('Coverage'){
                     steps {
                         dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
-                            bat '../../../packages/OpenCover.4.7.922/tools/OpenCover.Console.exe -target:AMF.Tools.TestRunner.exe -register'
+                            bat '"../../../packages/OpenCover.4.7.922/tools/OpenCover.Console.exe" -target:AMF.Tools.TestRunner.exe -register'
                         }
                     }
                 }

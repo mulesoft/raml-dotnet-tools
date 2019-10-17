@@ -30,7 +30,7 @@ pipeline {
                 stage('Coverage'){
                     steps {
                         dir("src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\") {
-                            bat '${openCover} -target:"${nunitRunner}" -targetArgs:AMF.Api.Core.Tests.dll -register'
+                            bat '"$openCover" -target:"$nunitRunner" -targetArgs:AMF.Api.Core.Tests.dll -register'
                         }
                     }
                 }

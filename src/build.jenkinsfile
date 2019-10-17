@@ -24,6 +24,13 @@ pipeline {
                         bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml'
                     }
                 }
+                stage('Coverage'){
+                    steps {
+                        dir("%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\") {
+                            bat '../../../../../tools/packages/OpenCover.4.7.922/tools/OpenCover.Console.exe -target:../../../../../tools/packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe -targetArgs:AMF.Api.Core.Tests.dll -register'
+                        }
+                    }
+                }
                 stage('Pack') {
                     steps {
                         bat 'nuget pack src/apicore/src/RAML.API.Core/AMF.Api.Core.csproj -Prop Configuration=Release'
@@ -122,12 +129,12 @@ pipeline {
                         }
                     }
                 }
-                stage ("Nexus IQ") {
-                    steps {
-                        // nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/RAML.Parser.Expressions.nupkg")
-                        nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/AMF.NetCoreAPIExplorer.nupkg")
-                    }
-                }
+                // stage ("Nexus IQ") {
+                //     steps {
+                //         // nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/RAML.Parser.Expressions.nupkg")
+                //         nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/AMF.NetCoreAPIExplorer.nupkg")
+                //     }
+                // }
             }
         }
 
@@ -156,6 +163,13 @@ pipeline {
                             bat 'AMF.Tools.TestRunner.exe'
                         }
                         // bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
+                    }
+                }
+                stage('Coverage'){
+                    steps {
+                        dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
+                            bat '../../../packages/OpenCover.4.7.922/tools/OpenCover.Console.exe -target:AMF.Tools.TestRunner.exe -register'
+                        }
                     }
                 }
                 stage('Sing Vsix') {

@@ -197,8 +197,8 @@ pipeline {
                         echo "Starting NexusIQ scan for appId ${appId} against scan.zip"
                         sh "mkdir scan"
                         bat "cp *.nupkg scan/"
-                        bat "cp 'src/core-apicore/src/AMF.NetCore.APICore/bin/Release/*.nupkg' scan/"
-                        bat "cp 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Release/*.nupkg' scan/"
+                        bat "cp \"%WORKSPACE%\\src\\core-apicore\\src\\AMF.NetCore.APICore\\bin\\Release\\*.*\" scan/"
+                        bat "cp \"%WORKSPACE%\\src\\core-apiexplorer\\src\\AMF.NetCoreApiExplorer\\bin\\Release\\*.*\" scan/"
                         zip zipFile: 'scan.zip', dir: 'scan'
                         script {
                             try {

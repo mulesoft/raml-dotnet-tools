@@ -199,7 +199,7 @@ pipeline {
                         bat "cp *.nupkg scan/"
                         // bat "cp \"%WORKSPACE%\\src\\core-apicore\\src\\AMF.NetCore.APICore\\bin\\Release\\*.*\" scan/"
                         // bat "cp \"%WORKSPACE%\\src\\core-apiexplorer\\src\\AMF.NetCoreApiExplorer\\bin\\Release\\*.*\" scan/"
-                        zip zipFile: 'scan.zip', dir: 'scan'
+                        zip zipFile: 'scan.zip', dir: 'scan', archive: true
                         script {
                             try {
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding',

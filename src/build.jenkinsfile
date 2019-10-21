@@ -1,6 +1,11 @@
 def openCover = "%WORKSPACE%\\src\\tools\\packages\\OpenCover.4.7.922\\tools\\OpenCover.Console.exe"
 def nunitRunner = "%WORKSPACE%\\src\\tools\\packages\\NUnit.ConsoleRunner.3.10.0\\tools\\nunit3-console.exe"
 
+def niqHome= "C:/Users/Administrator/jenkins-agent/tools/com.cloudbees.jenkins.plugins.customtools.CustomTool/"
+def iqUrl ="http://nexus-iq-0:8070"
+def appId="dotnet-tools"
+def iqCmd = "java -jar ${niqHome}/nexus-iq-cli.jar -s ${iqUrl} -i ${appId}"
+
 pipeline {
 
     environment {
@@ -186,6 +191,31 @@ pipeline {
                             }
                         }
                     }
+                }
+                stage ("Nexus IQ") {
+                    steps {
+                        echo "Starting NexusIQ scan for appId ${appId} against scan.zip"
+                        bat "mkdir 'scan'"
+                        bat "cp *.nupkg scan"
+                        bat "cp 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg' scan"
+                        bat "cp 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg' scan"
+                        zip zipFile: 'scan.zip', dir: 'scan'
+                        script {
+                            try {
+                                withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                                    credentialsId: 'nexus-iq',
+                                    passwordVariable: 'IQ_PASSWORD',
+                                    usernameVariable: 'IQ_USERNAME']]) {
+                                        sh "${iqCmd} -a ${env.IQ_USERNAME}:${env.IQ_PASSWORD} scan.zip"
+                                }//withCredential 
+                            }//try
+                            catch(err) {
+                                        echo "Nexus IQ Scan Failed: ${err}"
+                                        if (ignoreErrors == false || failOnVulnerabilities == true)
+                                            throw err
+                            }//catch
+                        }//script
+                    }//steps
                 }
             }
         }

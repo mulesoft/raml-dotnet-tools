@@ -195,10 +195,10 @@ pipeline {
                 stage ("Nexus IQ") {
                     steps {
                         echo "Starting NexusIQ scan for appId ${appId} against scan.zip"
-                        bat "mkdir 'scan'"
-                        bat "cp *.nupkg scan"
-                        bat "cp 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg' scan"
-                        bat "cp 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg' scan"
+                        sh "mkdir scan"
+                        bat "cp *.nupkg scan/"
+                        bat "cp 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg' scan/"
+                        bat "cp 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg' scan/"
                         zip zipFile: 'scan.zip', dir: 'scan'
                         script {
                             try {

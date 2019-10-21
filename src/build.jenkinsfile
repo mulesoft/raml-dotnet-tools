@@ -198,8 +198,6 @@ pipeline {
                         sh "mkdir scan"
                         bat "cp *.nupkg scan/"
                         bat "cp \"%WORKSPACE%\\src\\tools\\src\\AMF.Tools\\bin\\Release\\*.*\" scan/"
-                        bat "cp \"%WORKSPACE%\\src\\core-apicore\\src\\AMF.NetCore.APICore\\bin\\Debug\\*.*\" scan/"
-                        bat "cp \"%WORKSPACE%\\src\\core-apiexplorer\\src\\AMF.NetCoreApiExplorer\\bin\\Debug\\*.*\" scan/"
                         zip zipFile: 'scan.zip', dir: 'scan', archive: true
                         script {
                             try {

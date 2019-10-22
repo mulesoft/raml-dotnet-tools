@@ -197,7 +197,7 @@ pipeline {
                         echo "Starting NexusIQ scan for appId ${appId} against scan.zip"
                         sh "mkdir scan"
                         bat "cp *.nupkg scan/"
-                        bat "cp '%WORKSPACE%\\src\\tools\\AMF.Tools\\bin\\Release\\' scan/"
+                        bat "cp src/tools/AMF.Tools/bin/Release/ scan/"
                         zip zipFile: 'scan.zip', dir: 'scan', archive: true
                         script {
                             try {

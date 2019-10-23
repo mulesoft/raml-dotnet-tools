@@ -176,7 +176,7 @@ pipeline {
                 stage('Coverage'){
                     steps {
                         dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
-                            bat "\"${OpenCover}\" -target:AMF.Tools.TestRunner.exe -register"
+                            bat "\"${openCover}\" -target:AMF.Tools.TestRunner.exe -register"
                         }
                     }
                 }

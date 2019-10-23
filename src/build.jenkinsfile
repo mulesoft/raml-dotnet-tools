@@ -175,11 +175,12 @@ pipeline {
                 }
                 stage('Coverage'){
                     steps {
+                        bat "mkdir toolscoverage"
                         dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
                             bat "\"${openCover}\" -target:AMF.Tools.TestRunner.exe -register"
-                            bat "\"../../../packages/ReportGenerator.4.3.2/tools/net47/ReportGenerator.exe\" -reports:results.xml -targetdir:%WORKSPACE%"
-                            zip zipFile: 'coverage.zip', glob: '*.htm', archive: true
+                            bat "\"../../../packages/ReportGenerator.4.3.2/tools/net47/ReportGenerator.exe\" -reports:results.xml -targetdir:%WORKSPACE%\\toolscoverage"
                         }
+                        zip zipFile: 'toolscoverage.zip', dir: 'toolscoverage', archive: true
                     }
                 }
                 stage('Sing Vsix') {
@@ -228,7 +229,6 @@ pipeline {
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
             archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'
-            archiveArtifacts '*.htm'
             nunit testResultsPattern: '*.xml'
         }
         cleanup {

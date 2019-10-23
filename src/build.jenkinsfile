@@ -1,7 +1,7 @@
 def openCover = "%WORKSPACE%\\src\\tools\\packages\\OpenCover.4.7.922\\tools\\OpenCover.Console.exe"
 def nunitRunner = "%WORKSPACE%\\src\\tools\\packages\\NUnit.ConsoleRunner.3.10.0\\tools\\nunit3-console.exe"
 
-def niqHome= "C:/Users/Administrator/jenkins-agent/tools/com.cloudbees.jenkins.plugins.customtools.CustomTool/"
+def niqHome= "c:/cp/"
 def iqUrl ="http://nexus-iq-0:8070"
 def appId="dotnet-tools"
 def iqCmd = "java -jar ${niqHome}/nexus-iq-cli.jar -s ${iqUrl} -i ${appId}"

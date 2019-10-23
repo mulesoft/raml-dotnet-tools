@@ -177,7 +177,7 @@ pipeline {
                     steps {
                         dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
                             bat "\"${openCover}\" -target:AMF.Tools.TestRunner.exe -register"
-                            bat "\"../../../packages/ReportGenerator.4.3.2/tools/net47/ReportGenerator.exe\" reports:results.xml"
+                            bat "\"../../../packages/ReportGenerator.4.3.2/tools/net47/ReportGenerator.exe\" reports:results.xml -targetdir:%WORKSPACE%"
                         }
                     }
                 }
@@ -227,7 +227,7 @@ pipeline {
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
             archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'
-            archiveArtifacts 'src/tools/AMF.Tools.TestRunner/bin/Release/*.xml'
+            archiveArtifacts '*.htm'
             nunit testResultsPattern: '*.xml'
         }
         cleanup {

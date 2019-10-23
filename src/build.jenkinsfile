@@ -177,7 +177,7 @@ pipeline {
                     steps {
                         dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
                             bat "\"${openCover}\" -target:AMF.Tools.TestRunner.exe -register"
-                            bat "\"../../../packages/ReportGenerator.4.3.2/tools/net47/ReportGenerator.exe\" reports:results.xml -targetdir:%WORKSPACE%"
+                            bat "\"../../../packages/ReportGenerator.4.3.2/tools/net47/ReportGenerator.exe\" -reports:results.xml -targetdir:%WORKSPACE%"
                         }
                     }
                 }

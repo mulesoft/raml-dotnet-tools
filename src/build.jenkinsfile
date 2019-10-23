@@ -173,13 +173,13 @@ pipeline {
                         // bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
                     }
                 }
-                // stage('Coverage'){
-                //     steps {
-                //         dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
-                //             bat "\"${OpenCover}\" -target:AMF.Tools.TestRunner.exe -register"
-                //         }
-                //     }
-                // }
+                stage('Coverage'){
+                    steps {
+                        dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
+                            bat "\"${OpenCover}\" -target:AMF.Tools.TestRunner.exe -register"
+                        }
+                    }
+                }
                 stage('Sing Vsix') {
                     steps {
                         withCredentials([file(credentialsId: 'AMF-Net-Crt', variable: 'CERT')]) {

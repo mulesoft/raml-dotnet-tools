@@ -203,8 +203,7 @@ pipeline {
                         bat "cp -a src/tools/AMF.Tools/*.cs scan/"
                         bat "cp -a src/tools/AMF.Tools/*.csproj scan/"
                         bat "cp -a src/tools/AMF.Tools/*.config scan/"
-                        bat "cp -a src/tools/AMF.Tools/*.dll scan/"
-                        bat "cp -a src/tools/AMF.Tools/*.nupkg scan/"
+                        bat "cp -a *.nupkg scan/"
                         zip zipFile: 'scan.zip', dir: 'scan', archive: true
                         script {
                             try {

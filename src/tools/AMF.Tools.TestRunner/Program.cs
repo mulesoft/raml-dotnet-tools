@@ -133,7 +133,7 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldHandleInlinedTypes();
             await tests.ShouldHandleShortcutsSyntacticSugar();
 
-            // await tests.ShouldHandleTypeExpressions();
+            await tests.ShouldHandleTypeExpressions();
 
             // TODO: collections defined in types
             await tests.ShouldBuildArrayTypes();

@@ -200,7 +200,11 @@ pipeline {
                         echo "Starting NexusIQ scan for appId ${appId} against scan.zip"
                         bat "powershell -Command \"& {Invoke-WebRequest -OutFile nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.49.0-01.jar;}\""
                         sh "mkdir scan"
-                        bat "cp -a src/tools/AMF.Tools/* scan/"
+                        bat "cp -a src/tools/AMF.Tools/*.cs scan/"
+                        bat "cp -a src/tools/AMF.Tools/*.csproj scan/"
+                        bat "cp -a src/tools/AMF.Tools/*.config scan/"
+                        bat "cp -a src/tools/AMF.Tools/*.dll scan/"
+                        bat "cp -a src/tools/AMF.Tools/*.nupkg scan/"
                         zip zipFile: 'scan.zip', dir: 'scan', archive: true
                         script {
                             try {

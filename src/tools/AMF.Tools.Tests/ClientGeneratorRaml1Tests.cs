@@ -79,14 +79,14 @@ namespace Raml.Tools.Tests
             Assert.IsNotNull(model);
         }
 
-        [Test]
-        public async Task ShouldHandleTypeExpressions()
-        {
-            var model = await GetTypeExpressionsModel();
-            //Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Movie"), model.Classes.First().Methods.First(m => m.Verb == "Get").OkReturnType);
-            Assert.AreEqual("string", model.Classes.First().Methods.First(m => m.Verb == "Put").Parameter.Type);
-            Assert.AreEqual("string", model.Classes.First().Methods.First(m => m.Verb == "Post").Parameter.Type);
-        }
+        //[Test]
+        //public async Task ShouldHandleTypeExpressions()
+        //{
+        //    var model = await GetTypeExpressionsModel();
+        //    //Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Movie"), model.Classes.First().Methods.First(m => m.Verb == "Get").OkReturnType);
+        //    Assert.AreEqual("string", model.Classes.First().Methods.First(m => m.Verb == "Put").Parameter.Type);
+        //    Assert.AreEqual("string", model.Classes.First().Methods.First(m => m.Verb == "Post").Parameter.Type);
+        //}
 
         [Test]
         public async Task ShouldHandleInlinedTypes()

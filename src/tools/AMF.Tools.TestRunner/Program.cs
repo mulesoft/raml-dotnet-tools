@@ -133,7 +133,7 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldHandleInlinedTypes();
             await tests.ShouldHandleShortcutsSyntacticSugar();
 
-            await tests.ShouldHandleTypeExpressions();
+            //await tests.ShouldHandleTypeExpressions();
 
             // TODO: collections defined in types
             await tests.ShouldBuildArrayTypes();
@@ -179,6 +179,10 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldHandleRouteNameContainedInUriParam();
             await tests.ShouldHandleSimilarSchemas();
             await tests.ShouldHandle_FileTypes();
+
+            await tests.ShouldHandle_TraitsAtResourceLevel();
+            await tests.ShouldHandle_TraitsAtMethodLevel();
+
 
             // TODO: https://www.mulesoft.org/jira/browse/APIMF-927
             await tests.ShouldHandleTraitsInLibraries();

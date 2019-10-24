@@ -555,21 +555,6 @@ namespace AMF.Tools.Core.Pluralization
                         _classicalInflectionList.Values).Concat(_irregularVerbList.Values).Concat(_uninflectiveWords));
         }
 
-        /// <summary>
-        ///     Constructs a new  instance  of default pluralization service
-        ///     used in Entity Framework.
-        ///     <param name="userDictionaryEntries">
-        ///         A collection of user dictionary entries to be used by this service.These inputs
-        ///         can  customize the service according the user needs.
-        ///     </param>
-        /// </summary>
-        public EnglishPluralizationService(IEnumerable<CustomPluralizationEntry> userDictionaryEntries)
-            : this()
-        {
-
-            userDictionaryEntries.Each(entry => _userDictionary.AddValue(entry.Singular, entry.Plural));
-        }
-
         // CONSIDER optimize the algorithm by collecting all the special cases to one single dictionary
         public string Pluralize(string word)
         {

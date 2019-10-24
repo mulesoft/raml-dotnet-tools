@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Model\ApiEnum.cs" />
     <Compile Include="Model\ApiObject.cs" />
-    <Compile Include="ApiObjectsCleaner.cs" />
     <Compile Include="ClientGenerator\ApiRequestObjectsGenerator.cs" />
     <Compile Include="ClientGenerator\ApiResponseObjectsGenerator.cs" />
     <Compile Include="Model\Client\ClassObject.cs" />
@@ -84,9 +83,7 @@
     <Compile Include="ParametersMapper.cs" />
     <Compile Include="ParserHelpers.cs" />
     <Compile Include="Pluralization\BidirectionalDictionary.cs" />
-    <Compile Include="Pluralization\CustomPluralizationEntry.cs" />
     <Compile Include="Pluralization\EnglishPluralizationService.cs" />
-    <Compile Include="Pluralization\EnumerableExtensions.cs" />
     <Compile Include="Pluralization\IPluralizationService.cs" />
     <Compile Include="Pluralization\PluralizationServiceUtil.cs" />
     <Compile Include="Pluralization\StringBidirectionalDictionary.cs" />
@@ -94,7 +91,6 @@
     <Compile Include="Model\Property.cs" />
     <Compile Include="Model\PropertyBase.cs" />
     <Compile Include="QueryParametersParser.cs" />
-    <Compile Include="RamlParserExtensions.cs" />
     <Compile Include="RamlTypesHelper.cs" />
     <Compile Include="RequestTypesService.cs" />
     <Compile Include="ResponseTypesService.cs" />

@@ -23,8 +23,6 @@ namespace AMF.Tools.Core
         protected IDictionary<string, string> linkKeysWithObjectNames = new Dictionary<string, string>();
         protected IDictionary<Guid, string> linkIdsWithTypes = new Dictionary<Guid, string>();
 
-        protected ApiObjectsCleaner apiObjectsCleaner;        
-
 		protected IDictionary<string, string> warnings;
 	    protected IDictionary<string, ApiEnum> enums;
 		protected readonly AmfModel raml;

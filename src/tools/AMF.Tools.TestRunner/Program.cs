@@ -136,7 +136,7 @@ namespace AMF.Tools.TestRunner
             // await tests.ShouldHandleTypeExpressions();
 
             // TODO: collections defined in types
-            //await tests.ShouldBuildArrayTypes();
+            await tests.ShouldBuildArrayTypes();
             TestCount += tests.TestCount;
         }
 

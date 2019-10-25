@@ -183,18 +183,6 @@ pipeline {
                         zip zipFile: 'toolscoverage.zip', dir: 'toolscoverage', archive: true
                     }
                 }
-                stage('Sing Vsix') {
-                    steps {
-                        withCredentials([file(credentialsId: 'AMF-Net-Crt', variable: 'CERT')]) {
-                            withCredentials([file(credentialsId: 'AMF-Net-Key', variable: 'KEY')]) {
-                                withCredentials([string(credentialsId: 'AMF-Net-Pw', variable: 'PWD')]) {
-                                    bat "openssl pkcs12 -export -out mulesoft.pfx -inkey $KEY -in $CERT -password pass:$PWD"
-                                    // bat "\"src/tools/packages/Microsoft.VSSDK.VsixSignTool.16.0.28727/tools/vssdk/vsixsigntool.exe\" sign /f mulesoft.pfx /p $PWD /sha1 1b4f5c8bc7fa3748f025b4bc1b19f62d8dd25b11 /fd sha256 src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
-                                }
-                            }
-                        }
-                    }
-                }
                 stage ("Nexus IQ") {
                     steps {
                         echo "Starting NexusIQ scan for appId ${appId} against scan.zip"

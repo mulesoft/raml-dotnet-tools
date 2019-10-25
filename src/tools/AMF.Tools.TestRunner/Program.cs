@@ -35,6 +35,7 @@ namespace AMF.Tools.TestRunner
             var tests = new MiscTests();
             tests.PluralizationTest();
             tests.PluralizationTest2();
+            tests.XmlCommentHelperTest();
             TestCount += tests.TestCount;
         }
 

@@ -43,6 +43,6 @@ namespace AMF.Tools.Core
             set { paramName = value; }
         }
 
-        public string OriginalName { get; internal set; }
+        public string OriginalName { get; set; }
     }
 }

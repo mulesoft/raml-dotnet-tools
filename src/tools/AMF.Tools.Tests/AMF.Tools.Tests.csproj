@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="ClientGeneratorRaml1Tests.cs" />
     <Compile Include="ClientGeneratorTests.cs" />
+    <Compile Include="MiscTests.cs" />
+    <Compile Include="ModelGeneratorServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RamlExchangeTests.cs" />
     <Compile Include="WebApiGeneratorRaml1Tests.cs" />

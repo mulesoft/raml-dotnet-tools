@@ -110,10 +110,6 @@
     <Compile Include="WebApiGenerator\WebApiGeneratorService.cs" />
     <Compile Include="WebApiGenerator\WebApiMethodsGenerator.cs" />
     <Compile Include="XmlCommentHelper.cs" />
-    <Compile Include="XML\ArraysToCollectionsExtension.cs" />
-    <Compile Include="XML\FieldsToPropertiesExtension.cs" />
-    <Compile Include="XML\ICodeExtension.cs" />
-    <Compile Include="XML\XmlSchemaParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

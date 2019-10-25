@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AMF.Api.Core;
-using AMF.Tools.Core.XML;
 using AMF.Parser.Model;
 
 namespace AMF.Tools.Core

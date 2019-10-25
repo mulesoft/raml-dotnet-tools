@@ -7,50 +7,7 @@ namespace AMF.Tools.Core
 {
     public class RamlTypesHelper
     {
-        public static string DecodeRaml1Type(string type)
-        {
-            // TODO: can I handle this better ?
-            if (type.Contains("(") || type.Contains("|"))
-                return "object";
-
-            if (type.EndsWith("[][]")) // array of arrays
-            {
-                var strippedType = type.Substring(0, type.Length - 4);
-                if (NewNetTypeMapper.Map(strippedType) == null)
-                    strippedType = NetNamingMapper.GetObjectName(strippedType);
-
-                var decodeRaml1Type = CollectionTypeHelper.GetCollectionType(CollectionTypeHelper.GetCollectionType(strippedType));
-                return decodeRaml1Type;
-            }
-
-            if (type.EndsWith("[]")) // array
-            {
-                var strippedType = type.Substring(0, type.Length - 2);
-
-                if (NewNetTypeMapper.Map(strippedType) == null)
-                    strippedType = NetNamingMapper.GetObjectName(strippedType);
-
-                var decodeRaml1Type = CollectionTypeHelper.GetCollectionType(strippedType);
-                return decodeRaml1Type;
-            }
-
-            if (type.EndsWith("{}")) // Map
-            {
-                var subtype = type.Substring(0, type.Length - 2);
-                var netType = NewNetTypeMapper.Map(subtype);
-                if (netType != null)
-                    return "IDictionary<string, " + netType + ">";
-
-               return "IDictionary<string, " + NetNamingMapper.GetObjectName(subtype) + ">";
-            }
-
-            if (CollectionTypeHelper.IsCollection(type))
-                return type;
-
-            return NetNamingMapper.GetObjectName(type);
-        }
-
-        internal static bool IsPrimitiveOrSchemaObject(string type, IDictionary<string, ApiObject> schemaObjects)
+          internal static bool IsPrimitiveOrSchemaObject(string type, IDictionary<string, ApiObject> schemaObjects)
         {
             return NewNetTypeMapper.IsPrimitiveType(type) || NewNetTypeMapper.IsPrimitiveType(CollectionTypeHelper.GetBaseType(type)) ||
             schemaObjects.ContainsKey(type) || schemaObjects.Any(o => o.Value.Type == type || o.Value.Type == CollectionTypeHelper.GetBaseType(type));

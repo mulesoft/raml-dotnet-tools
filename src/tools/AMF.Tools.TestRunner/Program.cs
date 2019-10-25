@@ -13,6 +13,8 @@ namespace AMF.Tools.TestRunner
             try
             {
                 TestCount = 0;
+                RunMiscTests();
+                RunModelsServiceTestsAsync().Wait();
                 RunExchangeTestsAsync().Wait();
                 RunOasTestsAsync().Wait();
                 RunServerRaml1TestsAsync().Wait();
@@ -26,6 +28,22 @@ namespace AMF.Tools.TestRunner
                 InformException(ex);
                 return 1;
             }
+        }
+
+        public static void RunMiscTests()
+        {
+            var tests = new MiscTests();
+            tests.PluralizationTest();
+            tests.PluralizationTest2();
+            TestCount += tests.TestCount;
+        }
+
+        public static async Task RunModelsServiceTestsAsync()
+        {
+            var tests = new ModelGeneratorServiceTests();
+            await tests.MoviesModels();
+            await tests.PetStoreModels();
+            TestCount += tests.TestCount;
         }
 
         private static async Task RunExchangeTestsAsync()
@@ -183,13 +201,8 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldHandle_TraitsAtResourceLevel();
             await tests.ShouldHandle_TraitsAtMethodLevel();
 
-
-            // TODO: https://www.mulesoft.org/jira/browse/APIMF-927
             await tests.ShouldHandleTraitsInLibraries();
-            // TODO: https://www.mulesoft.org/jira/browse/APIMF-927
             await tests.ShouldHandle_SalesOrdersCase();
-
-            // TODO: https://www.mulesoft.org/jira/browse/APIMF-891
             await tests.ShouldHandleXml();
 
             //TODO: 
@@ -197,7 +210,10 @@ namespace AMF.Tools.TestRunner
 
             //TODO: check
             //await tests.ShouldHandleComplexQueryParams();
+
+            //await tests.ShouldMapAttributes_WhenCustomScalarInObject();
             TestCount += tests.TestCount;
+            Console.ReadLine();
         }
 
         private static void InformException(Exception ex)

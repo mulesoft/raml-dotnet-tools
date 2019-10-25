@@ -133,17 +133,6 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(CollectionTypeHelper.GetCollectionType("string"), model.Objects.First().Properties.First().Type);
         }
 
-        private async Task<ClientGeneratorModel> GetAnnotationTargetsModel()
-        {
-            return await BuildModel("files/raml1/annotations-targets.raml");
-        }
-
-        private async Task<ClientGeneratorModel> GetAnnotationsModel()
-        {
-            return await BuildModel("files/raml1/annotations.raml");
-        }
-
-
         private async Task<ClientGeneratorModel> GetCustomScalarModel()
         {
             return await BuildModel("files/raml1/customscalar.raml");
@@ -164,15 +153,10 @@ namespace Raml.Tools.Tests
             return await BuildModel("files/raml1/parameters.raml");
         }
 
-        private async Task<ClientGeneratorModel> GetTypeExpressionsModel()
-        {
-            return await BuildModel("files/raml1/typeexpressions.raml");
-        }
-
-        private async Task<ClientGeneratorModel> GetMapsModel()
-        {
-            return await BuildModel("files/raml1/maps.raml");
-        }
+        //private async Task<ClientGeneratorModel> GetTypeExpressionsModel()
+        //{
+        //    return await BuildModel("files/raml1/typeexpressions.raml");
+        //}
 
         private async Task<ClientGeneratorModel> GetArraysModel()
         {

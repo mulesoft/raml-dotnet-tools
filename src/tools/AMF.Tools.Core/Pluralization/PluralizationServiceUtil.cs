@@ -7,9 +7,9 @@ namespace AMF.Tools.Core.Pluralization
     using System.Globalization;
     using System.Linq;
 
-    internal static class PluralizationServiceUtil
+    public static class PluralizationServiceUtil
     {
-        internal static bool DoesWordContainSuffix(string word, IEnumerable<string> suffixes, CultureInfo culture)
+        public static bool DoesWordContainSuffix(string word, IEnumerable<string> suffixes, CultureInfo culture)
         {
             return suffixes.Any(s => word.EndsWith(s, true, culture));
         }
@@ -26,7 +26,7 @@ namespace AMF.Tools.Core.Pluralization
             return false;
         }
 
-        internal static bool TryInflectOnSuffixInWord(
+        public static bool TryInflectOnSuffixInWord(
             string word, IEnumerable<string> suffixes, Func<string, string> operationOnWord, CultureInfo culture,
             out string newWord)
         {

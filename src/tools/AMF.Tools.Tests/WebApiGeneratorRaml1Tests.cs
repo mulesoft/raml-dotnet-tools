@@ -30,18 +30,18 @@ namespace Raml.Tools.Tests
             Assert.IsNotNull(model);
         }
 
-        [Test]
-        public async Task ShouldMapAttributes_WhenCustomScalarInObject()
-        {
-            var model = await BuildModel("files/raml1/customscalar-in-object.raml");
-            Assert.AreEqual(3, model.Objects.Count());
-            Assert.AreEqual(1, model.Objects.First(o => o.Name == "CustomInt").Properties.Count);
-            Assert.AreEqual(1, model.Objects.First(o => o.Name == "CustomString").Properties.Count);
-            Assert.AreEqual(0, model.Objects.First(o => o.Name == "CustomInt").Properties.First().Minimum);
-            Assert.AreEqual(100, model.Objects.First(o => o.Name == "CustomInt").Properties.First().Maximum);
-            Assert.AreEqual(5, model.Objects.First(o => o.Name == "CustomString").Properties.First().MinLength);
-            Assert.AreEqual(255, model.Objects.First(o => o.Name == "CustomString").Properties.First().MaxLength);
-        }
+        //[Test]
+        //public async Task ShouldMapAttributes_WhenCustomScalarInObject()
+        //{
+        //    var model = await BuildModel("files/raml1/customscalar-in-object.raml");
+        //    Assert.AreEqual(3, model.Objects.Count());
+        //    Assert.AreEqual(1, model.Objects.First(o => o.Name == "CustomInt").Properties.Count);
+        //    Assert.AreEqual(1, model.Objects.First(o => o.Name == "CustomString").Properties.Count);
+        //    Assert.AreEqual(0, model.Objects.First(o => o.Name == "CustomInt").Properties.First().Minimum);
+        //    Assert.AreEqual(100, model.Objects.First(o => o.Name == "CustomInt").Properties.First().Maximum);
+        //    Assert.AreEqual(5, model.Objects.First(o => o.Name == "CustomString").Properties.First().MinLength);
+        //    Assert.AreEqual(255, model.Objects.First(o => o.Name == "CustomString").Properties.First().MaxLength);
+        //}
 
         [Test]
         public async Task ShouldMapPatternAttributes()
@@ -165,24 +165,24 @@ namespace Raml.Tools.Tests
         }
 
 
-        [Test]
-        public async Task ShouldHandleUnionTypes()
-        {
-            var model = await BuildModel("files/raml1/uniontypes.raml");
+        //[Test]
+        //public async Task ShouldHandleUnionTypes()
+        //{
+        //    var model = await BuildModel("files/raml1/uniontypes.raml");
 
-            Assert.AreEqual(5, model.Objects.Count());
+        //    Assert.AreEqual(5, model.Objects.Count());
 
-            Assert.AreEqual(2, model.Objects.First(c => c.Name == "Customer").Properties.Count);
-            Assert.AreEqual("Person", model.Objects.First(c => c.Name == "Customer").Properties.First(c => c.Name == "Person").Type);
-            Assert.AreEqual("Company", model.Objects.First(c => c.Name == "Customer").Properties.First(c => c.Name == "Company").Type);
+        //    Assert.AreEqual(2, model.Objects.First(c => c.Name == "Customer").Properties.Count);
+        //    Assert.AreEqual("Person", model.Objects.First(c => c.Name == "Customer").Properties.First(c => c.Name == "Person").Type);
+        //    Assert.AreEqual("Company", model.Objects.First(c => c.Name == "Customer").Properties.First(c => c.Name == "Company").Type);
 
-            Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Objects.First(c => c.Name == "Customers").Properties.First(c => c.Name == "Person").Type);
-            Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Company"), model.Objects.First(c => c.Name == "Customers").Properties.First(c => c.Name == "Company").Type);
+        //    Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Objects.First(c => c.Name == "Customers").Properties.First(c => c.Name == "Person").Type);
+        //    Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Company"), model.Objects.First(c => c.Name == "Customers").Properties.First(c => c.Name == "Company").Type);
 
-            Assert.AreEqual(false, model.Objects.First(c => c.Name == "Group").IsArray);
-            Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Objects.First(c => c.Name == "Group").Properties.First(c => c.Name == "Person").Type);
-            Assert.AreEqual("Company", model.Objects.First(c => c.Name == "Group").Properties.First(c => c.Name == "Company").Type);
-        }
+        //    Assert.AreEqual(false, model.Objects.First(c => c.Name == "Group").IsArray);
+        //    Assert.AreEqual(CollectionTypeHelper.GetCollectionType("Person"), model.Objects.First(c => c.Name == "Group").Properties.First(c => c.Name == "Person").Type);
+        //    Assert.AreEqual("Company", model.Objects.First(c => c.Name == "Group").Properties.First(c => c.Name == "Company").Type);
+        //}
 
         [Test]
         public async Task ShouldHandleXml()
@@ -225,14 +225,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("TypeA", model.Controllers.First().Methods.First().Parameter.Type);
         }
 
-        [Test]
-        public async Task ShouldHandleComplexQueryParams()
-        {
-            var model = await BuildModel("files/raml1/queryParams.raml");
-            //Assert.AreEqual(1, model.Objects.Count());
-            //Assert.AreEqual(true, model.Objects.First().IsScalar);
-            Assert.AreEqual("string", model.Controllers.First().Methods.First().QueryParameters.First().Type);
-        }
+        //[Test]
+        //public async Task ShouldHandleComplexQueryParams()
+        //{
+        //    var model = await BuildModel("files/raml1/queryParams.raml");
+        //    //Assert.AreEqual(1, model.Objects.Count());
+        //    //Assert.AreEqual(true, model.Objects.First().IsScalar);
+        //    Assert.AreEqual("string", model.Controllers.First().Methods.First().QueryParameters.First().Type);
+        //}
 
         [Test]
         public async Task ShouldHandleDates()
@@ -322,25 +322,25 @@ namespace Raml.Tools.Tests
             Assert.IsTrue(model.Controllers.First().Methods.First(m => m.Verb.ToLower() == "post").ParametersString.Contains("offset"));
         }
 
-        [Test]
-        public async Task ShouldParse_RequiredScalarInProperty()
-        {
-            var model = await BuildModel("files/raml1/movietype.raml");
-            Assert.AreEqual(true, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Name").Required);
+        //[Test]
+        //public async Task ShouldParse_RequiredScalarInProperty()
+        //{
+        //    var model = await BuildModel("files/raml1/movietype.raml");
+        //    Assert.AreEqual(true, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Name").Required);
 
-        }
+        //}
 
-        [Test]
-        public async Task ShouldParse_OptionalInProperty()
-        {
-            var model = await BuildModel("files/raml1/movietype.raml");
-            Assert.AreEqual(false, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Rented").Required);
-            Assert.AreEqual(false, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Duration").Required);
-            Assert.AreEqual(true, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Language").Required);
-            Assert.AreEqual(false, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Storyline").Required);
-            Assert.AreEqual("decimal?", model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Duration").Type);
-            Assert.AreEqual("bool?", model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Rented").Type);
-        }
+        //[Test]
+        //public async Task ShouldParse_OptionalInProperty()
+        //{
+        //    var model = await BuildModel("files/raml1/movietype.raml");
+        //    Assert.AreEqual(false, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Rented").Required);
+        //    Assert.AreEqual(false, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Duration").Required);
+        //    Assert.AreEqual(true, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Language").Required);
+        //    Assert.AreEqual(false, model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Storyline").Required);
+        //    Assert.AreEqual("decimal?", model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Duration").Type);
+        //    Assert.AreEqual("bool?", model.Objects.First(o => o.Name == "Movie").Properties.First(p => p.Name == "Rented").Type);
+        //}
 
         [Test]
         public async Task ShouldApplyParametersOfResourceType()
@@ -352,16 +352,16 @@ namespace Raml.Tools.Tests
             Assert.AreEqual(3, model.Controllers.First(c => c.Name == "Users").Methods.First(m => m.Verb == "Get").QueryParameters.Count);
         }
 
-        [Test]
-        public async Task StringArrayTest()
-        {
-            var model = await BuildModel("files/raml1/string-array.raml");
-            Assert.AreEqual(2, model.Objects.Count());
-            Assert.AreEqual("Messages", model.Objects.First(o => o.Name == "Other").Properties.First().Name);
-            Assert.AreEqual("Messages", model.Objects.First(o => o.Name == "Some").Properties.First().Name);
-            Assert.AreEqual("Some", model.Controllers.First(c => c.Name == "Messages").Methods.First(m => m.Verb == "Post").Parameter.Type);
-            Assert.AreEqual("Other", model.Controllers.First(c => c.Name == "Messages").Methods.First(m => m.Verb == "Get").ReturnType);
-        }
+        //[Test]
+        //public async Task StringArrayTest()
+        //{
+        //    var model = await BuildModel("files/raml1/string-array.raml");
+        //    Assert.AreEqual(2, model.Objects.Count());
+        //    Assert.AreEqual("Messages", model.Objects.First(o => o.Name == "Other").Properties.First().Name);
+        //    Assert.AreEqual("Messages", model.Objects.First(o => o.Name == "Some").Properties.First().Name);
+        //    Assert.AreEqual("Some", model.Controllers.First(c => c.Name == "Messages").Methods.First(m => m.Verb == "Post").Parameter.Type);
+        //    Assert.AreEqual("Other", model.Controllers.First(c => c.Name == "Messages").Methods.First(m => m.Verb == "Get").ReturnType);
+        //}
 
         [Test]
         public async Task ShouldHandleSimilarSchemas()
@@ -424,15 +424,15 @@ namespace Raml.Tools.Tests
             Assert.AreNotEqual("One", model.Objects.First(e => e.Name == "One").Properties.First().Name);
         }
 
-        private async Task<WebApiGeneratorModel> GetAnnotationTargetsModel()
-        {
-            return await BuildModel("files/raml1/annotations-targets.raml");
-        }
+        //private async Task<WebApiGeneratorModel> GetAnnotationTargetsModel()
+        //{
+        //    return await BuildModel("files/raml1/annotations-targets.raml");
+        //}
 
-        private async Task<WebApiGeneratorModel> GetAnnotationsModel()
-        {
-            return await BuildModel("files/raml1/annotations.raml");
-        }
+        //private async Task<WebApiGeneratorModel> GetAnnotationsModel()
+        //{
+        //    return await BuildModel("files/raml1/annotations.raml");
+        //}
 
 
         private async Task<WebApiGeneratorModel> GetCustomScalarModel()

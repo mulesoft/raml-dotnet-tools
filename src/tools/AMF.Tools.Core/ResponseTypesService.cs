@@ -106,65 +106,9 @@ namespace AMF.Tools.Core
             return type;
         }
 
-
-
-
-
-        // avoids infinite recursion
-        private string GetReturnTypeFromResponseWithoutCheckingResourceTypes(Operation method, EndPoint resource, Payload mimeType, string key, string responseCode, string fullUrl)
-        {
-            var returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
-
-            if (!string.IsNullOrWhiteSpace(returnType))
-                return returnType;
-
-            if (ResponseHasKey(key))
-                return GetReturnTypeFromResponseByKey(key);
-
-            var responseKey = key + ParserHelpers.GetStatusCode(responseCode) + GeneratorServiceBase.ResponseContentSuffix;
-            if (ResponseHasKey(responseKey))
-                return GetReturnTypeFromResponseByKey(responseKey);
-
-            if (linkKeysWithObjectNames.ContainsKey(key))
-            {
-                var linkedKey = linkKeysWithObjectNames[key];
-                if (ResponseHasKey(linkedKey))
-                    return GetReturnTypeFromResponseByKey(linkedKey);
-            }
-
-            if (linkKeysWithObjectNames.ContainsKey(responseKey))
-            {
-                var linkedKey = linkKeysWithObjectNames[responseKey];
-                if (ResponseHasKey(linkedKey))
-                    return GetReturnTypeFromResponseByKey(linkedKey);
-            }
-
-            return returnType;
-        }
-
         private string GetNamedReturnType(Operation method, EndPoint resource, Payload mimeType, string fullUrl)
         {
             return NewNetTypeMapper.GetNetType(mimeType.Schema, schemaObjects, schemaResponseObjects, enums);
-
-            //if (mimeType.Schema != null && mimeType.Schema.Contains("<<") && mimeType.Schema.Contains(">>"))
-            //    return GetReturnTypeFromParameter(method, resource, fullUrl, mimeType.Schema);
-
-            //if (mimeType.Schema != null && !mimeType.Schema.Contains("<") && !mimeType.Schema.Contains("{"))
-            //    return GetReturnTypeFromName(mimeType.Schema);
-
-            //if (!string.IsNullOrWhiteSpace(mimeType.Type))
-            //{
-            //    if (mimeType.Type.Contains("<<") && mimeType.Type.Contains(">>"))
-            //        return GetReturnTypeFromParameter(method, resource, fullUrl, mimeType.Type);
-
-            //    var type = GetReturnTypeFromName(mimeType.Type);
-            //    if (!string.IsNullOrWhiteSpace(type))
-            //        return type;
-
-            //    return DecodeResponseRaml1Type(mimeType.Type);
-            //}
-
-            //return string.Empty;
         }
 
         private string GetReturnTypeFromName(string type)
@@ -186,29 +130,6 @@ namespace AMF.Tools.Core
 
             return string.Empty;
         }
-
-        private string GetReturnTypeFromParameter(Operation method, EndPoint resource, string fullUrl, string schema)
-        {
-            var type = schemaParameterParser.Parse(schema, resource, method, fullUrl);
-
-            if (schemaObjects.Values.Any(o => o.Name.ToLowerInvariant() == type.ToLowerInvariant()))
-            {
-                var apiObject = schemaObjects.Values
-                    .First(o => o.Name.ToLowerInvariant() == type.ToLowerInvariant());
-                return RamlTypesHelper.GetTypeFromApiObject(apiObject);
-            }
-
-
-            if (schemaResponseObjects.Values.Any(o => o.Name.ToLowerInvariant() == type.ToLowerInvariant()))
-            {
-                var apiObject = schemaResponseObjects.Values
-                    .First(o => o.Name.ToLowerInvariant() == type.ToLowerInvariant());
-                return RamlTypesHelper.GetTypeFromApiObject(apiObject);
-            }
-
-            return string.Empty;
-        }
-
 
         private bool ResponseHasKey(string key)
         {

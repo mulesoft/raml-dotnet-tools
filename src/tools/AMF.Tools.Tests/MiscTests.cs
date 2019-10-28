@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AMF.Tools.Core.Pluralization;
 using System;
 using AMF.Tools.Core;
+using System.Collections.Generic;
 
 namespace Raml.Tools.Tests
 {
@@ -45,6 +46,22 @@ namespace Raml.Tools.Tests
         }
 
         [Test]
+        public void WebApiGeneratorModelTest()
+        {
+            IncrementTestCount();
+            var model = new WebApiGeneratorModel()
+            {
+                ApiVersion = "v1",
+                BaseUri = "www.base.com",
+                BaseUriParameters = new List<GeneratorParameter>() { new GeneratorParameter() { Name = "pepe", Type = "string" } },
+                Controllers = new List<ControllerObject>(),
+                ControllersNamespace = "ns",
+                Security = new Security()
+            };
+            Assert.AreEqual("string pepe", model.BaseUriParametersString);
+        }
+
+        [Test]
         public void ControllerMethodTest()
         {
             IncrementTestCount();
@@ -55,10 +72,14 @@ namespace Raml.Tools.Tests
                 Parameter = new GeneratorParameter() { Name = "pepe", Type = "string", ParamName = "pepe" },
                 ResponseStatusCode = "200",
                 ReturnType = "string",
-                Verb = "Get"
+                Verb = "Post"
             };
             Assert.AreEqual("string", cm.OkReturnType);
-            Assert.AreEqual("string", cm.OkReturnType);
+            Assert.AreEqual("string", cm.OkConcreteType);
+            Assert.AreEqual("pepe", cm.ParametersCallString);
+            Assert.AreEqual("string pepe = default(string);", cm.ParametersDefinitionAspNetCore);
+            Assert.AreEqual("[FromBody] string pepe", cm.ParametersString);
+            Assert.AreEqual("[FromBody] string pepe", cm.ParametersStringForAspNet5);
         }
 
         [Test]

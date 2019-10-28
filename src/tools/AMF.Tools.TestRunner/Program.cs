@@ -38,6 +38,7 @@ namespace AMF.Tools.TestRunner
             tests.XmlCommentHelperTest();
             tests.ControllerMethodTest();
             tests.RamlTypesHelperTest();
+            tests.WebApiGeneratorModelTest();
             TestCount += tests.TestCount;
         }
 

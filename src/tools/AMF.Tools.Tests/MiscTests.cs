@@ -62,7 +62,7 @@ namespace Raml.Tools.Tests
         }
 
         [Test]
-        public void ReamlTypesHelperTest()
+        public void RamlTypesHelperTest()
         {
             IncrementTestCount();
             var result = RamlTypesHelper.ExtractType("type[][]");

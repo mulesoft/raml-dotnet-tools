@@ -36,6 +36,8 @@ namespace AMF.Tools.TestRunner
             tests.PluralizationTest();
             tests.PluralizationTest2();
             tests.XmlCommentHelperTest();
+            tests.ControllerMethodTest();
+            tests.RamlTypesHelperTest();
             TestCount += tests.TestCount;
         }
 

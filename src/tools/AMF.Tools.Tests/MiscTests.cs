@@ -78,7 +78,7 @@ namespace Raml.Tools.Tests
                 Type = "type[]"
             };
             result = RamlTypesHelper.GetTypeFromApiObject(apiObj);
-            Assert.AreEqual("type", result);
+            Assert.AreEqual("IList<type[]>", result);
 
             apiObj = new ApiObject()
             {

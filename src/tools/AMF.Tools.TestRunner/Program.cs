@@ -39,6 +39,9 @@ namespace AMF.Tools.TestRunner
             tests.ControllerMethodTest();
             tests.RamlTypesHelperTest();
             tests.WebApiGeneratorModelTest();
+            tests.BidirectionDicTest();
+            tests.ResponseTypeServiceTest();
+            tests.ClientGeneratorMethodTest();
             TestCount += tests.TestCount;
         }
 

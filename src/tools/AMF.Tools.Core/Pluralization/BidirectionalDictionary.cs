@@ -8,18 +8,18 @@ namespace AMF.Tools.Core.Pluralization
     ///     This class provide service for both the singularization and pluralization, it takes the word pairs
     ///     in the ctor following the rules that the first one is singular and the second one is plural.
     /// </summary>
-    internal class BidirectionalDictionary<TFirst, TSecond>
+    public class BidirectionalDictionary<TFirst, TSecond>
     {
-        internal Dictionary<TFirst, TSecond> FirstToSecondDictionary { get; set; }
-        internal Dictionary<TSecond, TFirst> SecondToFirstDictionary { get; set; }
+        public Dictionary<TFirst, TSecond> FirstToSecondDictionary { get; set; }
+        public Dictionary<TSecond, TFirst> SecondToFirstDictionary { get; set; }
 
-        internal BidirectionalDictionary()
+        public BidirectionalDictionary()
         {
             FirstToSecondDictionary = new Dictionary<TFirst, TSecond>();
             SecondToFirstDictionary = new Dictionary<TSecond, TFirst>();
         }
 
-        internal BidirectionalDictionary(Dictionary<TFirst, TSecond> firstToSecondDictionary)
+        public BidirectionalDictionary(Dictionary<TFirst, TSecond> firstToSecondDictionary)
             : this()
         {
             foreach (var key in firstToSecondDictionary.Keys)
@@ -28,7 +28,7 @@ namespace AMF.Tools.Core.Pluralization
             }
         }
 
-        internal virtual bool ExistsInFirst(TFirst value)
+        public virtual bool ExistsInFirst(TFirst value)
         {
             if (FirstToSecondDictionary.ContainsKey(value))
             {
@@ -37,7 +37,7 @@ namespace AMF.Tools.Core.Pluralization
             return false;
         }
 
-        internal virtual bool ExistsInSecond(TSecond value)
+        public virtual bool ExistsInSecond(TSecond value)
         {
             if (SecondToFirstDictionary.ContainsKey(value))
             {
@@ -46,7 +46,7 @@ namespace AMF.Tools.Core.Pluralization
             return false;
         }
 
-        internal virtual TSecond GetSecondValue(TFirst value)
+        public virtual TSecond GetSecondValue(TFirst value)
         {
             if (ExistsInFirst(value))
             {
@@ -58,7 +58,7 @@ namespace AMF.Tools.Core.Pluralization
             }
         }
 
-        internal virtual TFirst GetFirstValue(TSecond value)
+        public virtual TFirst GetFirstValue(TSecond value)
         {
             if (ExistsInSecond(value))
             {
@@ -70,7 +70,7 @@ namespace AMF.Tools.Core.Pluralization
             }
         }
 
-        internal void AddValue(TFirst firstValue, TSecond secondValue)
+        public void AddValue(TFirst firstValue, TSecond secondValue)
         {
             FirstToSecondDictionary.Add(firstValue, secondValue);
 

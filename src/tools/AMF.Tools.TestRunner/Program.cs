@@ -35,13 +35,19 @@ namespace AMF.Tools.TestRunner
             var tests = new MiscTests();
             tests.PluralizationTest();
             tests.PluralizationTest2();
+            tests.EnglishPluralizationServiceTest();
             tests.XmlCommentHelperTest();
             tests.ControllerMethodTest();
+            tests.ControllerMethodWithParametersTest();
+            tests.ApiObjectTest();
+            tests.RequestTypeServiceScalarTest();
             tests.RamlTypesHelperTest();
             tests.WebApiGeneratorModelTest();
             tests.BidirectionDicTest();
-            tests.ResponseTypeServiceTest();
+            tests.ResponseTypeServiceScalarTest();
+            tests.ResponseTypeSeriveObjectTest();
             tests.ClientGeneratorMethodTest();
+            tests.ResponseTypeSeriveEnumTest();
             TestCount += tests.TestCount;
         }
 

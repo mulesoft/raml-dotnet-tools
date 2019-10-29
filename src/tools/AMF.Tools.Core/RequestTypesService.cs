@@ -41,18 +41,19 @@ namespace AMF.Tools.Core
                 };
             }
 
-            var apiObjectByKey = GetRequestApiObjectByKey(key);
-            if (apiObjectByKey != null)
-                return CreateGeneratorParameter(apiObjectByKey);
+            //var apiObjectByKey = GetRequestApiObjectByKey(key);
+            //if (apiObjectByKey != null)
+            //    return CreateGeneratorParameter(apiObjectByKey);
 
-            apiObjectByKey = GetRequestApiObjectByKey(NetNamingMapper.GetObjectName(key));
-            if (apiObjectByKey != null)
-                return CreateGeneratorParameter(apiObjectByKey);
+            //apiObjectByKey = GetRequestApiObjectByKey(NetNamingMapper.GetObjectName(key));
+            //if (apiObjectByKey != null)
+            //    return CreateGeneratorParameter(apiObjectByKey);
 
             var requestKey = key + GeneratorServiceBase.RequestContentSuffix;
-            apiObjectByKey = GetRequestApiObjectByKey(requestKey);
-            if (apiObjectByKey != null)
-                return CreateGeneratorParameter(apiObjectByKey);
+            //apiObjectByKey = GetRequestApiObjectByKey(requestKey);
+            //if (apiObjectByKey != null)
+            //    return CreateGeneratorParameter(apiObjectByKey);
+            ApiObject apiObjectByKey;
 
             if (linkKeysWithObjectNames.ContainsKey(key))
             {

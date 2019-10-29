@@ -25,10 +25,7 @@ namespace AMF.Tools.Core
 
         public string GetResponseType(Operation method, EndPoint resource, Payload mimeType, string key, string responseCode, string fullUrl)
         {
-            string returnType = null;
-
-            returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
-
+            var returnType = GetNamedReturnType(method, resource, mimeType, fullUrl);
             if (!string.IsNullOrWhiteSpace(returnType) && (RamlTypesHelper.IsPrimitiveOrSchemaObject(returnType, schemaObjects)
                 || RamlTypesHelper.IsPrimitiveOrSchemaObject(returnType, schemaResponseObjects)))
                 return returnType;

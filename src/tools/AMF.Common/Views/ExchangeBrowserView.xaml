@@ -147,7 +147,7 @@
             <Grid Grid.Column="1" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="260" />
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Select an API"
@@ -164,11 +164,17 @@
                         Width="68"
                         Height="30" />
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Right" Width="200">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Right" Width="250">
                     <Label Content="Username: "
                         Style="{StaticResource DefaultLabel}" />
                     <Label Content="{Binding Path=Username}"
                         Style="{StaticResource DefaultLabel}" />
+                    <Button Content="Logout"
+                        x:Name="Logout"
+                        HorizontalAlignment="Right"
+                        Style="{StaticResource Button}"
+                        Width="68"
+                        Height="30" />
                 </StackPanel>
 
             </Grid>

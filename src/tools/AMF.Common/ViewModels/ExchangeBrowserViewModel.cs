@@ -135,6 +135,13 @@ namespace AMF.Common.ViewModels
             }
         }
 
+        public async void Logout()
+        {
+            AccessToken = null;
+            Username = null;
+            await GetProductsAsync(SearchText); //reload without token            
+        }
+
         public class ExchangeAsset
         {
             public string GroupId { get; set; }

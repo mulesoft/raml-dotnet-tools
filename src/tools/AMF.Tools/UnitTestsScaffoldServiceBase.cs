@@ -58,6 +58,7 @@ namespace AMF.Tools
 
         public void ScaffoldToProject(RamlChooserActionParams parameters, Project proj)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var data = parameters.Data;
             if (data == null || data.RamlDocument == null)
                 return;
@@ -86,6 +87,7 @@ namespace AMF.Tools
 
         private static void ScaffoldMainRamlFiles(IEnumerable<string> ramlFiles)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var service = GetScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
 
             foreach (var ramlFile in ramlFiles)
@@ -107,6 +109,7 @@ namespace AMF.Tools
 
         public static UnitTestsScaffoldServiceBase GetScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider serviceProvider)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var dte = serviceProvider.GetService(typeof (SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             UnitTestsScaffoldServiceBase service;
@@ -119,6 +122,7 @@ namespace AMF.Tools
 
         private static IEnumerable<string> GetMainRamlFiles(Document document)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var path = document.Path.ToLowerInvariant();
 
             if (IsMainRamlFile(document, path))
@@ -130,11 +134,13 @@ namespace AMF.Tools
 
         private static bool IsMainRamlFile(Document document, string path)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             return !path.EndsWith(IncludesFolder) && HasReferenceFile(document.FullName);
         }
 
         private static IEnumerable<string> GetItemsWithReferenceFiles(IEnumerable<ProjectItem> ramlItems)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             return (from item in ramlItems where HasReferenceFile(item.FileNames[0]) select item.FileNames[0]).ToList();
         }
 
@@ -145,8 +151,10 @@ namespace AMF.Tools
             return hasReferenceFile;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread", Justification = "<Pending>")]
         private static IEnumerable<ProjectItem> GetMainRamlFileFromProject()
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             var contractsItem =
@@ -164,6 +172,7 @@ namespace AMF.Tools
 
         private static bool IsInContractsFolder(Document document)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             return document.Path.ToLowerInvariant().Contains(ContractsFolder.ToLowerInvariant());
         }
 
@@ -232,6 +241,7 @@ namespace AMF.Tools
 
         protected void AddUnitTests(ProjectItem folderItem, string folderPath, RamlChooserActionParams parameters)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var includesFolderPath = folderPath + Path.DirectorySeparatorChar + InstallerServices.IncludesFolderName;
 
             var includesManager = new RamlIncludesManager();
@@ -268,8 +278,10 @@ namespace AMF.Tools
             };
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread", Justification = "<Pending>")]
         private static ProjectItem AddOrUpdateRamlFile(string modifiedContents, ProjectItem folderItem, string folderPath, string ramlFileName)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             ProjectItem ramlProjItem;
             var ramlDestFile = Path.Combine(folderPath, ramlFileName);
 

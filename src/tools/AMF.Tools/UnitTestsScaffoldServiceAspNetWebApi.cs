@@ -7,6 +7,8 @@ using AMF.Tools.Properties;
 using AMF.Common;
 using Microsoft.VisualStudio.ComponentModelHost;
 using NuGet.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft;
 
 namespace AMF.Tools
 {
@@ -21,6 +23,7 @@ namespace AMF.Tools
 
         public override void AddTests(RamlChooserActionParams parameters)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             Tracking.Track("Unit Tests Scaffold (Asp.Net WebApi)");
 
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
@@ -41,6 +44,7 @@ namespace AMF.Tools
         public override void InstallDependencies(Project proj)
         { 
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
             var packs = installerServices.GetInstalledPackages(proj).ToArray();

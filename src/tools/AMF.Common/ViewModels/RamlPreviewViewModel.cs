@@ -148,8 +148,14 @@ namespace AMF.Common.ViewModels
             set
             {
                 generateUnitTests = value;
+                if (value) WarnUnitTestProject();
                 NotifyOfPropertyChange(() => GenerateUnitTests);
             }
+        }
+
+        private void WarnUnitTestProject()
+        {
+            MessageBox.Show("Unit test project must be created before generating code with this option", "Warning");
         }
 
         public string Username

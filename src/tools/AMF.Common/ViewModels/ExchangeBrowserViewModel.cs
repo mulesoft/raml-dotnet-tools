@@ -12,7 +12,7 @@ namespace AMF.Common.ViewModels
 {
     public class ExchangeBrowserViewModel : Screen
     {
-        static HttpClient client = new HttpClient();
+        static readonly HttpClient client = new HttpClient();
         private static readonly string BaseUrl = "https://anypoint.mulesoft.com";
         private readonly string AssetsUrl = BaseUrl + "/exchange/api/v1/assets";
         private readonly string DefaultQueryString = "type=rest-api&limit=" + AssetsLimit;

@@ -17,7 +17,7 @@
     <Window.Resources>
 
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-        
+
         <Style x:Key="DefaultLabel"
 			   TargetType="{x:Type Label}">
             <Setter Property="FontSize" Value="13"></Setter>
@@ -147,14 +147,14 @@
             <Grid Grid.Column="1" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="260" />
+                    <ColumnDefinition Width="245" />
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Select an API"
 							FontWeight="Bold"
                             Margin="0,10,0,2"
                             Grid.Column="0" />
-                
+
                 <Button Content="Login"
                         x:Name="Login"
                         HorizontalAlignment="Right"
@@ -164,10 +164,10 @@
                         Width="68"
                         Height="30" />
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Right" Width="250">
-                    <Label Content="Username: "
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Right" Width="240">
+                    <Label Content="Username: " Margin="0 10 0 0"
                         Style="{StaticResource DefaultLabel}" />
-                    <Label Content="{Binding Path=Username}"
+                    <Label Content="{Binding Path=Username}"  Margin="0 10 0 0"
                         Style="{StaticResource DefaultLabel}" />
                     <Button Content="Logout"
                         x:Name="Logout"
@@ -183,15 +183,19 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="190" />
                     <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="251*"/>
+                    <ColumnDefinition Width="33*"/>
                 </Grid.ColumnDefinitions>
-                
-                <TextBox x:Name="SearchText" Grid.Column="0" Width="180" Style="{StaticResource DefaultTextBox}" />
+
+                <TextBox x:Name="SearchText" Grid.Column="0" Width="180" Style="{StaticResource DefaultTextBox}"
+                        ToolTip="looks for terms in: asset's name, tags, categories, custom attributes, asset portal pages, properties in RAML and OAS specifications https://docs.mulesoft.com/exchange/to-find-info#exchange-search" Margin="3,12,7,12" />
                 <Button Content="Search"
                         x:Name="Search"
+                        ToolTip="looks for terms in: asset's name, tags, categories, custom attributes, asset portal pages, properties in RAML and OAS specifications https://docs.mulesoft.com/exchange/to-find-info#exchange-search"
                         Grid.Column="1"
                         Style="{StaticResource Button}"
                         Width="68"
-                        Height="30" />
+                        Height="30" Margin="12,10,10,10" />
             </Grid>
 
             <DataGrid ItemsSource="{Binding Assets}" AutoGenerateColumns="False"  IsReadOnly="True"

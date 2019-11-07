@@ -1,0 +1,30 @@
+== Customizing the Code Generation
+
+RAML .Net Tools uses T4 templates for code generation of client and service implementation.
+The T4 templates are now placed in your project folder to let you easily customize them.
+
+If you customize a template, be sure to add this file to your VCS repository.
+
+Each template has a header with the title, version, and hash. Do not modify this information as it's used to check for customization and compatibility with new versions.
+
+=== Compatibility With New Versions of the Templates
+
+When upgrading the tool if the template has changed, a compatibility check is performed. If you have customized the template and the new version of the template is compatible with your current one, you are given the option to override or continue using your customized template.
+
+In case your customized template is no longer compatible,  you are given the choice to override the template or stop the process. In the latter, you must uninstall the new version of the tool and reinstall the previous one.
+
+=== Customizing the Generated Code for the Client
+
+For the client there is a single template containing all the generated code, the *RAMLClient.t4* file is placed under "API References/Templates".
+
+=== Customizing the Generated Code for the Asp.Net Web API
+
+For the Web API there are a several templates under "Contracts/Templates":
+
+- *ApiControllerImplementation.t4*: Generates the skeleton of the controller, this is the place where you implement your code.
+
+- *ApiControllerBase.t4*: This class delegates the to the methods on the controller implementation class (ApiControllerImplementation).
+
+- *ApiControllerInterface.t4*: The interface that the controller implements.
+
+- *ApiModel.t4*: Template for the request and response content models.

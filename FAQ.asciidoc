@@ -1,0 +1,17 @@
+== FAQ
+
+*What are the differences between the RAML Parser for .NET and RAML .Net Tools?*
+
+The RAML Parser takes a text based RAML definition and returns an Abstract Syntax Tree (An object model representing the resources/methods in the RAML definition). The AMF Tools leverage this model in code generation templates to provide strongly typed classes for the consumption or implementation of the API itself.
+
+*Which languages can the tools generate code for?*
+
+Currently, C# is the only output language supported. This generated code can however simply be contained within a separate assembly, and the types exposed then consumed from any CLR language.
+
+*Can I customize the code-generation templates?*
+
+Yes, RAML .Net Tools uses T4 templates for code generation of client and service implementation. See the appropriate sections for guidance on where and how to customize templates.
+
+*I already have an API built using ASP.NET WebApi - how do I adopt RAML for my project?*
+
+To extract a RAML definition for an existing WebApi project, simply *enable RAML Metadata output* from the project context menu. More info in the section: <<Metadata - Extract a RAML definition from your Web app>>

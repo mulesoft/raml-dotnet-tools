@@ -1,0 +1,6 @@
+== Exchange
+
+Both when generating a client proxy (Add RAML/OAS Reference) or scaffolding an ASP.Net Core/WebApi Application (Add RAML/OAS Contract) you can select an existing REST API from Mulesoft's Anypoint Exchange platform.
+Click on the *Exchange* button to see the list of public REST APIs or search for an specific API. If you have a Anypoint Mulesoft account you can also login to see your private APIs.
+
+image::./docimages/exchange-rest-apis.png[align="center", width="550"]

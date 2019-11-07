@@ -141,3 +141,8 @@ If you plan to host several versions of the API in the same solution, you can ch
 This will add the version as a prefix to routes, controllers, and models, thus preventing collision between different versions of the API.
 
 image::docimages/RAML_NETAddRAMLContractScreen.png[align="center", width=550]
+
+
+=== Advanced Scenarios
+
+- link:CustomizingCodeGeneration.asciidoc[Customizing the Code Generation]

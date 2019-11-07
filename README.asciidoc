@@ -8,7 +8,7 @@ The AMF Tools for .NET allows developers to easily integrate and consume APIs th
 
 The tools are provided as a Visual Studio extension, allowing simple and natural integration of RAML/OAS into a normal development workflow.
 
-A single installation package provides support for both client and service code-generation scenarios.
+A single installation package provides support for both client, service code-generation and RAML extraction scenarios.
 
 Contents:
 
@@ -52,14 +52,14 @@ Contents:
 
 You can generate API client code from a RAML/OAS definition, which lets client applications consume existing APIs from a RAML/OAS definition.
 
-In Visual Studio .NET, you can add a reference to a RAML/OAS definition, and a strongly-typed client proxy is generated in the project. A local copy of the RAML/OAS definition stores as a file within the Visual Studio project, which is kept in sync with the original RAML/OAS definition.
+In Visual Studio, you can add a reference to a RAML/OAS definition, and a strongly-typed client proxy is generated in the project. A local copy of the RAML/OAS definition stores as a file within the Visual Studio project, which is kept in sync with the original RAML/OAS definition.
  
 
 === ASP.NET Implementation from a RAML/OAS Definition
 
 You can generate an ASP .NET Core or Web API 2 implementation from a new or existing RAML/OAS definition.
 
-From within Visual Studio .NET, you can add a RAML/OAS definition from which the tool generates an initial ASP .NET Core, or Web API 2 implementation, depending if you are invoking the command from a Visual Studio 2017 project type (.xproj) or the traditional project type (.csproj). This implementation includes controller classes and route registrations that map to the resources exposed in the RAML/OAS definition and also includes model classes for their representation. The model classes are generated from the available RAML/OAS types or JSON schemas.
+From within Visual Studio .NET, you can add a RAML/OAS definition from which the tool generates an initial ASP .NET Core, or Web API 2 implementation. This implementation includes controller classes and route registrations that map to the resources exposed in the RAML/OAS definition and also includes model classes for their representation. The model classes are generated from the available RAML/OAS types or JSON schemas.
 
 In code, the controllers definition and implementation are logically separated. The generated code representing the definition is driven by the RAML/OAS definition allowing you to focus exclusively on the implementation classes. This separation of concerns allows iterative evolution of the API with non-destructive forward engineering of the code-based definition.
 
@@ -74,12 +74,12 @@ When enabling metadata, a local endpoint is registered to provide a browser-acce
 === Not Supported
     - Visual Studio for Mac
     - Visual Studio Code
-    - Visual Studio 2019
 
 === Not tested
     - Xamarin
 
 == Supported specific versions
+    - Visual Studio 2019
     - Visual Studio 2017
     - For the client proxy generation functionality:
         - .Net Framework 4.5 - 4.7.2
@@ -93,165 +93,21 @@ When enabling metadata, a local endpoint is registered to provide a browser-acce
 
 == Prerequisites
 
-* Visual Studio 2017
+* Visual Studio 2017 or 2019
 * .NET Framework 4.6.2 or higher
 * RAML 1.0/0.8 or OAS 2.0 compatible endpoint
 * Supported languages: C# (other languages indirectly)
 
 == Installation
 
-. Run the AMF tools for Visual Studio Tools extension (VSIX) included in this package (ensure that Visual Studio 2017 is closed).
-. On the initial screen select Visual Studio 2017 and click *Install*.
+. Run the AMF tools for Visual Studio Tools extension (VSIX) included in this package (ensure that Visual Studio is closed).
+. On the initial screen select Visual Studio and click *Install*.
 +
 image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
 +
 . Wait for the installer to complete and click the *Close* button.
 
-== Generating an API Client
-
-. Start Visual Studio 2017 and create a new project that consumes the API, or open an existing project.
-. In the Solution Explorer right-click the References node for the selected project and select the *Add RAML/OAS Reference* command.
-+
-image::./docimages/RAML_NET_SolutionExplorer.png[align="center"]
-+
-. Specify the URL of the RAML/OAS definition and click the *Go* button, use the *Upload* button to select the file from the local filesystem or choose a REST API from Exchange.
-+
-image::./docimages/RAML_NET_AddRAMLReference.png[align="center"]
-+
-. The RAML/OAS definition is presented together a preview of the available resources. When ready, click the *OK* button to begin generating the API client. Optionally change the filename or namespace for the generated code.
-+
-A folder called API References containing the generated assets is added to the project. These assets include the original RAML/OAS file as well as any include dependencies, generated code, and a hidden .ref file with metadata for the code-generation tools.
-+
-image::./docimages/RAML_NET_APIRef.png[align="center"]
-+
-Newtonsoft.Json, Microsoft.AspNet.WebApi.Client and other NuGet packages are installed and referenced by the project.
-+
-. The C# classes nested beneath the parent RAML/OAS file contain the generated code to consume the Web API. At this point, the generated code is ready to be used.
-
-
-== Using the API Client with the Movies Sample
-
-The AMF .NET Tools installation package includes a sample project for a Movies API,
-which is a fictitious video library service where users browse a movie catalog,  rent or return movies, and add movies to a wishlist for future watching.
-
-The main constructor of the project's MoviesClient client uses an endpoint URI. The overload for the constructor allows a custom HttpClient implementation to be injected, such as an HttpClient instance configured with a MessageHandler. You can use this instance for unit testing.
-
-=== Consuming an API
-
-The MoviesClient model object replicates the same structure as the RAML definition through available resources and actions. The methods in this object model are asynchronous and based on the Task Parallel Library (TPL), so they can execute with the new async  and await syntax in C# version 5.
-
-
-[source, c#]
-----
-var api = new MoviesClient("http://movies.com/api/");
-
-// GET /movies
-var moviesResponse = await api.Movies.Get();
-
-// GET /movies/available
-var availableMoviesResponse = await api.Movies.Available.Get();
-----
-
-
-If your API requires authentication, you can specify the access token as per this example of an authenticated Post.
-
-=== Calling an Authenticated API with OAuth
-
-If your API is secured with OAuth, you can specify the access token before making a call as shown in this example:
-
-[source, c#]
-----
-var api = new MoviesApi("http://movies.con/api/");
-var postMovie = new PostMovies
-{
-  Name = "Big Fish",
-  Director = "Tim Burton",
-  Cast = "Ewan McGregor, Albert Finney, Billy Crudup",
-  Language = "English",
-  Genre = "Drama, Fantasy"
-};
-
-// Set OAuth access token
-moviesApi.OAuthAccessToken = "<OAuth_Token>";
-
-// POST /movies
-var response = await moviesApi.Movies.Post(postMovie);
-----
-
-Replace the <OAuth_Token> with your  OAuth token received from your OAuth authorization service.
-
-=== Consuming the HTTP Response
-
-All methods in the generated class return an instance of ApiResponse or of a subclass of it. This class provides access to the HTTP status codes, raw headers, and content. The following code fragment illustrates how to use those:
-
-[source, c#]
-----
-var statusCode = response.StatusCode;
-var rawHeaders = response.RawHeaders;
-var rawContent = response.RawContent;
-var stream = await response.RawContent.ReadAsStreamAsync();
-----
-
-When the RAML specifies a JSON contract for a response, the tool generates a strongly typed object with an equivalent structure. This object is accessible through the Content property in the response.
-
-[source, c#]
-----
-var moviesResponse = await api.Movies.Get();
-MoviesGetOKResponseContent[] movies = moviesResponse.Content;
-var director = movies.First().Director;
-----
-
-For more advanced scenarios in which several JSON schemas are associated with a response, the Content property provides a different typed object for each schema.
-
-[source, c#]
-----
-var okContent = movieResponse.Content.IdGetOKResponseContent;
-var badReqContent = movieResponse.Content.IdGetBadRequestResponseContent;
-var notFoundContent = movieResponse.Content.IdGetNotFoundResponseContent;
-----
-
-Depending on the HTTP status code, each property has a value or is null. For example, if the status code is OK (200), only the IdGetOKResponseContent  has a value, and the other properties are null.
-
-The response also provides access to typed headers in case they were included in the RAML definition:
-
-[source, c#]
-----
-GetByIdMoviesOKResponseHeader headers = movieResponse.Headers;
-var created = headers.Created;
-var code = headers.Code;
-----
-
-== Implementing an ASP.NET Core Web Application
-
-To implement an ASP.NET Core web app:
-
-. Start Visual Studio 2017 and create a new ASP.NET Core Web Application.
-. In the New ASP.NET Project menu, select a template:
-+
-image::./docimages/webapi-vs2015.png[align="center", width="550"]
-+
-. In the Solution Explorer, right-click the project node and click the *Add RAML/OAS Contract* command.
-+
-image::./docimages/RAML_NETAddRAMLContract.png[align="center", width="550"]
-+
-. The dialog lets you create a RAML definition or import a RAML or OAS existing specification. If you import an existing one, click  the *Go* button to download the RAML/OAS definition from an URL, browse to use a local copy from your file system or select from Exchange.
-
-The preview screen has several options to customize the generated code. You can change the filename, namespace, or choose asynchronous methods.
-
-Also you can customize the location of the generated classes. Check the "Customize output folders" and enter the path for the controllers and/or the models. 
-Select the check box if you want to add "generated.cs" to the model filenames.
-
-A Contracts folder is added to the project containing the generated assets. These assets include a local copy of the RAML/OAS definition, the generated model classes (inferred from the RAML types or JSON schemas in the RAML/OAS definition), and .NET interfaces representing the contracts for the ASP.NET Controllers.
-
-If you want to customize the location of the generated classes, select the "Customize output folders", specify the paths, and choose if you want to add ".generated.cs" suffix to the Models. **Specified paths will be relative to the project's root folder**.
-If you leave these fields empty, it will place the generated controllers in the "Controllers" folder and the rest of the assets under the Contracts folder.
-
-If you plan to host several versions of the API in the same solution, you can check the "Use api version" option. 
-This will add the version as a prefix to routes, controllers, and models, thus preventing collision between different versions of the API.
-
-image::docimages/RAML_NETAddRAMLContractScreen.png[align="center", width=550]
-
-
+link:APIClientProxy.asciidoc[Generating an API Client]
 
 == Implementing an ASP.NET Web API Application
 
@@ -714,13 +570,6 @@ RAML 0.8:
 |rfc2616  |DateTimeOffset
 |rfc3339  |DateTime
 |======================
-
-
-== Internal dependencies
-
-. https://github.com/raml-org/raml-dotnet-parser-2[RAML .Net Parser]
-. https://github.com/mulesoft-labs/raml-dotnet-apicore[RAML API Core]
-. https://github.com/mulesoft-labs/raml-dotnet-apiexplorer[RAML ApiExplorer]
 
 
 == FAQ

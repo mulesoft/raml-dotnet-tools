@@ -15,6 +15,8 @@ image::./docimages/RAML_NETAddRAMLContract.png[align="center", width="550"]
 
 The preview screen has several options to customize the generated code. You can change the filename, namespace, or choose asynchronous methods.
 
+You can choose to generate unit tests for the actions of the generated controllers. To do so check the "Genera Unit Tests" checkbox and select your unit test project. Is important to note that *you need to create the unit testing project first*, before adding the raml contract. The tests are aimed for the https://github.com/microsoft/testfx[MSTest Framework].
+
 Also you can customize the location of the generated classes. Check the "Customize output folders" and enter the path for the controllers and/or the models. 
 Select the check box if you want to add "generated.cs" to the model filenames.
 

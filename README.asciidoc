@@ -39,7 +39,7 @@ Next Steps:
 
 - link:AspNetCore.asciidoc[Implementing an ASP.NET Core Application]
 
-- link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+- link:AspNetWebAPI.asciidoc[Implementing an ASP.NET WebAPI Application]
 
 - link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]
 
@@ -86,11 +86,15 @@ Full contents links:
 
 * link:AspNetCore.asciidoc[Implementing an ASP.NET Core Web Application]
 
-* link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+* link:AspNetCore.asciidoc[Generating Unit Tests for your ASP.NET Core Web App]
+
+* link:AspNetWebAPI.asciidoc[Implementing an ASP.NET WebAPI Application]
+
+* link:AspNetWebAPI.asciidoc[Generating Unit Tests for your ASP.NET WebAPI App]
 
 * link:AspNetWebAPI.asciidoc[Updating your RAML/OAS specification]
 
-* link:AspNetWebAPI.asciidoc[Implementing a Controller in ASP.NET Web API]
+* link:AspNetWebAPI.asciidoc[Implementing a Controller in ASP.NET WebAPI]
 
 * link:CustomizingCodeGeneration.asciidoc[Customizing the Generated Code]
 
@@ -98,7 +102,7 @@ Full contents links:
 
 ** link:CustomizingCodeGeneration.asciidoc[Customizing the Generated Code for the Client]
 
-** link:CustomizingCodeGeneration.asciidoc[Customizing the Generated Code for the Asp.Net Web API]
+** link:CustomizingCodeGeneration.asciidoc[Customizing the Generated Code for the Asp.Net WebAPI]
 
 * link:ExtractRAML.asciidoc[Metadata - Extract a RAML definition from your Web app]
 

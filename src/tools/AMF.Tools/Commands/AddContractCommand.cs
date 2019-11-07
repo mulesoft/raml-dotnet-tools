@@ -99,7 +99,7 @@ namespace AMF.Tools
 
             var ramlScaffoldUpdater = RamlScaffoldServiceBase.GetRamlScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
             var ramlChooserViewModel = new RamlChooserViewModel();
-            ramlChooserViewModel.Load(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, ramlScaffoldUpdater.AddContract, "Add RAML Contract",
+            ramlChooserViewModel.Load(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, ramlScaffoldUpdater.AddContract, "Add RAML/OAS Contract",
                 true, Settings.Default.RAMLExchangeUrl);
             dynamic settings = new ExpandoObject();
             settings.Height = 600;

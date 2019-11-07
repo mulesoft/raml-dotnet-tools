@@ -199,6 +199,12 @@ public partial class MoviesController : IMoviesController
 The `IMoviesController` interface implemented by the controller represents the contract. You can provide, for example, the implementation code for the Get method and return a list of available movies in the catalog.
 
 
-=== Advanced Scenarios
+link:README.asciidoc[Return to Documentation Index]
+
+=== More info
 
 - link:CustomizingCodeGeneration.asciidoc[Customizing the Code Generation]
+
+- link:Exchange.asciidoc[Retrieving your specifications from Anypoint Exchange]
+
+- link:PrimitiveTypes.asciidoc[Fine tuning generated .NET primitive types]

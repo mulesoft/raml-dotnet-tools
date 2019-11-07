@@ -37,6 +37,8 @@ Next Steps:
 
 - link:APIClientProxy.asciidoc[Generating an API Client]
 
+- link:AspNetCore.asciidoc[Implementing an ASP.NET Core Application]
+
 - link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
 
 - link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]
@@ -82,7 +84,7 @@ Full contents links:
 
 ** link:APIClientProxy.asciidoc[Consuming the HTTP Response]
 
-* link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Core Web Application]
+* link:AspNetCore.asciidoc[Implementing an ASP.NET Core Web Application]
 
 * link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
 

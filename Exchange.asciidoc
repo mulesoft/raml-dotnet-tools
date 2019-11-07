@@ -4,3 +4,15 @@ Both when generating a client proxy (Add RAML/OAS Reference) or scaffolding an A
 Click on the *Exchange* button to see the list of public REST APIs or search for an specific API. If you have a Anypoint Mulesoft account you can also login to see your private APIs.
 
 image::./docimages/exchange-rest-apis.png[align="center", width="550"]
+
+link:README.asciidoc[Return to Documentation Index]
+
+Next Steps:
+
+- link:APIClientProxy.asciidoc[Generating an API Client]
+
+- link:AspNetCore.asciidoc[Implementing an ASP.NET Core Application]
+
+- link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+
+- link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]

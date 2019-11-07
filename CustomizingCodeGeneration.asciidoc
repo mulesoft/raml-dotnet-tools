@@ -28,3 +28,15 @@ For the Web API there are a several templates under "Contracts/Templates":
 - *ApiControllerInterface.t4*: The interface that the controller implements.
 
 - *ApiModel.t4*: Template for the request and response content models.
+
+link:README.asciidoc[Return to Documentation Index]
+
+Next Steps:
+
+- link:APIClientProxy.asciidoc[Generating an API Client]
+
+- link:AspNetCore.asciidoc[Implementing an ASP.NET Core Application]
+
+- link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+
+- link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]

@@ -5,7 +5,8 @@
 You can generate API client code from a RAML/OAS definition, which lets client applications consume existing APIs from a RAML/OAS definition.
 
 In Visual Studio, you can add a reference to a RAML/OAS definition, and a strongly-typed client proxy is generated in the project. A local copy of the RAML/OAS definition stores as a file within the Visual Studio project, which is kept in sync with the original RAML/OAS definition.
- 
+
+link:APIClientProxy.asciidoc[More info]
 
 === ASP.NET Implementation from a RAML/OAS Definition
 
@@ -15,8 +16,26 @@ From within Visual Studio .NET, you can add a RAML/OAS definition from which the
 
 In code, the controllers definition and implementation are logically separated. The generated code representing the definition is driven by the RAML/OAS definition allowing you to focus exclusively on the implementation classes. This separation of concerns allows iterative evolution of the API with non-destructive forward engineering of the code-based definition.
 
+- link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+- link:AspNetCore.asciidoc[Implementing an ASP.NET Core Application]
+
+
 === Extract a RAML definition from an ASP.NET Core or WebApi 2 app
 
 You can generate a RAML 1 or 0.8 definition from your ASP .NET Core or WebAPI 2 implementation.
 
 When enabling metadata, a local endpoint is registered to provide a browser-accessible API Console for the RAML-enabled implementation. This gives an easily navigable view of the API, including full documentation of routes, resource schema, and includes examples.
+
+link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]
+
+link:README.asciidoc[Return to Documentation Index]
+
+Next Steps:
+
+- link:APIClientProxy.asciidoc[Generating an API Client]
+
+- link:AspNetCore.asciidoc[Implementing an ASP.NET Core Application]
+
+- link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+
+- link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]

@@ -48,3 +48,16 @@ RAML 0.8:
 |rfc2616  |DateTimeOffset
 |rfc3339  |DateTime
 |======================
+
+
+link:README.asciidoc[Return to Documentation Index]
+
+Next Steps:
+
+- link:APIClientProxy.asciidoc[Generating an API Client]
+
+- link:AspNetCore.asciidoc[Implementing an ASP.NET Core Application]
+
+- link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+
+- link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]

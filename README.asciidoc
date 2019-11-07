@@ -32,48 +32,90 @@ image::./docimages/RAML_NET_VSIXInstaller.png[align="center"]
 - Generate ASP.NET Base Implementation from a RAML/OAS Definition link:AspNetWebAPI.asciidoc[More info]
 - Extract a RAML definition and HTML Documentation (API Console) from an ASP.NET Core or WebApi 2 app link:ExtractRAML.asciidoc[More info]
 
-More info about the functionality of these tools and each of these scenarios: link:Scenarios.asciidoc[Scenarios]
 
 Next Steps:
+
 - link:APIClientProxy.asciidoc[Generating an API Client]
+
 - link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+
 - link:ExtractRAML.asciidoc[Extract a RAML definition from your Web app]
 
+- link:Scenarios.asciidoc[More info about the functionality of these tools and each of these scenarios]
+
+
 More info:
+
 - link:FAQ.asciidoc[FAQ - Frequently Asked Questions]
+
 - link:Exchange.asciidoc[Retrieving your specifications from Anypoint Exchange]
+
 - link:CustomizingCodeGeneration.asciidoc[Customizing the Code Generation]
+
 - link:PrimitiveTypes.asciidoc[Fine tuning generated .NET primitive types]
+
 - link:SupportedVersionsAndTools.asciidoc[Supported .Net flavours/versions, IDEs and Tools]
 
+Full contents links:
+
 * link:Scenarios.asciidoc[Scenarios]
-** link:Scenarios.asciidoc#<<API Client Code from a RAML/OAS Definition>>
-** link:Scenarios.asciidoc#<<ASP.NET Implementation from a RAML/OAS Definition>>
-** link:Scenarios.asciidoc#<<Extract a RAML definition from an ASP.NET Core or WebApi 2 app>>
+
+** link:Scenarios.asciidoc[API Client Code from a RAML/OAS Definition]
+
+** link:Scenarios.asciidoc[ASP.NET Implementation from a RAML/OAS Definition]
+
+** link:Scenarios.asciidoc[Extract a RAML definition from an ASP.NET Core or WebApi 2 app]
+
 * link:SupportedVersionsAndTools.asciidoc[Supported .Net flavours/versions, IDEs and Tools]
+
 * <<Prerequisites>>
+
 * <<Installation>>
+
 * link:APIClientProxy.asciidoc[Generating an API Client]
-* link:APIClientProxy.asciidoc#<<Using the API Client with the Movies Sample>>
-** link:APIClientProxy.asciidoc#<<Consuming an API>>
-** link:APIClientProxy.asciidoc#<<Calling an Authenticated API with OAuth>>
-** link:APIClientProxy.asciidoc#<<Consuming the HTTP Response>>
-* link:AspNetWebAPI.asciidoc#<<Implementing an ASP.NET Core Web Application>>
-* link:AspNetWebAPI.asciidoc#<<Implementing an ASP.NET Web API Application>>
-* link:AspNetWebAPI.asciidoc#<<Updating your RAML/OAS specification>>
-* link:AspNetWebAPI.asciidoc#<<Implementing a Controller in ASP.NET Web API>>
+
+* link:APIClientProxy.asciidoc[Using the API Client with the Movies Sample]
+
+** link:APIClientProxy.asciidoc[Consuming an API]
+
+** link:APIClientProxy.asciidoc[Calling an Authenticated API with OAuth]
+
+** link:APIClientProxy.asciidoc[Consuming the HTTP Response]
+
+* link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Core Web Application]
+
+* link:AspNetWebAPI.asciidoc[Implementing an ASP.NET Web API Application]
+
+* link:AspNetWebAPI.asciidoc[Updating your RAML/OAS specification]
+
+* link:AspNetWebAPI.asciidoc[Implementing a Controller in ASP.NET Web API]
+
 * link:CustomizingCodeGeneration.asciidoc[Customizing the Generated Code]
-** link:CustomizingCodeGeneration.asciidoc#<<Compatibility With New Versions of the Templates>>
-** link:CustomizingCodeGeneration.asciidoc#<<Customizing the Generated Code for the Client>>
-** link:CustomizingCodeGeneration.asciidoc#<<Customizing the Generated Code for the Asp.Net Web API>>
+
+** link:CustomizingCodeGeneration.asciidoc[Compatibility With New Versions of the Templates]
+
+** link:CustomizingCodeGeneration.asciidoc[Customizing the Generated Code for the Client]
+
+** link:CustomizingCodeGeneration.asciidoc[Customizing the Generated Code for the Asp.Net Web API]
+
 * link:ExtractRAML.asciidoc[Metadata - Extract a RAML definition from your Web app]
-** link:ExtractRAML.asciidoc#<<Api Console>>
-** link:ExtractRAML.asciidoc#<<Viewing the Raw RAML>>
-** link:ExtractRAML.asciidoc#<<Downloading the RAML>>
-** link:ExtractRAML.asciidoc#<<Customizing the Generated RAML on your ASP.NET Core app>>
-** link:ExtractRAML.asciidoc#<<Customizing the Generated RAML on your ASP.NET WebApi 2 app>>
+
+** link:ExtractRAML.asciidoc[Api Console]
+
+** link:ExtractRAML.asciidoc[Viewing the Raw RAML]
+
+** link:ExtractRAML.asciidoc[Downloading the RAML]
+
+** link:ExtractRAML.asciidoc[Customizing the Generated RAML on your ASP.NET Core app]
+
+** link:ExtractRAML.asciidoc[Customizing the Generated RAML on your ASP.NET WebApi 2 app]
+
 * link:Exchange.asciidoc[Exchange]
-* link:PrimitiveTypes.asciidoc#<<Fine tuning generated .NET primitive types>>
-** link:PrimitiveTypes.asciidoc#<<Numeric types>>
-** link:PrimitiveTypes.asciidoc#<<Date types>>
-* - link:FAQ.asciidoc[FAQ]
+
+* link:PrimitiveTypes.asciidoc[Fine tuning generated .NET primitive types]
+
+** link:PrimitiveTypes.asciidoc[Numeric types]
+
+** link:PrimitiveTypes.asciidoc[Date types]
+
+* link:FAQ.asciidoc[FAQ]

@@ -146,7 +146,7 @@ pipeline {
             }
         }
 
-        stage('AMF.Tools')
+        stage('RAML.Tools')
         {
             stages {
                 stage('Build') {
@@ -161,23 +161,23 @@ pipeline {
                                 echo err.getMessage()
                             }
                         }
-                        bat 'nuget restore src/tools/AMF.Tools.sln'
-                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
+                        bat 'nuget restore src/tools/RAML.Tools.sln'
+                        bat "msbuild src/tools/RAML.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
                     }
                 }
                 stage('Test') {
                     steps {
-                        dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
-                            bat 'AMF.Tools.TestRunner.exe'
+                        dir("src/tools/RAML.Tools.TestRunner/bin/Release/"){
+                            bat 'RAML.Tools.TestRunner.exe'
                         }
-                        // bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\AMF.Tools.Tests\\bin\\Release\\AMF.Tools.Tests.dll" --result=Testtools.xml'
+                        // bat 'nunit3-console.exe "%WORKSPACE%\\src\\tools\\RAML.Tools.Tests\\bin\\Release\\RAML.Tools.Tests.dll" --result=Testtools.xml'
                     }
                 }
                 stage('Coverage'){
                     steps {
                         bat "mkdir toolscoverage"
-                        dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
-                            bat "\"${openCover}\" -target:AMF.Tools.TestRunner.exe -register"
+                        dir("src/tools/RAML.Tools.TestRunner/bin/Release/"){
+                            bat "\"${openCover}\" -target:RAML.Tools.TestRunner.exe -register"
                             bat "\"../../../packages/ReportGenerator.4.3.2/tools/net47/ReportGenerator.exe\" -reports:results.xml -targetdir:%WORKSPACE%\\toolscoverage"
                         }
                         zip zipFile: 'toolscoverage.zip', dir: 'toolscoverage', archive: true
@@ -188,9 +188,9 @@ pipeline {
                         echo "Starting NexusIQ scan for appId ${appId} against scan.zip"
                         bat "powershell -Command \"& {Invoke-WebRequest -OutFile nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.49.0-01.jar;}\""
                         sh "mkdir scan"
-                        bat "cp -a src/tools/AMF.Tools/*.cs scan/"
-                        bat "cp -a src/tools/AMF.Tools/*.csproj scan/"
-                        bat "cp -a src/tools/AMF.Tools/*.config scan/"
+                        bat "cp -a src/tools/RAML.Tools/*.cs scan/"
+                        bat "cp -a src/tools/RAML.Tools/*.csproj scan/"
+                        bat "cp -a src/tools/RAML.Tools/*.config scan/"
                         bat "cp -a *.nupkg scan/"
                         zip zipFile: 'scan.zip', dir: 'scan', archive: true
                         script {
@@ -216,7 +216,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts 'src/tools/AMF.Tools/bin/Release/*.vsix'
+            archiveArtifacts 'src/tools/RAML.Tools/bin/Release/*.vsix'
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
             archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'

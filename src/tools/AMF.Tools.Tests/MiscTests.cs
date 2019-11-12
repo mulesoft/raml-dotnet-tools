@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using AMF.Parser;
+using RAML.Parser;
 using AMF.Tools.Core.WebApiGenerator;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using AMF.Tools.Core.Pluralization;
 using System;
 using AMF.Tools.Core;
 using System.Collections.Generic;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Tools.Core.ClientGenerator;
 
 namespace Raml.Tools.Tests

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using AMF.Parser;
+using RAML.Parser;
 using AMF.Tools.Core.WebApiGenerator;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace Raml.Tools.Tests
         {
             IncrementTestCount();
             var fi = new FileInfo("files/oas/petstore.json");
-            var raml = await new AmfParser().Load(fi.FullName);
+            var raml = await new RamlParser().Load(fi.FullName);
             var model = new ModelsGeneratorService(raml, "test").BuildModel();
             Assert.AreEqual(3, model.Objects.Count());
         }
@@ -31,7 +31,7 @@ namespace Raml.Tools.Tests
         {
             IncrementTestCount();
             var fi = new FileInfo("files/raml1/movies-v1.raml");
-            var raml = await new AmfParser().Load(fi.FullName);
+            var raml = await new RamlParser().Load(fi.FullName);
             var model = new ModelsGeneratorService(raml, "test").BuildModel();
             Assert.AreEqual(1, model.Objects.Count());
         }

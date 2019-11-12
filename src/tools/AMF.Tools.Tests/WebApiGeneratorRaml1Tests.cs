@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using AMF.Parser;
+using RAML.Parser;
 using System.Linq;
 using System.Threading.Tasks;
 using AMF.Tools.Core.WebApiGenerator;
@@ -465,7 +465,7 @@ namespace Raml.Tools.Tests
         {
             IncrementTestCount();
             //var fi = new FileInfo(ramlFile);
-            var raml = await new AmfParser().Load(ramlFile);
+            var raml = await new RamlParser().Load(ramlFile);
             var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
             return model;

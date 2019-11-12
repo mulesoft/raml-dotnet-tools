@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
-using AMF.Parser;
-using AMF.Parser.Model;
+using RAML.Parser;
+using RAML.Parser.Model;
 using System.Linq;
 using Task = System.Threading.Tasks.Task;
 using AMF.Api.Core;
@@ -444,7 +444,7 @@ namespace AMF.Common.ViewModels
                 var result = includesManager.Manage(url, Path.GetTempPath(), Path.GetTempPath(), false, Username, Password);
 
                 var raml = result.ModifiedContents;
-                var parser = new AmfParser();
+                var parser = new RamlParser();
 
                 var tempPath = Path.GetTempFileName();
                 File.WriteAllText(tempPath, raml);
@@ -751,7 +751,7 @@ namespace AMF.Common.ViewModels
                 SetDefaultClientRootClassName();
 
                 var result = includesManager.Manage(RamlTempFilePath, Path.GetTempPath(), Path.GetTempPath());
-                var parser = new AmfParser();
+                var parser = new RamlParser();
 
                 var tempPath = Path.GetTempFileName().Replace(".tmp",Path.GetExtension(RamlTempFilePath));
                 File.WriteAllText(tempPath, result.ModifiedContents);

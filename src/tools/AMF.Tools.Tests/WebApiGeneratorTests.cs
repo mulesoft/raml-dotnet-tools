@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using AMF.Parser;
+using RAML.Parser;
 using AMF.Tools.Core.WebApiGenerator;
 using System.Linq;
 using System.Threading.Tasks;
@@ -167,7 +167,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task NestedAdditionalProperties()
         {
-            var raml = await new AmfParser().Load("files/additionalprops-nested.raml");
+            var raml = await new RamlParser().Load("files/additionalprops-nested.raml");
             var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();
             Assert.AreEqual(2, model.Objects.Count());
         }
@@ -175,7 +175,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task NestedAdditionalProperties_v4Schema()
         {
-            var raml = await new AmfParser().Load("files/additionalprops-nested-v4.raml");
+            var raml = await new RamlParser().Load("files/additionalprops-nested-v4.raml");
             var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();
             Assert.AreEqual(2, model.Objects.Count());
         }
@@ -198,7 +198,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task ShouldAccept3LevelNestingSchema()
         {
-            var raml = await new AmfParser().Load("files/level3nest.raml");
+            var raml = await new RamlParser().Load("files/level3nest.raml");
             var model = new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
 
             Assert.AreEqual(3, model.Objects.Count());
@@ -207,7 +207,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task ShouldAccept3LevelNestingSchemaWithArray()
         {
-            var raml = await new AmfParser().Load("files/level3nest-array.raml");
+            var raml = await new RamlParser().Load("files/level3nest-array.raml");
             var model = new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
 
             Assert.AreEqual(3, model.Objects.Count());
@@ -217,7 +217,7 @@ namespace Raml.Tools.Tests
 
         public async Task ShouldAccept3LevelNestingVersion3Schema()
         {
-            var raml = await new AmfParser().Load("files/level3nest-v3.raml");
+            var raml = await new RamlParser().Load("files/level3nest-v3.raml");
             var model = new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
 
             Assert.AreEqual(3, model.Objects.Count());
@@ -226,7 +226,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task ShouldAcceptReferenceToRAMLSchemaKey()
         {
-            var raml = await new AmfParser().Load("files/issue59.raml");
+            var raml = await new RamlParser().Load("files/issue59.raml");
             var model = new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
 
             Assert.AreEqual(17, model.Objects.Count());
@@ -235,7 +235,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task ShouldAcceptReferenceToRAMLSchemaKey_issue64()
         {
-            var raml = await new AmfParser().Load("files/issue64.raml");
+            var raml = await new RamlParser().Load("files/issue64.raml");
             var model = new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
             Assert.AreEqual(3, model.Objects.Count());
             Assert.AreNotEqual("string", model.Controllers.First().Methods.First().Parameter.Type);
@@ -244,7 +244,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task ShouldWorkIncludeWithRelativeIncludes()
         {
-            var raml = await new AmfParser().Load("files/relative-include.raml");
+            var raml = await new RamlParser().Load("files/relative-include.raml");
             var model = new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
             Assert.IsNotNull(model);
         }
@@ -252,7 +252,7 @@ namespace Raml.Tools.Tests
         [Test]
         public async Task ShouldWorkIncludeWithIncludes()
         {
-            var raml = await new AmfParser().Load("files/included-files.raml");
+            var raml = await new RamlParser().Load("files/included-files.raml");
             var model = new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
             Assert.AreEqual(2, model.Objects.Count());
         }
@@ -414,14 +414,14 @@ namespace Raml.Tools.Tests
         {
             IncrementTestCount();
             var fi = new FileInfo(ramlFile);
-            var raml = await new AmfParser().Load(fi.FullName);
+            var raml = await new RamlParser().Load(fi.FullName);
             return new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
         }
 
         private async Task<WebApiGeneratorModel> GetRootGeneratedModel()
         {
             IncrementTestCount();
-            var raml = await new AmfParser().Load("files/root.raml");
+            var raml = await new RamlParser().Load("files/root.raml");
             var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
             return model;

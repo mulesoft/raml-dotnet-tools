@@ -1,6 +1,6 @@
 ﻿//using System.IO;
 //using NUnit.Framework;
-//using AMF.Parser;
+//using RAML.Parser;
 //using AMF.Tools.Core.ClientGenerator;
 //using System.Linq;
 //using System.Threading.Tasks;
@@ -357,7 +357,7 @@
 //        [Test] // JSON.NET issue
 //        public async Task ShouldHandleJsonSchemaRecursiveTree()
 //        {
-//            var raml = await new AmfParser().Load("files/tree-issue63.raml");
+//            var raml = await new RamlParser().Load("files/tree-issue63.raml");
 //            var model = new ClientGeneratorService(raml, "test", "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
 //            Assert.IsNotNull(model);
@@ -483,7 +483,7 @@
 //        {
 //            IncrementTestCount();
 //            var fi = new FileInfo(ramlFile);
-//            var raml = await new AmfParser().Load(fi.FullName);
+//            var raml = await new RamlParser().Load(fi.FullName);
 //            var model = new ClientGeneratorService(raml, "test", "TargetNamespace", "TargetNamespace.Models").BuildModel();
 
 //            return model;

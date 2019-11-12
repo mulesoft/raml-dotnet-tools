@@ -1,5 +1,5 @@
 using System.Linq;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 
 namespace AMF.Tools.Core
 {

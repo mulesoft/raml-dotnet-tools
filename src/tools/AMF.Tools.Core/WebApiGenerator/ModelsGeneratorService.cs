@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using AMF.Api.Core;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 
 namespace AMF.Tools.Core.WebApiGenerator
 {

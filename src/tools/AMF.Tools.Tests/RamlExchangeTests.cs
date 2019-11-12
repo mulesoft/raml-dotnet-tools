@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using AMF.Parser;
+using RAML.Parser;
 using System.Linq;
 using System.Threading.Tasks;
 using AMF.Tools.Core.WebApiGenerator;
@@ -540,7 +540,7 @@ namespace Raml.Tools.Tests
             var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", string.Empty));
             var fullPath = Path.Combine(path + "\\", ramlFile.Replace("/","//"));
             var fi = new FileInfo(fullPath);
-            var raml = await new AmfParser().Load(fi.FullName);
+            var raml = await new RamlParser().Load(fi.FullName);
             var model = new WebApiGeneratorService(raml, "TargetNamespace", "TargetNamespace.Models").BuildModel();
             return model;
         }

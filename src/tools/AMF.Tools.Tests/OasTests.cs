@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using AMF.Parser;
+using RAML.Parser;
 using AMF.Tools.Core.WebApiGenerator;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +36,7 @@ namespace Raml.Tools.Tests
         {
             IncrementTestCount();
             var fi = new FileInfo(ramlFile);
-            var raml = await new AmfParser().Load(fi.FullName);
+            var raml = await new RamlParser().Load(fi.FullName);
             return new WebApiGeneratorService(raml, "TestNs", "TestNs.Models").BuildModel();
         }
 
@@ -44,7 +44,7 @@ namespace Raml.Tools.Tests
         {
             IncrementTestCount();
             var fi = new FileInfo(ramlFile);
-            var raml = await new AmfParser().Load(fi.FullName);
+            var raml = await new RamlParser().Load(fi.FullName);
             return new ClientGeneratorService(raml, "root", "TestNs", "TestsNs.Models").BuildModel();
         }
 

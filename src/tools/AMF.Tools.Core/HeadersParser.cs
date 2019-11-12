@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using AMF.Api.Core;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Tools.Core.ClientGenerator;
 
 namespace AMF.Tools.Core

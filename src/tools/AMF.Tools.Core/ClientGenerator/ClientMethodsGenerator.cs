@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using AMF.Tools.Core.WebApiGenerator;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Api.Core;
 
 namespace AMF.Tools.Core.ClientGenerator
@@ -32,7 +32,7 @@ namespace AMF.Tools.Core.ClientGenerator
             queryParametersParser = new QueryParametersParser(schemaObjects);
         }
 
-        public ICollection<ClientGeneratorMethod> GetMethods(Parser.Model.EndPoint resource, string url, ClassObject parent, string objectName, 
+        public ICollection<ClientGeneratorMethod> GetMethods(RAML.Parser.Model.EndPoint resource, string url, ClassObject parent, string objectName, 
             IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
             var methodsNames = new List<string>();
@@ -51,7 +51,7 @@ namespace AMF.Tools.Core.ClientGenerator
             return generatorMethods;
         }
 
-        private void AddGeneratedMethod(AMF.Parser.Model.EndPoint resource, string url, string objectName, Operation method, ICollection<string> methodsNames, 
+        private void AddGeneratedMethod(RAML.Parser.Model.EndPoint resource, string url, string objectName, Operation method, ICollection<string> methodsNames, 
             ICollection<ClientGeneratorMethod> generatorMethods, IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
             var generatedMethod = BuildClassMethod(url, method, resource, modelsNamespace);
@@ -92,7 +92,7 @@ namespace AMF.Tools.Core.ClientGenerator
             return type != null && type.Any() ? type.First().Key : string.Empty;
         }
 
-        private ClientGeneratorMethod BuildClassMethod(string url, Operation operation, AMF.Parser.Model.EndPoint resource, string modelsNamespace)
+        private ClientGeneratorMethod BuildClassMethod(string url, Operation operation, RAML.Parser.Model.EndPoint resource, string modelsNamespace)
         {
             var parentUrl = UrlGeneratorHelper.GetParentUri(url, resource.Path);
 

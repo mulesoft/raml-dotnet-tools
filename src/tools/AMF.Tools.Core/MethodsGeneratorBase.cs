@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using AMF.Api.Core;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Tools.Core.Pluralization;
 
 namespace AMF.Tools.Core
@@ -32,7 +32,7 @@ namespace AMF.Tools.Core
             uriParametersGenerator = new UriParametersGenerator(schemaObjects);
         }
 
-        protected string GetReturnType(Operation method, Parser.Model.EndPoint resource, string fullUrl)
+        protected string GetReturnType(Operation method, RAML.Parser.Model.EndPoint resource, string fullUrl)
         {
             if (method.Responses.All(r => !r.Payloads.Any(p => p.Schema != null)))
                 return "string";
@@ -49,7 +49,7 @@ namespace AMF.Tools.Core
             return "string";
         }
 
-        private string HandleMultipleSchemaType(IEnumerable<Response> responses, Parser.Model.EndPoint resource, Operation method, string fullUrl)
+        private string HandleMultipleSchemaType(IEnumerable<Response> responses, RAML.Parser.Model.EndPoint resource, Operation method, string fullUrl)
         {
             var properties = GetProperties(responses, resource, method, fullUrl);
 
@@ -73,7 +73,7 @@ namespace AMF.Tools.Core
             return name;
         }
 
-        private List<Property> GetProperties(IEnumerable<Response> responses, Parser.Model.EndPoint resource, Operation method, string fullUrl)
+        private List<Property> GetProperties(IEnumerable<Response> responses, RAML.Parser.Model.EndPoint resource, Operation method, string fullUrl)
         {
             var properties = new List<Property>();
             foreach (var response in responses)
@@ -84,7 +84,7 @@ namespace AMF.Tools.Core
             return properties;
         }
 
-        private void AddProperty(Parser.Model.EndPoint resource, Operation method, string key, Response response, ICollection<Property> properties, string fullUrl)
+        private void AddProperty(RAML.Parser.Model.EndPoint resource, Operation method, string key, Response response, ICollection<Property> properties, string fullUrl)
         {
             var mimeType = GeneratorServiceHelper.GetMimeType(response);
             if (mimeType == null)
@@ -119,7 +119,7 @@ namespace AMF.Tools.Core
             return null;
         }
 
-        protected string GetComment(Parser.Model.EndPoint resource, Operation method, string url)
+        protected string GetComment(RAML.Parser.Model.EndPoint resource, Operation method, string url)
         {
             var description = resource.Description;
             if (!string.IsNullOrWhiteSpace(method.Description))
@@ -136,7 +136,7 @@ namespace AMF.Tools.Core
             return description;
         }
 
-        protected GeneratorParameter GetParameter(string key, Operation method, Parser.Model.EndPoint resource, string fullUrl)
+        protected GeneratorParameter GetParameter(string key, Operation method, RAML.Parser.Model.EndPoint resource, string fullUrl)
         {
             return requestTypesService.GetRequestParameter(key, method, resource, fullUrl, raml.WebApi.Accepts);
 		}

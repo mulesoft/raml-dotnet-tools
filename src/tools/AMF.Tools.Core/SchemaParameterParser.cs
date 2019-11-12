@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Tools.Core.Pluralization;
 
 namespace AMF.Tools.Core

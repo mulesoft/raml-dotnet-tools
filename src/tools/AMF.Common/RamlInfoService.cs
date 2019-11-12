@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
-using AMF.Parser;
+using RAML.Parser;
 using System.Threading.Tasks;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 
 namespace AMF.Common
 {
@@ -101,7 +101,7 @@ namespace AMF.Common
 
             if (model == null)
             {
-                var task = new AmfParser().Load(tempPath);
+                var task = new RamlParser().Load(tempPath);
                 task.WaitWithPumping();
                 info.RamlDocument = task.Result;
             }

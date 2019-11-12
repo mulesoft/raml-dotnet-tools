@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Api.Core;
 using System.Text.RegularExpressions;
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Tools.Core.Pluralization;
 using AMF.Api.Core;
 
@@ -110,7 +110,7 @@ namespace AMF.Tools.Core
             return url.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
 
-        protected static void GetInheritedUriParams(IDictionary<string, Parameter> parentUriParameters, Parser.Model.EndPoint resource)
+        protected static void GetInheritedUriParams(IDictionary<string, Parameter> parentUriParameters, RAML.Parser.Model.EndPoint resource)
         {
             foreach (var uriParam in resource.Parameters.Where(p => p.Binding == "URL")) //TODO: check
             {
@@ -334,7 +334,7 @@ namespace AMF.Tools.Core
                 AddElement(newObj, schemaObjects);
         }
 
-        protected string GetUniqueObjectName(Parser.Model.EndPoint resource, Parser.Model.EndPoint parent)
+        protected string GetUniqueObjectName(RAML.Parser.Model.EndPoint resource, RAML.Parser.Model.EndPoint parent)
         {
             string objectName;
 
@@ -399,7 +399,7 @@ namespace AMF.Tools.Core
             throw new InvalidOperationException("Could not find a unique name for object " + name);
         }
 
-        private static string GetObjectNameForParameter(Parser.Model.EndPoint resource)
+        private static string GetObjectNameForParameter(RAML.Parser.Model.EndPoint resource)
         {
             var relativeUri = resource.Path.Replace("{mediaTypeExtension}", string.Empty);
             var objectNameForParameter = relativeUri.Substring(1).Replace("{", string.Empty).Replace("}", string.Empty);

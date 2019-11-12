@@ -1,5 +1,5 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ assembly name="$(binDir)AMF.Parser.dll" #>
+<#@ assembly name="$(binDir)RAML.Parser.dll" #>
 <#@ assembly name="$(binDir)EdgeJs.dll" #>
 <#@ assembly name="$(binDir)AMF.Tools.Core.dll" #>
 <#@ assembly name="$(binDir)AMF.Api.Core.dll" #>

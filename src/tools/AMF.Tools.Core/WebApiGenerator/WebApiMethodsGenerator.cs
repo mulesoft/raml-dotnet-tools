@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using AMF.Api.Core;
-using AMF.Parser.Model;
+using RAML.Parser.Model;
 using AMF.Tools.Core.WebApiGenerator;
 
 namespace AMF.Tools.Core
@@ -20,7 +20,7 @@ namespace AMF.Tools.Core
             queryParametersParser = new QueryParametersParser(schemaObjects);
         }
 
-        public IEnumerable<ControllerMethod> GetMethods(Parser.Model.EndPoint endpoint, string url, ControllerObject parent, string objectName, 
+        public IEnumerable<ControllerMethod> GetMethods(RAML.Parser.Model.EndPoint endpoint, string url, ControllerObject parent, string objectName, 
             IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
             var methodsNames = new List<string>();
@@ -62,7 +62,7 @@ namespace AMF.Tools.Core
             return path.Replace(prefixUri, string.Empty);
         }
 
-        private ControllerMethod BuildControllerMethod(string url, Operation method, Parser.Model.EndPoint resource, ControllerObject parent, 
+        private ControllerMethod BuildControllerMethod(string url, Operation method, RAML.Parser.Model.EndPoint resource, ControllerObject parent, 
             IDictionary<string, Parameter> parentUriParameters, string modelsNamespace)
         {
             var relativeUri = UrlGeneratorHelper.GetRelativeUri(url, parent.PrefixUri);

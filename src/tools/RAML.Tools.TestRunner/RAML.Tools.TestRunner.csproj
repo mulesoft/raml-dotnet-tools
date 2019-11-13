@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D87F1071-13A1-4E28-95B6-8A54ED004503}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AMF.Tools.TestRunner</RootNamespace>
-    <AssemblyName>AMF.Tools.TestRunner</AssemblyName>
+    <RootNamespace>RAML.Tools.TestRunner</RootNamespace>
+    <AssemblyName>RAML.Tools.TestRunner</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

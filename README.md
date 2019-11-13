@@ -6,4 +6,4 @@ The tools are provided as a Visual Studio extension, allowing simple and natural
 
 A single installation package provides support for both client, service code-generation and RAML extraction scenarios.
 
-![Check the documentation on the Wiki](wiki)
+[Check the documentation on the Wiki](https://github.com/mulesoft-labs/raml-dotnet-tools/wiki)

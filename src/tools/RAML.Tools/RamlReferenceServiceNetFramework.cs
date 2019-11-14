@@ -11,20 +11,21 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.ComponentModelHost;
 using System.Linq;
 using AMF.Tools.Core;
+using Microsoft;
 
 namespace AMF.Tools
 {
     // Net 4.5 implementation
     public class RamlReferenceServiceNetFramework : RamlReferenceServiceBase 
     {
-        private readonly string ramlApiCorePackageId = Settings.Default.RAMLApiCorePackageId;
-        private readonly string ramlApiCorePackageVersion = Settings.Default.RAMLApiCorePackageVersion;
-        private readonly string newtonsoftJsonPackageVersion = Settings.Default.NewtonsoftJsonPackageVersion;
-        private readonly string webApiCorePackageId = Settings.Default.WebApiCorePackageId;
-        private readonly string webApiCorePackageVersion = Settings.Default.WebApiCorePackageVersion;
-        private readonly string microsoftNetHttpPackageId = Settings.Default.MicrosoftNetHttpPackageId;
-        private readonly string microsoftNetHttpPackageVersion = Settings.Default.MicrosoftNetHttpPackageVersion;
-        private readonly string nugetPackagesSource = Settings.Default.NugetPackagesSource;
+        private readonly string ramlApiCorePackageId = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageId;
+        private readonly string ramlApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageVersion;
+        private readonly string newtonsoftJsonPackageVersion = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonPackageVersion;
+        private readonly string webApiCorePackageId = RAML.Tools.Properties.Settings.Default.WebApiCorePackageId;
+        private readonly string webApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.WebApiCorePackageVersion;
+        private readonly string microsoftNetHttpPackageId = RAML.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageId;
+        private readonly string microsoftNetHttpPackageVersion = RAML.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageVersion;
+        private readonly string nugetPackagesSource = RAML.Tools.Properties.Settings.Default.NugetPackagesSource;
 
         public RamlReferenceServiceNetFramework(IServiceProvider serviceProvider, ILogger logger) : base(serviceProvider, logger)
         {
@@ -32,6 +33,7 @@ namespace AMF.Tools
 
         public override void AddRamlReference(RamlChooserActionParams parameters)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             try
             {
                 Logger.LogInformation("Add RAML Reference process started");
@@ -62,15 +64,16 @@ namespace AMF.Tools
         protected override void InstallNugetDependencies(Project proj)
         {
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, AMF.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, NewtonsoftJsonPackageId, newtonsoftJsonPackageVersion, Settings.Default.NugetExternalPackagesSource);
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, webApiCorePackageId, webApiCorePackageVersion, Settings.Default.NugetExternalPackagesSource);
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.ComponentModel.Annotations", "4.5.0", Settings.Default.NugetExternalPackagesSource);
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Primitives", "4.3.0", Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, NewtonsoftJsonPackageId, newtonsoftJsonPackageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, webApiCorePackageId, webApiCorePackageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.ComponentModel.Annotations", "4.5.0", RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Primitives", "4.3.0", RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
 
             // RAML.Api.Core
@@ -83,6 +86,7 @@ namespace AMF.Tools
         public override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, 
             string apiRefsFolderPath, string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             //ramlProjItem.Properties.Item("CustomTool").Value = string.Empty; // to cause a refresh when file already exists
             //ramlProjItem.Properties.Item("CustomTool").Value = "RamlClientTool";
 

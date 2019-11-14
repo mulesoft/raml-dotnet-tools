@@ -96,7 +96,7 @@ namespace AMF.Tools
             var generationServices = RamlReferenceServiceBase.GetRamlReferenceService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, new ActivityLogger());
             var ramlChooserViewModel = new RamlChooserViewModel();
             ramlChooserViewModel.Load(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider, generationServices.AddRamlReference, "Add RAML Reference", false, 
-                Settings.Default.RAMLExchangeUrl);
+                RAML.Tools.Properties.Settings.Default.RAMLExchangeUrl);
             dynamic settings = new ExpandoObject();
             settings.Height = 475;
             AMFToolsPackage.WindowManager.ShowDialog(ramlChooserViewModel, null, settings);

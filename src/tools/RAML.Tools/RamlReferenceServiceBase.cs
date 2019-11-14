@@ -14,13 +14,13 @@ namespace AMF.Tools
     {
         protected readonly IServiceProvider ServiceProvider;
         protected readonly ILogger Logger;
-        protected readonly string NewtonsoftJsonPackageId = Properties.Settings.Default.NewtonsoftJsonPackageId;
+        protected readonly string NewtonsoftJsonPackageId = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonPackageId;
 
         
 
-        public readonly static string ApiReferencesFolderName = Properties.Settings.Default.ApiReferencesFolderName;
+        public readonly static string ApiReferencesFolderName = RAML.Tools.Properties.Settings.Default.ApiReferencesFolderName;
 
-        protected readonly string ClientT4TemplateName = Properties.Settings.Default.ClientT4TemplateName;
+        protected readonly string ClientT4TemplateName = RAML.Tools.Properties.Settings.Default.ClientT4TemplateName;
         protected readonly TemplatesManager TemplatesManager = new TemplatesManager();
 
         protected RamlReferenceServiceBase(IServiceProvider serviceProvider, ILogger logger)

@@ -25,15 +25,15 @@ namespace AMF.Tools
         private const string EnumTemplateName = "ApiEnum.t4";
 
         private readonly TemplatesManager templatesManager = new TemplatesManager();
-        private static readonly string ContractsFolder = Path.DirectorySeparatorChar + Settings.Default.ContractsFolderName + Path.DirectorySeparatorChar;
+        private static readonly string ContractsFolder = Path.DirectorySeparatorChar + RAML.Tools.Properties.Settings.Default.ContractsFolderName + Path.DirectorySeparatorChar;
         private static readonly string IncludesFolder = Path.DirectorySeparatorChar + "includes" + Path.DirectorySeparatorChar;
 
-        protected readonly string nugetPackagesSource = Settings.Default.NugetPackagesSource;
-        private readonly string newtonsoftJsonPackageId = Settings.Default.NewtonsoftJsonPackageId;
+        protected readonly string nugetPackagesSource = RAML.Tools.Properties.Settings.Default.NugetPackagesSource;
+        private readonly string newtonsoftJsonPackageId = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonPackageId;
         
         private readonly CodeGenerator codeGenerator;
         private readonly IT4Service t4Service;
-        protected readonly string ContractsFolderName = Settings.Default.ContractsFolderName;
+        protected readonly string ContractsFolderName = RAML.Tools.Properties.Settings.Default.ContractsFolderName;
         protected readonly IServiceProvider ServiceProvider;
 
         public abstract void AddContract(RamlChooserActionParams parameters);
@@ -133,7 +133,7 @@ namespace AMF.Tools
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
             // AMF.Api.Core dependencies
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, newtonsoftJsonPackageId, packageVersion, Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, newtonsoftJsonPackageId, packageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             // System.Xml.XmlSerializer 4.0.11-beta-23516
             // NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Xml.XmlSerializer", "4.0.11-beta-23516");
@@ -205,7 +205,7 @@ namespace AMF.Tools
             var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             var contractsItem =
-                proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == Settings.Default.ContractsFolderName);
+                proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == RAML.Tools.Properties.Settings.Default.ContractsFolderName);
 
             if (contractsItem == null)
                 throw new InvalidOperationException("Could not find main file");
@@ -226,7 +226,7 @@ namespace AMF.Tools
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ControllerImplementationTemplateName,
-                Settings.Default.ControllerImplementationTemplateTitle, TemplateSubFolder);
+                RAML.Tools.Properties.Settings.Default.ControllerImplementationTemplateTitle, TemplateSubFolder);
             var controllersFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, "Controllers");
             
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
@@ -239,7 +239,7 @@ namespace AMF.Tools
                 {
                     TargetFolder = TargetFolderResolver.GetImplementationControllersFolderPath(proj, parameters.ImplementationControllersFolder),
                     RelativeFolder = parameters.ImplementationControllersFolder,
-                    Title = Settings.Default.ControllerImplementationTemplateTitle,
+                    Title = RAML.Tools.Properties.Settings.Default.ControllerImplementationTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
@@ -260,7 +260,7 @@ namespace AMF.Tools
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ControllerInterfaceTemplateName,
-                Settings.Default.ControllerInterfaceTemplateTitle, TemplateSubFolder);
+                RAML.Tools.Properties.Settings.Default.ControllerInterfaceTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
 
             var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
@@ -271,7 +271,7 @@ namespace AMF.Tools
                     parameters.ControllersNamespace, "Controller", true,
                     "I" + GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
-                    Title = Settings.Default.ControllerInterfaceTemplateTitle,
+                    Title = RAML.Tools.Properties.Settings.Default.ControllerInterfaceTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
@@ -287,7 +287,7 @@ namespace AMF.Tools
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ControllerBaseTemplateName,
-                Settings.Default.BaseControllerTemplateTitle, TemplateSubFolder);
+                RAML.Tools.Properties.Settings.Default.BaseControllerTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
 
             var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
@@ -298,7 +298,7 @@ namespace AMF.Tools
                     parameters.ControllersNamespace, "Controller", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
-                    Title = Settings.Default.BaseControllerTemplateTitle,
+                    Title = RAML.Tools.Properties.Settings.Default.BaseControllerTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
@@ -313,7 +313,7 @@ namespace AMF.Tools
         private void AddOrUpdateModels(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem, WebApiGeneratorModel model, ProjectItem contractsFolderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ModelTemplateName,
-                Settings.Default.ModelsTemplateTitle, TemplateSubFolder);
+                RAML.Tools.Properties.Settings.Default.ModelsTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
             
             var models = model.Objects;
@@ -340,7 +340,7 @@ namespace AMF.Tools
                 GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion) +
                 (parameters.AddGeneratedSuffixToFiles ? ".generated" : string.Empty))
             {
-                Title = Settings.Default.ModelsTemplateTitle,
+                Title = RAML.Tools.Properties.Settings.Default.ModelsTemplateTitle,
                 RelativeFolder = parameters.ModelsFolder,
                 TargetFolder = TargetFolderResolver.GetModelsTargetFolder(ramlItem.ContainingProject,
                     targetFolderPath, parameters.ModelsFolder),
@@ -353,7 +353,7 @@ namespace AMF.Tools
         private void AddOrUpdateEnums(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem, WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, EnumTemplateName,
-                Settings.Default.EnumsTemplateTitle, TemplateSubFolder);
+                RAML.Tools.Properties.Settings.Default.EnumsTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
 
             var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
@@ -363,7 +363,7 @@ namespace AMF.Tools
                 targetFolderPath, folderItem, extensionPath, parameters.ControllersNamespace,
                 GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
             {
-                Title = Settings.Default.ModelsTemplateTitle,
+                Title = RAML.Tools.Properties.Settings.Default.ModelsTemplateTitle,
                 RelativeFolder = parameters.ModelsFolder,
                 TargetFolder = TargetFolderResolver.GetModelsTargetFolder(ramlItem.ContainingProject,
                     targetFolderPath, parameters.ModelsFolder),

@@ -13,10 +13,10 @@ namespace AMF.Tools
     public class ReverseEngineeringAspNetCore : ReverseEngineeringServiceBase
     {
         private const string AspNetCoreStaticFilesPackageId = "Microsoft.AspNetCore.StaticFiles";
-        private static readonly string RamlParserExpressionsPackageId = Settings.Default.RamlParserExpressionsPackageId;
-        private static readonly string RamlParserExpressionsPackageVersion = Settings.Default.RamlParserExpressionsPackageVersion;
-        private static readonly string RamlNetCoreApiExplorerPackageId = Settings.Default.RamlNetCoreApiExplorerPackageId;
-        private static readonly string RamlNetCoreApiExplorerPackageVersion = Settings.Default.RamlNetCoreApiExplorerPackageVersion;
+        private static readonly string RamlParserExpressionsPackageId = RAML.Tools.Properties.Settings.Default.RamlParserExpressionsPackageId;
+        private static readonly string RamlParserExpressionsPackageVersion = RAML.Tools.Properties.Settings.Default.RamlParserExpressionsPackageVersion;
+        private static readonly string RamlNetCoreApiExplorerPackageId = RAML.Tools.Properties.Settings.Default.RamlNetCoreApiExplorerPackageId;
+        private static readonly string RamlNetCoreApiExplorerPackageVersion = RAML.Tools.Properties.Settings.Default.RamlNetCoreApiExplorerPackageVersion;
 
         public ReverseEngineeringAspNetCore(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -203,7 +203,7 @@ namespace AMF.Tools
             {
                 if(version.StartsWith("1"))
                     NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, AspNetCoreStaticFilesPackageId, "1.0.0", 
-                        Settings.Default.NugetExternalPackagesSource);
+                        RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
             }
 
             // RAML.Parser.Expressions

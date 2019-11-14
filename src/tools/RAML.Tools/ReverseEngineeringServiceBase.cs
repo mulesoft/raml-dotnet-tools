@@ -13,7 +13,7 @@ namespace AMF.Tools
 {
     public abstract class ReverseEngineeringServiceBase
     {
-        protected static readonly string NugetPackagesSource = Settings.Default.NugetPackagesSource;
+        protected static readonly string NugetPackagesSource = RAML.Tools.Properties.Settings.Default.NugetPackagesSource;
 
         private readonly IServiceProvider serviceProvider;
 

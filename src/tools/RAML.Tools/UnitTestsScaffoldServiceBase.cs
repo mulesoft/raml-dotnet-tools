@@ -24,10 +24,10 @@ namespace AMF.Tools
         private const string EnumTemplateName = "ApiEnum.t4";
 
         private readonly TemplatesManager templatesManager = new TemplatesManager();
-        private static readonly string ContractsFolder = Path.DirectorySeparatorChar + Settings.Default.ContractsFolderName + Path.DirectorySeparatorChar;
+        private static readonly string ContractsFolder = Path.DirectorySeparatorChar + RAML.Tools.Properties.Settings.Default.ContractsFolderName + Path.DirectorySeparatorChar;
         private static readonly string IncludesFolder = Path.DirectorySeparatorChar + "includes" + Path.DirectorySeparatorChar;
 
-        protected readonly string nugetPackagesSource = Settings.Default.NugetPackagesSource;
+        protected readonly string nugetPackagesSource = RAML.Tools.Properties.Settings.Default.NugetPackagesSource;
         
         private readonly CodeGenerator codeGenerator;
 
@@ -158,7 +158,7 @@ namespace AMF.Tools
             var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             var contractsItem =
-                proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == Settings.Default.ContractsFolderName);
+                proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == RAML.Tools.Properties.Settings.Default.ContractsFolderName);
 
             if (contractsItem == null)
                 throw new InvalidOperationException("Could not find main file");
@@ -180,7 +180,7 @@ namespace AMF.Tools
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(unitTestsFolderPath, UnitTestsControllerImplementationTemplateName,
-                Settings.Default.ControllerUnitTestsImplementationTemplateTitle, TemplateSubFolder);
+                RAML.Tools.Properties.Settings.Default.ControllerUnitTestsImplementationTemplateTitle, TemplateSubFolder);
             var unitTestsFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, UnitTestsFolderName);
             
             var templatesFolder = Path.Combine(unitTestsFolderPath, "Templates");
@@ -193,7 +193,7 @@ namespace AMF.Tools
                 {
                     TargetFolder = TargetFolderResolver.GetUnitTestsFolder(proj, UnitTestsFolderName),
                     RelativeFolder = UnitTestsFolderName,
-                    Title = Settings.Default.ControllerUnitTestsImplementationTemplateTitle,
+                    Title = RAML.Tools.Properties.Settings.Default.ControllerUnitTestsImplementationTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,
@@ -215,7 +215,7 @@ namespace AMF.Tools
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
             templatesManager.CopyServerTemplateToProjectFolder(unitTestFolderPath, UnitTestsControllerTemplateName,
-                Settings.Default.BaseControllerTestsTemplateTitle, TemplateSubFolder);
+                RAML.Tools.Properties.Settings.Default.BaseControllerTestsTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(unitTestFolderPath, "Templates");
 
             var targetFolderPath = GetTargetFolderPath(unitTestFolderPath, Path.GetFileName(parameters.RamlFilePath));
@@ -226,7 +226,7 @@ namespace AMF.Tools
                     parameters.ControllersNamespace, "ControllerTests", true,
                     GetVersionPrefix(parameters.IncludeApiVersionInRoutePrefix, model.ApiVersion))
                 {
-                    Title = Settings.Default.BaseControllerTestsTemplateTitle,
+                    Title = RAML.Tools.Properties.Settings.Default.BaseControllerTestsTemplateTitle,
                     IncludeHasModels = true,
                     HasModels = model.Objects.Any(o => o.IsScalar == false) || model.Enums.Any(),
                     UseAsyncMethods = parameters.UseAsyncMethods,

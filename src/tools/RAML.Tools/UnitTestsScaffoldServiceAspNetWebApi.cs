@@ -50,7 +50,7 @@ namespace AMF.Tools
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
             // MSTests package
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.3.2", Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.3.2", RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             //// Microsoft.AspNet.WebApi.Core
             var webApiPackage = "Microsoft.AspNet.WebApi.Core";
@@ -61,8 +61,8 @@ namespace AMF.Tools
             }
 
             //// AMF.Core.APICore
-            //var ramlApiCorePackageId = Settings.Default.RAMLApiCorePackageId;
-            //var ramlApiCorePackageVersion = Settings.Default.RAMLApiCorePackageVersion;
+            //var ramlApiCorePackageId = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageId;
+            //var ramlApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageVersion;
             //if (!installerServices.IsPackageInstalled(proj, ramlApiCorePackageId))
             //{
             //    installer.InstallPackage(nugetPackagesSource, proj, ramlApiCorePackageId, webApiVersion, false);

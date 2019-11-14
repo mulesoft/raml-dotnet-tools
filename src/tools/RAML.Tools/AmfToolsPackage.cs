@@ -16,6 +16,8 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using Task = System.Threading.Tasks.Task;
 using AMF.Tools.Commands;
+using Microsoft;
+using System.Windows.Interactivity;
 
 namespace AMF.Tools
 {
@@ -76,6 +78,7 @@ namespace AMF.Tools
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             var dte = await GetServiceAsync(typeof(DTE)) as DTE;
+            Assumes.Present(dte);
 
             // trigger scaffold when RAML document gets saved
             events = dte.Events;
@@ -92,6 +95,7 @@ namespace AMF.Tools
 
         private void DocumentEventsOnDocumentSaved(Document document)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             RamlScaffoldServiceBase.TriggerScaffoldOnRamlChanged(document);
             //RamlClientTool.TriggerClientRegeneration(document, GetExtensionPath());
         }
@@ -101,7 +105,7 @@ namespace AMF.Tools
         {
             // HACK: Force load System.Windows.Interactivity.dll from plugin's 
             // directory
-            typeof(System.Windows.Interactivity.Behavior).ToString();
+            typeof(Behavior).ToString();
         }
 
         private static IWindowManager windowManager;

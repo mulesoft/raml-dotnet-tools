@@ -13,16 +13,16 @@ namespace AMF.Tools
 {
     public class ReverseEngineeringServiceWebApi : ReverseEngineeringServiceBase
     {
-        private static readonly string RamlWebApiExplorerPackageId = Settings.Default.RAMLWebApiExplorerPackageId;
-        private static readonly string RamlWebApiExplorerPackageVersion = Settings.Default.RAMLWebApiExplorerPackageVersion;
-        private static readonly string RamlParserPackageId = Settings.Default.RAMLParserPackageId;
-        private static readonly string RamlParserPackageVersion = Settings.Default.RAMLParserPackageVersion;
-        private static readonly string RamlApiCorePackageId = Settings.Default.RAMLApiCorePackageId;
-        private static readonly string RamlApiCorePackageVersion = Settings.Default.RAMLApiCorePackageVersion;
-        private static readonly string NewtonsoftJsonPackageId = Settings.Default.NewtonsoftJsonPackageId;
-        private static readonly string NewtonsoftJsonPackageVersion = Settings.Default.NewtonsoftJsonPackageVersion;
-        private static readonly string EdgePackageId = Settings.Default.EdgePackageId;
-        private static readonly string EdgePackageVersion = Settings.Default.EdgePackageVersion;
+        private static readonly string RamlWebApiExplorerPackageId = RAML.Tools.Properties.Settings.Default.RAMLWebApiExplorerPackageId;
+        private static readonly string RamlWebApiExplorerPackageVersion = RAML.Tools.Properties.Settings.Default.RAMLWebApiExplorerPackageVersion;
+        private static readonly string RamlParserPackageId = RAML.Tools.Properties.Settings.Default.RAMLParserPackageId;
+        private static readonly string RamlParserPackageVersion = RAML.Tools.Properties.Settings.Default.RAMLParserPackageVersion;
+        private static readonly string RamlApiCorePackageId = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageId;
+        private static readonly string RamlApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageVersion;
+        private static readonly string NewtonsoftJsonPackageId = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonPackageId;
+        private static readonly string NewtonsoftJsonPackageVersion = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonPackageVersion;
+        private static readonly string EdgePackageId = RAML.Tools.Properties.Settings.Default.EdgePackageId;
+        private static readonly string EdgePackageVersion = RAML.Tools.Properties.Settings.Default.EdgePackageVersion;
         
         public ReverseEngineeringServiceWebApi(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -115,16 +115,16 @@ namespace AMF.Tools
             IVsPackageInstallerServices installerServices)
         {
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, NewtonsoftJsonPackageId,
-                NewtonsoftJsonPackageVersion, Settings.Default.NugetExternalPackagesSource);
+                NewtonsoftJsonPackageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, EdgePackageId, EdgePackageVersion,
-                Settings.Default.NugetExternalPackagesSource);
+                RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.ComponentModel.Annotations",
-                "4.0.0", Settings.Default.NugetExternalPackagesSource);
+                "4.0.0", RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             // RAML.Parser
-            if (!installerServices.IsPackageInstalled(proj, Settings.Default.RamlParserModelPackageId))
+            if (!installerServices.IsPackageInstalled(proj, RAML.Tools.Properties.Settings.Default.RamlParserModelPackageId))
             {
-                installer.InstallPackage(NugetPackagesSource, proj, Settings.Default.RamlParserModelPackageId, Settings.Default.RamlParserModelPackageVersion,
+                installer.InstallPackage(NugetPackagesSource, proj, RAML.Tools.Properties.Settings.Default.RamlParserModelPackageId, RAML.Tools.Properties.Settings.Default.RamlParserModelPackageVersion,
                     false);
             }
 

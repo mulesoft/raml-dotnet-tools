@@ -147,11 +147,11 @@ namespace AMF.Common
 
                 //File.WriteAllText(writeToFilePath, string.Join(Environment.NewLine, lines).Trim());
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // This is intentional
             }

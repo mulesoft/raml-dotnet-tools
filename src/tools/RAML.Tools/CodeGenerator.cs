@@ -20,6 +20,7 @@ namespace AMF.Tools
 
         public void GenerateCodeFromTemplate<T>(TemplateParams<T> templateParams) where T : IHasName
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             if (!Directory.Exists(templateParams.TargetFolder))
                 Directory.CreateDirectory(templateParams.TargetFolder);
 
@@ -62,12 +63,15 @@ namespace AMF.Tools
 
         private static void AddItem(string folder, Project proj, string generatedFileName, string destinationFile, string relativeFolder)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var folderItem = CreateFolderItem(proj, folder, relativeFolder);
 
             if (folderItem == null)
                 return;
 
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
             var fileItem = folderItem.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == generatedFileName);
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
             if (fileItem != null) return;
 
             folderItem.ProjectItems.AddFromFile(destinationFile);

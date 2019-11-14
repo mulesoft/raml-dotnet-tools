@@ -17,8 +17,8 @@ namespace AMF.Tools
         private const string HashPrefix = "// hash:";
         private const string TitlePrefix = "// title:";
         private const string VersionPrefix = "// version:";
-        private readonly string ServerTemplatesVersion = Settings.Default.ServerTemplatesVersion;
-        private readonly string ClientTemplatesVersion = Settings.Default.ClientTemplatesVersion;
+        private readonly string ServerTemplatesVersion = RAML.Tools.Properties.Settings.Default.ServerTemplatesVersion;
+        private readonly string ClientTemplatesVersion = RAML.Tools.Properties.Settings.Default.ClientTemplatesVersion;
 
         public void CopyServerTemplateToProjectFolder(string generatedFolderPath, string templateName, string title, string templateSubFolder)
         {
@@ -31,16 +31,16 @@ namespace AMF.Tools
 
         public void CopyClientTemplateToProjectFolder(string generatedFolderPath, string templateSubFolder)
         {
-            var templateName = Settings.Default.ClientT4TemplateName;
+            var templateName = RAML.Tools.Properties.Settings.Default.ClientT4TemplateName;
             var extensionPath = Path.GetDirectoryName(GetType().Assembly.Location) + Path.DirectorySeparatorChar;
             var sourceTemplateFolder = Path.Combine(extensionPath,
                 "Templates" + Path.DirectorySeparatorChar + templateSubFolder + Path.DirectorySeparatorChar);
-            CopyTemplateToProjectFolder(generatedFolderPath, templateName, sourceTemplateFolder, ClientTemplatesVersion, Settings.Default.ClientTemplateTitle);
+            CopyTemplateToProjectFolder(generatedFolderPath, templateName, sourceTemplateFolder, ClientTemplatesVersion, RAML.Tools.Properties.Settings.Default.ClientTemplateTitle);
         }
 
         public bool ConfirmWhenIncompatibleClientTemplate(string generatodFolderPath)
         {
-            return ConfirmWhenIncompatibleTemplate(generatodFolderPath, Settings.Default.ClientT4TemplateName, ClientTemplatesVersion);
+            return ConfirmWhenIncompatibleTemplate(generatodFolderPath, RAML.Tools.Properties.Settings.Default.ClientT4TemplateName, ClientTemplatesVersion);
         }
 
         public bool ConfirmWhenIncompatibleServerTemplate(string generatodFolderPath, string[] templates)
@@ -258,8 +258,8 @@ namespace AMF.Tools
 
         public string AddClientMetadataHeader(string contents)
         {
-            var header = string.Format("// Template: {0} ({1}) version {2}{3}", Settings.Default.ClientTemplateTitle,
-                Settings.Default.ClientT4TemplateName, ClientTemplatesVersion, Environment.NewLine);
+            var header = string.Format("// Template: {0} ({1}) version {2}{3}", RAML.Tools.Properties.Settings.Default.ClientTemplateTitle,
+                RAML.Tools.Properties.Settings.Default.ClientT4TemplateName, ClientTemplatesVersion, Environment.NewLine);
             contents = contents.Insert(0, header);
             return contents;
         }

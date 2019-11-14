@@ -6,8 +6,6 @@ namespace AMF.Tools
 {
     public class TemplateParams<TT> where TT : IHasName
     {
-        private string _testsNamespace;
-
         public TemplateParams(string templatePath, ProjectItem projItem, string parameterName,
             IEnumerable<TT> parameterCollection, string folderPath, ProjectItem folderItem, string binPath,
             string controllersNamespace, string suffix = null, bool ovewrite = true, string prefix = null, string testsNamespace = null)

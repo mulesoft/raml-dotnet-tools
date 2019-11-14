@@ -110,11 +110,11 @@ namespace AMF.Tools
 
 
             var editorModel = new RamlPropertiesEditorViewModel();
-            editorModel.Load(refFilePath, Settings.Default.ContractsFolderName, Settings.Default.ApiReferencesFolderName);
+            editorModel.Load(refFilePath, RAML.Tools.Properties.Settings.Default.ContractsFolderName, RAML.Tools.Properties.Settings.Default.ApiReferencesFolderName);
             AMFToolsPackage.WindowManager.ShowDialog(editorModel);
 
             //var frm = new RamlPropertiesEditor();
-            //frm.Load(refFilePath, Settings.Default.ContractsFolderName, Settings.Default.ApiReferencesFolderName);
+            //frm.Load(refFilePath, RAML.Tools.Properties.Settings.Default.ContractsFolderName, RAML.Tools.Properties.Settings.Default.ApiReferencesFolderName);
             //var result = frm.ShowDialog();
             if (editorModel.WasSaved)
             {
@@ -161,10 +161,10 @@ namespace AMF.Tools
 
         private bool IsServerSide(string ramlFilePath)
         {
-            if (ramlFilePath.Contains(Settings.Default.ContractsFolderName) && !ramlFilePath.Contains(Settings.Default.ApiReferencesFolderName))
+            if (ramlFilePath.Contains(RAML.Tools.Properties.Settings.Default.ContractsFolderName) && !ramlFilePath.Contains(RAML.Tools.Properties.Settings.Default.ApiReferencesFolderName))
                 return true;
 
-            if (!ramlFilePath.Contains(Settings.Default.ContractsFolderName) && ramlFilePath.Contains(Settings.Default.ApiReferencesFolderName))
+            if (!ramlFilePath.Contains(RAML.Tools.Properties.Settings.Default.ContractsFolderName) && ramlFilePath.Contains(RAML.Tools.Properties.Settings.Default.ApiReferencesFolderName))
                 return false;
 
             throw new InvalidOperationException("Cannot determine if the raml is used on the server or the client");

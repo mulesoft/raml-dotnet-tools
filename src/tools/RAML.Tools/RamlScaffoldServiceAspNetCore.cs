@@ -12,7 +12,7 @@ namespace AMF.Tools
 {
     public class RamlScaffoldServiceAspNetCore : RamlScaffoldServiceBase
     {
-        private readonly string newtonsoftJsonForCorePackageVersion = Settings.Default.NewtonsoftJsonForCorePackageVersion;
+        private readonly string newtonsoftJsonForCorePackageVersion = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonForCorePackageVersion;
 
         public RamlScaffoldServiceAspNetCore(IT4Service t4Service, IServiceProvider serviceProvider): base(t4Service, serviceProvider){}
 
@@ -58,8 +58,8 @@ namespace AMF.Tools
             InstallNugetDependencies(proj, newtonsoftJsonForCorePackageVersion);
 
             // AMF.NetCore.APICore
-            var ramlNetCoreApiCorePackageId = Settings.Default.AMFNetCoreApiCorePackageId;
-            var ramlNetCoreApiCorePackageVersion = Settings.Default.AMFNetCoreApiCorePackageVersion;
+            var ramlNetCoreApiCorePackageId = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageId;
+            var ramlNetCoreApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageVersion;
             if (!installerServices.IsPackageInstalled(proj, ramlNetCoreApiCorePackageId))
             {
                 installer.InstallPackage(nugetPackagesSource, proj, ramlNetCoreApiCorePackageId, ramlNetCoreApiCorePackageVersion, false);

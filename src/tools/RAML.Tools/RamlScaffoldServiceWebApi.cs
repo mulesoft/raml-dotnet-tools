@@ -13,11 +13,11 @@ namespace AMF.Tools
 {
     public class RamlScaffoldServiceWebApi : RamlScaffoldServiceBase
     {
-        private readonly string newtonsoftJsonPackageVersion = Settings.Default.NewtonsoftJsonPackageVersion;
-        private readonly string microsoftNetHttpPackageId = Settings.Default.MicrosoftNetHttpPackageId;
-        private readonly string microsoftNetHttpPackageVersion = Settings.Default.MicrosoftNetHttpPackageVersion;
-        private readonly string ramlApiCorePackageId = Settings.Default.RAMLApiCorePackageId;
-        private readonly string ramlApiCorePackageVersion = Settings.Default.RAMLApiCorePackageVersion;
+        private readonly string newtonsoftJsonPackageVersion = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonPackageVersion;
+        private readonly string microsoftNetHttpPackageId = RAML.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageId;
+        private readonly string microsoftNetHttpPackageVersion = RAML.Tools.Properties.Settings.Default.MicrosoftNetHttpPackageVersion;
+        private readonly string ramlApiCorePackageId = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageId;
+        private readonly string ramlApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.RAMLApiCorePackageVersion;
 
         public override string TemplateSubFolder
         {
@@ -35,7 +35,7 @@ namespace AMF.Tools
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
             // AMF.Api.Core dependencies
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             InstallNugetDependencies(proj, packageVersion);
 

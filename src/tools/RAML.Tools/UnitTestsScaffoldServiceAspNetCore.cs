@@ -50,13 +50,13 @@ namespace AMF.Tools
 
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
             // MSTests package
-            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.4.0", Settings.Default.NugetExternalPackagesSource);
+            NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "MSTest.TestFramework", "1.4.0", RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             // InstallNugetDependencies(proj, newtonsoftJsonForCorePackageVersion);
 
             //// AMF.NetCore.APICore
-            //var ramlNetCoreApiCorePackageId = Settings.Default.AMFNetCoreApiCorePackageId;
-            //var ramlNetCoreApiCorePackageVersion = Settings.Default.AMFNetCoreApiCorePackageVersion;
+            //var ramlNetCoreApiCorePackageId = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageId;
+            //var ramlNetCoreApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageVersion;
             //if (!installerServices.IsPackageInstalled(proj, ramlNetCoreApiCorePackageId))
             //{
             //    installer.InstallPackage(nugetPackagesSource, proj, ramlNetCoreApiCorePackageId, ramlNetCoreApiCorePackageVersion, false);

@@ -17,7 +17,7 @@ namespace AMF.Tools
                 !IsSameOrNewerVersion(packageMetadata.VersionString, packageVersion))
             {
                 if (nugetPackagesSource == null)
-                    nugetPackagesSource = Settings.Default.NugetPackagesSource;
+                    nugetPackagesSource = RAML.Tools.Properties.Settings.Default.NugetPackagesSource;
 
                 installer.InstallPackage(nugetPackagesSource, proj, packageId, packageVersion, false);
             }

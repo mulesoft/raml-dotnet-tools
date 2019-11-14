@@ -31,6 +31,7 @@ namespace AMF.Tools
 
         protected override void ConfigureProject(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             AddXmlCommentsDocumentation(proj);
             ActivityLog.LogInformation(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, "XML comments documentation added");
         }
@@ -43,6 +44,7 @@ namespace AMF.Tools
 
         protected override void RemoveConfiguration(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             RemovXmlCommentsDocumentation(proj);
             ActivityLog.LogInformation(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, "XML comments documentation removed");
         }
@@ -58,20 +60,24 @@ namespace AMF.Tools
 
         private void AddXmlCommentsDocumentation(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             ConfigureXmlDocumentationFileInProject(proj);
             AddIncludeXmlCommentsInWebApiConfig(proj);
         }
 
         private static void ConfigureXmlDocumentationFileInProject(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var config = proj.ConfigurationManager.ActiveConfiguration;
             var configProps = config.Properties;
             var prop = configProps.Item("DocumentationFile");
             prop.Value = string.Format("bin\\{0}.XML", proj.Name);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread", Justification = "<Pending>")]
         private static void AddIncludeXmlCommentsInWebApiConfig(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var appStart = proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == "App_Start");
             if (appStart == null) return;
 
@@ -146,12 +152,15 @@ namespace AMF.Tools
 
         private void RemovXmlCommentsDocumentation(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             RemoveXmlCommentsInWebApiConfig(proj);
             RemoveXmlDocumentationFileInProject(proj);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread", Justification = "<Pending>")]
         private static void RemoveXmlCommentsInWebApiConfig(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var appStart = proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == "App_Start");
             if (appStart == null) return;
 
@@ -171,6 +180,7 @@ namespace AMF.Tools
 
         private static void RemoveXmlDocumentationFileInProject(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var config = proj.ConfigurationManager.ActiveConfiguration;
             var configProps = config.Properties;
             var prop = configProps.Item("DocumentationFile");

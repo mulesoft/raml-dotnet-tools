@@ -303,7 +303,8 @@
                                      Grid.Column="3"></PasswordBox>
                     </Grid>
 
-                    <Label Grid.Row="3" Grid.ColumnSpan="3" Margin="0,10,0,0" Cursor="Hand">
+                    <Label Visibility="{Binding ContractUseCaseVisibility}"
+                        Grid.Row="3" Grid.ColumnSpan="3" Margin="0,10,0,0" Cursor="Hand">
                         <TextBlock TextDecorations="Underline" Foreground="Blue">
                         <Button cal:Message.Attach="[Event Click] = [Action OpenApiDesigner()]"
                                 Foreground="Blue"

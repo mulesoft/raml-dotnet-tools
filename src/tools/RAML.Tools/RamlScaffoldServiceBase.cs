@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using AMF.Api.Core;
+using Microsoft.VisualStudio.Shell;
+using Microsoft;
 
 namespace AMF.Tools
 {
@@ -51,6 +53,7 @@ namespace AMF.Tools
 
         public void Scaffold(string ramlSource, RamlChooserActionParams parameters)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var data = parameters.Data;
             if (data == null || data.RamlDocument == null)
                 return;
@@ -63,7 +66,9 @@ namespace AMF.Tools
             var contractsFolderItem = VisualStudioAutomationHelper.AddFolderIfNotExists(proj, ContractsFolderName);
             var ramlItem =
                 contractsFolderItem.ProjectItems.Cast<ProjectItem>()
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
                     .First(i => i.Name.ToLowerInvariant() == parameters.TargetFileName.ToLowerInvariant());
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
             var contractsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar +
                                       ContractsFolderName + Path.DirectorySeparatorChar;
 
@@ -108,7 +113,8 @@ namespace AMF.Tools
         private void AddJsonSchemaParsingErrors(IDictionary<string, string> warnings, string contractsFolderPath, 
             ProjectItem contractsFolderItem, ProjectItem ramlItem)
         {
-            if(warnings.Count == 0)
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (warnings.Count == 0)
                 return;
 
             var targetFolderPath = GetTargetFolderPath(contractsFolderPath, ramlItem.FileNames[0]);
@@ -118,6 +124,7 @@ namespace AMF.Tools
 
         public static void TriggerScaffoldOnRamlChanged(Document document)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             if (!IsInContractsFolder(document)) 
                 return;
 
@@ -127,6 +134,7 @@ namespace AMF.Tools
         protected void InstallNugetDependencies(Project proj, string packageVersion)
         {
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
 
@@ -141,6 +149,7 @@ namespace AMF.Tools
 
         private static void ScaffoldMainRamlFiles(IEnumerable<string> ramlFiles)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var service = GetRamlScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
 
             foreach (var ramlFile in ramlFiles)
@@ -160,8 +169,9 @@ namespace AMF.Tools
             }
         }
 
-        public static RamlScaffoldServiceBase GetRamlScaffoldService(Microsoft.VisualStudio.Shell.ServiceProvider serviceProvider)
+        public static RamlScaffoldServiceBase GetRamlScaffoldService(ServiceProvider serviceProvider)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var dte = serviceProvider.GetService(typeof (SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             RamlScaffoldServiceBase service;
@@ -174,6 +184,7 @@ namespace AMF.Tools
 
         private static IEnumerable<string> GetMainRamlFiles(Document document)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var path = document.Path.ToLowerInvariant();
 
             if (IsMainRamlFile(document, path))
@@ -185,11 +196,13 @@ namespace AMF.Tools
 
         private static bool IsMainRamlFile(Document document, string path)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             return !path.EndsWith(IncludesFolder) && HasReferenceFile(document.FullName);
         }
 
         private static IEnumerable<string> GetItemsWithReferenceFiles(IEnumerable<ProjectItem> ramlItems)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             return (from item in ramlItems where HasReferenceFile(item.FileNames[0]) select item.FileNames[0]).ToList();
         }
 
@@ -200,8 +213,10 @@ namespace AMF.Tools
             return hasReferenceFile;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread", Justification = "<Pending>")]
         private static IEnumerable<ProjectItem> GetMainRamlFileFromProject()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var dte = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             var contractsItem =
@@ -219,6 +234,7 @@ namespace AMF.Tools
 
         private static bool IsInContractsFolder(Document document)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             return document.Path.ToLowerInvariant().Contains(ContractsFolder.ToLowerInvariant());
         }
 
@@ -259,6 +275,7 @@ namespace AMF.Tools
         private void AddOrUpdateControllerInterfaces(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem,
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ControllerInterfaceTemplateName,
                 RAML.Tools.Properties.Settings.Default.ControllerInterfaceTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
@@ -286,6 +303,7 @@ namespace AMF.Tools
         private void AddOrUpdateControllerBase(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem,
             WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ControllerBaseTemplateName,
                 RAML.Tools.Properties.Settings.Default.BaseControllerTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
@@ -312,6 +330,7 @@ namespace AMF.Tools
 
         private void AddOrUpdateModels(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem, WebApiGeneratorModel model, ProjectItem contractsFolderItem, string extensionPath)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, ModelTemplateName,
                 RAML.Tools.Properties.Settings.Default.ModelsTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
@@ -352,6 +371,7 @@ namespace AMF.Tools
 
         private void AddOrUpdateEnums(RamlChooserActionParams parameters, string contractsFolderPath, ProjectItem ramlItem, WebApiGeneratorModel model, ProjectItem folderItem, string extensionPath)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             templatesManager.CopyServerTemplateToProjectFolder(contractsFolderPath, EnumTemplateName,
                 RAML.Tools.Properties.Settings.Default.EnumsTemplateTitle, TemplateSubFolder);
             var templatesFolder = Path.Combine(contractsFolderPath, "Templates");
@@ -376,6 +396,7 @@ namespace AMF.Tools
 
         public void UpdateRaml(string ramlFilePath)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             var contractsFolderPath = Path.GetDirectoryName(proj.FullName) + Path.DirectorySeparatorChar + ContractsFolderName + Path.DirectorySeparatorChar;
@@ -407,6 +428,7 @@ namespace AMF.Tools
 
         protected void AddContractFromFile(ProjectItem folderItem, string folderPath, RamlChooserActionParams parameters)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var includesFolderPath = folderPath + Path.DirectorySeparatorChar + InstallerServices.IncludesFolderName;
 
             var includesManager = new RamlIncludesManager();
@@ -428,8 +450,11 @@ namespace AMF.Tools
 
         protected void ManageIncludes(ProjectItem folderItem, RamlIncludesManagerResult result)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var includesFolderItem = folderItem.ProjectItems.Cast<ProjectItem>()
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
                 .FirstOrDefault(i => i.Name == InstallerServices.IncludesFolderName);
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
 
             if (includesFolderItem == null)
                 includesFolderItem = folderItem.ProjectItems.AddFolder(InstallerServices.IncludesFolderName);
@@ -463,6 +488,7 @@ namespace AMF.Tools
 
         private static ProjectItem AddOrUpdateRamlFile(string modifiedContents, ProjectItem folderItem, string folderPath, string ramlFileName)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             ProjectItem ramlProjItem;
             var ramlDestFile = Path.Combine(folderPath, ramlFileName);
 
@@ -477,7 +503,9 @@ namespace AMF.Tools
                 }
                 else
                 {
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
                     ramlProjItem = folderItem.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == ramlFileName);
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
                     if (ramlProjItem == null)
                         ramlProjItem = folderItem.ProjectItems.AddFromFile(ramlDestFile);
                 }
@@ -492,7 +520,7 @@ namespace AMF.Tools
 
         protected void AddEmptyContract(ProjectItem folderItem, string folderPath, RamlChooserActionParams parameters)
         {
-            
+            ThreadHelper.ThrowIfNotOnUIThread();
             var newContractFile = Path.Combine(folderPath, parameters.TargetFileName);
             var contents = CreateNewRamlContents(parameters.RamlTitle);
 
@@ -507,7 +535,9 @@ namespace AMF.Tools
                 }
                 else
                 {
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
                     ramlProjItem = folderItem.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == newContractFile);
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
                     if (ramlProjItem == null)
                         ramlProjItem = folderItem.ProjectItems.AddFromFile(newContractFile);
                 }

@@ -31,6 +31,7 @@ namespace AMF.Tools
 
         public static RamlReferenceServiceBase GetRamlReferenceService(ServiceProvider serviceProvider, ILogger logger)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var dte = serviceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             RamlReferenceServiceBase service;
@@ -47,7 +48,8 @@ namespace AMF.Tools
 
         protected void AddFilesToProject(RamlInfo data, string ramlSourceFile, Project proj, string targetNamespace, string ramlOriginalSource, string targetFileName, string clientRootClassName)
         {
-            if(!File.Exists(ramlSourceFile))
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (!File.Exists(ramlSourceFile))
                 throw new FileNotFoundException("RAML file not found " + ramlSourceFile);
 
             if(Path.GetInvalidFileNameChars().Any(targetFileName.Contains))

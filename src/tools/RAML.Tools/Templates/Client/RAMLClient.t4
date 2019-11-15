@@ -996,12 +996,6 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
 <#
-			if(property.IsEnum)
-			{
-#>
-		[EnumMember(Value = "<#= property.OriginalName #>")]
-<#			
-			}
 		} 
 
 		if(property.IsEnum)
@@ -1063,12 +1057,6 @@ foreach (var header in model.HeaderObjects.Values.Where(o => o.Properties.Any())
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
 <#
-			if(property.IsEnum)
-			{
-#>
-		[EnumMember(Value = "<#= property.OriginalName #>")]
-<#			
-			}
 		}
 
 		if(property.IsEnum)
@@ -1167,12 +1155,6 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
 #>
 		[JsonProperty("<#= property.OriginalName #>")]
 <#
-			if(property.IsEnum)
-			{
-#>
-		[EnumMember(Value = "<#= property.OriginalName #>")]
-<#			
-			}
 		}
 
 		if(property.IsEnum)

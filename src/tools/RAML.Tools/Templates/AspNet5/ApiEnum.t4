@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace <#= modelsNamespace #>
 {
@@ -30,7 +31,26 @@ namespace <#= modelsNamespace #>
 #>
     public enum <#= apiEnum.Name #>
     {
-		<#= string.Join(", ", apiEnum.Values.Select(e => e.Name).ToList()) #>
+<#
+	var i = 1;
+	foreach (var property in apiEnum.Values)
+	{
+#>
+		[JsonProperty("<#= property.OriginalName #>")]
+<#
+			if(!string.IsNullOrWhiteSpace(property.OriginalName) && property.OriginalName != property.Name)
+			{
+#>
+		[EnumMember(Value = "<#= property.OriginalName #>")]
+<#			
+			}
+#>
+		<#= property.Name #><#= i < apiEnum.Values.Count() ? "," : string.Empty #>
+<#	
+		i++;
+	}
+#>
+
     }
 
 }

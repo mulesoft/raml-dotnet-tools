@@ -970,8 +970,8 @@
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AMF.Api.Core, Version=0.9.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AMF.Api.Core.0.9.15\lib\net45\AMF.Api.Core.dll</HintPath>
+    <Reference Include="RAML.Api.Core, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RAML.Api.Core.0.10.0\lib\net45\RAML.Api.Core.dll</HintPath>
     </Reference>
     <Reference Include="RAML.Parser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Analytics.NET, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">

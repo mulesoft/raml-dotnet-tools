@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
 	public class NetNamingMapper
 	{

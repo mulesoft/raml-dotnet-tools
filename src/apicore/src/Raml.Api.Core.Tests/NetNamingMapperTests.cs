@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace AMF.Api.Core.Tests
+namespace RAML.Api.Core.Tests
 {
     [TestFixture]
     public class NetNamingMapperTests

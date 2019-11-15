@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
     public class XmlSerializerFormatter : MediaTypeFormatter
     {

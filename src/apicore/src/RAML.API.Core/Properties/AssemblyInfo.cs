@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AMF.Api.Core")]
+[assembly: AssemblyTitle("RAML.Api.Core")]
 [assembly: AssemblyDescription("Core API support classes for the RAML tools extension")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MuleSoft Inc")]
-[assembly: AssemblyProduct("AMF.Api.Core")]
-[assembly: AssemblyCopyright("Copyright © 2018 MuleSoft")]
+[assembly: AssemblyProduct("RAML.Api.Core")]
+[assembly: AssemblyCopyright("Copyright © 2019 MuleSoft")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.15")]
-[assembly: AssemblyFileVersion("0.9.15")]
+[assembly: AssemblyVersion("0.10.0")]
+[assembly: AssemblyFileVersion("0.10.0")]

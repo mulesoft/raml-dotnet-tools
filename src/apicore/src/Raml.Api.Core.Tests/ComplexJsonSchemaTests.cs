@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace AMF.Api.Core.Tests
+namespace RAML.Api.Core.Tests
 {
     [TestFixture]
     public class ComplexJsonSchemaTests

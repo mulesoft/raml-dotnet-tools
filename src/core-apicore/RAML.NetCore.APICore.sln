@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F08A56BF-A1B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{52E428A0-2D9A-4AAC-B535-F3DCC1CB942B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMF.NetCore.APICore", "src\AMF.NetCore.APICore\AMF.NetCore.APICore.csproj", "{206A416F-DD49-4391-BB1F-4466FDB041BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RAML.NetCore.APICore", "src\RAML.NetCore.APICore\RAML.NetCore.APICore.csproj", "{206A416F-DD49-4391-BB1F-4466FDB041BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A199840B-FF2B-45D1-A3F5-BB85DF534CFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.NetCore.APICore.Tests", "src\AMF.NetCore.APICore.Tests\AMF.NetCore.APICore.Tests.csproj", "{1C465349-C16F-4EAC-BDD7-575C6D7B654F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAML.NetCore.APICore.Tests", "src\RAML.NetCore.APICore.Tests\RAML.NetCore.APICore.Tests.csproj", "{1C465349-C16F-4EAC-BDD7-575C6D7B654F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

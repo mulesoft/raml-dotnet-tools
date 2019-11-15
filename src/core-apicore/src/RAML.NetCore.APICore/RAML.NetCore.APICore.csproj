@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Core API support classes for the RAML tools package</Description>
@@ -6,8 +6,8 @@
     <AssemblyTitle>RAML.NetCore.APICore</AssemblyTitle>
     <Authors>MuleSoft Inc</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>AMF.NetCore.APICore</AssemblyName>
-    <PackageId>AMF.NetCore.APICore</PackageId>
+    <AssemblyName>RAML.NetCore.APICore</AssemblyName>
+    <PackageId>RAML.NetCore.APICore</PackageId>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -17,7 +17,10 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.5</Version>
+    <Version>0.1.0</Version>
+    <PackageProjectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</RepositoryUrl>
+    <PackageTags>RAML REST API OAS OpenAPI sagger</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
     public class ApiRequest
     {

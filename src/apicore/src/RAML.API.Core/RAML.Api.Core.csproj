@@ -8,8 +8,8 @@
     <ProjectGuid>{38B9703D-6167-4AAE-BAED-0C896C24A762}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AMF.Api.Core</RootNamespace>
-    <AssemblyName>AMF.Api.Core</AssemblyName>
+    <RootNamespace>RAML.Api.Core</RootNamespace>
+    <AssemblyName>RAML.Api.Core</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -268,7 +268,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="AMF.Api.Core.nuspec">
+    <None Include="RAML.Api.Core.nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

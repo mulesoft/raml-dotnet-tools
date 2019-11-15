@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2002
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.Api.Core", "RAML.API.Core\AMF.Api.Core.csproj", "{38B9703D-6167-4AAE-BAED-0C896C24A762}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAML.Api.Core", "RAML.API.Core\RAML.Api.Core.csproj", "{38B9703D-6167-4AAE-BAED-0C896C24A762}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{050DDE2F-D543-4728-B79A-94DAA02D94E3}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{050DDE
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMF.Api.Core.Tests", "Raml.Api.Core.Tests\AMF.Api.Core.Tests.csproj", "{EE496728-16DA-4B0D-B899-337A7D390A4C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAML.Api.Core.Tests", "Raml.Api.Core.Tests\RAML.Api.Core.Tests.csproj", "{EE496728-16DA-4B0D-B899-337A7D390A4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

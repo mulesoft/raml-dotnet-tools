@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
 	public class ApiHeader
 	{

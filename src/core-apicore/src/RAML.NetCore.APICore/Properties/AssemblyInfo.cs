@@ -7,8 +7,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MuleSoft Inc")]
-[assembly: AssemblyProduct("AMF.NetCore.APICore")]
-[assembly: AssemblyDescription(".Net Core common classes for the AMF tools extension")]
+[assembly: AssemblyProduct("RAML.NetCore.APICore")]
+[assembly: AssemblyDescription(".Net Core common classes for the RAML .Net tools extension")]
 [assembly: AssemblyCopyright("Copyright © 2019 MuleSoft")]
 
 
@@ -20,4 +20,4 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("206a416f-dd49-4391-bb1f-4466fdb041ba")]
 
-[assembly:AssemblyVersion("0.0.5")]
+[assembly:AssemblyVersion("0.1.0")]

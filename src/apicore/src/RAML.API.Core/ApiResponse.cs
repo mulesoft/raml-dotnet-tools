@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
     public class ApiResponse
     {

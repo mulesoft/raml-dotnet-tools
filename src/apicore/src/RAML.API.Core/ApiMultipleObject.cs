@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
     public class ApiMultipleObject
     {

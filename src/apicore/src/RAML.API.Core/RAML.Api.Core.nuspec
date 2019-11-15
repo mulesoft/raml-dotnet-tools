@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RAML.Api.Core</id>
+    <version>0.10.0</version>
+    <title>RAML.Api.Core</title>
+    <authors>MuleSoft Inc</authors>
+    <owners>MuleSoft Inc</owners>
+    <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</projectUrl>
+	  <license type="expression">Apache-2.0</license>
+	  <iconUrl>http://raml.org/images/logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Core API support classes for the RAML .Net Tools extension</description>
+    <copyright>Copyright © 2019 MuleSoft</copyright>
+    <tags>RAML OAS SWAGGER REST API SCHEMA MARKUP CLIENT SERVICE OpenAPI OAS</tags>
+      <dependencies>
+          <dependency id="Microsoft.Net.Http" version="2.2.29" />
+          <dependency id="Newtonsoft.Json" version="6.0.4" />
+      </dependencies>
+  </metadata>
+    <files>
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\net45\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\wpa81\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\win8\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\MonoAndroid10\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\xamarinios10\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\MonoTouch10\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\portable-net45+win+wpa81\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\Xamarin.iOS10\RAML.Api.Core.dll" />
+        <file src="bin\Release\RAML.Api.Core.dll" target="lib\dotnet\RAML.Api.Core.dll" />
+    </files>
+</package>

@@ -4,7 +4,7 @@ using System.Net;
 using System.Reflection;
 #endif
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
 	public class ApiMultipleResponse : ApiMultipleObject
 	{

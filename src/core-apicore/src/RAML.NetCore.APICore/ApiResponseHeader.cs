@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http.Headers;
-using AMF.Common;
+using RAML.Common;
 using System.Reflection;
 
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
 	public class ApiResponseHeader
 	{

@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 #endif
 
-namespace AMF.Api.Core
+namespace RAML.Api.Core
 {
 	public class ApiResponseHeader
 	{

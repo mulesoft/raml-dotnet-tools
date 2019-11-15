@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
 using NUnit.Framework;
-using AMF.Api.Core;
+using RAML.Api.Core;
 
-namespace AMF.Tools.Tests
+namespace RAML.Tools.Tests
 {
     [TestFixture]
     public class SchemaValidationTests

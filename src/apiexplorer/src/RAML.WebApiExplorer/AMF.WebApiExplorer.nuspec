@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+      <id>$id$</id>
+      <version>$version$</version>
+      <title>RAML WebApi Explorer</title>
+      <authors>MuleSoft Inc</authors>
+      <owners>MuleSoft Inc</owners>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <description>This package is used by the RAML Tools for .NET Visual Studio extension to generate RAML metadata from an existing WebAPI implementation.
+      In Visual Studio, go to Tools -> Extensions and Updates, then search for RAML in the Online gallery.</description>
+      <releaseNotes>RAML WebApi Explorer</releaseNotes>
+      <copyright>MuleSoft Inc, Copyright (c) 2019</copyright>
+      <tags>RAML WebApi Reverse Engineering</tags>
+	    <license type="expression">CPAL-1.0</license>
+	    <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools/src/apiexplorer</projectUrl>
+      <iconUrl>http://raml.org/images/logo.png</iconUrl>
+      <dependencies>
+		  <dependency id="Microsoft.AspNet.Mvc" version="5.1.2" />
+		  <dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.1.2" />
+      </dependencies>
+	<references>
+	  <group targetFramework="net45">
+		  <reference file="Raml.Parser.Model.dll" />
+      <reference file="RAML.Api.Core.dll" />
+		  <reference file="RAML.WebApiExplorer.dll" />
+	  </group>
+	</references>
+  </metadata>
+  <files>
+    <file src="package\content\**\*.*" target="content\net45\"/>
+	  <file src="bin\Release\Raml.Parser.Model.dll" target="lib\net45\"/>
+    <file src="bin\Release\RAML.Api.Core.dll" target="lib\net45\"/>
+    <file src="bin\Release\RAML.WebApiExplorer.dll" target="lib\net45\"/>
+  </files>
+</package>

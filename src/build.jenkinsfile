@@ -18,30 +18,30 @@ pipeline {
         }
     }
     stages {
-        stage('AMF.Api.Core')
+        stage('RAML.Api.Core')
         {
             stages {
                 stage('Build') {
                     steps {
-                        bat 'nuget restore src/apicore/src/AMF.Api.Core.sln'
-                        bat "msbuild src/apicore/src/AMF.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                        bat 'nuget restore src/apicore/src/RAML.Api.Core.sln'
+                        bat "msbuild src/apicore/src/RAML.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
                 }
                 stage('Test') {
                     steps {
-                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\AMF.API.Core.Tests.dll" --result=TestApiCore.xml'
+                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\RAML.API.Core.Tests.dll" --result=TestApiCore.xml'
                     }
                 }
                 stage('Coverage'){
                     steps {
                         dir("src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\") {
-                            bat "\"../../../packages/OpenCover.4.7.922/tools/OpenCover.Console.exe\" -target:\"../../../packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe\" -targetArgs:AMF.Api.Core.Tests.dll -register"
+                            bat "\"../../../packages/OpenCover.4.7.922/tools/OpenCover.Console.exe\" -target:\"../../../packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe\" -targetArgs:RAML.Api.Core.Tests.dll -register"
                         }
                     }
                 }
                 stage('Pack') {
                     steps {
-                        bat 'nuget pack src/apicore/src/RAML.API.Core/AMF.Api.Core.csproj -Prop Configuration=Release'
+                        bat 'nuget pack src/apicore/src/RAML.API.Core/RAML.Api.Core.csproj -Prop Configuration=Release'
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }
@@ -69,18 +69,18 @@ pipeline {
             }
         }
 
-        stage('AMF.NetCore.APICore'){
+        stage('RAML.NetCore.APICore'){
             stages{
                 stage('Build'){
                     steps {
-                        bat "dotnet restore src/core-apicore/AMF.NetCore.APICore.sln"
-                        bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
-                        bat "dotnet build src/core-apicore/src/AMF.NetCore.APICore.Tests/AMF.NetCore.APICore.Tests.csproj"
+                        bat "dotnet restore src/core-apicore/RAML.NetCore.APICore.sln"
+                        bat "dotnet build src/core-apicore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.csproj"
+                        bat "dotnet build src/core-apicore/src/RAML.NetCore.APICore.Tests/RAML.NetCore.APICore.Tests.csproj"
                     }
                 }
                 stage('Pack'){
                     steps {
-                        bat "dotnet pack src/core-apicore/src/AMF.NetCore.APICore/AMF.NetCore.APICore.csproj"
+                        bat "dotnet pack src/core-apicore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.csproj"
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }

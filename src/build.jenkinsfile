@@ -89,23 +89,23 @@ pipeline {
             }
         }
 
-        stage('AMF.ApiExplorer')
+        stage('RAML.ApiExplorer')
         {
             stages {
                 stage('Build') {
                     steps {
-                        bat 'nuget restore src/apiexplorer/src/AMF.WebApiExplorer.sln'
-                        bat "msbuild src/apiexplorer/src/AMF.WebApiExplorer.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+                        bat 'nuget restore src/apiexplorer/src/RAML.WebApiExplorer.sln'
+                        bat "msbuild src/apiexplorer/src/RAML.WebApiExplorer.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
                 }
                 stage('Test') {
                     steps {
-                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\apiexplorer\\src\\AMF.WebApiExplorer.Tests\\bin\\Release\\AMF.WebApiExplorer.Tests.dll" --result=TestWebApiExplorer.xml'
+                        bat 'nunit3-console.exe "%WORKSPACE%\\src\\apiexplorer\\src\\RAML.WebApiExplorer.Tests\\bin\\Release\\RAML.WebApiExplorer.Tests.dll" --result=TestWebApiExplorer.xml'
                     }
                 }
                 stage('Pack') {
                     steps {
-                        bat 'nuget pack src/apiexplorer/src/AMF.WebApiExplorer/AMF.WebApiExplorer.csproj -Prop Configuration=Release'
+                        bat 'nuget pack src/apiexplorer/src/RAML.WebApiExplorer/RAML.WebApiExplorer.csproj -Prop Configuration=Release'
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }
@@ -114,24 +114,24 @@ pipeline {
             }
         }
 
-        stage('AMF.NetCore.ApiExplorer'){
+        stage('RAML.NetCore.ApiExplorer'){
             stages{
                 stage('Build'){
                     steps {
-                        bat "dotnet restore src/core-apiexplorer/AMF.NetCoreAPIExplorer.sln"
-                        bat "dotnet build src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/AMF.NetCoreAPIExplorer.csproj"
-                        bat "dotnet build src/core-apiexplorer/src/AMF.NetCoreAPIExplorer.Tests/AMF.NetCoreAPIExplorer.Tests.csproj"
+                        bat "dotnet restore src/core-apiexplorer/RAML.NetCoreAPIExplorer.sln"
+                        bat "dotnet build src/core-apiexplorer/src/RAML.NetCoreAPIExplorer/RAML.NetCoreAPIExplorer.csproj"
+                        bat "dotnet build src/core-apiexplorer/src/RAML.NetCoreAPIExplorer.Tests/RAML.NetCoreAPIExplorer.Tests.csproj"
                     }
                 }
                 stage('Test'){
                     steps{
-                        bat 'dotnet test src/core-apiexplorer/src/AMF.NetCoreApiExplorer.Tests/AMF.NetCoreApiExplorer.Tests.csproj'
+                        bat 'dotnet test src/core-apiexplorer/src/RAML.NetCoreApiExplorer.Tests/RAML.NetCoreApiExplorer.Tests.csproj'
                     }
                 }
                 stage('Pack'){
                     steps {
                         bat "dotnet pack src/core-apiexplorer/src/RAML.Parser.Expressions/RAML.Parser.Expressions.csproj"
-                        bat "dotnet pack src/core-apiexplorer/src/AMF.NetCoreAPIExplorer/AMF.NetCoreAPIExplorer.csproj"
+                        bat "dotnet pack src/core-apiexplorer/src/RAML.NetCoreAPIExplorer/RAML.NetCoreAPIExplorer.csproj"
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }
@@ -139,8 +139,8 @@ pipeline {
                 }
                 // stage ("Nexus IQ") {
                 //     steps {
-                //         // nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Release/RAML.Parser.Expressions.nupkg")
-                //         nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Release/AMF.NetCoreAPIExplorer.nupkg")
+                //         // nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/RAML.NetCoreApiExplorer/bin/Release/RAML.Parser.Expressions.nupkg")
+                //         nexusIQScan("dotnet-tools", "http://nexus-iq-0:8070", "src/core-apiexplorer/src/RAML.NetCoreApiExplorer/bin/Release/RAML.NetCoreAPIExplorer.nupkg")
                 //     }
                 // }
             }
@@ -219,7 +219,7 @@ pipeline {
             archiveArtifacts 'src/tools/RAML.Tools/bin/Release/*.vsix'
             archiveArtifacts '*.nupkg'
             archiveArtifacts 'src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/*.nupkg'
-            archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'
+            archiveArtifacts 'src/core-apiexplorer/src/RAML.NetCoreApiExplorer/bin/Debug/*.nupkg'
             nunit testResultsPattern: '*.xml'
         }
         cleanup {

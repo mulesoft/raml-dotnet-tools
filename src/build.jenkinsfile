@@ -94,6 +94,16 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
+                        script {
+                            try {
+                                // bat 'nuget sources remove -Name nexus'
+                                bat "nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $NUGET_CREDS_USR -Password $NUGET_CREDS_PSW -StorePasswordInClearText"
+                            }
+                            catch (err) {
+                                // ignore already present source error
+                                echo err.getMessage()
+                            }
+                        }
                         bat 'nuget restore src/apiexplorer/src/RAML.WebApiExplorer.sln'
                         bat "msbuild src/apiexplorer/src/RAML.WebApiExplorer.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
@@ -118,6 +128,16 @@ pipeline {
             stages{
                 stage('Build'){
                     steps {
+                        script {
+                            try {
+                                // bat 'nuget sources remove -Name nexus'
+                                bat "nuget sources add -Name nexus -Source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ -UserName $NUGET_CREDS_USR -Password $NUGET_CREDS_PSW -StorePasswordInClearText"
+                            }
+                            catch (err) {
+                                // ignore already present source error
+                                echo err.getMessage()
+                            }
+                        }
                         bat "dotnet restore src/core-apiexplorer/RAML.NetCoreAPIExplorer.sln"
                         bat "dotnet build src/core-apiexplorer/src/RAML.NetCoreAPIExplorer/RAML.NetCoreAPIExplorer.csproj"
                         bat "dotnet build src/core-apiexplorer/src/RAML.NetCoreAPIExplorer.Tests/RAML.NetCoreAPIExplorer.Tests.csproj"

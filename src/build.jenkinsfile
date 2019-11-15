@@ -82,7 +82,7 @@ pipeline {
                     steps {
                         bat "dotnet pack src/core-apicore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.csproj"
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
-                            bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                            bat "nuget push src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/*.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }
                     }
                 }
@@ -153,7 +153,7 @@ pipeline {
                         bat "dotnet pack src/core-apiexplorer/src/RAML.Parser.Expressions/RAML.Parser.Expressions.csproj"
                         bat "dotnet pack src/core-apiexplorer/src/RAML.NetCoreAPIExplorer/RAML.NetCoreAPIExplorer.csproj"
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
-                            bat "nuget push src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/*.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
+                            bat "nuget push src/core-apiexplorer/src/RAML.NetCoreApiExplorer/bin/Debug/*.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }
                     }
                 }

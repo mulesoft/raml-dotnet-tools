@@ -218,7 +218,7 @@ pipeline {
         always {
             archiveArtifacts 'src/tools/RAML.Tools/bin/Release/*.vsix'
             archiveArtifacts '*.nupkg'
-            archiveArtifacts 'src/core-apicore/src/AMF.NetCore.APICore/bin/Debug/*.nupkg'
+            archiveArtifacts 'src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/*.nupkg'
             archiveArtifacts 'src/core-apiexplorer/src/AMF.NetCoreApiExplorer/bin/Debug/*.nupkg'
             nunit testResultsPattern: '*.xml'
         }

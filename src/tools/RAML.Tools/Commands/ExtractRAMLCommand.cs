@@ -103,7 +103,7 @@ namespace AMF.Tools.Commands
 
                 var service = ReverseEngineeringServiceBase.GetReverseEngineeringService(Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider);
                 service.AddReverseEngineering();
-                System.Diagnostics.Process.Start("https://github.com/mulesoft-labs/raml-dotnet-tools#metadata-extract-a-raml-definition-from-your-web-app");
+                System.Diagnostics.Process.Start("https://github.com/mulesoft-labs/raml-dotnet-tools/wiki/Extract-a-RAML-definition-from-your-Web-app");
             }
             finally
             {

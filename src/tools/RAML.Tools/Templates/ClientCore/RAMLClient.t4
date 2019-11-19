@@ -32,7 +32,7 @@ using Newtonsoft.Json.Converters;
 using RAML.Api.Core;
 using $(namespace).Models;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using AMF.Common;
+using RAML.Common;
 
 namespace $(namespace)
 {

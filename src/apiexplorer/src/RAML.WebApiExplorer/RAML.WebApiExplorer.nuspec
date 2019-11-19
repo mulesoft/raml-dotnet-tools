@@ -14,7 +14,6 @@
       <tags>RAML WebApi Reverse Engineering</tags>
 	    <license type="expression">CPAL-1.0</license>
 	    <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools/src/apiexplorer</projectUrl>
-      <iconUrl>http://raml.org/images/logo.png</iconUrl>
       <dependencies>
 		  <dependency id="Microsoft.AspNet.Mvc" version="5.1.2" />
 		  <dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.1.2" />

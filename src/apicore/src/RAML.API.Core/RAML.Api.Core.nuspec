@@ -8,7 +8,6 @@
     <owners>MuleSoft Inc</owners>
     <projectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</projectUrl>
 	  <license type="expression">Apache-2.0</license>
-	  <iconUrl>http://raml.org/images/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Core API support classes for the RAML .Net Tools extension</description>
     <copyright>Copyright © 2019 MuleSoft</copyright>

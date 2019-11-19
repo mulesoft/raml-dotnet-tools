@@ -21,6 +21,7 @@
     <PackageProjectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</RepositoryUrl>
     <PackageTags>RAML REST API OAS OpenAPI sagger</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

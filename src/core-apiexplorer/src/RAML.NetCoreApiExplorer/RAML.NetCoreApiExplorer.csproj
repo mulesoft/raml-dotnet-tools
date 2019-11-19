@@ -22,6 +22,7 @@
     <PackageProjectUrl>https://github.com/mulesoft/raml-dotnet-tools/src/core-apiexplorer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mulesoft/raml-dotnet-tools/</RepositoryUrl>
     <PackageTags>RAML OAS swagger OpenAPI REST API</PackageTags>
+    <PackageLicenseExpression>CPAL-1.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

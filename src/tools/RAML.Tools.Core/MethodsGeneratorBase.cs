@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using RAML.Parser.Model;
 using AMF.Tools.Core.Pluralization;
 

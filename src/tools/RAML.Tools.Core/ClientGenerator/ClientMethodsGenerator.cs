@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using AMF.Tools.Core.WebApiGenerator;
 using RAML.Parser.Model;
-using AMF.Api.Core;
+using RAML.Api.Core;
 
 namespace AMF.Tools.Core.ClientGenerator
 {

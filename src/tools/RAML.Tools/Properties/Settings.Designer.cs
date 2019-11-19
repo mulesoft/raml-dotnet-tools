@@ -79,7 +79,7 @@ namespace RAML.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("AMF.Api.Core")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RAML.Api.Core")]
         public string RAMLApiCorePackageId {
             get {
                 return ((string)(this["RAMLApiCorePackageId"]));

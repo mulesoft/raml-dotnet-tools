@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RAML.Parser.Model;
 using AMF.Tools.Core.Pluralization;
-using AMF.Api.Core;
+using RAML.Api.Core;
 
 namespace AMF.Tools.Core
 {

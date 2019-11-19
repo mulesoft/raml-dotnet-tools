@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using RAML.Parser.Model;
 using AMF.Tools.Core.ClientGenerator;
 

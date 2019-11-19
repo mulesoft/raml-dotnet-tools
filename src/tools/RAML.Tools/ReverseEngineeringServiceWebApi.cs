@@ -134,7 +134,7 @@ namespace AMF.Tools
                     false);
             }
 
-            // AMF.Api.Core
+            // RAML.Api.Core
             if (!installerServices.IsPackageInstalled(proj, RamlApiCorePackageId))
             {
                 //installer.InstallPackage(nugetPackagesSource, proj, ramlApiCorePackageId, ramlApiCorePackageVersion, false);

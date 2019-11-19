@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AMF.Api.Core;
+using RAML.Api.Core;
 
 namespace AMF.Tools.Core
 {

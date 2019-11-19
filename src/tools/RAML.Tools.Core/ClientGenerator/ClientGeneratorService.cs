@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using RAML.Parser.Model;
 
 namespace AMF.Tools.Core.ClientGenerator

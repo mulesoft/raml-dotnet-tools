@@ -34,12 +34,12 @@ namespace AMF.Tools
 
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
-            // AMF.Api.Core dependencies
+            // RAML.Api.Core dependencies
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, microsoftNetHttpPackageId, microsoftNetHttpPackageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             InstallNugetDependencies(proj, packageVersion);
 
-            // AMF.Api.Core
+            // RAML.Api.Core
             if (!installerServices.IsPackageInstalled(proj, ramlApiCorePackageId))
             {
                 installer.InstallPackage(nugetPackagesSource, proj, ramlApiCorePackageId, ramlApiCorePackageVersion, false);
@@ -124,7 +124,7 @@ namespace AMF.Tools
         private static void InsertLines(IList<string> lines, int index)
         {
             lines.Insert(index, "\t\t\tconfig.Formatters.Remove(config.Formatters.XmlFormatter);");
-            lines.Insert(index, "\t\t\tconfig.Formatters.Add(new AMF.Api.Core.XmlSerializerFormatter());");
+            lines.Insert(index, "\t\t\tconfig.Formatters.Add(new RAML.Api.Core.XmlSerializerFormatter());");
         }
 
         private static int FindLineWith(IReadOnlyList<string> lines, string find)

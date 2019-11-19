@@ -2,10 +2,10 @@
 <#@ assembly name="$(binDir)RAML.Parser.dll" #>
 <#@ assembly name="$(binDir)EdgeJs.dll" #>
 <#@ assembly name="$(binDir)AMF.Tools.Core.dll" #>
-<#@ assembly name="$(binDir)AMF.Api.Core.dll" #>
+<#@ assembly name="$(binDir)RAML.Api.Core.dll" #>
 <#@ assembly name="System.Runtime" #>
 <#@ assembly name="System.Core" #>
-<#@ import namespace="AMF.Api.Core" #>
+<#@ import namespace="RAML.Api.Core" #>
 <#@ import namespace="AMF.Tools.Core" #>
 <#@ import namespace="AMF.Tools.Core.ClientGenerator" #>
 <#@ import namespace="System.Linq" #>
@@ -29,7 +29,7 @@ using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using $(namespace).Models;
 
 namespace $(namespace)

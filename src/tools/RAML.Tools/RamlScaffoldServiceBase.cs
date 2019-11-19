@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using Microsoft.VisualStudio.Shell;
 using Microsoft;
 
@@ -140,7 +140,7 @@ namespace AMF.Tools
 
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
 
-            // AMF.Api.Core dependencies
+            // RAML.Api.Core dependencies
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, newtonsoftJsonPackageId, packageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
             // System.Xml.XmlSerializer 4.0.11-beta-23516

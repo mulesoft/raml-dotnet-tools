@@ -84,7 +84,6 @@ pipeline {
                         bat "cp -r src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/* ./"
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
-                            bat "nuget push src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/netstandard1.6/*.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                         }
                     }
                 }

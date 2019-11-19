@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Microsoft.Win32;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using System.Net.Http;
 using System.Linq;
 using System.IO.Compression;

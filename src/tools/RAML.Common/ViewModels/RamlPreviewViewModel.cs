@@ -9,7 +9,7 @@ using RAML.Parser;
 using RAML.Parser.Model;
 using System.Linq;
 using Task = System.Threading.Tasks.Task;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 

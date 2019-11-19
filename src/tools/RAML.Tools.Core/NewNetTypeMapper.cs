@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using RAML.Parser.Model;
-using AMF.Api.Core;
+using RAML.Api.Core;
 using System.Text.RegularExpressions;
 
 namespace AMF.Tools.Core

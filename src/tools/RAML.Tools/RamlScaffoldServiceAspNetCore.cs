@@ -57,7 +57,7 @@ namespace AMF.Tools
 
             InstallNugetDependencies(proj, newtonsoftJsonForCorePackageVersion);
 
-            // AMF.NetCore.APICore
+            // RAML.NetCore.APICore
             var ramlNetCoreApiCorePackageId = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageId;
             var ramlNetCoreApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageVersion;
             if (!installerServices.IsPackageInstalled(proj, ramlNetCoreApiCorePackageId))

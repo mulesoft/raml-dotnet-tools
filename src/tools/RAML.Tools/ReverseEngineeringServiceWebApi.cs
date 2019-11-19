@@ -51,7 +51,7 @@ namespace AMF.Tools
 
         protected override void RemoveDependencies(Project proj, IVsPackageInstallerServices installerServices, IVsPackageUninstaller installer)
         {
-            // Uninstall AMF.WebApiExplorer
+            // Uninstall RAML.WebApiExplorer
             if (installerServices.IsPackageInstalled(proj, RamlWebApiExplorerPackageId))
             {
                 installer.UninstallPackage(proj, RamlWebApiExplorerPackageId, false);
@@ -104,7 +104,7 @@ namespace AMF.Tools
             {
                 if (lines[line + 1].Contains("{"))
                 {
-                    lines.Insert(line + 2, "\t\t\tAMF.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
+                    lines.Insert(line + 2, "\t\t\tRAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
                     inserted = true;
                 }
             }
@@ -113,7 +113,7 @@ namespace AMF.Tools
             {
                 line = TextFileHelper.FindLineWith(lines, ".MapHttpAttributeRoutes();");
                 if (line != -1)
-                    lines.Insert(line + 1, "\t\t\tAMF.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
+                    lines.Insert(line + 1, "\t\t\tRAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();");
             }
         }
 
@@ -142,7 +142,7 @@ namespace AMF.Tools
                     false);
             }
 
-            // AMF.WebApiExplorer
+            // RAML.WebApiExplorer
             if (!installerServices.IsPackageInstalled(proj, RamlWebApiExplorerPackageId))
             {
                 installer.InstallPackage(NugetPackagesSource, proj, RamlWebApiExplorerPackageId,
@@ -173,7 +173,7 @@ namespace AMF.Tools
             if (!content.Contains("DocumentationProviderConfig.IncludeXmlComments"))
                 return;
 
-            content = content.Replace("AMF.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();", string.Empty);
+            content = content.Replace("RAML.WebApiExplorer.DocumentationProviderConfig.IncludeXmlComments();", string.Empty);
 
             File.WriteAllText(path, content);
         }

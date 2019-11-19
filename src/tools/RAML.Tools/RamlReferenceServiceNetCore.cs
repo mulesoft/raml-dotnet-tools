@@ -67,7 +67,7 @@ namespace AMF.Tools
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.ComponentModel.Annotations", "4.5.0", RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Runtime.Serialization.Primitives", "4.3.0", RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
 
-            // AMF.NetCore.APICore
+            // RAML.NetCore.APICore
             var ramlNetCoreApiCorePackageId = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageId;
             var ramlNetCoreApiCorePackageVersion = RAML.Tools.Properties.Settings.Default.AMFNetCoreApiCorePackageVersion;
             if (!installerServices.IsPackageInstalled(proj, ramlNetCoreApiCorePackageId))

@@ -60,7 +60,7 @@
       <Value Profile="(Default)">https://www.mulesoft.com/exchange#!/?types=RAML</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">AMF.WebApiExplorer</Value>
+      <Value Profile="(Default)">RAML.WebApiExplorer</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageVersion" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1.2.5</Value>
@@ -90,7 +90,7 @@
       <Value Profile="(Default)">11.0.2</Value>
     </Setting>
     <Setting Name="RamlNetCoreApiExplorerPackageId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">AMF.NetCoreApiExplorer</Value>
+      <Value Profile="(Default)">RAML.NetCoreAPIExplorer</Value>
     </Setting>
     <Setting Name="RamlNetCoreApiExplorerPackageVersion" Type="System.String" Scope="Application">
       <Value Profile="(Default)">0.0.3</Value>
@@ -102,7 +102,7 @@
       <Value Profile="(Default)">0.0.1</Value>
     </Setting>
     <Setting Name="AMFNetCoreApiCorePackageId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">AMF.NetCore.APICore</Value>
+      <Value Profile="(Default)">RAML.NetCore.APICore</Value>
     </Setting>
     <Setting Name="AMFNetCoreApiCorePackageVersion" Type="System.String" Scope="Application">
       <Value Profile="(Default)">0.0.4</Value>

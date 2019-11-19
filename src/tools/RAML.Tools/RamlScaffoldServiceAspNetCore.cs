@@ -7,6 +7,8 @@ using AMF.Tools.Properties;
 using AMF.Common;
 using Microsoft.VisualStudio.ComponentModelHost;
 using NuGet.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft;
 
 namespace AMF.Tools
 {
@@ -23,6 +25,7 @@ namespace AMF.Tools
 
         public override void AddContract(RamlChooserActionParams parameters)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             Tracking.Track("Asp.Net Core Scaffold");
 
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
@@ -50,6 +53,7 @@ namespace AMF.Tools
         private void InstallDependencies(Project proj, string newtonsoftJsonForCorePackageVersion)
         {
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
 

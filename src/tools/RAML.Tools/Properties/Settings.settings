@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AMF.Tools.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RAML.Tools.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="NugetPackagesSource" Type="System.String" Scope="Application">
@@ -24,7 +24,7 @@
       <Value Profile="(Default)">RAML.Api.Core</Value>
     </Setting>
     <Setting Name="RAMLApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.9.14</Value>
+      <Value Profile="(Default)">0.10.0</Value>
     </Setting>
     <Setting Name="ApiReferencesFolderName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">API References</Value>
@@ -33,10 +33,10 @@
       <Value Profile="(Default)">RAMLClient.t4</Value>
     </Setting>
     <Setting Name="ServerTemplatesVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">3.0</Value>
+      <Value Profile="(Default)">4.0</Value>
     </Setting>
     <Setting Name="ClientTemplatesVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">6.1</Value>
+      <Value Profile="(Default)">7.0</Value>
     </Setting>
     <Setting Name="ClientTemplateTitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Client Proxy T4 Template</Value>
@@ -63,13 +63,13 @@
       <Value Profile="(Default)">RAML.WebApiExplorer</Value>
     </Setting>
     <Setting Name="RAMLWebApiExplorerPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1.2.5</Value>
+      <Value Profile="(Default)">1.3.0</Value>
     </Setting>
     <Setting Name="RAMLParserPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">RAML.Parser</Value>
     </Setting>
     <Setting Name="RAMLParserPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.9.6</Value>
+      <Value Profile="(Default)">2.0.0</Value>
     </Setting>
     <Setting Name="MicrosoftNetHttpPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Microsoft.Net.Http</Value>
@@ -93,7 +93,7 @@
       <Value Profile="(Default)">RAML.NetCoreAPIExplorer</Value>
     </Setting>
     <Setting Name="RamlNetCoreApiExplorerPackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.0.3</Value>
+      <Value Profile="(Default)">0.1.0</Value>
     </Setting>
     <Setting Name="RamlParserExpressionsPackageId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">RAML.Parser.Expressions</Value>
@@ -105,7 +105,7 @@
       <Value Profile="(Default)">RAML.NetCore.APICore</Value>
     </Setting>
     <Setting Name="AMFNetCoreApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.0.4</Value>
+      <Value Profile="(Default)">0.1.0</Value>
     </Setting>
     <Setting Name="BaseControllerTestsTemplateTitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Controller Unit Tests Base</Value>

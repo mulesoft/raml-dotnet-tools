@@ -34,7 +34,7 @@ namespace AMF.Tools
         private readonly string newtonsoftJsonPackageId = RAML.Tools.Properties.Settings.Default.NewtonsoftJsonPackageId;
         
         private readonly CodeGenerator codeGenerator;
-        private readonly IT4Service t4Service;
+
         protected readonly string ContractsFolderName = RAML.Tools.Properties.Settings.Default.ContractsFolderName;
         protected readonly IServiceProvider ServiceProvider;
 
@@ -48,7 +48,6 @@ namespace AMF.Tools
         {
             ServiceProvider = serviceProvider;
             codeGenerator = new CodeGenerator(t4Service);
-            this.t4Service = t4Service;
         }
 
         public void Scaffold(string ramlSource, RamlChooserActionParams parameters)
@@ -142,9 +141,6 @@ namespace AMF.Tools
 
             // RAML.Api.Core dependencies
             NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, newtonsoftJsonPackageId, packageVersion, RAML.Tools.Properties.Settings.Default.NugetExternalPackagesSource);
-
-            // System.Xml.XmlSerializer 4.0.11-beta-23516
-            // NugetInstallerHelper.InstallPackageIfNeeded(proj, packs, installer, "System.Xml.XmlSerializer", "4.0.11-beta-23516");
         }
 
         private static void ScaffoldMainRamlFiles(IEnumerable<string> ramlFiles)
@@ -464,11 +460,6 @@ namespace AMF.Tools
                 if (!File.Exists(file))
                     includesFolderItem.ProjectItems.AddFromFile(file);
             }
-
-            // TODO: check if this should be enabled when in a csproj
-            //var existingIncludeItems = includesFolderItem.ProjectItems.Cast<ProjectItem>();
-            //var oldIncludedFiles = existingIncludeItems.Where(item => !result.IncludedFiles.Contains(item.FileNames[0]));
-            //InstallerServices.RemoveSubItemsAndAssociatedFiles(oldIncludedFiles);
         }
 
         private RamlProperties Map(RamlChooserActionParams parameters)

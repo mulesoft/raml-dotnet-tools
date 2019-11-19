@@ -8,6 +8,7 @@ using AMF.Tools.Properties;
 using AMF.Common;
 using Microsoft.VisualStudio.ComponentModelHost;
 using NuGet.VisualStudio;
+using Microsoft;
 
 namespace AMF.Tools
 {
@@ -29,6 +30,7 @@ namespace AMF.Tools
         protected void InstallDependencies(Project proj, string packageVersion)
         {
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
 
@@ -48,6 +50,7 @@ namespace AMF.Tools
 
         public override void AddContract(RamlChooserActionParams parameters)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             Tracking.Track("Asp.Net WebApi Scaffold");
 
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
@@ -79,8 +82,10 @@ namespace AMF.Tools
             return folderPath;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread", Justification = "<Pending>")]
         private static void AddXmlFormatterInWebApiConfig(Project proj)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var appStart = proj.ProjectItems.Cast<ProjectItem>().FirstOrDefault(i => i.Name == "App_Start");
             if (appStart == null) return;
 

@@ -8,6 +8,7 @@ using AMF.Common;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft;
 
 namespace AMF.Tools
 {
@@ -25,6 +26,7 @@ namespace AMF.Tools
 
         public static ReverseEngineeringServiceBase GetReverseEngineeringService(ServiceProvider serviceProvider)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var dte = serviceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             ReverseEngineeringServiceBase service;
@@ -37,6 +39,7 @@ namespace AMF.Tools
 
         public void AddReverseEngineering()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             try
             {
                 ActivityLog.LogInformation(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, "Enable RAML metadata output process started");
@@ -63,6 +66,7 @@ namespace AMF.Tools
         private void InstallNugetAndDependencies(Project proj)
         {
             var componentModel = (IComponentModel)serviceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
 
@@ -82,6 +86,7 @@ namespace AMF.Tools
 
         public void RemoveReverseEngineering()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             try
             {
                 ActivityLog.LogInformation(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, "Disable RAML metadata output process started");
@@ -107,6 +112,7 @@ namespace AMF.Tools
         private void UninstallNugetAndDependencies(Project proj)
         {
             var componentModel = (IComponentModel)serviceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageUninstaller>();
 

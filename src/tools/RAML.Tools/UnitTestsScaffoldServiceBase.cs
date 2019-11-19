@@ -17,7 +17,6 @@ namespace AMF.Tools
 {
     public abstract class UnitTestsScaffoldServiceBase
     {
-        private const string RamlSpecVersion = "1.0";
         private const string UnitTestsControllerTemplateName = "ApiControllerTests.t4";
         private const string UnitTestsControllerImplementationTemplateName = "ApiControllerTestsImplementation.t4";
         private const string ModelTemplateName = "ApiModel.t4";
@@ -50,6 +49,7 @@ namespace AMF.Tools
 
         public void Scaffold(string ramlSource, RamlChooserActionParams parameters)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var dte = ServiceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
 

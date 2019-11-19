@@ -11,6 +11,7 @@ using AMF.Tools.Core.ClientGenerator;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.ComponentModelHost;
 using AMF.Tools.Core;
+using Microsoft;
 
 namespace AMF.Tools
 {
@@ -24,6 +25,7 @@ namespace AMF.Tools
 
         public override void AddRamlReference(RamlChooserActionParams parameters)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             try
             {
                 Logger.LogInformation("Add RAML Reference process started");
@@ -57,6 +59,7 @@ namespace AMF.Tools
         protected override void InstallNugetDependencies(Project proj)
         {
             var componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
+            Assumes.Present(componentModel);
             var installerServices = componentModel.GetService<IVsPackageInstallerServices>();
             var installer = componentModel.GetService<IVsPackageInstaller>();
             var packs = installerServices.GetInstalledPackages(proj).ToArray();
@@ -79,6 +82,7 @@ namespace AMF.Tools
         public override void GenerateCode(RamlInfo data, Project proj, string targetNamespace, string clientRootClassName, string apiRefsFolderPath,
             string ramlDestFile, string destFolderPath, string destFolderName, ProjectItem ramlProjItem)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             TemplatesManager.CopyClientTemplateToProjectFolder(apiRefsFolderPath, "ClientCore");
             GenerateCode(data, targetNamespace, clientRootClassName, ramlDestFile, destFolderPath, destFolderName, ramlProjItem);
         }
@@ -86,6 +90,7 @@ namespace AMF.Tools
         public void GenerateCode(RamlInfo data, string targetNamespace, string clientRootClassName, string ramlDestFile, string destFolderPath,
             string destFolderName, ProjectItem ramlProjItem)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             //var ramlInfo = await RamlInfoService.GetRamlInfo(ramlDestFile);
             //if (ramlInfo.HasErrors)
             //{
@@ -161,6 +166,7 @@ namespace AMF.Tools
 
         private static string GetProjectFilePath(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             return proj.FileName;
         }
 

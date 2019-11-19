@@ -25,6 +25,7 @@ namespace AMF.Tools
 
         protected override void ConfigureProject(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             ConfigureNetCoreStartUp(proj);
             ActivityLog.LogInformation(VisualStudioAutomationHelper.RamlVsToolsActivityLogSource, "StatUp configuration added");
 
@@ -40,6 +41,7 @@ namespace AMF.Tools
 
         protected override void RemoveConfiguration(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             RemoveNetCoreStartUpConfiguration(proj);
         }
 
@@ -54,6 +56,7 @@ namespace AMF.Tools
 
         private void ConfigureNetCoreStartUp(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var startUpPath = Path.Combine(Path.GetDirectoryName(proj.FullName), "Startup.cs");
             if (!File.Exists(startUpPath)) return;
 
@@ -221,6 +224,7 @@ namespace AMF.Tools
 
         private void RemoveNetCoreStartUpConfiguration(Project proj)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var startUpPath = Path.Combine(Path.GetDirectoryName(proj.FullName), "Startup.cs");
             if (!File.Exists(startUpPath)) return;
 

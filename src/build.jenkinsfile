@@ -81,7 +81,7 @@ pipeline {
                 stage('Pack'){
                     steps {
                         bat "dotnet pack src/core-apicore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.csproj"
-                        bat "cp src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/ ./"
+                        bat "cp src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/* ./"
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"
                             bat "nuget push src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/netstandard1.6/*.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NugetApiKey"

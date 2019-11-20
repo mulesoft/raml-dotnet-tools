@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>This package is used by the RAML Tools for .NET Visual Studio extension to generate RAML metadata from an existing ASP.NET Core implementation. In Visual Studio, go to Tools -&gt; Extensions and Updates, then search for RAML in the Online gallery.</Description>
@@ -7,8 +7,8 @@
     <VersionPrefix>0.0.1</VersionPrefix>
     <Authors>MuleSoft Inc</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>AMF.NetCoreApiExplorer</AssemblyName>
-    <PackageId>AMF.NetCoreApiExplorer</PackageId>
+    <AssemblyName>RAML.NetCoreApiExplorer</AssemblyName>
+    <PackageId>RAML.NetCoreApiExplorer</PackageId>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
@@ -17,10 +17,12 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <Version>0.0.3</Version>
+    <Version>0.1.0</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/mulesoft/amf-dotnet-tools/tree/develop/src/core-apiexplorer</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/mulesoft/amf-dotnet-tools/</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mulesoft/raml-dotnet-tools/src/core-apiexplorer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mulesoft/raml-dotnet-tools/</RepositoryUrl>
+    <PackageTags>RAML OAS swagger OpenAPI REST API</PackageTags>
+    <PackageLicenseExpression>CPAL-1.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,9 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AMF.NetCore.APICore" Version="0.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="1.0.3" />
+    <PackageReference Include="RAML.NetCore.APICore" Version="0.1.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.1.0" />
   </ItemGroup>
 

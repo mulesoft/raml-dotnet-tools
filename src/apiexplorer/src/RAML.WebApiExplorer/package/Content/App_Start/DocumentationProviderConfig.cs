@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Http.Description;
 using System.Web.Http;
 
-namespace AMF.WebApiExplorer
+namespace RAML.WebApiExplorer
 {
 	public static class DocumentationProviderConfig
 	{

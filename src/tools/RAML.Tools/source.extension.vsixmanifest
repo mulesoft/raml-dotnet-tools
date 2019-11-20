@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="RAML.Tools.1034e5df-3b62-4707-aba9-fc087b4a7c91" Version="0.1.0" Language="en-US" Publisher="MuleSoft Inc" />
+        <Identity Id="RAML.Tools.1034e5df-3b62-4707-aba9-fc087b4a7c91" Version="3.0.0" Language="en-US" Publisher="MuleSoft Inc" />
         <DisplayName>RAML.Tools</DisplayName>
         <Description xml:space="preserve">RAML Tools for .NET allows developers to easily integrate and consume APIs that exposes a RAML or OAS (swagger) definitions, or generate a new ASP.NET Web API implementation from scratch using a contract-first approach from a previously created RAML or OAS (swagger) definition.
 Project home: https://github.com/mulesoft/amf-dotnet-tools</Description>

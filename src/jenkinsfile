@@ -7,27 +7,27 @@ pipeline {
         }
     }
     stages {
-        stage('AMF.Tools')
+        stage('RAML.Tools')
         {
             stages {
                 stage('Build') {
                     steps {
-                        bat 'nuget restore src/tools/AMF.Tools.sln'
-                        bat "msbuild src/tools/AMF.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
+                        bat 'nuget restore src/tools/RAML.Tools.sln'
+                        bat "msbuild src/tools/RAML.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
                     }
                 }
                 stage('Test') {
                     steps {
-                        dir("src/tools/AMF.Tools.TestRunner/bin/Release/"){
-                            bat 'AMF.Tools.TestRunner.exe'
+                        dir("src/tools/RAML.Tools.TestRunner/bin/Release/"){
+                            bat 'RAML.Tools.TestRunner.exe'
                         }
                     }
                 }
                 stage('Sing Vsix') {
                     steps {
                         withCredentials([string(credentialsId: 'amf_codesign_cert_thumbprint', variable: 'THUMBPRINT')]) {
-                            bat "OpenVsixSignTool.exe sign --sha1 $THUMBPRINT --timestamp http://timestamp.digicert.com -ta sha256 -fd sha256 src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
-                            //bat "'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\x64\\signtool.exe' sign /v /fd sha256 /sha1 $THUMBPRINT /sm src/tools/AMF.Tools/bin/Release/AMF.Tools.vsix"
+                            bat "OpenVsixSignTool.exe sign --sha1 $THUMBPRINT --timestamp http://timestamp.digicert.com -ta sha256 -fd sha256 src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix"
+                            //bat "'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\x64\\signtool.exe' sign /v /fd sha256 /sha1 $THUMBPRINT /sm src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix"
                         }
                     }
                 }
@@ -37,7 +37,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts 'src/tools/AMF.Tools/bin/Release/*.vsix'
+            archiveArtifacts 'src/tools/RAML.Tools/bin/Release/*.vsix'
         }
         cleanup {
             cleanWs()

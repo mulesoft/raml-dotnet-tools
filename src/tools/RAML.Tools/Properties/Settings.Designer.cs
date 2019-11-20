@@ -205,7 +205,7 @@ namespace RAML.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.3.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.3.1")]
         public string RAMLWebApiExplorerPackageVersion {
             get {
                 return ((string)(this["RAMLWebApiExplorerPackageVersion"]));

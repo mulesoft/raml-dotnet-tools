@@ -82,7 +82,7 @@ namespace $(namespace)
 	            foreach (var p in method.UriParameters)
 	            {
 #>
-            url = url.Replace("{<#= p.OriginalName #>}", <#= p.ParamName #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", Uri.EscapeDataString(<#= p.ParamName #>.ToString()));
 <#
         	    }
 
@@ -106,7 +106,7 @@ namespace $(namespace)
                         {
 #>
                 if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
-					url += "&<#= property.OriginalName #>=" + <#= method.Query.Name.ToLower() #>.<#= property.Name #>;
+					url += "&<#= property.OriginalName #>=" + Uri.EscapeDataString(<#= method.Query.Name.ToLower() #>.<#= property.Name #>);
 <#
                         }
         		    }
@@ -252,7 +252,7 @@ namespace $(namespace)
 			if(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #> == null)
 				throw new InvalidOperationException("Uri Parameter <#= NetNamingMapper.Capitalize(p.Name) #> cannot be null");
 
-            url = url.Replace("{<#= p.OriginalName #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", Uri.EscapeDataString(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString()));
 <#
 	            }
 
@@ -276,7 +276,7 @@ namespace $(namespace)
                         {
 #>
                 if(request.Query.<#= property.Name #> != null)
-                    url += "&<#= property.OriginalName ?? property.Name #>=" + request.Query.<#= property.Name #>;
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + Uri.EscapeDataString(request.Query.<#= property.Name #>);
 <#
                         }
 		            }
@@ -538,7 +538,7 @@ namespace $(namespace)
 	            foreach (var p in method.UriParameters)
 	            {
 #>
-            url = url.Replace("{<#= p.OriginalName #>}", <#= p.ParamName #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", Uri.EscapeDataString(<#= p.ParamName #>.ToString()));
 <#
         	    }
 
@@ -562,7 +562,7 @@ namespace $(namespace)
                         {
 #>
                 if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
-					url += "&<#= property.OriginalName #>=" + <#= method.Query.Name.ToLower() #>.<#= property.Name #>;
+					url += "&<#= property.OriginalName #>=" + Uri.EscapeDataString(<#= method.Query.Name.ToLower() #>.<#= property.Name #>);
 <#
                         }
         		    }
@@ -708,7 +708,7 @@ namespace $(namespace)
 			if(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #> == null)
 				throw new InvalidOperationException("Uri Parameter <#= NetNamingMapper.Capitalize(p.Name) #> cannot be null");
 
-            url = url.Replace("{<#= p.OriginalName #>}", request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString());
+            url = url.Replace("{<#= p.OriginalName #>}", Uri.EscapeDataString(request.UriParameters.<#= NetNamingMapper.Capitalize(p.Name) #>.ToString()));
 <#
 	            }
 
@@ -732,7 +732,7 @@ namespace $(namespace)
                         {
 #>
                 if(request.Query.<#= property.Name #> != null)
-                    url += "&<#= property.OriginalName ?? property.Name #>=" + request.Query.<#= property.Name #>;
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + Uri.EscapeDataString(request.Query.<#= property.Name #>);
 <#
                         }
 		            }

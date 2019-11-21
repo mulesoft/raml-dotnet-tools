@@ -48,7 +48,7 @@ namespace AMF.Tools
         /// <summary>
         /// AMFToolsPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "5d360b46-ec9c-4f14-94ab-14d941cf681b";
+        public const string PackageGuidString = "49d3aa6e-2e80-4568-92e9-4bcb3eb2b40d";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AMFToolsPackage"/> class.

@@ -107,7 +107,7 @@
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidAMFToolsPackage" value="{5d360b46-ec9c-4f14-94ab-14d941cf681b}" />
+    <GuidSymbol name="guidAMFToolsPackage" value="{49d3aa6e-2e80-4568-92e9-4bcb3eb2b40d}" />
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidNodesCmdSet" value="{a6b93485-ff23-4fde-8aea-dce55fc2e3b6}">

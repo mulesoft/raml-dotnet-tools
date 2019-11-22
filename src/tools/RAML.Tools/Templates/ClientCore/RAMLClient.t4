@@ -159,7 +159,7 @@ namespace $(namespace)
 #>
 
             var stringWriter = new StringWriter();
-        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, <#= method.Parameter.Name #>);
+        	new XmlSerializer(typeof (<#= method.Parameter.Type #>)).Serialize(stringWriter, <#= method.Parameter.Name #>);
             req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
 <#
                         } else {
@@ -350,13 +350,15 @@ namespace $(namespace)
                         if(method.RequestContentTypes.Any(c => c.Contains("xml")) && !method.RequestContentTypes.Any(c => c.Contains("json"))){
 #>
             var stringWriter = new StringWriter();
-        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, request.Content);
+        	new XmlSerializer(typeof (<#= method.Parameter.Type #>)).Serialize(stringWriter, request.Content);
             req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
 <#
                         } else {
 #>
             if(request.Formatter == null)
                 request.Formatter = new JsonMediaTypeFormatter();
+
+			req.Content = new ObjectContent(typeof(<#= method.Parameter.Type #>), request.Content, request.Formatter);
 <#
                         }
 	                }
@@ -615,7 +617,7 @@ namespace $(namespace)
 #>
 
             var stringWriter = new StringWriter();
-        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, <#= method.Parameter.Name #>);
+        	new XmlSerializer(typeof (<#= method.Parameter.Type #>)).Serialize(stringWriter, <#= method.Parameter.Name #>);
             req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
 <#
                         } else {
@@ -806,13 +808,15 @@ namespace $(namespace)
                         if(method.RequestContentTypes.Any(c => c.Contains("xml")) && !method.RequestContentTypes.Any(c => c.Contains("json"))){
 #>
             var stringWriter = new StringWriter();
-        	new XmlSerializer(typeof (Models.<#= method.Parameter.Type #>)).Serialize(stringWriter, request.Content);
+        	new XmlSerializer(typeof (<#= method.Parameter.Type #>)).Serialize(stringWriter, request.Content);
             req.Content = new  StringContent(stringWriter.GetStringBuilder().ToString(), Encoding.UTF8, "application/xml");     
 <#
                         } else {
 #>
             if(request.Formatter == null)
                 request.Formatter = new JsonMediaTypeFormatter();
+
+			req.Content = new ObjectContent(typeof(<#= method.Parameter.Type #>), request.Content, request.Formatter);
 <#
                         }
 	                }

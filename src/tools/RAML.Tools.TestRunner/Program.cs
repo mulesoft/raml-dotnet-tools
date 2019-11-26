@@ -12,6 +12,7 @@ namespace AMF.Tools.TestRunner
         {
             try
             {
+                Console.WriteLine("Tests runner started");
                 TestCount = 0;
                 RunMiscTests();
                 RunModelsServiceTestsAsync().Wait();
@@ -49,6 +50,7 @@ namespace AMF.Tools.TestRunner
             tests.ClientGeneratorMethodTest();
             tests.ResponseTypeSeriveEnumTest();
             TestCount += tests.TestCount;
+            Console.WriteLine($"Tests ran {TestCount} - Misc");
         }
 
         public static async Task RunModelsServiceTestsAsync()
@@ -57,6 +59,7 @@ namespace AMF.Tools.TestRunner
             await tests.MoviesModels();
             await tests.PetStoreModels();
             TestCount += tests.TestCount;
+            Console.WriteLine($"Tests ran {TestCount} - Models Service");
         }
 
         private static async Task RunExchangeTestsAsync()
@@ -140,6 +143,7 @@ namespace AMF.Tools.TestRunner
             await tests.customer_api_for_visual_editing_raml();
 
             TestCount += tests.TestCount;
+            Console.WriteLine($"Tests ran {TestCount} - Exchange");
         }
 
         private static async Task RunOasTestsAsync()
@@ -148,6 +152,7 @@ namespace AMF.Tools.TestRunner
             await tests.PetStoreClient();
             await tests.PetStoreServer();
             TestCount += tests.TestCount;
+            Console.WriteLine($"Tests ran {TestCount} - OAS");
         }
 
         private static async Task RunClientRaml1TestsAsync()
@@ -169,6 +174,7 @@ namespace AMF.Tools.TestRunner
             // TODO: collections defined in types
             await tests.ShouldBuildArrayTypes();
             TestCount += tests.TestCount;
+            Console.WriteLine($"Tests ran {TestCount} - Client RAML 1");
         }
 
         private static async Task RunWebApiTestsAsync()
@@ -177,6 +183,7 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldWorkIncludeWithRelativeIncludes();
             // await tests.ShouldWorkIncludeWithIncludes();
             TestCount += tests.TestCount;
+            Console.WriteLine($"Tests ran {TestCount} - WebApi");
         }
 
         private static async Task RunServerRaml1TestsAsync()
@@ -226,7 +233,8 @@ namespace AMF.Tools.TestRunner
 
             //await tests.ShouldMapAttributes_WhenCustomScalarInObject();
             TestCount += tests.TestCount;
-            Console.ReadLine();
+
+            Console.WriteLine($"Tests ran {TestCount} - Server RAML 1");
         }
 
         private static void InformException(Exception ex)

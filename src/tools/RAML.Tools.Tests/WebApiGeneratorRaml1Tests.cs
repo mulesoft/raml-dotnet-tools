@@ -274,8 +274,8 @@ namespace Raml.Tools.Tests
             var model = await BuildModel("files/numbers.raml");
             Assert.AreEqual("int", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Intprop").Type);
             Assert.AreEqual("decimal", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Numberprop").Type);
-            Assert.AreEqual("long", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Longprop").Type);
-            Assert.AreEqual("short", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Shortprop").Type);
+            Assert.AreEqual("long?", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Longprop").Type);
+            Assert.AreEqual("short?", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Shortprop").Type);
         }
 
         [Test]
@@ -284,8 +284,8 @@ namespace Raml.Tools.Tests
             var model = await BuildModel("files/numbers-v4.raml");
             Assert.AreEqual("int", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Intprop").Type);
             Assert.AreEqual("decimal", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Numberprop").Type);
-            Assert.AreEqual("long", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Longprop").Type);
-            Assert.AreEqual("short", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Shortprop").Type);
+            Assert.AreEqual("long?", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Longprop").Type);
+            Assert.AreEqual("short?", model.Objects.First(x => x.Name == "Sample").Properties.First(x => x.Name == "Shortprop").Type);
         }
 
         [Test]

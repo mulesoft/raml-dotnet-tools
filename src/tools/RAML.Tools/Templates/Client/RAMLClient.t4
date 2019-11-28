@@ -106,7 +106,7 @@ namespace $(namespace)
                         {
 #>
                 if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
-					url += "&<#= property.OriginalName #>=" + Uri.EscapeDataString(<#= method.Query.Name.ToLower() #>.<#= property.Name #>);
+					url += "&<#= property.OriginalName #>=" + Uri.EscapeDataString(<#= method.Query.Name.ToLower() #>.<#= property.Name #><#= property.Type != "string" ? ".ToString()" : "" #>);
 <#
                         }
         		    }
@@ -276,7 +276,7 @@ namespace $(namespace)
                         {
 #>
                 if(request.Query.<#= property.Name #> != null)
-                    url += "&<#= property.OriginalName ?? property.Name #>=" + Uri.EscapeDataString(request.Query.<#= property.Name #>);
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + Uri.EscapeDataString(request.Query.<#= property.Name #><#= property.Type != "string" ? ".ToString()" : "" #>);
 <#
                         }
 		            }
@@ -564,7 +564,7 @@ namespace $(namespace)
                         {
 #>
                 if(<#= method.Query.Name.ToLower() #>.<#= property.Name #> != null)
-					url += "&<#= property.OriginalName #>=" + Uri.EscapeDataString(<#= method.Query.Name.ToLower() #>.<#= property.Name #>);
+					url += "&<#= property.OriginalName #>=" + Uri.EscapeDataString(<#= method.Query.Name.ToLower() #>.<#= property.Name #><#= property.Type != "string" ? ".ToString()" : "" #>);
 <#
                         }
         		    }
@@ -734,7 +734,7 @@ namespace $(namespace)
                         {
 #>
                 if(request.Query.<#= property.Name #> != null)
-                    url += "&<#= property.OriginalName ?? property.Name #>=" + Uri.EscapeDataString(request.Query.<#= property.Name #>);
+                    url += "&<#= property.OriginalName ?? property.Name #>=" + Uri.EscapeDataString(request.Query.<#= property.Name #><#= property.Type != "string" ? ".ToString()" : "" #>);
 <#
                         }
 		            }

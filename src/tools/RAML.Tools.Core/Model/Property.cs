@@ -13,7 +13,23 @@ namespace AMF.Tools.Core
         public Property(string parentClassName = null) : base(parentClassName) { }
 
         public string Description { get; set; }
-        public string Type { get; set; }
+
+        private string type;
+        public string Type 
+        {
+            get 
+            {
+                if (!Required && !type.EndsWith("?") && NewNetTypeMapper.IsPrimitiveType(type) && type != "string" && type != "object")
+                    return type + "?";
+
+                return type;
+            }
+            set 
+            {
+                type = value;
+            }
+        }
+
         public string Example { get; set; }
         public bool Required { get; set; }
         public HttpStatusCode? StatusCode { get; set; }

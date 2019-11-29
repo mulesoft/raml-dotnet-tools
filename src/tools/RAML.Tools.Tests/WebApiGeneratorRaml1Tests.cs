@@ -47,7 +47,7 @@ namespace Raml.Tools.Tests
         public async Task ShouldMapPatternAttributes()
         {
             var model = await BuildModel("files/raml1/patterns.raml");
-            Assert.AreEqual(3, model.Objects.Count());
+            Assert.AreEqual(2, model.Objects.Count());
             Assert.IsTrue( model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop1").CustomAttributes.Contains("[RegularExpression(@\""));
             Assert.AreEqual("^/dev/[^/]+(/[^/]+)*$", model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop1").Pattern);
             Assert.AreEqual("^(/[^/]+)+$", model.Objects.First(o => o.Name == "MyObj").Properties.First(p => p.Name == "Prop2").Pattern);

@@ -16,10 +16,10 @@ namespace AMF.Tools.TestRunner
                 TestCount = 0;
                 RunMiscTests();
                 RunModelsServiceTestsAsync().Wait();
-                RunExchangeTestsAsync().Wait();
-                RunOasTestsAsync().Wait();
                 RunServerRaml1TestsAsync().Wait();
                 RunWebApiTestsAsync().Wait();
+                RunExchangeTestsAsync().Wait();
+                RunOasTestsAsync().Wait();
                 RunClientRaml1TestsAsync().Wait();
                 Console.WriteLine($"{TestCount} tests passed");
                 return 0;
@@ -66,13 +66,6 @@ namespace AMF.Tools.TestRunner
         {
             var tests = new RamlExchangeTests();
 
-            await tests.zendesk_api_raml(); // RP-578
-            await tests.twitter_api_raml(); // RP 577
-            await tests.stripe_api_raml(); // RP 576
-            await tests.salesforce_raml_raml(); // RP-575
-            await tests.google_drive_api_raml(); // RP-574
-            await tests.github_api_raml(); // RP-573
-            await tests.box_api_raml(); // RP-572
             await tests.catalyst_healthcare_appointment_api_raml();
             await tests.banking_aisp_experience_api();
             await tests.appian_api_raml();
@@ -134,13 +127,18 @@ namespace AMF.Tools.TestRunner
             await tests.workiva_wdesk_spreadsheets_api_raml();
             await tests.yammer_raml_raml();
             await tests.zuora_raml_raml();
-
-            //
             await tests.paypal_orders_api_raml();
             await tests.catalyst_healthcare_fitbit_sapi_raml();
             await tests.catalyst_healthcare_onboarding_api_raml();
             await tests.crm_fhir_system_api_raml();
             await tests.customer_api_for_visual_editing_raml();
+            await tests.zendesk_api_raml(); // RP-578
+            await tests.twitter_api_raml(); // RP 577
+            await tests.stripe_api_raml(); // RP 576
+            await tests.salesforce_raml_raml(); // RP-575
+            await tests.google_drive_api_raml(); // RP-574
+            await tests.github_api_raml(); // RP-573
+            await tests.box_api_raml(); // RP-572
 
             TestCount += tests.TestCount;
             Console.WriteLine($"Tests ran {TestCount} - Exchange");

@@ -40,8 +40,8 @@
     <Reference Include="AMF.Api.Core, Version=0.9.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AMF.Api.Core.0.9.12\lib\net45\AMF.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RAML.Parser, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RAML.Parser.2.0.0\lib\net462\RAML.Parser.dll</HintPath>
+    <Reference Include="RAML.Parser, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RAML.Parser.2.0.1\lib\net462\RAML.Parser.dll</HintPath>
     </Reference>
     <Reference Include="CommandLine, Version=2.0.275.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.0.275-beta\lib\net45\CommandLine.dll</HintPath>

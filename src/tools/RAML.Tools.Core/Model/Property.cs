@@ -19,7 +19,7 @@ namespace AMF.Tools.Core
         {
             get 
             {
-                if (!Required && !type.EndsWith("?") && NewNetTypeMapper.IsPrimitiveType(type) && type != "string" && type != "object")
+                if (!Required && !type.EndsWith("?") && NewNetTypeMapper.IsPrimitiveType(type) && type != "string" && type != "object" && type != "byte[]")
                     return type + "?";
 
                 return type;

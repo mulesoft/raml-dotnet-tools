@@ -1,0 +1,39 @@
+pipeline {
+
+    agent {
+        node {
+            label 'windows10'
+            customWorkspace 'c:\\cp'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                bat 'nuget restore src/apiexplorer/src/RAML.WebApiExplorer.sln'
+                bat "msbuild src/apiexplorer/src/RAML.WebApiExplorer.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+            }
+        }
+        stage('Test') {
+            steps {
+                bat 'nunit3-console.exe "%WORKSPACE%\\src\\apiexplorer\\src\\RAML.WebApiExplorer.Tests\\bin\\Release\\RAML.WebApiExplorer.Tests.dll" --result=TestWebApiExplorer.xml'
+            }
+        }
+        stage('Pack & Publish') {
+            steps {
+                bat 'nuget pack src/apiexplorer/src/RAML.WebApiExplorer/RAML.WebApiExplorer.csproj -Prop Configuration=Release'
+                withCredentials([string(credentialsId: 'dotnet-nuget-key', variable: 'NugetApiKey')]) {
+                    bat "nuget push *.nupkg -Source https://api.nuget.org/v3/index.json -NoSymbols -SkipDuplicate -ApiKey $NugetApiKey"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

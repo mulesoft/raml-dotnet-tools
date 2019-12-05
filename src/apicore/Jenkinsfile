@@ -1,0 +1,39 @@
+pipeline {
+
+    agent {
+        node {
+            label 'windows10'
+            customWorkspace 'c:\\cp'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                bat 'nuget restore src/apicore/src/RAML.Api.Core.sln'
+                bat "msbuild src/apicore/src/RAML.Api.Core.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+            }
+        }
+        stage('Test') {
+            steps {
+                bat 'nunit3-console.exe "%WORKSPACE%\\src\\apicore\\src\\RAML.Api.Core.Tests\\bin\\Release\\RAML.API.Core.Tests.dll" --result=TestApiCore.xml'
+            }
+        }
+        stage('Pack & Publish') {
+            steps {
+                bat 'nuget pack src/apicore/src/RAML.API.Core/RAML.Api.Core.csproj -Prop Configuration=Release'
+                withCredentials([string(credentialsId: 'dotnet-nuget-key', variable: 'NugetApiKey')]) {
+                    bat "nuget push *.nupkg -Source https://api.nuget.org/v3/index.json -NoSymbols -SkipDuplicate -ApiKey $NugetApiKey"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

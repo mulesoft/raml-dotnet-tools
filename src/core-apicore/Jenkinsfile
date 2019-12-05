@@ -1,0 +1,42 @@
+pipeline {
+
+    agent {
+        node {
+            label 'windows10'
+            customWorkspace 'c:\\cp'
+        }
+    }
+    stages {
+        stage('Build'){
+            steps {
+                bat "dotnet restore src/core-apicore/RAML.NetCore.APICore.sln"
+                bat "dotnet build src/core-apicore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.csproj"
+                bat "dotnet build src/core-apicore/src/RAML.NetCore.APICore.Tests/RAML.NetCore.APICore.Tests.csproj"
+            }
+        }
+        stage('Test'){
+            steps{
+                bat 'dotnet test src/core-apicore/src/RAML.NetCore.APICore.Tests/RAML.NetCore.APICore.Tests.csproj'
+            }
+        }        
+        stage('Pack & Publish'){
+            steps {
+                bat "dotnet pack src/core-apicore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.csproj"
+                bat "cp -r src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/* ./"
+                withCredentials([string(credentialsId: 'dotnet-nuget-key', variable: 'NugetApiKey')]) {
+                    bat "nuget push *.nupkg -Source https://api.nuget.org/v3/index.json -NoSymbols -SkipDuplicate -ApiKey $NugetApiKey"
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+            archiveArtifacts 'src/core-apicore/src/RAML.NetCore.APICore/bin/Debug/*.nupkg'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

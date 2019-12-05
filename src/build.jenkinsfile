@@ -78,6 +78,11 @@ pipeline {
                         bat "dotnet build src/core-apicore/src/RAML.NetCore.APICore.Tests/RAML.NetCore.APICore.Tests.csproj"
                     }
                 }
+                stage('Test'){
+                    steps{
+                        bat 'dotnet test src/core-apicore/src/RAML.NetCore.APICore.Tests/RAML.NetCore.APICore.Tests.csproj'
+                    }
+                }                  
                 stage('Pack'){
                     steps {
                         bat "dotnet pack src/core-apicore/src/RAML.NetCore.APICore/RAML.NetCore.APICore.csproj"

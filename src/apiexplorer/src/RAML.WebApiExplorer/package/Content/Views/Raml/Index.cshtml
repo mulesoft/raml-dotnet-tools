@@ -1,4 +1,7 @@
-﻿<!doctype html>
+﻿@{
+    Layout = null;
+}
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -30,11 +33,11 @@
 </head>
 
 <body class="apic-container">
-    <input hidden id="specurl" name="specurl" value="@ViewData['url']/raw" />
+    <input hidden id="specurl" name="specurl" value="@ViewData["url"]raml/raw" />
     <input hidden id="spectype" name="spectype" value="raml" />
-    <script src="package/build/vendor.js"></script>
-    <script src="package/build/apic-import.js"></script>
+    <script src="~/Scripts/package/build/vendor.js"></script>
+    <script src="~/Scripts/package/build/apic-import.js"></script>
     <api-console-app id="api-console-app" app compatibility allowCustom selectedShape="summary" selectedShapeType="summary"></api-console-app>
-    <script type="text/javascript" src="bundle.js"></script>
+    <script type="text/javascript" src="~/Scripts/bundle.js"></script>
 </body>
 </html>

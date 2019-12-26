@@ -9,6 +9,7 @@ namespace RAML.WebApiExplorer
     {
         public ActionResult Index()
         {
+            ViewData["url"] = Request.Url.AbsoluteUri;
             return View();
         }
 

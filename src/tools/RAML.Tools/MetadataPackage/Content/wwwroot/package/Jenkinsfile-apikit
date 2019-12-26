@@ -1,0 +1,51 @@
+node('ubuntu-14.04') {
+    try {
+        String workspaceDir = pwd()
+        String mavenRepositoryLocation = setRepositoryLocation()
+        String mavenRepositoryId = "mulesoft-private"
+        String mavenRepositoryURL = "https://repository-master.mulesoft.org/nexus/content/repositories/releases/"
+        String mavenSettingsId = "ab7820eb-e393-4e88-9962-92104044ed75"
+        String groupId="org.mule.apikit"
+        String artifactId="anypoint-api-console"
+        String packaging="tar.gz"
+        String version = env.TAG_NAME.substring(1)
+
+        stage('Prepare workspace') { // for display purposes
+            deleteDir()
+
+            installJdk()
+            installMaven()
+        }
+
+        stage('Download console') {
+            if (!(version ==~ /^\d+\.\d+\.\d+$/)) {
+                error("The anypoint-api-console version was not found, make sure the job is running on tags instead of branches (current branch: " + version + ").")
+            }
+
+            String outputFileArtifact = "${workspaceDir}/anypoint-api-console-${version}.tgz"
+            withCredentials([usernamePassword(credentialsId: "nexus", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                sh "curl --fail -v -u ${NEXUS_USER}:${NEXUS_PASS} https://nexus3.build.msap.io/repository/npm-internal/@mulesoft/anypoint-api-console/-/anypoint-api-console-${version}.tgz -o ${outputFileArtifact}"
+            }
+
+        }
+
+        stage('Deploy console') {
+            String outputFileArtifact = "${workspaceDir}/anypoint-api-console-${version}.tgz"
+            mvn("org.apache.maven.plugins:maven-deploy-plugin:2.8.2:deploy-file -DgroupId=${groupId} -DartifactId=${artifactId} -Dversion=${version} -Dpackaging=${packaging} -Dfile=${outputFileArtifact} -DrepositoryId=${mavenRepositoryId} -Durl=${mavenRepositoryURL}", mavenSettingsId, [], mavenRepositoryLocation)
+        }
+
+    } catch (e) {
+        currentBuild.result = 'FAILURE'
+        throw e
+    } finally {
+        stage('Clean workspace') {
+            deleteDir()
+        }
+    }
+}
+
+def setRepositoryLocation() {
+    String workspaceLocation = pwd()
+    String repositoryLocation = workspaceLocation + '/.repository'
+    return repositoryLocation
+}

@@ -13,6 +13,7 @@ namespace RAML.WebApiExplorer
         [HttpGet]
         public IActionResult Index()
         {
+            ViewData["url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
             return View();
         }
 

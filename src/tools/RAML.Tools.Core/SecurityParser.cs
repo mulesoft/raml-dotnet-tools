@@ -13,15 +13,21 @@ namespace AMF.Tools.Core
         {
             if (ramlDocument.Security != null && ramlDocument.Security.Any())
             {
-                foreach(var sec in ramlDocument.Security)
+                foreach(var secReq in ramlDocument.Security)
                 {
-                    parametrizedSecuritySchemes.Add(sec);
+                    foreach (var sec in secReq.Schemes)
+                    {
+                        parametrizedSecuritySchemes.Add(sec);
+                    }
                 }
             }
 
-            foreach(var sec in ramlDocument.EndPoints.SelectMany(e => e.Operations).SelectMany(o => o.Security))
+            foreach(var secReq in ramlDocument.EndPoints.SelectMany(e => e.Operations).SelectMany(o => o.Security))
             {
-                securitySchemes.Add(sec);
+                foreach (var sec in secReq.Schemes)
+                {
+                    securitySchemes.Add(sec.SecurityScheme);
+                }
             }
 
             if (securitySchemes.Count == 0)
@@ -31,12 +37,14 @@ namespace AMF.Tools.Core
 
             var settings = securityScheme?.Settings;
 
+            var flow = settings?.Flows?.FirstOrDefault();
+
 			return new Security
 			       {
-				       AccessTokenUri = settings?.AccessTokenUri,
+				       AccessTokenUri = flow != null ? flow.AccessTokenUri : settings?.AccessTokenUri,
 				       AuthorizationGrants = settings?.AuthorizationGrants.ToArray(),
-				       AuthorizationUri = settings?.AuthorizationUri,
-				       Scopes = settings?.Scopes.Select(s => s.Name).ToArray(),
+				       AuthorizationUri = flow != null ? flow.AuthorizationUri : settings?.AuthorizationUri,
+				       Scopes = (flow != null ? flow.Scopes : settings?.Scopes).Select(s => s.Name).ToArray(),
 				       RequestTokenUri = settings?.RequestTokenUri,
 				       TokenCredentialsUri = settings?.TokenCredentialsUri,
 				       Headers = securityScheme?.Headers == null

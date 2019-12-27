@@ -1411,7 +1411,7 @@
     <Reference Include="RAML.Api.Core, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RAML.Api.Core.0.10.0\lib\net45\RAML.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RAML.Parser, Version=2.0.1.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="RAML.Parser, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Analytics.NET, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Analytics.3.0.0\lib\Analytics.NET.dll</HintPath>
     </Reference>

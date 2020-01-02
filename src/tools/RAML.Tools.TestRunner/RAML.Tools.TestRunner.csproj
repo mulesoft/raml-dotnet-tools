@@ -244,18 +244,6 @@
     <Content Include="node_modules\.bin\amf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="node_modules\ajv\scripts\info">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="node_modules\ajv\scripts\prepare-tests">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="node_modules\ajv\scripts\publish-built-version">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="node_modules\ajv\scripts\travis-gh-pages">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="node_modules\amf-client-js\bin\amf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -16,11 +16,12 @@ namespace AMF.Tools.TestRunner
                 TestCount = 0;
                 RunMiscTests();
                 RunModelsServiceTestsAsync().Wait();
-                RunServerRaml1TestsAsync().Wait();
                 RunWebApiTestsAsync().Wait();
+                RunServerRaml1TestsAsync().Wait();
                 RunExchangeTestsAsync().Wait();
                 RunOasTestsAsync().Wait();
                 RunClientRaml1TestsAsync().Wait();
+                
                 Console.WriteLine($"{TestCount} tests passed");
                 return 0;
             }
@@ -187,7 +188,7 @@ namespace AMF.Tools.TestRunner
         private static async Task RunServerRaml1TestsAsync()
         {
             var tests = new WebApiGeneratorRaml1Tests();
-            await tests.OGame_Test();
+
 
             await tests.ShouldHandeInheritance();
             await tests.ShouldMapPatternAttributes();
@@ -223,6 +224,7 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldHandle_SalesOrdersCase();
             await tests.ShouldHandleXml();
 
+            await tests.OGame_Test();
             //TODO: 
             //await tests.ShouldHandleUnionTypes();
 

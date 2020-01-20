@@ -23,6 +23,7 @@ pipeline {
             steps {
                 bat "dotnet pack src/core-apiexplorer/src/RAML.Parser.Expressions/RAML.Parser.Expressions.csproj"
                 bat "dotnet pack src/core-apiexplorer/src/RAML.NetCoreAPIExplorer/RAML.NetCoreAPIExplorer.csproj"
+                bat "cp -r src/core-apiexplorer/src/RAML.NetCoreAPIExplorer/bin/Debug/* ./"
                 withCredentials([string(credentialsId: 'dotnet-nuget-key', variable: 'NugetApiKey')]) {
                     bat "nuget push *.nupkg -Source https://api.nuget.org/v3/index.json -NoSymbols -SkipDuplicate -ApiKey $NugetApiKey"
                 }

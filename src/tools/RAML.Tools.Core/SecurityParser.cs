@@ -44,7 +44,7 @@ namespace AMF.Tools.Core
 				       AccessTokenUri = flow != null ? flow.AccessTokenUri : settings?.AccessTokenUri,
 				       AuthorizationGrants = settings?.AuthorizationGrants.ToArray(),
 				       AuthorizationUri = flow != null ? flow.AuthorizationUri : settings?.AuthorizationUri,
-				       Scopes = (flow != null ? flow.Scopes : settings?.Scopes).Select(s => s.Name).ToArray(),
+				       Scopes = (flow != null ? flow.Scopes : settings?.Scopes)?.Select(s => s.Name).ToArray(),
 				       RequestTokenUri = settings?.RequestTokenUri,
 				       TokenCredentialsUri = settings?.TokenCredentialsUri,
 				       Headers = securityScheme?.Headers == null

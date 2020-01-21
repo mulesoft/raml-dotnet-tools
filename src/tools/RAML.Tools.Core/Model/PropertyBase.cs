@@ -8,7 +8,7 @@ namespace AMF.Tools.Core
     public class PropertyBase
     {
         private readonly List<string> reservedWords = new List<string> { "ref", "out", "in", "base", "long", "int", "short", "bool", "string", "decimal",
-            "float", "double", "null", "true", "false", "public", "private" };
+            "float", "double", "null", "true", "false", "public", "private", "is" };
 
         private string name;
 
@@ -20,6 +20,7 @@ namespace AMF.Tools.Core
 
         public string ParentClassName { get; internal set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "SEC0115:Insecure Random Number Generator", Justification = "Not used in cryptographic nor any sensitive way. Only used to generate unique name")]
         public string Name
         {
             get

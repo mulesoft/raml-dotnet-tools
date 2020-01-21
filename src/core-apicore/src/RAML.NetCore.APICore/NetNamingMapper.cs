@@ -7,7 +7,7 @@ namespace RAML.Common
 {
 	public class NetNamingMapper
 	{
-        private static readonly string[] ReservedWords = { "Get", "Post", "Put", "Delete", "Options", "Head", "ApiClient", "Type", "null", "true", "false" };
+        private static readonly string[] ReservedWords = { "Get", "Post", "Put", "Delete", "Options", "Head", "ApiClient", "Type", "null", "true", "false", "is" };
 
 		public static string GetNamespace(string title)
 		{

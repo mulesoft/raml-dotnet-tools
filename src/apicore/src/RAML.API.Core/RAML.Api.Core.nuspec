@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>RAML.Api.Core</id>
-    <version>0.10.0</version>
+    <version>0.10.1</version>
     <title>RAML.Api.Core</title>
     <authors>MuleSoft Inc</authors>
     <owners>MuleSoft Inc</owners>

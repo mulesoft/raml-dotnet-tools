@@ -38,7 +38,7 @@ pipeline {
                 }
                 bat "cp ./src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./releases/r${datefolder}/RAML.Tools.vsix"
                 bat "git add ./releases/r${datefolder}/RAML.Tools.vsix"
-                bat "git commit -m 'Add released vsix ${datefolder}'"
+                bat 'git commit -m "Add released vsix ${datefolder}"'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github',
                     passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME']]) {
                     bat "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com:mulesoft/raml-dotnet-tools.git"

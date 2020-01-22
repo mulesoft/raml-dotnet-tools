@@ -1,4 +1,4 @@
-def date = new Date()
+def date = new Date() + "%d-%m-%Y"
 
 pipeline {
 
@@ -37,7 +37,7 @@ pipeline {
                     bat "cp src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./r${date}/RAML.Tools.vsix"
                 }
             }
-        }                
+        }
     }
 
     post {

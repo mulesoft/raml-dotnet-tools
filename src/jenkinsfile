@@ -35,8 +35,8 @@ pipeline {
             steps {
                 dir("releases"){
                     bat "mkdir r${datefolder}"
-                    bat "cp src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./r${datefolder}/RAML.Tools.vsix"
                 }
+                bat "cp ./src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./releases/r${datefolder}/RAML.Tools.vsix"
             }
         }
     }

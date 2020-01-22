@@ -45,7 +45,7 @@ pipeline {
                 bat 'git commit -m "Add released vsix ${datefolder}"'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github',
                     passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME']]) {
-                    bat "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com:mulesoft-labs/raml-dotnet-tools.git origin master"
+                    bat "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com:mulesoft-labs/raml-dotnet-tools.git"
                 }
             }
         }

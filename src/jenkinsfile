@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat "git clone https://github.com/mulesoft-labs/raml-dotnet-tools.git"
+                bat "git clone https://github.com/mulesoft/raml-dotnet-tools.git"
                 bat "git checkout master"
                 bat 'nuget restore src/tools/RAML.Tools.sln'
                 bat "msbuild src/tools/RAML.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
@@ -45,7 +45,7 @@ pipeline {
                 bat 'git commit -m "Add released vsix ${datefolder}"'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github',
                     passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME']]) {
-                    bat "git push git@github.com:mulesoft-labs/raml-dotnet-tools.git"
+                    bat "git push git@github.com:mulesoft/raml-dotnet-tools.git"
                 }
             }
         }

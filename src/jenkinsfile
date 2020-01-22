@@ -37,6 +37,8 @@ pipeline {
                     bat "mkdir r${datefolder}"
                 }
                 bat "cp ./src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./releases/r${datefolder}/RAML.Tools.vsix"
+                bat 'git config --global user.email "jenkins@mulesoft.com"'
+                bat 'git config --global user.name "MuleSoft Jenkins Automation"'
                 bat "git add ./releases/r${datefolder}/RAML.Tools.vsix"
                 bat 'git commit -m "Add released vsix ${datefolder}"'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github',

@@ -12,6 +12,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                bat "git clone https://github.com/mulesoft-labs/raml-dotnet-tools.git"
+                bat "git checkout master"
                 bat 'nuget restore src/tools/RAML.Tools.sln'
                 bat "msbuild src/tools/RAML.Tools.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeployExtension=false"
             }
@@ -37,8 +39,6 @@ pipeline {
                     bat "mkdir r${datefolder}"
                 }
                 bat "cp ./src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./releases/r${datefolder}/RAML.Tools.vsix"
-                bat "git clone https://github.com/mulesoft-labs/raml-dotnet-tools.git"
-                bat "git checkout master"
                 bat 'git config --global user.email "jenkins@mulesoft.com"'
                 bat 'git config --global user.name "MuleSoft Jenkins Automation"'
                 bat "git add ./releases/r${datefolder}/RAML.Tools.vsix"

@@ -31,6 +31,15 @@ pipeline {
                         }
                     }
                 }
+                stage('Deploy to folder') {
+                    steps {
+                        dir("releases"){
+                            def date = new Date()
+                            bat "mkdir r${date}"
+                            bat "cp src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./r${date}/RAML.Tools.vsix"
+                        }
+                    }
+                }                
             }
         }
     }

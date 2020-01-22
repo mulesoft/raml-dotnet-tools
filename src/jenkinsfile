@@ -1,4 +1,5 @@
-def date = new Date() + "%d-%m-%Y"
+def date = new Date()
+def datefolder = date.format("%Y-%m-%d")
 
 pipeline {
 
@@ -33,8 +34,8 @@ pipeline {
         stage('Deploy to folder') {
             steps {
                 dir("releases"){
-                    bat "mkdir r${date}"
-                    bat "cp src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./r${date}/RAML.Tools.vsix"
+                    bat "mkdir r${datefolder}"
+                    bat "cp src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./r${datefolder}/RAML.Tools.vsix"
                 }
             }
         }

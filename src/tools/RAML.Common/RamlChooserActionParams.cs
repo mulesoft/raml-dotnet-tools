@@ -38,7 +38,7 @@
         public string ImplementationControllersFolder { get; set; }
         public bool AddGeneratedSuffixToFiles { get; set; }
         public RamlInfo Data { get; set; }
-        public string ModelsNamespace { get; internal set; }
-        public string ControllersNamespace { get; internal set; }
+        public string ModelsNamespace { get; set; }
+        public string ControllersNamespace { get; set; }
     }
 }

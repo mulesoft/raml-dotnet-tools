@@ -131,8 +131,8 @@
     <Reference Include="RAML.Api.Core, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RAML.Api.Core.0.10.1\lib\net45\RAML.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RAML.Parser, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RAML.Parser.2.0.2\lib\net462\RAML.Parser.dll</HintPath>
+    <Reference Include="RAML.Parser, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RAML.Parser.2.0.3\lib\net462\RAML.Parser.dll</HintPath>
     </Reference>
     <Reference Include="StreamJsonRpc, Version=1.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\StreamJsonRpc.1.3.23\lib\net45\StreamJsonRpc.dll</HintPath>

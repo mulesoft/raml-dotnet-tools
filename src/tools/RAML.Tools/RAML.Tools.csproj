@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.VSSDK.BuildTools.15.9.3039\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.15.9.3039\build\Microsoft.VSSDK.BuildTools.props')" />
   <PropertyGroup>
@@ -78,6 +78,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="node_modules\ajv\.tonic_example.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="node_modules\amf-client-js\amf.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -106,6 +114,38 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="node_modules\fast-json-stable-stringify\.eslintrc.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\fast-json-stable-stringify\.travis.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\fast-json-stable-stringify\index.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\fast-json-stable-stringify\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\json-schema-traverse\.eslintrc.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\json-schema-traverse\.travis.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\json-schema-traverse\index.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\json-schema-traverse\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="node_modules\punycode\LICENSE-MIT.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -122,519 +162,479 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="node_modules\uri-js\bower.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\uri-js\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\uri-js\rollup.config.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\uri-js\yarn.lock">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\dist\ajv.bundle.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\dist\ajv.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\lib\ajv.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\lib\cache.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\lib\data.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\lib\keyword.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\scripts\.eslintrc.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\scripts\bundle.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\scripts\compile-dots.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\scripts\info">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\scripts\prepare-tests">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\scripts\publish-built-version">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="node_modules\ajv\scripts\travis-gh-pages">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="node_modules\amf-client-js\bin\amf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\.tonic_example.js">
+    <Content Include="node_modules\fast-json-stable-stringify\.github\FUNDING.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\package.json">
+    <Content Include="node_modules\fast-json-stable-stringify\benchmark\index.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\.eslintrc.yml">
+    <Content Include="node_modules\fast-json-stable-stringify\benchmark\test.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\.travis.yml">
+    <Content Include="node_modules\fast-json-stable-stringify\example\key_cmp.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\index.js">
+    <Content Include="node_modules\fast-json-stable-stringify\example\nested.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\package.json">
+    <Content Include="node_modules\fast-json-stable-stringify\example\str.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\json-schema-traverse\.eslintrc.yml">
+    <Content Include="node_modules\fast-json-stable-stringify\example\value_cmp.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\json-schema-traverse\.travis.yml">
+    <Content Include="node_modules\fast-json-stable-stringify\test\cmp.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\json-schema-traverse\index.js">
+    <Content Include="node_modules\fast-json-stable-stringify\test\nested.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\json-schema-traverse\package.json">
+    <Content Include="node_modules\fast-json-stable-stringify\test\str.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\bower.json">
+    <Content Include="node_modules\fast-json-stable-stringify\test\to-json.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\package.json">
+    <Content Include="node_modules\json-schema-traverse\spec\.eslintrc.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\rollup.config.js">
+    <Content Include="node_modules\json-schema-traverse\spec\index.spec.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\yarn.lock">
+    <Content Include="node_modules\uri-js\tests\qunit.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\dist\ajv.bundle.js">
+    <Content Include="node_modules\uri-js\tests\qunit.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\dist\ajv.min.js">
+    <Content Include="node_modules\uri-js\tests\test-es5-min.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\ajv.js">
+    <Content Include="node_modules\uri-js\tests\test-es5.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\cache.js">
+    <Content Include="node_modules\uri-js\tests\tests.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\data.js">
+    <Content Include="node_modules\ajv\lib\compile\async.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\keyword.js">
+    <Content Include="node_modules\ajv\lib\compile\equal.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\scripts\.eslintrc.yml">
+    <Content Include="node_modules\ajv\lib\compile\error_classes.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\scripts\bundle.js">
+    <Content Include="node_modules\ajv\lib\compile\formats.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\scripts\compile-dots.js">
+    <Content Include="node_modules\ajv\lib\compile\index.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\scripts\info">
+    <Content Include="node_modules\ajv\lib\compile\resolve.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\scripts\prepare-tests">
+    <Content Include="node_modules\ajv\lib\compile\rules.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\scripts\publish-built-version">
+    <Content Include="node_modules\ajv\lib\compile\schema_obj.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\scripts\travis-gh-pages">
+    <Content Include="node_modules\ajv\lib\compile\ucs2length.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\.github\FUNDING.yml">
+    <Content Include="node_modules\ajv\lib\compile\util.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\benchmark\index.js">
+    <Content Include="node_modules\ajv\lib\dot\allOf.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\benchmark\test.json">
+    <Content Include="node_modules\ajv\lib\dot\anyOf.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\example\key_cmp.js">
+    <Content Include="node_modules\ajv\lib\dot\coerce.def">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\example\nested.js">
+    <Content Include="node_modules\ajv\lib\dot\comment.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\example\str.js">
+    <Content Include="node_modules\ajv\lib\dot\const.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\example\value_cmp.js">
+    <Content Include="node_modules\ajv\lib\dot\contains.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\test\cmp.js">
+    <Content Include="node_modules\ajv\lib\dot\custom.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\test\nested.js">
+    <Content Include="node_modules\ajv\lib\dot\defaults.def">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\test\str.js">
+    <Content Include="node_modules\ajv\lib\dot\definitions.def">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\fast-json-stable-stringify\test\to-json.js">
+    <Content Include="node_modules\ajv\lib\dot\dependencies.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\json-schema-traverse\spec\.eslintrc.yml">
+    <Content Include="node_modules\ajv\lib\dot\enum.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\json-schema-traverse\spec\index.spec.js">
+    <Content Include="node_modules\ajv\lib\dot\errors.def">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\tests\qunit.css">
+    <Content Include="node_modules\ajv\lib\dot\format.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\tests\qunit.js">
+    <Content Include="node_modules\ajv\lib\dot\if.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\tests\test-es5-min.html">
+    <Content Include="node_modules\ajv\lib\dot\items.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\tests\test-es5.html">
+    <Content Include="node_modules\ajv\lib\dot\missing.def">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\tests\tests.js">
+    <Content Include="node_modules\ajv\lib\dot\multipleOf.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\async.js">
+    <Content Include="node_modules\ajv\lib\dot\not.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\equal.js">
+    <Content Include="node_modules\ajv\lib\dot\oneOf.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\error_classes.js">
+    <Content Include="node_modules\ajv\lib\dot\pattern.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\formats.js">
+    <Content Include="node_modules\ajv\lib\dot\properties.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\index.js">
+    <Content Include="node_modules\ajv\lib\dot\propertyNames.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\resolve.js">
+    <Content Include="node_modules\ajv\lib\dot\ref.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\rules.js">
+    <Content Include="node_modules\ajv\lib\dot\required.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\schema_obj.js">
+    <Content Include="node_modules\ajv\lib\dot\uniqueItems.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\ucs2length.js">
+    <Content Include="node_modules\ajv\lib\dot\validate.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\compile\util.js">
+    <Content Include="node_modules\ajv\lib\dot\_limit.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\allOf.jst">
+    <Content Include="node_modules\ajv\lib\dot\_limitItems.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\anyOf.jst">
+    <Content Include="node_modules\ajv\lib\dot\_limitLength.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\coerce.def">
+    <Content Include="node_modules\ajv\lib\dot\_limitProperties.jst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\comment.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\allOf.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\const.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\anyOf.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\contains.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\comment.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\custom.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\const.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\defaults.def">
+    <Content Include="node_modules\ajv\lib\dotjs\contains.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\definitions.def">
+    <Content Include="node_modules\ajv\lib\dotjs\custom.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\dependencies.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\dependencies.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\enum.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\enum.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\errors.def">
+    <Content Include="node_modules\ajv\lib\dotjs\format.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\format.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\if.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\if.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\index.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\items.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\items.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\missing.def">
+    <Content Include="node_modules\ajv\lib\dotjs\multipleOf.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\multipleOf.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\not.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\not.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\oneOf.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\oneOf.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\pattern.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\pattern.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\properties.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\properties.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\propertyNames.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\propertyNames.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\ref.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\ref.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\required.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\required.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\uniqueItems.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\uniqueItems.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\validate.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\validate.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\_limit.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\_limit.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\_limitItems.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\_limitItems.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\_limitLength.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\_limitLength.jst">
+    <Content Include="node_modules\ajv\lib\dotjs\_limitProperties.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dot\_limitProperties.jst">
+    <Content Include="node_modules\ajv\lib\refs\data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\allOf.js">
+    <Content Include="node_modules\ajv\lib\refs\json-schema-draft-04.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\anyOf.js">
+    <Content Include="node_modules\ajv\lib\refs\json-schema-draft-06.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\comment.js">
+    <Content Include="node_modules\ajv\lib\refs\json-schema-draft-07.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\const.js">
+    <Content Include="node_modules\json-schema-traverse\spec\fixtures\schema.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\contains.js">
+    <Content Include="node_modules\uri-js\dist\es5\uri.all.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\custom.js">
+    <Content Include="node_modules\uri-js\dist\es5\uri.all.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\dependencies.js">
+    <Content Include="node_modules\uri-js\dist\esnext\index.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\enum.js">
+    <Content Include="node_modules\uri-js\dist\esnext\regexps-iri.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\format.js">
+    <Content Include="node_modules\uri-js\dist\esnext\regexps-uri.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\if.js">
+    <Content Include="node_modules\uri-js\dist\esnext\uri.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\index.js">
+    <Content Include="node_modules\uri-js\dist\esnext\util.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\items.js">
+    <Content Include="node_modules\uri-js\dist\esnext\schemes\http.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\multipleOf.js">
+    <Content Include="node_modules\uri-js\dist\esnext\schemes\https.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\not.js">
+    <Content Include="node_modules\uri-js\dist\esnext\schemes\mailto.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\oneOf.js">
+    <Content Include="node_modules\uri-js\dist\esnext\schemes\urn-uuid.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\pattern.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\properties.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\propertyNames.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\ref.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\required.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\uniqueItems.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\validate.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\_limit.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\_limitItems.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\_limitLength.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\dotjs\_limitProperties.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\refs\data.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\refs\json-schema-draft-04.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\refs\json-schema-draft-06.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\ajv\lib\refs\json-schema-draft-07.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\json-schema-traverse\spec\fixtures\schema.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\es5\uri.all.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\es5\uri.all.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\index.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\regexps-iri.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\regexps-uri.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\uri.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\util.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\schemes\http.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\schemes\https.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\schemes\mailto.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\schemes\urn-uuid.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="node_modules\amf-client-js\node_modules\uri-js\dist\esnext\schemes\urn.js">
+    <Content Include="node_modules\uri-js\dist\esnext\schemes\urn.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -1411,7 +1411,6 @@
     <Reference Include="RAML.Api.Core, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RAML.Api.Core.0.10.1\lib\net45\RAML.Api.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RAML.Parser, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Analytics.NET, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Analytics.3.0.0\lib\Analytics.NET.dll</HintPath>
     </Reference>
@@ -1524,6 +1523,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="PresentationFramework" />
+    <Reference Include="RAML.Parser, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RAML.Parser.2.0.3\lib\net462\RAML.Parser.dll</HintPath>
+    </Reference>
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\packages\VSSDK.DTE.7.0.4\lib\net20\stdole.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>

@@ -20,6 +20,7 @@ namespace AMF.Tools.TestRunner
                 RunServerRaml1TestsAsync().Wait();
                 RunExchangeTestsAsync().Wait();
                 RunOasTestsAsync().Wait();
+                RunOas30TestsAsync().Wait();
                 RunClientRaml1TestsAsync().Wait();
                 
                 Console.WriteLine($"{TestCount} tests passed");
@@ -152,6 +153,15 @@ namespace AMF.Tools.TestRunner
             await tests.PetStoreServer();
             TestCount += tests.TestCount;
             Console.WriteLine($"Tests ran {TestCount} - OAS");
+        }
+
+        private static async Task RunOas30TestsAsync()
+        {
+            var tests = new Oas30Tests();
+            await tests.PetStoreClient();
+            await tests.PetStoreServer();
+            TestCount += tests.TestCount;
+            Console.WriteLine($"Tests ran {TestCount} - OAS 3.0");
         }
 
         private static async Task RunClientRaml1TestsAsync()

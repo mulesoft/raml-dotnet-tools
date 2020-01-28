@@ -158,6 +158,7 @@ namespace AMF.Tools.TestRunner
         private static async Task RunOas30TestsAsync()
         {
             var tests = new Oas30Tests();
+            await tests.PetStoreExpandedClient();
             await tests.PetStoreClient();
             await tests.PetStoreServer();
             TestCount += tests.TestCount;

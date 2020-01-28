@@ -32,6 +32,14 @@ namespace Raml.Tools.Tests
             Assert.IsTrue(model.Objects.Any(o => o.Name == "Pet"));
         }
 
+        [Test]
+        public async Task PetStoreExpandedClient()
+        {
+            var model = await BuildClientModel("files/oas/3.0/petstore-expanded.yaml");
+            Assert.AreEqual(2, model.Classes.Count());
+            Assert.IsTrue(model.Objects.Any(o => o.Name == "Pet"));
+        }
+
         private async Task<WebApiGeneratorModel> BuildWebApiModel(string ramlFile)
         {
             IncrementTestCount();

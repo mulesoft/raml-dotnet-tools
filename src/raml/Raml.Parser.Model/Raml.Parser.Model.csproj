@@ -1,71 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{96A8B376-1465-4A3A-8F1A-D3A02C0D5763}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Raml.Parser.Model</RootNamespace>
-    <AssemblyName>Raml.Parser.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFrameworks>net40;netstandard1.3;netstandard2.0</TargetFrameworks>
+    <Description>RAML Parser model classes for the RAML .Net Parser</Description>
+    <Copyright>Copyright © 2018 - 2020 MuleSoft</Copyright>
+    <Authors>Mulesoft Inc</Authors>
+    <Company>Mulesoft Inc</Company>
+    <Version>1.0.8</Version>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnnotationType.cs" />
-    <Compile Include="ArrayType.cs" />
-    <Compile Include="BasicInfo.cs" />
-    <Compile Include="DocumentationItem.cs" />
-    <Compile Include="Error.cs" />
-    <Compile Include="ExternalType.cs" />
-    <Compile Include="Method.cs" />
-    <Compile Include="MimeType.cs" />
-    <Compile Include="ObjectType.cs" />
-    <Compile Include="Parameter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Property.cs" />
-    <Compile Include="Protocol.cs" />
-    <Compile Include="QueryString.cs" />
-    <Compile Include="RamlDocument.cs" />
-    <Compile Include="RamlType.cs" />
-    <Compile Include="RamlTypesOrderedDictionary.cs" />
-    <Compile Include="RamlVersion.cs" />
-    <Compile Include="Resource.cs" />
-    <Compile Include="ResourceType.cs" />
-    <Compile Include="Response.cs" />
-    <Compile Include="SecurityScheme.cs" />
-    <Compile Include="SecuritySchemeDescriptor.cs" />
-    <Compile Include="SecuritySettings.cs" />
-    <Compile Include="Verb.cs" />
-    <Compile Include="VerbType.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="$(binDir)AMF.Tools.Core.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="AMF.Tools.Core" #>
+<#@ import namespace="AMF.Tools.Core.WebApiGenerator" #>
+<#@ import namespace="System.Linq" #>
+<#@ parameter name="controllerObject" type="AMF.Tools.Core.WebApiGenerator.ControllerObject" #>
+<#@ parameter name="hasModels" type="System.Boolean" #>
+<#@ parameter name="useAsyncMethods" type="System.Boolean" #>
+<#@ parameter name="apiVersion" type="System.String" #>
+<#@ parameter name="modelsNamespace" type="System.String" #>
+<#@ output extension=".cs" #>
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+<# if(hasModels){ #>
+using <#= modelsNamespace #>;
+<# } #>
+
+
+namespace $(namespace)
+{
+<# if(System.String.IsNullOrWhiteSpace(apiVersion)) { #>
+    public interface I<#= controllerObject.Name #>Controller
+<# } else { #>
+    public interface I<#= apiVersion #><#= controllerObject.Name #>Controller
+<# } #>
+    {
+
+<#
+		foreach (var method in controllerObject.Methods)
+		{
+            if(useAsyncMethods)
+            {
+#>
+        Task<IActionResult> <#= method.Name #>(<#= method.ParametersStringForAspNet5 #>);
+<#          
+            } 
+            else 
+            { 
+#>
+        IActionResult <#= method.Name #>(<#= method.ParametersStringForAspNet5 #>);
+<#
+            }
+		}
+#>
+    }
+}

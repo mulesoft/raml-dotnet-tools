@@ -176,11 +176,16 @@ namespace AMF.Tools
             ThreadHelper.ThrowIfNotOnUIThread();
             var dte = serviceProvider.GetService(typeof (SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
+
             RamlScaffoldServiceBase service;
-            if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
-                service = new RamlScaffoldServiceAspNetCore(new T4Service(serviceProvider), serviceProvider);
+            var t4Service = new T4Service(serviceProvider);
+            if (VisualStudioAutomationHelper.IsANetCore3Project(proj))
+                service = new RamlScaffoldServiceAspNetCore3(t4Service, serviceProvider);
+            else if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
+                service = new RamlScaffoldServiceAspNetCore(t4Service, serviceProvider);
             else
                 service = new RamlScaffoldServiceWebApi(new T4Service(serviceProvider), serviceProvider);
+
             return service;
         }
 

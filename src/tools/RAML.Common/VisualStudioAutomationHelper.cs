@@ -116,12 +116,47 @@ namespace AMF.Common
             return projectItem;
         }
 
+        public static bool IsAnAspNetCore3Project(Project proj)
+        {
+            if (!IsANetCoreProject(proj))
+                return false;
+
+            var targetFramework = GetTargetFrameworkMoniker(proj);
+            if (IsAspNet3x(targetFramework))
+                return true;
+
+            throw new InvalidOperationException("Cannot determine .net framework. " + targetFramework);
+        }
+
+        public static bool IsANetCore3Project(Project proj)
+        {
+            if (!IsANetCoreProject(proj))
+                return false;
+
+            var targetFramework = GetTargetFrameworkMoniker(proj);
+            if (IsNetCore3(targetFramework))
+                return true;
+
+            throw new InvalidOperationException("Cannot determine .net framework. " + targetFramework);
+        }
+
+        private static bool IsNetCore3(string targetFramework)
+        {
+            return IsAspNet3x(targetFramework)
+                || targetFramework.Contains("netstandard") && targetFramework.Contains("2.1");
+        }
+
+        private static bool IsAspNet3x(string targetFramework)
+        {
+            return targetFramework.Contains("netcore") && targetFramework.Contains("v3.");
+        }
+
         public static bool IsANetCoreProject(Project proj)
         {
             if (proj.FileName.EndsWith("xproj") || proj.FileName.EndsWith("json"))
                 return true;
 
-            string targetFramework = GetTargetFrameworkMoniker(proj);
+            var targetFramework = GetTargetFrameworkMoniker(proj);
             if (targetFramework.Contains("netcore") || targetFramework.Contains("netstandard"))
                 return true;
 

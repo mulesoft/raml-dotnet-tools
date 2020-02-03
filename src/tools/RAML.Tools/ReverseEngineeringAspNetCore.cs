@@ -13,10 +13,10 @@ namespace AMF.Tools
     public class ReverseEngineeringAspNetCore : ReverseEngineeringServiceBase
     {
         private const string AspNetCoreStaticFilesPackageId = "Microsoft.AspNetCore.StaticFiles";
-        private static readonly string RamlParserExpressionsPackageId = RAML.Tools.Properties.Settings.Default.RamlParserExpressionsPackageId;
-        private static readonly string RamlParserExpressionsPackageVersion = RAML.Tools.Properties.Settings.Default.RamlParserExpressionsPackageVersion;
-        private static readonly string RamlNetCoreApiExplorerPackageId = RAML.Tools.Properties.Settings.Default.RamlNetCoreApiExplorerPackageId;
-        private static readonly string RamlNetCoreApiExplorerPackageVersion = RAML.Tools.Properties.Settings.Default.RamlNetCoreApiExplorerPackageVersion;
+        protected static readonly string RamlParserExpressionsPackageId = RAML.Tools.Properties.Settings.Default.RamlParserExpressionsPackageId;
+        protected static readonly string RamlParserExpressionsPackageVersion = RAML.Tools.Properties.Settings.Default.RamlParserExpressionsPackageVersion;
+        protected static readonly string RamlNetCoreApiExplorerPackageId = RAML.Tools.Properties.Settings.Default.RamlNetCoreApiExplorerPackageId;
+        protected static readonly string RamlNetCoreApiExplorerPackageVersion = RAML.Tools.Properties.Settings.Default.RamlNetCoreApiExplorerPackageVersion;
 
         public ReverseEngineeringAspNetCore(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -150,7 +150,7 @@ namespace AMF.Tools
                 lines.Insert(line + 2, appUsestaticfiles);
         }
 
-        private void ConfigureNetCoreMvcServices(List<string> lines)
+        protected virtual void ConfigureNetCoreMvcServices(List<string> lines)
         {
             var addService = "            services.AddScoped<RAML.WebApiExplorer.ApiExplorerDataFilter>();";
 
@@ -198,10 +198,10 @@ namespace AMF.Tools
                    + "                    options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(RAML.WebApiExplorer.RamlController)));" + Environment.NewLine;
         }
 
-        private void InstallNetCoreDependencies(Project proj, IVsPackageMetadata[] packs, IVsPackageInstaller installer, IVsPackageInstallerServices installerServices)
+        protected virtual void InstallNetCoreDependencies(Project proj, IVsPackageMetadata[] packs, IVsPackageInstaller installer, IVsPackageInstallerServices installerServices)
         {
             var version = VisualStudioAutomationHelper.GetTargetFrameworkVersion(proj);
-            // RAML.Parser.Expressions
+            // AspNet Core StaticFiles
             if (!installerServices.IsPackageInstalled(proj, AspNetCoreStaticFilesPackageId))
             {
                 if(version.StartsWith("1"))

@@ -30,7 +30,9 @@ namespace AMF.Tools
             var dte = serviceProvider.GetService(typeof(SDTE)) as DTE;
             var proj = VisualStudioAutomationHelper.GetActiveProject(dte);
             ReverseEngineeringServiceBase service;
-            if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
+            if(VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj))
+                service = new ReverseEngineeringAspNetCore3(serviceProvider);
+            else if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
                 service = new ReverseEngineeringAspNetCore(serviceProvider);
             else
                 service = new ReverseEngineeringServiceWebApi(serviceProvider);

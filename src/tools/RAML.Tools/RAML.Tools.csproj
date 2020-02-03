@@ -1022,6 +1022,7 @@
     <Compile Include="NullLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RamlScaffoldServiceAspNetCore3.cs" />
+    <Compile Include="ReverseEngineeringAspNetCore3.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

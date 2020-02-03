@@ -120,10 +120,13 @@ namespace AMF.Tools.Commands
 
             var proj = VisualStudioAutomationHelper.GetActiveProject(_dte);
 
-            if (!VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsWebApiCoreInstalled(proj) || IsWebApiExplorerInstalled()))
+            if (!VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj) && !VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsWebApiCoreInstalled(proj) || IsWebApiExplorerInstalled()))
                 return;
 
-            if (VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsAspNet5MvcInstalled(proj) || IsNetCoreApiExplorerInstalled()))
+            if (!VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj) && VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsAspNet5MvcInstalled(proj) || IsNetCoreApiExplorerInstalled()))
+                return;
+
+            if (!VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj))
                 return;
 
             CommandsUtil.ShowAndEnableCommand(menuCommand, true);

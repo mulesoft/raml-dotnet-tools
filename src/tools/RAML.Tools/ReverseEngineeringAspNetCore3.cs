@@ -20,14 +20,15 @@ namespace AMF.Tools
         {
             if (lines.Any(l => l.Contains("ConfigureServices(IServiceCollection services")))
             {
-
                 var configuredServices = "            services.AddScoped(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));" + Environment.NewLine;
-                configuredServices += "               services.AddControllersWithViews(options => {" + Environment.NewLine;
-                configuredServices += "                   options.Filters.AddService(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));" + Environment.NewLine;
-                configuredServices += "                   options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());" + Environment.NewLine;
-                configuredServices += "                   options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(RAML.WebApiExplorer.RamlController)));" + Environment.NewLine;
-                configuredServices += "               });" + Environment.NewLine;
-
+                if (!lines.Any(l => l.Contains("services.AddControllersWithViews")))
+                {
+                    configuredServices += "               services.AddControllersWithViews(options => {" + Environment.NewLine;
+                    configuredServices += "                   options.Filters.AddService(typeof(RAML.WebApiExplorer.ApiExplorerDataFilter));" + Environment.NewLine;
+                    configuredServices += "                   options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityEnabledConvention());" + Environment.NewLine;
+                    configuredServices += "                   options.Conventions.Add(new RAML.WebApiExplorer.ApiExplorerVisibilityDisabledConvention(typeof(RAML.WebApiExplorer.RamlController)));" + Environment.NewLine;
+                    configuredServices += "               });" + Environment.NewLine;
+                }
                 var lineIndex = TextFileHelper.FindLineWith(lines, "ConfigureServices(IServiceCollection services");
                 if (lineIndex > 0)
                     lines.Insert(lineIndex + 2, configuredServices);

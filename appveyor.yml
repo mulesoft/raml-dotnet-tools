@@ -1,0 +1,20 @@
+version: 3.0.0.{build}
+image: Visual Studio 2019
+build_script:
+- cmd: >-
+    nuget restore src/tools/RAML.Tools.sln
+
+    msbuild src/tools/RAML.Tools.sln /p:DeployExtension=false
+test_script:
+- cmd: >-
+    cd C:\projects\raml-dotnet-tools-97ejs\src\tools\RAML.Tools.TestRunner\bin\Debug\
+
+    RAML.Tools.TestRunner.exe
+notifications:
+- provider: Email
+  to:
+  - pedro.wood@mulesoft.com
+  subject: Tools build failed
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: false

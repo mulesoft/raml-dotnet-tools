@@ -4,9 +4,9 @@
     <Description>RAML Parser domain model classes</Description>
     <Copyright>MuleSoft Inc</Copyright>
     <AssemblyTitle>RAML.Parser.Expressions</AssemblyTitle>
-    <VersionPrefix>0.0.1</VersionPrefix>
+    <VersionPrefix>0.0.2</VersionPrefix>
     <Authors>MuleSoft Inc</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFrameworks>net40;netstandard1.3;netstandard2.0</TargetFrameworks>
     <AssemblyName>RAML.Parser.Expressions</AssemblyName>
     <PackageId>RAML.Parser.Expressions</PackageId>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
@@ -17,8 +17,16 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="System.Collections.Specialized" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System.Collections.Specialized" />
   </ItemGroup>
 
 </Project>

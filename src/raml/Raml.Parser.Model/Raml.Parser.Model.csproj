@@ -17,7 +17,7 @@
     <PackageReference Include="System.Collections.Specialized" Version="4.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.Collections.Specialized" />
   </ItemGroup>
 

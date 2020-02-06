@@ -8,7 +8,6 @@ namespace Raml.Parser.Expressions
         public object Facets { get; set; }
 
         // number
-        public string Format { get; set; }
         public int? MultipleOf { get; set; }
 
         // file

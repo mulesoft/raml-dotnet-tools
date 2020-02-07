@@ -22,6 +22,8 @@ pipeline {
                 }
             }
         }
+    }
+    
     post {
         always {
             archiveArtifacts '*.nupkg'

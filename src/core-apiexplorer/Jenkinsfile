@@ -30,16 +30,16 @@ pipeline {
                 }
             }
         }
-        
-        post {
-            always {
-                archiveArtifacts '*.nupkg'
-                archiveArtifacts 'src/core-apiexplorer/src/RAML.NetCoreApiExplorer/bin/Debug/*.nupkg'
-                archiveArtifacts 'src/core-apiexplorer/src/RAML.Parser.Expressions/bin/Debug/*.nupkg'
-            }
-            cleanup {
-                cleanWs()
-            }
+    }
+
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+            archiveArtifacts 'src/core-apiexplorer/src/RAML.NetCoreApiExplorer/bin/Debug/*.nupkg'
+            archiveArtifacts 'src/core-apiexplorer/src/RAML.Parser.Expressions/bin/Debug/*.nupkg'
+        }
+        cleanup {
+            cleanWs()
         }
     }
 }

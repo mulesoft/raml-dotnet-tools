@@ -1,0 +1,34 @@
+pipeline {
+
+    agent {
+        node {
+            label 'windows10'
+            customWorkspace 'c:\\cp'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                bat 'nuget restore src/raml/Raml.Parser.Model.sln'
+                bat "msbuild src/raml/Raml.Parser.Model.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+            }
+        }
+        stage('Pack & Publish') {
+            steps {
+                bat 'dotnet pack src/raml/RAML.Parser.Model/RAML.Parser.Model.csproj'
+                bat "cp -r src/raml/RAML.Parser.Model/bin/Debug/* ./"
+                withCredentials([string(credentialsId: 'dotnet-nuget-key', variable: 'NugetApiKey')]) {
+                    bat "nuget push *.nupkg -Source https://api.nuget.org/v3/index.json -NoSymbols -SkipDuplicate -ApiKey $NugetApiKey"
+                }
+            }
+        }
+    post {
+        always {
+            archiveArtifacts '*.nupkg'
+            archiveArtifacts 'src/raml/RAML.Parser.Model/*.nupkg'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}

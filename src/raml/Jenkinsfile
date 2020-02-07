@@ -23,11 +23,10 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always {
             archiveArtifacts '*.nupkg'
-            archiveArtifacts 'src/raml/RAML.Parser.Model/*.nupkg'
         }
         cleanup {
             cleanWs()

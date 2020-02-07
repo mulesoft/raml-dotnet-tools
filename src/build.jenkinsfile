@@ -55,6 +55,7 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
+                        bat 'nuget restore src/raml/Raml.Parser.Model.sln'
                         bat "msbuild src/raml/Raml.Parser.Model.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
                     }
                 }

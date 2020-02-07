@@ -61,7 +61,7 @@ pipeline {
                 }
                 stage('Pack') {
                     steps {
-                        bat 'dotnet pack src/raml/RAML.Parser.Model/RAML.Parser.Model.csproj -Prop Configuration=Release'
+                        bat 'dotnet pack src/raml/RAML.Parser.Model/RAML.Parser.Model.csproj'
                         withCredentials([string(credentialsId: 'AMF-Net-NugetKey', variable: 'NexusNugetApiKey')]) {
                             bat "nuget push *.nupkg -source https://nexus.dev.build.msap.io/nexus/service/local/nuget/NuGet/ $NexusNugetApiKey"
                         }

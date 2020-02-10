@@ -17,7 +17,7 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.1</Version>
+    <Version>0.2.0</Version>
     <PackageProjectUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mulesoft-labs/raml-dotnet-tools</RepositoryUrl>
     <PackageTags>RAML REST API OAS OpenAPI sagger</PackageTags>

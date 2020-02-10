@@ -40,8 +40,8 @@ namespace AMF.Tools.Core.WebApiGenerator
                 if (ReturnTypeObject == null)
                     return null;
 
-                if (ReturnTypeObject.IsMultiple && ReturnTypeObject.Properties.Any(p => p.StatusCode == HttpStatusCode.OK))
-                    return ReturnTypeObject.Properties.First(p => p.StatusCode == HttpStatusCode.OK).Type;
+                if (ReturnTypeObject.IsMultiple && ReturnTypeObject.Properties.Any(p => p.StatusCode == "200"))
+                    return ReturnTypeObject.Properties.First(p => p.StatusCode == "200").Type;
 
                 return null;
             }

@@ -115,7 +115,7 @@ namespace RAML.Tools.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5.0")]
         public string ServerTemplatesVersion {
             get {
                 return ((string)(this["ServerTemplatesVersion"]));

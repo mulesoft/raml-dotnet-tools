@@ -321,8 +321,8 @@ namespace Raml.Tools.Tests
                 ReturnType = "string",
                 Verb = "Post",
                 UriParameters = new List<GeneratorParameter>() { new GeneratorParameter() { Name = "foo", OriginalName = "foo", ParamName = "foo", Type = "string" } },
-                QueryParameters = new List<Property>() { new Property() { Name = "foo2", OriginalName = "foo2", Type = "string", StatusCode = System.Net.HttpStatusCode.OK } },
-                SecurityParameters = new List<Property>() { new Property() { Name = "foo3", OriginalName = "foo3", Type = "string", StatusCode = System.Net.HttpStatusCode.OK } },
+                QueryParameters = new List<Property>() { new Property() { Name = "foo2", OriginalName = "foo2", Type = "string", StatusCode = "200" } },
+                SecurityParameters = new List<Property>() { new Property() { Name = "foo3", OriginalName = "foo3", Type = "string", StatusCode = "200" } },
             };
             Assert.IsNotNull(cm.OkReturnType);
             Assert.IsNotNull(cm.OkConcreteType);

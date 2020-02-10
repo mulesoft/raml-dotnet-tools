@@ -128,8 +128,8 @@ namespace AMF.Tools.Core.ClientGenerator
             if (!generatedMethod.ReturnTypeObject.IsMultiple)
                 return generatedMethod.ReturnType;
 
-            if (generatedMethod.ReturnTypeObject.Properties.Any(p => p.StatusCode == HttpStatusCode.OK))
-                return generatedMethod.ReturnTypeObject.Properties.First(p => p.StatusCode == HttpStatusCode.OK).Type;
+            if (generatedMethod.ReturnTypeObject.Properties.Any(p => p.StatusCode == "200"))
+                return generatedMethod.ReturnTypeObject.Properties.First(p => p.StatusCode == "200").Type;
 
             return generatedMethod.ReturnTypeObject.Properties.First().Type;
         }
@@ -157,11 +157,11 @@ namespace AMF.Tools.Core.ClientGenerator
 
         private void GetResponseHeaders(string objectName, ClientGeneratorMethod generatedMethod, Operation method)
         {
-            generatedMethod.ResponseHeaders = new Dictionary<HttpStatusCode, ApiObject>();
+            generatedMethod.ResponseHeaders = new Dictionary<string, ApiObject>();
             foreach (var resp in method.Responses.Where(r => r.Headers != null && r.Headers.Any()))
             {
                 var headerObject = HeadersParser.GetHeadersObject(generatedMethod, resp, objectName);
-                generatedMethod.ResponseHeaders.Add(ParserHelpers.GetHttpStatusCode(resp.StatusCode), headerObject);
+                generatedMethod.ResponseHeaders.Add(resp.StatusCode, headerObject);
                 responseHeadersObjects.Add(headerObject.Name, headerObject);
             }
 

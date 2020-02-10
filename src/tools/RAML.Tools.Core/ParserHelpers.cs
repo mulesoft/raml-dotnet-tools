@@ -22,13 +22,5 @@ namespace AMF.Tools.Core
 
             return description ?? code;
         }
-        public static HttpStatusCode GetHttpStatusCode(string code)
-        {
-            HttpStatusCode statusCode;
-
-            Enum.TryParse(code, out statusCode);
-
-            return statusCode;
-        }
     }
 }

@@ -43,7 +43,7 @@ namespace EPiServerServiceAPI
             {
                 if (proxy.SchemaValidation.RaiseExceptions)
                 {
-                    await SchemaValidator.ValidateWithExceptionAsync(Models.TokenPostResponse.GetSchema(response.StatusCode), response.Content);
+                    await SchemaValidator.ValidateWithExceptionAsync(Models.TokenPostResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content);
                 }
 
             }
@@ -54,7 +54,7 @@ namespace EPiServerServiceAPI
                 RawHeaders = response.Headers,
                 StatusCode = response.StatusCode,
                 ReasonPhrase = response.ReasonPhrase,
-                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.TokenPostResponse.GetSchema(response.StatusCode), response.Content), true)
+                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.TokenPostResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content), true)
             };
 
         }
@@ -83,7 +83,7 @@ namespace EPiServerServiceAPI
             {
                 if (proxy.SchemaValidation.RaiseExceptions)
                 {
-                    await SchemaValidator.ValidateWithExceptionAsync(Models.TokenPostResponse.GetSchema(response.StatusCode), response.Content);
+                    await SchemaValidator.ValidateWithExceptionAsync(Models.TokenPostResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content);
                 }
 
             }
@@ -94,7 +94,7 @@ namespace EPiServerServiceAPI
                 Formatters = responseFormatters,
                 StatusCode = response.StatusCode,
                 ReasonPhrase = response.ReasonPhrase,
-                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.TokenPostResponse.GetSchema(response.StatusCode), response.Content), true)
+                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.TokenPostResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content), true)
             };
         }
 
@@ -309,23 +309,23 @@ namespace EPiServerServiceAPI.Models
     public partial class MultipleTokenPost : ApiMultipleResponse
     {
 
-        static readonly Dictionary<HttpStatusCode, string> schemas = new Dictionary<HttpStatusCode, string>
+        static readonly Dictionary<string, string> schemas = new Dictionary<string, string>
         {
-            { HttpStatusCode.OK, "{  \"$schema\": \"http://json-schema.org/draft-04/schema#\",  \"title\": \"Access Token\",  \"description\": \"An Access Token returned by a successful authorization request\",  \"type\": \"object\",  \"properties\": {    \"access_token\": {      \"type\": \"string\"    },    \"token_type\": {      \"type\": \"string\",      \"pattern\" : \"bearer\"    },    \"expires_in\": {      \"type\": \"integer\",      \"minimum\": 1    }  },  \"required\": [\"access_token\", \"token_type\", \"expires_in\"]}"},
-            { HttpStatusCode.BadRequest, "{  \"$schema\": \"http://json-schema.org/draft-04/schema#\",  \"title\": \"Access Request Error\",  \"description\": \"When a token is not generated\",  \"type\": \"object\",  \"properties\": {    \"error\": {      \"type\": \"string\"    }  },  \"required\" : [\"error\"]}"},
+            { "200", "{  \"$schema\": \"http://json-schema.org/draft-04/schema#\",  \"title\": \"Access Token\",  \"description\": \"An Access Token returned by a successful authorization request\",  \"type\": \"object\",  \"properties\": {    \"access_token\": {      \"type\": \"string\"    },    \"token_type\": {      \"type\": \"string\",      \"pattern\" : \"bearer\"    },    \"expires_in\": {      \"type\": \"integer\",      \"minimum\": 1    }  },  \"required\": [\"access_token\", \"token_type\", \"expires_in\"]}"},
+            { "400", "{  \"$schema\": \"http://json-schema.org/draft-04/schema#\",  \"title\": \"Access Request Error\",  \"description\": \"When a token is not generated\",  \"type\": \"object\",  \"properties\": {    \"error\": {      \"type\": \"string\"    }  },  \"required\" : [\"error\"]}"},
         };
 
-        public static string GetSchema(HttpStatusCode statusCode)
+        public static string GetSchema(string statusCode)
         {
             return schemas.ContainsKey(statusCode) ? schemas[statusCode] : string.Empty;
         }
 
         public MultipleTokenPost()
         {
-            names.Add(HttpStatusCode.OK, "TokenPostOKResponseContent");
-            types.Add(HttpStatusCode.OK, typeof(TokenPostOKResponseContent));
-            names.Add(HttpStatusCode.BadRequest, "TokenPostBadRequestResponseContent");
-            types.Add(HttpStatusCode.BadRequest, typeof(TokenPostBadRequestResponseContent));
+            names.Add("200", "TokenPostOKResponseContent");
+            types.Add("200", typeof(TokenPostOKResponseContent));
+            names.Add("400", "TokenPostBadRequestResponseContent");
+            types.Add("400", typeof(TokenPostBadRequestResponseContent));
         }
         /// <summary>
         /// access is granted and an access token returned 
@@ -380,16 +380,16 @@ namespace EPiServerServiceAPI.Models
 
                 typedContent = new MultipleTokenPost();
                 var task = Formatters != null && Formatters.Any()
-                            ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode), Formatters)
-                            : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode));
+                            ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode.ToString()), Formatters)
+                            : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode.ToString()));
                 task.Wait();
                 var content = task.GetAwaiter().GetResult();
-                typedContent.SetPropertyByStatusCode(StatusCode, content);
+                typedContent.SetPropertyByStatusCode(StatusCode.ToString(), content);
                 return typedContent;
             }
         }
 
-        public static string GetSchema(HttpStatusCode statusCode)
+        public static string GetSchema(string statusCode)
         {
             return MultipleTokenPost.GetSchema(statusCode);
         }

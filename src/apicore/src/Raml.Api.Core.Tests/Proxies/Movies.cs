@@ -586,7 +586,7 @@ namespace Movies
             {
                 if (proxy.SchemaValidation.RaiseExceptions)
                 {
-                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetResponse.GetSchema(response.StatusCode), response.Content);
+                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content);
                 }
 
             }
@@ -597,7 +597,7 @@ namespace Movies
                 RawHeaders = response.Headers,
                 StatusCode = response.StatusCode,
                 ReasonPhrase = response.ReasonPhrase,
-                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetResponse.GetSchema(response.StatusCode), response.Content), true)
+                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content), true)
             };
 
         }
@@ -625,7 +625,7 @@ namespace Movies
             {
                 if (proxy.SchemaValidation.RaiseExceptions)
                 {
-                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetResponse.GetSchema(response.StatusCode), response.Content);
+                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content);
                 }
 
             }
@@ -636,7 +636,7 @@ namespace Movies
                 Formatters = responseFormatters,
                 StatusCode = response.StatusCode,
                 ReasonPhrase = response.ReasonPhrase,
-                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetResponse.GetSchema(response.StatusCode), response.Content), true)
+                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content), true)
             };
         }
 
@@ -717,13 +717,13 @@ namespace Movies
             {
                 if (proxy.SchemaValidation.RaiseExceptions)
                 {
-                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetByIdResponse.GetSchema(response.StatusCode), response.Content);
+                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetByIdResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content);
                 }
 
             }
 
             var headers = new Models.MultipleGetByIdHeader();
-            headers.SetProperties(response.Headers, response.StatusCode);
+            headers.SetProperties(response.Headers, ApiMultipleResponse.GetValueAsString(response.StatusCode));
             return new Models.MoviesGetByIdResponse
             {
                 RawContent = response.Content,
@@ -731,7 +731,7 @@ namespace Movies
                 RawHeaders = response.Headers,
                 StatusCode = response.StatusCode,
                 ReasonPhrase = response.ReasonPhrase,
-                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetByIdResponse.GetSchema(response.StatusCode), response.Content), true)
+                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetByIdResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content), true)
             };
 
         }
@@ -766,12 +766,12 @@ namespace Movies
             {
                 if (proxy.SchemaValidation.RaiseExceptions)
                 {
-                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetByIdResponse.GetSchema(response.StatusCode), response.Content);
+                    await SchemaValidator.ValidateWithExceptionAsync(Models.MoviesGetByIdResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content);
                 }
 
             }
             var headers = new Models.MultipleGetByIdHeader();
-            headers.SetProperties(response.Headers, response.StatusCode);
+            headers.SetProperties(response.Headers, ApiMultipleResponse.GetValueAsString(response.StatusCode));
             return new Models.MoviesGetByIdResponse
             {
                 RawContent = response.Content,
@@ -780,7 +780,7 @@ namespace Movies
                 Formatters = responseFormatters,
                 StatusCode = response.StatusCode,
                 ReasonPhrase = response.ReasonPhrase,
-                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetByIdResponse.GetSchema(response.StatusCode), response.Content), true)
+                SchemaValidation = new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid(Models.MoviesGetByIdResponse.GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode)), response.Content), true)
             };
         }
 
@@ -1249,23 +1249,23 @@ namespace Movies.Models
     public partial class MultipleMoviesGet : ApiMultipleResponse
     {
 
-        static readonly Dictionary<HttpStatusCode, string> schemas = new Dictionary<HttpStatusCode, string>
+        static readonly Dictionary<string, string> schemas = new Dictionary<string, string>
         {
-            { HttpStatusCode.OK, "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"array\",  \"description\": \"movies\",  \"items\":     {      \"type\": \"object\",        \"properties\": {        \"id\": { \"type\": \"integer\" },        \"name\": { \"type\": \"string\"},        \"director\": { \"type\": \"string\"},        \"genre\": { \"type\": [\"string\", \"null\"] },        \"cast\":{ \"type\": \"string\" },        \"duration\":{ \"type\": [\"number\", \"null\"] },        \"storyline\":{ \"type\": \"string\" },        \"language\":{ \"type\": \"string\" },        \"rented\":{ \"type\": \"boolean\" }    }  }}"},
-            { HttpStatusCode.BadRequest, "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"bad request error\",  \"properties\":     {      \"error\": { \"type\": \"string\"},      \"code\": { \"type\": \"integer\" }    }  }"},
+            { "200", "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"array\",  \"description\": \"movies\",  \"items\":     {      \"type\": \"object\",        \"properties\": {        \"id\": { \"type\": \"integer\" },        \"name\": { \"type\": \"string\"},        \"director\": { \"type\": \"string\"},        \"genre\": { \"type\": [\"string\", \"null\"] },        \"cast\":{ \"type\": \"string\" },        \"duration\":{ \"type\": [\"number\", \"null\"] },        \"storyline\":{ \"type\": \"string\" },        \"language\":{ \"type\": \"string\" },        \"rented\":{ \"type\": \"boolean\" }    }  }}"},
+            { "400", "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"bad request error\",  \"properties\":     {      \"error\": { \"type\": \"string\"},      \"code\": { \"type\": \"integer\" }    }  }"},
         };
 
-        public static string GetSchema(HttpStatusCode statusCode)
+        public static string GetSchema(string statusCode)
         {
             return schemas.ContainsKey(statusCode) ? schemas[statusCode] : string.Empty;
         }
 
         public MultipleMoviesGet()
         {
-            names.Add(HttpStatusCode.OK, "MoviesGetOKResponseContent");
-            types.Add(HttpStatusCode.OK, typeof(MoviesGetOKResponseContent[]));
-            names.Add(HttpStatusCode.BadRequest, "MoviesGetBadRequestResponseContent");
-            types.Add(HttpStatusCode.BadRequest, typeof(MoviesGetBadRequestResponseContent));
+            names.Add("200", "MoviesGetOKResponseContent");
+            types.Add("200", typeof(MoviesGetOKResponseContent[]));
+            names.Add("400", "MoviesGetBadRequestResponseContent");
+            types.Add("400", typeof(MoviesGetBadRequestResponseContent));
         }
         public MoviesGetOKResponseContent[] MoviesGetOKResponseContent { get; set; }
         public MoviesGetBadRequestResponseContent MoviesGetBadRequestResponseContent { get; set; }
@@ -1278,26 +1278,26 @@ namespace Movies.Models
     public partial class MultipleIdGet : ApiMultipleResponse
     {
 
-        static readonly Dictionary<HttpStatusCode, string> schemas = new Dictionary<HttpStatusCode, string>
+        static readonly Dictionary<string, string> schemas = new Dictionary<string, string>
         {
-            { HttpStatusCode.OK, "{   \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"a movie\",  \"properties\": {    \"id\": { \"type\": \"integer\"},    \"name\": { \"type\": \"string\"},    \"director\": { \"type\": \"string\"},    \"genre\": { \"type\": \"string\" },    \"cast\":{ \"type\": \"string\" },    \"duration\":{ \"type\": \"number\" },    \"storyline\":{ \"type\": \"string\" },    \"language\":{ \"type\": \"string\" },    \"rented\":{ \"type\": \"boolean\" }  }}"},
-            { HttpStatusCode.BadRequest, "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"bad request error\",  \"properties\":     {      \"error\": { \"type\": \"string\"},      \"code\": { \"type\": \"integer\" }    }  }"},
-            { HttpStatusCode.NotFound, "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"not found\",  \"properties\":     {      \"id\": { \"type\": \"integer\" },      \"error\": { \"type\": \"string\"},      \"code\": { \"type\": \"integer\" }    }  }"},
+            { "200", "{   \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"a movie\",  \"properties\": {    \"id\": { \"type\": \"integer\"},    \"name\": { \"type\": \"string\"},    \"director\": { \"type\": \"string\"},    \"genre\": { \"type\": \"string\" },    \"cast\":{ \"type\": \"string\" },    \"duration\":{ \"type\": \"number\" },    \"storyline\":{ \"type\": \"string\" },    \"language\":{ \"type\": \"string\" },    \"rented\":{ \"type\": \"boolean\" }  }}"},
+            { "400", "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"bad request error\",  \"properties\":     {      \"error\": { \"type\": \"string\"},      \"code\": { \"type\": \"integer\" }    }  }"},
+            { "404", "{ \"$schema\": \"http://json-schema.org/draft-03/schema\",  \"type\": \"object\",  \"description\": \"not found\",  \"properties\":     {      \"id\": { \"type\": \"integer\" },      \"error\": { \"type\": \"string\"},      \"code\": { \"type\": \"integer\" }    }  }"},
         };
 
-        public static string GetSchema(HttpStatusCode statusCode)
+        public static string GetSchema(string statusCode)
         {
             return schemas.ContainsKey(statusCode) ? schemas[statusCode] : string.Empty;
         }
 
         public MultipleIdGet()
         {
-            names.Add(HttpStatusCode.OK, "IdGetOKResponseContent");
-            types.Add(HttpStatusCode.OK, typeof(IdGetOKResponseContent));
-            names.Add(HttpStatusCode.BadRequest, "IdGetBadRequestResponseContent");
-            types.Add(HttpStatusCode.BadRequest, typeof(IdGetBadRequestResponseContent));
-            names.Add(HttpStatusCode.NotFound, "IdGetNotFoundResponseContent");
-            types.Add(HttpStatusCode.NotFound, typeof(IdGetNotFoundResponseContent));
+            names.Add("200", "IdGetOKResponseContent");
+            types.Add("200", typeof(IdGetOKResponseContent));
+            names.Add("400", "IdGetBadRequestResponseContent");
+            types.Add("400", typeof(IdGetBadRequestResponseContent));
+            names.Add("404", "IdGetNotFoundResponseContent");
+            types.Add("404", typeof(IdGetNotFoundResponseContent));
         }
         public IdGetOKResponseContent IdGetOKResponseContent { get; set; }
         public IdGetBadRequestResponseContent IdGetBadRequestResponseContent { get; set; }
@@ -1383,15 +1383,15 @@ namespace Movies.Models
 
         public MultipleGetByIdHeader()
         {
-            names.Add(HttpStatusCode.OK, "GetByIdMoviesOKResponseHeader");
-            types.Add(HttpStatusCode.OK, typeof(GetByIdMoviesOKResponseHeader));
-            names.Add(HttpStatusCode.BadRequest, "GetByIdMoviesBadRequestResponseHeader");
-            types.Add(HttpStatusCode.BadRequest, typeof(GetByIdMoviesBadRequestResponseHeader));
+            names.Add("200", "GetByIdMoviesOKResponseHeader");
+            types.Add("200", typeof(GetByIdMoviesOKResponseHeader));
+            names.Add("400", "GetByIdMoviesBadRequestResponseHeader");
+            types.Add("400", typeof(GetByIdMoviesBadRequestResponseHeader));
         }
 
-        public void SetProperties(HttpResponseHeaders headers, HttpStatusCode statusCode)
+        public void SetProperties(HttpResponseHeaders headers, string statusCode)
         {
-            if (statusCode == HttpStatusCode.OK)
+            if (statusCode == "200")
             {
                 var header = new GetByIdMoviesOKResponseHeader();
                 foreach (var responseHeader in headers)
@@ -1403,7 +1403,7 @@ namespace Movies.Models
                 this.GetByIdMoviesOKResponseHeader = header;
                 return;
             }
-            if (statusCode == HttpStatusCode.BadRequest)
+            if (statusCode == "400")
             {
                 var header = new GetByIdMoviesBadRequestResponseHeader();
                 foreach (var responseHeader in headers)
@@ -1756,16 +1756,16 @@ namespace Movies.Models
 
                 typedContent = new MultipleMoviesGet();
                 var task = Formatters != null && Formatters.Any()
-                            ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode), Formatters)
-                            : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode));
+                            ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode.ToString()), Formatters)
+                            : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode.ToString()));
                 task.Wait();
                 var content = task.GetAwaiter().GetResult();
-                typedContent.SetPropertyByStatusCode(StatusCode, content);
+                typedContent.SetPropertyByStatusCode(StatusCode.ToString(), content);
                 return typedContent;
             }
         }
 
-        public static string GetSchema(HttpStatusCode statusCode)
+        public static string GetSchema(string statusCode)
         {
             return MultipleMoviesGet.GetSchema(statusCode);
         }
@@ -1797,16 +1797,16 @@ namespace Movies.Models
 
                 typedContent = new MultipleIdGet();
                 var task = Formatters != null && Formatters.Any()
-                            ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode), Formatters)
-                            : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode));
+                            ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode.ToString()), Formatters)
+                            : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode.ToString()));
                 task.Wait();
                 var content = task.GetAwaiter().GetResult();
-                typedContent.SetPropertyByStatusCode(StatusCode, content);
+                typedContent.SetPropertyByStatusCode(StatusCode.ToString(), content);
                 return typedContent;
             }
         }
 
-        public static string GetSchema(HttpStatusCode statusCode)
+        public static string GetSchema(string statusCode)
         {
             return MultipleIdGet.GetSchema(statusCode);
         }

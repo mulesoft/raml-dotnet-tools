@@ -5,10 +5,10 @@ namespace RAML.Api.Core
 {
     public class ApiMultipleObject
     {
-        protected IDictionary<HttpStatusCode, string> names = new Dictionary<HttpStatusCode, string>();
-        protected IDictionary<HttpStatusCode, System.Type> types = new Dictionary<HttpStatusCode, System.Type>();
+        protected IDictionary<string, string> names = new Dictionary<string, string>();
+        protected IDictionary<string, System.Type> types = new Dictionary<string, System.Type>();
 
-        public System.Type GetTypeByStatusCode(HttpStatusCode statusCode)
+        public System.Type GetTypeByStatusCode(string statusCode)
         {
             if (types.ContainsKey(statusCode))
                 return types[statusCode];

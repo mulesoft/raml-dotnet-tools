@@ -947,19 +947,19 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 	if (apiObject.IsMultiple)
 	{
 #>
-        static readonly Dictionary<HttpStatusCode, string> schemas = new Dictionary<HttpStatusCode, string>
+        static readonly Dictionary<string, string> schemas = new Dictionary<string, string>
         {
 <#
 		foreach (var property in apiObject.Properties.Where(p => p.Type != null && p.Name != null && p.JSONSchema != null).ToArray())
 		{
 #>
-			{ (HttpStatusCode)<#= (int)property.StatusCode #>, "<#= property.JSONSchema #>"},
+			{ "<#= property.StatusCode #>", "<#= property.JSONSchema #>"},
 <#
         }
 #>
 		};
         
-		public static string GetSchema(HttpStatusCode statusCode)
+		public static string GetSchema(string statusCode)
         {
             return schemas.ContainsKey(statusCode) ? schemas[statusCode] : string.Empty;
         }
@@ -970,8 +970,8 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 		foreach (var property in apiObject.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
 		{
 #>
-            names.Add((HttpStatusCode)<#= (int)property.StatusCode #>, "<#= property.Name #>");
-            types.Add((HttpStatusCode)<#= (int)property.StatusCode #>, typeof(<#= property.Type #>));
+            names.Add("<#= property.StatusCode #>", "<#= property.Name #>");
+            types.Add("<#= property.StatusCode #>", typeof(<#= property.Type #>));
 <#
 		}
 #>
@@ -1108,20 +1108,20 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
 		foreach (var property in respHeader.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
 		{
 #>
-            names.Add((HttpStatusCode)<#= (int)property.StatusCode #>, "<#= property.Name #>");
-            types.Add((HttpStatusCode)<#= (int)property.StatusCode #>, typeof(<#= property.Type #>));
+            names.Add("<#= property.StatusCode #>", "<#= property.Name #>");
+            types.Add("<#= property.StatusCode #>", typeof(<#= property.Type #>));
 <#
 		}
 #>
         }
 
-		public void SetProperties(HttpResponseHeaders headers, HttpStatusCode statusCode)
+		public void SetProperties(HttpResponseHeaders headers, string statusCode)
 	    {
 <#
 		foreach (var property in respHeader.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
 		{
 #>
-		    if (statusCode == (HttpStatusCode)<#= (int)property.StatusCode #>)
+		    if (statusCode == "<#= property.StatusCode #>")
 		    {
 				var header = new <#= property.Type #>();
 			    foreach (var responseHeader in headers)
@@ -1315,7 +1315,7 @@ foreach (var apiObject in model.ApiResponseObjects)
 	        }
     	}  
 		
-		public static string GetSchema(HttpStatusCode statusCode)
+		public static string GetSchema(string statusCode)
         {
             return <#= body.Type #>.GetSchema(statusCode);
         }      

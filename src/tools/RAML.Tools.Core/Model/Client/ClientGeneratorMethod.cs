@@ -134,7 +134,7 @@ namespace AMF.Tools.Core.ClientGenerator
 
         public ApiObject Header { get; set; }
 
-        public IDictionary<HttpStatusCode, ApiObject> ResponseHeaders { get; set; }
+        public IDictionary<string, ApiObject> ResponseHeaders { get; set; }
 
         public bool UseSecurity { get; set; }
 

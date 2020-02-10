@@ -104,19 +104,11 @@ namespace AMF.Tools.Core
                 Description = response.Description + " " + mimeType.Schema.Description,
                 Example = ObjectParser.MapExample(mimeType.Schema),
                 Type = type,
-                StatusCode = GetStatusCode(response),
+                StatusCode = response?.StatusCode,
                 JSONSchema = mimeType.Schema as SchemaShape == null ? null : ((SchemaShape)mimeType.Schema).Raw.Replace(Environment.NewLine, "").Replace("\r\n", "").Replace("\n", "").Replace("\"", "\\\"")
             };
 
             properties.Add(property);
-        }
-
-        private static HttpStatusCode? GetStatusCode(Response response)
-        {
-            if (Enum.TryParse(response.StatusCode, out HttpStatusCode result))
-                return result;
-
-            return null;
         }
 
         protected string GetComment(RAML.Parser.Model.EndPoint resource, Operation method, string url)

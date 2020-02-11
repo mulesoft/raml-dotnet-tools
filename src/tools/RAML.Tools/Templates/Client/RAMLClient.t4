@@ -177,7 +177,7 @@ namespace $(namespace)
 			{
                 var jsonSchema = !method.ReturnTypeObject.IsMultiple ? 
 					String.Format("\"{0}\"", method.ReturnTypeObject.JSONSchema) : 
-					method.ResponseType + ".GetSchema(response.StatusCode)";
+					method.ResponseType + ".GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode))";
                 
 				validationWithException = String.Format("await SchemaValidator.ValidateWithExceptionAsync({0}, response.Content)", jsonSchema);
                 validationCall = String.Format("new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid({0}, response.Content), true)", jsonSchema);
@@ -209,7 +209,7 @@ namespace $(namespace)
 	            {
 #>
             var headers = new <#= method.ResponseHeaderType #>();
-            headers.SetProperties(response.Headers, response.StatusCode);
+            headers.SetProperties(response.Headers, ApiMultipleResponse.GetValueAsString(response.StatusCode));
 <#
                 }
 
@@ -388,7 +388,7 @@ namespace $(namespace)
 	            {
 #>
             var headers = new <#= method.ResponseHeaderType #>();
-            headers.SetProperties(response.Headers, response.StatusCode);
+            headers.SetProperties(response.Headers, ApiMultipleResponse.GetValueAsString(response.StatusCode));
 <#
                 }
 
@@ -635,7 +635,7 @@ namespace $(namespace)
 			{
                 var jsonSchema = !method.ReturnTypeObject.IsMultiple ? 
 					String.Format("\"{0}\"", method.ReturnTypeObject.JSONSchema) : 
-					method.ResponseType + ".GetSchema(response.StatusCode)";
+					method.ResponseType + ".GetSchema(ApiMultipleResponse.GetValueAsString(response.StatusCode))";
                 
 				validationWithException = String.Format("await SchemaValidator.ValidateWithExceptionAsync({0}, response.Content)", jsonSchema);
                 validationCall = String.Format("new Lazy<SchemaValidationResults>(() => SchemaValidator.IsValid({0}, response.Content), true)", jsonSchema);
@@ -667,7 +667,7 @@ namespace $(namespace)
 	            {
 #>
             var headers = new <#= method.ResponseHeaderType #>();
-            headers.SetProperties(response.Headers, response.StatusCode);
+            headers.SetProperties(response.Headers, ApiMultipleResponse.GetValueAsString(response.StatusCode));
 <#
                 }
 
@@ -846,7 +846,7 @@ namespace $(namespace)
 	            {
 #>
             var headers = new <#= method.ResponseHeaderType #>();
-            headers.SetProperties(response.Headers, response.StatusCode);
+            headers.SetProperties(response.Headers, ApiMultipleResponse.GetValueAsString(response.StatusCode));
 <#
                 }
 
@@ -1294,17 +1294,17 @@ foreach (var apiObject in model.ApiResponseObjects)
                     var task = RawContent.ReadAsStreamAsync();
 
                     var xmlStream = task.GetAwaiter().GetResult();
-                    var content = new XmlSerializer(typedContent.GetTypeByStatusCode(StatusCode)).Deserialize(xmlStream);
-                    typedContent.SetPropertyByStatusCode(StatusCode, content);
+                    var content = new XmlSerializer(typedContent.GetTypeByStatusCode(ApiMultipleResponse.GetValueAsString(StatusCode))).Deserialize(xmlStream);
+                    typedContent.SetPropertyByStatusCode(ApiMultipleResponse.GetValueAsString(StatusCode), content);
                 }
                 else
                 {
 		            var task = Formatters != null && Formatters.Any() 
-                                ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode), Formatters).ConfigureAwait(false)
-                                : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(StatusCode)).ConfigureAwait(false);
+                                ? RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(ApiMultipleResponse.GetValueAsString(StatusCode)), Formatters).ConfigureAwait(false)
+                                : RawContent.ReadAsAsync(typedContent.GetTypeByStatusCode(ApiMultipleResponse.GetValueAsString(StatusCode))).ConfigureAwait(false);
 		        
 		            var content = task.GetAwaiter().GetResult();
-                    typedContent.SetPropertyByStatusCode(StatusCode, content);
+                    typedContent.SetPropertyByStatusCode(ApiMultipleResponse.GetValueAsString(StatusCode), content);
                 }
 
 		        return typedContent;

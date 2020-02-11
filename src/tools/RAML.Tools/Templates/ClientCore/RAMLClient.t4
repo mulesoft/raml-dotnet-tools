@@ -953,7 +953,7 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 		foreach (var property in apiObject.Properties.Where(p => p.Type != null && p.Name != null && p.JSONSchema != null).ToArray())
 		{
 #>
-			{ "<#= ApiMultipleResponse.GetValueAsString(property.StatusCode) #>", "<#= property.JSONSchema #>"},
+			{ "<#= property.StatusCode #>", "<#= property.JSONSchema #>"},
 <#
         }
 #>
@@ -970,8 +970,8 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
 		foreach (var property in apiObject.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
 		{
 #>
-            names.Add("<#= ApiMultipleResponse.GetValueAsString(property.StatusCode) #>", "<#= property.Name #>");
-            types.Add("<#= ApiMultipleResponse.GetValueAsString(property.StatusCode) #>", typeof(<#= property.Type #>));
+            names.Add("<#= property.StatusCode #>", "<#= property.Name #>");
+            types.Add("<#= property.StatusCode #>", typeof(<#= property.Type #>));
 <#
 		}
 #>
@@ -1108,8 +1108,8 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
 		foreach (var property in respHeader.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
 		{
 #>
-            names.Add("<#= ApiMultipleResponse.GetValueAsString(property.StatusCode) #>", "<#= property.Name #>");
-            types.Add("<#= ApiMultipleResponse.GetValueAsString(property.StatusCode) #>", typeof(<#= property.Type #>));
+            names.Add("<#= property.StatusCode #>", "<#= property.Name #>");
+            types.Add("<#= property.StatusCode #>", typeof(<#= property.Type #>));
 <#
 		}
 #>
@@ -1121,7 +1121,7 @@ foreach (var respHeader in model.ResponseHeaderObjects.Values.Where(o => o.Prope
 		foreach (var property in respHeader.Properties.Where(p => p != null && p.Type != null && p.Name != null).ToArray())
 		{
 #>
-		    if (statusCode == "<#= ApiMultipleResponse.GetValueAsString(property.StatusCode) #>")
+		    if (statusCode == "<#= property.StatusCode #>")
 		    {
 				var header = new <#= property.Type #>();
 			    foreach (var responseHeader in headers)
@@ -1301,7 +1301,7 @@ foreach (var apiObject in model.ApiResponseObjects)
 
                     var xmlStream = task.GetAwaiter().GetResult();
                     var content = new XmlSerializer(typedContent.GetTypeByStatusCode(ApiMultipleResponse.GetValueAsString(StatusCode))).Deserialize(xmlStream);
-                    typedContent.SetPropertyByStatusCode(StatusCode, content);
+                    typedContent.SetPropertyByStatusCode(ApiMultipleResponse.GetValueAsString(StatusCode), content);
                 }
                 else
                 {

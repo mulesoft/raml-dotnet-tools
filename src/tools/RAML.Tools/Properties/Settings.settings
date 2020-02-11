@@ -24,7 +24,7 @@
       <Value Profile="(Default)">RAML.Api.Core</Value>
     </Setting>
     <Setting Name="RAMLApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.10.1</Value>
+      <Value Profile="(Default)">0.11.0</Value>
     </Setting>
     <Setting Name="ApiReferencesFolderName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">API References</Value>
@@ -102,7 +102,7 @@
       <Value Profile="(Default)">RAML.NetCore.APICore</Value>
     </Setting>
     <Setting Name="AMFNetCoreApiCorePackageVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.1.1</Value>
+      <Value Profile="(Default)">0.2.0</Value>
     </Setting>
     <Setting Name="BaseControllerTestsTemplateTitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Controller Unit Tests Base</Value>

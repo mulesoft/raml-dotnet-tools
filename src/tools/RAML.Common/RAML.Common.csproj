@@ -128,8 +128,8 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="RAML.Api.Core, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RAML.Api.Core.0.10.1\lib\net45\RAML.Api.Core.dll</HintPath>
+    <Reference Include="RAML.Api.Core, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RAML.Api.Core.0.11.0\lib\net45\RAML.Api.Core.dll</HintPath>
     </Reference>
     <Reference Include="RAML.Parser, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RAML.Parser.2.0.3\lib\net462\RAML.Parser.dll</HintPath>

@@ -40,26 +40,19 @@ pipeline {
                 }
                 bat "cp ./src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix ./releases/r${datefolder}/RAML.Tools.vsix"
 
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus-public',
-                    passwordVariable: 'PUBLIC_NEXUS_PASS', usernameVariable: 'PUBLIC_NEXUS_USER']]) {
-                    
-                nexusArtifactUploader {
-                        nexusVersion('nexus2')
-                        protocol('http')
-                        groupId('sp.sd')
-                        version('2.4')
-                        repository('dotnet_tools')
-                        nexusPassword("${PUBLIC_NEXUS_PASS}")
-                        nexusUrl('https://repository-master.mulesoft.org/nexus/content/repositories/releases')
-                        nexusUser("${PUBLIC_NEXUS_USER}")
-                        artifact {
-                            artifactId('RAML.Tools.vsix')
-                            type('vsix')
-                            classifier('release')
-                            file("releases/r${datefolder}/RAML.Tools.vsix")
-                        }
-                    }
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus-public', passwordVariable: 'PUBLIC_NEXUS_PASS', usernameVariable: 'PUBLIC_NEXUS_USER']]) {
 
+                    nexusArtifactUploader artifacts: [
+                    [artifactId: 'RAML.Tools.vsix', classifier: 'debug', file: 'releases/r${datefolder}/RAML.Tools.vsix', type: 'vsix']
+                    ], 
+                    groupId: 'sp.sd', 
+                    nexusUrl: 'https://repository-master.mulesoft.org/nexus/content/repositories/releases',
+                    nexusPassword: "${PUBLIC_NEXUS_PASS}",
+                    nexusUser: "${PUBLIC_NEXUS_USER}",
+                    nexusVersion: 'nexus2',
+                    protocol: 'http', 
+                    repository: 'dotnet_tools', 
+                    version: '2.4'
                 }
             }
         }

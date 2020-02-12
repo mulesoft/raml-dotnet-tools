@@ -49,7 +49,7 @@ pipeline {
                         groupId('sp.sd')
                         version('2.4')
                         repository('dotnet_tools')
-                        nexusPassword: '${PUBLIC_NEXUS_PASS}'
+                        nexusPassword('${PUBLIC_NEXUS_PASS}')
                         nexusUrl('https://repository-master.mulesoft.org/nexus/content/repositories/releases')
                         nexusUser('${PUBLIC_NEXUS_USER}')
                         artifact {

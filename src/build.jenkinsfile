@@ -6,6 +6,9 @@ def iqUrl ="http://nexus-iq-0:8070"
 def appId="dotnet-tools"
 def iqCmd = "java -jar ${niqHome}/nexus-iq-cli.jar -s ${iqUrl} -i ${appId}"
 
+def date = new Date()
+def datefolder = date.format("%Y-%m-%d")
+
 pipeline {
 
     environment {

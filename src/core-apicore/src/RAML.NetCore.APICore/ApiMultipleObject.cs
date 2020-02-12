@@ -13,6 +13,9 @@ namespace RAML.Api.Core
             if (types.ContainsKey(statusCode))
                 return types[statusCode];
 
+            if (types.ContainsKey("default"))
+                return types["default"];
+
             return null;
         }
  

@@ -11,14 +11,18 @@ namespace RAML.Api.Core
 	{
 		public void SetPropertyByStatusCode(string statusCode, object model)
 		{
-			if (!names.ContainsKey(statusCode))
-				return;
+			var propName = string.Empty;
 
-			var propName = names[statusCode];
+			if (names.ContainsKey(statusCode))
+				propName = names[statusCode];
+
+			if (names.ContainsKey("default"))
+				propName = names["default"];
+
 #if !PORTABLE
 			GetType().GetProperties().First(p => p.Name == propName).SetValue(this, model);
 #else
-            GetType().GetTypeInfo().DeclaredProperties.First(p => p.Name == propName).SetValue(this, model);
+			GetType().GetTypeInfo().DeclaredProperties.First(p => p.Name == propName).SetValue(this, model);
 #endif
 		}
 

@@ -961,7 +961,13 @@ foreach (var apiObject in model.Objects.Where(o => string.IsNullOrWhiteSpace(o.G
         
 		public static string GetSchema(string statusCode)
         {
-            return schemas.ContainsKey(statusCode) ? schemas[statusCode] : string.Empty;
+            if(schemas.ContainsKey(statusCode))
+                return schemas[statusCode];
+
+            if(schemas.ContainsKey("default"))
+                return schemas["default"];
+                
+            return string.Empty;
         }
         
         public <#= apiObject.Name #>()

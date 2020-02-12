@@ -8,12 +8,15 @@ namespace RAML.Api.Core
 	{
 		public void SetPropertyByStatusCode(string statusCode, object model)
 		{
-			if (!names.ContainsKey(statusCode))
-				return;
+			var propName = string.Empty;
+			
+			if (names.ContainsKey(statusCode))
+				propName = names[statusCode];
 
-			var propName = names[statusCode];
+			if(names.ContainsKey("default"))
+				propName = names["default"];
+
             GetType().GetTypeInfo().DeclaredProperties.First(p => p.Name == propName).SetValue(this, model);
-
 		}
 
 		public static string GetValueAsString(HttpStatusCode statusCode)

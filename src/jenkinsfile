@@ -56,7 +56,7 @@ pipeline {
                             artifactId('RAML.Tools.vsix')
                             type('vsix')
                             classifier('release')
-                            file("./releases/r${datefolder}/RAML.Tools.vsix")
+                            file("releases/r${datefolder}/RAML.Tools.vsix")
                         }
                     }
 

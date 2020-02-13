@@ -223,7 +223,7 @@ pipeline {
 
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus-public', passwordVariable: 'PUBLIC_NEXUS_PASS', usernameVariable: 'PUBLIC_NEXUS_USER']]) {
 
-                            nexusArtifactUploader artifactId: 'RAML.Tools.vsix', classifier: 'debug', file: './src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix', type: 'vsix', groupId: 'sp.sd', nexusUrl: 'https://repository-master.mulesoft.org/nexus/content/repositories/releases', credentialsId: 'nexus-public', nexusPassword: "${PUBLIC_NEXUS_PASS}", nexusUser: "${PUBLIC_NEXUS_USER}", nexusVersion: 'nexus2', protocol: 'http', repository: 'dotnet_tools', version: '2.4'
+                            nexusArtifactUploader artifactId: 'RAML.Tools.vsix', classifier: 'debug', file: './src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix', type: 'vsix', groupId: 'sp.sd', nexusUrl: 'repository-master.mulesoft.org/nexus/', credentialsId: 'nexus-public', nexusPassword: "${PUBLIC_NEXUS_PASS}", nexusUser: "${PUBLIC_NEXUS_USER}", nexusVersion: 'nexus2', protocol: 'http', repository: 'dotnet_tools', version: '2.4'
                         }
                     }
                 }

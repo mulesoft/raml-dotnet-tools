@@ -125,7 +125,7 @@ namespace AMF.Common
             if (IsAspNet3x(targetFramework))
                 return true;
 
-            throw new InvalidOperationException("Cannot determine .net framework. " + targetFramework);
+            return false;
         }
 
         public static bool IsANetCore3Project(Project proj)
@@ -137,7 +137,7 @@ namespace AMF.Common
             if (IsNetCore3(targetFramework))
                 return true;
 
-            throw new InvalidOperationException("Cannot determine .net framework. " + targetFramework);
+            return false;
         }
 
         private static bool IsNetCore3(string targetFramework)

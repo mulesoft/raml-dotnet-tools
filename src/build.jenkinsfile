@@ -214,14 +214,6 @@ pipeline {
                         zip zipFile: 'toolscoverage.zip', dir: 'toolscoverage', archive: true
                     }
                 }
-                stage('Deploy to public nexus') {
-                    steps {
-                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus-public', passwordVariable: 'PUBLIC_NEXUS_PASS', usernameVariable: 'PUBLIC_NEXUS_USER']]) {
-
-                            nexusArtifactUploader artifactId: 'RAML.Tools', classifier: 'release', file: './src/tools/RAML.Tools/bin/Release/RAML.Tools.vsix', type: 'vsix', groupId: 'dotnet', nexusUrl: 'repository-master.mulesoft.org/nexus', credentialsId: 'nexus-public', nexusPassword: "${PUBLIC_NEXUS_PASS}", nexusUser: "${PUBLIC_NEXUS_USER}", nexusVersion: 'nexus2', protocol: 'https', repository: 'releases', version: '3.0.2'
-                        }
-                    }
-                }
             }
         }
     }

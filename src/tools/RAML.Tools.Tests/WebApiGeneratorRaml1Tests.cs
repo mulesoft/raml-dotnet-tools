@@ -30,6 +30,20 @@ namespace Raml.Tools.Tests
             Assert.IsNotNull(model);
         }
 
+        [Test]
+        public async Task ShouldCreateLongArrays()
+        {
+            var model = await BuildModel("files/raml1/long-arrays.raml");
+            Assert.AreEqual("IList<long>", model.Objects.First(x => x.Name == "ResponseType").Properties.First(x => x.Name == "Ids").Type);
+        }
+
+        [Test]
+        public async Task CustomTypeWithEnums()
+        {
+            var model = await BuildModel("files/raml1/custom-type-in-uses.raml");
+            Assert.AreEqual("Relation", model.Objects.First(x => x.Name == "UserDto").Properties.First(x => x.Name == "Relationval").Type);
+        }
+
         //[Test]
         //public async Task ShouldMapAttributes_WhenCustomScalarInObject()
         //{

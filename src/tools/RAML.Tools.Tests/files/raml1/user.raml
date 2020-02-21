@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+uses:
+  common: ./common.raml
+
+types:
+  UserDto:
+    description: Common user
+    properties:
+      firstname: string
+      lastname: string
+      relationval: common.relation

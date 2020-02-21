@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: TestApi
+version: v1
+protocols: [ HTTPS ]
+baseUri: http://localhost:8080/testapi/api/
+mediaType: application/json
+
+uses:
+  user: ./user.raml
+  common: ./common.raml
+
+/users:
+  description: |
+        Users endpoint
+  get:
+        description: |
+            Retrieves all existing users
+        responses:
+          200:
+            body:
+              application/json:
+                type: user.UserDto

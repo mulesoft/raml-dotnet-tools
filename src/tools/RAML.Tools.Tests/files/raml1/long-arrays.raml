@@ -1,0 +1,53 @@
+#%RAML 1.0
+title: Example Service
+version: v1.0
+protocols: [ HTTP, HTTPS ]
+mediaType: application/json
+
+baseUri: http://192.168.1.1:8080/example/rest/
+
+types:
+  Long:
+    description: 64 bit long
+    type: integer
+    format: int64
+
+  ResponseType:
+    properties:
+      name:
+        type: string
+
+      longProp:
+        type: Long
+        required: true
+
+      longProp2:
+        type: Long
+        required: false
+
+      int64Prop:
+        type: integer
+        format: int64
+        required: true
+
+      int64Prop2:
+        type: integer
+        format: int64
+        required: false
+
+      ids:
+        type: Long[]
+
+/longArrayExample/{longId}:
+  uriParameters:
+    longId:
+      type: Long
+  get:
+    queryParameters:
+      longQuery:
+        type: Long
+    responses:
+      200:
+        body:
+          application/json:
+            type: ResponseType

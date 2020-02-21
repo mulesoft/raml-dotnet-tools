@@ -22,7 +22,7 @@ namespace AMF.Tools.TestRunner
                 RunOasTestsAsync().Wait();
                 RunOas30TestsAsync().Wait();
                 RunClientRaml1TestsAsync().Wait();
-                
+
                 Console.WriteLine($"{TestCount} tests passed");
                 return 0;
             }
@@ -200,7 +200,8 @@ namespace AMF.Tools.TestRunner
         {
             var tests = new WebApiGeneratorRaml1Tests();
 
-
+            await tests.CustomTypeWithEnums();
+            await tests.ShouldCreateLongArrays();
             await tests.ShouldHandeInheritance();
             await tests.ShouldMapPatternAttributes();
             await tests.ShouldBuildTypes_WhenMovies();
@@ -227,15 +228,13 @@ namespace AMF.Tools.TestRunner
             await tests.ShouldHandleRouteNameContainedInUriParam();
             await tests.ShouldHandleSimilarSchemas();
             await tests.ShouldHandle_FileTypes();
-
             await tests.ShouldHandle_TraitsAtResourceLevel();
             await tests.ShouldHandle_TraitsAtMethodLevel();
-
             await tests.ShouldHandleTraitsInLibraries();
             await tests.ShouldHandle_SalesOrdersCase();
             await tests.ShouldHandleXml();
-
             await tests.OGame_Test();
+
             //TODO: 
             //await tests.ShouldHandleUnionTypes();
 

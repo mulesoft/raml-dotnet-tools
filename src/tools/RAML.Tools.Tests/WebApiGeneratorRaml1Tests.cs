@@ -44,6 +44,14 @@ namespace Raml.Tools.Tests
             Assert.AreEqual("Relation", model.Objects.First(x => x.Name == "UserDto").Properties.First(x => x.Name == "Relationval").Type);
         }
 
+        [Test]
+        public async Task CustomTypeWithEnums2()
+        {
+            var model = await BuildModel("files/raml1/enum-scalar.raml");
+            Assert.AreEqual(1, model.Enums.Count());
+            Assert.AreEqual(1, model.Objects.Count());
+        }
+
         //[Test]
         //public async Task ShouldMapAttributes_WhenCustomScalarInObject()
         //{

@@ -14,10 +14,10 @@ namespace AMF.Tools.TestRunner
             {
                 Console.WriteLine("Tests runner started");
                 TestCount = 0;
+                RunServerRaml1TestsAsync().Wait();
                 RunMiscTests();
                 RunModelsServiceTestsAsync().Wait();
                 RunWebApiTestsAsync().Wait();
-                RunServerRaml1TestsAsync().Wait();
                 RunExchangeTestsAsync().Wait();
                 RunOasTestsAsync().Wait();
                 RunOas30TestsAsync().Wait();
@@ -200,6 +200,7 @@ namespace AMF.Tools.TestRunner
         {
             var tests = new WebApiGeneratorRaml1Tests();
 
+            await tests.CustomTypeWithEnums2();
             await tests.CustomTypeWithEnums();
             await tests.ShouldCreateLongArrays();
             await tests.ShouldHandeInheritance();

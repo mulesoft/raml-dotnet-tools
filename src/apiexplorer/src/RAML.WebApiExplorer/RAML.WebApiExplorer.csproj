@@ -129,10 +129,10 @@
     <Content Include="package\Content\Scripts\node_modules\uri-js\tests\test-es5-min.html" />
     <Content Include="package\Content\Scripts\node_modules\uri-js\tests\test-es5.html" />
     <Content Include="package\Content\Scripts\node_modules\uri-js\tests\tests.js" />
-    <Content Include="package\Content\Scripts\package\build\api-console-074935b9.js" />
+    <Content Include="package\Content\Scripts\package\build\api-console-73ee4a86.js" />
     <Content Include="package\Content\Scripts\package\build\apic-import.js" />
     <Content Include="package\Content\Scripts\package\build\index.html" />
-    <Content Include="package\Content\Scripts\package\build\legacy\api-console-5a590915.js" />
+    <Content Include="package\Content\Scripts\package\build\legacy\api-console-dfa6967e.js" />
     <Content Include="package\Content\Scripts\package\build\oauth-popup.html" />
     <Content Include="package\Content\Scripts\package\build\polyfills\core-js.75d89a608ee8c655883ccf374ca31995.js" />
     <Content Include="package\Content\Scripts\package\build\polyfills\custom-elements-es5-adapter.84b300ee818dce8b351c7cc7c100bcf7.js" />

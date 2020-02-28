@@ -26,16 +26,16 @@ self.addEventListener('message', (event) => {
  */
 self.__precacheManifest = [
   {
-    "url": "api-console-074935b9.js",
-    "revision": "1ba9a45f8293b6c5ea7316d3c0a8e416"
+    "url": "api-console-73ee4a86.js",
+    "revision": "1cbeb2d30bd524695b69d68e4aebc127"
   },
   {
     "url": "index.html",
-    "revision": "a8aeda01207d7904483ef7685f2bb17f"
+    "revision": "1586a81e4b0b134a483e84b8bb70878b"
   },
   {
-    "url": "legacy/api-console-5a590915.js",
-    "revision": "47d9e23b894ec3e27d2b4a37f87170f0"
+    "url": "legacy/api-console-dfa6967e.js",
+    "revision": "7e8839122f20f8aa0719b2183aa1fc14"
   },
   {
     "url": "polyfills/core-js.75d89a608ee8c655883ccf374ca31995.js",

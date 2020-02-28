@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "./build.sh",
-    "test": "echo 'no test'"
+    "test": "echo 'no test'",
+    "start": "simplehttpserver build"
   },
   "repository": {
     "type": "git",
@@ -16,11 +17,12 @@
   },
   "homepage": "https://www.mulesoft.org/jira/browse/APIC",
   "devDependencies": {
+    "simplehttpserver": "^0.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-prettier": "^3.1.1"
   },
   "dependencies": {
     "rollup-plugin-cpy": "^2.0.1"
   },
-  "version": "6.0.40"
+  "version": "6.0.49"
 }

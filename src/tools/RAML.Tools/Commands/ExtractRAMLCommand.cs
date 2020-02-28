@@ -126,8 +126,8 @@ namespace AMF.Tools.Commands
             if (!VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj) && VisualStudioAutomationHelper.IsANetCoreProject(proj) && (!CommandsUtil.IsAspNet5MvcInstalled(proj) || IsNetCoreApiExplorerInstalled()))
                 return;
 
-            if (!VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj))
-                return;
+            //if (!VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj))
+            //    return;
 
             CommandsUtil.ShowAndEnableCommand(menuCommand, true);
         }

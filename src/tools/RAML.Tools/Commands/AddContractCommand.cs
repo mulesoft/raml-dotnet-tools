@@ -124,6 +124,9 @@ namespace AMF.Tools
         {
             var proj = VisualStudioAutomationHelper.GetActiveProject(_dte);
 
+            if (VisualStudioAutomationHelper.IsANetCore3Project(proj))
+                return VisualStudioAutomationHelper.IsAnAspNetCore3Project(proj);
+
             if (VisualStudioAutomationHelper.IsANetCoreProject(proj))
                 return CommandsUtil.IsAspNet5MvcInstalled(proj);
 
